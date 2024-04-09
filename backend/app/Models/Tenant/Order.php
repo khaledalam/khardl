@@ -47,7 +47,8 @@ class Order extends Model
         'driver_phone',
         'manual_order_first_name',
         'manual_order_last_name',
-        'refund_id'
+        'refund_id',
+        'accepted_at'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $casts = [
@@ -80,7 +81,7 @@ class Order extends Model
 
         $tenant_id = tenant()->id;
 
-        self::creating(function ($model) use($tenant_id){
+        self::creating(function ($model) use ($tenant_id) {
 
             // 5 6 5
             // Tenant mapper hash - date(YY-MM-DD) - order unique hash
@@ -88,13 +89,13 @@ class Order extends Model
             // 5 7 => 12
             // Tenant mapper hash - order unique hash
             $prefix = Tenant::find($tenant_id)->mapper_hash;
-//            $suffix = date('ymd') . generateToken();
+            //            $suffix = date('ymd') . generateToken();
 
             do {
                 $suffix = generateToken(7);
                 $ID = $prefix . $suffix;
                 $order = Order::where('id', '=', $ID)->first();
-            } while($order);
+            } while ($order);
 
             $model->id = $ID;
         });
@@ -105,7 +106,7 @@ class Order extends Model
     }
     public function getTaxAmountAttribute()
     {
-        return number_format((($this->subtotal - $this->discount) * $this->vat) / 100 , 2, '.', '');
+        return number_format((($this->subtotal - $this->discount) * $this->vat) / 100, 2, '.', '');
     }
 
     public function getUpdatedAtAttribute($value)
@@ -114,8 +115,8 @@ class Order extends Model
     }
     public function getCancelableAttribute()
     {
-        if($this->isDelivery()){
-            if($this->deliver_by == 'Yeswa'){
+        if ($this->isDelivery()) {
+            if ($this->deliver_by == 'Yeswa') {
                 return false;
             }
         }
@@ -162,14 +163,14 @@ class Order extends Model
     }
     public function scopeDelivery($query)
     {
-        return $query->whereHas('delivery_type',function($q){
-            return $q->where('name',DeliveryType::DELIVERY);
+        return $query->whereHas('delivery_type', function ($q) {
+            return $q->where('name', DeliveryType::DELIVERY);
         });
     }
     public function scopeOnlineCash($query)
     {
-        return $query->whereHas('payment_method',function($q){
-            return $q->where('name',PaymentMethod::ONLINE);
+        return $query->whereHas('payment_method', function ($q) {
+            return $q->where('name', PaymentMethod::ONLINE);
         });
     }
     public function scopeRecent($query)
@@ -199,7 +200,7 @@ class Order extends Model
             } elseif ($date == 'last_week') {
                 $startDate = Carbon::now()->subDays(7)->startOfDay();
                 $endDate = Carbon::now()->subDays(1)->endOfDay();
-                return $q->whereBetween('created_at', [$startDate,$endDate]);
+                return $q->whereBetween('created_at', [$startDate, $endDate]);
             } elseif ($date == 'this_month') {
                 $startOfMonth = now()->startOfMonth();
                 $endOfMonth = now()->endOfMonth();
@@ -209,8 +210,8 @@ class Order extends Model
     }
     public function scopeWhenDateRange($query, $from, $to)
     {
-        return $query->when($from != null && $to !=null, function ($q) use ($from, $to) {
-            return $q->whereBetween('created_at',[$from,$to]);
+        return $query->when($from != null && $to != null, function ($q) use ($from, $to) {
+            return $q->whereBetween('created_at', [$from, $to]);
         });
     }
     public function scopeWhenPaymentStatus($query, $status)
@@ -220,12 +221,13 @@ class Order extends Model
         });
     }
     /* End Scoped */
-    public static function ChangeStatus($status){
-        return  match($status){
-            self::PENDING => [self::RECEIVED_BY_RESTAURANT,self::ACCEPTED,self::CANCELLED,self::COMPLETED,self::READY,self::REJECTED],
-            self::RECEIVED_BY_RESTAURANT => [self::ACCEPTED,self::CANCELLED,self::COMPLETED,self::READY,self::REJECTED],
-            self::ACCEPTED => [self::READY,self::COMPLETED,self::CANCELLED],
-            self::READY => [self::COMPLETED,self::CANCELLED],
+    public static function ChangeStatus($status)
+    {
+        return match ($status) {
+            self::PENDING => [self::RECEIVED_BY_RESTAURANT, self::ACCEPTED, self::CANCELLED, self::COMPLETED, self::READY, self::REJECTED],
+            self::RECEIVED_BY_RESTAURANT => [self::ACCEPTED, self::CANCELLED, self::COMPLETED, self::READY, self::REJECTED],
+            self::ACCEPTED => [self::READY, self::COMPLETED, self::CANCELLED],
+            self::READY => [self::COMPLETED, self::CANCELLED],
             default => []
         };
     }
@@ -239,8 +241,8 @@ class Order extends Model
     }
     public function driver()
     {
-        return $this->belongsTo(RestaurantUser::class)->whereHas('roles',function($q){
-            return $q->where('name','Driver');
+        return $this->belongsTo(RestaurantUser::class)->whereHas('roles', function ($q) {
+            return $q->where('name', 'Driver');
         });
     }
 
@@ -253,7 +255,7 @@ class Order extends Model
         return $this->belongsTo(Coupon::class);
     }
 
-//    public function products()
+    //    public function products()
 //    {
 //        return $this->belongsToMany(Product::class)->withPivot('quantity', 'price_at_order_time')->withTimestamps();
 //    }
@@ -273,15 +275,21 @@ class Order extends Model
     }
     protected static function newFactory()
     {
-      return OrderFactory::new();
+        return OrderFactory::new();
     }
-    public function getAcceptedDelivery(){
+    public function getAcceptedDelivery()
+    {
         $data = [];
-        (!$this->cervo_ref)?:$data[]=__('Cervo');
-        (!$this->yeswa_ref)?:$data[]=__('Yeswa');
-        (!$this->streetline_ref)?:$data[]=__('StreetLine');
-        if(empty($data)) return false;
+        (!$this->cervo_ref) ?: $data[] = __('Cervo');
+        (!$this->yeswa_ref) ?: $data[] = __('Yeswa');
+        (!$this->streetline_ref) ?: $data[] = __('StreetLine');
+        if (empty($data))
+            return false;
         return implode(",", $data);
+    }
+    public function getDistanceAttribute()
+    {
+        return haversineDistance((float) $this->branch?->lat, (float) $this->branch?->lng, (float) $this->user?->lat, (float) $this->user?->lng);
     }
 
 }
