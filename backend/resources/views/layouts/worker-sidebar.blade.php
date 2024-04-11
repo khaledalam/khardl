@@ -181,7 +181,7 @@
                                         </span>
                                     <!--end::Svg Icon-->
                                 </span>
-                                <a href="{{route('restaurant.menu',['branchId' => $user->branch->id])}}">
+                                <a href="{{route('restaurant.get-category',['id' => \App\Models\Tenant\Category::where('branch_id', $user->branch->id)?->first()?->id ?? -1, 'branchId' => $user->branch->id])}}">
                                     <span class="menu-title">{{__('menu')}}</span>
                                 </a>
                             </span>

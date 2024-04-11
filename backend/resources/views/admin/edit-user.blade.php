@@ -46,9 +46,6 @@
                                             <!--begin::Input-->
                                             <input type="text" name="first_name" class="form-control mb-2" required placeholder="{{ __('first-name')}}" value="{{ $user->first_name }}" />
                                             <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('first-name')}} {{ __('is-required')}}</div>
-                                            <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
@@ -59,9 +56,6 @@
                                             <!--begin::Input-->
                                             <input type="text" name="last_name" class="form-control mb-2" required placeholder="{{ __('last-name')}}" value="{{ $user->last_name }}" />
                                             <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('last-name')}} {{ __('is-required')}}</div>
-                                            <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
@@ -72,23 +66,17 @@
                                             <!--begin::Input-->
                                             <input type="email" name="email" class="form-control mb-2" required placeholder="{{ __('email')}}" value="{{ $user->email }}" />
                                             <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('email')}} {{ __('is-required')}}</div>
-                                            <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
 
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{ __('password')}}</label>
+                                            <label class="required form-label">{{ __('change-password')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="password" name="password" class="form-control mb-2" disabled minlength="8" placeholder="Password" value="***********" />
+                                            <input type="password" name="password" class="form-control mb-2" minlength="8" placeholder="Password" value="" />
                                             <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('password')}} {{ __('is-not-possible-to-change')}}</div>
-                                            <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
 
