@@ -56,13 +56,9 @@ class LocationController extends Controller
 
 //        curl_close($ch);
 
-        var_dump($response);
-        exit;
         $data = json_decode($response, true);
 
         if ($data['status'] === 'OK') {
-            var_dump($data);
-            exit;
             return $data['results'][0]['formatted_address']
                 ?? $data['geocode']?->plus_code?->compound_code
                 ?? "$lat,$lng";
