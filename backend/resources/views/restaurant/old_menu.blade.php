@@ -24,7 +24,7 @@
                         <div class="row">
                             @foreach ($branches as $branchLoop)
                             <div class="col-md-3">
-                                <a href="{{ route('restaurant.menu',['branchId' => $branchLoop->id]) }}">
+                                <a href="{{ route('restaurant.get-category',['id' => \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1, 'branchId' => $branchLoop->id]) }}">
                                     <button type="button" class="btn btn-primary">
                                         {{ $branchLoop->name }}
                                     </button>

@@ -140,7 +140,7 @@
                                             </td>
                                             @if($restaurantUser->branch)
                                             <td class="fw-bolder text-end">
-                                                <a href="{{ route('restaurant.menu',$restaurantUser->branch->id) }}">
+                                                <a href="{{ route('restaurant.get-category',['id' => \App\Models\Tenant\Category::where('branch_id', $user->branch->id)?->first()?->id ?? -1, 'branchId' => $restaurantUser->branch->id]) }}">
                                                     {{ $restaurantUser->branch?->name }}
                                                 </a>
                                             </td>

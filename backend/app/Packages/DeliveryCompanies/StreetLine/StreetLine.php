@@ -126,7 +126,7 @@ class StreetLine  extends AbstractDeliveryCompany
                         $order->update([
                             'status'=>Order::COMPLETED
                         ]);
-                        $this->sendNotification($order);
+                        $this->sendNotifications($order);
                 }else if( $payload['status_id'] == self::STATUS_ORDER['Order picked up'] ){
                         $order->update([
                             'status'=>Order::ACCEPTED,
@@ -147,14 +147,14 @@ class StreetLine  extends AbstractDeliveryCompany
             }
         }
     }
-    public function sendNotifications($user, $order)
+    public function sendNotifications($order)
     {
 
         //Internal notification
         $type = NotificationTypeEnum::OrderDelivered;
         $message = [
-            'en' => 'Order has been delivered for customer (' . $user->full_name . '). by Streetline delivery company',
-            'ar' => 'تم توصيل الطلب للعميل (' . $user->full_name . ') بواسطة شركة الشحن ستريت لاين.'
+            'en' => 'Order has been delivered for customer (' . $order->user?->full_name . '). by Streetline delivery company',
+            'ar' => 'تم توصيل الطلب للعميل (' . $order->user?->full_name . ') بواسطة شركة الشحن ستريت لاين.'
         ];
         $title = [
             'ar' => 'الطلب وصل',

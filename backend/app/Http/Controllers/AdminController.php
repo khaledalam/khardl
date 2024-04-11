@@ -471,6 +471,10 @@ class AdminController extends Controller
         $selectedUser->phone = $request->input('phone');
         $selectedUser->email = $request->input('email');
 
+        if ($request->has('password')) {
+            $selectedUser->password = Hash::make($request->input('password'));
+        }
+
         $permissions = [
             'can_access_restaurants',
             'can_view_restaurants',
