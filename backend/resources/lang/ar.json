@@ -1087,6 +1087,7 @@
     "Reason":"السبب",
     "This branch is inactive":"هذا الفرع غير نشط",
     "Order has been created successfully":"تم انشاء الطلب بنجاح",
+    "Address updated successfully": "تم تحديث العنوان بنجاح",
     "You will not be able to receive orders from this branch":"لن تتمكن من تلقي اي طلبات من هذا الفرع",
     "token saved successfully.":"تم حفظ رقم الجهاز, بنجاح.",
     "New order has been created for customer :name.":"تم انشاء طلب لعميل :name",
