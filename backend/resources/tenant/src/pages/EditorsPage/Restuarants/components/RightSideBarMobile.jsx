@@ -55,14 +55,6 @@ export const RightSideBarMobile = ({
         (state) => state.restuarantEditorStyle
     );
 
-    useEffect(() => {
-        activeSubitem != null &&
-            console.log(
-                "now : ",
-                navItems[activeSection].subItems[activeSubitem]
-            );
-    }, [activeSection, activeSubitem]);
-
     const {
         headerPosition,
         logo_alignment,

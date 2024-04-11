@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cartHeaderImg from "../../../../assets/cartBoldIcon.svg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,13 @@ import ImgPlaceholder from "../../../../assets/imgPlaceholder.png";
 import HeaderSidebar from "../../../../assets/headerSidebar.svg";
 import HeaderHomeIcon from "../../../../assets/headerHomeIcon.svg";
 import HedaerIconCart from "../../../../assets/headerIconCart.svg";
-const HeaderEdit = ({ restaurantStyle, toggleSidebarCollapse }) => {
+import GreenDot from "../../../../assets/greenDot.png";
+const HeaderEdit = ({
+    restaurantStyle,
+    toggleSidebarCollapse,
+    isHighlighted,
+    currentSubItem,
+}) => {
     const [isCropModalOpened, setIsCropModalOpened] = useState(false);
     const [uncroppedImage, setUncroppedImage] = useState(null);
     const [imgType, setImgType] = useState("");
@@ -18,18 +24,18 @@ const HeaderEdit = ({ restaurantStyle, toggleSidebarCollapse }) => {
     const dispatch = useDispatch();
 
     const cartItemsCount = useSelector(
-        (state) => state.categoryAPI.cartItemsCount,
+        (state) => state.categoryAPI.cartItemsCount
     );
     const categories = useSelector((state) => state.categoryAPI.categories);
     const restuarantEditorStyle = useSelector(
-        (state) => state.restuarantEditorStyle,
+        (state) => state.restuarantEditorStyle
     );
     const handleGotoCart = () => {
         navigate("/cart");
     };
 
     const uploadLogo = useSelector(
-        (state) => state.restuarantEditorStyle.logoUpload,
+        (state) => state.restuarantEditorStyle.logoUpload
     );
     const clearLogo = () => {
         dispatch(logoUpload(null));
@@ -80,20 +86,32 @@ const HeaderEdit = ({ restaurantStyle, toggleSidebarCollapse }) => {
             dispatch(logoUpload(URL.createObjectURL(selectedLogo)));
         }
     };
+
     return (
         <div
             style={{
                 backgroundColor: restaurantStyle?.header_color,
             }}
-            className="w-full h-[56px] z-10 rounded-[50px] flex items-center justify-between px-[16px] md:mt-[8px]"
+            className={`w-full h-[56px] z-10 rounded-[50px] flex items-center justify-between px-[16px] md:mt-[8px] ${
+                isHighlighted && "shadow-inner border-[#C0D123] border-[2px]"
+            }`}
         >
             <div className="flex justify-start w-[30px]">
                 <div
                     onClick={toggleSidebarCollapse}
                     style={{ fontWeight: restaurantStyle?.text_fontWeight }}
-                    className={`flex items-center gap-3 cursor-pointer`}
+                    className={`flex items-center gap-3 cursor-pointer relative`}
                 >
                     <img src={HeaderSidebar} alt="sidebar icon" />
+                    <img
+                        src={GreenDot}
+                        alt="green dot"
+                        className={`${
+                            currentSubItem == "Side Menu"
+                                ? "absolute w-[5px] h-[5px] right-[-4px] top-[-6px]"
+                                : "hidden"
+                        }`}
+                    />
                 </div>
             </div>
 
@@ -111,10 +129,28 @@ const HeaderEdit = ({ restaurantStyle, toggleSidebarCollapse }) => {
                         <div className="w-[10px] h-[10px] rounded-full bg-[#FF3D00] flex items-center justify-center"></div>
                     </div>
                 )}
+                <img
+                    src={GreenDot}
+                    alt="green dot"
+                    className={`${
+                        currentSubItem == "Order Cart"
+                            ? "absolute w-[5px] h-[5px] right-[-1px] top-[-3px]"
+                            : "hidden"
+                    }`}
+                />
             </div>
 
-            <div className="pt-[6px] pb-[9px] pr-[7px] pl-[8px] bg-[#F3F3F3] rounded-full">
+            <div className="pt-[6px] pb-[9px] pr-[7px] pl-[8px] bg-[#F3F3F3] rounded-full relative">
                 <img src={HeaderHomeIcon} alt={"home icon"} className="" />
+                <img
+                    src={GreenDot}
+                    alt="green dot"
+                    className={`${
+                        currentSubItem == "Home"
+                            ? "absolute w-[5px] h-[5px] right-[-1px] top-[-3px]"
+                            : "hidden"
+                    }`}
+                />
             </div>
         </div>
     );

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ImgBurger from "../../../../assets/burger.png";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import GreenDot from "../../../../assets/greenDot.png";
 
 const CategoryItem = ({
     active,
@@ -17,6 +18,7 @@ const CategoryItem = ({
     isGrid,
     fontSize,
     valuekey,
+    currentSubItem,
 }) => {
     const [isHover, setIsHover] = useState(false);
     const { t } = useTranslation();
@@ -63,7 +65,7 @@ const CategoryItem = ({
                     <div
                         className={`w-full h-full flex items-center ${
                             shape === "sharp" ? "" : "rounded-full"
-                        } justify-center`}
+                        } justify-center relative`}
                     >
                         <img
                             src={imgSrc ? imgSrc : ImgBurger}
@@ -71,6 +73,15 @@ const CategoryItem = ({
                             className={`w-full h-full object-cover ${
                                 shape === "sharp" ? "" : "rounded-full"
                             } `}
+                        />
+                        <img
+                            src={GreenDot}
+                            alt="green dot"
+                            className={`${
+                                currentSubItem == "Category"
+                                    ? "absolute w-[5px] h-[5px] right-0 top-0 z-[30]"
+                                    : "hidden"
+                            }`}
                         />
                     </div>
                 </div>

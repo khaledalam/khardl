@@ -12,11 +12,17 @@ import CategoryItem from "./CategoryItem";
 import { selectedCategoryAPI } from "../../../../redux/NewEditor/categoryAPISlice";
 import { useSelector, useDispatch } from "react-redux";
 import useWindowSize from "../../../../hooks/useWindowSize";
+import GreenDot from "../../../../assets/greenDot.png";
 
 // Install Swiper modules
 SwiperCore.use([Navigation]);
 
-function EditorSlider({ items, scrollToSection }) {
+function EditorSlider({
+    items,
+    scrollToSection,
+    isHighlighted,
+    currentSubItem,
+}) {
     const restuarantEditorStyle = useSelector(
         (state) => state.restuarantEditorStyle
     );
@@ -48,7 +54,9 @@ function EditorSlider({ items, scrollToSection }) {
                 backgroundColor: page_category_color,
                 borderRadius: category_shape === "sharp" ? 0 : 12,
             }}
-            className="w-full h-40 py-3 flex items-center justify-between"
+            className={`w-full h-40 py-3 flex items-center justify-between ${
+                isHighlighted && "shadow-inner border-[#C0D123] border-[2px]"
+            }`}
         >
             <div className="flex items-center justify-between w-full px-[16px]">
                 <div>
@@ -94,6 +102,7 @@ function EditorSlider({ items, scrollToSection }) {
                                             : true
                                     }
                                     fontSize={text_fontSize}
+                                    currentSubItem={currentSubItem}
                                 />
                             </SwiperSlide>
                         ))}

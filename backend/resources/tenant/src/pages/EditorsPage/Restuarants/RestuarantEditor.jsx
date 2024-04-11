@@ -172,6 +172,13 @@ export const RestuarantEditor = () => {
             title: t("Menu Category Detail"),
             subItems: [
                 {
+                    title: t("Menu Card"),
+                    layout: ["color"],
+                    contentPosition: [],
+                    text: ["font", "weight", "size", "color"],
+                    link: [],
+                },
+                {
                     title: t("Menu Name"),
                     layout: ["color"],
                     contentPosition: [],
@@ -207,10 +214,10 @@ export const RestuarantEditor = () => {
             ],
         },
         {
-            title: t("Footer "),
+            title: t("Footer Editor"),
             subItems: [
                 {
-                    title: t("Footer "),
+                    title: t("Footer Editor"),
                     layout: ["color"],
                     contentPosition: ["positionContent"],
                     text: ["font", "weight", "size", "color"],
@@ -253,6 +260,10 @@ export const RestuarantEditor = () => {
                                         toggleSidebarCollapse={
                                             handleSidebarCollapse
                                         }
+                                        isHighlighted={
+                                            navItems[activeSection]?.title ===
+                                            t("Header")
+                                        }
                                     />
                                 </div>
                             )}
@@ -262,6 +273,15 @@ export const RestuarantEditor = () => {
                                     categories={categories}
                                     toggleSidebarCollapse={
                                         handleSidebarCollapse
+                                    }
+                                    activeSubitem={activeSubitem}
+                                    setActiveSubitem={setActiveSubitem}
+                                    activeSection={activeSection}
+                                    setActiveSection={setActiveSection}
+                                    navItems={navItems}
+                                    activeDesignSection={activeDesignSection}
+                                    setActiveDesignSection={
+                                        setActiveDesignSection
                                     }
                                 />
                             </div>

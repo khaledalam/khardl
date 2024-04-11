@@ -37,6 +37,7 @@ import { getCartItemsCount } from "../../../../redux/NewEditor/categoryAPISlice"
 import cartImg from "../../../../assets/cartLgIcon.svg";
 import Burger from "../../../../assets/burger.png";
 import KcalIcon from "../../../../assets/kcalIcon.png";
+import GreenDot from "../../../../assets/greenDot.png";
 
 const ProductItem = ({
     id,
@@ -66,6 +67,7 @@ const ProductItem = ({
     dropdown_input_titles,
     dropdown_input_names,
     dropdown_input_prices,
+    currentSubItem,
 }) => {
     const dropdDownRef = useRef([]);
     const dispatch = useDispatch();
@@ -404,7 +406,7 @@ const ProductItem = ({
     return (
         <Fragment>
             <div
-                className="w-36 h-44"
+                className="w-36 h-44 relative"
                 key={valuekey}
                 onClick={() => document.getElementById(id).showModal()}
             >
@@ -412,25 +414,63 @@ const ProductItem = ({
                     <div className="w-36 h-[86px] bg-orange-100 bg-opacity-10 rounded-xl flex justify-center items-center">
                         <img className="w-[60px] h-[60px]" src={imgSrc} />
                     </div>
-                    <div className=" text-black text-opacity-75 text-xs font-semibold font-['Inter']">
-                        {name}
+                    <div className=" text-black text-opacity-75 text-xs font-semibold font-['Inter'] relative">
+                        <span>{name}</span>
+                        <img
+                            src={GreenDot}
+                            alt="green dot"
+                            className={`${
+                                currentSubItem == "Menu Name"
+                                    ? "absolute w-[5px] h-[5px] right-[-8px] top-[-2px]"
+                                    : "hidden"
+                            }`}
+                        />
                     </div>
                     <div className="w-full h-3">
                         <div className="left-[16px] flex justify-center">
                             <img className="w-3 h-3" src={KcalIcon} />
-                            <span className="text-black text-opacity-75 text-[10px] font-medium font-['Inter']">
-                                {caloryInfo} {t("Kcal")}
+                            <span className="text-black text-opacity-75 text-[10px] font-medium font-['Inter'] relative">
+                                <span>
+                                    {caloryInfo} {t("Kcal")}
+                                </span>
+                                <img
+                                    src={GreenDot}
+                                    alt="green dot"
+                                    className={`${
+                                        currentSubItem == "Total Calories"
+                                            ? "absolute w-[5px] h-[5px] right-[-8px] top-[-2px]"
+                                            : "hidden"
+                                    }`}
+                                />
                             </span>
                         </div>
                     </div>
                     <div className="w-28 h-6">
-                        <div className="w-28 h-6 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center">
+                        <div className="w-28 h-6 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center relative">
                             <div className=" text-white text-xs font-medium font-['Inter']">
                                 {t("SAR")} {amount}
                             </div>
+                            <img
+                                src={GreenDot}
+                                alt="green dot"
+                                className={`${
+                                    currentSubItem == "Price"
+                                        ? "absolute w-[5px] h-[5px] right-0 top-0"
+                                        : "hidden"
+                                }`}
+                            />
                         </div>
                     </div>
                 </div>
+                <img
+                    src={GreenDot}
+                    alt="green dot"
+                    className={`${
+                        currentSubItem == "Menu Card"
+                            ? "absolute w-[5px] h-[5px] right-[10px] top-[10px]"
+                            : "hidden"
+                    }`}
+                />
             </div>
             {/* <div
                 key={valuekey}

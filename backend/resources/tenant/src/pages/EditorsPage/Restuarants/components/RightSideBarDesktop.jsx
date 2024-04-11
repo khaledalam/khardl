@@ -52,14 +52,14 @@ export const RightSideBarDesktop = ({
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const restuarantEditorStyle = useSelector(
-        (state) => state.restuarantEditorStyle,
+        (state) => state.restuarantEditorStyle
     );
 
     useEffect(() => {
         activeSubitem != null &&
             console.log(
                 "now : ",
-                navItems[activeSection].subItems[activeSubitem],
+                navItems[activeSection].subItems[activeSubitem]
             );
     }, [activeSection, activeSubitem]);
 
@@ -102,7 +102,7 @@ export const RightSideBarDesktop = ({
         setOpenItems((prev) =>
             prev.includes(index)
                 ? prev.filter((item) => item !== index)
-                : [...prev, index],
+                : [...prev, index]
         );
     };
 
@@ -117,14 +117,14 @@ export const RightSideBarDesktop = ({
                 <ul className="flex flex-col py-4 divide-y divide-black/[0.2] h-full">
                     {activeSubitem != null &&
                         Object.keys(
-                            navItems[activeSection].subItems[activeSubitem],
+                            navItems[activeSection].subItems[activeSubitem]
                         )
                             .filter(
                                 (item) =>
                                     item != "title" &&
                                     navItems[activeSection].subItems[
                                         activeSubitem
-                                    ][item].length > 0,
+                                    ][item].length > 0
                             )
                             .map((item, index) => (
                                 <li key={index}>
@@ -169,21 +169,21 @@ export const RightSideBarDesktop = ({
                                                         handleChange={(value) =>
                                                             dispatch(
                                                                 setHeaderPosition(
-                                                                    value,
-                                                                ),
+                                                                    value
+                                                                )
                                                             )
                                                         }
                                                         options={[
                                                             {
                                                                 value: "fixed",
                                                                 text: t(
-                                                                    "Fixed",
+                                                                    "Fixed"
                                                                 ),
                                                             },
                                                             {
                                                                 value: "relative",
                                                                 text: t(
-                                                                    "Relative",
+                                                                    "Relative"
                                                                 ),
                                                             },
                                                         ]}
@@ -192,14 +192,16 @@ export const RightSideBarDesktop = ({
                                                     <EditorColorSelect
                                                         label={t("Color")}
                                                         modalId={"page-modal"}
-                                                        color={`${t(page_color)}`}
+                                                        color={`${t(
+                                                            page_color
+                                                        )}`}
                                                         handleColorChange={(
-                                                            color,
+                                                            color
                                                         ) =>
                                                             dispatch(
                                                                 headerColor(
-                                                                    color,
-                                                                ),
+                                                                    color
+                                                                )
                                                             )
                                                         }
                                                     />
@@ -212,15 +214,15 @@ export const RightSideBarDesktop = ({
                                                         onChange={(value) =>
                                                             dispatch(
                                                                 logoAlignment(
-                                                                    value,
-                                                                ),
+                                                                    value
+                                                                )
                                                             )
                                                         }
                                                     />
                                                 ) : subItem == "radius" ? (
                                                     <EditorPercentageInput
                                                         label={t(
-                                                            "Border Radius",
+                                                            "Border Radius"
                                                         )}
                                                         percentage={10}
                                                     />
@@ -228,26 +230,26 @@ export const RightSideBarDesktop = ({
                                                     <EditorSelect
                                                         label={t("Font")}
                                                         defaultValue={t(
-                                                            "Inter",
+                                                            "Inter"
                                                         )}
                                                         handleChange={(value) =>
                                                             dispatch(
                                                                 setHeaderPosition(
-                                                                    value,
-                                                                ),
+                                                                    value
+                                                                )
                                                             )
                                                         }
                                                         options={[
                                                             {
                                                                 value: "inter",
                                                                 text: t(
-                                                                    "Inter",
+                                                                    "Inter"
                                                                 ),
                                                             },
                                                             {
                                                                 value: "jakarta",
                                                                 text: t(
-                                                                    "Jakarta",
+                                                                    "Jakarta"
                                                                 ),
                                                             },
                                                         ]}
@@ -256,20 +258,20 @@ export const RightSideBarDesktop = ({
                                                     <EditorSelect
                                                         label={t("Type")}
                                                         defaultValue={t(
-                                                            "Stack",
+                                                            "Stack"
                                                         )}
                                                         handleChange={(value) =>
                                                             dispatch(
                                                                 setHeaderPosition(
-                                                                    value,
-                                                                ),
+                                                                    value
+                                                                )
                                                             )
                                                         }
                                                         options={[
                                                             {
                                                                 value: "stack",
                                                                 text: t(
-                                                                    "Stack",
+                                                                    "Stack"
                                                                 ),
                                                             },
                                                             {
@@ -282,26 +284,26 @@ export const RightSideBarDesktop = ({
                                                     <EditorSelect
                                                         label={t("Weight")}
                                                         defaultValue={t(
-                                                            "Regular",
+                                                            "Regular"
                                                         )}
                                                         handleChange={(value) =>
                                                             dispatch(
                                                                 setHeaderPosition(
-                                                                    value,
-                                                                ),
+                                                                    value
+                                                                )
                                                             )
                                                         }
                                                         options={[
                                                             {
                                                                 value: "regular",
                                                                 text: t(
-                                                                    "Regular",
+                                                                    "Regular"
                                                                 ),
                                                             },
                                                             {
                                                                 value: "light",
                                                                 text: t(
-                                                                    "Light",
+                                                                    "Light"
                                                                 ),
                                                             },
                                                         ]}
@@ -310,13 +312,13 @@ export const RightSideBarDesktop = ({
                                                     <EditorSizeSelect
                                                         label={t("Size")}
                                                         defaultValue={t(
-                                                            "Regular",
+                                                            "Regular"
                                                         )}
                                                         handleChange={(value) =>
                                                             dispatch(
                                                                 setHeaderPosition(
-                                                                    value,
-                                                                ),
+                                                                    value
+                                                                )
                                                             )
                                                         }
                                                     />
@@ -326,8 +328,8 @@ export const RightSideBarDesktop = ({
                                                         handleChange={(value) =>
                                                             dispatch(
                                                                 setHeaderPosition(
-                                                                    value,
-                                                                ),
+                                                                    value
+                                                                )
                                                             )
                                                         }
                                                     />

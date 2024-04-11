@@ -14,6 +14,8 @@ import { selectedCategoryAPI } from "../../../../redux/NewEditor/categoryAPISlic
 import {
     logoUpload,
     setBannerUpload,
+    moveSelectedIconsToMedia,
+    setSelectedSocialMediaId,
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
 import EmptyBackground from "../../../../assets/emptyBackground.png";
 import EmptyBackground60 from "../../../../assets/emptyBackground60.png";
@@ -25,7 +27,21 @@ import Cropper from "react-easy-crop";
 import getCroppedImg from "./cropImage";
 import RightIcon from "../../../../assets/rightIcon.png";
 import LeftIcon from "../../../../assets/leftIcon.png";
-const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
+import GreenDot from "../../../../assets/greenDot.png";
+import { AiOutlineClose } from "react-icons/ai";
+
+const MainBoardEditor = ({
+    categories,
+    toggleSidebarCollapse,
+    isLoading,
+    activeSection,
+    setActiveSection,
+    activeSubitem,
+    setActiveSubitem,
+    navItems,
+    activeDesignSection,
+    setActiveDesignSection,
+}) => {
     const restuarantEditorStyle = useSelector(
         (state) => state.restuarantEditorStyle
     );
@@ -114,6 +130,10 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
         (state) => state.restuarantEditorStyle.logoUpload
     );
 
+    const selectedMediaId = useSelector(
+        (state) => state.restuarantEditorStyle.selectedMediaId
+    );
+
     const [uploadSingleBanner, setUploadSingleBanner] = useState(null);
 
     const handleLogoUpload = (event) => {
@@ -167,7 +187,23 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                 })
             );
         }
-    }, [language, dispatch, categories]);
+        activeSubitem != null &&
+            console.log(
+                "now 2 : ",
+                navItems[activeSection].subItems[activeSubitem].title
+            );
+    }, [
+        language,
+        dispatch,
+        categories,
+        activeSection,
+        activeSubitem,
+        selectedSocialIcons,
+    ]);
+
+    // let currentSubItem = activeSubitem
+    //     ? navItems[activeSection]?.subItem[activeSubitem].title
+    //     : null;
 
     const clearLogo = () => {
         dispatch(logoUpload(null));
@@ -175,6 +211,14 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
     const clearBanner = () => {
         setUploadSingleBanner(null);
         dispatch(setBannerUpload(null));
+    };
+
+    const handleRemoveMediaSelect = (id) => {
+        dispatch(moveSelectedIconsToMedia(id));
+    };
+
+    const handleSocialMediaSelect = (id) => {
+        dispatch(setSelectedSocialMediaId(id));
     };
 
     const categoriesPlaceHolders = [
@@ -247,6 +291,8 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
         }
     };
 
+    // console.log("KKK: ")
+
     return (
         <div
             style={{
@@ -254,13 +300,22 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                 fontFamily: text_fontFamily,
                 fontWeight: text_fontWeight,
             }}
-            className="w-full p-4 flex flex-col gap-[16px] relative"
+            className="w-full p-4 flex flex-col gap-[16px] relative "
         >
             {/* Header cart */}
             {headerPosition !== "fixed" && (
                 <HeaderEdit
                     restaurantStyle={restuarantEditorStyle}
                     toggleSidebarCollapse={toggleSidebarCollapse}
+                    isHighlighted={
+                        navItems[activeSection]?.title === t("Header")
+                    }
+                    currentSubItem={
+                        activeSubitem != null
+                            ? navItems[activeSection].subItems[activeSubitem]
+                                  .title
+                            : null
+                    }
                 />
             )}
             {/* logo */}
@@ -273,7 +328,10 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                         : logo_alignment === "right"
                         ? "items-center justify-end"
                         : ""
-                } `}
+                } ${
+                    navItems[activeSection]?.title === t("Logo") &&
+                    "shadow-inner border-[#C0D123] border-[2px]"
+                }`}
             >
                 <div
                     style={{
@@ -290,6 +348,17 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                     }}
                     className="w-[60px] h-[60px] flex flex-col items-center pt-[17px] pb-[7px] relative"
                 >
+                    <img
+                        src={GreenDot}
+                        alt="green dot"
+                        className={`${
+                            activeSubitem != null &&
+                            navItems[activeSection].subItems[activeSubitem]
+                                .title == "Logo"
+                                ? "absolute w-[5px] h-[5px] right-[-1px] top-[-3px]"
+                                : "hidden"
+                        }`}
+                    />
                     <input
                         type="file"
                         name="logo"
@@ -335,7 +404,13 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
             {!isLoading ? (
                 banner_type === "slider" ? (
                     <>
-                        <div className="w-full h-[300px]">
+                        <div
+                            className={`w-full h-[300px] ${
+                                navItems[activeSection]?.title ===
+                                    t("Banner") &&
+                                "shadow-inner border-[#C0D123] border-[2px] rounded-[10px]"
+                            }`}
+                        >
                             <Slider banner_images={banner_images} />
                         </div>
                         {/* <div className="w-full h-[300px]">
@@ -446,8 +521,6 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                 <div className="skeleton w-[100px] h-[95px] w-full shrink-0"></div>
             )}
 
-            {/* <EditorSlider items={categories} /> */}
-
             {/* Category */}
             <div
                 className={`w-full h-full flex ${
@@ -470,6 +543,17 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                     <EditorSlider
                         items={categories}
                         scrollToSection={scrollToSection}
+                        isHighlighted={
+                            navItems[activeSection]?.title ===
+                            t("Menu Category")
+                        }
+                        currentSubItem={
+                            activeSubitem != null
+                                ? navItems[activeSection].subItems[
+                                      activeSubitem
+                                  ].title
+                                : null
+                        }
                     />
                     {/* <div
                         style={{
@@ -546,7 +630,12 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                                 : "w-[75%]"
                         } ${
                             categoryDetail_shape === "sharp" ? "" : "rounded-lg"
-                        } bg-white py-[32]`}
+                        } bg-white py-[32] 
+                        ${
+                            navItems[activeSection]?.title ===
+                                t("Menu Category Detail") &&
+                            "shadow-inner border-[#C0D123] border-[2px]"
+                        }`}
                     >
                         <div
                             className={`w-full h-full flex flex-col max-h-[610px] items-start justify-center `}
@@ -746,6 +835,17 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                                                             fontSize={
                                                                 text_fontSize
                                                             }
+                                                            currentSubItem={
+                                                                activeSubitem !=
+                                                                null
+                                                                    ? navItems[
+                                                                          activeSection
+                                                                      ]
+                                                                          .subItems[
+                                                                          activeSubitem
+                                                                      ].title
+                                                                    : null
+                                                            }
                                                         />
                                                     )
                                                 )}
@@ -768,7 +868,13 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                         : socialMediaIcons_alignment === "right"
                         ? "items-center justify-end"
                         : ""
-                }`}
+                } 
+
+                ${
+                    navItems[activeSection]?.title === t("Social Media") &&
+                    "shadow-inner border-[#C0D123] border-[2px]"
+                }
+                ${selectedSocialIcons?.length == 0 ? "hidden" : ""}`}
             >
                 <div className="flex items-center gap-5">
                     {selectedSocialIcons?.map((socialMedia) => (
@@ -777,11 +883,39 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                             key={socialMedia.id}
                             className="cursor-pointer"
                         >
-                            <div className="w-[30px] h-[30px] rounded-full relative">
+                            <div className="w-[35px] h-[35px] bg-[#F3F3F3] flex justify-center items-center rounded-full relative">
                                 <img
                                     src={socialMedia.imgUrl}
                                     alt={"whatsapp"}
-                                    className="w-full h-full object-cover"
+                                    className="w-[20px] h-[20px] object-cover"
+                                    onClick={() =>
+                                        handleSocialMediaSelect(socialMedia.id)
+                                    }
+                                />
+                                {
+                                    <button
+                                        key={socialMedia.id}
+                                        className="absolute top-[-5px] right-[-4px] text-[10px] text-bold h-fit w-fit rounded-full bg-red-500 p-[3px] text-white"
+                                        onClick={() =>
+                                            handleRemoveMediaSelect(
+                                                socialMedia.id
+                                            )
+                                        }
+                                    >
+                                        <AiOutlineClose size={7} />
+                                    </button>
+                                }
+                                <img
+                                    src={GreenDot}
+                                    alt="green dot"
+                                    className={`${
+                                        activeSubitem != null &&
+                                        navItems[activeSection].subItems[
+                                            activeSubitem
+                                        ].title == "Social Media"
+                                            ? "absolute w-[5px] h-[5px] right-[-8px] top-[-8px]"
+                                            : "hidden"
+                                    }`}
                                 />
                             </div>
                         </a>
@@ -799,6 +933,10 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                         : phoneNumber_alignment === "right"
                         ? "items-center justify-end"
                         : ""
+                } 
+                ${
+                    navItems[activeSection]?.title === t("Footer Editor") &&
+                    "shadow-inner border-[#C0D123] border-[2px]"
                 }`}
             >
                 <h3
@@ -806,9 +944,20 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                         text_fontFamily
                             ? text_fontFamily
                             : "font-['Plus Jakarta Sans']"
-                    } text-black text-opacity-50 text-[10px] font-normal leading-3 tracking-tight`}
+                    } text-black text-opacity-50 text-[10px] font-normal leading-3 tracking-tight relative`}
                 >
-                    {t("Powered by @Khardl")}
+                    <span>{t("Powered by @Khardl")}</span>
+                    <img
+                        src={GreenDot}
+                        alt="green dot"
+                        className={`${
+                            activeSubitem != null &&
+                            navItems[activeSection].subItems[activeSubitem]
+                                .title == t("Footer Editor")
+                                ? "absolute w-[5px] h-[5px] right-[-7px] top-[-3px]"
+                                : "hidden"
+                        }`}
+                    />
                 </h3>
             </div>
             {isCropModalOpened && (
