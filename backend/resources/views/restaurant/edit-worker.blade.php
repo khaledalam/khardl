@@ -83,7 +83,7 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{ __('password')}}</label>
+                                            <label class="required form-label">{{ __('change-password')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="password" @if(!$user?->hasPermissionWorker('can_modify_and_see_other_workers')) disabled @endif name="password" class="form-control mb-2" minlength="6" placeholder="Password" value="" />
@@ -99,9 +99,6 @@
                                             <!--begin::Input-->
                                             <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control @error('phone') is-invalid @enderror" value="{{ $worker->phone }}" name="phone" id="phone" placeholder="05XXXXXXXX" required>
                                             <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('phone-number')}} {{ __('is-required')}}</div>
-                                            <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
 

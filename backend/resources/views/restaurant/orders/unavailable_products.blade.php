@@ -92,7 +92,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('restaurant.menu',['branchId'=> $product->branch_id]) }}" class="text-gray-600 text-hover-primary">
+                                            <a href="{{ route('restaurant.get-category',['id' => \App\Models\Tenant\Category::where('branch_id', $product->branch_id)?->first()?->id ?? -1, 'branchId'=> $product->branch_id]) }}" class="text-gray-600 text-hover-primary">
                                                 {{ $product->branch->name }}
                                             </a>
                                         </td>
