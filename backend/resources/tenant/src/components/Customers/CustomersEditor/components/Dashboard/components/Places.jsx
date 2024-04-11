@@ -49,17 +49,19 @@ const Places = ({ inputStyle, isCart, user }) => {
 };
 
 const convertToAddress = async (lat, lng) => {
-    return await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyCFkagJ1zc4jW9N3lRNlIyAIJJcNpOwecE`,
-    ).then(async (res) => {
-        const geocode = await res.json();
 
-        return (
-            geocode?.results[0]?.formatted_address ||
-            geocode?.plus_code?.compound_code ||
-            `${lat},${lng}`
-        );
-    });
+    try {
+        return await AxiosInstance.post(`/latlng-to-address`, {
+            lat: lat,
+            lng: lng,
+        })
+            .then((r) => {
+                console.log("convert: ", r);
+                return r;
+            });
+    } catch (error) {
+        toast.error(error.response.data.message);
+    }
 };
 
 function Map({ inputStyle, isCart, user }) {
