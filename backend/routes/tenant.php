@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Http\Controllers\API\Tenant\LocationController;
 use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 
 use App\Http\Controllers\API\Tenant\Notification\NotificationController;
@@ -259,6 +260,12 @@ Route::group([
 
 
         Route::middleware('auth')->group(function () {
+
+
+            Route::post('/latlng-to-address', [LocationController::class, 'convertLatLngToAddress'])
+                ->name('global.convertLatLngToAddress');
+
+
 
             Route::middleware('notVerifiedPhone')->group(function () {
                 Route::get('verification-phone', static function () {
