@@ -48,9 +48,9 @@ class LocationController extends Controller
 
         $response = file_get_contents($url);
 
+
         if($response === false) {
 //            $error = curl_error($ch);
-            echo "cURL Error: $error";
             return $this->sendError('Request Error.', 'Error: Unable to retrieve address request.');
         }
 
