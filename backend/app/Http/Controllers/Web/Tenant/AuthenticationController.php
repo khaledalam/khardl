@@ -68,7 +68,7 @@ class AuthenticationController extends Controller
                 return ResponseHelper::response([
                     'message' => 'logged out successfully',
                     'is_loggedin' => false
-                ], ResponseHelper::HTTP_REDIRECT_TO_CENTERAL);
+                ], ResponseHelper::HTTP_OK);
             }
 
             return redirect()->route("homeCentral");
