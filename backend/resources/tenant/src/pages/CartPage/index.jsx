@@ -55,7 +55,7 @@ const CartPage = () => {
     });
 
     const cartItemsData = useSelector(
-        (state) => state.categoryAPI.cartItemsData,
+        (state) => state.categoryAPI.cartItemsData
     );
     const [tap, setTap] = useState(null);
 
@@ -63,6 +63,7 @@ const CartPage = () => {
 
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [deliveryType, setDeliveryType] = useState("Delivery");
+    const [deliveryTypesData, setDeliveryTypesData] = useState([]);
     const [deliveryAddress, setDeliveryAddress] = useState(0);
     const [userAddress, setUserAddress] = useState(null);
     const [orderNotes, setOrderNotes] = useState("");
@@ -80,7 +81,7 @@ const CartPage = () => {
     const fetchResStyleData = async () => {
         try {
             AxiosInstance.get(`restaurant-style`).then((response) =>
-                dispatch(changeRestuarantEditorStyle(response.data?.data)),
+                dispatch(changeRestuarantEditorStyle(response.data?.data))
             );
         } catch (error) {
             // toast.error(`${t('Failed to send verification code')}`)
@@ -103,7 +104,7 @@ const CartPage = () => {
                 dispatch(getCartItemsCount(cartResponse.data?.data.count));
                 setCart(cartResponse.data?.data);
                 // setPaymentMethodsData(cartResponse.data?.data?.payment_methods);
-                // setDeliveryTypesData(cartResponse.data?.data?.delivery_types);
+                setDeliveryTypesData(cartResponse.data?.data?.delivery_types);
                 // setAddress(cartResponse.data?.data?.address ?? t("N/A"));
                 setTap(cartResponse.data?.data?.tap_information);
             }
@@ -134,7 +135,6 @@ const CartPage = () => {
     };
 
     const handlePlaceOrder = async () => {
-
         console.log("handlePlaceOrder func, paymentMethod: ", paymentMethod);
 
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
@@ -152,7 +152,7 @@ const CartPage = () => {
                     });
                     if (cartResponse.data) {
                         toast.success(
-                            `${t("Order has been created successfully")}`,
+                            `${t("Order has been created successfully")}`
                         );
                         navigate(`/dashboard#orders`);
                     }
@@ -180,7 +180,7 @@ const CartPage = () => {
                     couponCode: coupon,
                     address: orderAddress,
                     token_id: response?.id,
-                },
+                }
             );
 
             if (redirect.data) {
@@ -198,7 +198,7 @@ const CartPage = () => {
             parseFloat(cart?.total) +
                 (deliveryType === "PICKUP"
                     ? 0.0
-                    : parseFloat(cart?.delivery_fee)),
+                    : parseFloat(cart?.delivery_fee))
         ).toFixed(2);
 
     return (
@@ -244,7 +244,7 @@ const CartPage = () => {
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Payment Method")}</h3>
                                         {cart.payment_methods.some(
-                                            (obj) => obj.name === "Online",
+                                            (obj) => obj.name === "Online"
                                         ) && (
                                             <CartDetailSection
                                                 key={"Online"}
@@ -263,7 +263,7 @@ const CartPage = () => {
                                             />
                                         )}
                                         {cart.payment_methods.some(
-                                            (obj) => obj.name === "Online",
+                                            (obj) => obj.name === "Online"
                                         ) &&
                                             isSafari && (
                                                 <CartDetailSection
@@ -271,7 +271,7 @@ const CartPage = () => {
                                                     name={"ApplePay"}
                                                     onChange={(e) =>
                                                         setPaymentMethod(
-                                                            "Apple Pay",
+                                                            "Apple Pay"
                                                         )
                                                     }
                                                     isChecked={
@@ -287,14 +287,14 @@ const CartPage = () => {
                                             )}
                                         {cart.payment_methods.some(
                                             (obj) =>
-                                                obj.name === "Cash on Delivery",
+                                                obj.name === "Cash on Delivery"
                                         ) && (
                                             <CartDetailSection
                                                 key={"Cash on Delivery"}
                                                 name={"Cash on Delivery"}
                                                 onChange={(e) =>
                                                     setPaymentMethod(
-                                                        "Cash on Delivery",
+                                                        "Cash on Delivery"
                                                     )
                                                 }
                                                 isChecked={
@@ -326,22 +326,27 @@ const CartPage = () => {
                                             <div className="mt-6">
                                                 <ApplePayButton
                                                     // The public Key provided by Tap
-                                                    publicKey={tap.tap_public_key}
+                                                    publicKey={
+                                                        tap.tap_public_key
+                                                    }
                                                     //The environment of the SDK and it can be one of these environments
-                                                    environment={Environment.Beta}
+                                                    environment={
+                                                        Environment.Beta
+                                                    }
                                                     //to enable the debug mode
                                                     debug
                                                     merchant={{
                                                         //  The merchant domain name
-                                                        domain: window.location.hostname,
+                                                        domain: window.location
+                                                            .hostname,
                                                         //  The merchant identifier provided by Tap
-                                                        id: tap.merchant_id
+                                                        id: tap.merchant_id,
                                                     }}
                                                     transaction={{
                                                         // The amount to be charged
                                                         amount: getTotalPrice(),
                                                         // The currency of the amount
-                                                        currency: 'SAR'
+                                                        currency: "SAR",
                                                     }}
                                                     // The scope of the SDK and it can be one of these scopes:
                                                     // [TapToken,AppleToken], by default it is TapToken)
@@ -350,14 +355,18 @@ const CartPage = () => {
                                                         // The supported networks for the Apple Pay button and it
                                                         // can be one of these networks: [Mada,Visa,MasterCard], by default
                                                         // we bring all the supported networks from tap merchant configuration
-                                                        supportedBrands: [SupportedNetworks.Mada, SupportedNetworks.Visa, SupportedNetworks.MasterCard],
-                                                        supportedCards : "ALL",
-                                                        supportedCardsWithAuthentications : ["3DS"]
+                                                        supportedBrands: [
+                                                            SupportedNetworks.Mada,
+                                                            SupportedNetworks.Visa,
+                                                            SupportedNetworks.MasterCard,
+                                                        ],
+                                                        supportedCards: "ALL",
+                                                        supportedCardsWithAuthentications:
+                                                            ["3DS"],
                                                     }}
                                                     // The billing contact information
                                                     customer={{
                                                         id: tap.tap_customer_id,
-
                                                     }}
                                                     //for styling button
                                                     interface={{
@@ -369,32 +378,41 @@ const CartPage = () => {
                                                         // The type of the Apple Pay
                                                         type: ButtonType.BUY,
                                                         // The border of the Apple Pay button and it can be one of these values:[curved,straight]
-                                                        edges: Edges.CURVED
+                                                        edges: Edges.CURVED,
                                                     }}
                                                     // optional (A callback function that will be called when you cancel
                                                     // the payment process)
-                                                    onCancel={() => console.log('cancelled')}
+                                                    onCancel={() =>
+                                                        console.log("cancelled")
+                                                    }
                                                     // optional (A callback function that will be called when you have an error)
-                                                    onError={(err) => console.error(err)}
+                                                    onError={(err) =>
+                                                        console.error(err)
+                                                    }
                                                     // optional (A async function that will be called after creating the token
                                                     // successfully)
-                                                    onSuccess={async (token) => {
+                                                    onSuccess={async (
+                                                        token
+                                                    ) => {
                                                         // do your stuff here...
 
-                                                        console.log("here inline");
+                                                        console.log(
+                                                            "here inline"
+                                                        );
 
                                                         console.log(token);
 
-                                                        cardPaymentCallbackFunc(token);
-
+                                                        cardPaymentCallbackFunc(
+                                                            token
+                                                        );
                                                     }}
                                                     // optional (A callback function that will be called when you button is clickable)
                                                     onReady={() => {
-                                                        console.log('Ready')
+                                                        console.log("Ready");
                                                     }}
                                                     // optional (A callback function that will be called when the button clicked)
                                                     onClick={() => {
-                                                        console.log('Clicked')
+                                                        console.log("Clicked");
                                                     }}
                                                 />
                                             </div>
@@ -402,30 +420,38 @@ const CartPage = () => {
                                     </div>
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Delivery Type")}</h3>
-                                        <CartDetailSection
-                                            name="Delivery"
-                                            onChange={(e) => {
-                                                fetchProfileData();
-                                                setDeliveryType("Delivery");
-                                            }}
-                                            isChecked={
-                                                deliveryType === "Delivery"
-                                            }
-                                            img={dtdelivery}
-                                            displayName="delivery"
-                                        />
+                                        {deliveryTypesData.some(
+                                            (obj) => obj.name === "Delivery"
+                                        ) && (
+                                            <CartDetailSection
+                                                name="Delivery"
+                                                onChange={(e) => {
+                                                    fetchProfileData();
+                                                    setDeliveryType("Delivery");
+                                                }}
+                                                isChecked={
+                                                    deliveryType === "Delivery"
+                                                }
+                                                img={dtdelivery}
+                                                displayName="delivery"
+                                            />
+                                        )}
 
-                                        <CartDetailSection
-                                            name="PICKUP"
-                                            onChange={(e) =>
-                                                setDeliveryType("PICKUP")
-                                            }
-                                            isChecked={
-                                                deliveryType === "PICKUP"
-                                            }
-                                            img={dtpickup}
-                                            displayName="PICKUP"
-                                        />
+                                        {deliveryTypesData.some(
+                                            (obj) => obj.name === "PICKUP"
+                                        ) && (
+                                            <CartDetailSection
+                                                name="PICKUP"
+                                                onChange={(e) =>
+                                                    setDeliveryType("PICKUP")
+                                                }
+                                                isChecked={
+                                                    deliveryType === "PICKUP"
+                                                }
+                                                img={dtpickup}
+                                                displayName="PICKUP"
+                                            />
+                                        )}
                                     </div>
                                     <div className="mt-8">
                                         {deliveryType === "Delivery" && (
@@ -453,7 +479,7 @@ const CartPage = () => {
                                             rows={5}
                                             cols={30}
                                             placeholder={t(
-                                                "Say something nice...",
+                                                "Say something nice..."
                                             )}
                                         />
                                     </div>
@@ -465,7 +491,7 @@ const CartPage = () => {
                                             <div>{t("Subtotal")}</div>
                                             <div>
                                                 {Number(cart?.total).toFixed(
-                                                    2,
+                                                    2
                                                 ) + ` ${t("SAR")}`}
                                             </div>
                                         </div>
@@ -485,7 +511,7 @@ const CartPage = () => {
                                                     value={coupon}
                                                     onChange={(e) =>
                                                         setCoupon(
-                                                            e.target.value,
+                                                            e.target.value
                                                         )
                                                     }
                                                     className="w-32"
@@ -496,7 +522,9 @@ const CartPage = () => {
                                         <div className="flex justify-between mt-1">
                                             <div>{t("Total Payment")}</div>
                                             <div>
-                                                {`${getTotalPrice()} ${t("SAR")}`}
+                                                {`${getTotalPrice()} ${t(
+                                                    "SAR"
+                                                )}`}
                                             </div>
                                         </div>
                                     </div>
@@ -522,7 +550,7 @@ const CartPage = () => {
                             </p>
                             <p className="mb-6 font-semibold text-gray-500">
                                 {t(
-                                    "Before proceeding to checkout you must add some products to cart",
+                                    "Before proceeding to checkout you must add some products to cart"
                                 )}
                             </p>
 
