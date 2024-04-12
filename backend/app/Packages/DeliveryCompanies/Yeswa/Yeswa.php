@@ -90,13 +90,13 @@ class Yeswa  extends AbstractDeliveryCompany
 
     }
     public function processWebhook(array $payload){
-       
+
         $data = isset($payload['data']["deliveries"][0])?$payload['data']["deliveries"][0]:null;
-    
+
         if(isset($data['job_status'])  ){
             $order = Order::where('yeswa_ref',$payload['data']['trip_ref'])->firstOrFail();
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
-            
+
                 $tracking_url = null;
                 if(isset($data['track'])){
                     $tracking_url = $data['track'];
@@ -108,7 +108,7 @@ class Yeswa  extends AbstractDeliveryCompany
                     $order->update([
                         'driver_name'=> $payload['data']['driver_name'],
                         'driver_phone'=> $payload['data']['driver_phone']
-                    ]); 
+                    ]);
                 }
                 if($tracking_url){
                     $order->update([
@@ -140,14 +140,14 @@ class Yeswa  extends AbstractDeliveryCompany
 
         }
     }
-    public function sendNotifications($user, $order)
+    public function sendNotifications($order)
     {
 
         //Internal notification
         $type = NotificationTypeEnum::OrderDelivered;
         $message = [
-            'en' => 'Order has been delivered for customer (' . $user->full_name . '). by Yeswa delivery company',
-            'ar' => 'تم توصيل الطلب للعميل (' . $user->full_name . ') بواسطة شركة الشحن يسوا'
+            'en' => 'Order has been delivered for customer (' . $order->user?->full_name . '). by Yeswa delivery company',
+            'ar' => 'تم توصيل الطلب للعميل (' . $order->user?->full_name . ') بواسطة شركة الشحن يسوا'
         ];
         $title = [
             'ar' => 'الطلب وصل',

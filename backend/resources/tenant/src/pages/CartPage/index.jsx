@@ -63,6 +63,7 @@ const CartPage = () => {
 
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [deliveryType, setDeliveryType] = useState("Delivery");
+    const [deliveryTypesData, setDeliveryTypesData] = useState([]);
     const [deliveryAddress, setDeliveryAddress] = useState(0);
     const [userAddress, setUserAddress] = useState(null);
     const [orderNotes, setOrderNotes] = useState("");
@@ -103,7 +104,7 @@ const CartPage = () => {
                 dispatch(getCartItemsCount(cartResponse.data?.data.count));
                 setCart(cartResponse.data?.data);
                 // setPaymentMethodsData(cartResponse.data?.data?.payment_methods);
-                // setDeliveryTypesData(cartResponse.data?.data?.delivery_types);
+                setDeliveryTypesData(cartResponse.data?.data?.delivery_types);
                 // setAddress(cartResponse.data?.data?.address ?? t("N/A"));
                 setTap(cartResponse.data?.data?.tap_information);
             }
@@ -419,30 +420,38 @@ const CartPage = () => {
                                     </div>
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Delivery Type")}</h3>
-                                        <CartDetailSection
-                                            name="Delivery"
-                                            onChange={(e) => {
-                                                fetchProfileData();
-                                                setDeliveryType("Delivery");
-                                            }}
-                                            isChecked={
-                                                deliveryType === "Delivery"
-                                            }
-                                            img={dtdelivery}
-                                            displayName="delivery"
-                                        />
+                                        {deliveryTypesData.some(
+                                            (obj) => obj.name === "Delivery"
+                                        ) && (
+                                            <CartDetailSection
+                                                name="Delivery"
+                                                onChange={(e) => {
+                                                    fetchProfileData();
+                                                    setDeliveryType("Delivery");
+                                                }}
+                                                isChecked={
+                                                    deliveryType === "Delivery"
+                                                }
+                                                img={dtdelivery}
+                                                displayName="delivery"
+                                            />
+                                        )}
 
-                                        <CartDetailSection
-                                            name="PICKUP"
-                                            onChange={(e) =>
-                                                setDeliveryType("PICKUP")
-                                            }
-                                            isChecked={
-                                                deliveryType === "PICKUP"
-                                            }
-                                            img={dtpickup}
-                                            displayName="PICKUP"
-                                        />
+                                        {deliveryTypesData.some(
+                                            (obj) => obj.name === "PICKUP"
+                                        ) && (
+                                            <CartDetailSection
+                                                name="PICKUP"
+                                                onChange={(e) =>
+                                                    setDeliveryType("PICKUP")
+                                                }
+                                                isChecked={
+                                                    deliveryType === "PICKUP"
+                                                }
+                                                img={dtpickup}
+                                                displayName="PICKUP"
+                                            />
+                                        )}
                                     </div>
                                     <div className="mt-8">
                                         {deliveryType === "Delivery" && (

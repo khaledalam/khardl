@@ -46,12 +46,12 @@ export default function OrderReviewSummary({ cart }) {
                             {productPrice} {t("SAR")}
                         </span>
                     </div>
-                    <div className="flex justify-between mt-3">
+                    {optionsItems.length > 0 && <div className="flex justify-between mt-3">
                         <span>{t("Extras")}</span>
                         <span>
                             {extra} {t("SAR")}
                         </span>
-                    </div>
+                    </div>}
                     <div>{jsxOption}</div>
                 </div>
             );

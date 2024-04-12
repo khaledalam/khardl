@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Web\Central\Admin\Log\LogController;
+use App\Http\Controllers\Web\Central\GlobalPromoterController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -16,8 +18,6 @@ use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
-use App\Http\Controllers\Web\Central\Admin\Log\LogController;
-use App\Http\Controllers\Web\Central\GlobalPromoterController;
 use App\Http\Controllers\Web\Central\DeliveryWebhookController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
@@ -70,12 +70,11 @@ Route::get('/health', static function (){
     ]);
 })->name('health');
 
-
- Route::get('/test', function (){
+Route::get('/test', function (){
      return response()->json([
          'status' => 'test'
      ]);
- })->name('test');
+})->name('test');
 
 
 Route::get('promoter/{name}', [GlobalPromoterController::class, 'show'])->name('global.promoter.show');
