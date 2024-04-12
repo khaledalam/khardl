@@ -29,6 +29,7 @@ import RightIcon from "../../../../assets/rightIcon.png";
 import LeftIcon from "../../../../assets/leftIcon.png";
 import GreenDot from "../../../../assets/greenDot.png";
 import { AiOutlineClose } from "react-icons/ai";
+import { set } from "react-hook-form";
 
 const MainBoardEditor = ({
     categories,
@@ -55,6 +56,8 @@ const MainBoardEditor = ({
     const [croppedImage, setCroppedImage] = useState(null);
     const [uncroppedImage, setUncroppedImage] = useState(null);
     const [isCropModalOpened, setIsCropModalOpened] = useState(false);
+    const [isBannerModalOpened, setIsBannerModalOpened] = useState(false);
+    const [showCropSection, setShowCropSection] = useState(false);
     const [imgType, setImgType] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -96,6 +99,8 @@ const MainBoardEditor = ({
         text_color,
     } = restuarantEditorStyle;
 
+    const [listofBannerImages, setListofBannerImages] = useState([]);
+
     const onCropComplete = (croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels);
     };
@@ -107,6 +112,7 @@ const MainBoardEditor = ({
                 rotation
             );
             console.log("donee", { croppedImage });
+
             setUncroppedImage(null);
             setIsCropModalOpened(false);
             if (imgType == "logoUpload") {
@@ -116,6 +122,25 @@ const MainBoardEditor = ({
                 setUploadSingleBanner(croppedImage);
             }
             // setCroppedImage(croppedImage)
+        } catch (e) {
+            console.error(e);
+        }
+    };
+    const showCroppedImageBanner = async () => {
+        try {
+            const croppedImage = await getCroppedImg(
+                uncroppedImage,
+                croppedAreaPixels,
+                rotation
+            );
+            setListofBannerImages([...listofBannerImages, { croppedImage }]);
+            console.log("donee", { croppedImage });
+            console.log("list of uploaded images", listofBannerImages);
+            setUncroppedImage(null);
+            dispatch(setBannerUpload(croppedImage));
+            setUploadSingleBanner(null);
+            // setCroppedImage(croppedImage)
+            setShowCropSection(false);
         } catch (e) {
             console.error(e);
         }
@@ -135,6 +160,7 @@ const MainBoardEditor = ({
     );
 
     const [uploadSingleBanner, setUploadSingleBanner] = useState(null);
+    const [uploadedSingleBanner, setUploadedSingleBanner] = useState(null);
 
     const handleLogoUpload = (event) => {
         event.preventDefault();
@@ -161,11 +187,12 @@ const MainBoardEditor = ({
             } else {
                 setIsVideo(false);
                 setUncroppedImage(URL.createObjectURL(selectedBanner));
-                setIsCropModalOpened(true);
+                // setIsCropModalOpened(true);
                 setImgType("setBannerUpload");
                 setUploadSingleBanner(URL.createObjectURL(selectedBanner));
             }
             dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)));
+            setShowCropSection(true);
         }
     };
 
@@ -187,6 +214,22 @@ const MainBoardEditor = ({
                 })
             );
         }
+        if (banner_type == "slider" && banner_images.length > 0) {
+            setListofBannerImages(
+                banner_images.map((image) => {
+                    return {
+                        croppedImage: `${image.url}`,
+                    };
+                })
+            );
+        }
+        if (banner_type == "one-image" && banner_image) {
+            setListofBannerImages([{ croppedImage: `${banner_image.url}` }]);
+            setUploadedSingleBanner(`${banner_image.url}`);
+        }
+        console.log("checking type: ", banner_type);
+        console.log("checking images: ", banner_images);
+        console.log("checking image: ", banner_image);
         activeSubitem != null &&
             console.log(
                 "now 2 : ",
@@ -211,6 +254,17 @@ const MainBoardEditor = ({
     const clearBanner = () => {
         setUploadSingleBanner(null);
         dispatch(setBannerUpload(null));
+    };
+
+    const removeUploadedImage = (index) => {
+        console.log("index", index);
+        if (index >= 0 && index < listofBannerImages.length) {
+            console.log("log list", listofBannerImages.splice(index, 1));
+            setListofBannerImages(listofBannerImages.splice(index, 1));
+            console.log("list of uploaded images - after", listofBannerImages);
+        } else {
+            console.error("Index out of bounds!");
+        }
     };
 
     const handleRemoveMediaSelect = (id) => {
@@ -402,132 +456,72 @@ const MainBoardEditor = ({
             </div>
             {/* banner */}
             {!isLoading ? (
-                banner_type === "slider" ? (
+                listofBannerImages?.length > 1 ? (
                     <>
                         <div
-                            className={`w-full h-[300px] ${
+                            className={`w-full h-[304px] ${
                                 navItems[activeSection]?.title ===
                                     t("Banner") &&
                                 "shadow-inner border-[#C0D123] border-[2px] rounded-[10px]"
                             }`}
                         >
-                            <Slider banner_images={banner_images} />
+                            {/* <Slider banner_images={banner_images} /> */}
+                            <Sliderr
+                                banner_images={listofBannerImages}
+                                setIsBannerModalOpened={setIsBannerModalOpened}
+                            />
                         </div>
-                        {/* <div className="w-full h-[300px]">
-                            <Sliderr banner_images={banner_images} />
-                        </div> */}
                     </>
                 ) : (
-                    // : isVideo ||
-                    //   (banner_image && banner_image?.type === "video") ? (
-                    //     <div
-                    //         className={`w-full min-h-[180px] max-h-[300px] overflow-hidden relative  border border-neutral-100  flex items-center justify-center`}
-                    //     >
-                    //         {uploadSingleBanner && (
-                    //             <video
-                    //                 controls
-                    //                 className="absolute top-0 right-0 bottom-0 z-[5] left-0 w-full max-h-[200px]"
-                    //             >
-                    //                 <source
-                    //                     src={uploadSingleBanner}
-                    //                     type="video/mp4"
-                    //                 />
-                    //                 Your browser does not support the video tag.
-                    //             </video>
-                    //         )}
-                    //         <div
-                    //             style={{
-                    //                 borderRadius: banner_shape === "sharp" ? 0 : 12,
-                    //             }}
-                    //             className="w-14 h-14 rounded-lg p-2 flex items-center z-10 justify-center bg-neutral-100 relative"
-                    //         >
-                    //             <label htmlFor="banner">
-                    //                 <input
-                    //                     type="file"
-                    //                     name="banner"
-                    //                     id={"banner"}
-                    //                     accept="video/*, image/*"
-                    //                     onChange={handleBannerUpload}
-                    //                     className="hidden"
-                    //                     hidden
-                    //                 />
-                    //                 {uploadSingleBanner ? (
-                    //                     <IoCloseOutline
-                    //                         size={28}
-                    //                         className="text-red-500"
-                    //                         onClick={clearBanner}
-                    //                     />
-                    //                 ) : (
-                    //                     <BiCloudUpload size={28} />
-                    //                 )}
-                    //             </label>
-                    //         </div>
-                    //     </div>
-                    // )
                     <div
                         style={{
                             backgroundColor: banner_background_color,
-                            backgroundImage: uploadSingleBanner
-                                ? `url(${uploadSingleBanner})`
-                                : banner_image
-                                ? `url(${banner_image?.url})`
-                                : `url(${EmptyBackground})`,
+                            backgroundImage: uploadedSingleBanner
+                                ? `url(${uploadedSingleBanner})`
+                                : // : banner_image?.url
+                                  // ? `url(${banner_image?.url})`
+                                  `url(${EmptyBackground})`,
                             borderRadius: banner_shape === "sharp" ? 0 : 12,
                             backgroundSize: "cover",
                             backgroundRepeat: "no-repeat",
                         }}
                         className={`w-full min-h-[180px] h-[300px] flex pt-[56px] md:pt-[80px] justify-center relative`}
+                        onClick={() => setIsBannerModalOpened(true)}
                     >
-                        <div className="flex flex-col items-center">
+                        <div
+                            className={`${
+                                uploadedSingleBanner
+                                    ? "hidden"
+                                    : "flex flex-col items-center"
+                            } `}
+                        >
                             <span className="uppercase text-[24px] leading-[30px] font-semibold text-black/[.54] mb-[8px]">
                                 {t("Banner")}
                             </span>
-                            <label htmlFor="banner">
-                                <input
-                                    type="file"
-                                    name="banner"
-                                    id={"banner"}
-                                    accept="video/*, image/*"
-                                    onChange={handleBannerUpload}
-                                    className="hidden"
-                                    hidden
-                                />
-                                <img
-                                    src={UploadIcon}
-                                    alt={""}
-                                    style={{
-                                        borderRadius:
-                                            logo_shape === "sharp" ? 0 : 12,
-                                    }}
-                                    className="w-[18px] h-[18px] object-cover"
-                                />
-                            </label>
 
-                            {uploadSingleBanner && (
-                                <div className="absolute top-[-0.8rem] right-[-1rem]">
-                                    <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
-                                        <IoCloseOutline
-                                            size={16}
-                                            className="text-red-500"
-                                            onClick={clearBanner}
-                                        />
-                                    </div>
-                                </div>
-                            )}
+                            <img
+                                src={UploadIcon}
+                                alt={""}
+                                style={{
+                                    borderRadius:
+                                        logo_shape === "sharp" ? 0 : 12,
+                                }}
+                                className="w-[18px] h-[18px] object-cover"
+                            />
                         </div>
                     </div>
                 )
             ) : (
-                <div className="skeleton w-[100px] h-[95px] w-full shrink-0"></div>
+                <div className="skeleton h-[95px] w-full shrink-0"></div>
             )}
 
             {/* Category */}
             <div
                 className={`w-full h-full flex ${
                     category_alignment === "center"
-                        ? "flex-col justify-center"
-                        : "flex-row"
-                } items-center gap-[16px]`}
+                        ? "flex-col justify-center items-center"
+                        : "flex-row items-start"
+                }  gap-[16px]`}
             >
                 <div
                     className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
@@ -630,7 +624,7 @@ const MainBoardEditor = ({
                                 : "w-[75%]"
                         } ${
                             categoryDetail_shape === "sharp" ? "" : "rounded-lg"
-                        } bg-white py-[32] 
+                        } py-[32] 
                         ${
                             navItems[activeSection]?.title ===
                                 t("Menu Category Detail") &&
@@ -1002,6 +996,139 @@ const MainBoardEditor = ({
                                     onClick={() => showCroppedImage()}
                                 >
                                     Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {isBannerModalOpened && (
+                <div
+                    class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center"
+                    style={{ opacity: 1, pointerEvents: "all" }}
+                >
+                    <div class="modal-container bg-white !w-[688px] mx-auto rounded-[10px] shadow-lg z-50">
+                        <div className="w-[688px] flex flex-col items-center rounded-[10px] border-dashed border-2 border-black border-opacity-30">
+                            {showCropSection === false ? (
+                                <div
+                                    className="w-full h-[200px] mt-[16px] bg-white rounded-[10px] border border-black border-opacity-10 flex flex-col items-center relative"
+                                    style={{
+                                        backgroundImage: uploadSingleBanner
+                                            ? `url(${uploadSingleBanner})`
+                                            : // : banner_image?.url
+                                              // ? `url(${banner_image?.url})`
+                                              `url(${EmptyBackground})`,
+                                        backgroundSize: "cover",
+                                        backgroundRepeat: "no-repeat",
+                                    }}
+                                >
+                                    <div className=" text-black text-opacity-50 mt-[67px] text-2xl font-semibold">
+                                        BANNER
+                                    </div>
+                                    <div className="w-[18px] h-[18px] mt-[8px]">
+                                        <div className="w-[18px] h-[18px] bg-zinc-100 rounded-full border border-black border-opacity-20 flex justify-center items-center">
+                                            <img
+                                                className="w-2 h-2"
+                                                src={UploadIcon}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className={"cropper-container"}>
+                                    <Cropper
+                                        image={uncroppedImage}
+                                        crop={crop}
+                                        rotation={rotation}
+                                        zoom={zoom}
+                                        aspect={2 / 1}
+                                        onCropChange={setCrop}
+                                        onRotationChange={setRotation}
+                                        onCropComplete={onCropComplete}
+                                        onZoomChange={setZoom}
+                                    />
+                                </div>
+                            )}
+
+                            <div
+                                className={`${
+                                    listofBannerImages.length > 0
+                                        ? "flex flex-row space-x-[8px] mt-[8px] "
+                                        : "hidden"
+                                }`}
+                            >
+                                {listofBannerImages.map((image, idx) => (
+                                    <div key={idx} className="relative">
+                                        <img
+                                            src={image.croppedImage}
+                                            alt="banner"
+                                            className="w-[80px] h-[40px] rounded-[10px] object-cover"
+                                        />
+                                        <div className="absolute top-[-0.8rem] right-[-1rem]">
+                                            <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
+                                                <IoCloseOutline
+                                                    size={16}
+                                                    className="text-red-500"
+                                                    onClick={() =>
+                                                        removeUploadedImage(idx)
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <input
+                                type="file"
+                                name="banner"
+                                id={"banner"}
+                                accept="image/*"
+                                onChange={handleBannerUpload}
+                                className="hidden"
+                                hidden
+                            />
+                            <div className="flex flex-row space-x-[16px] justify-center items-center mt-[16px]">
+                                <label
+                                    htmlFor="banner"
+                                    className="w-[105px] h-6 bg-zinc-300 rounded-[50px] text-[#111827C4]/[0.77] text-[10px] font-light flex justify-center items-center"
+                                >
+                                    Upload here
+                                </label>
+                                <button
+                                    onClick={() => showCroppedImageBanner()}
+                                    className={`${
+                                        uploadSingleBanner
+                                            ? "w-14 h-6 bg-white rounded-[50px] border border-black border-opacity-20 text-[#111827C4]/[0.77] text-[10px] font-light"
+                                            : "hidden"
+                                    }`}
+                                >
+                                    Crop
+                                </button>
+                            </div>
+                            <div className="flex flex-row space-x-[16px] my-[16px]">
+                                <button
+                                    onClick={() => {
+                                        listofBannerImages.length == 1 &&
+                                            setUploadedSingleBanner(
+                                                listofBannerImages[0]
+                                                    .croppedImage
+                                            );
+                                        setIsBannerModalOpened(false);
+                                        listofBannerImages.length == 0 &&
+                                            setUploadedSingleBanner(null);
+                                    }}
+                                    className="w-14 h-6 bg-zinc-300 rounded-[50px] text-[#111827C4]/[0.77] text-[10px] font-light"
+                                >
+                                    Apply
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setIsBannerModalOpened(false);
+                                    }}
+                                    className="w-14 h-6 bg-white rounded-[50px] border border-black border-opacity-20 text-[#111827C4]/[0.77] text-[10px] font-light"
+                                >
+                                    Cancel
                                 </button>
                             </div>
                         </div>

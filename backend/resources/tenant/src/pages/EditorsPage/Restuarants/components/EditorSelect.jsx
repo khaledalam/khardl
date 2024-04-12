@@ -9,13 +9,13 @@ const EditorSelect = ({ defaultValue, options, handleChange, label }) => {
         setisOpen((prev) => !prev);
     }, []);
     return (
-        <div className={`flex flex-row items-center w-[208px] justify-between`}>
+        <div className={`flex flex-row items-start w-[208px] justify-between`}>
             {label && (
-                <label className="text-[12px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
+                <label className="text-[12px] py-[8px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
                     {label}
                 </label>
             )}
-            <div className={`dropdown`}>
+            <div className={``}>
                 <div
                     tabIndex={0}
                     role="button"
@@ -33,7 +33,7 @@ const EditorSelect = ({ defaultValue, options, handleChange, label }) => {
                 {isOpen && (
                     <div
                         tabIndex={0}
-                        className="dropdown-content z-[99] menu flex flex-col gap-4 p-2 shadow bg-base-100 rounded-box w-full max-h-[150px] overflow-x-hidden overflow-y-scroll !flex-nowrap hide-scroll"
+                        className="z-[99] menu flex flex-col gap-4 p-2 shadow bg-base-100 rounded-box w-full max-h-[150px] overflow-x-hidden overflow-y-scroll !flex-nowrap hide-scroll"
                     >
                         {options &&
                             options?.map((item, i) => (

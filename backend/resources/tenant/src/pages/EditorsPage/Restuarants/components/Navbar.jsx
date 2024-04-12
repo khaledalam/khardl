@@ -9,7 +9,7 @@ import { MenuContext } from "react-flexible-sliding-menu";
 import GoBackHomeIcon from "../../../../assets/GoBackHomeIcon.png";
 import PrimaryDropDown from "./PrimaryDropDown";
 
-const Navbar = ({ toggleSidebarCollapse }) => {
+const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
     const { t } = useTranslation();
     const { toggleMenu } = useContext(MenuContext);
     const [isLoading, setIsLoading] = useState(false);
@@ -95,7 +95,7 @@ const Navbar = ({ toggleSidebarCollapse }) => {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
-                },
+                }
             );
             if (response) {
                 setIsLoading(false);
@@ -146,40 +146,45 @@ const Navbar = ({ toggleSidebarCollapse }) => {
                     className="text-neutral-400 cursor-pointer"
                     onClick={toggleMenu}
                 /> */}
-                <img src={GoBackHomeIcon} className='hover:cursor-pointer' alt='icon' onClick={toggleMenu} />
+                <img
+                    src={GoBackHomeIcon}
+                    className="hover:cursor-pointer"
+                    alt="icon"
+                    onClick={toggleMenu}
+                />
                 <PrimaryDropDown
-                        // handleChange={handleChange}
-                        innerClassName="border-none shadow-none"
-                        defaultValue={
-                            restuarantStyle.template === "template-1"
-                                ? t("Template 1")
-                                : restuarantStyle.template === "template-2"
-                                  ? t("Template 2")
-                                  : restuarantStyle.template === "template-3"
-                                    ? t("Template 3")
-                                    : " "
-                        }
-                        dropdownList={[
-                            {
-                                value: "template-1",
-                                text: t("Template 1"),
-                            },
-                            {
-                              value: "template-2",
-                              text: "Template 2",
-                            },
-                            {
-                              value: "template-3",
-                              text: "Template 3",
-                            },
-                        ]}
-                    />
+                    // handleChange={handleChange}
+                    innerClassName="border-none shadow-none"
+                    defaultValue={
+                        restuarantStyle.template === "template-1"
+                            ? t("Template 1")
+                            : restuarantStyle.template === "template-2"
+                            ? t("Template 2")
+                            : restuarantStyle.template === "template-3"
+                            ? t("Template 3")
+                            : " "
+                    }
+                    dropdownList={[
+                        {
+                            value: "template-1",
+                            text: t("Template 1"),
+                        },
+                        {
+                            value: "template-2",
+                            text: "Template 2",
+                        },
+                        {
+                            value: "template-3",
+                            text: "Template 3",
+                        },
+                    ]}
+                />
                 <div className="flex items-center gap-[8px] cursor-pointer">
                     <button
-                        onClick={() => window.open("/")}
+                        onClick={() => setIsPreview((prev) => !prev)}
                         className="w-[63px] h-[24px] text-[10px] font-semibold bg-white hover:bg-neutral-200 active:bg-neutral-200 border-[0.5px] rounded-[50px] "
                     >
-                        {t("Preview")}
+                        {isPreview ? t("Edit") : t("Preview")}
                     </button>
                     <button
                         onClick={handleSubmitResStyle}

@@ -227,25 +227,35 @@ export const RestuarantEditor = () => {
         },
     ];
 
+    const [isPreview, setIsPreview] = useState(false);
+
     return (
         <div
             className="block"
             style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
         >
-            <Navbar toggleSidebarCollapse={handleSidebarCollapse} />
+            <Navbar
+                toggleSidebarCollapse={handleSidebarCollapse}
+                setIsPreview={setIsPreview}
+                isPreview={isPreview}
+            />
             <div className="flex flex-col md:flex-row bg-[#EEEEEE] h-[calc(100vh-56px)] w-full transition-all hide-scroll">
-                <div className="transition-all flex-[40px] md:flex-[25%] md:max-w-[240px] overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-[646px] border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
-                    {/* <SidebarEditor /> */}
-                    <LeftSideBar
-                        activeSubitem={activeSubitem}
-                        setActiveSubitem={setActiveSubitem}
-                        activeSection={activeSection}
-                        setActiveSection={setActiveSection}
-                        navItems={navItems}
-                        activeDesignSection={activeDesignSection}
-                        setActiveDesignSection={setActiveDesignSection}
-                    />
-                </div>
+                {isPreview ? (
+                    <div className="md:flex-[25%] md:max-w-[240px]"></div>
+                ) : (
+                    <div className="transition-all flex-[40px] md:flex-[25%] md:max-w-[240px] overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-[646px] border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
+                        {/* <SidebarEditor /> */}
+                        <LeftSideBar
+                            activeSubitem={activeSubitem}
+                            setActiveSubitem={setActiveSubitem}
+                            activeSection={activeSection}
+                            setActiveSection={setActiveSection}
+                            navItems={navItems}
+                            activeDesignSection={activeDesignSection}
+                            setActiveDesignSection={setActiveDesignSection}
+                        />
+                    </div>
+                )}
                 <div
                     className={` transition-all h-full ${
                         isSidebarCollapse ? "flex-[100%] w-full" : "flex-[50%]"
@@ -288,32 +298,36 @@ export const RestuarantEditor = () => {
                         </div>
                     )}
                 </div>
-                <div
-                    className={`transition-all flex-[140px] max-h-[140px] md:max-h-full md:flex-[25%] md:max-w-[240px] overflow-x-hidden h-[646px] bg-white border-t md:border-t-0 md:border-l border-[rgba(0,0,0,0.3)]`}
-                >
-                    {/* <SidebarEditor /> */}
-                    {width < 768 ? (
-                        <RightSideBarMobile
-                            activeSubitem={activeSubitem}
-                            setActiveSubitem={setActiveSubitem}
-                            activeSection={activeSection}
-                            setActiveSection={setActiveSection}
-                            navItems={navItems}
-                            activeDesignSection={activeDesignSection}
-                            setActiveDesignSection={setActiveDesignSection}
-                        />
-                    ) : (
-                        <RightSideBarDesktop
-                            activeSubitem={activeSubitem}
-                            setActiveSubitem={setActiveSubitem}
-                            activeSection={activeSection}
-                            setActiveSection={setActiveSection}
-                            navItems={navItems}
-                            activeDesignSection={activeDesignSection}
-                            setActiveDesignSection={setActiveDesignSection}
-                        />
-                    )}
-                </div>
+                {isPreview ? (
+                    <div className="md:flex-[25%] md:max-w-[240px]"></div>
+                ) : (
+                    <div
+                        className={`transition-all flex-[140px] max-h-[140px] md:max-h-full md:flex-[25%] md:max-w-[240px] overflow-x-hidden h-[646px] bg-white border-t md:border-t-0 md:border-l border-[rgba(0,0,0,0.3)]`}
+                    >
+                        {/* <SidebarEditor /> */}
+                        {width < 768 ? (
+                            <RightSideBarMobile
+                                activeSubitem={activeSubitem}
+                                setActiveSubitem={setActiveSubitem}
+                                activeSection={activeSection}
+                                setActiveSection={setActiveSection}
+                                navItems={navItems}
+                                activeDesignSection={activeDesignSection}
+                                setActiveDesignSection={setActiveDesignSection}
+                            />
+                        ) : (
+                            <RightSideBarDesktop
+                                activeSubitem={activeSubitem}
+                                setActiveSubitem={setActiveSubitem}
+                                activeSection={activeSection}
+                                setActiveSection={setActiveSection}
+                                navItems={navItems}
+                                activeDesignSection={activeDesignSection}
+                                setActiveDesignSection={setActiveDesignSection}
+                            />
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );

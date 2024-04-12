@@ -23,7 +23,9 @@ const CategoryItem = ({
     const [isHover, setIsHover] = useState(false);
     const { t } = useTranslation();
 
-    const { branches } = useSelector((state) => state.restuarantEditorStyle);
+    const { branches, category_alignment } = useSelector(
+        (state) => state.restuarantEditorStyle
+    );
 
     if (!branches) return;
 
@@ -58,9 +60,13 @@ const CategoryItem = ({
                             ? hoverColor
                             : "#F5F5F5",
                     }}
-                    className={`w-[60px] h-[60px] ${
+                    className={` ${
+                        category_alignment == "center"
+                            ? "w-[60px] h-[60px]"
+                            : "w-[40px] h-[40px]"
+                    } ${
                         shape === "sharp" ? "" : "rounded-full"
-                    }  flex items-center justify-center scale-100 hover:scale-110 transition-all duration-300  bg-neutral-100  `}
+                    }  flex items-center justify-center transition-all duration-300  bg-neutral-100  `}
                 >
                     <div
                         className={`w-full h-full flex items-center ${

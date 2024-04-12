@@ -149,7 +149,7 @@ export const RightSideBarDesktop = ({
                                     <ul
                                         className={`overflow-hidden transition-all duration-300 ${
                                             openItems.includes(index)
-                                                ? "max-h-40"
+                                                ? "max-h-96 pb-[16px]"
                                                 : "max-h-0"
                                         }`}
                                     >

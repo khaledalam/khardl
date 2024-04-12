@@ -54,64 +54,93 @@ function EditorSlider({
                 backgroundColor: page_category_color,
                 borderRadius: category_shape === "sharp" ? 0 : 12,
             }}
-            className={`w-full h-40 py-3 flex items-center justify-between ${
+            className={`${
+                category_alignment == "center" ? "h-40" : "h-full"
+            } w-full  py-3 flex items-center justify-between ${
                 isHighlighted && "shadow-inner border-[#C0D123] border-[2px]"
             }`}
         >
-            <div className="flex items-center justify-between w-full px-[16px]">
-                <div>
-                    <SlidePrevButton swiper={swiper} />
-                </div>
-                <Swiper
-                    slidesPerView={width > 1024 ? 5 : width > 768 ? 3 : 1}
-                    spaceBetween={0}
-                    loop={true}
-                    modules={[Navigation]}
-                    onSwiper={setSwiper}
-                    className="flex flex-row w-full h-full !justify-center"
-                >
-                    <div
-                        className={`flex ${
-                            category_alignment === "center"
-                                ? "flex-row gap-[30px] "
-                                : "flex-col gap-6"
-                        } items-center !justify-center w-full`}
-                    >
-                        {items.map((category, i) => (
-                            <SwiperSlide
-                                key={i}
-                                className="flex justify-center items-center"
-                            >
-                                <CategoryItem
-                                    key={i}
-                                    active={selectedCategory.id === category.id}
-                                    name={category.name}
-                                    imgSrc={category.photo}
-                                    alt={category.name}
-                                    hoverColor={category_hover_color}
-                                    onClick={() =>
-                                        scrollToSection(category.name)
-                                    }
-                                    textColor={text_color}
-                                    textAlign={text_alignment}
-                                    fontWeight={text_fontWeight}
-                                    shape={category_shape}
-                                    isGrid={
-                                        category_alignment === "center"
-                                            ? false
-                                            : true
-                                    }
-                                    fontSize={text_fontSize}
-                                    currentSubItem={currentSubItem}
-                                />
-                            </SwiperSlide>
-                        ))}
+            {category_alignment == "center" ? (
+                <div className="flex items-center justify-between w-full px-[16px]">
+                    <div>
+                        <SlidePrevButton swiper={swiper} />
                     </div>
-                </Swiper>
-                <div>
-                    <SlideNextButton swiper={swiper} />
+                    <Swiper
+                        slidesPerView={width > 1024 ? 5 : width > 768 ? 3 : 1}
+                        spaceBetween={0}
+                        loop={true}
+                        modules={[Navigation]}
+                        onSwiper={setSwiper}
+                        className="flex flex-row w-full h-full !justify-center"
+                    >
+                        <div
+                            className={`flex ${
+                                category_alignment === "center"
+                                    ? "flex-row gap-[30px] "
+                                    : "flex-col gap-6"
+                            } items-center !justify-center w-full`}
+                        >
+                            {items.map((category, i) => (
+                                <SwiperSlide
+                                    key={i}
+                                    className="flex justify-center items-center"
+                                >
+                                    <CategoryItem
+                                        key={i}
+                                        active={
+                                            selectedCategory.id === category.id
+                                        }
+                                        name={category.name}
+                                        imgSrc={category.photo}
+                                        alt={category.name}
+                                        hoverColor={category_hover_color}
+                                        onClick={() =>
+                                            scrollToSection(category.name)
+                                        }
+                                        textColor={text_color}
+                                        textAlign={text_alignment}
+                                        fontWeight={text_fontWeight}
+                                        shape={category_shape}
+                                        isGrid={
+                                            category_alignment === "center"
+                                                ? false
+                                                : true
+                                        }
+                                        fontSize={text_fontSize}
+                                        currentSubItem={currentSubItem}
+                                    />
+                                </SwiperSlide>
+                            ))}
+                        </div>
+                    </Swiper>
+                    <div>
+                        <SlideNextButton swiper={swiper} />
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div className="flex flex-col items-center justify-between w-full h-full px-[16px]">
+                    {items.map((category, i) => (
+                        <CategoryItem
+                            key={i}
+                            active={selectedCategory.id === category.id}
+                            name={category.name}
+                            imgSrc={category.photo}
+                            alt={category.name}
+                            hoverColor={category_hover_color}
+                            onClick={() => scrollToSection(category.name)}
+                            textColor={text_color}
+                            textAlign={text_alignment}
+                            fontWeight={text_fontWeight}
+                            shape={category_shape}
+                            isGrid={
+                                category_alignment === "center" ? false : true
+                            }
+                            fontSize={text_fontSize}
+                            currentSubItem={currentSubItem}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
