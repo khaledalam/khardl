@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Http\Controllers\API\Tenant\LocationController;
 use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 
 use App\Http\Controllers\API\Tenant\Notification\NotificationController;
@@ -260,6 +261,12 @@ Route::group([
 
         Route::middleware('auth')->group(function () {
 
+
+            Route::post('/latlng-to-address', [LocationController::class, 'convertLatLngToAddress'])
+                ->name('global.convertLatLngToAddress');
+
+
+
             Route::middleware('notVerifiedPhone')->group(function () {
                 Route::get('verification-phone', static function () {
                     return view("tenant");
@@ -372,8 +379,9 @@ Route::middleware([
             Route::middleware('driver')->group(function () {
                 Route::prefix('driver')->group(function () {
                     Route::controller(DriverOrderController::class)->group(function () {
-                        Route::get('drivers-orders', 'index')->name('restaurant.drivers.all');
-                        Route::get('drivers-calendar', 'history')->name('restaurant.drivers.history');
+                        Route::get('drivers-orders', 'index')->name('drivers.all');
+                        Route::get('drivers-calendar', 'history')->name('history');
+                        Route::get('order-details/{order}', 'orderDetails')->name('order-details');
                         Route::post('change-status/{order}', 'changeStatus')->name('changeStatus');
                         Route::post('assign-order/{order}', 'assignOrder')->name('assign_order');
                     });

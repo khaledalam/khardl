@@ -1049,7 +1049,7 @@ class RestaurantController extends BaseController
         $selectedWorker->phone = $request->input('phone');
         $selectedWorker->email = $request->input('email');
 
-        if($user?->hasPermissionWorker('can_modify_and_see_other_workers')
+        if($request->has('password') && $user?->hasPermissionWorker('can_modify_and_see_other_workers')
             && $request->password && strlen($request->password) >= 6) {
             $selectedWorker->password = Hash::make($request->password);
         }
