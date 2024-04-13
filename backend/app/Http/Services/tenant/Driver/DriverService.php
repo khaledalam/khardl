@@ -33,6 +33,11 @@ class DriverService
         $branches = Branch::all();
         return view('restaurant.drivers.edit',compact('branches','driver'));
     }
+    public function show($request,$id)
+    {
+        $driver = RestaurantUser::drivers()->findOrFail($id);
+        return view('restaurant.drivers.show',compact('driver'));
+    }
     public function store($request)
     {
         $driver = RestaurantUser::create($this->request_data($request));
