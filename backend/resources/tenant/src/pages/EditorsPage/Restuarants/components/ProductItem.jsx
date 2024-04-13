@@ -420,7 +420,7 @@ const ProductItem = ({
                             src={GreenDot}
                             alt="green dot"
                             className={`${
-                                currentSubItem == "Menu Name"
+                                currentSubItem == t("Menu Name")
                                     ? "absolute w-[5px] h-[5px] right-[-8px] top-[-2px]"
                                     : "hidden"
                             }`}
@@ -437,7 +437,7 @@ const ProductItem = ({
                                     src={GreenDot}
                                     alt="green dot"
                                     className={`${
-                                        currentSubItem == "Total Calories"
+                                        currentSubItem == t("Total Calories")
                                             ? "absolute w-[5px] h-[5px] right-[-8px] top-[-2px]"
                                             : "hidden"
                                     }`}
@@ -454,7 +454,7 @@ const ProductItem = ({
                                 src={GreenDot}
                                 alt="green dot"
                                 className={`${
-                                    currentSubItem == "Price"
+                                    currentSubItem == t("Price")
                                         ? "absolute w-[5px] h-[5px] right-0 top-0"
                                         : "hidden"
                                 }`}
@@ -466,7 +466,7 @@ const ProductItem = ({
                     src={GreenDot}
                     alt="green dot"
                     className={`${
-                        currentSubItem == "Menu Card"
+                        currentSubItem == t("Menu Card")
                             ? "absolute w-[5px] h-[5px] right-[10px] top-[10px]"
                             : "hidden"
                     }`}

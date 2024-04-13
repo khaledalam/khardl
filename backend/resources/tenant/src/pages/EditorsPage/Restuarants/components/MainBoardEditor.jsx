@@ -361,9 +361,7 @@ const MainBoardEditor = ({
                 <HeaderEdit
                     restaurantStyle={restuarantEditorStyle}
                     toggleSidebarCollapse={toggleSidebarCollapse}
-                    isHighlighted={
-                        navItems[activeSection]?.title === t("Header")
-                    }
+                    isHighlighted={navItems[activeSection]?.title === "Header"}
                     currentSubItem={
                         activeSubitem != null
                             ? navItems[activeSection].subItems[activeSubitem]
@@ -383,7 +381,7 @@ const MainBoardEditor = ({
                         ? "items-center justify-end"
                         : ""
                 } ${
-                    navItems[activeSection]?.title === t("Logo") &&
+                    navItems[activeSection]?.title === "Logo" &&
                     "shadow-inner border-[#C0D123] border-[2px]"
                 }`}
             >
@@ -437,7 +435,7 @@ const MainBoardEditor = ({
                                 borderRadius: logo_shape === "sharp" ? 0 : 12,
                             }}
                             className={`w-[18px] h-[18px] object-cover ${
-                                (logo || uploadLogo) && "hidden"
+                                uploadLogo && "hidden"
                             }`}
                         />
                     </label>
@@ -460,8 +458,7 @@ const MainBoardEditor = ({
                     <>
                         <div
                             className={`w-full h-[304px] ${
-                                navItems[activeSection]?.title ===
-                                    t("Banner") &&
+                                navItems[activeSection]?.title === "Banner" &&
                                 "shadow-inner border-[#C0D123] border-[2px] rounded-[10px]"
                             }`}
                         >
@@ -538,8 +535,7 @@ const MainBoardEditor = ({
                         items={categories}
                         scrollToSection={scrollToSection}
                         isHighlighted={
-                            navItems[activeSection]?.title ===
-                            t("Menu Category")
+                            navItems[activeSection]?.title === "Menu Category"
                         }
                         currentSubItem={
                             activeSubitem != null
@@ -627,7 +623,7 @@ const MainBoardEditor = ({
                         } py-[32] 
                         ${
                             navItems[activeSection]?.title ===
-                                t("Menu Category Detail") &&
+                                "Menu Category Detail" &&
                             "shadow-inner border-[#C0D123] border-[2px]"
                         }`}
                     >
@@ -865,7 +861,7 @@ const MainBoardEditor = ({
                 } 
 
                 ${
-                    navItems[activeSection]?.title === t("Social Media") &&
+                    navItems[activeSection]?.title === "Social Media" &&
                     "shadow-inner border-[#C0D123] border-[2px]"
                 }
                 ${selectedSocialIcons?.length == 0 ? "hidden" : ""}`}
@@ -929,7 +925,7 @@ const MainBoardEditor = ({
                         : ""
                 } 
                 ${
-                    navItems[activeSection]?.title === t("Footer Editor") &&
+                    navItems[activeSection]?.title === "Footer Editor" &&
                     "shadow-inner border-[#C0D123] border-[2px]"
                 }`}
             >
@@ -1022,8 +1018,8 @@ const MainBoardEditor = ({
                                         backgroundRepeat: "no-repeat",
                                     }}
                                 >
-                                    <div className=" text-black text-opacity-50 mt-[67px] text-2xl font-semibold">
-                                        BANNER
+                                    <div className=" text-black text-opacity-50 mt-[67px] text-2xl font-semibold uppercase">
+                                        {t("Banner")}
                                     </div>
                                     <div className="w-[18px] h-[18px] mt-[8px]">
                                         <div className="w-[18px] h-[18px] bg-zinc-100 rounded-full border border-black border-opacity-20 flex justify-center items-center">
@@ -1089,22 +1085,25 @@ const MainBoardEditor = ({
                                 hidden
                             />
                             <div className="flex flex-row space-x-[16px] justify-center items-center mt-[16px]">
-                                <label
-                                    htmlFor="banner"
-                                    className="w-[105px] h-6 bg-zinc-300 rounded-[50px] text-[#111827C4]/[0.77] text-[10px] font-light flex justify-center items-center"
-                                >
-                                    Upload here
-                                </label>
-                                <button
-                                    onClick={() => showCroppedImageBanner()}
-                                    className={`${
-                                        uploadSingleBanner
-                                            ? "w-14 h-6 bg-white rounded-[50px] border border-black border-opacity-20 text-[#111827C4]/[0.77] text-[10px] font-light"
-                                            : "hidden"
-                                    }`}
-                                >
-                                    Crop
-                                </button>
+                                {!uploadSingleBanner ? (
+                                    <label
+                                        htmlFor="banner"
+                                        className="w-[105px] h-6 bg-zinc-300 rounded-[50px] text-[#111827C4]/[0.77] text-[10px] font-light flex justify-center items-center"
+                                    >
+                                        {t("Upload Image")}
+                                    </label>
+                                ) : (
+                                    <button
+                                        onClick={() => showCroppedImageBanner()}
+                                        className={`${
+                                            uploadSingleBanner
+                                                ? "w-14 h-6 bg-white rounded-[50px] border border-black border-opacity-20 text-[#111827C4]/[0.77] text-[10px] font-light"
+                                                : "hidden"
+                                        }`}
+                                    >
+                                        {t("Crop")}
+                                    </button>
+                                )}
                             </div>
                             <div className="flex flex-row space-x-[16px] my-[16px]">
                                 <button
@@ -1120,7 +1119,7 @@ const MainBoardEditor = ({
                                     }}
                                     className="w-14 h-6 bg-zinc-300 rounded-[50px] text-[#111827C4]/[0.77] text-[10px] font-light"
                                 >
-                                    Apply
+                                    {t("Apply")}
                                 </button>
                                 <button
                                     onClick={() => {
@@ -1128,7 +1127,7 @@ const MainBoardEditor = ({
                                     }}
                                     className="w-14 h-6 bg-white rounded-[50px] border border-black border-opacity-20 text-[#111827C4]/[0.77] text-[10px] font-light"
                                 >
-                                    Cancel
+                                    {t("Cancel")}
                                 </button>
                             </div>
                         </div>

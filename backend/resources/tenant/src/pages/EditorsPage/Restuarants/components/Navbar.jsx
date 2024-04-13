@@ -171,11 +171,11 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
                         },
                         {
                             value: "template-2",
-                            text: "Template 2",
+                            text: t("Template 2"),
                         },
                         {
                             value: "template-3",
-                            text: "Template 3",
+                            text: t("Template 3"),
                         },
                     ]}
                 />
