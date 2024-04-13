@@ -3,6 +3,7 @@ import { ChromePicker } from "react-color";
 import { IoIosClose } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import Percentage from "../../../../assets/percentage.png";
+import { useDispatch, useSelector } from "react-redux";
 
 const EditorPercentageInput = ({
     label,
@@ -14,6 +15,8 @@ const EditorPercentageInput = ({
     const newdefaultColor = `#ffffff`;
     const [isResetColor, setIsResetColor] = useState(false);
 
+    const Language = useSelector((state) => state.languageMode.languageMode);
+
     return (
         <div className={`flex flex-row items-center w-[208px] justify-between`}>
             {label && (
@@ -21,7 +24,13 @@ const EditorPercentageInput = ({
                     {label}
                 </label>
             )}
-            <div className="h-[32px] w-[111px] rounded-[50px] bg-[#F3F3F3] flex flex-row justify-between pr-[2px] pl-[16px]">
+            <div
+                className={`h-[32px] w-[111px] rounded-[50px] bg-[#F3F3F3] flex flex-row justify-between ${
+                    Language == "ar"
+                        ? "pl-[2px] pr-[16px]"
+                        : "pr-[2px] pl-[16px]"
+                }`}
+            >
                 <div className="w-[50px]">
                     <input
                         type="text"

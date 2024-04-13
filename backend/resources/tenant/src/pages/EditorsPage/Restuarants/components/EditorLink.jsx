@@ -14,6 +14,8 @@ const EditorLink = ({ defaultValue, options, handleChange, label }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
 
+    const Language = useSelector((state) => state.languageMode.languageMode);
+
     const mediaCollection = useSelector(
         (state) => state.restuarantEditorStyle.mediaCollection
     );
@@ -51,7 +53,9 @@ const EditorLink = ({ defaultValue, options, handleChange, label }) => {
                 )}
                 <div className={`dropdown`}>
                     <div
-                        className={`flex items-center h-[32px] w-[154px] rounded-[50px] pr-[16px] bg-[#F3F3F3] ${
+                        className={`flex items-center h-[32px] w-[154px] rounded-[50px] ${
+                            Language == "ar" ? "pl-[16px]" : "pr-[16px]"
+                        } bg-[#F3F3F3] ${
                             selectedSocialIcons.length == 0 && "pl-[16px]"
                         } relative`}
                     >

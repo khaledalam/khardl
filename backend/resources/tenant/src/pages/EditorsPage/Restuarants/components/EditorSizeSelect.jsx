@@ -1,9 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import halfArrowDown from "../../../../assets/halfArrowDown.svg";
+import { useSelector, useDispatch } from "react-redux";
 
 const EditorSizeSelect = ({ defaultValue, options, handleChange, label }) => {
     const [currentValue, setCurrentValue] = useState(10);
+
+    const Language = useSelector((state) => state.languageMode.languageMode);
 
     const handleIncrement = () => {
         setCurrentValue(currentValue + 1);
@@ -32,7 +35,11 @@ const EditorSizeSelect = ({ defaultValue, options, handleChange, label }) => {
                         className="bg-[#F3F3F3] w-[30px] focus:outline-none text-[12px] leading-[16px] font-light text-[rgba(17,24,39,0.77)]"
                     />
 
-                    <div className="absolute right-[16px] flex flex-col items-center">
+                    <div
+                        className={`absolute ${
+                            Language == "ar" ? "left-[16px]" : "right-[16px]"
+                        } flex flex-col items-center`}
+                    >
                         <button onClick={handleIncrement} className="">
                             <img
                                 src={halfArrowDown}

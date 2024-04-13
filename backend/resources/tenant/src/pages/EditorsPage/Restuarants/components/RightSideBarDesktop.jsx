@@ -192,9 +192,7 @@ export const RightSideBarDesktop = ({
                                                     <EditorColorSelect
                                                         label={t("Color")}
                                                         modalId={"page-modal"}
-                                                        color={`${t(
-                                                            page_color
-                                                        )}`}
+                                                        color={page_color}
                                                         handleColorChange={(
                                                             color
                                                         ) =>

@@ -107,6 +107,18 @@ export const RestuarantEditor = () => {
 
     const navItems = [
         {
+            title: t("Page Background"),
+            subItems: [
+                {
+                    title: t("Page Background"),
+                    layout: ["color"],
+                    contentPosition: [],
+                    text: [],
+                    link: [],
+                },
+            ],
+        },
+        {
             title: t("Header"),
             subItems: [
                 {

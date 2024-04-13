@@ -32,6 +32,8 @@ function EditorSlider({
 
     const dispatch = useDispatch();
     const { width } = useWindowSize();
+    const Language = useSelector((state) => state.languageMode.languageMode);
+    console.log("Language", Language);
 
     const {
         category_hover_color,
@@ -61,7 +63,11 @@ function EditorSlider({
             }`}
         >
             {category_alignment == "center" ? (
-                <div className="flex items-center justify-between w-full px-[16px]">
+                <div
+                    className={`flex items-center justify-between w-full px-[16px] ${
+                        Language == "ar" && "flex-row-reverse"
+                    }`}
+                >
                     <div>
                         <SlidePrevButton swiper={swiper} />
                     </div>
