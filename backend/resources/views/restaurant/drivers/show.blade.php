@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('View drive'))
+@section('title', __('View driver'))
 
 @section('content')
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -48,40 +48,31 @@
                                 <td>{{ __("Vehicle number") }}</td>
                                 <td>{{ $driver->vehicle_number }}</td>
                             </tr>
+                            <tr>
+                                <td>{{ __("Delivered orders") }}</td>
+                                <td>{{ $driver->completed_orders?->count() }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ __("This month") }}</td>
+                                <td>{{ $driver->monthly_orders()?->count() }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            {{-- <div class="col-md-12 mb-5 card">
+            <div class="col-md-12 mb-5 card">
                 <div class="card-header d-flex align-items-center justify-content-between flex-xxl-row flex-lg-row flex-md-row flex-column">
                     <strong class="title_head h4 fw-semibold d-block">
-                        {{ __("Revenues") }}
+                        {{ __('Orders') }}
                     </strong>
                 </div>
                 <hr />
-                <div class="card-body table-responsive">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>{{ __('Monthly revenue') }} </td>
-                                <td class="text-success">{{ $monthlyRevenue }} {{ __('SAR') }}</td>
-                            </tr>
-                            <tr>
-                                <td>{{ __('Percentage taken') }} </td>
-                                <td class="text-info">{{ $driver->percentage_taken }}%</td>
-                            </tr>
-                            <tr>
-                                <td>{{ __('Money for consultant') }} </td>
-                                <td class="text-danger">{{ $ownMoney }} {{ __('SAR') }}</td>
-                            </tr>
-                            <tr>
-                                <td>{{ __('Money for administrator') }} </td>
-                                <td class="text-success">{{ $debitMoney }} {{ __('SAR') }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        @include('restaurant.orders.component.list_orders',['orders' => $orders])
+                    </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
     <!--end::Post-->

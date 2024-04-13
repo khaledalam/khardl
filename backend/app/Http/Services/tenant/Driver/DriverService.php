@@ -36,7 +36,11 @@ class DriverService
     public function show($request,$id)
     {
         $driver = RestaurantUser::drivers()->findOrFail($id);
-        return view('restaurant.drivers.show',compact('driver'));
+        $orders = $driver->driver_orders()
+        ->orderBy('orders.id','desc')
+        ->paginate(config('application.perPage') ?? 20);
+        /* TODO: order by id desc not working*/
+        return view('restaurant.drivers.show',compact('driver','orders'));
     }
     public function store($request)
     {
