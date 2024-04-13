@@ -30,6 +30,10 @@ class DriverController extends BaseController
     {
         return $this->driverService->edit($request,$driver);
     }
+    public function show(Request $request, $driver)
+    {
+        return $this->driverService->show($request,$driver);
+    }
     public function update(DriverUpdateFormRequest $request, $driver)
     {
         return $this->driverService->update($request, $driver);

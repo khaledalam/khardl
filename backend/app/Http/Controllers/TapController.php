@@ -183,6 +183,7 @@ class TapController extends Controller
 
     public function payments_submit_card_details(SaveCardRequest $request)
     {
+
         $data = $request->validated();
         $sub = ROSubscription::first();
         $centralSubscription = tenancy()->central(function(){
@@ -243,7 +244,7 @@ class TapController extends Controller
     public function payments_submit_lead($tenant,CreateLeadRequest $request) {
         $tenant = Tenant::findOrFail($tenant);
         $data = $request->all();
-     
+
         // $tenant_id = tenant()->id;
         // $userBankIban = '';
         // tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
@@ -284,7 +285,7 @@ class TapController extends Controller
 
         }
 
-    
+
 
         $response = Lead::connect($data);
         if($response['http_code'] == ResponseHelper::HTTP_OK){
@@ -299,8 +300,8 @@ class TapController extends Controller
                     lead_id :  $response['message']['id'],
                 );
             });
-            
-           
+
+
 
             return redirect()->route('admin.view-restaurants',['tenant'=>$tenant])->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
         }

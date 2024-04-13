@@ -33,6 +33,15 @@ class DriverService
         $branches = Branch::all();
         return view('restaurant.drivers.edit',compact('branches','driver'));
     }
+    public function show($request,$id)
+    {
+        $driver = RestaurantUser::drivers()->findOrFail($id);
+        $orders = $driver->driver_orders()
+        ->orderBy('orders.id','desc')
+        ->paginate(config('application.perPage') ?? 20);
+        /* TODO: order by id desc not working*/
+        return view('restaurant.drivers.show',compact('driver','orders'));
+    }
     public function store($request)
     {
         $driver = RestaurantUser::create($this->request_data($request));
@@ -72,6 +81,7 @@ class DriverService
             'branch_id',
             'email',
             'phone',
+            'vehicle_number'
         ]);
     }
 

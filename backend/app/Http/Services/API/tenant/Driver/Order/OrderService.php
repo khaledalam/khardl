@@ -141,8 +141,8 @@ class OrderService
             ->get();
         if ($workers->count()) {
             Notification::send($workers, new NotificationAction($type, $message, $order->toArray()));
-            $data = $order->only(['id', 'user_id', 'branch_id', 'delivery_type_id', 'total']);
-            $this->handleSingleNotification($workers, $data, $title, $message, $type->value);
+        $data = $order->only(['id', 'user_id', 'branch_id', 'delivery_type_id', 'total']);
+        $this->handleSingleNotification($workers, $data, $title, $message, $type->value);
         }
     }
     public function handleSingleNotification($workers, $data, $title, $body, $type)
