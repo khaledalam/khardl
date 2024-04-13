@@ -519,5 +519,7 @@
     "Before proceeding to checkout you must add some products to cart": "يجب عليك إضافة بعض المنتجات إلى سلة التسوق الخاصة بك",
     "Subtotal": "المجموع الفرعي",
     "Set default address": "حفظ العنوان",
-    "Write custom address": "اكتب عنوان مخصص"
+    "Write custom address": "اكتب عنوان مخصص",
+    "Page Background": "خلفية الصفحة",
+    "Page": "الصفحة"
 }

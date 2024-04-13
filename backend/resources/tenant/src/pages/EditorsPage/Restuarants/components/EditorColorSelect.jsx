@@ -32,7 +32,7 @@ const EditorColorSelect = ({
                                 ? newdefaultColor
                                 : color,
                         }}
-                        className={`w-[28px] h-[28px] rounded-[50px]`}
+                        className={`w-[28px] h-[28px] rounded-[50px] mx-1`}
                     ></div>
                     <span className="ml-[6px] text-[12px] leading-[16px] font-light tracking-wide">
                         {isResetColor ? `${t("#ffffff")}` : color}

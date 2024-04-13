@@ -7,6 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeStyleDataRestaurant } from "../../../redux/editor/styleDataRestaurantSlice";
 import {
     changeRestuarantEditorStyle,
+    headerColor,
+    logoBorderColor,
+    logoBorderRadius,
+    pageBackgroundColor,
     setSidebarCollapse,
 } from "../../../redux/NewEditor/restuarantEditorSlice";
 import {
@@ -24,8 +28,43 @@ export const RestuarantEditor = () => {
     const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(true);
     const { width } = useWindowSize();
-
+    const restuarantEditorStyle = useSelector(
+        (state) => state.restuarantEditorStyle
+    );
     const dispatch = useDispatch();
+
+    const {
+        headerPosition,
+        logo_alignment,
+        banner_type,
+        category_alignment,
+        socialMediaIcons_alignment,
+        selectedSocialIcons,
+        phoneNumber,
+        phoneNumber_alignment,
+        page_color,
+        page_category_color,
+        product_background_color,
+        category_hover_color,
+        categoryDetail_cart_color,
+        header_color,
+        logo_shape,
+        banner_shape,
+        banner_background_color,
+        categoryDetail_shape,
+        category_shape,
+        footer_color,
+        price_color,
+        text_color,
+        text_fontFamily,
+        text_fontWeight,
+        text_alignment,
+        text_fontSize,
+
+        logo_border_radius,
+        logo_border_color,
+    } = restuarantEditorStyle;
+
     const categories = useSelector((state) => state.categoryAPI.categories);
 
     const isSidebarCollapse = useSelector(
@@ -107,14 +146,19 @@ export const RestuarantEditor = () => {
 
     const navItems = [
         {
-            title: t("Page Background"),
+            title: t("Page"),
             subItems: [
                 {
                     title: t("Page Background"),
                     layout: ["color"],
+                    layoutInitialValues: [page_color],
+                    layoutOnChange: [
+                        color => dispatch(pageBackgroundColor(color)),
+                    ],
                     contentPosition: [],
                     text: [],
                     link: [],
+
                 },
             ],
         },
@@ -150,7 +194,16 @@ export const RestuarantEditor = () => {
                 {
                     title: t("Logo"),
                     layout: ["color"],
+                    layoutInitialValues: [logo_border_color],
+                    layoutOnChange: [
+                        color => dispatch(logoBorderColor(color))
+                    ],
                     contentPosition: ["positionContent", "radius"],
+                    contentPositionInitialValues: [],
+                    contentPositionOnChange: [
+                        null,
+                        borderRadius => dispatch(logoBorderRadius(borderRadius)),
+                    ],
                     text: [],
                     link: [],
                 },

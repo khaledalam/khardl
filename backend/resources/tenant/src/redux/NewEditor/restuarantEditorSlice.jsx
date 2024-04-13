@@ -126,6 +126,9 @@ const restuarantEditorSlice = createSlice({
         banner_images_urls: null,
         collapse_sidebar: false,
         template: "template-1",
+
+        logo_border_radius: 0,
+        logo_border_color: 'white'
     },
     reducers: {
         headerPosition: (state, action) => {
@@ -294,10 +297,35 @@ const restuarantEditorSlice = createSlice({
         setTemplate: (state, action) => {
             state.template = action.payload;
         },
+        pageBackgroundColor: (state, action) => {
+            state.page_color = action.payload;
+        },
+        headerSideMenuIconPosition: (state, action) => {
+            state.header_side_menu_icon_position = action.payload;
+        },
+        headerSideMenuIconLocation: (state, action) => {
+            state.header_side_menu_icon_location = action.payload;
+        },
+        headerSideMenuIconBackgroundColor: (state, action) => {
+            state.header_side_menu_icon_background_color = action.payload;
+        },
+
+        logoBorderRadius: (state, action) => {
+            state.logo_border_radius = action.payload;
+        },
+        logoBorderColor: (state, action) => {
+            state.logo_border_color = action.payload;
+        },
     },
 });
 
 export const {
+    pageBackgroundColor,
+
+    logoBorderRadius,
+    logoBorderColor,
+
+
     headerPosition,
     logoAlignment,
     logoShape,

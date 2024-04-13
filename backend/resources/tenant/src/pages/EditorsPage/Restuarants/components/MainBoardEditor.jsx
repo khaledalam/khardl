@@ -97,6 +97,10 @@ const MainBoardEditor = ({
         socialMediaIcons_alignment,
         selectedSocialIcons,
         text_color,
+
+        logo_border_radius,
+        logo_border_color,
+
     } = restuarantEditorStyle;
 
     const [listofBannerImages, setListofBannerImages] = useState([]);
@@ -387,7 +391,8 @@ const MainBoardEditor = ({
             >
                 <div
                     style={{
-                        borderRadius: logo_shape === "sharp" ? 0 : 12,
+                        borderRadius: logo_border_radius ? (logo_border_radius + '%') : (logo_shape === "sharp" ? 0 : 12),
+                        border: `1px solid ${logo_border_color}`,
                         backgroundImage: `url(${
                             uploadLogo
                                 ? uploadLogo
@@ -620,7 +625,7 @@ const MainBoardEditor = ({
                                 : "w-[75%]"
                         } ${
                             categoryDetail_shape === "sharp" ? "" : "rounded-lg"
-                        } py-[32] 
+                        } py-[32]
                         ${
                             navItems[activeSection]?.title ===
                                 "Menu Category Detail" &&
@@ -858,7 +863,7 @@ const MainBoardEditor = ({
                         : socialMediaIcons_alignment === "right"
                         ? "items-center justify-end"
                         : ""
-                } 
+                }
 
                 ${
                     navItems[activeSection]?.title === "Social Media" &&
@@ -923,7 +928,7 @@ const MainBoardEditor = ({
                         : phoneNumber_alignment === "right"
                         ? "items-center justify-end"
                         : ""
-                } 
+                }
                 ${
                     navItems[activeSection]?.title === "Footer Editor" &&
                     "shadow-inner border-[#C0D123] border-[2px]"

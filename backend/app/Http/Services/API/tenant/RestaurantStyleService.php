@@ -51,7 +51,13 @@ class RestaurantStyleService
             'text_color' => $request->text_color,
             'product_background_color' => $request->product_background_color,
             'selectedSocialIcons' => $request->selectedSocialIcons,
-            'user_id' => Auth::user()?->id
+            'user_id' => Auth::user()?->id,
+
+            // new attrs of new site-editor
+            'logo_border_radius' => $request->logo_border_radius,
+            'logo_border_color' => $request->logo_border_color
+
+
         ];
         if (isset($request->logo) && $request->logo) {
             $logo = tenant_asset(store_image($request->file('logo'), RestaurantStyle::STORAGE, 'logo'));
