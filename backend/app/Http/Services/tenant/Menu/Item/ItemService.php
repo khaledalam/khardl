@@ -121,6 +121,9 @@ class ItemService
             return redirect()->back()->with('error', 'You are not authorized to access that page.');
         }
     }
+    public function edit($request,$item){
+        return view('restaurant.edit-item',compact('item'));
+    }
     function processOptions($request, $enKey, $arKey)
     {
         return $request->input($arKey)

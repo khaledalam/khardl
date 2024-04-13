@@ -238,6 +238,9 @@
                                                         <div class="menu-item px-3">
                                                             <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('view') }}</a>
                                                         </div>
+                                                        <div class="menu-item px-3">
+                                                            <a href="{{ route('restaurant.edit-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('edit') }}</a>
+                                                        </div>
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
                                                         {{-- TODO:Edit item --}}

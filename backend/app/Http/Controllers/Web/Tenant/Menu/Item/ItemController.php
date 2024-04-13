@@ -28,4 +28,8 @@ class ItemController extends BaseController
         return $this->itemService->deleteItem($id);
     }
 
+    public function edit(Request $request, Item $item)
+    {
+        return $this->itemService->edit($request,$item);
+    }
 }
