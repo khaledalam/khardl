@@ -127,6 +127,15 @@
                                             <div class="text-muted fs-7">{{ __('phone-number')}} {{ __('is-required')}}</div>
                                             <!--end::Description-->
                                         </div>
+                                        <!--begin::Input group-->
+                                        <div class="mb-10 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="form-label">{{ __('Vehicle number')}}</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" name="vehicle_number" class="form-control mb-2" placeholder="{{ __('Number')}}" value="{{old('vehicle_number')}}"  required/>
+                                            <!--end::Input-->
+                                        </div>
                                         <!--end::Input group-->
                                     </div>
                                     <!--end::Card header-->

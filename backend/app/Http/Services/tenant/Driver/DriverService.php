@@ -72,6 +72,7 @@ class DriverService
             'branch_id',
             'email',
             'phone',
+            'vehicle_number'
         ]);
     }
 

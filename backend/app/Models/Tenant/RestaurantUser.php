@@ -48,7 +48,8 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'loyalty_points',
         'cashback',
         'default_lang',
-        'device_token'
+        'device_token',
+        'vehicle_number'
     ];
     const STATUS = [
         self::ACTIVE,
