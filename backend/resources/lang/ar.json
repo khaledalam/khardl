@@ -720,6 +720,8 @@
     "Enter name in english" : "ادخل الاسم بالانجليزية",
     "Enter name in arabic" : "ادخل الاسم بالعربية",
     "Description" : "الوصف",
+    "Description in english" : "الوصف بالانجليزية",
+    "Description in arabic" : "الوصف بالعربية",
     "Title in english" : "العنوان بالانجليزية",
     "Title in arabic" : "العنوان بالعربية",
     "Max" : "عدد الخيارات المتاحة",
