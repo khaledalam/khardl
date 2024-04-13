@@ -109,7 +109,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                 <div class="col-xl-4">
                                                     <div class="d-flex h-100 align-items-center">
                                                         <!--begin::Option-->
-                                                        <div class="w-100 h-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75">
+                                                        <div class="py-2 w-100 h-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75">
                                                             <div class="w-100 text-right" style="padding: -15px !important;">
                                                                 {{-- <p class="badge bg-khardl p-3 text-page-bg fw-bolder">{{count($branches)}}</p> --}}
                                                             </div>
@@ -395,7 +395,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                 <div class="col-xl-4">
                                                     <div class="d-flex h-100 align-items-center">
                                                         <!--begin::Option-->
-                                                        <div class="w-100 h-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75">
+                                                        <div class="py-2 w-100 h-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75">
                                                             <div class="w-100 text-right" style="padding: -15px !important;"></div>
                                                             <!--begin::Heading-->
                                                             <div class="mb-1 text-center px-10" >
