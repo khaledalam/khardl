@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\API\Tenant;
 
+use App\Enums\Admin\NotificationTypeEnum;
 use App\Models\Tenant\Order;
+use App\Models\Tenant\RestaurantUser;
+use App\Notifications\NotificationAction;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
 use App\Models\Tenant\Setting;
-use Faker\Provider\id_ID\Color;
-use Illuminate\Validation\Rule;
 use App\Traits\APIResponseTrait;
 use App\Jobs\AssignDeliveryCompany;
-
+use Illuminate\Support\Facades\Notification;
 use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\OrderStatusLogs;
@@ -18,12 +19,9 @@ use App\Repositories\API\OrderRepository;
 use App\Packages\TapPayment\Refund\Refund;
 use App\Http\Requests\OrderStatusChangeRequest;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
-use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Repositories\API\CustomerOrderRepository;
 use App\Packages\DeliveryCompanies\DeliveryCompanies;
-use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
-use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
 use App\Http\Controllers\API\Tenant\BaseRepositoryController;
 use Exception;
 use Spatie\WebhookClient\Models\WebhookCall;
@@ -74,14 +72,14 @@ class  OrderController extends BaseRepositoryController
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
         if(
-            ($request->status == Order::REJECTED || $request->status == Order::CANCELLED) 
-            && $order->payment_method->name == PaymentMethod::ONLINE 
-            && $order->payment_status == PaymentMethod::PAID 
+            ($request->status == Order::REJECTED || $request->status == Order::CANCELLED)
+            && $order->payment_method->name == PaymentMethod::ONLINE
+            && $order->payment_status == PaymentMethod::PAID
             && $order->transaction_id
             && $setting->merchant_id
         ){
-    
-            
+
+
             $refund = Refund::create([
                 "charge_id"=> $order->transaction_id,
                 "amount"=> $order->total,
@@ -189,6 +187,13 @@ class  OrderController extends BaseRepositoryController
         }elseif($settings && $settings->delivery_companies_option){
             $order->update(['status' => $request->status]);
             return $this->assignOrderToDC($request->expectsJson(),$order,$request->status);
+        }elseif($settings && $settings->drivers_option){
+            $this->sendNotificationsWhenReceivedByRestaurant($order);
+            $order->update(['status' => $request->status]);
+            if ($request->expectsJson()) {
+                return $this->sendResponse(null, __('Order has been updated successfully.'));
+            }
+            return redirect()->back()->with('success',__('Order has been updated successfully.'));
         }else {
             if ($request->expectsJson()) {
                 return $this->sendError('Fail', __('Restaurant does not have any delivery companies yet'));
@@ -212,6 +217,43 @@ class  OrderController extends BaseRepositoryController
                 return $this->sendResponse(null, __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
             }
             return redirect()->back()->with('success', __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
+        }
+    }
+    public function sendNotificationsWhenReceivedByRestaurant($order)
+    {
+
+        //Internal notification
+        $type = NotificationTypeEnum::NewOrderAvailable;
+        $message = [
+            'en' => 'You can assign order #'.$order->id.' now.',
+            'ar' => 'يمكنك الان تعيين طلب رقم'. $order->id.' لك '
+        ];
+        $title = [
+            'en' => 'New order available.',
+            'ar' => 'طلب جديد متاح.'
+        ];
+        $this->sendToDrivers($order, $type, $title, $message);
+
+    }
+    public function sendToDrivers($order, $type, $title, $message)
+    {
+        //Send notification to all drivers
+        $drivers = RestaurantUser::drivers()
+            ->where('branch_id', $order->branch_id)
+            ->get();
+        if ($drivers->count()) {
+            Notification::send($drivers, new NotificationAction($type, $title, $order->toArray()));
+            $data = $order->only(['id', 'user_id', 'branch_id', 'delivery_type_id', 'total']);
+            return $this->handleSingleNotification($drivers, $data, $title, $message, $type->value);
+        }
+    }
+    public function handleSingleNotification($drivers, $data, $title, $body, $type)
+    {
+        foreach ($drivers as $driver) {
+            $lang = $driver->default_lang == 'ar' ? 'ar' : 'en';
+            $notifyTitle = $title[$lang];
+            $notifyBody = $body[$lang];
+            sendPushNotification($driver, $data, $notifyTitle, $notifyBody, $type);
         }
     }
 
