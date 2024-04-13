@@ -27,6 +27,7 @@ class ItemService
         if (!$request->validate([
             'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
             'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
+            'checkbox_input_maximum_choices' => 'nullable|int|min:1'
         ], [
             'item_name_en.regex'=>__("English name is not valid"),
             'item_name_en.required'=>__("English name is required"),
