@@ -17,11 +17,24 @@ class ROCustomerAppSub extends Model
         "end_at",
         'amount',
         "user_id",
+        "chg_id",
+        'cus_id',
+        'card_id',
         'status',
+        'ios_url',
+        'android_url',
         'reminder_email_sent',
         'reminder_suspend_email_sent',
         'subscription_id' 
     ];
+
+    public const NEW ="new";
+
+    
+    public const ACTIVE = 'active';
+    public const DEACTIVATE = 'deactivate';
+    public const SUSPEND = 'suspend';
+
     public function user(){
         return $this->belongsTo(RestaurantUser::class,'user_id');
     }

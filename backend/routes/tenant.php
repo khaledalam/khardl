@@ -157,6 +157,8 @@ Route::group([
                 // Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead')->middleware('isLeadSubmitted');
                 // Step 3: save cards
                 Route::post('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
+                Route::post('/payments/tap-create-customer-app', [TapController::class, 'payments_submit_customer_app'])->name('tap.payments_submit_customer_app');
+                
                 Route::get('/payments/tap-card-details-redirect', [TapController::class, 'payments_redirect'])->name('tap.payments_redirect');
                 Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
 
@@ -164,6 +166,7 @@ Route::group([
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
+                Route::get('/app-service', [RestaurantController::class, 'appServices'])->name('restaurant.app.service');
                 Route::patch('/service/deactivate', [RestaurantController::class, 'serviceDeactivate'])->name('restaurant.service.deactivate');
                 Route::patch('/service/activate', [RestaurantController::class, 'serviceActivate'])->name('restaurant.service.activate');
                 Route::get('/service/{type}/{number_of_branches}/calculate/{subscription_id}', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');

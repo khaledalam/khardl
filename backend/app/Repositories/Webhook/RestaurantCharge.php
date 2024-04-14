@@ -2,16 +2,17 @@
 
 namespace App\Repositories\Webhook;
 
-
+use App\Models\ROCustomerAppSub;
 use Closure;
 use Exception;
+use App\Models\Tenant\Branch;
 use App\Models\ROSubscription;
 use Illuminate\Support\Facades\DB;
 use App\Models\ROSubscriptionInvoice;
 use App\Models\Tenant\RestaurantUser;
+use App\Models\ROCustomerAppSubInvoice;
 use Spatie\WebhookClient\Models\WebhookCall;
 use App\Models\Subscription as CentralSubscription;
-use App\Models\Tenant\Branch;
 
 class RestaurantCharge
 {
@@ -40,6 +41,50 @@ class RestaurantCharge
             throw $e;
         }
         
+    }
+    public static function updateOrCreateApp($data){
+        DB::beginTransaction();
+        try {
+            $user = RestaurantUser::first();
+            $subscription = ROCustomerAppSub::first();
+            
+            if ($data['status'] == 'CAPTURED') { // if payment successful
+                $db = [
+                    'start_at' => now(),
+                    'end_at' => $endAt ?? now()->addDays(365),
+                    'amount' => $data['amount'],
+                    'user_id' => $user->id,
+                    'type' => $data['metadata']['subscription'],
+                    'status' => ROSubscription::SUSPEND, // until activate it in the admin dashboard 
+                    'chg_id' => $data['id'],
+                    'cus_id' => env('TAP_DEFAULT_CUSTOMER_ID', 'cus_LV06G4620241548c2JK1002613'),
+                    'card_id' => $data['card']['id'] ?? null,
+                    'subscription_id' => $data['metadata']['subscription_id'],
+                ];
+                if($subscription){
+                    
+                }else {
+                    ROCustomerAppSub::create($db);
+                }
+            }
+            ROCustomerAppSubInvoice::create([
+                'amount' => $data['amount'],
+                'user_id' => $user->id,
+                'status' => ($data['status'] == 'CAPTURED') ? ROSubscription::ACTIVE : $data['status'],
+                'subscription_id' => $data['metadata']['subscription_id'],
+                'chg_id' => $data['id'],
+                'cus_id' => env('TAP_DEFAULT_CUSTOMER_ID', 'cus_LV06G4620241548c2JK1002613'),
+                'card_id' => $data['card']['id'] ?? null,
+                'type' => $data['metadata']['subscription'],
+            ]);
+         
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+        
+
     }
     public static function createNewSubscription($data)
     {
@@ -106,26 +151,26 @@ class RestaurantCharge
     private static function processSubscription($data, Closure $callback)
     {
        
-            $user = RestaurantUser::first();
-            $subscription = ROSubscription::first();
-            
-            if ($data['status'] == 'CAPTURED') { // if payment successful
-                $callback($user, $data, $subscription);
-                if( $data['metadata']['subscription'] == ROSubscription::RENEW_AFTER_ONE_YEAR)   // soft delete branches 
-                    Branch::where('active',false)->delete();
-            }
+        $user = RestaurantUser::first();
+        $subscription = ROSubscription::first();
+        
+        if ($data['status'] == 'CAPTURED') { // if payment successful
+            $callback($user, $data, $subscription);
+            if( $data['metadata']['subscription'] == ROSubscription::RENEW_AFTER_ONE_YEAR)   // soft delete branches 
+                Branch::where('active',false)->delete();
+        }
 
-            ROSubscriptionInvoice::create([
-                'amount' => $data['amount'],
-                'number_of_branches' =>  $data['metadata']['n-branches'],
-                'user_id' => $user->id,
-                'status' => ($data['status'] == 'CAPTURED') ? ROSubscription::ACTIVE : $data['status'],
-                'subscription_id' => $data['metadata']['subscription_id'],
-                'chg_id' => $data['id'],
-                'cus_id' => env('TAP_DEFAULT_CUSTOMER_ID'),
-                'card_id' => $data['card']['id'] ?? null,
-                'type' => $data['metadata']['subscription'],
-            ]);
+        ROSubscriptionInvoice::create([
+            'amount' => $data['amount'],
+            'number_of_branches' =>  $data['metadata']['n-branches'],
+            'user_id' => $user->id,
+            'status' => ($data['status'] == 'CAPTURED') ? ROSubscription::ACTIVE : $data['status'],
+            'subscription_id' => $data['metadata']['subscription_id'],
+            'chg_id' => $data['id'],
+            'cus_id' => env('TAP_DEFAULT_CUSTOMER_ID', 'cus_LV06G4620241548c2JK1002613'),
+            'card_id' => $data['card']['id'] ?? null,
+            'type' => $data['metadata']['subscription'],
+        ]);
        
     }
 }

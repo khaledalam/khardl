@@ -16,6 +16,8 @@ return new class extends Migration
             $table->date("start_at");
             $table->date("end_at");
             $table->integer("amount");
+            $table->string("ios_url")->nullable();
+            $table->string("android_url")->nullable();
             $table->string("cus_id");
             $table->string("chg_id");
             $table->string("card_id")->nullable();

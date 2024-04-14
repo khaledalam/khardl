@@ -33,6 +33,7 @@ use App\Models\Subscription;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
+use App\Models\ROCustomerAppSub;
 use App\Models\ROSubscription;
 use App\Models\Tenant\DeliveryCompany;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
@@ -61,6 +62,7 @@ class RestaurantController extends BaseController
         $RO_subscription = ROSubscription::first();
         $customer_tap_id = Auth::user()->tap_customer_id;
         $setting  = Setting::first();
+
         $active_branches = Branch::where('active',true)->count();
         $total_branches = $active_branches + ( $RO_subscription->number_of_branches ?? 0);
         $amount = $total_branches * $subscription->amount;
@@ -70,6 +72,18 @@ class RestaurantController extends BaseController
             $total_branches = 1;
         }
         return view('restaurant.service', compact('user','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
+    }
+    public function appServices(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        $customer_app_sub = tenancy()->central(function () {
+            return  Subscription::skip(1)->first();
+        });
+        $ROCustomerAppSub = ROCustomerAppSub::first();
+        $customer_tap_id = Auth::user()->tap_customer_id;
+
+        return view('restaurant.service-app', compact('user','customer_app_sub','ROCustomerAppSub','customer_tap_id'));
     }
     public function serviceDeactivate()
     {
