@@ -31,16 +31,16 @@ class Charge extends Tap implements ChargeInterface
                 'id'=>env('TAP_PLATFORM_ID')
             ],
             'post'=>[
-                'url'=>route('webhook-client-tap-payment')
+                'url'=>'https://dd9e-156-207-113-65.ngrok-free.app/webhook-tap-actions'/* route('webhook-client-tap-payment') */
             ],
             // "source"=>[
             //     "id"=>"src_all"
             // ],
             'redirect'=>[
-                'url'=>$redirect 
-            ] 
-            
-            
+                'url'=>$redirect
+            ]
+
+
         ]+ $data);
     }
     public static function createSub(array $data,string $token_id,string $redirect): array {
@@ -56,21 +56,21 @@ class Charge extends Tap implements ChargeInterface
             'customer'=>[
                 'id'=> env('TAP_DEFAULT_CUSTOMER_ID',''),
             ],
-            
+
             'source'=>[
                 'id'=>$token_id
             ],
             'post'=>[
-                'url'=>route('webhook-client-tap-payment')
+                'url'=>'https://dd9e-156-207-113-65.ngrok-free.app/webhook-tap-actions'
             ],
             // "source"=>[
             //     "id"=>"src_all"
             // ],
             'redirect'=>[
-                'url'=>$redirect 
-            ] 
-            
-            
+                'url'=>$redirect
+            ]
+
+
         ]+ $data);
     }
     public static function retrieve(string $charge_id): array {
@@ -79,7 +79,7 @@ class Charge extends Tap implements ChargeInterface
     public static function retrieveSub(string $charge_id): array {
         return self::sendToSub("/charges/$charge_id",[],'get');
     }
-    
-    
+
+
 
 }

@@ -174,7 +174,7 @@ const CartPage = () => {
             const redirect = await AxiosInstance.post(
                 `/orders/payment/redirect`,
                 {
-                    payment_method: paymentMethod,
+                    payment_method: paymentMethod == "Apple Pay" ? "Online" : paymentMethod,
                     delivery_type: deliveryType,
                     notes: orderNotes,
                     couponCode: coupon,
