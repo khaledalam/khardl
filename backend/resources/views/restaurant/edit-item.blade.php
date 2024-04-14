@@ -16,7 +16,7 @@
                             <!--begin::Modal content-->
                             <div class="modal-content rounded">
                                 <!--begin::Modal header-->
-                          
+
                                 <!--begin::Modal header-->
                                 <!--begin::Modal body-->
                                 <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
@@ -36,30 +36,30 @@
                                         </button>
                                         <!--end::Purchase link-->
                                     </div>
-                
-                
+
+
                                     <!--begin:Form-->
 
                                     <form id="kt_modal_new_target_form" class="form"  method="POST" enctype="multipart/form-data">
                                         @csrf
-                                   
+
                                         <!--end::Heading-->
                                         <!--begin::Input group-->
                                         <div class="d-flex flex-column mb-8 fv-row">
                                             <!--begin::Label-->
                                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                                 <span class="required">{{__('item-photo')}}</span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference"></i>
                                             </label>
                                             <!--end::Label-->
                                             <input type="file" class="form-control form-control-solid" required placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                            <img alt="product_image" src="{{ $item->photo }}" style="max-height: 120px;max-width:120px"/>
                                         </div>
                                         <!--end::Input group-->
-                
+
                                         <!--begin::Input group-->
                                         <div class="d-flex flex-column mb-8">
                                             <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
-                
+
                                             <ul class="nav nav-tabs" >
                                                 <li class="nav-item">
                                                     <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">{{ __('English') }}</a>
@@ -70,14 +70,14 @@
                                             </ul>
                                             <div class="tab-content mt-3">
                                                 <div class="tab-pane fade show active" id="name-en">
-                                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in english') }}" name="item_name_en"/>
+                                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in english') }}" name="item_name_en" value="{{ old('item_name_en') ??  $item->getTranslation('name', 'en') }}"/>
                                                 </div>
                                                 <div class="tab-pane fade" id="name-ar">
-                                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}" name="item_name_ar"/>
+                                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}" name="item_name_ar" value="{{ old('item_name_ar') ?? $item->getTranslation('name', 'ar') }}"/>
                                                 </div>
                                             </div>
                                         </div>
-                
+
                                         <!--begin::Input group-->
                                         <div class="d-flex flex-column mb-8 fv-row">
                                             <!--begin::Label-->
@@ -87,10 +87,10 @@
                                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
                                                 </label>
                                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                    <input type="checkbox" name="availability" checked value="1">
+                                                    <input type="checkbox" name="availability" value="{{ old('availability') || $item->availability ? 'checked' : '' }}">
                                                 </label>
                                             </div>
-                
+
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
@@ -101,7 +101,7 @@
                                                 <!--begin::Input-->
                                                 <div class="position-relative d-flex align-items-center">
                                                     <!--begin::Datepicker-->
-                                                    <input type="number" min="0" step="0.1" required name="price" class="form-control form-control-solid ps-12" />
+                                                    <input type="number" min="0" step="0.1" value="{{ old('price') ?? $item->price }}" required name="price" class="form-control form-control-solid ps-12" />
                                                     <!--end::Datepicker-->
                                                 </div>
                                                 <!--end::Input-->
@@ -110,16 +110,16 @@
                                             <!--begin::Col-->
                                             <div class="col-md-6 fv-row">
                                                 <label class="required fs-6 fw-bold mb-2">{{ __('Calories') }}</label>
-                                                <input type="number" step="0.1" min="1" required name="calories" class="form-control form-control-solid ps-12" />
+                                                <input type="number" step="0.1" min="1" required name="calories" value="{{ old('calories') ?? $item->calories }}" class="form-control form-control-solid ps-12" />
                                             </div>
                                             <!--end::Col-->
-                
+
                                         </div>
                                         <!--end::Input group-->
-                
+
                                         <div class="d-flex flex-column mb-8">
                                             <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
-                
+
                                             <ul class="nav nav-tabs" >
                                                 <li class="nav-item">
                                                     <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en">{{ __('English') }}</a>
@@ -130,32 +130,36 @@
                                             </ul>
                                             <div class="tab-content mt-3">
                                                 <div class="tab-pane fade show active" id="d-en">
-                                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in english') }}"   name="description_en"></textarea>
+                                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in english') }}"  name="description_en">
+                                                        {{ old('description_en') ?? $item->getTranslation('description', 'en') }}
+                                                    </textarea>
                                                 </div>
                                                 <div class="tab-pane fade" id="d-ar">
-                                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}"   name="description_ar"></textarea>
+                                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}"   name="description_ar">
+                                                        {{ old('description_ar') ?? $item->getTranslation('description', 'ar') }}
+                                                    </textarea>
                                                 </div>
                                             </div>
                                         </div>
                                         <!--end::Input group-->
-                
-                
-                
+
+
+
                                         <div id="checkboxes">
                                             <!-- Checkbox elements will be dynamically added here -->
-                
+
                                         </div>
-                
-                
+
+
                                         <div id="selections">
                                             <!-- Checkbox elements will be dynamically added here -->
                                         </div>
-                
-                
+
+
                                         <div id="dropdowns">
                                             <!-- Checkbox elements will be dynamically added here -->
                                         </div>
-                
+
                                         <!--begin::Actions-->
                                         <div class="text-center">
                                             <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
@@ -167,7 +171,7 @@
                                         </div>
                                         <!--end::Actions-->
                                     </form>
-                                   
+
                                         <!--end:Form-->
                                 </div>
                                 <!--end::Modal body-->
@@ -177,7 +181,7 @@
                         <!--end::Modal dialog-->
                     </div>
                 </div>
-              
+
                 <!--end::Container-->
             </div>
             <!--end::Post-->
