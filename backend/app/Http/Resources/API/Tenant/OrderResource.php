@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\Tenant;
 
+use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -37,15 +38,14 @@ class OrderResource extends JsonResource
             'updated_at' => $this->updated_at,
             'manual_order_first_name' => $this->manual_order_first_name,
             'manual_order_last_name' => $this->manual_order_last_name,
+            'distance' => $this->distance,
+            'own_driver_can_accept' => $this->driver_can_accept,
             'branch' => $this->whenLoaded('branch'),
             'customer' => $this->whenLoaded('user'),
             'driver_id' => new DriverResource($this->whenLoaded('driver')),
             'items' => OrderItemResource::collection($this->whenLoaded('items')),
 
         ];
-        if ($request->has('km')) {
-            $data['distance'] = $this->distance;
-        }
         if ($request->has('branch')) {
             $data['branch'] = $this->branch;
         }
