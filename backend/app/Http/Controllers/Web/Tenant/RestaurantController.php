@@ -82,7 +82,7 @@ class RestaurantController extends BaseController
         });
         $ROCustomerAppSub = ROCustomerAppSub::first();
         $customer_tap_id = Auth::user()->tap_customer_id;
-
+ 
         return view('restaurant.service-app', compact('user','customer_app_sub','ROCustomerAppSub','customer_tap_id'));
     }
     public function serviceDeactivate()

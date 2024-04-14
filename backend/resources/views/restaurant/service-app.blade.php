@@ -110,7 +110,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                 <div class="col-xl-4">
                                                     <div class="d-flex 0 align-items-center ">
                                                         <!--begin::Option-->
-                                                        <div class="py-2 w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75" style="height: 300px">
+                                                        <div class="py-2 w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 p-2" >
                                                             <div class="w-100 text-right" style="padding: -15px !important;"></div>
                                                             <!--begin::Heading-->
                                                             <div class="mb-1 text-center px-10" >
@@ -163,21 +163,32 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                             <!--begin::Select-->
 
                                                             <!--end::Modal dialog-->
-                                                            <div class="d-flex flex-column text-center">
+                                                            <div class="d-flex flex-column text-center ">
                                                                 @if($ROCustomerAppSub && $ROCustomerAppSub->status == \App\Models\ROCustomerAppSub::ACTIVE)
-                                                                <div>
-                                                                    <a href="https://play.google.com/store/apps/details?id=com.khardl.orders" >
-                                                                        <img src="{{global_asset('images/logo_playstore.svg')}}" width="150"/>
-                                                                    </a>
-                                                                </div>
+                                                                    @if($ROCustomerAppSub->android_url)
+                                                                        <div>
+                                                                            <a href="{{$ROCustomerAppSub->android_url}}">
+                                                                                <img src="{{global_asset('images/logo_playstore.svg')}}" width="150"/>
+                                                                            </a>
+                                                                        </div>
+                                                                        <br />
+                                                                    @endif
+                                                                    @if($ROCustomerAppSub->ios_url)
+                                                                        <div>
+                                                                            <a href="{{$ROCustomerAppSub->ios_url}}" >
+                                                                                <img src="{{global_asset('images/logo_appstore.svg')}}" width="150"/>
+                                                                            </a>
+                                                                        </div>
+                                                                    @endif
+                                                              
+                                                                @elseif($ROCustomerAppSub && $ROCustomerAppSub->status == \App\Models\ROCustomerAppSub::SUSPEND && !$ROCustomerAppSub->android_url && !$ROCustomerAppSub->ios_url )
+                                                                    <div class="text-center my-5">
 
-                                                                <br />
+                                                                        <h4 class=" badge-primary m-2 p-2 w-boldest text-center text-white mt-3 ">
+                                                                            {{__('Your request has been sent to the admin and the applications will be activated soon')}}
+                                                                        </h4>
 
-                                                                <div>
-                                                                    <a href="https://apps.apple.com/ae/app/khardl-orders/id6478204383" >
-                                                                        <img src="{{global_asset('images/logo_appstore.svg')}}" width="150"/>
-                                                                    </a>
-                                                                </div>
+                                                                    </div>
                                                                 @else
                                                                 <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" data-bs-target="#kt_modal_customer_app"><i class="fas fa-shopping-cart"></i>{{__('Buy now')}}</a>
 
@@ -223,6 +234,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                             <!--end::Modal body-->
                                                                         </div>
                                                                     @endif
+                                                                </form>
                                                             <!--end::Select-->
                                                         </div>
                                                         <!--end::Option-->

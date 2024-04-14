@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Services\tenant\Restaurant\RestaurantService as TenantRestaurantService;
+use App\Models\ROCustomerAppSub;
 use App\Models\ROSubscription;
 use App\Models\Tenant\RestaurantUser;
 
@@ -54,7 +55,7 @@ class RestaurantService
             $restaurants = $query->paginate(config('application.perPage') ?? 20);
         }
         $user = Auth::user();
-
+  
         return view('admin.restaraunts', compact('restaurants', 'user', 'totalRestaurantsCount'));
     }
     public function show(Tenant $tenant)
@@ -85,7 +86,8 @@ class RestaurantService
             $subscription,
             $setting,
             $RO,
-            $restaurant_name
+            $restaurant_name,
+            $customer_app
         ] = $this->getRestaurantData($restaurant);
 
         $owner = $restaurant->user;
@@ -100,6 +102,7 @@ class RestaurantService
         } else {
             $filesCount = count(\File::allFiles($path));
         }
+  
 
         return view(
             'admin.Restaurants.Layout.view',
@@ -133,7 +136,8 @@ class RestaurantService
                 'setting',
                 'traderRegistrationRequirement',
                 'RO',
-                'restaurant_name'
+                'restaurant_name',
+                'customer_app'
             )
         );
     }
@@ -166,7 +170,7 @@ class RestaurantService
             $setting = Setting::first();
             $RO =  RestaurantUser::first();
             $restaurant_name = $setting->restaurant_name;
-       
+            $customer_app = ROCustomerAppSub::first();
            
             return [
                 $info['logo'],
@@ -193,7 +197,8 @@ class RestaurantService
                 $subscription,
                 $setting,
                 $RO,
-                $restaurant_name
+                $restaurant_name,
+                $customer_app
             ];
         });
 
