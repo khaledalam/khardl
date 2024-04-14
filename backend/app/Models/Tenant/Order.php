@@ -291,5 +291,21 @@ class Order extends Model
     {
         return haversineDistance((float) $this->branch?->lat, (float) $this->branch?->lng, (float) $this->user?->lat, (float) $this->user?->lng);
     }
+    public function getDriverCanAcceptAttribute()
+    {
+        if(($this->status == self::RECEIVED_BY_RESTAURANT || $this->status == self::READY)
+            && $this->driver_id == null
+            && $this->deliver_by == null
+        ){
+            $settings = Setting::first();
+            $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
+            if($settings && $settings->delivery_companies_option && $limitDrivers > 0){
+                return $this->received_by_restaurant_at > Carbon::now()->subMinutes($limitDrivers);
+            }else{
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

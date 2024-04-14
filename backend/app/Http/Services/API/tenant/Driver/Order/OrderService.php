@@ -54,7 +54,6 @@ class OrderService
 
         $perPage = config('application.perPage', 20);
         $orders = $query->paginate($perPage);
-
         return $this->sendResponse(new OrderCollection($orders), '');
     }
     public function history(Request $request)
@@ -75,7 +74,6 @@ class OrderService
     }
     public function orderDetails(Request $request, Order $order)
     {
-        $request['km'] = 'get value';
         $order->load(['user','branch','items']);
         return $this->sendResponse(new OrderResource($order), '');
     }
