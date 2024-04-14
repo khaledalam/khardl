@@ -38,7 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'default_lang',
         'loyalty_points',
         'cashback',
-        'email_verified_at',
+        'email_verified_at'
     ];
     public const STORAGE = "user_files";
     public const STATUS_REJECTED = "rejected";
