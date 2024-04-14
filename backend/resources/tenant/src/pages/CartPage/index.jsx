@@ -169,6 +169,7 @@ const CartPage = () => {
     const cardPaymentCallbackFunc = async (response) => {
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
 
+
         try {
             setLoading(true);
             const redirect = await AxiosInstance.post(
@@ -271,7 +272,7 @@ const CartPage = () => {
                                                     name={"ApplePay"}
                                                     onChange={(e) =>
                                                         setPaymentMethod(
-                                                            "Apple Pay"
+                                                            "Online"
                                                         )
                                                     }
                                                     isChecked={
