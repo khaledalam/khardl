@@ -410,7 +410,7 @@ function deleteSection(section) {
 
     let selectionCount = -1;
 
-    function createSelection() {
+    function createSelection(item = null, key = null) {
         selectionCount++;
         const selectionDiv = document.createElement('div');
         selectionDiv.className = 'd-flex flex-column mb-8 fv-row';
@@ -425,15 +425,17 @@ function deleteSection(section) {
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
                         <input type="hidden" name="selection_required[${selectionCount}]" value="false" />
-                        <input type="checkbox" name="selection_required_input[${selectionCount}]" id="" >&nbsp;{{ __('Required') }}
+                        <input type="checkbox" name="selection_required_input[${selectionCount}]" ${key !=null ? (item.selection_required[key] == "true"  ? 'checked':'') : ''} >&nbsp;{{ __('Required') }}
                     </label>
                 </div>
                 <!--end::Label-->
 
                 <div id="inputContainer${selectionCount}">
                     <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[]" placeholder="{{ __('Title in english') }}">
-                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}">
+                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[]" placeholder="{{ __('Title in english') }}"
+                        value="${key !=null ? item.selection_input_titles[key][1]: ''}">
+                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}"
+                        value="${key !=null ? item.selection_input_titles[key][0]: ''}">
 
                         <button class="delete-selection btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                     </div>
@@ -469,10 +471,16 @@ function deleteSection(section) {
         });
 
         selectionsContainer.appendChild(selectionDiv);
-        createSelectionOption(selectionDiv, selectionCount,true);
+        if(key!=null){
+            item.selection_input_names[key].forEach(function(value,index) {
+                createSelectionOption(selectionDiv, selectionCount,true,value, item.selection_input_prices[key][index]);
+            });
+        }else{
+            createSelectionOption(selectionDiv, selectionCount,true);
+        }
     }
 
-    function createSelectionOption(selectionDiv, selectionCount,isDeletable = false) {
+    function createSelectionOption(selectionDiv, selectionCount,isDeletable = false, option = null, price = null) {
         const optionsDiv = selectionDiv.querySelector('.options');
         const optionCount = optionsDiv.id;
         const optionDiv = document.createElement('div');
@@ -480,20 +488,26 @@ function deleteSection(section) {
         if(isDeletable){
         optionDiv.innerHTML = `
             <div class="d-flex justify-content-between align-items-center mt-5">
-                <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}">
-                <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}">
+                <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
+                value="${option ? option[1] : ''}">
+                <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                value="${option ? option[0] : ''}">
 
-                <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
+                <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
+                value="${price ? price : ''}">
                 <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
             </div>
         `;  }
         else {
             optionDiv.innerHTML = `
             <div class="d-flex justify-content-between align-items-center mt-5">
-                <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}">
-                <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}">
+                <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
+                value="${option ? option[1] : ''}">
+                <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                value="${option ? option[0] : ''}">
 
-                <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
+                <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
+                value="${price ? price : ''}">
                 <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
             </div>
         `;
@@ -716,6 +730,10 @@ function deleteSection(section) {
     var item = @json($item);
     checkboxOptions.forEach(function(value,key) {
         createCheckbox(item,key);
+    });
+    var selectionOptions = @json($item->selection_input_titles);
+    selectionOptions.forEach(function(value,key) {
+        createSelection(item,key);
     });
 </script>
 @endsection
