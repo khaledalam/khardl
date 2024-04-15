@@ -27,6 +27,7 @@ class OrderService
         $query = Order::with(['payment_method','items','branch','user'])
             ->delivery()
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
+            ->WhenDateString($request['date_string']??null)
             ->when($request->status == 'ready', function ($query) {
                 $settings = Setting::first();
                 $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
