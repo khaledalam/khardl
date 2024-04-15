@@ -51,8 +51,14 @@
                                                 {{__('item-photo')}}</span>
                                             </label>
                                             <!--end::Label-->
-                                            <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
-                                            <img alt="product_image" src="{{ $item->photo }}" style="max-height: 120px;max-width:120px"/>
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <img alt="product_image" src="{{ $item->photo }}" class="rounded" style="max-height: 100%;max-width:100%"/>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!--end::Input group-->
 
