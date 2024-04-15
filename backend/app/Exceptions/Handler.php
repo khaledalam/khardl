@@ -28,7 +28,8 @@ class Handler extends ExceptionHandler
     public function report(Throwable $exception)
     {
         // Exclude Exceptions
-        if ($exception instanceof TenantCouldNotBeIdentifiedOnDomainException) {
+        if ($exception instanceof TenantCouldNotBeIdentifiedOnDomainException ||
+            $exception instanceof NotFoundHttpException) {
             return;
         }
 
