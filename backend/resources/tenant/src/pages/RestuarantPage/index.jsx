@@ -34,9 +34,9 @@ export const RestuarantHomePage = () => {
                     branch_id
                         ? `&selected_branch_id=${branch_id}`
                         : id
-                          ? `&selected_branch_id=${id}`
-                          : ""
-                }`,
+                        ? `&selected_branch_id=${id}`
+                        : ""
+                }`
             );
             // const restaurantCategoriesResponse =[];
 
@@ -46,13 +46,13 @@ export const RestuarantHomePage = () => {
                 restaurantCategoriesResponse.data?.data.length > 0
             ) {
                 dispatch(
-                    setCategoriesAPI(restaurantCategoriesResponse.data?.data),
+                    setCategoriesAPI(restaurantCategoriesResponse.data?.data)
                 );
                 dispatch(
                     selectedCategoryAPI({
                         name: restaurantCategoriesResponse.data?.data[0].name,
                         id: restaurantCategoriesResponse.data?.data[0].id,
-                    }),
+                    })
                 );
 
                 if (!branch_id && id) {

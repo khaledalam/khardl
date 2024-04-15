@@ -80,9 +80,13 @@ const MainBoardEditor = ({
         logo,
         banner_image,
         banner_images,
-        header_color,
         banner_background_color,
         footer_color,
+        footer_alignment,
+        footer_text_fontFamily,
+        footer_text_fontWeight,
+        footer_text_fontSize,
+        footer_text_color,
         headerPosition,
         logo_alignment,
         logo_shape,
@@ -95,12 +99,25 @@ const MainBoardEditor = ({
         phoneNumber,
         phoneNumber_alignment,
         socialMediaIcons_alignment,
+        social_media_radius,
+        social_media_color,
+        social_media_background_color,
         selectedSocialIcons,
         text_color,
 
         logo_border_radius,
         logo_border_color,
 
+        header_position,
+        header_color,
+        header_radius,
+        side_menu_position,
+        order_cart_position,
+        order_cart_color,
+        order_cart_radius,
+        home_position,
+        home_color,
+        home_radius,
     } = restuarantEditorStyle;
 
     const [listofBannerImages, setListofBannerImages] = useState([]);
@@ -391,7 +408,11 @@ const MainBoardEditor = ({
             >
                 <div
                     style={{
-                        borderRadius: logo_border_radius ? (logo_border_radius + '%') : (logo_shape === "sharp" ? 0 : 12),
+                        borderRadius: logo_border_radius
+                            ? logo_border_radius + "%"
+                            : logo_shape === "sharp"
+                            ? 0
+                            : 12,
                         border: `1px solid ${logo_border_color}`,
                         backgroundImage: `url(${
                             uploadLogo
@@ -854,7 +875,7 @@ const MainBoardEditor = ({
             </div>
             {/* social media */}
             <div
-                style={{ backgroundColor: footer_color }}
+                style={{ backgroundColor: social_media_color }}
                 className={`w-full min-h-[70px] px-3  rounded-xl flex ${
                     socialMediaIcons_alignment === "center"
                         ? "items-center justify-center"
@@ -878,7 +899,18 @@ const MainBoardEditor = ({
                             key={socialMedia.id}
                             className="cursor-pointer"
                         >
-                            <div className="w-[35px] h-[35px] bg-[#F3F3F3] flex justify-center items-center rounded-full relative">
+                            <div
+                                className={`w-[35px] h-[35px] bg-[#F3F3F3] flex justify-center items-center relative`}
+                                style={{
+                                    borderRadius: social_media_radius
+                                        ? social_media_radius + "%"
+                                        : "50%",
+                                    backgroundColor:
+                                        social_media_background_color
+                                            ? social_media_background_color
+                                            : "#F3F3F3",
+                                }}
+                            >
                                 <img
                                     src={socialMedia.imgUrl}
                                     alt={"whatsapp"}
@@ -921,11 +953,11 @@ const MainBoardEditor = ({
             <div
                 style={{ backgroundColor: footer_color }}
                 className={`w-full min-h-[70px]  rounded-xl flex  ${
-                    phoneNumber_alignment === "center"
+                    footer_alignment === "center"
                         ? "items-center justify-center"
-                        : phoneNumber_alignment === "left"
+                        : footer_alignment === "left"
                         ? "items-center justify-start"
-                        : phoneNumber_alignment === "right"
+                        : footer_alignment === "right"
                         ? "items-center justify-end"
                         : ""
                 }
@@ -935,11 +967,23 @@ const MainBoardEditor = ({
                 }`}
             >
                 <h3
+                    style={{ color: footer_text_color }}
                     className={`${
                         text_fontFamily
-                            ? text_fontFamily
+                            ? `font-['${text_fontFamily}']`
                             : "font-['Plus Jakarta Sans']"
-                    } text-black text-opacity-50 text-[10px] font-normal leading-3 tracking-tight relative`}
+                    }
+                    ${
+                        footer_text_fontSize
+                            ? `text-[${footer_text_fontSize}px]`
+                            : "text-[10px]"
+                    }
+                    ${
+                        footer_text_fontWeight
+                            ? `font-${footer_text_fontWeight}`
+                            : "font-normal"
+                    }
+                     leading-3 tracking-tight relative`}
                 >
                     <span>{t("Powered by @Khardl")}</span>
                     <img

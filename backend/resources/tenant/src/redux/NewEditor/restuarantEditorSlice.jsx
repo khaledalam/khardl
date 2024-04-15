@@ -103,18 +103,63 @@ const restuarantEditorSlice = createSlice({
 
         selectedMediaId: 1,
         socialMediaIcons_alignment: "center",
+        social_media_color: "#FFFFFF",
+        social_media_background_color: "#FFFFFF",
+        social_media_radius: 25,
         phoneNumber: "",
         phoneNumber_alignment: "center",
+
+        menu_card_background_color: "#FFFFFF",
+        menu_card_text_font: "Inter",
+        menu_card_text_weight: "light",
+        menu_card_text_size: 13,
+        menu_card_text_color: "#333",
+
+        menu_name_background_color: "#FFFFFF",
+        menu_name_text_font: "Inter",
+        menu_name_text_weight: "light",
+        menu_name_text_size: 13,
+        menu_name_text_color: "#333",
+
+        total_calories_background_color: "#FFFFFF",
+        total_calories_text_font: "Inter",
+        total_calories_text_weight: "light",
+        total_calories_text_size: 13,
+        total_calories_text_color: "#333",
+
+        price_background_color: "#FFFFFF",
+        price_text_font: "Inter",
+        price_text_weight: "light",
+        price_text_size: 13,
+        price_text_color: "#333",
+
+        header_position: "relative",
+        header_color: "#ffffff",
+        header_radius: 50,
+
+        side_menu_position: "left",
+
+        order_cart_position: "center",
+        order_cart_color: "#ffffff",
+        order_cart_radius: 50,
+
+        home_position: "right",
+        home_color: "#ffffff",
+        home_radius: 50,
 
         page_color: "#EEEEEE",
         category_background_color: "#4466ff",
         page_category_color: "#ffffff",
         product_background_color: "white",
-        header_color: "#ffffff",
         footer_color: "#ffffff",
+        footer_alignment: "center",
+        footer_text_fontFamily: "Inter",
+        footer_text_fontWeight: "light",
+        footer_text_fontSize: 12,
+        footer_text_color: "#eee",
         price_color: "red",
 
-        text_fontFamily: "Inter",
+        text_fontFamily: "Jakarta",
         text_fontWeight: 400,
         text_fontSize: 13,
         text_alignment: "center",
@@ -128,7 +173,7 @@ const restuarantEditorSlice = createSlice({
         template: "template-1",
 
         logo_border_radius: 0,
-        logo_border_color: 'white'
+        logo_border_color: "white",
     },
     reducers: {
         headerPosition: (state, action) => {
@@ -181,6 +226,15 @@ const restuarantEditorSlice = createSlice({
         socialMediaIconsAlignment: (state, action) => {
             state.socialMediaIcons_alignment = action.payload;
         },
+        socialMediaColor: (state, action) => {
+            state.social_media_color = action.payload;
+        },
+        socialMediaBackgroundColor: (state, action) => {
+            state.social_media_background_color = action.payload;
+        },
+        socialMediaRadius: (state, action) => {
+            state.social_media_radius = action.payload;
+        },
         phoneNumber: (state, action) => {
             state.phoneNumber = action.payload;
         },
@@ -199,9 +253,6 @@ const restuarantEditorSlice = createSlice({
         priceColor: (state, action) => {
             state.price_color = action.payload;
         },
-        headerColor: (state, action) => {
-            state.header_color = action.payload;
-        },
         footerColor: (state, action) => {
             state.footer_color = action.payload;
         },
@@ -217,11 +268,120 @@ const restuarantEditorSlice = createSlice({
         textAlignment: (state, action) => {
             state.text_alignment = action.payload;
         },
+        footerAlignment: (state, action) => {
+            state.footer_alignment = action.payload;
+        },
+        footerTextFont: (state, action) => {
+            state.footer_text_fontFamily = action.payload;
+        },
+        footerTextWeight: (state, action) => {
+            state.footer_text_fontWeight = action.payload;
+        },
+        footerTextSize: (state, action) => {
+            state.footer_text_fontSize = action.payload;
+        },
+        footerTextColor: (state, action) => {
+            state.footer_text_color = action.payload;
+        },
         textColor: (state, action) => {
             state.text_color = action.payload;
         },
         logoUpload: (state, action) => {
             state.logoUpload = action.payload;
+        },
+
+        MenuCardBackgroundColor: (state, action) => {
+            state.menu_card_background_color = action.payload;
+        },
+        MenuCardTextFont: (state, action) => {
+            state.menu_card_text_font = action.payload;
+        },
+        MenuCardTextWeight: (state, action) => {
+            state.menu_card_text_weight = action.payload;
+        },
+        MenuCardTextSize: (state, action) => {
+            state.menu_card_text_size = action.payload;
+        },
+        MenuCardTextColor: (state, action) => {
+            state.menu_card_text_color = action.payload;
+        },
+
+        MenuNameBackgroundColor: (state, action) => {
+            state.menu_name_background_color = action.payload;
+        },
+        MenuNameTextFont: (state, action) => {
+            state.menu_name_text_font = action.payload;
+        },
+        MenuNameTextWeight: (state, action) => {
+            state.menu_name_text_weight = action.payload;
+        },
+        MenuNameTextSize: (state, action) => {
+            state.menu_name_text_size = action.payload;
+        },
+        MenuNameTextColor: (state, action) => {
+            state.menu_name_text_color = action.payload;
+        },
+
+        TotalCaloriesBackgroundColor: (state, action) => {
+            state.total_calories_background_color = action.payload;
+        },
+        TotalCaloriesTextFont: (state, action) => {
+            state.total_calories_text_font = action.payload;
+        },
+        TotalCaloriesTextWeight: (state, action) => {
+            state.total_calories_text_weight = action.payload;
+        },
+        TotalCaloriesTextSize: (state, action) => {
+            state.total_calories_text_size = action.payload;
+        },
+        TotalCaloriesTextColor: (state, action) => {
+            state.total_calories_text_color = action.payload;
+        },
+
+        PriceBackgroundColor: (state, action) => {
+            state.price_background_color = action.payload;
+        },
+        PriceTextFont: (state, action) => {
+            state.price_text_font = action.payload;
+        },
+        PriceTextWeight: (state, action) => {
+            state.price_text_weight = action.payload;
+        },
+        PriceTextSize: (state, action) => {
+            state.price_text_size = action.payload;
+        },
+        PriceTextColor: (state, action) => {
+            state.price_text_color = action.payload;
+        },
+        HeaderPosition: (state, action) => {
+            state.header_position = action.payload;
+        },
+        HeaderColor: (state, action) => {
+            state.header_color = action.payload;
+        },
+        HeaderRadius: (state, action) => {
+            state.header_radius = action.payload;
+        },
+        SideMenuPosition: (state, action) => {
+            state.side_menu_position = action.payload;
+        },
+        OrderCartPosition: (state, action) => {
+            state.order_cart_position = action.payload;
+        },
+        OrderCartColor: (state, action) => {
+            state.order_cart_color = action.payload;
+        },
+        OrderCartRadius: (state, action) => {
+            state.order_cart_radius = action.payload;
+        },
+        HomePosition: (state, action) => {
+            state.home_position = action.payload;
+        },
+        HomeColor: (state, action) => {
+            state.home_color = action.payload;
+        },
+        HomeRadius: (state, action) => {
+            state.home_radius = action.payload;
         },
 
         changeRestuarantEditorStyle: (state, action) => {
@@ -325,7 +485,6 @@ export const {
     logoBorderRadius,
     logoBorderColor,
 
-
     headerPosition,
     logoAlignment,
     logoShape,
@@ -346,6 +505,11 @@ export const {
     priceColor,
     headerColor,
     footerColor,
+    footerAlignment,
+    footerTextFont,
+    footerTextWeight,
+    footerTextSize,
+    footerTextColor,
     textFontFamily,
     textFontWeight,
     textFontSize,
@@ -367,5 +531,38 @@ export const {
     moveSelectedIconsToMedia,
     setSelectedSocialMediaId,
     setTemplate,
+    socialMediaColor,
+    socialMediaBackgroundColor,
+    socialMediaRadius,
+    MenuCardBackgroundColor,
+    MenuCardTextFont,
+    MenuCardTextWeight,
+    MenuCardTextSize,
+    MenuCardTextColor,
+    MenuNameBackgroundColor,
+    MenuNameTextFont,
+    MenuNameTextWeight,
+    MenuNameTextSize,
+    MenuNameTextColor,
+    TotalCaloriesBackgroundColor,
+    TotalCaloriesTextFont,
+    TotalCaloriesTextWeight,
+    TotalCaloriesTextSize,
+    TotalCaloriesTextColor,
+    PriceBackgroundColor,
+    PriceTextFont,
+    PriceTextWeight,
+    PriceTextSize,
+    PriceTextColor,
+    HeaderPosition,
+    HeaderColor,
+    HeaderRadius,
+    SideMenuPosition,
+    OrderCartPosition,
+    OrderCartColor,
+    OrderCartRadius,
+    HomePosition,
+    HomeColor,
+    HomeRadius,
 } = restuarantEditorSlice.actions;
 export default restuarantEditorSlice.reducer;

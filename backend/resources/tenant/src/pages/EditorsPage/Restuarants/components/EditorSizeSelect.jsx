@@ -4,16 +4,18 @@ import halfArrowDown from "../../../../assets/halfArrowDown.svg";
 import { useSelector, useDispatch } from "react-redux";
 
 const EditorSizeSelect = ({ defaultValue, options, handleChange, label }) => {
-    const [currentValue, setCurrentValue] = useState(10);
+    const [currentValue, setCurrentValue] = useState(defaultValue);
 
     const Language = useSelector((state) => state.languageMode.languageMode);
 
     const handleIncrement = () => {
         setCurrentValue(currentValue + 1);
+        handleChange(currentValue + 1);
     };
 
     const handleDecrement = () => {
         setCurrentValue(currentValue - 1);
+        handleChange(currentValue - 1);
     };
     const [isOpen, setisOpen] = useState(false);
 

@@ -74,6 +74,13 @@ const HeaderEdit = ({
         socialMediaIcons_alignment,
         selectedSocialIcons,
         text_color,
+        side_menu_position,
+        order_cart_position,
+        order_cart_color,
+        order_cart_radius,
+        home_position,
+        home_color,
+        home_radius,
     } = restuarantEditorStyle;
     const handleLogoUpload = (event) => {
         event.preventDefault();
@@ -91,12 +98,21 @@ const HeaderEdit = ({
         <div
             style={{
                 backgroundColor: restaurantStyle?.header_color,
+                borderRadius: `${restaurantStyle?.header_radius}px`,
             }}
-            className={`w-full h-[56px] z-10 rounded-[50px] flex items-center justify-between px-[16px] md:mt-[8px] ${
+            className={`w-full h-[56px] z-10 grid grid-cols-3 px-[16px] md:mt-[8px] ${
                 isHighlighted && "shadow-inner border-[#C0D123] border-[2px]"
             }`}
         >
-            <div className="flex justify-start w-[30px]">
+            <div
+                className={`flex justify-start w-[30px] self-center ${
+                    side_menu_position == "left"
+                        ? "justify-self-start"
+                        : side_menu_position == "right"
+                        ? "justify-self-end"
+                        : "justify-self-center"
+                }`}
+            >
                 <div
                     onClick={toggleSidebarCollapse}
                     style={{ fontWeight: restaurantStyle?.text_fontWeight }}
@@ -121,7 +137,21 @@ const HeaderEdit = ({
                         ? handleGotoCart
                         : () => {}
                 }
-                className="w-[30px] h-[30px] pl-[8px] pr-[7px] pb-[9px] pt-[6px] rounded-full bg-[#F3F3F3] relative flex items-center justify-center cursor-pointer"
+                style={{
+                    backgroundColor: order_cart_color
+                        ? order_cart_color
+                        : "#F3F3F3",
+                    borderRadius: order_cart_radius
+                        ? `${order_cart_radius}px`
+                        : "50px",
+                }}
+                className={`w-[30px] h-[30px] pl-[8px] pr-[7px] pb-[9px] pt-[6px] relative flex items-center justify-center cursor-pointer self-center ${
+                    order_cart_position == "left"
+                        ? "justify-self-start"
+                        : order_cart_position == "right"
+                        ? "justify-self-end"
+                        : "justify-self-center"
+                }`}
             >
                 <img src={HedaerIconCart} alt={"cart"} className="" />
                 {cartItemsCount > 0 && (
@@ -140,7 +170,19 @@ const HeaderEdit = ({
                 />
             </div>
 
-            <div className="pt-[6px] pb-[9px] pr-[7px] pl-[8px] bg-[#F3F3F3] rounded-full relative">
+            <div
+                style={{
+                    backgroundColor: home_color ? home_color : "#F3F3F3",
+                    borderRadius: home_radius ? `${home_radius}px` : "50px",
+                }}
+                className={`pt-[6px] pb-[9px] pr-[7px] pl-[8px] bg-[#F3F3F3] rounded-full relative self-center ${
+                    home_position == "left"
+                        ? "justify-self-start"
+                        : home_position == "right"
+                        ? "justify-self-end"
+                        : "justify-self-center"
+                }`}
+            >
                 <img src={HeaderHomeIcon} alt={"home icon"} className="" />
                 <img
                     src={GreenDot}
