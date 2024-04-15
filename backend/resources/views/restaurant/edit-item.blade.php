@@ -350,7 +350,8 @@ function deleteSection(section) {
         checkboxesContainer.appendChild(checkboxDiv);
         if(key!=null){
             item.checkbox_input_names[key].forEach(function(value,index) {
-                createCheckBoxOption(checkboxDiv,false, value, item.checkbox_input_prices[key][index]);
+                if(item.checkbox_input_prices!= null)
+                    createCheckBoxOption(checkboxDiv,false, value, item.checkbox_input_prices[key][index]);
             });
         }else{
             createCheckBoxOption(checkboxDiv,false);
@@ -473,7 +474,8 @@ function deleteSection(section) {
         selectionsContainer.appendChild(selectionDiv);
         if(key!=null){
             item.selection_input_names[key].forEach(function(value,index) {
-                createSelectionOption(selectionDiv, selectionCount,false,value, item.selection_input_prices[key][index]);
+                if(item.selection_input_prices!= null)
+                    createSelectionOption(selectionDiv, selectionCount,false,value, item.selection_input_prices[key][index]);
             });
         }else{
             createSelectionOption(selectionDiv, selectionCount,false);
@@ -532,7 +534,7 @@ function deleteSection(section) {
 
     let dropdownCount = -1;
 
-    function createDropdown() {
+    function createDropdown(item = null, key = null) {
         dropdownCount++;
         const dropdownDiv = document.createElement('div');
         dropdownDiv.className = 'd-flex flex-column mb-8 fv-row';
@@ -547,15 +549,17 @@ function deleteSection(section) {
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
                         <input type="hidden" name="dropdown_required[${dropdownCount}]" value="false" />
-                        <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" id="" >&nbsp;{{ __('Required') }}
+                        <input type="checkbox" name="dropdown_required_input[${dropdownCount}]"  ${key !=null ? (item.dropdown_required[key] == "true"  ? 'checked':'') : ''} >&nbsp;{{ __('Required') }}
                     </label>
                 </div>
                 <!--end::Label-->
 
                 <div id="inputContainer${dropdownCount}">
                     <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[]" placeholder="{{ __('Title in english') }}">
-                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}">
+                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[]" placeholder="{{ __('Title in english') }}"
+                        value="${key !=null ? item.dropdown_input_titles[key][1]: ''}">
+                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}"
+                        value="${key !=null ? item.dropdown_input_titles[key][0]: ''}">
 
                         <button class="delete-dropdown btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                     </div>
@@ -591,10 +595,17 @@ function deleteSection(section) {
         });
 
         dropdownsContainer.appendChild(dropdownDiv);
-        createDropdownOption(dropdownDiv,true);
+        if(key!=null){
+            item.dropdown_input_names[key].forEach(function(value,index) {
+                if(item.dropdown_input_prices!= null)
+                    createDropdownOption(dropdownDiv,false,value,item.dropdown_input_prices[key][index]);
+            });
+        }else{
+            createDropdownOption(dropdownDiv,false);
+        }
     }
 
-    function createDropdownOption(dropdownDiv,isDeletable = false) {
+    function createDropdownOption(dropdownDiv,isDeletable = false, option = null, price = null) {
         const optionsDiv = dropdownDiv.querySelector('.options');
         const optionCount = optionsDiv.id;
         const optionDiv = document.createElement('div');
@@ -602,8 +613,10 @@ function deleteSection(section) {
         if(isDeletable){
         optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in english') }}">
-                    <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}">
+                    <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in english') }}"
+                    value="${option ? option[1] : ''}">
+                    <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                    value="${option ? option[0] : ''}">
 
                     <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
@@ -611,10 +624,13 @@ function deleteSection(section) {
         `; }else {
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}">
-                    <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('Option in arabic') }}">
+                    <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
+                    value="${option ? option[1] : ''}">
+                    <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('Option in arabic') }}"
+                    value="${option ? option[0] : ''}">
 
-                    <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
+                    <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
+                    value="${price ? price : ''}">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
         `;
@@ -728,12 +744,17 @@ function deleteSection(section) {
 <script>
     var checkboxOptions = @json($item->checkbox_input_titles);
     var item = @json($item);
+    console.log(item);
     checkboxOptions.forEach(function(value,key) {
         createCheckbox(item,key);
     });
     var selectionOptions = @json($item->selection_input_titles);
     selectionOptions.forEach(function(value,key) {
         createSelection(item,key);
+    });
+    var dropdownOptions = @json($item->dropdown_input_titles);
+    dropdownOptions.forEach(function(value,key) {
+        createDropdown(item,key);
     });
 </script>
 @endsection
