@@ -349,10 +349,11 @@ function deleteSection(section) {
 
         checkboxesContainer.appendChild(checkboxDiv);
         if(key!=null){
-            item.checkbox_input_names[key].forEach(function(value,index) {
-                if(item.checkbox_input_prices!= null)
+            if(item.checkbox_input_prices!= null && item.checkbox_input_names!=null){
+                item.checkbox_input_names[key].forEach(function(value,index) {
                     createCheckBoxOption(checkboxDiv,false, value, item.checkbox_input_prices[key][index]);
-            });
+                });
+            }
         }else{
             createCheckBoxOption(checkboxDiv,false);
         }
@@ -473,10 +474,11 @@ function deleteSection(section) {
 
         selectionsContainer.appendChild(selectionDiv);
         if(key!=null){
-            item.selection_input_names[key].forEach(function(value,index) {
-                if(item.selection_input_prices!= null)
-                    createSelectionOption(selectionDiv, selectionCount,false,value, item.selection_input_prices[key][index]);
-            });
+            if(item.selection_input_prices!= null && item.selection_input_names !=null){
+                item.selection_input_names[key].forEach(function(value,index) {
+                        createSelectionOption(selectionDiv, selectionCount,false,value, item.selection_input_prices[key][index]);
+                });
+            }
         }else{
             createSelectionOption(selectionDiv, selectionCount,false);
         }
@@ -596,10 +598,11 @@ function deleteSection(section) {
 
         dropdownsContainer.appendChild(dropdownDiv);
         if(key!=null){
-            item.dropdown_input_names[key].forEach(function(value,index) {
-                if(item.dropdown_input_prices!= null)
+            if(item.dropdown_input_prices!= null && item.dropdown_input_names){
+                item.dropdown_input_names[key].forEach(function(value,index) {
                     createDropdownOption(dropdownDiv,false,value,item.dropdown_input_prices[key][index]);
-            });
+                });
+            }
         }else{
             createDropdownOption(dropdownDiv,false);
         }
@@ -749,6 +752,7 @@ function deleteSection(section) {
         createCheckbox(item,key);
     });
     var selectionOptions = @json($item->selection_input_titles);
+    console.log(selectionOptions);
     selectionOptions.forEach(function(value,key) {
         createSelection(item,key);
     });
