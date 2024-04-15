@@ -13,7 +13,10 @@ class UpdateItemFormRequest extends FormRequest
     }
     public function rules()
     {
+        /* dd(request()->all()); */
         return [
+            'calories' => ['required','numeric'],
+            'price' => ['required','numeric'],
             'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
             'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
             'checkboxInputTitleAr' => ['array', function ($attribute, $titles, $fail)  {
@@ -32,28 +35,28 @@ class UpdateItemFormRequest extends FormRequest
             }],
             'selectionInputTitleAr' => ['array', function ($attribute, $titles, $fail)  {
                 foreach ($titles as $key => $title) {
-                    if(!isset($this->checkboxInputNameAr[$key])){
+                    if(!isset($this->selectionInputNameAr[$key])){
                         $fail(__('Options of title :num is required for Selection',['num' => $key + 1]));
                     }
                 }
             }],
             'selectionInputTitleEn' => ['array', function ($attribute, $titles, $fail)  {
                 foreach ($titles as $key => $title) {
-                    if(!isset($this->checkboxInputNameEn[$key])){
+                    if(!isset($this->selectionInputNameEn[$key])){
                         $fail(__('Options of title :num is required for Selection',['num' => $key + 1]));
                     }
                 }
             }],
             'dropdownInputTitleAr' => ['array', function ($attribute, $titles, $fail)  {
                 foreach ($titles as $key => $title) {
-                    if(!isset($this->checkboxInputNameAr[$key])){
+                    if(!isset($this->dropdownInputNameAr[$key])){
                         $fail(__('Options of title :num is required for Dropdown',['num' => $key + 1]));
                     }
                 }
             }],
             'dropdownInputTitleEn' => ['array', function ($attribute, $titles, $fail)  {
                 foreach ($titles as $key => $title) {
-                    if(!isset($this->checkboxInputNameEn[$key])){
+                    if(!isset($this->dropdownInputNameEn[$key])){
                         $fail(__('Options of title :num is required for Dropdown',['num' => $key + 1]));
                     }
                 }

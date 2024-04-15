@@ -224,25 +224,6 @@
   </script>
 
 
-<!--begin::Javascript-->
-<script>
-    var hostUrl = "assets/";
-    // script.js
-    const addCategoryButton = document.getElementById("addCategoryButton");
-    const categoryForm = document.getElementById("categoryForm");
-    const categoryNameInput = document.getElementById("categoryName");
-    const categoryList = document.getElementById("categoryList");
-
-    addCategoryButton.addEventListener("click", () => {
-        categoryForm.style.display = "block";
-        categoryList.scrollTo(0, categoryList.scrollHeight);
-        categoryNameInput.focus();
-    });
-
-
-
-</script>
-
 
 <!-- Category sidebar -->
 <script>
@@ -598,7 +579,7 @@ function deleteSection(section) {
 
         dropdownsContainer.appendChild(dropdownDiv);
         if(key!=null){
-            if(item.dropdown_input_prices!= null && item.dropdown_input_names){
+            if(item.dropdown_input_prices!= null && item.dropdown_input_names !=null){
                 item.dropdown_input_names[key].forEach(function(value,index) {
                     createDropdownOption(dropdownDiv,false,value,item.dropdown_input_prices[key][index]);
                 });
@@ -649,25 +630,6 @@ function deleteSection(section) {
 
     addDropdownButton.addEventListener('click', createDropdown);
 
-    document.getElementById('category-submit').addEventListener('submit', function (e) {
-        e.preventDefault();
-        var submitButton = document.querySelector('#saveCategoryBtn');
-        submitButton.disabled = true;
-
-        var inputValue = document.querySelector('input[name=name_ar]').value.trim();
-        if (inputValue === '') {
-            alert('Please fill in the input in (Arabic) tab.');
-            return ;
-        }
-        var inputValueAR = document.querySelector('input[name=name_en]').value.trim();
-        console.log(inputValueAR);
-        if (inputValueAR === '') {
-            alert('Please fill in the input in the (English) tab.');
-            return ;
-        }
-
-        document.getElementById('category-submit').submit();
-    });
 
     document.getElementById('kt_modal_new_target_form').addEventListener('submit', function (e) {
         e.preventDefault();
@@ -745,20 +707,24 @@ function deleteSection(section) {
 </style>
 {{-- Add items options --}}
 <script>
-    var checkboxOptions = @json($item->checkbox_input_titles);
     var item = @json($item);
-    console.log(item);
-    checkboxOptions.forEach(function(value,key) {
-        createCheckbox(item,key);
-    });
+    var checkboxOptions = @json($item->checkbox_input_titles);
+    if(checkboxOptions){
+        checkboxOptions.forEach(function(value,key) {
+            createCheckbox(item,key);
+        });
+    }
     var selectionOptions = @json($item->selection_input_titles);
-    console.log(selectionOptions);
-    selectionOptions.forEach(function(value,key) {
-        createSelection(item,key);
-    });
+    if(selectionOptions){
+        selectionOptions.forEach(function(value,key) {
+            createSelection(item,key);
+        });
+    }
     var dropdownOptions = @json($item->dropdown_input_titles);
-    dropdownOptions.forEach(function(value,key) {
-        createDropdown(item,key);
-    });
+    if(dropdownOptions){
+        dropdownOptions.forEach(function(value,key) {
+            createDropdown(item,key);
+        });
+    }
 </script>
 @endsection

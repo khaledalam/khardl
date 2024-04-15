@@ -157,7 +157,7 @@ class ItemService
             DB::commit();
             return redirect()->back()->with('success', __('Item successfully updated.'));
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            \Sentry\captureException($e);
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
