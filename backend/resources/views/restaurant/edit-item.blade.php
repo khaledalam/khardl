@@ -473,10 +473,10 @@ function deleteSection(section) {
         selectionsContainer.appendChild(selectionDiv);
         if(key!=null){
             item.selection_input_names[key].forEach(function(value,index) {
-                createSelectionOption(selectionDiv, selectionCount,true,value, item.selection_input_prices[key][index]);
+                createSelectionOption(selectionDiv, selectionCount,false,value, item.selection_input_prices[key][index]);
             });
         }else{
-            createSelectionOption(selectionDiv, selectionCount,true);
+            createSelectionOption(selectionDiv, selectionCount,false);
         }
     }
 
@@ -495,7 +495,7 @@ function deleteSection(section) {
 
                 <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
                 value="${price ? price : ''}">
-                <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
             </div>
         `;  }
         else {
@@ -508,7 +508,7 @@ function deleteSection(section) {
 
                 <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
                 value="${price ? price : ''}">
-                <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
             </div>
         `;
 

@@ -768,7 +768,7 @@
                     <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in arabic') }}">
 
                     <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
-                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;  }
             else {
@@ -778,7 +778,7 @@
                     <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in arabic') }}">
 
                     <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
-                    <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                    <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
 
@@ -876,7 +876,7 @@
                         <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in arabic') }}">
 
                         <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
-                        <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                        <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                     </div>
             `; }else {
                 optionDiv.innerHTML = `
@@ -885,7 +885,7 @@
                         <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('Name in arabic') }}">
 
                         <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
-                        <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                        <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                     </div>
             `;
             const deleteOptionButton = optionDiv.querySelector('.delete-option');
