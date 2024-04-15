@@ -58,6 +58,30 @@ class RestaurantService
   
         return view('admin.restaraunts', compact('restaurants', 'user', 'totalRestaurantsCount'));
     }
+    public function appRequested(){
+        $query = Tenant::query()->with('primary_domain')
+        ->whenSearch($request['search'] ?? null);
+        $restaurants = $query->orderBy('created_at','DESC')->get();
+        $totalRestaurantsCount = count($restaurants);
+
+        // TODO @todo make sub active or not tag with search
+        $tenants = [];
+        foreach ($restaurants as $restaurant) {
+            $restaurant->run(function()use($query,$restaurant){
+                $customer_app = ROCustomerAppSub::first();
+                if($customer_app && $customer_app->status == ROSubscription::SUSPEND && !$customer_app->ios_url && !$customer_app->android_url){
+       
+                }else {
+                    $query->where('id', '!=', $restaurant->id);
+                }
+            });
+          
+        }
+        $restaurants = $query->paginate(config('application.perPage') ?? 20);
+        $user = Auth::user();
+
+        return view('admin.app-requested-restaurants', compact('restaurants', 'user', 'totalRestaurantsCount'));
+    }
     public function show(Tenant $tenant)
     {
         $restaurant = $tenant;

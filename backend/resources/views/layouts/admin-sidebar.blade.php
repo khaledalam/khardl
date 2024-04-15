@@ -164,7 +164,7 @@
 
                             @if($user?->hasPermission("can_access_restaurants"))
                                 <!-- Restaurants -->
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'restaurants' || $admin_link == 'restaurant-owner-management') ? 'show' : ''}}">
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'restaurants' || $admin_link == 'app-requested' || $admin_link == 'restaurant-owner-management') ? 'show' : ''}}">
                                     <span class="{{ ($admin_link == 'restaurants' || $admin_link == 'restaurant-owner-management') ? 'menu-link active' : 'menu-link' }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
@@ -203,9 +203,23 @@
                                                     <span class="menu-title">{{ __('restaurant-owners')}}</span>
                                                 </a>
                                             </div>
+                                            @endif
+                                        @if($user?->hasPermission('can_access_restaurants'))
+                                            <!-- Staff evaluation -->
+                                         
+                                            <div class="menu-item">
+                                                <a class="menu-link {{($admin_link == 'app-requested') ? 'active' : ''}}" href="{{ route('admin.restaurants.app-requested') }}">
+                                                    <span class="menu-icon">
+                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                                        <span class="svg-icon svg-icon-2">
+                                                            <i class="fa fa-mobile"></i>
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+                                                    <span class="menu-title">{{ __('Apps requested')}}</span>
+                                                </a>
+                                            </div>
                                         @endif
-
-
                                     </div>
                                 </div>
                             @endif

@@ -139,7 +139,7 @@
                                     </div>
                                     <!--end::Stats-->
                                 </div>
-                                <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
+                                <div class="d-flex flex-column w-200px w-sm-300px mt-3">
                                     <div class="d-flex justify-content-between w-100 mt-auto mb-2">
                                         @if($subscription && $subscription->status == \App\Models\ROSubscription::ACTIVE)
                                             <span class="fw-bold fs-6 text-black fw-bolder">{{ __('plan ends at') }} :</span>
@@ -152,24 +152,38 @@
                                                 {{__("No subscription")}}
                                             </span>
                                         @endif
+
+                                    </div>
+                                    <div class="d-flex justify-content-between w-100 mt-auto mb-2">
+                                        @if($customer_app && $customer_app->status == \App\Models\ROSubscription::ACTIVE)
+                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('customer app plan ends at') }} :</span>
+                                        <span class="badge badge-success p-2 fs-6">
+                                            {{ $customer_app->end_at?->format('Y-m-d') }}
+                                        </span>
+                                        @elseif($customer_app && $customer_app->status == \App\Models\ROSubscription::SUSPEND && !$customer_app->ios_url  && !$customer_app->android_url )
+                                            <span class="fw-bold fs-6 text-black fw-bolder">{{__('Customer application')}}</span>
+                                            <span class="badge badge-light-danger fw-bolder m-1">{{ __('Request for app')}}</span>
+                                        @elseif($customer_app && $customer_app->status == \App\Models\ROSubscription::SUSPEND)
+                                            <span class="fw-bold fs-6 text-black fw-bolder">{{__('Customer application')}}</span>
+                                            {{__("Customer app Subscription is currently suspended")}}
+
+                                            <span class="badge badge-success p-2 fs-6">
+                                        
+                                                {{ $customer_app->end_at?->format('Y-m-d') }}
+                                            </span>
+                                        @else
+                                            <span class="fw-bold fs-6 text-black fw-bolder">{{__('Customer application')}}</span>
+                                            <span class="badge badge-dark p-2 fs-6">
+                                                {{__("No subscription")}}
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
+                    
+                            
                                 <!--end::Wrapper-->
                                 <!--begin::Progress-->
-                                <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
-                                    @if (!is_null($restaurant->website_expire))
-                                    <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('site-end-date')}}</span>
-                                        <span class="badge badge-dark p-2 fs-6">{{$restaurant->website_expire}}</span>
-                                    </div>
-                                    @endif
-                                    @if (!is_null($restaurant->mobile_expire))
-                                    <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('app-end-date')}}</span>
-                                        <span class="badge badge-dark p-2 fs-6">{{ $restaurant->mobile_expire}}</span>
-                                    </div>
-                                    @endif
-                                </div>
+                                
                                 @elseif (!$is_live && !$restaurant?->user?->isBlocked())
                                 <div class="d-flex justify-content-between align-items-center">
                                     @if($user?->hasPermission('can_approve_restaurants'))

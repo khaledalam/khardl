@@ -28,6 +28,9 @@ class RestaurantController extends Controller
     {
         return $this->restaurantService->show($tenant);
     }
+    public function restaurantsAppRequested(Request $request){
+        return $this->restaurantService->appRequested($request);
+    }
     public function activeAndDeactivateDelivery(ActivateAndDeactivateDeliveryFormRequest $request, Tenant $tenant)
     {
         return $tenant->run(function ($tenant) use ($request) {

@@ -1,18 +1,20 @@
  <!--begin::details View-->
  <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
     <!--begin::Card header-->
-    <form action="{{route('admin.update-restaurants-config',['tenant'=>$restaurant->id])}}" method="POST">
-        @csrf
-        @method('PATCH')
+   
         <div class="card-header cursor-pointer">
             <!--begin::Card title-->
             <div class="card-title m-0">
-                <h3 class="fw-bolder m-0">{{ __('Payment gateway') }}</h3>
+                <h3 class="fw-bolder m-0">{{ __('Customer application') }}</h3>
             </div>
             <!--end::Card title-->
         </div>
         <!--begin::Card header-->
         <!--begin::Card body-->
+        @if($customer_app)
+        <form action="{{route('admin.update-restaurants-config',['tenant'=>$restaurant->id])}}" method="POST">
+            @csrf
+            @method('PATCH')
         <div class="card-body p-9">
             <!--begin::Row-->
 
@@ -53,6 +55,13 @@
             </button>
         </div>
     </form>
+        @else
+            <div class="card-title m-0 ">
+                <h3 class="fw-bolder m-0  badge-primary p-2 text-center">{{ __('There is no subscription for customer application yet') }}</h3>
+            </div>
+        @endif
+       
+  
 
 </div>
 <!--end::details View-->
