@@ -165,7 +165,7 @@ class Order extends Model
     {
         return $query->whereHas('delivery_type', function ($q) {
             return $q->where('name', DeliveryType::DELIVERY);
-        });
+        })->where('status','!=', self::PENDING);
     }
     public function scopeOnlineCash($query)
     {
@@ -197,14 +197,30 @@ class Order extends Model
                 return $q->whereDate('created_at', now()->toDateString());
             } elseif ($date == 'last_day') {
                 return $q->whereDate('created_at', now()->subDay()->toDateString());
+            } elseif ($date == 'this_week') {
+                $startDate = now()->startOfWeek();
+                $endDate = now()->endOfWeek();
+                return $q->whereBetween('created_at', [$startDate, $endDate]);
             } elseif ($date == 'last_week') {
                 $startDate = Carbon::now()->subDays(7)->startOfDay();
                 $endDate = Carbon::now()->subDays(1)->endOfDay();
                 return $q->whereBetween('created_at', [$startDate, $endDate]);
-            } elseif ($date == 'this_month') {
+            }  elseif ($date == 'this_month') {
                 $startOfMonth = now()->startOfMonth();
                 $endOfMonth = now()->endOfMonth();
                 return $q->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
+            } elseif ($date == 'last_month') {
+                $startOfLastMonth = now()->subMonth()->startOfMonth();
+                $endOfLastMonth = now()->subMonth()->endOfMonth();
+                return $q->whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth]);
+            } elseif ($date == 'this_year') {
+                $startOfYear = now()->startOfYear();
+                $endOfYear = now()->endOfYear();
+                return $q->whereBetween('created_at', [$startOfYear, $endOfYear]);
+            } elseif ($date == 'last_year') {
+                $startOfLastYear = now()->subYear()->startOfYear();
+                $endOfLastYear = now()->subYear()->endOfYear();
+                return $q->whereBetween('created_at', [$startOfLastYear, $endOfLastYear]);
             }
         });
     }
