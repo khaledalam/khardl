@@ -312,9 +312,7 @@ Route::group([
         Route::get('categories', [CategoryController::class, 'index']);
         Route::get('orders', [OrderController::class, 'index']);
 
-        Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class, 'asset'])
-            ->where('path', '(.*)')
-            ->name('stancl.tenancy.asset');
+      
     });
 
     Route::get('/change-language/{locale}', static function ($locale) {
@@ -333,7 +331,9 @@ Route::group([
         return Redirect::back();
     })->name('change.language');
 
-
+    Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class, 'asset'])
+    ->where('path', '(.*)')
+    ->name('stancl.tenancy.asset');
 });
 Route::middleware([
     'api',

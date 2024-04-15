@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer("amount");
             $table->string("ios_url")->nullable();
             $table->string("android_url")->nullable();
+            $table->string("icon")->nullable();
             $table->string("cus_id");
             $table->string("chg_id");
             $table->string("card_id")->nullable();

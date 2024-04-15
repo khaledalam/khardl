@@ -20,6 +20,7 @@ class ROCustomerAppSub extends Model
         "chg_id",
         'cus_id',
         'card_id',
+        'icon',
         'status',
         'ios_url',
         'android_url',

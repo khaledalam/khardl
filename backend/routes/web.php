@@ -161,7 +161,9 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                         Route::get('/app-requested/restaurants','restaurantsAppRequested')->middleware('permission:can_access_restaurants')->name('restaurants.app-requested');
                         Route::get('/restaurants/{tenant}','show')->middleware('permission:can_view_restaurants')->name('view-restaurants');
                         Route::patch('/restaurants/{tenant}/config','updateConfig')->middleware('permission:can_view_restaurants')->name('update-restaurants-config');
-                        Route::get('/restaurants/{tenant}/tap/details','tapLead')->middleware('permission:can_view_restaurants')->name('view-restaurants-tap-lead');
+                        Route::patch('/restaurants/{tenant}/update-restaurants-customer-app','updateCustomerApp')->middleware('permission:can_view_restaurants')->name('update-restaurants-customer-app');
+                        
+                        Route::get('/restaurants/{tenant}/tap/details','tapLead')->middleware('permission:can_view_restaurants')->name('view-restaurants-tap-lead');                        
                         Route::get('/restaurants','index')->middleware('permission:can_access_restaurants')->name('restaurants');
                         Route::post('/delivery/{tenant}', 'activeAndDeactivateDelivery')->name('delivery.activateAndDeactivate');
                         Route::post('/restaurants/{tenant}/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.sign-new-lead');
