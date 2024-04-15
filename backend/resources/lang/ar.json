@@ -1121,6 +1121,8 @@
     "Body Shape": "شكل الجسم",
     "Eye Frame Shape": "شكل إطار العين",
     "Eye Ball Shape": "شكل كرة العين",
-    "Size of the image": "حجم الصورة"
+    "Size of the image": "حجم الصورة",
+    "Option in english":"الخيار بالإنجليزية",
+    "Option in arabic":"الخيار بالعربية"
 
 }

@@ -613,6 +613,7 @@
                             <button class="delete-checkbox btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
+                    <hr>
                     <div id="inputContainer${checkboxCount}">
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
@@ -721,6 +722,7 @@
                             <button class="delete-selection btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
+                    <hr>
                     <div id="inputContainer${selectionCount}">
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
@@ -828,6 +830,7 @@
                             <button class="delete-dropdown btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
+                    <hr>
                     <div id="inputContainer${dropdownCount}">
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
