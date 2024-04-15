@@ -94,7 +94,7 @@
     "Coupon has been applied":"تم تطبيق القسيمة",
     "Android Order Mobile App": "تطبيق الطلبات علي هواتف اندرويد",
     "iPhone Order Mobile App": "تطبيق الطلبات علي هواتف ايفون",
-    "Orders Mobile App": "تطبيق الطلبات علي الهاتف",
+    "Orders Mobile App": "تطبيق استلام طلباتك",
     "Install app": "تثبيت التطبيق",
     "Your tap account has been created successfully, waiting for approval and we will contact you then":"لقد تم إنشاء حساب Tap الخاص بك بنجاح، في انتظار الموافقة وسوف نتصل بك بعد ذلك",
     "restaurant setting has been update successfully":"تم تحديث اعدادات الموقع بنجاح",
@@ -1045,7 +1045,7 @@
     "Max time for drivers to pickup order" : "أقصى وقت للسائقين لاستلام الطلب",
     "The number of minutes for drivers so he can pick up order before order goes to delivery companies" : "عدد الدقائق لدي السائق لالتقاط الطلب قبل خروج الطلب الي شركات التوصيل",
     "Number of minutes" : "عدد الدقائق",
-    "Max time for drivers to pickup order(in case if delivery companies exist and drivers)" : "الحد الأقصى للوقت الذي يستغرقه السائقون لاستلام الطلب (في حالة وجود شركات التوصيل والسائقين)",
+    "Max time for drivers to pickup order(in case if delivery companies exist and drivers)" : "الحد الأقصى للوقت الذي يستغرقه السائقون لاستلام الطلب (في حالة وجود شركات التوصيل اوالسائقين)",
     "Default: :minutes minutes" : "الحالي : :minutes دقيقة",
     "Delivery companies option" : "تفعيل شركات التوصيل",
     "Drivers option" : "تفعيل السائقين",
@@ -1087,6 +1087,7 @@
     "Reason":"السبب",
     "This branch is inactive":"هذا الفرع غير نشط",
     "Order has been created successfully":"تم انشاء الطلب بنجاح",
+    "Address updated successfully": "تم تحديث العنوان بنجاح",
     "You will not be able to receive orders from this branch":"لن تتمكن من تلقي اي طلبات من هذا الفرع",
     "token saved successfully.":"تم حفظ رقم الجهاز, بنجاح.",
     "New order has been created for customer :name.":"تم انشاء طلب لعميل :name",
@@ -1128,6 +1129,10 @@
     "Item successfully updated.":"تم تحديث العنصر بنجاح.",
     "Options of title :num is required for Checkbox":"خيارات العناون ال:num للخيارات(اختيار متعدد) مطلوبة .",
     "Options of title :num is required for Selection":"خيارات العناون ال:num للخيارات الحره مطلوبة .",
-    "Options of title :num is required for Dropdown":"خيارات العناون ال:num للخيارات من قائمه مطلوبة ."
+    "Options of title :num is required for Dropdown":"خيارات العناون ال:num للخيارات من قائمه مطلوبة .",
+    "Vehicle number":"رقم المركبة",
+    "Vehicle No.":"رقم المركبة",
+    "View driver":"عرض السائق",
+    "The old password is incorrect.":"كلمة المرور القديمة غير صحيحة."
 
 }

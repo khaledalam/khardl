@@ -62,6 +62,7 @@
                                     <th class="min-w-150px">{{ __('This month') }}</th>
                                     <th class="min-w-150px">{{ __('phone-number') }}</th>
                                     <th class="min-w-150px">{{ __('email') }}</th>
+                                    <th class="min-w-150px">{{ __('Vehicle No.') }}</th>
                                     <th class="min-w-150px text-end">{{ __('actions') }}</th>
                                 </tr>
                             </thead>
@@ -101,7 +102,13 @@
                                         <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->email }}</a>
                                     </td>
                                     <td>
+                                        <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->vehicle_number }}</a>
+                                    </td>
+                                    <td>
                                         <div class="d-flex justify-content-end flex-shrink-0">
+                                            <a href="{{ route('drivers.show', ['driver' => $driver->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
                                             <a href="{{ route('drivers.edit', ['driver' => $driver->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                 <span class="svg-icon svg-icon-3">

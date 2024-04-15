@@ -61,6 +61,7 @@ const convertToAddress = async (lat, lng) => {
             });
     } catch (error) {
         toast.error(error.response);
+        return "";
     }
 };
 
@@ -304,7 +305,7 @@ function PlacesAutoComplete({
                     type="text"
                     name="location"
                     id={"location"}
-                    value={value}
+                    value={value || ""}
                     onChange={(e) => setValue(e.target.value)}
                     disabled={!ready}
                     className={inputStyle}

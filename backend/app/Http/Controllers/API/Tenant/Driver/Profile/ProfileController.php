@@ -18,4 +18,8 @@ class ProfileController extends BaseController
     {
         return $this->profileService->changePassword($request);
     }
+    public function getProfile(Request $request)
+    {
+        return $this->profileService->getProfile();
+    }
 }
