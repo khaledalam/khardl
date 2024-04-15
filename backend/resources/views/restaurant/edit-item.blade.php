@@ -9,6 +9,26 @@
         <div id="kt_content_container">
             <!--begin::Navbar-->
             <div class="card mb-5 mb-xl-10">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="d-flex flex-column">
+                            <!--begin::Name-->
+                            <div class="d-flex align-items-center mb-2">
+
+                                <a class="text-primar fs-2 fw-bolder me-1">
+                                    {{ __('Edit item : '). $item->name}}
+                                </a>
+                            </div>
+                            <!--end::Name-->
+                        </div>
+                    </div>
+                    <a href="{{ route('restaurant.get-category', ['id' => $item->category_id,'branchId' => $item->branch_id]) }}" class="mt-4">
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <i class="fa fa-arrow-left"></i>
+                            {{ __('Back to list') }}
+                        </button>
+                    </a>
+                </div>
                 <div class="card-body pt-9 pb-0">
                     <div class="modal-dialog" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
                         <!--begin::Modal dialog-->
@@ -47,7 +67,7 @@
                                         <!--begin::Input group-->
                                         <div class="d-flex flex-column mb-8 fv-row">
                                             <!--begin::Label-->
-                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2 mt-2">
                                                 {{__('item-photo')}}</span>
                                             </label>
                                             <!--end::Label-->
@@ -168,7 +188,6 @@
 
                                         <!--begin::Actions-->
                                         <div class="text-center">
-                                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
                                             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
                                                 <span class="indicator-label">{{__('submit')}}</span>
                                                 <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
@@ -195,76 +214,6 @@
     </div>
 
 </div>
-<script>
-    var modal = document.getElementById('kt_modal_new_target');
-    modal.addEventListener('hidden.bs.modal', function () {
-        document.getElementById("kt_modal_new_target_form").reset();
-        document.getElementById('checkboxes').innerHTML = '';
-        document.getElementById('selections').innerHTML = '';
-        document.getElementById('dropdowns').innerHTML = '';
-
-    });
-    var deleteButtons = document.querySelectorAll('.delete-button');
-                deleteButtons.forEach(function(button) {
-                    button.addEventListener('click', function(event) {
-                        event.preventDefault();
-
-                        var form = button.closest('.delete-form');
-
-                        Swal.fire({
-                            title: '{{ __('are-you-sure') }}',
-                            text: "{{ __('you-wont-be-able-to-undo-this') }}",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#d33',
-                            cancelButtonColor: '#3085d6',
-                            confirmButtonText: '{{ __('delete') }}',
-                            cancelButtonText: '{{ __('cancel') }}'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                form.submit();
-                            }
-                        });
-                    });
-                });
-  </script>
-
-
-
-<!-- Category sidebar -->
-<script>
-const sectionsList = document.getElementById('sections-list');
-
-
-// Function to toggle between edit and save modes for a section
-function toggleEditSave(section) {
-    const sectionTitle = section.querySelector('.menu-title');
-    const editButton = section.querySelector('.edit-button');
-
-    if (sectionTitle.contentEditable === 'true') {
-        // Save mode
-        sectionTitle.contentEditable = 'false';
-        editButton.innerHTML = '<i class="fas fa-edit" style="color:#00a0f7;"></i>';
-    } else {
-        // Edit mode
-        sectionTitle.contentEditable = 'true';
-        editButton.innerHTML = '<i class="fas fa-save" style="color:#19b919;"></i>';
-    }
-}
-
-// Function to delete a section with confirmation
-function deleteSection(section) {
-    const confirmation = confirm("Are you sure you want to delete this section?");
-    if (confirmation) {
-        sectionsList.removeChild(section);
-    }
-}
-
-
-// Add event listener for the "Add New Section" button
-
-</script>
-
 
 <!-- Checkbox -->
 <script>
