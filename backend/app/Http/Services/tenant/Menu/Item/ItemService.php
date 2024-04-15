@@ -2,17 +2,21 @@
 
 namespace App\Http\Services\tenant\Menu\Item;
 
+use App\Models\Tenant\Cart;
+use App\Models\Tenant\CartItem;
 use App\Models\Tenant\Item;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+
 class ItemService
 {
     public function show($request, $item)
     {
-        return view('restaurant.view-item',compact('item'));
+        return view('restaurant.view-item', compact('item'));
     }
     public function addItem($request, $id, $branchId)
     {
@@ -24,15 +28,17 @@ class ItemService
         // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
         // TODO @todo validate the remain fields of the coming request
 
-        if (!$request->validate([
-            'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
-            'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
-        ], [
-            'item_name_en.regex'=>__("English name is not valid"),
-            'item_name_en.required'=>__("English name is required"),
-            'item_name_ar.regex'=>__("Arabic name is not valid"),
-            'item_name_ar.required'=>__("Arabic name is required")
-        ])) {
+        if (
+            !$request->validate([
+                'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
+                'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
+            ], [
+                'item_name_en.regex' => __("English name is not valid"),
+                'item_name_en.required' => __("English name is required"),
+                'item_name_ar.regex' => __("Arabic name is not valid"),
+                'item_name_ar.required' => __("Arabic name is required")
+            ])
+        ) {
             return redirect()->back()->with('error', __('Invalid Product Name'));
         }
         // dd([
@@ -97,13 +103,82 @@ class ItemService
                 Item::create($itemData);
                 DB::commit();
 
-                return redirect()->back()->with('success', 'Item successfully added.');
+                return redirect()->back()->with('success', __('Item successfully added.'));
             } catch (\Exception $e) {
                 logger($e->getMessage());
                 DB::rollback();
                 return redirect()->back()->with('error', $e->getMessage());
             }
         }
+    }
+    public function update(Request $request, Item $item)
+    {
+        //TODO: refactor add and update methods
+        //TODO: make validation request file
+        $validator = Validator::make($request->all(), [
+            'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
+            'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
+        ], [
+            'item_name_en.regex' => __("English name is not valid"),
+            'item_name_en.required' => __("English name is required"),
+            'item_name_ar.regex' => __("Arabic name is not valid"),
+            'item_name_ar.required' => __("Arabic name is required")
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', __('Invalid Product Name'));
+        }
+        DB::beginTransaction();
+        try {
+            $photoFile = $request->file('photo');
+
+            if ($photoFile) {
+                $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
+
+                while (Storage::disk('public')->exists('items/' . $filename)) {
+                    $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
+                }
+
+                $photoFile->storeAs('items', $filename, 'public');
+                //TODO: remove old image
+                if ($item->photo && Storage::disk('public')->exists($item->photo)) {
+                    Storage::disk('public')->delete($item->photo);
+                }
+
+                $item->photo = tenant_asset('items/' . $filename);
+            }
+
+            $item->price = $request->input('price');
+            $item->calories = $request->input('calories');
+            $item->name = trans_json($request->input('item_name_en'), $request->input('item_name_ar'));
+            $item->description = trans_json($request->input('description_en'), $request->input('description_ar'));
+            $item->checkbox_required = ($request->input('checkbox_required')) ? array_values($request->input('checkbox_required')) : null;
+            $item->checkbox_input_titles = ($request->checkboxInputTitleEn) ? array_map(null, $request->checkboxInputTitleEn, $request->checkboxInputTitleAr) : null;
+            $item->checkbox_input_maximum_choices = $request->input('checkboxInputMaximumChoice');
+            $item->checkbox_input_names = $this->processOptions($request, 'checkboxInputNameEn', 'checkboxInputNameAr');
+            $item->checkbox_input_prices = $request->input('checkboxInputPrice') ? array_values($request->input('checkboxInputPrice')) : null;
+            $item->selection_required = $request->input('selection_required') ? array_values($request->input('selection_required')) : null;
+            $item->selection_input_names = $this->processOptions($request, 'selectionInputNameEn', 'selectionInputNameAr');
+            $item->selection_input_prices = $request->input('selectionInputPrice') ? array_values($request->input('selectionInputPrice')) : null;
+            $item->selection_input_titles = (isset($request->selectionInputTitleEn)) ? array_map(null, $request->selectionInputTitleEn, $request->selectionInputTitleAr) : null;
+            $item->dropdown_required = ($request->input('dropdown_required')) ? array_values($request->input('dropdown_required')) : null;
+            $item->dropdown_input_titles = (isset($request->dropdownInputTitleEn)) ? array_map(null, $request->dropdownInputTitleEn, $request->dropdownInputTitleAr) : null;
+            $item->dropdown_input_names = $this->processOptions($request, 'dropdownInputNameEn', 'dropdownInputNameAr');
+            $item->dropdown_input_prices = $request->input('dropdownInputPrice') ? array_values($request->input('dropdownInputPrice')) : null;
+            $item->availability = ($request->input('availability')) ? true : false;
+            $item->save();
+            $this->removeItemFromCart($item->id);
+            DB::commit();
+            return redirect()->back()->with('success', __('Item successfully updated.'));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+    public function removeItemFromCart($item_id)
+    {
+        CartItem::where('item_id', $item_id)->delete();
     }
     public function deleteItem($id)
     {
@@ -115,14 +190,15 @@ class ItemService
 
             DB::table('items')->where('id', $id)->delete();
 
-            return redirect()->route('restaurant.get-category', ['id' => $selectedItem->category_id,'branchId' => $selectedItem->branch_id])->with('success', 'Item successfully deleted.');
+            return redirect()->route('restaurant.get-category', ['id' => $selectedItem->category_id, 'branchId' => $selectedItem->branch_id])->with('success', 'Item successfully deleted.');
 
         } else {
             return redirect()->back()->with('error', 'You are not authorized to access that page.');
         }
     }
-    public function edit($request,$item){
-        return view('restaurant.edit-item',compact('item'));
+    public function edit($request, $item)
+    {
+        return view('restaurant.edit-item', compact('item'));
     }
     function processOptions($request, $enKey, $arKey)
     {

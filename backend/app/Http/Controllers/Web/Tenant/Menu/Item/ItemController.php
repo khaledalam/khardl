@@ -23,6 +23,10 @@ class ItemController extends BaseController
     {
         return $this->itemService->addItem($request, $id, $branchId);
     }
+    public function update(Request $request, Item $item)
+    {
+        return $this->itemService->update($request, $item);
+    }
     public function delete($id)
     {
         return $this->itemService->deleteItem($id);

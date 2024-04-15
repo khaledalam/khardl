@@ -1123,6 +1123,8 @@
     "Eye Ball Shape": "شكل كرة العين",
     "Size of the image": "حجم الصورة",
     "Option in english":"الخيار بالإنجليزية",
-    "Option in arabic":"الخيار بالعربية"
+    "Option in arabic":"الخيار بالعربية",
+    "Item successfully added.":"تم اضافة العنصر بنجاح.",
+    "Item successfully updated.":"تم تحديث العنصر بنجاح."
 
 }

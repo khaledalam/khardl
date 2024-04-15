@@ -40,7 +40,7 @@
 
                                     <!--begin:Form-->
 
-                                    <form id="kt_modal_new_target_form" class="form"  method="POST" enctype="multipart/form-data">
+                                    <form id="kt_modal_new_target_form" class="form" action="{{ route('restaurant.update-item',['item' => $item->id]) }}"  method="POST" enctype="multipart/form-data">
                                         @csrf
 
                                         <!--end::Heading-->
@@ -48,10 +48,10 @@
                                         <div class="d-flex flex-column mb-8 fv-row">
                                             <!--begin::Label-->
                                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                <span class="required">{{__('item-photo')}}</span>
+                                                {{__('item-photo')}}</span>
                                             </label>
                                             <!--end::Label-->
-                                            <input type="file" class="form-control form-control-solid" required placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                            <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
                                             <img alt="product_image" src="{{ $item->photo }}" style="max-height: 120px;max-width:120px"/>
                                         </div>
                                         <!--end::Input group-->
@@ -87,7 +87,7 @@
                                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
                                                 </label>
                                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                    <input type="checkbox" name="availability" value="{{ old('availability') || $item->availability ? 'checked' : '' }}">
+                                                    <input type="checkbox" name="availability" value="1" {{ old('availability') || $item->availability ? 'checked' : '' }}>
                                                 </label>
                                             </div>
 
@@ -308,9 +308,9 @@ function deleteSection(section) {
                 <div id="inputContainer${checkboxCount}">
                     <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
                         <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleEn[]"  placeholder="{{ __('Title in english') }}"
-                        value="${key !=null ? item.checkbox_input_titles[key][1]: ''}">
-                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[]" placeholder="{{ __('Title in arabic') }}"
                         value="${key !=null ? item.checkbox_input_titles[key][0]: ''}">
+                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[]" placeholder="{{ __('Title in arabic') }}"
+                        value="${key !=null ? item.checkbox_input_titles[key][1]: ''}">
 
                         <input type="number" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" min="0" step="1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}"
                         value="${key !=null ? item.checkbox_input_maximum_choices[key]: ''}">
@@ -367,9 +367,9 @@ function deleteSection(section) {
             optionDiv.innerHTML = `
             <div class="d-flex justify-content-between mt-4">
                 <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in english') }}"
-                value="${option ? option[1] : ''}">
-                <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
                 value="${option ? option[0] : ''}">
+                <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
+                value="${option ? option[1] : ''}">
 
                 <input type="number" min="0" step="0.1" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Price') }}"
                 value="${price ? price : ''}">
@@ -380,9 +380,9 @@ function deleteSection(section) {
             optionDiv.innerHTML = `
             <div class="d-flex justify-content-between mt-4">
                 <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
-                value="${option ? option[1] : ''}">
-                <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
                 value="${option ? option[0] : ''}">
+                <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
+                value="${option ? option[1] : ''}">
 
                 <input type="number" step="0.1" min="0" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Price') }}"
                 value="${price ? price : ''}">
@@ -434,9 +434,9 @@ function deleteSection(section) {
                 <div id="inputContainer${selectionCount}">
                     <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
                         <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[]" placeholder="{{ __('Title in english') }}"
-                        value="${key !=null ? item.selection_input_titles[key][1]: ''}">
-                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}"
                         value="${key !=null ? item.selection_input_titles[key][0]: ''}">
+                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}"
+                        value="${key !=null ? item.selection_input_titles[key][1]: ''}">
 
                         <button class="delete-selection btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                     </div>
@@ -491,9 +491,9 @@ function deleteSection(section) {
         optionDiv.innerHTML = `
             <div class="d-flex justify-content-between align-items-center mt-5">
                 <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
-                value="${option ? option[1] : ''}">
-                <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
                 value="${option ? option[0] : ''}">
+                <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                value="${option ? option[1] : ''}">
 
                 <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
                 value="${price ? price : ''}">
@@ -504,9 +504,9 @@ function deleteSection(section) {
             optionDiv.innerHTML = `
             <div class="d-flex justify-content-between align-items-center mt-5">
                 <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
-                value="${option ? option[1] : ''}">
-                <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
                 value="${option ? option[0] : ''}">
+                <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                value="${option ? option[1] : ''}">
 
                 <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
                 value="${price ? price : ''}">
@@ -557,9 +557,9 @@ function deleteSection(section) {
                 <div id="inputContainer${dropdownCount}">
                     <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
                         <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[]" placeholder="{{ __('Title in english') }}"
-                        value="${key !=null ? item.dropdown_input_titles[key][1]: ''}">
-                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}"
                         value="${key !=null ? item.dropdown_input_titles[key][0]: ''}">
+                        <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}"
+                        value="${key !=null ? item.dropdown_input_titles[key][1]: ''}">
 
                         <button class="delete-dropdown btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                     </div>
@@ -614,24 +614,24 @@ function deleteSection(section) {
         optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
                     <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in english') }}"
-                    value="${option ? option[1] : ''}">
-                    <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
                     value="${option ? option[0] : ''}">
+                    <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                    value="${option ? option[1] : ''}">
 
                     <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
-                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
         `; }else {
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
                     <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
-                    value="${option ? option[1] : ''}">
-                    <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('Option in arabic') }}"
                     value="${option ? option[0] : ''}">
+                    <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('Option in arabic') }}"
+                    value="${option ? option[1] : ''}">
 
                     <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
                     value="${price ? price : ''}">
-                    <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                    <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
         `;
         const deleteOptionButton = optionDiv.querySelector('.delete-option');
