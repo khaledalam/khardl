@@ -76,7 +76,7 @@ class RestaurantController extends Controller
             }else {
                 $customer_app->android_url = null;
                 $customer_app->ios_url = null;
-                $customer_app->status = ROSubscription::SUSPEND;
+                $customer_app->status = ROCustomerAppSub::REQUESTED;
             }
   
             if($request->icon){

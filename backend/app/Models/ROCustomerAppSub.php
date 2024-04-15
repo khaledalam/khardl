@@ -31,11 +31,11 @@ class ROCustomerAppSub extends Model
 
     public const NEW ="new";
 
-    
+
     public const ACTIVE = 'active';
     public const DEACTIVATE = 'deactivate';
     public const SUSPEND = 'suspend';
-
+    public const REQUESTED ='requested';
     public function user(){
         return $this->belongsTo(RestaurantUser::class,'user_id');
     }

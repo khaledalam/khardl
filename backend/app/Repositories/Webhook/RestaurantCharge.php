@@ -55,7 +55,7 @@ class RestaurantCharge
                     'amount' => $data['amount'],
                     'user_id' => $user->id,
                     'type' => $data['metadata']['subscription'],
-                    'status' => ROSubscription::SUSPEND, // until activate it in the admin dashboard 
+                    'status' => ROCustomerAppSub::REQUESTED, // until activate it in the admin dashboard 
                     'chg_id' => $data['id'],
                     'cus_id' => env('TAP_DEFAULT_CUSTOMER_ID', 'cus_LV06G4620241548c2JK1002613'),
                     'card_id' => $data['card']['id'] ?? null,

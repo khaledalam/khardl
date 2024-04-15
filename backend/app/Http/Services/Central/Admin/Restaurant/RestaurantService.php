@@ -66,17 +66,7 @@ class RestaurantService
 
         // TODO @todo make sub active or not tag with search
         $tenants = [];
-        foreach ($restaurants as $restaurant) {
-            $restaurant->run(function()use($query,$restaurant){
-                $customer_app = ROCustomerAppSub::first();
-                if($customer_app && $customer_app->status == ROSubscription::SUSPEND && !$customer_app->ios_url && !$customer_app->android_url){
-       
-                }else {
-                    $query->where('id', '!=', $restaurant->id);
-                }
-            });
-          
-        }
+    
         $restaurants = $query->paginate(config('application.perPage') ?? 20);
         $user = Auth::user();
 

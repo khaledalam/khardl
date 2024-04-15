@@ -28,7 +28,13 @@
                     <input type="text" name="android_url" class="form-control" id="" value="{{$customer_app->android_url}}">
                 </div>
                 <div class="col-lg-1 mt-2">
-                    <img src="{{global_asset('images/logo_playstore.svg')}}" width="90"/>
+                    @if($customer_app->android_url)
+                        <a href="{{$customer_app->android_url}}" target="_blank">
+                            <img src="{{global_asset('images/logo_playstore.svg')}}" width="90"/>
+                        </a>
+                    @else
+                        <img src="{{global_asset('images/logo_playstore.svg')}}" width="90"/>
+                    @endif
                 </div>
                 <!--end::Col-->
             </div>
@@ -46,7 +52,13 @@
                     <input type="text" class="form-control " name="ios_url" value="{{$customer_app->ios_url}}">
                 </div>
                 <div class="col-lg-1 mt-2">
-                    <img src="{{global_asset('images/logo_appstore.svg')}}" width="90"/>
+                    @if($customer_app->android_url)
+                    <a href="{{$customer_app->android_url}}" target="_blank">
+                        <img src="{{global_asset('images/logo_appstore.svg')}}" width="90" />
+                    </a>
+                @else
+                <img src="{{global_asset('images/logo_appstore.svg')}}" width="90"/>
+                @endif
                 </div>
                 <!--end::Col-->
             </div>
