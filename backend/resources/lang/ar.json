@@ -1125,6 +1125,9 @@
     "Option in english":"الخيار بالإنجليزية",
     "Option in arabic":"الخيار بالعربية",
     "Item successfully added.":"تم اضافة العنصر بنجاح.",
-    "Item successfully updated.":"تم تحديث العنصر بنجاح."
+    "Item successfully updated.":"تم تحديث العنصر بنجاح.",
+    "Options of title :num is required for Checkbox":"خيارات العناون ال:num للخيارات(اختيار متعدد) مطلوبة .",
+    "Options of title :num is required for Selection":"خيارات العناون ال:num للخيارات الحره مطلوبة .",
+    "Options of title :num is required for Dropdown":"خيارات العناون ال:num للخيارات من قائمه مطلوبة ."
 
 }

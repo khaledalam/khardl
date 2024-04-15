@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Tenant\Menu\Item;
 
 use App\Http\Controllers\Web\BaseController;
+use App\Http\Requests\Tenant\Menu\UpdateItemFormRequest;
 use App\Http\Services\tenant\Menu\Item\ItemService;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
 use App\Models\Tenant\Item;
@@ -23,7 +24,7 @@ class ItemController extends BaseController
     {
         return $this->itemService->addItem($request, $id, $branchId);
     }
-    public function update(Request $request, Item $item)
+    public function update(UpdateItemFormRequest $request, Item $item)
     {
         return $this->itemService->update($request, $item);
     }

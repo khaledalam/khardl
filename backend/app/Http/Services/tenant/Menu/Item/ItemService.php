@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\tenant\Menu\Item;
 
+use App\Http\Requests\Tenant\Menu\UpdateItemFormRequest;
 use App\Models\Tenant\Cart;
 use App\Models\Tenant\CartItem;
 use App\Models\Tenant\Item;
@@ -111,23 +112,8 @@ class ItemService
             }
         }
     }
-    public function update(Request $request, Item $item)
+    public function update(UpdateItemFormRequest $request, Item $item)
     {
-        //TODO: refactor add and update methods
-        //TODO: make validation request file
-        $validator = Validator::make($request->all(), [
-            'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
-            'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
-        ], [
-            'item_name_en.regex' => __("English name is not valid"),
-            'item_name_en.required' => __("English name is required"),
-            'item_name_ar.regex' => __("Arabic name is not valid"),
-            'item_name_ar.required' => __("Arabic name is required")
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput()->with('error', __('Invalid Product Name'));
-        }
         DB::beginTransaction();
         try {
             $photoFile = $request->file('photo');
