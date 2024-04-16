@@ -71,7 +71,7 @@ class CartData extends TenantTestCase
                     $result[$i]['ar'][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$sub_option][1], $item->checkbox_input_prices[$i][$sub_option]];
                     $result[$i]['en'][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$sub_option][0], $item->checkbox_input_prices[$i][$sub_option]];
 
-                    $totalPrice += (float) $item->checkbox_input_prices[$i][$sub_option];
+                    $totalPrice += (float) ($item->checkbox_input_prices[$i][$sub_option] ?? 0);
                 }
             }
         }
@@ -85,7 +85,7 @@ class CartData extends TenantTestCase
             foreach ($options as $i => $option) {
                 $result[$i]['en'][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$option][0], $item->selection_input_prices[$i][$option]];
                 $result[$i]['ar'][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$option][1], $item->selection_input_prices[$i][$option]];
-                $totalPrice += (float) $item->selection_input_prices[$i][$option];
+                $totalPrice += (float) ($item->selection_input_prices[$i][$option] ?? 0);
             }
         }
         return [$result, $totalPrice];
@@ -99,7 +99,7 @@ class CartData extends TenantTestCase
                 if ($option !== null) {
                     $result[$i]['en'][$item->dropdown_input_titles[$i][0]] = [$item->dropdown_input_names[$i][$option][0], $item->dropdown_input_prices[$i][$option]];
                     $result[$i]['ar'][$item->dropdown_input_titles[$i][1]] = [$item->dropdown_input_names[$i][$option][1], $item->dropdown_input_prices[$i][$option]];
-                    $totalPrice += (float) $item->dropdown_input_prices[$i][$option];
+                    $totalPrice += (float) ($item->dropdown_input_prices[$i][$option] ?? 0);
                 }
             }
         }

@@ -27,6 +27,7 @@ class OrderService
         $query = Order::with(['payment_method','items','branch','user'])
             ->delivery()
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
+            ->WhenDateString($request['date_string']??null)
             ->when($request->status == 'ready', function ($query) {
                 $settings = Setting::first();
                 $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
@@ -54,7 +55,6 @@ class OrderService
 
         $perPage = config('application.perPage', 20);
         $orders = $query->paginate($perPage);
-
         return $this->sendResponse(new OrderCollection($orders), '');
     }
     public function history(Request $request)
@@ -75,7 +75,6 @@ class OrderService
     }
     public function orderDetails(Request $request, Order $order)
     {
-        $request['km'] = 'get value';
         $order->load(['user','branch','items']);
         return $this->sendResponse(new OrderResource($order), '');
     }

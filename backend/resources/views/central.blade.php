@@ -29,6 +29,7 @@
     <div id="root"></div>
     <script>
         window.csrfToken = "{{ csrf_token() }}";
+        const sentry_on = "{{ strlen(env('SENTRY_LARAVEL_DSN')) > 5 ? '1' : '0' }}"
 
     </script>
     <script type="text/javascript" src="{{ mix('js/central.js') }}"></script>

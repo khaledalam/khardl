@@ -207,7 +207,9 @@ return [
         "wallet.bank.documents.0.issuing_date" => "تاريخ اصدار كشف الحساب",
         "wallet.bank.account.name" => "اسم الشركة",
         "android_url"=>"رابط الاندرويد",
-        "ios_url"=>"رابط الايفون"
+        "ios_url"=>"رابط الايفون",
+        "calories" => "السعرات",
+        "old_password" => "كلمة المرور القديمة"
 
     ],
     'values' => [

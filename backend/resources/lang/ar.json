@@ -1154,8 +1154,17 @@
     "Eye Frame Shape": "شكل إطار العين",
     "Eye Ball Shape": "شكل كرة العين",
     "Size of the image": "حجم الصورة",
+    "Option in english":"الخيار بالإنجليزية",
+    "Option in arabic":"الخيار بالعربية",
+    "Item successfully added.":"تم اضافة المنتج بنجاح.",
+    "Item successfully updated.":"تم تحديث المنتج بنجاح.",
+    "Options of title :num is required for Checkbox":"خيارات العناون ال:num للخيارات(اختيار متعدد) مطلوبة .",
+    "Options of title :num is required for Selection":"خيارات العناون ال:num للخيارات الحره مطلوبة .",
+    "Options of title :num is required for Dropdown":"خيارات العناون ال:num للخيارات من قائمه مطلوبة .",
     "Vehicle number":"رقم المركبة",
     "Vehicle No.":"رقم المركبة",
-    "View driver":"عرض السائق"
+    "View driver":"عرض السائق",
+    "The old password is incorrect.":"كلمة المرور القديمة غير صحيحة.",
+    "Edit item : ":" تعديل المنتج : "
 
 }

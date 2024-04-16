@@ -101,7 +101,7 @@ class CartRepository
             foreach ($option as $j => $sub_option) {
                 $updatedOptions[$i]['ar'][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$sub_option][1], $item->checkbox_input_prices[$i][$sub_option]];
                 $updatedOptions[$i]['en'][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$sub_option][0], $item->checkbox_input_prices[$i][$sub_option]];
-                $totalPrice += (float) $item->checkbox_input_prices[$i][$sub_option];
+                $totalPrice += (float) ($item->checkbox_input_prices[$i][$sub_option] ?? 0);
             }
         }
         return $totalPrice;
@@ -112,7 +112,7 @@ class CartRepository
         foreach ($options as $i => $option) {
             $updatedOptions[$i]['ar'][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$option][1], $item->selection_input_prices[$i][$option]];
             $updatedOptions[$i]['en'][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$option][0], $item->selection_input_prices[$i][$option]];
-            $totalPrice += (float) $item->selection_input_prices[$i][$option];
+            $totalPrice += (float) ($item->selection_input_prices[$i][$option] ?? 0);
         }
         return $totalPrice;
     }
@@ -123,7 +123,7 @@ class CartRepository
             if($option!==null){
                 $updatedOptions[$i]['ar'][$item->dropdown_input_titles[$i][1]] = $item->dropdown_input_names[$i][$option][1];
                 $updatedOptions[$i]['en'][$item->dropdown_input_titles[$i][0]] = $item->dropdown_input_names[$i][$option][0];
-                $totalPrice += (float) $item->dropdown_input_prices[$i][$option];
+                $totalPrice += (float) ($item->dropdown_input_prices[$i][$option] ?? 0);
             }
         }
         return $totalPrice;

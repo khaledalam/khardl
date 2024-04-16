@@ -30,27 +30,29 @@ import { useAuthContext } from "./components/context/AuthContext";
 
 import * as Sentry from "@sentry/react";
 import {t} from "i18next";
-import { initializeApp } from "firebase/app";
-const firebaseConfig = {
-    apiKey: "AIzaSyD7xao9Wm2JTWWJwS5IvgNYWJWiSh48mwM",
-    authDomain: "khardl.firebaseapp.com",
-    projectId: "khardl",
-    storageBucket: "khardl.appspot.com",
-    messagingSenderId: "1002899768051",
-    appId: "1:1002899768051:web:9b50b863cddbe6fef82d86",
-    measurementId: "G-Z55421NDE7"
-};
-// Initialize Firebase
-const firstbaseApp = initializeApp(firebaseConfig);
+// import { initializeApp } from "firebase/app";
+// const firebaseConfig = {
+//     apiKey: "AIzaSyD7xao9Wm2JTWWJwS5IvgNYWJWiSh48mwM",
+//     authDomain: "khardl.firebaseapp.com",
+//     projectId: "khardl",
+//     storageBucket: "khardl.appspot.com",
+//     messagingSenderId: "1002899768051",
+//     appId: "1:1002899768051:web:9b50b863cddbe6fef82d86",
+//     measurementId: "G-Z55421NDE7"
+// };
+// // Initialize Firebase
+// const firstbaseApp = initializeApp(firebaseConfig);
 
-Sentry.init({
-  dsn:
-    "https://860125ea20f9254e5c411ffbdeb02c39@o4506502637420544.ingest.sentry.io/4506563222896640",
-  integrations: [new Sentry.Replay()],
-  // Session Replay
-  replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
-  replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
-});
+if (sentry_on == '1') {
+    Sentry.init({
+        dsn:
+            "https://860125ea20f9254e5c411ffbdeb02c39@o4506502637420544.ingest.sentry.io/4506563222896640",
+        integrations: [new Sentry.Replay()],
+        // Session Replay
+        replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
+        replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
+    });
+}
 
 const App = () => {
   console.log(localStorage.getItem("i18nextLng"));
