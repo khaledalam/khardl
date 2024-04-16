@@ -121,8 +121,11 @@ Route::group([
             Route::post('/category/edit/{categoryId}/{branchId}', [RestaurantController::class, 'editCategory'])->middleware('permission:can_edit_menu')->name('restaurant.edit-category');
             Route::name('restaurant.')->controller(AdminItemController::class)->group(function () {
                 Route::post('/category/{id}/{branchId}/add-item', 'store')->middleware('permission:can_edit_menu')->name('add-item');
+                Route::post('/update-item/{item}', 'update')->middleware('permission:can_edit_menu')->name('update-item');
                 Route::delete('/category/{id}/delete-item', 'delete')->middleware('permission:can_edit_menu')->name('delete-item');
                 Route::get('/item/{item}', 'show')->middleware('permission:can_edit_menu')->name('view-item');
+                Route::get('/item/{item}/edit', 'edit')->middleware('permission:can_edit_menu')->name('edit-item');
+
             });
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
             Route::get('/payments', [TapController::class, 'payments'])->middleware(['permission:can_control_payment'])->name('tap.payments');
