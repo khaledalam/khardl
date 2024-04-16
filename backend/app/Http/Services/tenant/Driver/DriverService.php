@@ -18,6 +18,9 @@ class DriverService
         $drivers = RestaurantUser::drivers()
         ->whenSearch($request['search'] ?? null)
         ->whenStatus($request['status'] ?? null)
+        ->when($user->isWorker(), function ($query)use($user) {
+            return $query->where('branch_id', $user->branch_id);
+        })
         ->orderBy('id','desc')
         ->paginate(config('application.perPage') ?? 20);
         return view('restaurant.drivers.index',compact('user','drivers'));

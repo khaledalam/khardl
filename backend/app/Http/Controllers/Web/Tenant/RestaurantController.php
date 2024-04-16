@@ -963,7 +963,7 @@ class RestaurantController extends BaseController
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'Worker');
             })
-            ->orderBy('id','asc')
+            ->orderBy('id','desc')
             ->get();
         return view('restaurant.workers', compact('user', 'workers', 'branchId', 'branch'));
     }
@@ -992,7 +992,8 @@ class RestaurantController extends BaseController
             'can_modify_working_time',
             'can_edit_menu',
             'can_control_payment',
-            'can_view_revenues'
+            'can_view_revenues',
+            'can_edit_and_view_drivers'
         ];
         $insertData = [];
 
@@ -1059,7 +1060,8 @@ class RestaurantController extends BaseController
             'can_modify_working_time',
             'can_edit_menu',
             'can_control_payment',
-            'can_view_revenues'
+            'can_view_revenues',
+            'can_edit_and_view_drivers'
         ];
 
         $updateData = [];
