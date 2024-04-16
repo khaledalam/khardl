@@ -15,7 +15,7 @@
                         <!--begin: Pic-->
                         <div class="me-7 mb-4">
                             <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                <img alt="Logo" src="{{ $item->photo }}" />
+                                <img alt="product_image" src="{{ $item->photo }}" />
                             </div>
                         </div>
                         <!--end::Pic-->

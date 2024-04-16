@@ -206,6 +206,7 @@ return [
         "wallet.bank.documents.0.images.0" => "ملف كشف الحساب البنكي",
         "wallet.bank.documents.0.issuing_date" => "تاريخ اصدار كشف الحساب",
         "wallet.bank.account.name" => "اسم الشركة",
+        "calories" => "السعرات",
         "old_password" => "كلمة المرور القديمة"
 
     ],
