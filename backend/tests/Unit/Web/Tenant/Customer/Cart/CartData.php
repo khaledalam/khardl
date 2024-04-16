@@ -99,7 +99,7 @@ class CartData extends TenantTestCase
                 if ($option !== null) {
                     $result[$i]['en'][$item->dropdown_input_titles[$i][0]] = [$item->dropdown_input_names[$i][$option][0], $item->dropdown_input_prices[$i][$option]];
                     $result[$i]['ar'][$item->dropdown_input_titles[$i][1]] = [$item->dropdown_input_names[$i][$option][1], $item->dropdown_input_prices[$i][$option]];
-                    $totalPrice += (float) $item->dropdown_input_prices[$i][$option];
+                    $totalPrice += (float) ($item->dropdown_input_prices[$i][$option] ?? 0);
                 }
             }
         }
