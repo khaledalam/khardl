@@ -221,7 +221,10 @@ class TapController extends Controller
             redirect: route('tap.payments_redirect')
         );
         if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-            return redirect($charge['message']['transaction']['url']);
+            if(isset($charge['message']['transaction']['url'])){
+                return redirect($charge['message']['transaction']['url']);
+
+            }
         }
 
 
@@ -322,7 +325,7 @@ class TapController extends Controller
                         ->with('success', __('You branch has been activated successfully'));
                     }
                     if(isset($charge['message']['metadata']['customer_app'])){
-                        return redirect()->route('restaurant.app.service')
+                        return redirect()->route('restaurant.service')
                         ->with('success', __('You have successfully subscribed to the application. The application will be activated in the coming days'));
                     }
                     return redirect()->route('restaurant.service')->with('success', __('You can now add a branch'));
@@ -361,7 +364,9 @@ class TapController extends Controller
             redirect: route('tap.payments_redirect')
         );
         if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-            return redirect($charge['message']['transaction']['url']);
+            if(isset($charge['message']['transaction']['url'])){
+                return redirect($charge['message']['transaction']['url']);
+            }
         }
 
 
@@ -369,7 +374,6 @@ class TapController extends Controller
     }
     public function  payments_submit_customer_app(CustomerAppSubRequest $request){
         $data = $request->validated();
-        dd($data);
         $sub = ROCustomerAppSub::first();
         $AppSubscription = tenancy()->central(function(){
             return CentralSubscription::skip(1)->first();
@@ -394,7 +398,10 @@ class TapController extends Controller
             redirect: route('tap.payments_redirect')
         );
         if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-            return redirect($charge['message']['transaction']['url']);
+            if(isset($charge['message']['transaction']['url'])){
+                return redirect($charge['message']['transaction']['url']);
+
+            }
         }
 
 

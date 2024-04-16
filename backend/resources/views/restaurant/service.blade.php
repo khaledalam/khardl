@@ -38,15 +38,15 @@ function submitPayment(e, containerID) {
                 submitButton.disabled = true;
            
                 
-                // if(loadedContainer == 'root'){
-                //     document.getElementById('n_branches').value = document.getElementById('n_branches').value;
-                //     document.getElementById('type').value = document.getElementById('type').value;
-                //     document.getElementById('token_id').value = event.id;
-                //     document.getElementById('pay').submit();
-                // }else {
-                //     document.getElementById('customer_app_token_id').value = event.id;
-                //     document.getElementById('pay_customer_app').submit();
-                // }
+                if(loadedContainer == 'root'){
+                    document.getElementById('n_branches').value = document.getElementById('n_branches').value;
+                    document.getElementById('type').value = document.getElementById('type').value;
+                    document.getElementById('token_id').value = event.id;
+                    document.getElementById('pay').submit();
+                }else {
+                    document.getElementById('customer_app_token_id').value = event.id;
+                    document.getElementById('pay_customer_app').submit();
+                }
              
             }
         },
@@ -79,7 +79,7 @@ function openModal(modalID) {
     var modalContent = $('#' + modalID).html();
 
     $('#modal_base_content').html(modalContent);
-
+    
     $('#kt_modal_default').modal('show');
 }     
 
@@ -239,8 +239,7 @@ function openModal(modalID) {
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                     <!--begin::Modal content-->
                                                                     <div class="modal-content rounded p-15">
-                                                                        <form action="{{route('tap.payments_submit_card_details')}}" method="POST" id="pay">
-                                                                            @csrf
+                                                                        
                                                                             <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                                 <h5 class="modal-title text-center">{{__('Card Details')}}</h5>
                                                                             </div>
@@ -252,13 +251,15 @@ function openModal(modalID) {
                                                                             </div>
                                                                            
                                                                          
-                                                                        </form>
+                                                                     
                                                                     </div>
                                                                 </div>
                                                             </div>
 
                                                         @if(!$RO_subscription)
                                                         <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
+                                                            <form action="{{route('tap.payments_submit_card_details')}}" method="POST" id="pay">
+                                                                @csrf
                                                             <!--begin::Modal dialog-->
                                                             <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                 <!--begin::Modal content-->
@@ -298,10 +299,13 @@ function openModal(modalID) {
 
                                                             </div>
                                                             <!--end::Modal body-->
+                                                            </form>
                                                         </div>
 
                                                         @elseif($RO_subscription && $RO_subscription->status != \App\Models\ROSubscription::SUSPEND)
                                                             <div class="modal fade" id="kt_modal_renew_sub" tabindex="-1" aria-hidden="true">
+                                                                <form action="{{route('tap.payments_submit_card_details')}}" method="POST" id="pay">
+                                                                    @csrf
                                                                 <!--begin::Modal dialog-->
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                     <!--begin::Modal content-->
@@ -357,11 +361,15 @@ function openModal(modalID) {
                                                                     </div>
                                                                 </div>
                                                                 <!--end::Modal body-->
+                                                                </form>
                                                             </div>
 
                                                         @elseif($RO_subscription && $RO_subscription->status == \App\Models\ROSubscription::SUSPEND)
                                                             <div class="modal fade" id="kt_modal_suspend_sub" tabindex="-1" aria-hidden="true">
+
                                                                 <!--begin::Modal dialog-->
+                                                                <form action="{{route('tap.payments_submit_card_details')}}" method="POST" id="pay">
+                                                                    @csrf
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                     <!--begin::Modal content-->
                                                                     <div class="modal-content rounded p-15">
@@ -408,13 +416,14 @@ function openModal(modalID) {
                                                                     </div>
                                                                 </div>
                                                                 <!--end::Modal body-->
+                                                                </form>
                                                             </div>
                                                         @endif
                                                         @if(!$ROCustomerAppSub)
                                                             <div class="modal fade" id="kt_modal_customer_app" tabindex="-1" aria-hidden="true">
                                                                     <form action="{{route('tap.payments_submit_customer_app')}}" method="POST" id="pay_customer_app">
                                                                         @csrf
-                                                                        <input type="hidden" name="token" id="customer_app_token_id" value="">
+                                                                        <input type="hidden" name="token_id" id="customer_app_token_id">
                                                                     <!--begin::Modal dialog-->
                                                                     <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                         <!--begin::Modal content-->
@@ -459,14 +468,17 @@ function openModal(modalID) {
                                                 <div class="col-xl-4">
                                                     <div class="d-flex h-200 align-items-center ">
                                                         <!--begin::Option-->
-                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10 " style="height: 420px">
-                                                            <div class="w-100 text-right" style="padding: -15px !important;"></div>
+                                                        <div class="py-2 w-100 h-200  rounded-3 bg-light bg-opacity-75" style="height: 420px">
+                                                        
                                                             <!--begin::Heading-->
-                                                            <div class="mb-1 text-center px-10" >
+                                                            <div class="mb-7 text-center px-10" style="padding-bottom: 15px;">
                                                                 <!--begin::image-->
                                                                 <div class="text-gray-400 fw-bold my-5">
                                                                     <!--begin::image-->
                                                                     <div class="text-gray-400 fw-bold my-5">
+                                                                        @if($ROCustomerAppSub?->icon)
+                                                                        <img src="{{$ROCustomerAppSub?->icon}}" alt="" width="100">
+                                                                        @else
                                                                         <svg width="75" height="85" viewBox="0 0 75 85" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                             <rect x="1" width="74" height="74" rx="10" fill="url(#paint0_linear_57_2741)" />
                                                                             <path d="M0.0508283 55.9262C0.542169 54.5352 1.54179 54.1282 2.96498 54.1282C10.2843 54.1621 17.5866 54.1451 24.9059 54.1451C25.177 54.1451 25.448 54.1451 25.8208 54.1451C25.8208 53.8398 25.8208 53.5684 25.8208 53.314C25.8208 43.9168 25.8208 34.5196 25.8208 25.1224C25.8208 21.8826 27.7014 19.9998 30.9375 19.9998C40.5949 19.9998 50.2523 19.9998 59.9266 19.9998C63.0779 19.9998 64.9925 21.8995 64.9925 25.0376C64.9925 28.0908 64.9925 31.1271 64.9925 34.1803C64.9925 34.2991 64.9925 34.4348 64.9925 34.5535C64.9586 35.1981 64.5858 35.5882 64.0267 35.5713C63.5015 35.5543 63.1288 35.1642 63.1288 34.5535C63.1118 32.993 63.1288 31.4155 63.1288 29.8549C63.1288 29.6005 63.1288 29.3461 63.1288 29.0407C51.3366 29.0407 39.5783 29.0407 27.7523 29.0407C27.7523 37.3693 27.7523 45.7148 27.7523 54.1282C28.3961 54.1282 29.023 54.1282 29.6498 54.1282C31.4966 54.1282 32.2929 54.9084 32.2929 56.7404C32.2929 61.0997 32.2929 65.459 32.2929 69.8184C32.2929 70.0728 32.2929 70.3103 32.2929 70.6156C42.5772 70.6156 52.7937 70.6156 63.1288 70.6156C63.1288 70.3612 63.1288 70.1068 63.1288 69.8354C63.1288 60.0141 63.1288 50.1929 63.1288 40.3716C63.1288 40.185 63.1118 39.9815 63.1288 39.7949C63.1796 39.2351 63.5354 38.8789 64.0606 38.8789C64.5858 38.8789 64.9416 39.2351 64.9925 39.7949C65.0094 39.9985 64.9925 40.219 64.9925 40.4225C64.9925 53.5175 64.9925 66.6125 64.9925 79.7244C64.9925 82.625 63.8573 84.1177 61.0617 84.898C61.0279 84.9149 60.994 84.9319 60.9601 84.9658C41.2556 84.9658 21.5512 84.9658 1.84676 84.9658C0.982681 84.6435 0.389684 84.0499 0.0677711 83.1848C0.0677711 81.4037 0.0677711 79.6227 0.0677711 77.8586C0.355798 77.3836 0.728539 77.0613 1.30459 77.2479C1.89759 77.4345 1.94842 77.9434 1.94842 78.4862C1.93148 79.7753 1.96536 81.0645 1.93148 82.3536C1.91453 82.9134 2.1009 83.083 2.66001 83.083C11.6905 83.066 20.721 83.066 29.7346 83.083C30.2598 83.083 30.4292 82.9134 30.4292 82.3875C30.4123 73.8215 30.4123 65.2385 30.4292 56.6725C30.4292 56.0958 30.2259 55.9601 29.6837 55.9601C26.939 55.9771 24.1943 55.9771 21.4326 55.9771C21.2462 55.9771 21.0768 56.011 20.8396 56.0279C20.8396 56.3163 20.8396 56.5368 20.8396 56.7743C20.8396 59.2508 20.8396 61.7273 20.8396 64.2038C20.8396 65.2046 20.5516 65.493 19.5689 65.493C17.2986 65.493 15.0452 65.493 12.7748 65.493C11.7583 65.493 11.4533 65.1876 11.4533 64.1699C11.4533 61.6764 11.4533 59.183 11.4533 56.6725C11.4533 56.452 11.4533 56.2315 11.4533 55.9771C8.47139 55.9771 5.60806 55.9771 2.72779 55.9771C1.89759 55.9771 1.89759 55.9771 1.89759 56.8421C1.89759 61.4898 1.89759 66.1545 1.89759 70.8022C1.89759 71.5486 1.96536 72.2949 1.8637 73.0243C1.81288 73.3466 1.50791 73.7876 1.21988 73.8894C0.965738 73.9911 0.559111 73.7367 0.220256 73.601C0.135542 73.5671 0.0677711 73.4653 0 73.3975C0.0508283 67.5963 0.0508283 61.7612 0.0508283 55.9262ZM32.3099 83.083C32.5132 83.1 32.6657 83.1169 32.8351 83.1169C41.9842 83.1169 51.1502 83.1169 60.2993 83.1169C61.9597 83.1169 63.1118 81.9465 63.1288 80.2672C63.1457 77.8755 63.1288 75.4838 63.1288 73.0921C63.1288 72.9225 63.1118 72.7699 63.0949 72.6002C52.8106 72.6002 42.5772 72.6002 32.3268 72.6002C32.3099 76.0945 32.3099 79.5548 32.3099 83.083ZM27.7014 27.09C39.5444 27.09 51.3027 27.09 63.1118 27.09C63.1118 26.3437 63.1118 25.6482 63.1118 24.9528C63.1118 22.9512 62.0275 21.8656 60.0113 21.8656C54.5727 21.8656 49.151 21.8656 43.7123 21.8656C39.3072 21.8656 34.9191 21.8656 30.5139 21.8656C29.023 21.8656 27.82 22.8664 27.7014 24.2573C27.6506 25.1903 27.7014 26.1232 27.7014 27.09ZM13.4017 56.0619C13.4017 58.6062 13.4017 61.0997 13.4017 63.6271C15.2654 63.6271 17.0953 63.6271 18.959 63.6271C18.959 61.0997 18.959 58.5893 18.959 56.0619C17.1122 56.0619 15.2824 56.0619 13.4017 56.0619Z" fill="#040205" />
@@ -492,6 +504,8 @@ function openModal(modalID) {
                                                                                 </linearGradient>
                                                                             </defs>
                                                                         </svg>
+                                                                        @endif`
+                                                                       
                                                                     </div>
                                                                     <!--end::image-->
                                                                 </div>
@@ -512,25 +526,61 @@ function openModal(modalID) {
                                                             <!--begin::Select-->
 
                                                             <!--end::Modal dialog-->
-                                                            <div class="d-flex flex-column text-center ">
-                                                                @if($ROCustomerAppSub && $ROCustomerAppSub->status == \App\Models\ROCustomerAppSub::ACTIVE)
-                                                                    @if($ROCustomerAppSub->android_url)
-                                                                        <div>
-                                                                            <a href="{{$ROCustomerAppSub->android_url}}">
-                                                                                <img src="{{global_asset('images/logo_playstore.svg')}}" width="150"/>
-                                                                            </a>
-                                                                        </div>
-                                                                        <br />
-                                                                    @endif
-                                                                    @if($ROCustomerAppSub->ios_url)
-                                                                        <div>
-                                                                            <a href="{{$ROCustomerAppSub->ios_url}}" >
-                                                                                <img src="{{global_asset('images/logo_appstore.svg')}}" width="150"/>
-                                                                            </a>
-                                                                        </div>
-                                                                    @endif
-                                                              
-                                                                @elseif($ROCustomerAppSub && $ROCustomerAppSub->status == \App\Models\ROCustomerAppSub::SUSPEND && !$ROCustomerAppSub->android_url && !$ROCustomerAppSub->ios_url )
+                  
+
+                                                            <div class="d-flex justify-content-center p-2" >
+                                                                @if($ROCustomerAppSub->android_url)
+                                                                <div class="mr-auto p-2">
+                                                                    <div>
+                                                                        <a href="{{$ROCustomerAppSub->android_url}}">
+                                                                            <img src="{{global_asset('images/logo_playstore.svg')}}" width="130"/>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                @endif
+                                                                @if($ROCustomerAppSub->ios_url)
+                                                                <div class="p-2">
+                                                                    <div>
+                                                                        <a href="{{$ROCustomerAppSub->ios_url}}" >
+                                                                            <img src="{{global_asset('images/logo_appstore.svg')}}" width="130"/>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                 @endif
+                                                     
+                                            
+
+                                                              </div>
+                                                           
+                                                           
+                                                                @if($ROCustomerAppSub?->status == \App\Models\ROSubscription::ACTIVE )
+                                                                <div class="d-flex flex-column mt-5">
+                                                                    <div class="d-flex justify-content-center mb-5">
+                                                                        <form action="{{route('restaurant.service.app.deactivate')}}" method="POST">
+                                                                            @csrf
+                                                                            <button href="#" type="submit" class="btn btn-sm btn-danger"><i class="fa fa-pause"></i> {{__("Deactivate")}}</button>
+                                                                            @method('PATCH')
+                                                                        </form>
+
+
+
+                                                                    </div>
+
+
+                                                                </div>
+                                                                @elseif($ROCustomerAppSub?->status == \App\Models\ROSubscription::DEACTIVATE )
+                                                                <div class="d-flex flex-column mt-5">
+                                                                    <div class="d-flex justify-content-center mb-5">
+                                                                        <form action="{{route('restaurant.service.app.activate')}}" method="POST">
+                                                                            @csrf
+                                                                            <button href="#" type="submit" class="btn btn-sm btn-success"><i class="fa fa-play"></i> {{__("Resume")}}</button>
+                                                                            @method('PATCH')
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>
+                                           
+                                                                @elseif($ROCustomerAppSub?->status == \App\Models\ROCustomerAppSub::REQUESTED  )
                                                                     <div class="text-center my-5">
 
                                                                         <h4 class=" badge-primary m-2 p-2 w-boldest text-center text-white mt-3 ">
@@ -542,7 +592,7 @@ function openModal(modalID) {
                                                                 <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" onclick="openModal('kt_modal_customer_app')" ><i class="fas fa-shopping-cart"></i>{{__('Buy now')}}</a>
                                                                 @endif
                                                                     
-                                                            </div>
+                                                          
                                                                
                                                             <!--end::Select-->
                                                         </div>
@@ -554,11 +604,11 @@ function openModal(modalID) {
                                         <div class="col-xl-4">
                                             <div class="d-flex h-200 align-items-center">
                                                 <!--begin::Option-->
-                                                <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10 " style="height: 420px">
+                                                <div class="py-2 w-100 h-200 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 " style="height: 420px">
                                                     <!--begin::Heading-->
-                                                    <div class="mb-7 text-center">
+                                                    <div class="mb-7 text-center px-10" style="padding-bottom: 15px;">
                                                         <!--begin::image-->
-                                                        <div class="text-gray-400 fw-bold mb-5">
+                                                        <div class="text-gray-400 fw-bold my-5">
                                                             <svg width="75" height="85" viewBox="0 0 75 85" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                 <rect x="1" width="74" height="74" rx="10" fill="url(#paint0_linear_57_2741)"/>
                                                                 <path d="M0.0508283 55.9262C0.542169 54.5352 1.54179 54.1282 2.96498 54.1282C10.2843 54.1621 17.5866 54.1451 24.9059 54.1451C25.177 54.1451 25.448 54.1451 25.8208 54.1451C25.8208 53.8398 25.8208 53.5684 25.8208 53.314C25.8208 43.9168 25.8208 34.5196 25.8208 25.1224C25.8208 21.8826 27.7014 19.9998 30.9375 19.9998C40.5949 19.9998 50.2523 19.9998 59.9266 19.9998C63.0779 19.9998 64.9925 21.8995 64.9925 25.0376C64.9925 28.0908 64.9925 31.1271 64.9925 34.1803C64.9925 34.2991 64.9925 34.4348 64.9925 34.5535C64.9586 35.1981 64.5858 35.5882 64.0267 35.5713C63.5015 35.5543 63.1288 35.1642 63.1288 34.5535C63.1118 32.993 63.1288 31.4155 63.1288 29.8549C63.1288 29.6005 63.1288 29.3461 63.1288 29.0407C51.3366 29.0407 39.5783 29.0407 27.7523 29.0407C27.7523 37.3693 27.7523 45.7148 27.7523 54.1282C28.3961 54.1282 29.023 54.1282 29.6498 54.1282C31.4966 54.1282 32.2929 54.9084 32.2929 56.7404C32.2929 61.0997 32.2929 65.459 32.2929 69.8184C32.2929 70.0728 32.2929 70.3103 32.2929 70.6156C42.5772 70.6156 52.7937 70.6156 63.1288 70.6156C63.1288 70.3612 63.1288 70.1068 63.1288 69.8354C63.1288 60.0141 63.1288 50.1929 63.1288 40.3716C63.1288 40.185 63.1118 39.9815 63.1288 39.7949C63.1796 39.2351 63.5354 38.8789 64.0606 38.8789C64.5858 38.8789 64.9416 39.2351 64.9925 39.7949C65.0094 39.9985 64.9925 40.219 64.9925 40.4225C64.9925 53.5175 64.9925 66.6125 64.9925 79.7244C64.9925 82.625 63.8573 84.1177 61.0617 84.898C61.0279 84.9149 60.994 84.9319 60.9601 84.9658C41.2556 84.9658 21.5512 84.9658 1.84676 84.9658C0.982681 84.6435 0.389684 84.0499 0.0677711 83.1848C0.0677711 81.4037 0.0677711 79.6227 0.0677711 77.8586C0.355798 77.3836 0.728539 77.0613 1.30459 77.2479C1.89759 77.4345 1.94842 77.9434 1.94842 78.4862C1.93148 79.7753 1.96536 81.0645 1.93148 82.3536C1.91453 82.9134 2.1009 83.083 2.66001 83.083C11.6905 83.066 20.721 83.066 29.7346 83.083C30.2598 83.083 30.4292 82.9134 30.4292 82.3875C30.4123 73.8215 30.4123 65.2385 30.4292 56.6725C30.4292 56.0958 30.2259 55.9601 29.6837 55.9601C26.939 55.9771 24.1943 55.9771 21.4326 55.9771C21.2462 55.9771 21.0768 56.011 20.8396 56.0279C20.8396 56.3163 20.8396 56.5368 20.8396 56.7743C20.8396 59.2508 20.8396 61.7273 20.8396 64.2038C20.8396 65.2046 20.5516 65.493 19.5689 65.493C17.2986 65.493 15.0452 65.493 12.7748 65.493C11.7583 65.493 11.4533 65.1876 11.4533 64.1699C11.4533 61.6764 11.4533 59.183 11.4533 56.6725C11.4533 56.452 11.4533 56.2315 11.4533 55.9771C8.47139 55.9771 5.60806 55.9771 2.72779 55.9771C1.89759 55.9771 1.89759 55.9771 1.89759 56.8421C1.89759 61.4898 1.89759 66.1545 1.89759 70.8022C1.89759 71.5486 1.96536 72.2949 1.8637 73.0243C1.81288 73.3466 1.50791 73.7876 1.21988 73.8894C0.965738 73.9911 0.559111 73.7367 0.220256 73.601C0.135542 73.5671 0.0677711 73.4653 0 73.3975C0.0508283 67.5963 0.0508283 61.7612 0.0508283 55.9262ZM32.3099 83.083C32.5132 83.1 32.6657 83.1169 32.8351 83.1169C41.9842 83.1169 51.1502 83.1169 60.2993 83.1169C61.9597 83.1169 63.1118 81.9465 63.1288 80.2672C63.1457 77.8755 63.1288 75.4838 63.1288 73.0921C63.1288 72.9225 63.1118 72.7699 63.0949 72.6002C52.8106 72.6002 42.5772 72.6002 32.3268 72.6002C32.3099 76.0945 32.3099 79.5548 32.3099 83.083ZM27.7014 27.09C39.5444 27.09 51.3027 27.09 63.1118 27.09C63.1118 26.3437 63.1118 25.6482 63.1118 24.9528C63.1118 22.9512 62.0275 21.8656 60.0113 21.8656C54.5727 21.8656 49.151 21.8656 43.7123 21.8656C39.3072 21.8656 34.9191 21.8656 30.5139 21.8656C29.023 21.8656 27.82 22.8664 27.7014 24.2573C27.6506 25.1903 27.7014 26.1232 27.7014 27.09ZM13.4017 56.0619C13.4017 58.6062 13.4017 61.0997 13.4017 63.6271C15.2654 63.6271 17.0953 63.6271 18.959 63.6271C18.959 61.0997 18.959 58.5893 18.959 56.0619C17.1122 56.0619 15.2824 56.0619 13.4017 56.0619Z" fill="#040205"/>

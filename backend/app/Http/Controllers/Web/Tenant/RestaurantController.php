@@ -74,17 +74,28 @@ class RestaurantController extends BaseController
             $amount =  $subscription->amount;
             $total_branches = 1;
         }
-        return view('restaurant.service-app', compact('user','customer_app_sub','ROCustomerAppSub','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
+        return view('restaurant.service', compact('user','customer_app_sub','ROCustomerAppSub','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
     }
    
     public function serviceDeactivate()
     {
         /** @var RestaurantUser $user */
+        if( ROSubscription::first()->status == ROSubscription::ACTIVE)
         ROSubscription::first()->update([
             'status' => ROSubscription::DEACTIVATE
         ]);
         return redirect()->back()->with('success', __('Branches has been deactivated successfully'));
     }
+    public function serviceAppDeactivate()
+    {
+        /** @var RestaurantUser $user */
+        if( ROCustomerAppSub::first()->status == ROSubscription::ACTIVE)
+        ROCustomerAppSub::first()->update([
+            'status' => ROSubscription::DEACTIVATE
+        ]);
+        return redirect()->back()->with('success', __('Branches has been deactivated successfully'));
+    }
+    
     public function serviceActivate()
     {
         /** @var RestaurantUser $user */
@@ -93,6 +104,18 @@ class RestaurantController extends BaseController
             return redirect()->back()->with('error', __('not allowed'));
         }
         ROSubscription::first()->update([
+            'status' => ROSubscription::ACTIVE
+        ]);
+        return redirect()->back()->with('success', __('Branches has been activated successfully'));
+    }
+    public function serviceAppActivate()
+    {
+        /** @var RestaurantUser $user */
+        $subscription = ROCustomerAppSub::first();
+        if ($subscription->status != ROSubscription::DEACTIVATE) {
+            return redirect()->back()->with('error', __('not allowed'));
+        }
+        ROCustomerAppSub::first()->update([
             'status' => ROSubscription::ACTIVE
         ]);
         return redirect()->back()->with('success', __('Branches has been activated successfully'));

@@ -85,12 +85,10 @@
                                             <td>
                                                 @if($customer_app && $customer_app->status == \App\Models\ROSubscription::ACTIVE)
                                                 <span class="badge badge-success fw-bolder">{{ __('active')}}</span>
-                                                @elseif($customer_app && $customer_app->status == \App\Models\ROCustomerAppSub::SUSPEND && $customer_app->end_at->isPast())
+                                                @elseif($customer_app && $customer_app->status == \App\Models\ROCustomerAppSub::SUSPEND)
                                                 <span class="badge badge-light-danger fw-bolder">{{ __('payment overdue')}}</span>
                                                 @elseif($customer_app && $customer_app->status == \App\Models\ROCustomerAppSub::DEACTIVATE)
                                                 <span class="badge badge-light-warning fw-bolder">{{ __('cancellation request')}}</span>
-                                                @elseif($customer_app && $customer_app->status == \App\Models\ROCustomerAppSub::DEACTIVATE && $customer_app->end_at->isPast())
-                                                <span class="badge badge-light-danger fw-bolder">{{ __('cancelled')}}</span>
                                                 @elseif($customer_app && $customer_app->status == \App\Models\ROCustomerAppSub::REQUESTED)
                                                 <span class="badge badge-primary fw-bolder">{{ __('Request for app')}}</span>
                                                 @else

@@ -57,6 +57,8 @@ class RestaurantCharge
                     'type' => $data['metadata']['subscription'],
                     'status' => ROCustomerAppSub::REQUESTED, // until activate it in the admin dashboard 
                     'chg_id' => $data['id'],
+                    'reminder_email_sent'=>false,
+                    'reminder_suspend_email_sent'=>false,
                     'cus_id' => env('TAP_DEFAULT_CUSTOMER_ID', 'cus_LV06G4620241548c2JK1002613'),
                     'card_id' => $data['card']['id'] ?? null,
                     'subscription_id' => $data['metadata']['subscription_id'],

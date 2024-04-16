@@ -10,6 +10,6 @@
     <span class="badge badge-light-danger fw-bolder">{{ __('not_live')}}</span>
 @endif
 
-@if($customer_app && $customer_app->status == \App\Models\ROSubscription::SUSPEND &&  !$customer_app->ios_url && !$customer_app->android_url)
+@if($customer_app && $customer_app->status == \App\Models\ROCustomerAppSub::REQUESTED)
 <span class="badge badge-light-danger fw-bolder m-1">{{ __('Request for app')}}</span>
 @endif

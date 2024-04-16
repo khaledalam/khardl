@@ -160,9 +160,12 @@
                                         <span class="badge badge-success p-2 fs-6">
                                             {{ $customer_app->end_at?->format('Y-m-d') }}
                                         </span>
-                                        @elseif($customer_app && $customer_app->status == \App\Models\ROSubscription::SUSPEND && !$customer_app->ios_url  && !$customer_app->android_url )
+                                        @elseif($customer_app && $customer_app->status == \App\Models\ROCustomerAppSub::REQUESTED)
                                             <span class="fw-bold fs-6 text-black fw-bolder">{{__('Customer application')}}</span>
                                             <span class="badge badge-light-danger fw-bolder m-1">{{ __('Request for app')}}</span>
+                                        @elseif($customer_app && $customer_app->status == \App\Models\ROCustomerAppSub::DEACTIVATE)
+                                            <span class="fw-bold fs-6 text-black fw-bolder">{{__('Customer application')}}</span>
+                                            <span class="badge badge-light-danger fw-bolder m-1">{{ __('cancellation request')}}</span>
                                         @elseif($customer_app && $customer_app->status == \App\Models\ROSubscription::SUSPEND)
                                             <span class="fw-bold fs-6 text-black fw-bolder">{{__('Customer application')}}</span>
                                             {{__("Customer app Subscription is currently suspended")}}

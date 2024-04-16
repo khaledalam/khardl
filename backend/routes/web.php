@@ -192,8 +192,8 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
 
                     Route::controller(AdminController::class)->prefix('subscriptions')->group(function () {
                         Route::get('/', [AdminController::class, 'subscriptions'])->name('subscriptions');
-                        Route::get('/create', [AdminController::class, 'subscriptionsCreate'])->name('subscriptions.create');
-                        Route::post('/store', [AdminController::class, 'subscriptionsStore'])->name('subscriptions.store');
+                        // Route::get('/create', [AdminController::class, 'subscriptionsCreate'])->name('subscriptions.create');
+                        // Route::post('/store', [AdminController::class, 'subscriptionsStore'])->name('subscriptions.store');
                         Route::get('/{subscription}/show', [AdminController::class, 'subscriptionShow'])->name('subscriptions.show');
                         Route::patch('/{subscription}/update', [AdminController::class, 'subscriptionUpdate'])->name('subscriptions.update');
 
