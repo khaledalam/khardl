@@ -243,12 +243,12 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
 
                                                                                     <div class="form-group mt-3">
-                                                                                        <label for="factor">{{__('Number of branches')}}</label>
+                                                                                        <label for="n_branches">{{__('Number of branches')}}</label>
                                                                                         <input type="number" class="form-control" id="n_branches" name="n_branches" value="1" min="1" onchange="updatePrice()" required>
                                                                                     </div>
 
                                                                                     <div class="form-group">
-                                                                                        <label for="factor">{{__('total-price')}}</label>
+                                                                                        <label for="price">{{__('total-price')}}</label>
                                                                                         <input type="text" class="form-control bg-secondary" id="price" name="price" value="{{ $subscription->amount }}" readonly>
                                                                                     </div>
                                                                                     <div id="root"></div>
@@ -296,15 +296,15 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                             </div>
                                                                                             <div class="col-12">
                                                                                                 <div class="form-group">
-                                                                                                    <label for="factor">{{__('Number of branches')}}</label>
+                                                                                                    <label for="n_branches">{{__('Number of branches')}}</label>
                                                                                                     <input type="number" class="form-control" id="n_branches" name="n_branches" value="1" min="1" onchange="calculateRenewPrice()">
                                                                                                 </div>
                                                                                             </div>
 
 
                                                                                             <div class="col-12 mt-3">
-                                                                                                <label for="factor">{{__('total-price')}} </label>
-                                                                                                <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="" readonly>
+                                                                                                <label for="price">{{__('total-price')}} </label>
+                                                                                                <input type="text" class="form-control bg-secondary" id="price" name="price" value="" readonly>
                                                                                                 <i id="costDesc" class="hidden"></i>
                                                                                             </div>
                                                                                             <div id="root"></div>
@@ -351,7 +351,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                     <div class="row">
 
                                                                                         <div class="col-12 mt-3">
-                                                                                            <label for="factor">{{__('total-price')}} </label>
+                                                                                            <label for="price">{{__('total-price')}} </label>
                                                                                             <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{$amount}}" readonly>
                                                                                             <div id="root"></div>
                                                                                             <p id="msg"></p>
