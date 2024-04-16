@@ -30,15 +30,13 @@ class DriverService
         $branches = Branch::all();
         return view('restaurant.drivers.create',compact('branches'));
     }
-    public function edit($request,$id)
+    public function edit($request,$driver)
     {
-        $driver = RestaurantUser::drivers()->findOrFail($id);
         $branches = Branch::all();
         return view('restaurant.drivers.edit',compact('branches','driver'));
     }
-    public function show($request,$id)
+    public function show($request,$driver)
     {
-        $driver = RestaurantUser::drivers()->findOrFail($id);
         $orders = $driver->driver_orders()
         ->orderBy('orders.id','desc')
         ->paginate(config('application.perPage') ?? 20);
@@ -53,9 +51,8 @@ class DriverService
         $driver->save();
         return redirect()->route('drivers.index')->with(['success' => __('Created successfully')]);
     }
-    public function update($request, $id)
+    public function update($request, $driver)
     {
-        $driver = RestaurantUser::drivers()->findOrFail($id);
         $data = $this->request_data($request);
         $data['status'] = $request->status;
         if(isset($request->password)){
@@ -64,11 +61,10 @@ class DriverService
         $driver->update($data);
         return redirect()->route('drivers.index')->with(['success' => __('Updated successfully')]);
     }
-    public function destroy($id)
+    public function destroy($driver)
     {
         $user = Auth::user();
         if($user->isRestaurantOwner()){
-            $driver = RestaurantUser::drivers()->findOrFail($id);
             $driver->delete();
             return redirect()->route('drivers.index')->with(['success' => __('Deleted successfully')]);
         }else{
