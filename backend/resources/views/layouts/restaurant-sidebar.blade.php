@@ -298,8 +298,9 @@
                             </a>
                             @endif
                         </div>
+                        {{-- //TODO: uncomment when driver app is ready --}}
                         <!-- drivers -->
-                        <div class="menu-item menu-accordion">
+                        {{-- <div class="menu-item menu-accordion">
                             @if(\App\Models\Tenant\Branch::first())
                             <a href="{{route('drivers.index')}}">
                                 <span class="{{ ($link == 'drivers') ? 'menu-link active' : 'menu-link ' }}">
@@ -327,7 +328,7 @@
                                 </span>
                             </a>
                             @endif
-                        </div>
+                        </div> --}}
 
                     <!-- menu -->
 
@@ -411,47 +412,22 @@
                                 </a>
                             </div>
                         @endif
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'service') || ($link == 'app-service') ? 'show' : '' }}">
-                            <span class="menu-link">
-                                <span class="menu-icon">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                    <span class="svg-icon svg-icon-2">
-                                        <svg fill="{{($link == 'service') || ($link == 'app-service') ? '#c2da08' : '#000000' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M78.8,62.1l-3.6-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,70.6c-1.2,0.6-2.7,0.6-3.9,0L26.5,60.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.6,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,78.5c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,65,80.4,62.8,78.8,62.1z"></path> </g> <g> <path d="M78.8,48.1l-3.7-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,56.6c-1.2,0.6-2.7,0.6-3.9,0L26.6,46.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.7,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,64.6c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,51.1,80.4,48.9,78.8,48.1 z"></path> </g> <g> <path d="M21.2,37.8l26.8,12.7c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7c1.6-0.8,1.6-2.9,0-3.7L51.9,21.4 c-1.2-0.6-2.7-0.6-3.9,0L21.2,34.2C19.6,34.9,19.6,37.1,21.2,37.8z"></path> </g> </g> </g></svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                </span>
-                                <span class="menu-title">{{__('services')}}</span>
-                                <span class="menu-arrow"></span>
-                            </span>
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                <a href="{{route('restaurant.service')}}">
-                                    <span class="{{ ($link == 'service' ) ? 'menu-link active' : 'menu-link ' }}">
-                                        <span class="menu-icon">
-                                            <!--begin::Svg Icon -->
-                                                <span class="svg-icon svg-icon-2">
-                                                    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="{{ ($link == 'service' ) ? '#c2da08' : '#000000' }}"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g fill="none" fill-rule="evenodd" id="页面-1" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"> <g id="导航图标" stroke="{{ ($link == 'service' ) ? '#c2da08' : '#000000' }}" stroke-width="1.5" transform="translate(-329.000000, -334.000000)"> <g id="服务" transform="translate(329.000000, 334.000000)"> <g id="编组" transform="translate(2.000000, 3.000000)"> <path d="M8,12.5 L11,13.5 C11,13.5 18.5,12 19.5,12 C20.5,12 20.5,13 19.5,14 C18.5,15 15,18 12,18 C9,18 7,16.5 5,16.5 C3,16.5 0,16.5 0,16.5" id="路径"></path> <path d="M0,10.5 C1,9.5 3,8 5,8 C7,8 11.75,10 12.5,11 C13.25,12 11,13.5 11,13.5" id="路径"></path> <path d="M6,5 L6,1 C6,0.447715 6.4477,0 7,0 L19,0 C19.5523,0 20,0.447715 20,1 L20,9" id="路径"></path> <rect height="4.5" id="矩形" width="5" x="10.5" y="0"></rect> </g> </g> </g> </g> </g></svg>
-                                                </span>
-                                            <!--end::Svg Icon-->
-                                        </span>
-                                            <span class="menu-title">{{__('website subscribtion')}}</span>
-                                    </span>
-                                </a>
                        
-                                <a href="{{route('restaurant.app.service')}}">
-                                    <span class="{{ ($link == 'app-service' ) ? 'menu-link active' : 'menu-link ' }}">
-                                        <span class="menu-icon">
-                                            <!--begin::Svg Icon -->
-                                                <span class="svg-icon svg-icon-2">
-                                                    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="{{ ($link == 'service' ) ? '#c2da08' : '#000000' }}"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g fill="none" fill-rule="evenodd" id="页面-1" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"> <g id="导航图标" stroke="{{ ($link == 'service' ) ? '#c2da08' : '#000000' }}" stroke-width="1.5" transform="translate(-329.000000, -334.000000)"> <g id="服务" transform="translate(329.000000, 334.000000)"> <g id="编组" transform="translate(2.000000, 3.000000)"> <path d="M8,12.5 L11,13.5 C11,13.5 18.5,12 19.5,12 C20.5,12 20.5,13 19.5,14 C18.5,15 15,18 12,18 C9,18 7,16.5 5,16.5 C3,16.5 0,16.5 0,16.5" id="路径"></path> <path d="M0,10.5 C1,9.5 3,8 5,8 C7,8 11.75,10 12.5,11 C13.25,12 11,13.5 11,13.5" id="路径"></path> <path d="M6,5 L6,1 C6,0.447715 6.4477,0 7,0 L19,0 C19.5523,0 20,0.447715 20,1 L20,9" id="路径"></path> <rect height="4.5" id="矩形" width="5" x="10.5" y="0"></rect> </g> </g> </g> </g> </g></svg>
-                                                </span>
-                                            <!--end::Svg Icon-->
-                                        </span>
-                                            <span class="menu-title">{{__('Application subscription')}}</span>
+                        <!-- Services -->
+                        <div class="menu-item menu-accordion">
+                            <a href="{{route('restaurant.service')}}">
+                                <span class="{{ ($link == 'service' ) ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon -->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="{{ ($link == 'service' ) ? '#c2da08' : '#000000' }}"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g fill="none" fill-rule="evenodd" id="页面-1" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"> <g id="导航图标" stroke="{{ ($link == 'service' ) ? '#c2da08' : '#000000' }}" stroke-width="1.5" transform="translate(-329.000000, -334.000000)"> <g id="服务" transform="translate(329.000000, 334.000000)"> <g id="编组" transform="translate(2.000000, 3.000000)"> <path d="M8,12.5 L11,13.5 C11,13.5 18.5,12 19.5,12 C20.5,12 20.5,13 19.5,14 C18.5,15 15,18 12,18 C9,18 7,16.5 5,16.5 C3,16.5 0,16.5 0,16.5" id="路径"></path> <path d="M0,10.5 C1,9.5 3,8 5,8 C7,8 11.75,10 12.5,11 C13.25,12 11,13.5 11,13.5" id="路径"></path> <path d="M6,5 L6,1 C6,0.447715 6.4477,0 7,0 L19,0 C19.5523,0 20,0.447715 20,1 L20,9" id="路径"></path> <rect height="4.5" id="矩形" width="5" x="10.5" y="0"></rect> </g> </g> </g> </g> </g></svg>
+                                            </span>
+                                        <!--end::Svg Icon-->
                                     </span>
-                                </a>
-                            </div>
-                        </div> 
-                        
+                                        <span class="menu-title">{{__('services')}}</span>
+                                </span>
+                            </a>
+                        </div>
                         <!-- Delivery Companies -->
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.delivery')}}">

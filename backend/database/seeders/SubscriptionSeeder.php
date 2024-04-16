@@ -26,7 +26,7 @@ class SubscriptionSeeder extends Seeder
         // ]);
         Subscription::create([
             'name'=>trans_json('Customer app','تطبيق الزبون'),
-            'description'=>trans_json('Application to receive your orders','تطبيق استلام طلباتك'),
+            'description'=>trans_json('Customer application','تطبيق الزبون'),
             "amount"=>400
         ]);
     }

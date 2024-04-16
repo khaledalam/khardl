@@ -16,7 +16,7 @@
                     <h3 class="fw-bolder me-5 my-1">{{ $restaurants->count() }} {{ __('restaurants-found')}} ({{__('from')}} {{$totalRestaurantsCount}} {{__('restaurant-singular')}})</h3>
                 </div>
                 <!--end::Title-->
-                <div id="kt_project_users_table_pane" class="tab-pane fade show active">
+                <div id="kt_project_users_table_pane" class="tab-pane fade show active" style="width:100%">
                     <!--begin::Card-->
                     <div class="card card-flush">
                         <!--begin::Card body-->
@@ -101,7 +101,7 @@
                 
                                             <td>{{ $customer_app?->end_at->format('Y-m-d')}}</td>
                                             <td>
-                                                @if($customer_app->android_url)
+                                                @if($customer_app?->android_url)
                                                 <div class="col-lg-8">
                                                     <span class="fw-bolder fs-6 text-gray-800">
                                                         <a href="{{ $customer_app->android_url}}" target="_blank">
@@ -112,7 +112,7 @@
                                                 @endif
                                                 </td>
                                             <td>
-                                                @if($customer_app->ios_url)
+                                                @if($customer_app?->ios_url)
                                                 <div class="col-lg-8">
                                                     <span class="fw-bolder fs-6 text-gray-800">
                                                         <a href="{{ $customer_app->ios_url}}" target="_blank">

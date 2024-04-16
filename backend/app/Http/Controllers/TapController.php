@@ -246,7 +246,7 @@ class TapController extends Controller
     public function payments_submit_lead($tenant,CreateLeadRequest $request) {
         $tenant = Tenant::findOrFail($tenant);
         $data = $request->all();
-
+       
         // $tenant_id = tenant()->id;
         // $userBankIban = '';
         // tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
@@ -369,6 +369,7 @@ class TapController extends Controller
     }
     public function  payments_submit_customer_app(CustomerAppSubRequest $request){
         $data = $request->validated();
+        dd($data);
         $sub = ROCustomerAppSub::first();
         $AppSubscription = tenancy()->central(function(){
             return CentralSubscription::skip(1)->first();

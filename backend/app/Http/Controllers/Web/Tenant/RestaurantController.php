@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\RegisterWorkerRequest;
-use App\Models\Subscription;
+use App\Models\Subscription as CentralSubscription;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
@@ -56,13 +56,16 @@ class RestaurantController extends BaseController
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
-        $subscription = tenancy()->central(function () {
-            return Subscription::first();
+        [$subscription,$customer_app_sub]= tenancy()->central(function () {
+            return [
+                CentralSubscription::first(),
+                CentralSubscription::skip(1)->first()
+            ];
         });
         $RO_subscription = ROSubscription::first();
         $customer_tap_id = Auth::user()->tap_customer_id;
         $setting  = Setting::first();
-
+        $ROCustomerAppSub = ROCustomerAppSub::first();
         $active_branches = Branch::where('active',true)->count();
         $total_branches = $active_branches + ( $RO_subscription->number_of_branches ?? 0);
         $amount = $total_branches * $subscription->amount;
@@ -71,20 +74,9 @@ class RestaurantController extends BaseController
             $amount =  $subscription->amount;
             $total_branches = 1;
         }
-        return view('restaurant.service', compact('user','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
+        return view('restaurant.service-app', compact('user','customer_app_sub','ROCustomerAppSub','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
     }
-    public function appServices(){
-        /** @var RestaurantUser $user */
-        $user = Auth::user();
-
-        $customer_app_sub = tenancy()->central(function () {
-            return  Subscription::skip(1)->first();
-        });
-        $ROCustomerAppSub = ROCustomerAppSub::first();
-        $customer_tap_id = Auth::user()->tap_customer_id;
- 
-        return view('restaurant.service-app', compact('user','customer_app_sub','ROCustomerAppSub','customer_tap_id'));
-    }
+   
     public function serviceDeactivate()
     {
         /** @var RestaurantUser $user */
