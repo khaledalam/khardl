@@ -98,6 +98,9 @@ class RestaurantStyleService
             'footer_text_fontWeight' => $request->footer_text_fontWeight,
             'footer_text_fontSize' => $request->footer_text_fontSize,
             'footer_text_color' => $request->footer_text_color,
+            'logo_border_radius' => $request->logo_border_radius,
+            'logo_border_color' => $request->logo_border_color,
+
         ];
         if (isset($request->logo) && $request->logo) {
             $logo = tenant_asset(store_image($request->file('logo'), RestaurantStyle::STORAGE, 'logo'));
