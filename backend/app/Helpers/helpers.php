@@ -48,8 +48,18 @@ if (!function_exists('random_hash')) {
 
 if (!function_exists('store_image')) {
 
-    function store_image($image, $store_at, $name = null)
+    function store_image($image, $store_at, $name = null, $old_image = null)
     {
+        if($old_image){//Try to delete old image of exist
+            try {
+                $oldImageFilename = basename(parse_url($old_image, PHP_URL_PATH));
+                if (Storage::disk('public')->exists($store_at . '/' . $oldImageFilename)) {
+                    Storage::disk('public')->delete($store_at . '/' . $oldImageFilename);
+                }
+            } catch (\Exception $e) {
+                \Sentry\captureException($e);
+            }
+        }
         try {
 
             if ($name) {

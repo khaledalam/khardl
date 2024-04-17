@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Tenant;
 
 use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
+use App\Models\Subscription;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\QrCode;
 use App\Models\Tenant\RestaurantStyle;
@@ -76,7 +77,7 @@ class RestaurantController extends BaseController
         }
         return view('restaurant.service', compact('user','customer_app_sub','ROCustomerAppSub','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
     }
-   
+
     public function serviceDeactivate()
     {
         /** @var RestaurantUser $user */
@@ -95,7 +96,7 @@ class RestaurantController extends BaseController
         ]);
         return redirect()->back()->with('success', __('Branches has been deactivated successfully'));
     }
-    
+
     public function serviceActivate()
     {
         /** @var RestaurantUser $user */

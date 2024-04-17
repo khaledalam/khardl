@@ -67,7 +67,7 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
                         <p className="text-sm">{label}</p>
                         <div className="flex flex-row items-center gap-2 ">
                             <span className="label-text">
-                                + {t("SAR")}&nbsp;{price}
+                                + {price}
                             </span>
                             <input
                                 id={id}

@@ -209,7 +209,8 @@ return [
         "android_url"=>"رابط الاندرويد",
         "ios_url"=>"رابط الايفون",
         "calories" => "السعرات",
-        "old_password" => "كلمة المرور القديمة"
+        "old_password" => "كلمة المرور القديمة",
+        "image" => "الصورة"
 
     ],
     'values' => [

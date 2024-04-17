@@ -298,9 +298,8 @@
                             </a>
                             @endif
                         </div>
-                        {{-- //TODO: uncomment when driver app is ready --}}
                         <!-- drivers -->
-                        {{-- <div class="menu-item menu-accordion">
+                        <div class="menu-item menu-accordion">
                             @if(\App\Models\Tenant\Branch::first())
                             <a href="{{route('drivers.index')}}">
                                 <span class="{{ ($link == 'drivers') ? 'menu-link active' : 'menu-link ' }}">
@@ -328,7 +327,7 @@
                                 </span>
                             </a>
                             @endif
-                        </div> --}}
+                        </div>
 
                     <!-- menu -->
 
@@ -412,7 +411,7 @@
                                 </a>
                             </div>
                         @endif
-                       
+
                         <!-- Services -->
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.service')}}">
