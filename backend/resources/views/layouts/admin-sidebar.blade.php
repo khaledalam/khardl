@@ -629,6 +629,32 @@
     </div>
     <!--end::Scrolltop-->
 
+    <script>
+        var deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                var form = button.closest('.delete-form');
+
+                Swal.fire({
+                    title: `{{ __('are-you-sure') }}`
+                    , text: "{{ __('you-wont-be-able-to-undo-this') }}"
+                    , icon: 'warning'
+                    , showCancelButton: true
+                    , confirmButtonColor: '#d33'
+                    , cancelButtonColor: '#3085d6'
+                    , confirmButtonText: `{{ __('delete') }}`
+                    , cancelButtonText: `{{ __('cancel') }}`
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+
+    </script>
     @yield('js')
     <!--begin::Javascript-->
     <script>

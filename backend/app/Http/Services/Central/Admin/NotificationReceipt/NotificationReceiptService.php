@@ -29,12 +29,10 @@ class NotificationReceiptService
         $branches = Branch::all();
         return view('restaurant.drivers.edit', compact('branches', 'driver'));
     }
-    public function show($request, $driver)
+    public function show($request, $notification)
     {
-        $orders = $driver->driver_orders()
-            ->orderBy('orders.id', 'desc')
-            ->paginate(config('application.perPage') ?? 20);
-        return view('restaurant.drivers.show', compact('driver', 'orders'));
+        $user = Auth::user();
+        return view('admin.notification_receipt.show', compact('user','notification'));
     }
     public function store($request)
     {
@@ -60,24 +58,19 @@ class NotificationReceiptService
         $driver->update($data);
         return redirect()->route('drivers.index')->with(['success' => __('Updated successfully')]);
     }
-    public function destroy($driver)
+    public function destroy($notification)
     {
-        $user = Auth::user();
-        if ($user->isRestaurantOwner()) {
-            $driver->delete();
-            return redirect()->route('drivers.index')->with(['success' => __('Deleted successfully')]);
-        } else {
-            return redirect()->route('drivers.index');
-        }
+        $notification->delete();
+        return redirect()->route('admin.notifications-receipt.index')->with(['success' => __('Deleted successfully')]);
     }
     public function handleImage($request, $update = null)
     {
         $image = tenant_asset(store_image($request->file('image'), self::DriverPath, null, $update));
         return $image;
     }
-    public function toggleStatus($notificationReceipt)
+    public function toggleStatus($notifications_receipt)
     {
-        $notificationReceipt->toggleActive();
+        $notifications_receipt->toggleActive();
         return redirect()->back()>with(['success' => __('Update successfully')]);
     }
     private function request_data($request)

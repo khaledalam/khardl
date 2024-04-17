@@ -29,11 +29,9 @@ class NotificationReceiptController extends BaseController
         $this->authorize('update', $driver);
         return $this->notificationService->edit($request,$driver);
     }
-    public function show(Request $request, $driver)
+    public function show(Request $request, NotificationReceipt $notifications_receipt)
     {
-        $driver = RestaurantUser::drivers()->findOrFail($driver);
-        $this->authorize('view', $driver);
-        return $this->notificationService->show($request,$driver);
+        return $this->notificationService->show($request,$notifications_receipt);
     }
     public function update(DriverUpdateFormRequest $request, $driver)
     {
@@ -41,14 +39,12 @@ class NotificationReceiptController extends BaseController
         $this->authorize('update', $driver);
         return $this->notificationService->update($request, $driver);
     }
-    public function destroy(Request $request, $driver)
+    public function destroy(Request $request, NotificationReceipt $notifications_receipt)
     {
-        $driver = RestaurantUser::drivers()->findOrFail($driver);
-        $this->authorize('delete', $driver);
-        return $this->notificationService->destroy($driver);
+        return $this->notificationService->destroy($notifications_receipt);
     }
-    public function toggleStatus(Request $request, NotificationReceipt $notificationReceipt)
+    public function toggleStatus(Request $request, NotificationReceipt $notifications_receipt)
     {
-        return $this->notificationService->toggleStatus($notificationReceipt);
+        return $this->notificationService->toggleStatus($notifications_receipt);
     }
 }
