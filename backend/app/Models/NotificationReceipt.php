@@ -26,7 +26,11 @@ class NotificationReceipt extends Model
     public function scopeWhenStatus($query,$status)
     {
         return $query->when($status != null, function ($q) use ($status) {
-            return $q->where('active', (bool)$status);
+            if($status == 'true'){
+                return $q->where('active', 1);
+            }else{
+                return $q->where('active', 0);
+            }
         });
     }
 }

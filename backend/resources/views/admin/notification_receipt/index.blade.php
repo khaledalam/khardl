@@ -57,6 +57,7 @@
                                     <th class="min-w-150px">{{ __('On purchase the app') }}</th>
                                     <th class="min-w-150px">{{ __('On purchase branch') }}</th>
                                     <th class="min-w-150px">{{ __('Status') }}</th>
+                                    <th class="min-w-150px">{{ __('Created at') }}</th>
                                     <th class="min-w-150px text-end">{{ __('actions') }}</th>
                                 </tr>
                             </thead>
@@ -107,12 +108,15 @@
                                             </label>
                                         </span>
                                     </td>
+                                    <td class="px-2">
+                                        <span>{{ $notification->created_at?->format('Y-m-d') }}</span>
+                                    </td>
                                     <td>
-                                        {{-- <div class="d-flex justify-content-end flex-shrink-0">
-                                            <a href="{{ route('notification-receipts.show', ['driver' => $notification->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
+                                        <div class="d-flex justify-content-end flex-shrink-0">
+                                            <a href="{{ route('admin.notifications-receipt.show', ['notifications_receipt' => $notification->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
                                         <i class="fa fa-eye"></i>
                                         </a>
-                                        </div> --}}
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
