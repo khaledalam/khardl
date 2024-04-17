@@ -18,9 +18,8 @@
                     <div class="card-title border-0 pt-5 d-flex align-items-center position-relative my-1">
                         <h3 class="card-title align-items-start flex-column mx-2">
                             <span class="card-label fw-bolder fs-3 mb-1">{{ __('drivers') }}
-                                <span class="text-muted mt-1 fw-bold fs-7">{{ __('drivers') }}</span>
                         </h3>
-                        <input type="text" value="{{ request('search') }}" placeholder="{{ __('By name, email, phone') }}" name="search" class="form-control  w-200px" placeholder="{{__('search')}}" />
+                        <input type="text" value="{{ request('search') }}" placeholder="{{ __('By name, email, phone') }}" name="search" class="form-control  w-200px" />
                         <div class="form-group mx-2">
                             <select name="status" id="status" class="form-select w-200px">
                                 <option value="">{{ __('Select') }}</option>
