@@ -99,27 +99,44 @@ export const RightSideBarMobile = ({
                         <div className="flex flex-row h-[24px] border-l pl-[8px] mt-[12px] space-x-[8px]">
                             {Object.keys(
                                 navItems[activeSection].subItems[activeSubitem]
-                            ).map(
-                                (key, index) =>
-                                    key != "title" &&
-                                    navItems[activeSection].subItems[
-                                        activeSubitem
-                                    ][key].length > 0 && (
-                                        <div
-                                            key={key}
-                                            onClick={() =>
-                                                setActiveDesignSection(key)
-                                            }
-                                            className={`text-[10px] h-[24px] font-light leading-[13px] rounded-[50px] pt-[5px] pb-[6px] pr-[11px] pl-[12px] ${
-                                                activeDesignSection === key
-                                                    ? "font-medium bg-[#F3F3F3]"
-                                                    : ""
-                                            }`}
-                                        >
-                                            {t(key)}
-                                        </div>
-                                    )
-                            )}
+                            )
+                                .filter(
+                                    (item) =>
+                                        item != "title" &&
+                                        item != "layoutOnChange" &&
+                                        item != "contentPositionOnChange" &&
+                                        item != "layoutInitialValues" &&
+                                        item !=
+                                            "contentPositionInitialValues" &&
+                                        item != "textInitialValues" &&
+                                        item != "textOnChange" &&
+                                        item != "textInitialValues_2" &&
+                                        item != "textOnChange_2" &&
+                                        navItems[activeSection].subItems[
+                                            activeSubitem
+                                        ][item].length > 0
+                                )
+                                .map(
+                                    (key, index) =>
+                                        key != "title" &&
+                                        navItems[activeSection].subItems[
+                                            activeSubitem
+                                        ][key].length > 0 && (
+                                            <div
+                                                key={key}
+                                                onClick={() =>
+                                                    setActiveDesignSection(key)
+                                                }
+                                                className={`text-[10px] h-[24px] font-light leading-[13px] rounded-[50px] pt-[5px] pb-[6px] pr-[11px] pl-[12px] ${
+                                                    activeDesignSection === key
+                                                        ? "font-medium bg-[#F3F3F3]"
+                                                        : ""
+                                                }`}
+                                            >
+                                                {t(key)}
+                                            </div>
+                                        )
+                                )}
                         </div>
                     </div>
                 )}
@@ -155,39 +172,159 @@ export const RightSideBarMobile = ({
                             ) : subItem == "color" ? (
                                 <EditorColorSelect
                                     label={t("Color")}
-                                    modalId={"page-modal"}
-                                    color={`${t(page_color)}`}
-                                    handleColorChange={(color) =>
-                                        dispatch(headerColor(color))
+                                    modalId={`${activeDesignSection}-color-modal`}
+                                    handleColorChange={
+                                        activeDesignSection === "layout"
+                                            ? (color) => {
+                                                  navItems[
+                                                      activeSection
+                                                  ].subItems[
+                                                      activeSubitem
+                                                  ]?.layoutOnChange[subIndex](
+                                                      color
+                                                  );
+                                              }
+                                            : activeDesignSection ===
+                                              "contentPosition"
+                                            ? (color) => {
+                                                  navItems[
+                                                      activeSection
+                                                  ].subItems[
+                                                      activeSubitem
+                                                  ]?.contentPositionOnChange[
+                                                      subIndex
+                                                  ](color);
+                                              }
+                                            : activeDesignSection === "text"
+                                            ? (color) => {
+                                                  navItems[
+                                                      activeSection
+                                                  ].subItems[
+                                                      activeSubitem
+                                                  ]?.textOnChange[subIndex](
+                                                      color
+                                                  );
+                                              }
+                                            : (color) => {
+                                                  navItems[
+                                                      activeSection
+                                                  ].subItems[
+                                                      activeSubitem
+                                                  ]?.textOnChange_2[subIndex](
+                                                      color
+                                                  );
+                                              }
+                                    }
+                                    color={
+                                        activeDesignSection === "layout"
+                                            ? navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.layoutInitialValues[subIndex]
+                                            : activeDesignSection ===
+                                              "contentPosition"
+                                            ? navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.contentPositionInitialValues[
+                                                  subIndex
+                                              ]
+                                            : activeDesignSection === "text"
+                                            ? navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textInitialValues[subIndex]
+                                            : navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textInitialValues_2[subIndex]
                                     }
                                 />
                             ) : subItem == "positionContent" ? (
                                 <EditorAlignment
-                                    defaultValue={logo_alignment}
-                                    onChange={(value) =>
-                                        dispatch(logoAlignment(value))
+                                    modalId={`${activeDesignSection}-position-modal`}
+                                    defaultValue={
+                                        navItems[activeSection].subItems[
+                                            activeSubitem
+                                        ]?.contentPositionInitialValues[
+                                            subIndex
+                                        ]
                                     }
+                                    onChange={(value) => {
+                                        navItems[activeSection].subItems[
+                                            activeSubitem
+                                        ]?.contentPositionOnChange[subIndex](
+                                            value
+                                        );
+                                    }}
                                 />
                             ) : subItem == "radius" ? (
                                 <EditorPercentageInput
                                     label={t("Border Radius")}
-                                    percentage={10}
+                                    percentage={
+                                        activeDesignSection === "layout"
+                                            ? navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.layoutInitialValues[subIndex]
+                                            : navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.contentPositionInitialValues[
+                                                  subIndex
+                                              ]
+                                    }
+                                    handlePercentageChange={
+                                        activeDesignSection === "layout"
+                                            ? (color) => {
+                                                  navItems[
+                                                      activeSection
+                                                  ].subItems[
+                                                      activeSubitem
+                                                  ]?.layoutOnChange[subIndex](
+                                                      color
+                                                  );
+                                              }
+                                            : navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.contentPositionOnChange[
+                                                  subIndex
+                                              ]
+                                    }
                                 />
                             ) : subItem == "font" ? (
                                 <EditorSelect
                                     label={t("Font")}
-                                    defaultValue={t("Inter")}
-                                    handleChange={(value) =>
-                                        dispatch(setHeaderPosition(value))
+                                    defaultValue={
+                                        activeDesignSection === "text"
+                                            ? navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textInitialValues[subIndex]
+                                            : navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textInitialValues_2[subIndex]
                                     }
+                                    handleChange={(value) => {
+                                        activeDesignSection === "text"
+                                            ? navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textOnChange[subIndex](value)
+                                            : navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textOnChange_2[subIndex](
+                                                  value
+                                              );
+                                    }}
                                     options={[
                                         {
-                                            value: "inter",
-                                            text: t("Inter"),
+                                            value: "cairo",
+                                            text: "Cairo",
                                         },
                                         {
-                                            value: "jakarta",
-                                            text: t("Jakarta"),
+                                            value: "Poppins",
+                                            text: "Poppins",
+                                        },
+                                        {
+                                            value: "Roboto",
+                                            text: "Roboto",
+                                        },
+                                        {
+                                            value: "Plus Jakarta Sans",
+                                            text: "Jakarta",
                                         },
                                     ]}
                                 />
@@ -212,28 +349,80 @@ export const RightSideBarMobile = ({
                             ) : subItem == "weight" ? (
                                 <EditorSelect
                                     label={t("Weight")}
-                                    defaultValue={t("Regular")}
-                                    handleChange={(value) =>
-                                        dispatch(setHeaderPosition(value))
+                                    defaultValue={
+                                        activeDesignSection === "text"
+                                            ? navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textInitialValues[subIndex]
+                                            : navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textInitialValues_2[subIndex]
                                     }
+                                    handleChange={(value) => {
+                                        activeDesignSection === "text"
+                                            ? navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textOnChange[subIndex](value)
+                                            : navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textOnChange_2[subIndex](
+                                                  value
+                                              );
+                                    }}
                                     options={[
                                         {
-                                            value: "regular",
-                                            text: t("Regular"),
+                                            value: "thin",
+                                            text: t("Thin"),
+                                        },
+                                        {
+                                            value: "extralight",
+                                            text: t("Extra Light"),
                                         },
                                         {
                                             value: "light",
                                             text: t("Light"),
+                                        },
+                                        {
+                                            value: "normal",
+                                            text: t("Normal"),
+                                        },
+                                        {
+                                            value: "medium",
+                                            text: t("Medium"),
+                                        },
+                                        {
+                                            value: "semibold",
+                                            text: t("Semibold"),
+                                        },
+                                        {
+                                            value: "bold",
+                                            text: t("Bold"),
                                         },
                                     ]}
                                 />
                             ) : subItem == "size" ? (
                                 <EditorSizeSelect
                                     label={t("Size")}
-                                    defaultValue={t("Regular")}
-                                    handleChange={(value) =>
-                                        dispatch(setHeaderPosition(value))
+                                    defaultValue={
+                                        activeDesignSection === "text"
+                                            ? navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textInitialValues[subIndex]
+                                            : navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textInitialValues_2[subIndex]
                                     }
+                                    handleChange={(value) => {
+                                        activeDesignSection === "text"
+                                            ? navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textOnChange[subIndex](value)
+                                            : navItems[activeSection].subItems[
+                                                  activeSubitem
+                                              ]?.textOnChange_2[subIndex](
+                                                  value
+                                              );
+                                    }}
                                 />
                             ) : subItem == "linkTo" ? (
                                 <EditorLink
@@ -242,93 +431,23 @@ export const RightSideBarMobile = ({
                                         dispatch(setHeaderPosition(value))
                                     }
                                 />
-                            ) : (
-                                <></>
-                            )}
+                            ) : subItem == "positionLayoutGrid" ? (
+                                <EditorPosition
+                                    modalId={`${activeDesignSection}-position`}
+                                    defaultValue={
+                                        navItems[activeSection].subItems[
+                                            activeSubitem
+                                        ]?.layoutInitialValues[subIndex]
+                                    }
+                                    onChange={(value) => {
+                                        navItems[activeSection].subItems[
+                                            activeSubitem
+                                        ]?.layoutOnChange[subIndex](value);
+                                    }}
+                                />
+                            ) : null}
                         </div>
                     ))}
-                    {/* <div>{actSecTitle}</div>
-                    <div>{actSubTitle}</div>
-                    <div>{activeDesignSection}</div>
-                    {console.log(
-                        "lll: ",
-                        navItems[activeSection].subItems[activeSubitem][
-                            activeDesignSection
-                        ]
-                    )} */}
-                    {/* {actSecTitle == "Header" ? (
-                        actSubTitle == "Side Menu" ? (
-                            activeDesignSection == "layout" ? (
-                                <div className="px-[16px] space-y-[8px]">
-                                    <EditorSelect
-                                        label={t("Position")}
-                                        defaultValue={
-                                            headerPosition === "relative"
-                                                ? t("Relative")
-                                                : t("Fixed")
-                                        }
-                                        handleChange={(value) =>
-                                            dispatch(setHeaderPosition(value))
-                                        }
-                                        options={[
-                                            {
-                                                value: "fixed",
-                                                text: t("Fixed"),
-                                            },
-                                            {
-                                                value: "relative",
-                                                text: t("Relative"),
-                                            },
-                                        ]}
-                                    />
-                                    <EditorColorSelect
-                                        label={t("Color")}
-                                        modalId={"page-modal"}
-                                        color={`${t(page_color)}`}
-                                        handleColorChange={(color) =>
-                                            dispatch(headerColor(color))
-                                        }
-                                    />
-                                </div>
-                            ) : activeDesignSection == "contentPosition" ? (
-                                <div>contentPosition 2</div>
-                            ) : activeDesignSection == "text" ? (
-                                <div>text 2</div>
-                            ) : activeDesignSection == "link" ? (
-                                <div>link 2</div>
-                            ) : (
-                                <></>
-                            )
-                        ) : actSubTitle == "Order Cart" ? (
-                            activeDesignSection == "layout" ? (
-                                <div>layout 2</div>
-                            ) : activeDesignSection == "contentPosition" ? (
-                                <div>contentPosition 2</div>
-                            ) : activeDesignSection == "text" ? (
-                                <div>text 2</div>
-                            ) : activeDesignSection == "link" ? (
-                                <div>link 2</div>
-                            ) : (
-                                <></>
-                            )
-                        ) : actSubTitle == "Home" ? (
-                            activeDesignSection == "layout" ? (
-                                <div>layout 2</div>
-                            ) : activeDesignSection == "contentPosition" ? (
-                                <div>contentPosition 2</div>
-                            ) : activeDesignSection == "text" ? (
-                                <div>text 2</div>
-                            ) : activeDesignSection == "link" ? (
-                                <div>link 2</div>
-                            ) : (
-                                <></>
-                            )
-                        ) : (
-                            <></>
-                        )
-                    ) : (
-                        <></>
-                    )} */}
                 </div>
             )}
         </div>
