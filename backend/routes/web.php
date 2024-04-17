@@ -158,13 +158,15 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::post('/generate-user', [AdminController::class, 'generateUser'])->middleware('permission:can_add_admins')->name('generate-user');
                     Route::get('/logs', [LogController::class, 'logs'])->middleware('permission:can_see_logs')->name('log');
                     Route::controller(RestaurantController::class)->group(function () {
+                        Route::get('/app-requested/restaurants','restaurantsAppRequested')->middleware('permission:can_access_restaurants')->name('restaurants.app-requested');
                         Route::get('/restaurants/{tenant}','show')->middleware('permission:can_view_restaurants')->name('view-restaurants');
                         Route::patch('/restaurants/{tenant}/config','updateConfig')->middleware('permission:can_view_restaurants')->name('update-restaurants-config');
-                        Route::get('/restaurants/{tenant}/tap/details','tapLead')->middleware('permission:can_view_restaurants')->name('view-restaurants-tap-lead');
+                        Route::patch('/restaurants/{tenant}/update-restaurants-customer-app','updateCustomerApp')->middleware('permission:can_view_restaurants')->name('update-restaurants-customer-app');
+                        
+                        Route::get('/restaurants/{tenant}/tap/details','tapLead')->middleware('permission:can_view_restaurants')->name('view-restaurants-tap-lead');                        
                         Route::get('/restaurants','index')->middleware('permission:can_access_restaurants')->name('restaurants');
                         Route::post('/delivery/{tenant}', 'activeAndDeactivateDelivery')->name('delivery.activateAndDeactivate');
                         Route::post('/restaurants/{tenant}/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.sign-new-lead');
-
                       });
                     Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
@@ -190,8 +192,8 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
 
                     Route::controller(AdminController::class)->prefix('subscriptions')->group(function () {
                         Route::get('/', [AdminController::class, 'subscriptions'])->name('subscriptions');
-                        Route::get('/create', [AdminController::class, 'subscriptionsCreate'])->name('subscriptions.create');
-                        Route::post('/store', [AdminController::class, 'subscriptionsStore'])->name('subscriptions.store');
+                        // Route::get('/create', [AdminController::class, 'subscriptionsCreate'])->name('subscriptions.create');
+                        // Route::post('/store', [AdminController::class, 'subscriptionsStore'])->name('subscriptions.store');
                         Route::get('/{subscription}/show', [AdminController::class, 'subscriptionShow'])->name('subscriptions.show');
                         Route::patch('/{subscription}/update', [AdminController::class, 'subscriptionUpdate'])->name('subscriptions.update');
 

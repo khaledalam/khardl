@@ -47,12 +47,17 @@
                                                 We hope this message finds you well.
                                             </p>
                                             <p>
-                                                We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has been suspended. Unfortunately, this means your restaurant cannot receive any new orders.
+                                                We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has been suspended.
                                             </p>
-
+                                            @if($type == 'website')
                                             <p>
                                                 To proceed with the renewal and start receiving orders again, please follow this link: <a href="{{ $url }}">Renew Subscription</a>. Our team is ready to assist you throughout the process and answer any questions you may have.
                                             </p>
+                                        @elseif($type == 'app')
+                                            <p>
+                                                Unfortunately, your customers cannot place orders through the app until your subscription is renewed. To proceed with the renewal and start receiving orders again, please follow this link: <a href="{{ $url }}">Renew Subscription</a>. Our team is ready to assist you throughout the process and answer any questions you may have.
+                                            </p>
+                                        @endif
                                             <p>
                                                 Thank you for choosing our services. We value your partnership and look forward to continuing our collaboration.
                                             </p>

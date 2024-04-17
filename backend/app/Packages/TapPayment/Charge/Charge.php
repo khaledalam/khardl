@@ -31,7 +31,8 @@ class Charge extends Tap implements ChargeInterface
                 'id'=>env('TAP_PLATFORM_ID')
             ],
             'post'=>[
-                'url'=> route('webhook-client-tap-payment') /* route('webhook-client-tap-payment') */
+                'url'=>route('webhook-client-tap-payment')
+                // 'url'=> 'https://4929-156-207-71-26.ngrok-free.app/webhook-tap-actions'
             ],
             // "source"=>[
             //     "id"=>"src_all"
@@ -61,7 +62,8 @@ class Charge extends Tap implements ChargeInterface
                 'id'=>$token_id
             ],
             'post'=>[
-                'url'=> route('webhook-client-tap-payment') 
+                'url'=>route('webhook-client-tap-payment')
+                // 'url'=> 'https://4929-156-207-71-26.ngrok-free.app/webhook-tap-actions'
             ],
             // "source"=>[
             //     "id"=>"src_all"
