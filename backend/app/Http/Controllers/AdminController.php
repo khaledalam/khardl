@@ -743,8 +743,15 @@ class AdminController extends Controller
         return view('admin.subscriptions-edit', compact('user','subscription'));
     }
     public function subscriptionUpdate(Subscription $subscription,Request $request){
+        $request->validate([
+            'name_en'=>"required|string",
+            'name_ar'=>"required|string",
+            'description_ar'=>"required|string",
+            'description_en'=>"required|string",
+        ]);
         $subscription->update([
-            'name'=>trans_json($request->name_en,$request->name_ar),
+            'name'=>trans_json($request->name_en ?? '',$request->name_ar ?? ''),
+            'description'=>trans_json($request->description_en ?? '',$request->description_ar ?? ''),
             'amount'=>$request->amount
         ]);
         return redirect()->route('admin.subscriptions')->with([
