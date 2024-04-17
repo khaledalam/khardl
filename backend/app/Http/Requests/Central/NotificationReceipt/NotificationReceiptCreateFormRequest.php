@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class NotificationReceiptFormRequest extends FormRequest
+class NotificationReceiptCreateFormRequest extends FormRequest
 {
 
     public function authorize(): bool
