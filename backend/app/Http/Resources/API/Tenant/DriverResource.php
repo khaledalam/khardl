@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\API\Tenant;
 
-use App\Models\Tenant\DeliveryType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,7 +24,8 @@ class DriverResource extends JsonResource
             'vehicle_number' => $this->vehicle_number,
             'lat' => $this->lat,
             'lng' => $this->lng,
-            'branch' => $this->branch
+            'branch' => $this->branch,
+            'image' => $this->image,
         ];
     }
 }

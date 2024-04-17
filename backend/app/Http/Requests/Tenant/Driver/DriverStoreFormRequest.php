@@ -30,9 +30,10 @@ class DriverStoreFormRequest extends FormRequest
             'last_name' => 'required|string|min:3|max:255',
             'email' => 'required|string|email|min:10|max:255|unique:users',
             'password' => 'required|string|min:6|max:255',
-            'phone' => 'required|regex:/^(966)?\d{9}$/|unique:users',
+            'phone' => 'required|regex:/^(966)?\d{9}$/|unique:users,phone',
             'address' => 'nullable|max:255',
-            'branch_id' => 'required|exists:branches,id'
+            'branch_id' => 'required|exists:branches,id',
+            'image' => ['required','mimes:png,jpg,jpeg,gif','max:4096']
         ];
     }
     protected function prepareForValidation()

@@ -10,7 +10,7 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Form-->
-            <form action="{{ route('drivers.store') }}" method="POST">
+            <form action="{{ route('drivers.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!--begin::Main column-->
@@ -74,6 +74,14 @@
                                         </div>
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
+                                            <label class="required form-label">{{ __('Image')}}</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="file" class="form-control form-control-solid" placeholder="{{ __('Photo') }}" name="image" accept="image/*" required />
+                                            <!--end::Input-->
+                                        </div>
+                                        <div class="mb-10 fv-row">
+                                            <!--begin::Label-->
                                             <label class="required form-label">{{ __('Branch')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
@@ -130,7 +138,7 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="form-label">{{ __('Vehicle number')}}</label>
+                                            <label class="required form-label">{{ __('Vehicle number')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="vehicle_number" class="form-control mb-2" placeholder="{{ __('Number')}}" value="{{old('vehicle_number')}}"  required/>

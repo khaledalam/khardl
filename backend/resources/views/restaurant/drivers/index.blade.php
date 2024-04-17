@@ -55,8 +55,8 @@
                             <thead>
                                 <tr class="fw-bolder text-muted">
                                     <th class="min-w-25px">#</th>
-                                    <th class="min-w-200px">{{ __('first-name') }}</th>
-                                    <th class="min-w-150px">{{ __('last-name') }}</th>
+                                    <th class="min-w-200px">{{ __('Name') }}</th>
+                                    <th class="min-w-200px">{{ __('Image') }}</th>
                                     <th class="min-w-150px">{{ __('Status') }}</th>
                                     <th class="min-w-150px">{{ __('Delivered orders') }}</th>
                                     <th class="min-w-150px">{{ __('This month') }}</th>
@@ -77,12 +77,14 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a class="text-dark fw-bolder text-hover-khardl fs-6">{{ $driver->first_name }}</a>
+                                                <a class="text-dark fw-bolder text-hover-khardl fs-6">{{ $driver->full_name }}</a>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->last_name }}</a>
+                                        <div class="symbol symbol-100px symbol-lg-60px symbol-fixed position-relative">
+                                            <img alt="driver image" src="{{ $driver->image }}" />
+                                        </div>
                                     </td>
                                     <td>
                                         <span class="badge {{ $driver->status }}">
