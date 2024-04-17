@@ -48,7 +48,7 @@ if (!function_exists('random_hash')) {
 
 if (!function_exists('store_image')) {
 
-    function store_image($image, $store_at, $name = null, $old_image)
+    function store_image($image, $store_at, $name = null, $old_image = null)
     {
         if($old_image){//Try to delete old image of exist
             try {
