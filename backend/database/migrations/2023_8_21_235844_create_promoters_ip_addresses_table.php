@@ -17,7 +17,11 @@ return new class extends Migration
             $table->string('ip_address');
             $table->boolean('registered')->default(false);
             $table->unique(['ip_address','promoter_id']);
+
+            $table->timestamps();
         });
+
+        
     }
 
     /**

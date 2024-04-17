@@ -153,7 +153,65 @@
                                             });
                                         @endphp
                                         {{ $restaurant?->restaurant_name }}
-                                        @include('components.restaurant-status-badge',['customer_app'=>$customer_app])
+                                        <style>
+    /* Tooltip container */
+    .custom-tooltip {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    /* Tooltip text */
+    .custom-tooltip .tooltip-text {
+        visibility: hidden;
+        width: max-content;
+        background-color: #fff; /* Tooltip background color */
+        color: #333; /* Tooltip text color */
+        text-align: center;
+        border-radius: 6px;
+        padding: 10px 15px;
+        position: absolute;
+        z-index: 1;
+        top: 100%; /* Position below the tooltip container */
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add box shadow for depth */
+    }
+
+    /* Tooltip text visible on hover */
+    .custom-tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+
+</style>
+
+@include('components.restaurant-status-badge',['customer_app'=>$customer_app])
+
+@if($restaurant?->user?->isRejected() && count(json_decode($restaurant?->user?->reject_reasons) ?? []) > 0)
+    <div class="custom-tooltip">
+        <i class="fas fa-info-circle text-danger"></i>
+        <span class="tooltip-text">
+            @foreach(json_decode($restaurant?->user?->reject_reasons) ?? [] as $reason)
+                {{ __($reason) }} <br> <!-- Change this to your localized rejection reason -->
+            @endforeach
+        </span>
+    </div>
+@endif
+
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+
+
+
+
                                     </a>
 
                                     <!--end::Name-->
@@ -161,14 +219,7 @@
                                     <div class="fw-bold text-gray-400 mb-6">{{ $restaurant->first_name }} {{ $restaurant->last_name }}</div>
                                     <!--end::Position-->
 
-                                    @if(count(json_decode($restaurant?->user?->reject_reasons) ?? []) > 0)
-                                        <b class="fs-4">{{__('Rejection reasons')}}:</b>
-                                        <ul>
-                                        @foreach(json_decode($restaurant?->user?->reject_reasons) ?? [] as $reason)
-                                            <li class="fs-6 text-danger small">{{ __($reason)}}</li>
-                                        @endforeach
-                                        </ul>
-                                    @endif
+                                    
 
                                     <div class="d-flex flex-center flex-wrap">
                                         <!--begin::Stats-->
