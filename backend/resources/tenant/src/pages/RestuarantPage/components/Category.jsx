@@ -88,6 +88,9 @@ const Category = ({ restaurantStyle, categories }) => {
                                                 name={product.name}
                                                 imgSrc={product.photo}
                                                 amount={product.price}
+                                                description={
+                                                    product.description
+                                                }
                                                 caloryInfo={product.calories}
                                                 checkbox_required={
                                                     product?.checkbox_required ?? [

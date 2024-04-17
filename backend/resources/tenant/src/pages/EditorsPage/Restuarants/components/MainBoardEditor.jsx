@@ -627,6 +627,9 @@ const MainBoardEditor = ({
                                                             imgSrc={
                                                                 product.photo
                                                             }
+                                                            description={
+                                                                product.description
+                                                            }
                                                             amount={
                                                                 product.price
                                                             }
