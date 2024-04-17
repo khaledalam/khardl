@@ -37,13 +37,19 @@ function EditorSlider({
 
     const {
         category_hover_color,
-        category_alignment,
         category_shape,
         text_fontWeight,
         text_fontSize,
         text_alignment,
         text_color,
         page_category_color,
+        menu_category_background_color,
+        menu_category_font,
+        menu_category_weight,
+        menu_category_size,
+        menu_category_color,
+        menu_category_position,
+        menu_category_radius,
     } = restuarantEditorStyle;
 
     // const swiper = useSwiper();
@@ -52,17 +58,25 @@ function EditorSlider({
 
     return (
         <div
+            // style={{
+            //     backgroundColor: page_category_color,
+            //     borderRadius: category_shape === "sharp" ? 0 : 12,
+            // }}
             style={{
-                backgroundColor: page_category_color,
-                borderRadius: category_shape === "sharp" ? 0 : 12,
+                backgroundColor: menu_category_background_color
+                    ? menu_category_background_color
+                    : "#F3F3F3",
+                borderRadius: menu_category_radius
+                    ? `${menu_category_radius}px`
+                    : "50px",
             }}
             className={`${
-                category_alignment == "center" ? "h-40" : "h-full"
+                menu_category_position == "center" ? "h-40" : "h-full"
             } w-full  py-3 flex items-center justify-between ${
                 isHighlighted && "shadow-inner border-[#C0D123] border-[2px]"
             }`}
         >
-            {category_alignment == "center" ? (
+            {menu_category_position == "center" ? (
                 <div
                     className={`flex items-center justify-between w-full px-[16px] ${
                         Language == "ar" && "flex-row-reverse"
@@ -81,7 +95,7 @@ function EditorSlider({
                     >
                         <div
                             className={`flex ${
-                                category_alignment === "center"
+                                menu_category_position === "center"
                                     ? "flex-row gap-[30px] "
                                     : "flex-col gap-6"
                             } items-center !justify-center w-full`}
@@ -103,16 +117,17 @@ function EditorSlider({
                                         onClick={() =>
                                             scrollToSection(category.name)
                                         }
-                                        textColor={text_color}
+                                        textColor={menu_category_color}
                                         textAlign={text_alignment}
-                                        fontWeight={text_fontWeight}
+                                        textFontFamily={menu_category_font}
+                                        fontWeight={menu_category_weight}
                                         shape={category_shape}
                                         isGrid={
-                                            category_alignment === "center"
+                                            menu_category_position === "center"
                                                 ? false
                                                 : true
                                         }
-                                        fontSize={text_fontSize}
+                                        fontSize={menu_category_size}
                                         currentSubItem={currentSubItem}
                                     />
                                 </SwiperSlide>
@@ -139,7 +154,9 @@ function EditorSlider({
                             fontWeight={text_fontWeight}
                             shape={category_shape}
                             isGrid={
-                                category_alignment === "center" ? false : true
+                                menu_category_position === "center"
+                                    ? false
+                                    : true
                             }
                             fontSize={text_fontSize}
                             currentSubItem={currentSubItem}

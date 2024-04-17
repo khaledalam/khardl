@@ -86,6 +86,28 @@ const ProductItem = ({
     const [selectedDropdown, setSelectedDropdown] = useState([]);
     const [spinner, setSpinner] = useState(false);
 
+    const restuarantEditorStyle = useSelector(
+        (state) => state.restuarantEditorStyle
+    );
+
+    const {
+        menu_card_background_color,
+        menu_card_radius,
+        menu_name_text_font,
+        menu_name_text_weight,
+        menu_name_text_size,
+        menu_name_text_color,
+        total_calories_text_font,
+        total_calories_text_weight,
+        total_calories_text_size,
+        total_calories_text_color,
+        price_background_color,
+        price_text_font,
+        price_text_weight,
+        price_text_size,
+        price_text_color,
+    } = restuarantEditorStyle;
+
     const incrementQty = useCallback(() => {
         // setSpinner(true);
         setQtyCount((prev) => prev + 1);
@@ -406,21 +428,33 @@ const ProductItem = ({
     return (
         <Fragment>
             <div
+                style={{
+                    backgroundColor: menu_card_background_color,
+                    borderRadius: `${menu_card_radius}px`,
+                }}
                 className="w-36 h-44 relative"
                 key={valuekey}
                 onClick={() => document.getElementById(id).showModal()}
             >
-                <div className="w-36 h-44 bg-white rounded-xl border border-red-900 border-opacity-10 flex flex-col justify-between items-center">
-                    <div className="w-36 h-[86px] bg-orange-100 bg-opacity-10 rounded-xl flex justify-center items-center">
+                <div className="w-36 h-44 flex flex-col justify-between items-center">
+                    <div className="w-36 h-[86px] flex justify-center items-center">
                         <img className="w-[60px] h-[60px]" src={imgSrc} />
                     </div>
-                    <div className=" text-black text-opacity-75 text-xs font-semibold font-['Inter'] relative">
+                    <div
+                        style={{
+                            color: menu_name_text_color,
+                            fontFamily: menu_name_text_font,
+                            fontWeight: menu_name_text_weight,
+                            fontSize: menu_name_text_size,
+                        }}
+                        className="relative"
+                    >
                         <span>{name}</span>
                         <img
                             src={GreenDot}
                             alt="green dot"
                             className={`${
-                                currentSubItem == t("Menu Name")
+                                currentSubItem == t("Item Text")
                                     ? "absolute w-[5px] h-[5px] right-[-8px] top-[-2px]"
                                     : "hidden"
                             }`}
@@ -429,7 +463,15 @@ const ProductItem = ({
                     <div className="w-full h-3">
                         <div className="left-[16px] flex justify-center">
                             <img className="w-3 h-3" src={KcalIcon} />
-                            <span className="text-black text-opacity-75 text-[10px] font-medium font-['Inter'] relative">
+                            <span
+                                style={{
+                                    color: total_calories_text_color,
+                                    fontFamily: total_calories_text_font,
+                                    fontWeight: total_calories_text_weight,
+                                    fontSize: total_calories_text_size,
+                                }}
+                                className="relative"
+                            >
                                 <span>
                                     {caloryInfo} {t("Kcal")}
                                 </span>
@@ -437,7 +479,7 @@ const ProductItem = ({
                                     src={GreenDot}
                                     alt="green dot"
                                     className={`${
-                                        currentSubItem == t("Total Calories")
+                                        currentSubItem == t("Item Text")
                                             ? "absolute w-[5px] h-[5px] right-[-8px] top-[-2px]"
                                             : "hidden"
                                     }`}
@@ -446,8 +488,19 @@ const ProductItem = ({
                         </div>
                     </div>
                     <div className="w-28 h-6">
-                        <div className="w-28 h-6 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center relative">
-                            <div className=" text-white text-xs font-medium font-['Inter']">
+                        <div
+                            style={{ backgroundColor: price_background_color }}
+                            className="w-28 h-6 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center relative"
+                        >
+                            <div
+                                style={{
+                                    color: price_text_color,
+                                    fontFamily: price_text_font,
+                                    fontWeight: price_text_weight,
+                                    fontSize: price_text_size,
+                                }}
+                                className=""
+                            >
                                 {t("SAR")} {amount}
                             </div>
                             <img

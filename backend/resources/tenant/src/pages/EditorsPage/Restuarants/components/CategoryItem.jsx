@@ -17,13 +17,14 @@ const CategoryItem = ({
     shape,
     isGrid,
     fontSize,
+    textFontFamily,
     valuekey,
     currentSubItem,
 }) => {
     const [isHover, setIsHover] = useState(false);
     const { t } = useTranslation();
 
-    const { branches, category_alignment } = useSelector(
+    const { branches, menu_category_position } = useSelector(
         (state) => state.restuarantEditorStyle
     );
 
@@ -61,7 +62,7 @@ const CategoryItem = ({
                             : "#F5F5F5",
                     }}
                     className={` ${
-                        category_alignment == "center"
+                        menu_category_position == "center"
                             ? "w-[60px] h-[60px]"
                             : "w-[40px] h-[40px]"
                     } ${
@@ -95,6 +96,7 @@ const CategoryItem = ({
             <h3
                 style={{
                     color: textColor,
+                    fontFamily: textFontFamily,
                     fontWeight,
                     fontSize:
                         fontSize &&

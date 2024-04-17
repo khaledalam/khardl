@@ -68,7 +68,6 @@ const MainBoardEditor = ({
         page_category_color,
         product_background_color,
         category_hover_color,
-        category_alignment,
         category_shape,
 
         categoryDetail_cart_color,
@@ -118,6 +117,15 @@ const MainBoardEditor = ({
         home_position,
         home_color,
         home_radius,
+        menu_category_background_color,
+        menu_category_font,
+        menu_category_weight,
+        menu_category_size,
+        menu_category_color,
+        menu_category_position,
+        menu_category_radius,
+        menu_section_background_color,
+        menu_section_radius,
     } = restuarantEditorStyle;
 
     const [listofBannerImages, setListofBannerImages] = useState([]);
@@ -541,20 +549,20 @@ const MainBoardEditor = ({
             {/* Category */}
             <div
                 className={`w-full h-full flex ${
-                    category_alignment === "center"
+                    menu_category_position === "center"
                         ? "flex-col justify-center items-center"
                         : "flex-row items-start"
                 }  gap-[16px]`}
             >
                 <div
                     className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
-                        category_alignment === "left"
-                            ? "order-1 w-[25%]"
-                            : category_alignment === "right"
-                            ? "order-2 w-[25%]"
-                            : category_alignment === "center"
+                        menu_category_position === "left"
+                            ? "order-1 w-[33%]"
+                            : menu_category_position === "right"
+                            ? "order-2 w-[33%]"
+                            : menu_category_position === "center"
                             ? "w-full"
-                            : "w-[25%]"
+                            : "w-[33%]"
                     } `}
                 >
                     <EditorSlider
@@ -571,81 +579,21 @@ const MainBoardEditor = ({
                                 : null
                         }
                     />
-                    {/* <div
-                        style={{
-                            backgroundColor: page_category_color,
-                            borderRadius: category_shape === "sharp" ? 0 : 12,
-                        }}
-                        className="w-full h-40 py-3 flex items-center justify-between"
-                    >
-                        <div
-                            className={`flex items-center justify-between w-full px-[16px]`}
-                        >
-                            <button className="w-[25px] h-[25px] bg-black/10 rounded-full flex justify-center items-center">
-                                <img src={LeftIcon} alt="left icon" />
-                            </button>
-                            <div
-                                className={`flex ${
-                                    category_alignment === "center"
-                                        ? "flex-row gap-[30px] "
-                                        : "flex-col gap-6"
-                                } items-center `}
-                            >
-                                {categories && categories.length > 0 ? (
-                                    categories?.map((category, i) => (
-                                        <CategoryItem
-                                            key={i}
-                                            active={
-                                                selectedCategory.id ===
-                                                category.id
-                                            }
-                                            name={category.name}
-                                            imgSrc={category.photo}
-                                            alt={category.name}
-                                            hoverColor={category_hover_color}
-                                            onClick={() =>
-                                                dispatch(
-                                                    selectedCategoryAPI({
-                                                        name: category.name,
-                                                        id: category.id,
-                                                    })
-                                                )
-                                            }
-                                            textColor={text_color}
-                                            textAlign={text_alignment}
-                                            fontWeight={text_fontWeight}
-                                            shape={category_shape}
-                                            isGrid={
-                                                category_alignment === "center"
-                                                    ? false
-                                                    : true
-                                            }
-                                            fontSize={text_fontSize}
-                                        />
-                                    ))
-                                ) : (
-                                    <div className="skeleton w-16 h-16 rounded-full shrink-0"></div>
-                                )}
-                            </div>
-                            <button className="w-[25px] h-[25px] bg-black/10 rounded-full flex justify-center items-center">
-                                <img src={RightIcon} alt="right icon" />
-                            </button>
-                        </div>
-                    </div> */}
                 </div>
                 {!isLoading && (
                     <div
-                        style={{ backgroundColor: product_background_color }}
+                        style={{
+                            backgroundColor: menu_section_background_color,
+                            borderRadius: `${menu_section_radius}px`,
+                        }}
                         className={`h-full  ${
-                            category_alignment === "left"
+                            menu_category_position === "left"
                                 ? "order-2 w-[75%]"
-                                : category_alignment === "right"
+                                : menu_category_position === "right"
                                 ? "order-1 w-[75%]"
-                                : category_alignment === "center"
+                                : menu_category_position === "center"
                                 ? "w-full"
                                 : "w-[75%]"
-                        } ${
-                            categoryDetail_shape === "sharp" ? "" : "rounded-lg"
                         } py-[32]
                         ${
                             navItems[activeSection]?.title ===
@@ -659,88 +607,6 @@ const MainBoardEditor = ({
                             <div
                                 className={`flex flex-col gap-[30px] h-fit p-4 overflow-y-scroll hide-scroll`}
                             >
-                                {/* {categories &&
-                                    categories[0].items
-                                        .filter(
-                                            (item) => item.availability === 1
-                                        )
-                                        .map((product, idx) => (
-                                            <ProductItem
-                                                key={idx + "prdt"}
-                                                id={product.id}
-                                                name={product.name}
-                                                imgSrc={product.photo}
-                                                amount={product.price}
-                                                caloryInfo={product.calories}
-                                                checkbox_required={
-                                                    product?.checkbox_required ?? [
-                                                        "true",
-                                                        "false",
-                                                    ]
-                                                }
-                                                checkbox_input_titles={
-                                                    product?.checkbox_input_titles ?? [
-                                                        [],
-                                                    ]
-                                                }
-                                                checkbox_input_names={
-                                                    product?.checkbox_input_names ?? [
-                                                        [],
-                                                    ]
-                                                }
-                                                checkbox_input_prices={
-                                                    product?.checkbox_input_prices ?? [
-                                                        [],
-                                                    ]
-                                                }
-                                                selection_required={
-                                                    product?.selection_required ?? [
-                                                        "true",
-                                                        "false",
-                                                    ]
-                                                }
-                                                selection_input_titles={
-                                                    product?.selection_input_titles ?? [
-                                                        [],
-                                                    ]
-                                                }
-                                                selection_input_names={
-                                                    product?.selection_input_names ?? [
-                                                        [],
-                                                    ]
-                                                }
-                                                selection_input_prices={
-                                                    product?.selection_input_prices ?? [
-                                                        [],
-                                                    ]
-                                                }
-                                                dropdown_required={
-                                                    product?.dropdown_required ?? [
-                                                        "true",
-                                                        "false",
-                                                    ]
-                                                }
-                                                dropdown_input_titles={
-                                                    product?.dropdown_input_titles ?? [
-                                                        [],
-                                                    ]
-                                                }
-                                                dropdown_input_names={
-                                                    product?.dropdown_input_names ?? [
-                                                        [],
-                                                    ]
-                                                }
-                                                cartBgcolor={
-                                                    categoryDetail_cart_color
-                                                }
-                                                amountColor={price_color}
-                                                textColor={text_color}
-                                                textAlign={text_alignment}
-                                                fontWeight={text_fontWeight}
-                                                shape={categoryDetail_shape}
-                                                fontSize={text_fontSize}
-                                            />
-                                        ))} */}
                                 {categories &&
                                     categories.map((category, i) => (
                                         <div
@@ -752,11 +618,6 @@ const MainBoardEditor = ({
                                                 {category.name}
                                             </div>
                                             <div className="flex flex-row flex-wrap gap-[25px] justify-start">
-                                                {/* {category.items.map(
-                                                    (product, idx) => (
-                                                        <div>Hello</div>
-                                                    )
-                                                )} */}
                                                 {category.items.map(
                                                     (product, idx) => (
                                                         <ProductItem
@@ -951,8 +812,8 @@ const MainBoardEditor = ({
             </div>
             {/* footer */}
             <div
-                style={{ backgroundColor: footer_color }}
-                className={`w-full min-h-[70px]  rounded-xl flex  ${
+                style={{ backgroundColor: "white" }}
+                className={`w-full min-h-[30px]  rounded-xl flex  ${
                     footer_alignment === "center"
                         ? "items-center justify-center"
                         : footer_alignment === "left"

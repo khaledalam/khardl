@@ -109,29 +109,30 @@ const restuarantEditorSlice = createSlice({
         phoneNumber: "",
         phoneNumber_alignment: "center",
 
-        menu_card_background_color: "#FFFFFF",
+        menu_card_background_color: "#FFECD61A",
         menu_card_text_font: "Inter",
         menu_card_text_weight: "light",
         menu_card_text_size: 13,
         menu_card_text_color: "#333",
+        menu_card_radius: 20,
 
         menu_name_background_color: "#FFFFFF",
         menu_name_text_font: "Inter",
         menu_name_text_weight: "light",
-        menu_name_text_size: 13,
-        menu_name_text_color: "#333",
+        menu_name_text_size: 12,
+        menu_name_text_color: "#000",
 
         total_calories_background_color: "#FFFFFF",
         total_calories_text_font: "Inter",
         total_calories_text_weight: "light",
-        total_calories_text_size: 13,
-        total_calories_text_color: "#333",
+        total_calories_text_size: 10,
+        total_calories_text_color: "#000",
 
-        price_background_color: "#FFFFFF",
+        price_background_color: "#7D0A0A",
         price_text_font: "Inter",
         price_text_weight: "light",
-        price_text_size: 13,
-        price_text_color: "#333",
+        price_text_size: 12,
+        price_text_color: "#FFFFFF",
 
         header_position: "relative",
         header_color: "#ffffff",
@@ -147,7 +148,18 @@ const restuarantEditorSlice = createSlice({
         home_color: "#ffffff",
         home_radius: 50,
 
-        page_color: "#EEEEEE",
+        menu_section_background_color: "#ffffff",
+        menu_section_radius: 20,
+
+        menu_category_background_color: "#ffffff",
+        menu_category_font: "Inter",
+        menu_category_weight: "light",
+        menu_category_size: 13,
+        menu_category_color: "#000000",
+        menu_category_position: "center",
+        menu_category_radius: 20,
+
+        page_color: "#eee",
         category_background_color: "#4466ff",
         page_category_color: "#ffffff",
         product_background_color: "white",
@@ -155,8 +167,8 @@ const restuarantEditorSlice = createSlice({
         footer_alignment: "center",
         footer_text_fontFamily: "Inter",
         footer_text_fontWeight: "light",
-        footer_text_fontSize: 12,
-        footer_text_color: "#eee",
+        footer_text_fontSize: 10,
+        footer_text_color: "#000000",
         price_color: "red",
 
         text_fontFamily: "Jakarta",
@@ -383,6 +395,36 @@ const restuarantEditorSlice = createSlice({
         HomeRadius: (state, action) => {
             state.home_radius = action.payload;
         },
+        MenuCategoryBackgroundColor: (state, action) => {
+            state.menu_category_background_color = action.payload;
+        },
+        MenuCategoryFont: (state, action) => {
+            state.menu_category_font = action.payload;
+        },
+        MenuCategoryWeight: (state, action) => {
+            state.menu_category_weight = action.payload;
+        },
+        MenuCategorySize: (state, action) => {
+            state.menu_category_size = action.payload;
+        },
+        MenuCategoryColor: (state, action) => {
+            state.menu_category_color = action.payload;
+        },
+        MenuCategoryPosition: (state, action) => {
+            state.menu_category_position = action.payload;
+        },
+        MenuCategoryRadius: (state, action) => {
+            state.menu_category_radius = action.payload;
+        },
+        MenuSectionBackgroundColor: (state, action) => {
+            state.menu_section_background_color = action.payload;
+        },
+        MenuSectionRadius: (state, action) => {
+            state.menu_section_radius = action.payload;
+        },
+        MenuCardRadius: (state, action) => {
+            state.menu_card_radius = action.payload;
+        },
 
         changeRestuarantEditorStyle: (state, action) => {
             // action.payload.page_color = "green";
@@ -564,5 +606,15 @@ export const {
     HomePosition,
     HomeColor,
     HomeRadius,
+    MenuCategoryBackgroundColor,
+    MenuCategoryFont,
+    MenuCategoryWeight,
+    MenuCategorySize,
+    MenuCategoryColor,
+    MenuCategoryPosition,
+    MenuCategoryRadius,
+    MenuSectionBackgroundColor,
+    MenuSectionRadius,
+    MenuCardRadius,
 } = restuarantEditorSlice.actions;
 export default restuarantEditorSlice.reducer;

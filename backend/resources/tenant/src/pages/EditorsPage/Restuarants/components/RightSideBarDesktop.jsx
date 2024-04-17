@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import PrimarySelect from "./PrimarySelect";
 import EditorSelect from "./EditorSelect";
 import EditorAlignment from "./EditorAlignment";
+import EditorPosition from "./EditorPosition";
 import EditorPercentageInput from "./EditorPercentageInput";
 import EditorSizeSelect from "./EditorSizeSelect";
 import EditorLink from "./EditorLink";
@@ -131,27 +132,14 @@ export const RightSideBarDesktop = ({
                                     item != "contentPositionInitialValues" &&
                                     item != "textInitialValues" &&
                                     item != "textOnChange" &&
+                                    item != "textInitialValues_2" &&
+                                    item != "textOnChange_2" &&
                                     navItems[activeSection].subItems[
                                         activeSubitem
                                     ][item].length > 0
                             )
                             .map((item, index) => (
                                 <li key={index}>
-                                    {console.log("the item: ", item)}
-                                    {console.log(
-                                        "activeSubitem: ",
-                                        activeSubitem
-                                    )}
-                                    {console.log(
-                                        "navItems[activeSection].subItems[activeSubitem]: ",
-                                        navItems[activeSection].subItems[
-                                            activeSubitem
-                                        ]
-                                    )}
-                                    {console.log(
-                                        "activeSection: ",
-                                        activeSection
-                                    )}
                                     <button
                                         type="button"
                                         className="flex items-center justify-between w-[191px] py-3"
@@ -185,25 +173,6 @@ export const RightSideBarDesktop = ({
                                                     key={subIndex}
                                                     className="py-1"
                                                 >
-                                                    {/* {console.log(
-                                                        "subItem *** *** *** : ",
-                                                        subItem
-                                                    )}
-                                                    {console.log(
-                                                        "subIndex *** *** ***: ",
-                                                        subIndex
-                                                    )}
-                                                    {console.log(
-                                                        "navItems[activeSection].subItems[activeSubitem] 2: ",
-                                                        navItems[activeSection]
-                                                            .subItems[
-                                                            activeSubitem
-                                                        ][item]
-                                                    )}
-                                                    {console.log(
-                                                        "itme: ",
-                                                        item
-                                                    )} */}
                                                     {subItem ==
                                                     "positionLayout" ? (
                                                         <EditorSelect
@@ -277,7 +246,9 @@ export const RightSideBarDesktop = ({
                                                                               color
                                                                           );
                                                                       }
-                                                                    : (
+                                                                    : item ===
+                                                                      "text"
+                                                                    ? (
                                                                           color
                                                                       ) => {
                                                                           navItems[
@@ -285,6 +256,19 @@ export const RightSideBarDesktop = ({
                                                                           ].subItems[
                                                                               activeSubitem
                                                                           ]?.textOnChange[
+                                                                              subIndex
+                                                                          ](
+                                                                              color
+                                                                          );
+                                                                      }
+                                                                    : (
+                                                                          color
+                                                                      ) => {
+                                                                          navItems[
+                                                                              activeSection
+                                                                          ].subItems[
+                                                                              activeSubitem
+                                                                          ]?.textOnChange_2[
                                                                               subIndex
                                                                           ](
                                                                               color
@@ -314,13 +298,24 @@ export const RightSideBarDesktop = ({
                                                                           ?.contentPositionInitialValues[
                                                                           subIndex
                                                                       ]
-                                                                    : navItems[
+                                                                    : item ===
+                                                                      "text"
+                                                                    ? navItems[
                                                                           activeSection
                                                                       ]
                                                                           .subItems[
                                                                           activeSubitem
                                                                       ]
                                                                           ?.textInitialValues[
+                                                                          subIndex
+                                                                      ]
+                                                                    : navItems[
+                                                                          activeSection
+                                                                      ]
+                                                                          .subItems[
+                                                                          activeSubitem
+                                                                      ]
+                                                                          ?.textInitialValues_2[
                                                                           subIndex
                                                                       ]
                                                             }
@@ -409,25 +404,44 @@ export const RightSideBarDesktop = ({
                                                         <EditorSelect
                                                             label={t("Font")}
                                                             defaultValue={
-                                                                navItems[
-                                                                    activeSection
-                                                                ].subItems[
-                                                                    activeSubitem
-                                                                ]
-                                                                    ?.textInitialValues[
-                                                                    subIndex
-                                                                ]
+                                                                item === "text"
+                                                                    ? navItems[
+                                                                          activeSection
+                                                                      ]
+                                                                          .subItems[
+                                                                          activeSubitem
+                                                                      ]
+                                                                          ?.textInitialValues[
+                                                                          subIndex
+                                                                      ]
+                                                                    : navItems[
+                                                                          activeSection
+                                                                      ]
+                                                                          .subItems[
+                                                                          activeSubitem
+                                                                      ]
+                                                                          ?.textInitialValues_2[
+                                                                          subIndex
+                                                                      ]
                                                             }
                                                             handleChange={(
                                                                 value
                                                             ) => {
-                                                                navItems[
-                                                                    activeSection
-                                                                ].subItems[
-                                                                    activeSubitem
-                                                                ]?.textOnChange[
-                                                                    subIndex
-                                                                ](value);
+                                                                item === "text"
+                                                                    ? navItems[
+                                                                          activeSection
+                                                                      ].subItems[
+                                                                          activeSubitem
+                                                                      ]?.textOnChange[
+                                                                          subIndex
+                                                                      ](value)
+                                                                    : navItems[
+                                                                          activeSection
+                                                                      ].subItems[
+                                                                          activeSubitem
+                                                                      ]?.textOnChange_2[
+                                                                          subIndex
+                                                                      ](value);
                                                             }}
                                                             options={[
                                                                 {
@@ -482,25 +496,44 @@ export const RightSideBarDesktop = ({
                                                         <EditorSelect
                                                             label={t("Weight")}
                                                             defaultValue={
-                                                                navItems[
-                                                                    activeSection
-                                                                ].subItems[
-                                                                    activeSubitem
-                                                                ]
-                                                                    ?.textInitialValues[
-                                                                    subIndex
-                                                                ]
+                                                                item === "text"
+                                                                    ? navItems[
+                                                                          activeSection
+                                                                      ]
+                                                                          .subItems[
+                                                                          activeSubitem
+                                                                      ]
+                                                                          ?.textInitialValues[
+                                                                          subIndex
+                                                                      ]
+                                                                    : navItems[
+                                                                          activeSection
+                                                                      ]
+                                                                          .subItems[
+                                                                          activeSubitem
+                                                                      ]
+                                                                          ?.textInitialValues_2[
+                                                                          subIndex
+                                                                      ]
                                                             }
                                                             handleChange={(
                                                                 value
                                                             ) => {
-                                                                navItems[
-                                                                    activeSection
-                                                                ].subItems[
-                                                                    activeSubitem
-                                                                ]?.textOnChange[
-                                                                    subIndex
-                                                                ](value);
+                                                                item === "text"
+                                                                    ? navItems[
+                                                                          activeSection
+                                                                      ].subItems[
+                                                                          activeSubitem
+                                                                      ]?.textOnChange[
+                                                                          subIndex
+                                                                      ](value)
+                                                                    : navItems[
+                                                                          activeSection
+                                                                      ].subItems[
+                                                                          activeSubitem
+                                                                      ]?.textOnChange_2[
+                                                                          subIndex
+                                                                      ](value);
                                                             }}
                                                             options={[
                                                                 {
@@ -551,25 +584,44 @@ export const RightSideBarDesktop = ({
                                                         <EditorSizeSelect
                                                             label={t("Size")}
                                                             defaultValue={
-                                                                navItems[
-                                                                    activeSection
-                                                                ].subItems[
-                                                                    activeSubitem
-                                                                ]
-                                                                    ?.textInitialValues[
-                                                                    subIndex
-                                                                ]
+                                                                item === "text"
+                                                                    ? navItems[
+                                                                          activeSection
+                                                                      ]
+                                                                          .subItems[
+                                                                          activeSubitem
+                                                                      ]
+                                                                          ?.textInitialValues[
+                                                                          subIndex
+                                                                      ]
+                                                                    : navItems[
+                                                                          activeSection
+                                                                      ]
+                                                                          .subItems[
+                                                                          activeSubitem
+                                                                      ]
+                                                                          ?.textInitialValues_2[
+                                                                          subIndex
+                                                                      ]
                                                             }
                                                             handleChange={(
                                                                 value
                                                             ) => {
-                                                                navItems[
-                                                                    activeSection
-                                                                ].subItems[
-                                                                    activeSubitem
-                                                                ]?.textOnChange[
-                                                                    subIndex
-                                                                ](value);
+                                                                item === "text"
+                                                                    ? navItems[
+                                                                          activeSection
+                                                                      ].subItems[
+                                                                          activeSubitem
+                                                                      ]?.textOnChange[
+                                                                          subIndex
+                                                                      ](value)
+                                                                    : navItems[
+                                                                          activeSection
+                                                                      ].subItems[
+                                                                          activeSubitem
+                                                                      ]?.textOnChange_2[
+                                                                          subIndex
+                                                                      ](value);
                                                             }}
                                                         />
                                                     ) : subItem == "linkTo" ? (
@@ -584,6 +636,32 @@ export const RightSideBarDesktop = ({
                                                                     )
                                                                 )
                                                             }
+                                                        />
+                                                    ) : subItem ==
+                                                      "positionLayoutGrid" ? (
+                                                        <EditorPosition
+                                                            modalId={`${item}-position`}
+                                                            defaultValue={
+                                                                navItems[
+                                                                    activeSection
+                                                                ].subItems[
+                                                                    activeSubitem
+                                                                ]
+                                                                    ?.layoutInitialValues[
+                                                                    subIndex
+                                                                ]
+                                                            }
+                                                            onChange={(
+                                                                value
+                                                            ) => {
+                                                                navItems[
+                                                                    activeSection
+                                                                ].subItems[
+                                                                    activeSubitem
+                                                                ]?.layoutOnChange[
+                                                                    subIndex
+                                                                ](value);
+                                                            }}
                                                         />
                                                     ) : null}
                                                 </li>

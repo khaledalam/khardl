@@ -82,7 +82,21 @@ const EditorLink = ({ defaultValue, options, handleChange, label }) => {
                         </div>
                         <input
                             type="text"
-                            value={currentValue}
+                            value={
+                                selectedSocialIcons?.find(
+                                    (socialIcon) =>
+                                        socialIcon.id === selectedMediaId
+                                )?.link
+                            }
+                            onChange={(e) => {
+                                console.log(e.target.value);
+                                dispatch(
+                                    updateSelectedIconInput({
+                                        id: selectedMediaId,
+                                        link: e.target.value,
+                                    })
+                                );
+                            }}
                             placeholder="URL..."
                             className="bg-[#F3F3F3] w-full focus:outline-none text-[12px] leading-[16px] font-light text-[rgba(17,24,39,0.77)]"
                         />

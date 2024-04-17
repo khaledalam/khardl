@@ -53,6 +53,16 @@ import {
     HomePosition,
     HomeColor,
     HomeRadius,
+    MenuCategoryBackgroundColor,
+    MenuCategoryFont,
+    MenuCategoryWeight,
+    MenuCategorySize,
+    MenuCategoryColor,
+    MenuCategoryPosition,
+    MenuCategoryRadius,
+    MenuSectionBackgroundColor,
+    MenuSectionRadius,
+    MenuCardRadius,
 } from "../../../redux/NewEditor/restuarantEditorSlice";
 import {
     getCartItemsCount,
@@ -75,39 +85,14 @@ export const RestuarantEditor = () => {
     const dispatch = useDispatch();
 
     const {
-        headerPosition,
         logo_alignment,
         banner_type,
-        category_alignment,
         socialMediaIcons_alignment,
         social_media_color,
         social_media_background_color,
         social_media_radius,
         selectedSocialIcons,
-        phoneNumber,
-        phoneNumber_alignment,
         page_color,
-        page_category_color,
-        product_background_color,
-        category_hover_color,
-        categoryDetail_cart_color,
-        logo_shape,
-        banner_shape,
-        banner_background_color,
-        categoryDetail_shape,
-        category_shape,
-        footer_color,
-        footer_alignment,
-        footer_text_fontFamily,
-        footer_text_fontWeight,
-        footer_text_fontSize,
-        footer_text_color,
-        price_color,
-        text_color,
-        text_fontFamily,
-        text_fontWeight,
-        text_alignment,
-        text_fontSize,
         menu_card_background_color,
         menu_card_text_font,
         menu_card_text_weight,
@@ -118,23 +103,18 @@ export const RestuarantEditor = () => {
         menu_name_text_weight,
         menu_name_text_size,
         menu_name_text_color,
-
         total_calories_background_color,
         total_calories_text_font,
         total_calories_text_weight,
         total_calories_text_size,
         total_calories_text_color,
-
         price_background_color,
         price_text_font,
         price_text_weight,
         price_text_size,
         price_text_color,
-
         logo_border_radius,
         logo_border_color,
-
-        header_position,
         header_color,
         header_radius,
         side_menu_position,
@@ -144,6 +124,16 @@ export const RestuarantEditor = () => {
         home_position,
         home_color,
         home_radius,
+        menu_category_background_color,
+        menu_category_font,
+        menu_category_weight,
+        menu_category_size,
+        menu_category_color,
+        menu_category_position,
+        menu_category_radius,
+        menu_section_background_color,
+        menu_section_radius,
+        menu_card_radius,
     } = restuarantEditorStyle;
 
     const categories = useSelector((state) => state.categoryAPI.categories);
@@ -346,9 +336,31 @@ export const RestuarantEditor = () => {
             subItems: [
                 {
                     title: t("Category"),
-                    layout: ["positionLayout", "type", "color", "radius"],
+                    layout: ["positionLayoutGrid", "color", "radius"],
+                    layoutInitialValues: [
+                        menu_category_position,
+                        menu_category_background_color,
+                        menu_category_radius,
+                    ],
+                    layoutOnChange: [
+                        (value) => dispatch(MenuCategoryPosition(value)),
+                        (color) => dispatch(MenuCategoryBackgroundColor(color)),
+                        (radius) => dispatch(MenuCategoryRadius(radius)),
+                    ],
                     contentPosition: [],
                     text: ["font", "weight", "size", "color"],
+                    textInitialValues: [
+                        menu_category_font,
+                        menu_category_weight,
+                        menu_category_size,
+                        menu_category_color,
+                    ],
+                    textOnChange: [
+                        (value) => dispatch(MenuCategoryFont(value)),
+                        (value) => dispatch(MenuCategoryWeight(value)),
+                        (value) => dispatch(MenuCategorySize(value)),
+                        (color) => dispatch(MenuCategoryColor(color)),
+                    ],
                     link: [],
                 },
             ],
@@ -357,35 +369,42 @@ export const RestuarantEditor = () => {
             title: t("Menu Category Detail"),
             subItems: [
                 {
-                    title: t("Menu Card"),
-                    layout: ["color"],
-                    layoutInitialValues: [menu_card_background_color],
+                    title: t("Menu Section"),
+                    layout: ["color", "radius"],
+                    layoutInitialValues: [
+                        menu_section_background_color,
+                        menu_section_radius,
+                    ],
                     layoutOnChange: [
-                        (color) => dispatch(MenuCardBackgroundColor(color)),
+                        (color) => dispatch(MenuSectionBackgroundColor(color)),
+                        (radius) => dispatch(MenuSectionRadius(radius)),
                     ],
                     contentPosition: [],
-                    text: ["font", "weight", "size", "color"],
-                    textInitialValues: [
-                        menu_card_text_font,
-                        menu_card_text_weight,
-                        menu_card_text_size,
-                        menu_card_text_color,
-                    ],
-                    textOnChange: [
-                        (value) => dispatch(MenuCardTextFont(value)),
-                        (value) => dispatch(MenuCardTextWeight(value)),
-                        (value) => dispatch(MenuCardTextSize(value)),
-                        (color) => dispatch(MenuCardTextColor(color)),
-                    ],
+                    text: [],
                     link: [],
                 },
                 {
-                    title: t("Menu Name"),
-                    layout: ["color"],
-                    layoutInitialValues: [menu_name_background_color],
-                    layoutOnChange: [
-                        (color) => dispatch(MenuNameBackgroundColor(color)),
+                    title: t("Menu Card"),
+                    layout: ["color", "radius"],
+                    layoutInitialValues: [
+                        menu_card_background_color,
+                        menu_card_radius,
                     ],
+                    layoutOnChange: [
+                        (color) => dispatch(MenuCardBackgroundColor(color)),
+                        (radius) => dispatch(MenuCardRadius(radius)),
+                    ],
+                    contentPosition: [],
+                    text: [],
+                    textInitialValues: [],
+                    textOnChange: [],
+                    link: [],
+                },
+                {
+                    title: t("Item Text"),
+                    layout: [],
+                    layoutInitialValues: [],
+                    layoutOnChange: [],
                     contentPosition: [],
                     text: ["font", "weight", "size", "color"],
                     textInitialValues: [
@@ -400,25 +419,14 @@ export const RestuarantEditor = () => {
                         (value) => dispatch(MenuNameTextSize(value)),
                         (color) => dispatch(MenuNameTextColor(color)),
                     ],
-                    link: [],
-                },
-                {
-                    title: t("Total Calories"),
-                    layout: ["color"],
-                    layoutInitialValues: [total_calories_background_color],
-                    layoutOnChange: [
-                        (color) =>
-                            dispatch(TotalCaloriesBackgroundColor(color)),
-                    ],
-                    contentPosition: [],
-                    text: ["font", "weight", "size", "color"],
-                    textInitialValues: [
+                    text_2: ["font", "weight", "size", "color"],
+                    textInitialValues_2: [
                         total_calories_text_font,
                         total_calories_text_weight,
                         total_calories_text_size,
                         total_calories_text_color,
                     ],
-                    textOnChange: [
+                    textOnChange_2: [
                         (value) => dispatch(TotalCaloriesTextFont(value)),
                         (value) => dispatch(TotalCaloriesTextWeight(value)),
                         (value) => dispatch(TotalCaloriesTextSize(value)),
@@ -426,14 +434,40 @@ export const RestuarantEditor = () => {
                     ],
                     link: [],
                 },
+                // {
+                //     title: t("Total Calories"),
+                //     layout: ["color"],
+                //     layoutInitialValues: [total_calories_background_color],
+                //     layoutOnChange: [
+                //         (color) =>
+                //             dispatch(TotalCaloriesBackgroundColor(color)),
+                //     ],
+                //     contentPosition: [],
+                //     text: ["font", "weight", "size", "color"],
+                //     textInitialValues: [
+                //         total_calories_text_font,
+                //         total_calories_text_weight,
+                //         total_calories_text_size,
+                //         total_calories_text_color,
+                //     ],
+                //     textOnChange: [
+                //         (value) => dispatch(TotalCaloriesTextFont(value)),
+                //         (value) => dispatch(TotalCaloriesTextWeight(value)),
+                //         (value) => dispatch(TotalCaloriesTextSize(value)),
+                //         (color) => dispatch(TotalCaloriesTextColor(color)),
+                //     ],
+                //     link: [],
+                // },
                 {
                     title: t("Price"),
-                    layout: ["color"],
-                    layoutInitialValues: [price_background_color],
-                    layoutOnChange: [
+                    layout: [],
+                    layoutInitialValues: [],
+                    layoutOnChange: [],
+                    contentPosition: ["color"],
+                    contentPositionInitialValues: [price_background_color],
+                    contentPositionOnChange: [
                         (color) => dispatch(PriceBackgroundColor(color)),
                     ],
-                    contentPosition: [],
                     text: ["font", "weight", "size", "color"],
                     textInitialValues: [
                         price_text_font,
@@ -475,41 +509,40 @@ export const RestuarantEditor = () => {
                     text: [],
                     textInitialValues: [],
                     textOnChange: [],
-                    // link: ["linkTo"],
-                    link: [],
+                    link: ["linkTo"],
                 },
             ],
         },
-        {
-            title: t("Footer Editor"),
-            subItems: [
-                {
-                    title: t("Footer Editor"),
-                    layout: ["color"],
-                    layoutInitialValues: [footer_color],
-                    layoutOnChange: [(color) => dispatch(footerColor(color))],
-                    contentPosition: ["positionContent"],
-                    contentPositionInitialValues: [footer_alignment],
-                    contentPositionOnChange: [
-                        (value) => dispatch(footerAlignment(value)),
-                    ],
-                    text: ["font", "weight", "size", "color"],
-                    textInitialValues: [
-                        footer_text_fontFamily,
-                        footer_text_fontWeight,
-                        footer_text_fontSize,
-                        footer_text_color,
-                    ],
-                    textOnChange: [
-                        (value) => dispatch(footerTextFont(value)),
-                        (value) => dispatch(footerTextWeight(value)),
-                        (value) => dispatch(footerTextSize(value)),
-                        (color) => dispatch(footerTextColor(color)),
-                    ],
-                    link: [],
-                },
-            ],
-        },
+        // {
+        //     title: t("Footer Editor"),
+        //     subItems: [
+        //         {
+        //             title: t("Footer Editor"),
+        //             layout: ["color"],
+        //             layoutInitialValues: [footer_color],
+        //             layoutOnChange: [(color) => dispatch(footerColor(color))],
+        //             contentPosition: ["positionContent"],
+        //             contentPositionInitialValues: [footer_alignment],
+        //             contentPositionOnChange: [
+        //                 (value) => dispatch(footerAlignment(value)),
+        //             ],
+        //             text: ["font", "weight", "size", "color"],
+        //             textInitialValues: [
+        //                 footer_text_fontFamily,
+        //                 footer_text_fontWeight,
+        //                 footer_text_fontSize,
+        //                 footer_text_color,
+        //             ],
+        //             textOnChange: [
+        //                 (value) => dispatch(footerTextFont(value)),
+        //                 (value) => dispatch(footerTextWeight(value)),
+        //                 (value) => dispatch(footerTextSize(value)),
+        //                 (color) => dispatch(footerTextColor(color)),
+        //             ],
+        //             link: [],
+        //         },
+        //     ],
+        // },
     ];
 
     const [isPreview, setIsPreview] = useState(false);
