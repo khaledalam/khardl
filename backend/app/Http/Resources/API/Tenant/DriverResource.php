@@ -24,8 +24,8 @@ class DriverResource extends JsonResource
             'vehicle_number' => $this->vehicle_number,
             'lat' => $this->lat,
             'lng' => $this->lng,
-            'branch' => $this->branch,
             'image' => $this->image,
+            'branch' => $this->branch,
         ];
     }
 }
