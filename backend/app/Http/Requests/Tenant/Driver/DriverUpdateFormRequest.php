@@ -33,7 +33,8 @@ class DriverUpdateFormRequest extends FormRequest
             'phone' => 'required|regex:/^(966)?\d{9}$/|unique:users,phone,'. $this->driver,
             'address' => 'nullable|max:255',
             'branch_id' => 'required|exists:branches,id',
-            'status' => 'required|in:active,inactive,suspended'
+            'status' => 'required|in:active,inactive,suspended',
+            'image' => ['nullable','mimes:png,jpg,jpeg,gif','max:4096']
         ];
     }
     protected function prepareForValidation()

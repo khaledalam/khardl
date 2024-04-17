@@ -56,6 +56,14 @@
                                 <td>{{ __("This month") }}</td>
                                 <td>{{ $driver->monthly_orders()?->count() }}</td>
                             </tr>
+                            <tr>
+                                <td>{{ __("Image") }}</td>
+                                <td>
+                                    <div class="symbol symbol-100px symbol-lg-100px symbol-fixed position-relative">
+                                        <img alt="driver image" src="{{ $driver->image }}" />
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

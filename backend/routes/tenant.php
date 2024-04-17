@@ -396,6 +396,7 @@ Route::middleware([
                     Route::controller(ProfileController::class)->group(function () {
                         Route::post('change-password', 'changePassword');
                         Route::get('get-profile', 'getProfile');
+                        Route::post('update-image', 'updateImage');
                     });
                 });
             });
