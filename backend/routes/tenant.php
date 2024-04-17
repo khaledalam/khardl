@@ -160,6 +160,8 @@ Route::group([
                 // Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead')->middleware('isLeadSubmitted');
                 // Step 3: save cards
                 Route::post('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
+                Route::post('/payments/tap-create-customer-app', [TapController::class, 'payments_submit_customer_app'])->name('tap.payments_submit_customer_app');
+                
                 Route::get('/payments/tap-card-details-redirect', [TapController::class, 'payments_redirect'])->name('tap.payments_redirect');
                 Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
 
@@ -168,7 +170,9 @@ Route::group([
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
                 Route::patch('/service/deactivate', [RestaurantController::class, 'serviceDeactivate'])->name('restaurant.service.deactivate');
+                Route::patch('/service/app/deactivate', [RestaurantController::class, 'serviceAppDeactivate'])->name('restaurant.service.app.deactivate');
                 Route::patch('/service/activate', [RestaurantController::class, 'serviceActivate'])->name('restaurant.service.activate');
+                Route::patch('/service/app/activate', [RestaurantController::class, 'serviceAppActivate'])->name('restaurant.service.app.activate');
                 Route::get('/service/{type}/{number_of_branches}/calculate/{subscription_id}', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');
 
 
@@ -312,9 +316,7 @@ Route::group([
         Route::get('categories', [CategoryController::class, 'index']);
         Route::get('orders', [OrderController::class, 'index']);
 
-        Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class, 'asset'])
-            ->where('path', '(.*)')
-            ->name('stancl.tenancy.asset');
+      
     });
 
     Route::get('/change-language/{locale}', static function ($locale) {
@@ -333,7 +335,9 @@ Route::group([
         return Redirect::back();
     })->name('change.language');
 
-
+    Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class, 'asset'])
+    ->where('path', '(.*)')
+    ->name('stancl.tenancy.asset');
 });
 Route::middleware([
     'api',
