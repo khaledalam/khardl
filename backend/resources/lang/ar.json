@@ -1167,6 +1167,12 @@
     "The old password is incorrect.":"كلمة المرور القديمة غير صحيحة.",
     "Edit item : ":" تعديل المنتج : ",
     "Can control drivers":"يمكن التحكم في السائقين",
-    "Profile image updated successfully":"تم تحديث صورة الملف الشخصي بنجاح"
+    "Profile image updated successfully":"تم تحديث صورة الملف الشخصي بنجاح",
+    "On purchase the app":"عند شراء التطبيق",
+    "On purchase branch":"عند شراء فرع",
+    "New notification":"إشعار جديد",
+    "By name, email":"بالاسم ، البريد الإلكتروني",
+    "Purchase notifications":"اشعارات الشراء",
+    "Users":"المستخدمون"
 
 }

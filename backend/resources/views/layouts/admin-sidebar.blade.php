@@ -206,7 +206,7 @@
                                             @endif
                                         @if($user?->hasPermission('can_access_restaurants'))
                                             <!-- Staff evaluation -->
-                                         
+
                                             <div class="menu-item">
                                                 <a class="menu-link {{($admin_link == 'app-requested') ? 'active' : ''}}" href="{{ route('admin.restaurants.app-requested') }}">
                                                     <span class="menu-icon">
@@ -322,6 +322,23 @@
                                         <!--end::Svg Icon-->
                                     </span>
                                     <span class="menu-title">{{ __('settings')}}</span>
+                                </span>
+                            </a>
+                            </div>
+                            @endif
+                            @if($user?->hasPermission('can_manage_notifications_receipt'))
+                            <!-- Setting -->
+                            <div class="menu-item">
+                                <a href="{{ route('admin.notifications-receipt.index') }}">
+                                <span class="{{ ($admin_link == 'notifications-receipt'  ) ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <i class=" fa fa-bell"></i>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">{{ __('Purchase notifications')}}</span>
                                 </span>
                             </a>
                             </div>

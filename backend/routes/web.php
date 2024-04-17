@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
+use App\Http\Controllers\Web\Central\Admin\NotificationReceipt\NotificationReceiptController;
 use App\Http\Controllers\Web\Central\GlobalPromoterController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -162,8 +163,8 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                         Route::get('/restaurants/{tenant}','show')->middleware('permission:can_view_restaurants')->name('view-restaurants');
                         Route::patch('/restaurants/{tenant}/config','updateConfig')->middleware('permission:can_view_restaurants')->name('update-restaurants-config');
                         Route::patch('/restaurants/{tenant}/update-restaurants-customer-app','updateCustomerApp')->middleware('permission:can_view_restaurants')->name('update-restaurants-customer-app');
-                        
-                        Route::get('/restaurants/{tenant}/tap/details','tapLead')->middleware('permission:can_view_restaurants')->name('view-restaurants-tap-lead');                        
+
+                        Route::get('/restaurants/{tenant}/tap/details','tapLead')->middleware('permission:can_view_restaurants')->name('view-restaurants-tap-lead');
                         Route::get('/restaurants','index')->middleware('permission:can_access_restaurants')->name('restaurants');
                         Route::post('/delivery/{tenant}', 'activeAndDeactivateDelivery')->name('delivery.activateAndDeactivate');
                         Route::post('/restaurants/{tenant}/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.sign-new-lead');
@@ -172,6 +173,7 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
+                    Route::resource('/notifications-receipt', NotificationReceiptController::class)->middleware('permission:can_manage_notifications_receipt');
                     Route::get('/user-management', [AdminController::class, 'userManagement'])->middleware('permission:can_see_admins')->name('user-management');
                     Route::get('/restaurant-owner-management', [AdminController::class, 'restaurantOwnerManagement'])->middleware('permission:can_see_restaurant_owners')->name('restaurant-owner-management');
                     Route::get('/order-inquiry', [AdminController::class, 'orderInquiry'])->middleware('permission:can_access_restaurants')->name('order-inquiry');

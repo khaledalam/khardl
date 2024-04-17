@@ -161,7 +161,7 @@ Route::group([
                 // Step 3: save cards
                 Route::post('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
                 Route::post('/payments/tap-create-customer-app', [TapController::class, 'payments_submit_customer_app'])->name('tap.payments_submit_customer_app');
-                
+
                 Route::get('/payments/tap-card-details-redirect', [TapController::class, 'payments_redirect'])->name('tap.payments_redirect');
                 Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
 
@@ -316,7 +316,7 @@ Route::group([
         Route::get('categories', [CategoryController::class, 'index']);
         Route::get('orders', [OrderController::class, 'index']);
 
-      
+
     });
 
     Route::get('/change-language/{locale}', static function ($locale) {
