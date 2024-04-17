@@ -75,6 +75,11 @@ class NotificationReceiptService
         $image = tenant_asset(store_image($request->file('image'), self::DriverPath, null, $update));
         return $image;
     }
+    public function toggleStatus($notificationReceipt)
+    {
+        $notificationReceipt->toggleActive();
+        return redirect()->back()>with(['success' => __('Update successfully')]);
+    }
     private function request_data($request)
     {
         return $request->only([

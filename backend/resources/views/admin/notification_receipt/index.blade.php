@@ -143,7 +143,7 @@
 <script>
     function toggleStatus(itemId) {
         $.ajax({
-            url: `{{ route('coupons.change-status', ['coupon' => ':itemId']) }}`.replace(':itemId', itemId)
+            url: `{{ route('admin.notifications-change-status', ['notificationReceipt' => ':itemId']) }}`.replace(':itemId', itemId)
             , type: 'POST'
             , dataType: 'json'
             , data: {

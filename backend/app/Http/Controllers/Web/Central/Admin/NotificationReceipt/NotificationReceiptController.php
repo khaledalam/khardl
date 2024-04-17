@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Central\Admin\NotificationReceipt;
 
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Services\Central\Admin\NotificationReceipt\NotificationReceiptService;
+use App\Models\NotificationReceipt;
 use Illuminate\Http\Request;
 
 class NotificationReceiptController extends BaseController
@@ -45,5 +46,9 @@ class NotificationReceiptController extends BaseController
         $driver = RestaurantUser::drivers()->findOrFail($driver);
         $this->authorize('delete', $driver);
         return $this->notificationService->destroy($driver);
+    }
+    public function toggleStatus(Request $request, NotificationReceipt $notificationReceipt)
+    {
+        return $this->notificationService->toggleStatus($notificationReceipt);
     }
 }

@@ -33,4 +33,9 @@ class NotificationReceipt extends Model
             }
         });
     }
+    public function toggleActive():void
+    {
+        $this->active = !$this->active;
+        $this->save();
+    }
 }

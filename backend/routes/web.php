@@ -174,6 +174,9 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
                     Route::resource('/notifications-receipt', NotificationReceiptController::class)->middleware('permission:can_manage_notifications_receipt');
+                    Route::post('/notifications-receipt/toggle-status/{notificationReceipt}',[NotificationReceiptController::class,'toggleStatus'])
+                    ->name('notifications-change-status')
+                    ->middleware('permission:can_manage_notifications_receipt');
                     Route::get('/user-management', [AdminController::class, 'userManagement'])->middleware('permission:can_see_admins')->name('user-management');
                     Route::get('/restaurant-owner-management', [AdminController::class, 'restaurantOwnerManagement'])->middleware('permission:can_see_restaurant_owners')->name('restaurant-owner-management');
                     Route::get('/order-inquiry', [AdminController::class, 'orderInquiry'])->middleware('permission:can_access_restaurants')->name('order-inquiry');
