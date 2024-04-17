@@ -29,9 +29,7 @@ function submitPayment(e, containerID) {
     containerID: "root",
     gateway: {
         callback: function(event) {
-            console.log(event);
             if (event.card.id) {
-                console.log(loadedContainer);
                 var waiting = document.querySelector('#waiting-item');
                 waiting.style.display = 'block';
                 var submitButton = document.getElementById('tap-btn');
@@ -238,7 +236,7 @@ function openModal(modalID) {
                                                             <div class="modal fade" id="kt_modal_default" tabindex="-1" aria-hidden="true">
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                     <!--begin::Modal content-->
-                                                                    <div class="modal-content rounded p-15">
+                                                                    <div class="modal-content rounded ">
                                                                         
                                                                             <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                                 <h5 class="modal-title text-center">{{__('Card Details')}}</h5>
@@ -263,7 +261,7 @@ function openModal(modalID) {
                                                             <!--begin::Modal dialog-->
                                                             <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                 <!--begin::Modal content-->
-                                                                <div class="modal-content rounded p-15">
+                                                                <div class="modal-content rounded ">
                                                                     <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::NEW}}">
                                                                     <!--begin::Modal header-->
                                                                     <div class="modal-header pb-0 border-0  d-flex justify-content-center">
@@ -309,7 +307,7 @@ function openModal(modalID) {
                                                                 <!--begin::Modal dialog-->
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                     <!--begin::Modal content-->
-                                                                    <div class="modal-content rounded p-15">
+                                                                    <div class="modal-content rounded ">
                                                                         <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::RENEW_TO_CURRENT_END_DATE}}">
                                                                         <!--begin::Modal header-->
                                                                         <div class="modal-header pb-0 border-0  d-flex justify-content-center">
@@ -372,7 +370,7 @@ function openModal(modalID) {
                                                                     @csrf
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                     <!--begin::Modal content-->
-                                                                    <div class="modal-content rounded p-15">
+                                                                    <div class="modal-content rounded ">
                                                                         <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::RENEW_AFTER_ONE_YEAR}}">
                                                                         <input type="hidden" class="form-control" id="n_branches" name="n_branches" value="0">
 
@@ -427,7 +425,7 @@ function openModal(modalID) {
                                                                     <!--begin::Modal dialog-->
                                                                     <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                         <!--begin::Modal content-->
-                                                                        <div class="modal-content rounded p-15">
+                                                                        <div class="modal-content rounded">
                                                                             <!--begin::Modal header-->
                                                                             <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                                 <h5 class="modal-title text-center">{{$customer_app_sub->name}}</h5>
@@ -456,6 +454,45 @@ function openModal(modalID) {
                                                                     <!--end::Modal body-->
                                                                 </form>
                                                             </div>
+                                                        @elseif($ROCustomerAppSub?->status == \App\Models\ROSubscription::SUSPEND  )
+                                                            <div class="modal fade" id="kt_modal_suspend_app_sub" tabindex="-1" aria-hidden="true">
+                                                                <form action="{{route('tap.payments_submit_customer_app')}}" method="POST" id="pay_customer_app">
+                                                                    @csrf
+                                                                    <input type="hidden" name="token_id" id="customer_app_token_id">
+                                                                <!--begin::Modal dialog-->
+                                                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                                    <!--begin::Modal content-->
+                                                                    <div class="modal-content rounded">
+                                                                        <!--begin::Modal header-->
+                                                                        <div class="modal-header pb-0 border-0  d-flex justify-content-center">
+                                                                            <h5 class="modal-title text-center">{{$customer_app_sub->name}} ({{__('Renew Subscription')}})</h5>
+                                                                        </div>
+                                                                        <div class="modal-body">
+
+
+
+                                                                            <div class="form-group">
+                                                                                <label for="factor">{{__('Total Price')}}</label>
+                                                                                <input type="text" class="form-control bg-secondary" name="price" value="{{ $customer_app_sub->amount }}" readonly>
+                                                                            </div>
+                    
+                                                                            <button id="tap-btn"   type="submit"   onclick="submitPayment(event,'root_customer_app')" class="btn btn-khardl text-white ">
+
+                                                                               
+                                                                                <span class="indicator-label">{{__("Renew Subscription")}}✔️</span>
+                                                                                <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
+                                                                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                            </button>
+
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <!--end::Modal body-->
+                                                            </form>
+                                                        </div>
+                                                            
                                                         @endif
 
 
@@ -468,7 +505,7 @@ function openModal(modalID) {
                                                 <div class="col-xl-4">
                                                     <div class="d-flex h-200 align-items-center ">
                                                         <!--begin::Option-->
-                                                        <div class="py-2 w-100 h-200  rounded-3 bg-light bg-opacity-75" style="height: 420px">
+                                                        <div class="py-2 w-100 h-200 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 " style="height: 420px">
                                                         
                                                             <!--begin::Heading-->
                                                             <div class="mb-7 text-center px-10" style="padding-bottom: 15px;">
@@ -527,31 +564,31 @@ function openModal(modalID) {
 
                                                             <!--end::Modal dialog-->
                   
-
-                                                            <div class="d-flex justify-content-center p-2" >
-                                                                @if($ROCustomerAppSub->android_url)
-                                                                <div class="mr-auto p-2">
-                                                                    <div>
-                                                                        <a href="{{$ROCustomerAppSub->android_url}}">
-                                                                            <img src="{{global_asset('images/logo_playstore.svg')}}" width="130"/>
-                                                                        </a>
+                                                            @if($ROCustomerAppSub?->status != \App\Models\ROSubscription::SUSPEND )
+                                                                <div class="d-flex justify-content-center p-2" >
+                                                                    @if($ROCustomerAppSub?->android_url)
+                                                                    <div class="mr-auto p-2">
+                                                                        <div>
+                                                                            <a href="{{$ROCustomerAppSub->android_url}}">
+                                                                                <img src="{{global_asset('images/logo_playstore.svg')}}" width="130"/>
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                @endif
-                                                                @if($ROCustomerAppSub->ios_url)
-                                                                <div class="p-2">
-                                                                    <div>
-                                                                        <a href="{{$ROCustomerAppSub->ios_url}}" >
-                                                                            <img src="{{global_asset('images/logo_appstore.svg')}}" width="130"/>
-                                                                        </a>
+                                                                    @endif
+                                                                    @if($ROCustomerAppSub?->ios_url)
+                                                                    <div class="p-2">
+                                                                        <div>
+                                                                            <a href="{{$ROCustomerAppSub->ios_url}}" >
+                                                                                <img src="{{global_asset('images/logo_appstore.svg')}}" width="130"/>
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                 @endif
-                                                     
-                                            
+                                                                    @endif
+                                                        
+                                                
 
-                                                              </div>
-                                                           
+                                                                </div>
+                                                              @endif
                                                            
                                                                 @if($ROCustomerAppSub?->status == \App\Models\ROSubscription::ACTIVE )
                                                                 <div class="d-flex flex-column mt-5">
@@ -588,8 +625,20 @@ function openModal(modalID) {
                                                                         </h4>
 
                                                                     </div>
+                                                                @elseif($ROCustomerAppSub?->status == \App\Models\ROCustomerAppSub::SUSPEND  )
+                                                                <div class="d-flex flex-column mt-5">
+                                                                    <div class="d-flex justify-content-center mb-5">
+                                                                        <a href="#" class="btn btn-sm btn-warning "  onclick="openModal('kt_modal_suspend_app_sub')" ><svg style="margin-left:10px" xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="red" viewBox="0 0 512 512">
+                                                                            <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></svg>
+                                                                            {{__('Renew Subscription')}}</a>
+                                                                    </div>
+                                                                </div>
                                                                 @else
-                                                                <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" onclick="openModal('kt_modal_customer_app')" ><i class="fas fa-shopping-cart"></i>{{__('Buy now')}}</a>
+                                                                    <div class="d-flex flex-column mt-5">
+                                                                        <div class="d-flex justify-content-center mb-5">
+                                                                        <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" onclick="openModal('kt_modal_customer_app')" ><i class="fas fa-shopping-cart"></i>{{__('Buy now')}}</a>
+                                                                        </div>
+                                                                    </div>
                                                                 @endif
                                                                     
                                                           
@@ -647,7 +696,7 @@ function openModal(modalID) {
                                                     </div>
                                                     <!--end::Heading-->
 
-                                                    <div class="w-100"><span class="text-khardl fw-bolder text-right">{{__('download now :')}} </span></div>
+                                                    <div class="w-100"><span class="text-khardl fw-bolder text-right m-5">{{__('download now :')}} </span></div>
                                                     <div class="d-flex justify-content-center align-items-center mt-3">
                                                         <div class="mx-3">
                                                             <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">{{__('iPhone')}}</a>

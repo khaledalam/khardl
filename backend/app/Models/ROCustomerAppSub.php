@@ -12,7 +12,6 @@ class ROCustomerAppSub extends Model
     use HasFactory;
     protected $table ="r_o_customer_app_subs";
     protected $fillable =[
-        'id',
         "start_at",
         "end_at",
         'amount',
@@ -29,13 +28,13 @@ class ROCustomerAppSub extends Model
         'subscription_id' 
     ];
 
-    public const NEW ="new";
 
 
     public const ACTIVE = 'active';
     public const DEACTIVATE = 'deactivate';
     public const SUSPEND = 'suspend';
     public const REQUESTED ='requested';
+
     public function user(){
         return $this->belongsTo(RestaurantUser::class,'user_id');
     }

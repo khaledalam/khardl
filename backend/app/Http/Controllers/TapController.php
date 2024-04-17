@@ -379,9 +379,9 @@ class TapController extends Controller
             return CentralSubscription::skip(1)->first();
         });
         if($sub){
-
+            $type = ROSubscription::RENEW_AFTER_ONE_YEAR;
         }else {
-           $type = ROCustomerAppSub::NEW;
+           $type = ROSubscription::NEW;
         }
      
         $charge = TapCharge::createSub(

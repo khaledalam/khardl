@@ -64,7 +64,17 @@ class RestaurantCharge
                     'subscription_id' => $data['metadata']['subscription_id'],
                 ];
                 if($subscription){
-                    
+                    if($subscription?->ios_url && $subscription?->android_url ){
+                        $db['status'] = ROCustomerAppSub::ACTIVE;
+                    }else {
+                        $db['status'] = ROCustomerAppSub::REQUESTED;
+                        $now = now();
+                        $db['created_at'] = $now;
+                        $db['updated_at'] = $now;
+                    }
+                    $subscription->update($db);
+                 
+
                 }else {
                     ROCustomerAppSub::create($db);
                 }
