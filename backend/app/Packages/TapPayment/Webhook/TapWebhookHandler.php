@@ -2,11 +2,12 @@
 
 namespace App\Packages\TapPayment\Webhook;
 
+use Exception;
 use App\Models\ROSubscription;
 use App\Repositories\Webhook\CustomerCharge;
 use App\Repositories\Webhook\RestaurantCharge;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
-
+use App\Models\Subscription as CentralSubscription;
 
 class TapWebhookHandler extends ProcessWebhookJob
 {
@@ -15,10 +16,16 @@ class TapWebhookHandler extends ProcessWebhookJob
     {
 
         $data = json_decode($this->webhookCall, true)['payload'];
-
         logger($data);
         if(isset($data['metadata']['subscription_id'])){ // subscription for RO
-            RestaurantCharge::updateOrCreate($data);
+            if(isset($data['metadata']['customer_app'])){
+                RestaurantCharge::updateOrCreateApp($data);
+            }else if ($data['metadata']['subscription_id']){
+                RestaurantCharge::updateOrCreate($data);
+            }else {
+                throw new Exception('Undefined subscription_id ');
+            }
+          
         }
         if(isset($data['metadata']['order_id'])){ // order for customer
             CustomerCharge::createOrder($data);
