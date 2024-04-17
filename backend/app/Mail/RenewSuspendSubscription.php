@@ -22,6 +22,7 @@ class RenewSuspendSubscription extends Mailable
        public $user,
        public $restaurant_name,
        public $url,
+       public $type,
     )
     {
 

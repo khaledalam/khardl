@@ -16,7 +16,7 @@ class ROSubscription extends Model
     use HasFactory;
     protected $table ="r_o_subscriptions";
     protected $fillable =[
-        'id',
+        
         "start_at",
         "end_at",
         'amount',

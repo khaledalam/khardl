@@ -44,18 +44,31 @@
                     <div class="mb-2" style="width: 50%; float: left;">
                         <label class="required form-label">{{ __('Name (Arabic)')}}</label>
                         <input type="text" name="name_ar" class="form-control" required placeholder="{{ __('Name (Arabic)')}}" value="{{ old('name_ar') ?? $subscription->getTranslation('name', 'ar')  }}" />
-                        <div class="text-muted fs-7">{{ __('Name (Arabic)')}} {{ __('is-required')}}</div>
                     </div>
 
                     <!-- English Name -->
                     <div class="mb-2" style="width: 50%; float: left;">
                         <label class="required form-label">{{ __('Name (English)')}}</label>
                         <input type="text" name="name_en" class="form-control" required placeholder="{{ __('Name (English)')}}" value="{{ old('name_en')  ?? $subscription->getTranslation('name', 'en')}}" />
-                        <div class="text-muted fs-7">{{ __('Name (English)')}} {{ __('is-required')}}</div>
                     </div>
 
                     <div style="clear: both;"></div> <!-- Clear the float -->
                 </div>
+                <div class="mb-10 fv-row">
+                  <!-- Arabic Name -->
+                  <div class="mb-2" style="width: 50%; float: left;">
+                      <label class="required form-label">{{ __('Description in arabic')}}</label>
+                      <input type="text" name="description_ar" class="form-control" required placeholder="{{ __('Description in arabic')}}" value="{{ old('description_ar') ?? $subscription->getTranslation('description', 'ar')  }}" />
+                  </div>
+
+                  <!-- English Name -->
+                  <div class="mb-2" style="width: 50%; float: left;">
+                      <label class="required form-label">{{ __('Description in english')}}</label>
+                      <input type="text" name="description_en" class="form-control" required placeholder="{{ __('Description in english')}}" value="{{ old('description_en')  ?? $subscription->getTranslation('description', 'en')}}" />
+                  </div>
+
+                  <div style="clear: both;"></div> <!-- Clear the float -->
+              </div>
                   <!--end::Input group-->
                                                 <!--begin::Input group-->
                   <div class="mb-10 fv-row">
