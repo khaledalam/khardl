@@ -3,8 +3,6 @@ import RightIcon from "../../../../assets/rightIcon.png";
 import LeftIcon from "../../../../assets/leftIcon.png";
 
 const Sliderr = ({ banner_images, setIsBannerModalOpened }) => {
-    console.log("banner_images: ", banner_images);
-
     const [imageIndex, setImageIndex] = useState(0);
 
     const showNextImage = () => {

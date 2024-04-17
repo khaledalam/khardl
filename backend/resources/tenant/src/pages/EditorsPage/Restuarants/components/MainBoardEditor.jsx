@@ -380,7 +380,7 @@ const MainBoardEditor = ({
         <div
             style={{
                 backgroundColor: page_color,
-                fontFamily: text_fontFamily,
+                fontFamily: footer_text_fontFamily,
                 fontWeight: text_fontWeight,
             }}
             className="w-full p-4 flex flex-col gap-[16px] relative "
@@ -830,8 +830,8 @@ const MainBoardEditor = ({
                 <h3
                     style={{ color: footer_text_color }}
                     className={`${
-                        text_fontFamily
-                            ? `font-['${text_fontFamily}']`
+                        footer_text_fontFamily
+                            ? `font-['${footer_text_fontFamily}']`
                             : "font-['Plus Jakarta Sans']"
                     }
                     ${

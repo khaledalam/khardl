@@ -45,37 +45,43 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                     "w-full  flex flex-col py-4 items-center justify-center gap-8"
                 }
             >
-                {/* <div
-          className={` w-full ${
-            restaurantStyle?.logo_alignment === t("Center") ||
-            restaurantStyle?.logo_alignment === "center"
-              ? " flex items-center justify-center"
-              : restaurantStyle?.logo_alignment === t("Left") ||
-                restaurantStyle?.logo_alignment === "left"
-              ? "items-center justify-start"
-              : "items-center justify-end"
-          }`}
-        >
-          <div
-            className={`w-[60px] h-[60px]  ${
-              restaurantStyle?.logo_shape === "rounded" ||
-              restaurantStyle?.logo_shape === t("Rounded")
-                ? "rounded-full"
-                : restaurantStyle?.logo_shape === "sharp" ||
-                  restaurantStyle?.logo_shape === t("Sharp")
-                ? "rounded-none"
-                : ""
-            }`}
-          >
-            <img
-              src={restaurantStyle?.logo ? restaurantStyle.logo : imgLogo}
-              alt='logo'
-              className={`w-full h-full object-cover ${
-                restaurantStyle?.logo_shape === t("Sharp") ? "" : "rounded-full"
-              }`}
-            />
-          </div>
-        </div> */}
+                <div
+                    className={` w-full ${
+                        restaurantStyle?.logo_alignment === t("Center") ||
+                        restaurantStyle?.logo_alignment === "center"
+                            ? " flex items-center justify-center"
+                            : restaurantStyle?.logo_alignment === t("Left") ||
+                              restaurantStyle?.logo_alignment === "left"
+                            ? "items-center justify-start"
+                            : "items-center justify-end"
+                    }`}
+                >
+                    <div
+                        className={`w-[60px] h-[60px]  ${
+                            restaurantStyle?.logo_shape === "rounded" ||
+                            restaurantStyle?.logo_shape === t("Rounded")
+                                ? "rounded-full"
+                                : restaurantStyle?.logo_shape === "sharp" ||
+                                  restaurantStyle?.logo_shape === t("Sharp")
+                                ? "rounded-none"
+                                : ""
+                        }`}
+                    >
+                        <img
+                            src={
+                                restaurantStyle?.logo
+                                    ? restaurantStyle.logo
+                                    : imgLogo
+                            }
+                            alt="logo"
+                            className={`w-full h-full object-cover ${
+                                restaurantStyle?.logo_shape === t("Sharp")
+                                    ? ""
+                                    : "rounded-full"
+                            }`}
+                        />
+                    </div>
+                </div>
                 {(restaurantStyle &&
                     restaurantStyle?.banner_type === "one-photo") ||
                 (restaurantStyle &&

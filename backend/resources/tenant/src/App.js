@@ -41,7 +41,7 @@ import FailedPayment from "./pages/FailedPayment";
 import * as Sentry from "@sentry/react";
 
 import { initializeApp } from "firebase/app";
-import {t} from "i18next";
+import { t } from "i18next";
 const firebaseConfig = {
     apiKey: "AIzaSyD7xao9Wm2JTWWJwS5IvgNYWJWiSh48mwM",
     authDomain: "khardl.firebaseapp.com",
@@ -157,7 +157,7 @@ const App = () => {
                 >
                     <div>
                         <ToastContainer theme="colored" />{" "}
-                        {showHeader && <NavbarRestuarant />} {/*<Supports />*/}{" "}
+                        {/* {showHeader && <NavbarRestuarant />} <Supports />{" "} */}
                         <ScrollUp />
                         <div>
                             <Routes>
@@ -252,9 +252,12 @@ const App = () => {
                         {/*        <Footer />*/}
                         {/*    </div>*/}
                         {/*{" "}*/}
-                        {showFooter && !loading && (<div className="mini-footer">{t("All rights reserved")}</div>)}
+                        {showFooter && !loading && (
+                            <div className="mini-footer">
+                                {t("All rights reserved")}
+                            </div>
+                        )}
                     </div>{" "}
-
                 </div>{" "}
             </MenuProvider>
         </>

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Herosection from "./components/Herosection";
 import ProductSection from "./components/ProductSection";
-import FooterRestuarant from "./components/Footer";
+import FooterRestuarant from "./components/Footerr";
+import FullPage from "./components/FullPage";
 import AxiosInstance from "../../axios/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
@@ -126,33 +127,36 @@ export const RestuarantHomePage = () => {
         );
     }
 
-    return (
-        <>
-            {/* <Helmet>
-        <title>{t("Home")}</title>
-        <link
-          rel="icon"
-          type="image/png"
-          href={restaurantStyle.logo}
-          sizes="16x16"
-        />
-      </Helmet> */}
+    return <FullPage categories={categories} />;
 
-            <div
-                style={{
-                    backgroundColor: restaurantStyle?.page_color,
-                    fontFamily: "cairo",
-                    minHeight: "calc(100vh - 230px)",
-                }}
-            >
-                <Herosection
-                    isMobile={isMobile}
-                    categories={categories}
-                    isCatLoading={isCatLoading}
-                />
-                <ProductSection categories={categories} isMobile={isMobile} />
-            </div>
-            <FooterRestuarant />
-        </>
-    );
+    // return (
+    //     <>
+    //         {/* <Helmet>
+    //     <title>{t("Home")}</title>
+    //     <link
+    //       rel="icon"
+    //       type="image/png"
+    //       href={restaurantStyle.logo}
+    //       sizes="16x16"
+    //     />
+    //   </Helmet> */}
+
+    //         {/* <div
+    //             style={{
+    //                 backgroundColor: restaurantStyle?.page_color,
+    //                 fontFamily: "cairo",
+    //                 minHeight: "calc(100vh - 230px)",
+    //                 padding: "16px",
+    //             }}
+    //         >
+    //             <Herosection
+    //                 isMobile={isMobile}
+    //                 categories={categories}
+    //                 isCatLoading={isCatLoading}
+    //             />
+    //             <ProductSection categories={categories} isMobile={isMobile} />
+    //         </div>
+    //         <FooterRestuarant /> */}
+    //     </>
+    // );
 };
