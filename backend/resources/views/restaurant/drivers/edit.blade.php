@@ -10,7 +10,7 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Form-->
-            <form action="{{ route('drivers.update',['driver' => $driver->id]) }}" method="POST">
+            <form action="{{ route('drivers.update',['driver' => $driver->id]) }}" method="POST"  enctype="multipart/form-data">
                 @method('PATCh')
                 @csrf
 
@@ -71,6 +71,21 @@
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="address" class="form-control mb-2" placeholder="{{ __('Address')}}" value="{{old('address') ?? $driver->address }}"  required/>
+                                            <!--end::Input-->
+                                        </div>
+                                        <div class="mb-10 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="form-label">{{ __('Image')}}</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <input type="file" class="form-control form-control-solid" placeholder="{{ __('Photo') }}" name="image" accept="image/*" required />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <img alt="driver image" src="{{ $driver->image }}" class="rounded" style="max-height: 100%;max-width:100%"/>
+                                                </div>
+                                            </div>
                                             <!--end::Input-->
                                         </div>
                                         <div class="mb-10 fv-row">
@@ -151,7 +166,7 @@
                                         </div>
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="form-label">{{ __('Vehicle number')}}</label>
+                                            <label class="required form-label">{{ __('Vehicle number')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="vehicle_number" class="form-control mb-2" placeholder="{{ __('Number')}}" value="{{old('vehicle_number') ?? $driver->vehicle_number }}"  required/>
