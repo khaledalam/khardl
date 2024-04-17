@@ -21,8 +21,8 @@ class NotificationReceiptService
     }
     public function create()
     {
-        $branches = Branch::all();
-        return view('restaurant.drivers.create', compact('branches'));
+        $user = Auth::user();
+        return view('admin.notification_receipt.create',compact('user'));
     }
     public function edit($request, $driver)
     {
@@ -36,14 +36,8 @@ class NotificationReceiptService
     }
     public function store($request)
     {
-        $driver = RestaurantUser::create($this->request_data($request));
-        $driver->password = Hash::make($request->password);
-        $driver->assignRole('Driver');
-        if ($request->hasFile('image')) {
-            $driver->image = $this->handleImage($request);
-        }
-        $driver->save();
-        return redirect()->route('drivers.index')->with(['success' => __('Created successfully')]);
+        NotificationReceipt::create($this->request_data($request));
+        return redirect()->route('admin.notifications-receipt.index')->with(['success' => __('Created successfully')]);
     }
     public function update($request, $driver)
     {
@@ -76,13 +70,10 @@ class NotificationReceiptService
     private function request_data($request)
     {
         return $request->only([
-            'first_name',
-            'last_name',
-            'address',
-            'branch_id',
+            'name',
             'email',
-            'phone',
-            'vehicle_number'
+            'is_application_purchase',
+            'is_branch_purchase',
         ]);
     }
 

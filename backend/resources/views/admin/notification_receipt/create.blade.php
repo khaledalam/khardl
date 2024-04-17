@@ -1,6 +1,6 @@
-@extends('layouts.restaurant-sidebar')
+@extends('layouts.admin-sidebar')
 
-@section('title', __('add-driver'))
+@section('title', __('Add user to notification'))
 
 @section('content')
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -10,7 +10,7 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Form-->
-            <form action="{{ route('drivers.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.notifications-receipt.store') }}" method="POST">
                 @csrf
 
                 <!--begin::Main column-->
@@ -25,9 +25,9 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>{{ __('add-driver')}}</h2>
+                                            <h2>{{ __('Add user')}}</h2>
                                         </div>
-                                        <a href="{{ route('drivers.index') }}">
+                                        <a href="{{ route('admin.notifications-receipt.index') }}">
                                             <button type="button" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-arrow-left"></i>
                                                 {{ __('Back to list') }}
@@ -40,111 +40,66 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{ __('first-name')}}</label>
+                                            <label class="required form-label">{{ __('Name')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('first-name')}}" value="{{old('first_name')}}" required/>
-                                            <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('first-name')}} {{ __('is-required')}}</div>
-                                            <!--end::Description-->
+                                            <input type="text" name="name" class="form-control mb-2" placeholder="{{ __('Name')}}" value="{{old('name')}}" required/>
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{ __('last-name')}}</label>
+                                            <label class="required form-label">{{ __('Email')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('last-name')}}" value="{{old('last_name')}}" required/>
-                                            <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('last-name')}} {{ __('is-required')}}</div>
-                                            <!--end::Description-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="form-label">{{ __('Address')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="text" name="address" class="form-control mb-2" placeholder="{{ __('Address')}}" value="{{old('address')}}"  required/>
+                                            <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('Email')}}" value="{{old('email')}}" required/>
                                             <!--end::Input-->
                                         </div>
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="required form-label">{{ __('Image')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="file" class="form-control form-control-solid" placeholder="{{ __('Photo') }}" name="image" accept="image/*" required />
-                                            <!--end::Input-->
-                                        </div>
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="required form-label">{{ __('Branch')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <div class="form-group">
-                                                <select name="branch_id" id="branch" class="form-select">
-                                                    @foreach ($branches as $branch)
-                                                    <option value="{{ $branch->id }}" {{old('branch_id') == $branch->id ? 'selected' :''}} required>{{ $branch->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                         <!--begin::Permission-->
+                                         <div style="margin-left: 0!important; padding-left: 0!important;" class="card mb-5 mb-xl-10 mx-0 px-0">
+                                            <!--begin::Card header-->
+                                            <div class="card-header border-0 cursor-pointer mx-0 px-0" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                                                <!--begin::Card title-->
+                                                <div class="card-title m-0">
+                                                    <h3 class="fw-bolder m-0">{{ __('The notifications')}}</h3>
+                                                </div>
+                                                <!--end::Card title-->
                                             </div>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="required form-label">{{ __('email')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('email')}}" value="{{old('email')}}" required />
-                                            <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('email')}}.</div>
-                                            <!--end::Description-->
-                                        </div>
-                                        <!--end::Input group-->
+                                            <!--begin::Card header-->
+                                            <!--begin::Content-->
+                                            <div id="kt_account_settings_profile_details" class="collapse show">
+                                                <!--begin::Card body-->
+                                                <div class="card-body border-top py-9 mx-0 px-0">
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="is_application_purchase" value="1" checked name="is_application_purchase">
+                                                            <label class="form-check-label" for="is_application_purchase">
+                                                                {{ __('On purchase the app')}}
+                                                            </label>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="is_branch_purchase" value="1" checked name="is_branch_purchase">
+                                                            <label class="form-check-label" for="is_branch_purchase">
+                                                                {{ __('On purchase branch')}}
+                                                            </label>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
 
-                                        <!--begin::Input group-->
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="required form-label">{{ __('password')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="password" name="password" class="form-control mb-2" placeholder="{{ __('password')}}" value="{{old('password')}}" required/>
-                                            <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('password')}} {{ __('is-required')}}</div>
-                                            <!--end::Description-->
+                                                    <!--end::Input group-->
+                                                </div>
+                                                <!--end::Card body-->
+                                            </div>
+                                            <!--end::Content-->
                                         </div>
-                                        <!--end::Input group-->
+                                        <!--end::Permission-->
 
-                                        <!--begin::Input group-->
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="required form-label">{{ __('phone-number')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="tel" minlength="9" maxlength="13" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" id="phone" placeholder="+966 123456789" required>
-                                            <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('phone-number')}} {{ __('is-required')}}</div>
-                                            <!--end::Description-->
-                                        </div>
-                                        <!--begin::Input group-->
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="required form-label">{{ __('Vehicle number')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="text" name="vehicle_number" class="form-control mb-2" placeholder="{{ __('Number')}}" value="{{old('vehicle_number')}}"  required/>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
                                     </div>
                                     <!--end::Card header-->
                                 </div>

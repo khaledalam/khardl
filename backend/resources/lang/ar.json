@@ -1173,6 +1173,9 @@
     "New notification":"إشعار جديد",
     "By name, email":"بالاسم ، البريد الإلكتروني",
     "Purchase notifications":"اشعارات الشراء",
-    "Users":"المستخدمون"
+    "Users":"المستخدمون",
+    "Add user to notification":"اضافة المستخدم للاشعار",
+    "Add user":"أضف المستخدم",
+    "The notifications":"الاشعارات"
 
 }

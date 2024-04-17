@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Central\Admin\NotificationReceipt;
 
 use App\Http\Controllers\Web\BaseController;
+use App\Http\Requests\Central\NotificationReceipt\NotificationReceiptFormRequest;
 use App\Http\Services\Central\Admin\NotificationReceipt\NotificationReceiptService;
 use App\Models\NotificationReceipt;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class NotificationReceiptController extends BaseController
     {
         return $this->notificationService->create();
     }
-    public function store(DriverStoreFormRequest $request)
+    public function store(NotificationReceiptFormRequest $request)
     {
         return $this->notificationService->store($request);
     }
