@@ -8,12 +8,16 @@ use Illuminate\Http\Request;
 use App\Enums\Admin\LogTypes;
 use App\Utils\ResponseHelper;
 use App\Models\Tenant\Setting;
+use App\Models\ROCustomerAppSub;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\DeliveryCompany;
+use App\Models\Tenant\RestaurantStyle;
+use App\Http\Requests\UpdateCustomerAppRequest;
 use App\Packages\TapPayment\Merchant\Merchant as TapMerchant;
 use App\Http\Services\Central\Admin\Restaurant\RestaurantService;
 use App\Http\Requests\Central\Restaurant\ActivateAndDeactivateDeliveryFormRequest;
+use App\Models\ROSubscription;
 
 class RestaurantController extends Controller
 {
@@ -27,6 +31,9 @@ class RestaurantController extends Controller
     public function show(Tenant $tenant)
     {
         return $this->restaurantService->show($tenant);
+    }
+    public function restaurantsAppRequested(Request $request){
+        return $this->restaurantService->appRequested($request);
     }
     public function activeAndDeactivateDelivery(ActivateAndDeactivateDeliveryFormRequest $request, Tenant $tenant)
     {
@@ -55,6 +62,33 @@ class RestaurantController extends Controller
             return Setting::first()->lead_response;
         });
         return response()->json($lead_response,200);
+    }
+    public function updateCustomerApp(Tenant $tenant,UpdateCustomerAppRequest $request){
+        $tenant->run(function()use($request,$tenant){
+            $customer_app = ROCustomerAppSub::first();
+            if($customer_app->created_at == $customer_app->updated_at){
+                $customer_app->start_at = now();
+            }
+            if($request->android_url && $request->ios_url){
+                $customer_app->android_url = $request->android_url;
+                $customer_app->ios_url = $request->ios_url;
+                $customer_app->status = ROSubscription::ACTIVE;
+            }else {
+                $customer_app->android_url = null;
+                $customer_app->ios_url = null;
+                $customer_app->status = ROCustomerAppSub::REQUESTED;
+            }
+  
+            if($request->icon){
+
+                $logo = store_image($request->file('icon'), RestaurantStyle::STORAGE, 'customer_app');
+                $customer_app->icon =  tenant_route($tenant->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'home').'/tenancy/assets/'.$logo;
+            }
+         
+            $customer_app->save();
+        });
+        return redirect()->back()->with('success',__('Customer app has been updated successfully'));
+
     }
     public function updateConfig(Tenant $tenant,Request $request){
 

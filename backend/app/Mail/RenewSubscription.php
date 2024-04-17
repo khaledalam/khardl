@@ -22,7 +22,8 @@ class RenewSubscription extends Mailable
        public $user,
        public $restaurant_name,
        public $url,
-       public $period
+       public $period,
+       public $type
     )
     {
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Tenant;
 
 use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
+use App\Models\Subscription;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\QrCode;
 use App\Models\Tenant\RestaurantStyle;
@@ -29,10 +30,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\RegisterWorkerRequest;
-use App\Models\Subscription;
+use App\Models\Subscription as CentralSubscription;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
+use App\Models\ROCustomerAppSub;
 use App\Models\ROSubscription;
 use App\Models\Tenant\DeliveryCompany;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
@@ -55,12 +57,16 @@ class RestaurantController extends BaseController
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
-        $subscription = tenancy()->central(function () {
-            return Subscription::first();
+        [$subscription,$customer_app_sub]= tenancy()->central(function () {
+            return [
+                CentralSubscription::first(),
+                CentralSubscription::skip(1)->first()
+            ];
         });
         $RO_subscription = ROSubscription::first();
         $customer_tap_id = Auth::user()->tap_customer_id;
         $setting  = Setting::first();
+        $ROCustomerAppSub = ROCustomerAppSub::first();
         $active_branches = Branch::where('active',true)->count();
         $total_branches = $active_branches + ( $RO_subscription->number_of_branches ?? 0);
         $amount = $total_branches * $subscription->amount;
@@ -69,16 +75,28 @@ class RestaurantController extends BaseController
             $amount =  $subscription->amount;
             $total_branches = 1;
         }
-        return view('restaurant.service', compact('user','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
+        return view('restaurant.service', compact('user','customer_app_sub','ROCustomerAppSub','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
     }
+
     public function serviceDeactivate()
     {
         /** @var RestaurantUser $user */
+        if( ROSubscription::first()->status == ROSubscription::ACTIVE)
         ROSubscription::first()->update([
             'status' => ROSubscription::DEACTIVATE
         ]);
         return redirect()->back()->with('success', __('Branches has been deactivated successfully'));
     }
+    public function serviceAppDeactivate()
+    {
+        /** @var RestaurantUser $user */
+        if( ROCustomerAppSub::first()->status == ROSubscription::ACTIVE)
+        ROCustomerAppSub::first()->update([
+            'status' => ROSubscription::DEACTIVATE
+        ]);
+        return redirect()->back()->with('success', __('Branches has been deactivated successfully'));
+    }
+
     public function serviceActivate()
     {
         /** @var RestaurantUser $user */
@@ -87,6 +105,18 @@ class RestaurantController extends BaseController
             return redirect()->back()->with('error', __('not allowed'));
         }
         ROSubscription::first()->update([
+            'status' => ROSubscription::ACTIVE
+        ]);
+        return redirect()->back()->with('success', __('Branches has been activated successfully'));
+    }
+    public function serviceAppActivate()
+    {
+        /** @var RestaurantUser $user */
+        $subscription = ROCustomerAppSub::first();
+        if ($subscription->status != ROSubscription::DEACTIVATE) {
+            return redirect()->back()->with('error', __('not allowed'));
+        }
+        ROCustomerAppSub::first()->update([
             'status' => ROSubscription::ACTIVE
         ]);
         return redirect()->back()->with('success', __('Branches has been activated successfully'));
@@ -963,7 +993,7 @@ class RestaurantController extends BaseController
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'Worker');
             })
-            ->orderBy('id','asc')
+            ->orderBy('id','desc')
             ->get();
         return view('restaurant.workers', compact('user', 'workers', 'branchId', 'branch'));
     }
@@ -992,7 +1022,8 @@ class RestaurantController extends BaseController
             'can_modify_working_time',
             'can_edit_menu',
             'can_control_payment',
-            'can_view_revenues'
+            'can_view_revenues',
+            'can_edit_and_view_drivers'
         ];
         $insertData = [];
 
@@ -1059,7 +1090,8 @@ class RestaurantController extends BaseController
             'can_modify_working_time',
             'can_edit_menu',
             'can_control_payment',
-            'can_view_revenues'
+            'can_view_revenues',
+            'can_edit_and_view_drivers'
         ];
 
         $updateData = [];

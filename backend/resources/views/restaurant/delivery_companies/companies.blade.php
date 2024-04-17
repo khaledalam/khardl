@@ -23,45 +23,45 @@
                             <!--begin::Contacts App- View Contact-->
 
                             <!--begin::Form-->
-                            <form action="#">
-                                <!--begin::Card-->
-                                <div class="card mb-7">
-                                    <!--begin::Card body-->
-                                    <div class="card-body">
-                                        <!--begin::Compact form-->
-                                        <form action="{{ route('restaurant.delivery') }}" method="GET">
-                                            @csrf
-                                            <div class="d-flex align-items-center justify-content-center">
-                                                <!--begin::Col-->
-                                                <div class="position-relative w-md-200px me-md-2">
-                                                    <select class="form-select form-select-solid" name="area">
-                                                        <option value="" selected>{{ __('All areas') }}</option>
-                                                        @foreach ($allCities as $city)
-                                                        <option value="{{ $city }}" {{ request('area') == $city ? 'selected' : '' }} >{{ $city }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+{{--                            <form action="#">--}}
+{{--                                <!--begin::Card-->--}}
+{{--                                <div class="card mb-7">--}}
+{{--                                    <!--begin::Card body-->--}}
+{{--                                    <div class="card-body">--}}
+{{--                                        <!--begin::Compact form-->--}}
+{{--                                        <form action="{{ route('restaurant.delivery') }}" method="GET">--}}
+{{--                                            @csrf--}}
+{{--                                            <div class="d-flex align-items-center justify-content-center">--}}
+{{--                                                <!--begin::Col-->--}}
+{{--                                                <div class="position-relative w-md-200px me-md-2">--}}
+{{--                                                    <select class="form-select form-select-solid" name="area">--}}
+{{--                                                        <option value="" selected>{{ __('All areas') }}</option>--}}
+{{--                                                        @foreach ($allCities as $city)--}}
+{{--                                                        <option value="{{ $city }}" {{ request('area') == $city ? 'selected' : '' }} >{{ $city }}</option>--}}
+{{--                                                        @endforeach--}}
+{{--                                                    </select>--}}
+{{--                                                </div>--}}
 
-                                                <!--begin:Action-->
-                                                <div class="d-flex align-items-center">
-                                                    <button type="submit" class="btn btn-sm btn-khardl me-5">{{ __('Filter') }}</button>
-                                                </div>
+{{--                                                <!--begin:Action-->--}}
+{{--                                                <div class="d-flex align-items-center">--}}
+{{--                                                    <button type="submit" class="btn btn-sm btn-khardl me-5">{{ __('Filter') }}</button>--}}
+{{--                                                </div>--}}
 
-                                                <div class="d-flex align-items-center">
-                                                    <button type="reset" class="btn btn-sm btn-secondary me-5" >
-                                                    <a href="{{ route('restaurant.delivery') }}">{{__('Discard')}}</a>
-                                                    </button>
-                                                </div>
-                                                <!--end:Action-->
-                                            </div>
-                                        </form>
-                                        <!--end::Compact form-->
+{{--                                                <div class="d-flex align-items-center">--}}
+{{--                                                    <button type="reset" class="btn btn-sm btn-secondary me-5" >--}}
+{{--                                                    <a href="{{ route('restaurant.delivery') }}">{{__('Discard')}}</a>--}}
+{{--                                                    </button>--}}
+{{--                                                </div>--}}
+{{--                                                <!--end:Action-->--}}
+{{--                                            </div>--}}
+{{--                                        </form>--}}
+{{--                                        <!--end::Compact form-->--}}
 
-                                    </div>
-                                    <!--end::Card body-->
-                                </div>
-                                <!--end::Card-->
-                            </form>
+{{--                                    </div>--}}
+{{--                                    <!--end::Card body-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Card-->--}}
+{{--                            </form>--}}
                             <!--end::Form-->
                             <div class="row g-6 delivery_companies">
                                 {{-- NOTE: and variabile you added here note that you have to add it in central controller --}}

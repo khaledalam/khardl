@@ -109,8 +109,7 @@ Route::group([
             Route::post('/workers/add/{branchId}', [RestaurantController::class, 'generateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.generate-worker');
             Route::put('/workers/update/{id}', [RestaurantController::class, 'updateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-worker');
             Route::get('/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.edit-worker');
-            //TODO: uncomment when driver app is ready
-            /* Route::resource('drivers', DriverController::class)->middleware('permission:can_edit_and_view_drivers'); */
+            Route::resource('drivers', DriverController::class)->middleware('permission:can_edit_and_view_drivers');
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
             Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
@@ -122,8 +121,11 @@ Route::group([
             Route::post('/category/edit/{categoryId}/{branchId}', [RestaurantController::class, 'editCategory'])->middleware('permission:can_edit_menu')->name('restaurant.edit-category');
             Route::name('restaurant.')->controller(AdminItemController::class)->group(function () {
                 Route::post('/category/{id}/{branchId}/add-item', 'store')->middleware('permission:can_edit_menu')->name('add-item');
+                Route::post('/update-item/{item}', 'update')->middleware('permission:can_edit_menu')->name('update-item');
                 Route::delete('/category/{id}/delete-item', 'delete')->middleware('permission:can_edit_menu')->name('delete-item');
                 Route::get('/item/{item}', 'show')->middleware('permission:can_edit_menu')->name('view-item');
+                Route::get('/item/{item}/edit', 'edit')->middleware('permission:can_edit_menu')->name('edit-item');
+
             });
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
             Route::get('/payments', [TapController::class, 'payments'])->middleware(['permission:can_control_payment'])->name('tap.payments');
@@ -158,6 +160,8 @@ Route::group([
                 // Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead')->middleware('isLeadSubmitted');
                 // Step 3: save cards
                 Route::post('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
+                Route::post('/payments/tap-create-customer-app', [TapController::class, 'payments_submit_customer_app'])->name('tap.payments_submit_customer_app');
+                
                 Route::get('/payments/tap-card-details-redirect', [TapController::class, 'payments_redirect'])->name('tap.payments_redirect');
                 Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
 
@@ -166,7 +170,9 @@ Route::group([
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
                 Route::patch('/service/deactivate', [RestaurantController::class, 'serviceDeactivate'])->name('restaurant.service.deactivate');
+                Route::patch('/service/app/deactivate', [RestaurantController::class, 'serviceAppDeactivate'])->name('restaurant.service.app.deactivate');
                 Route::patch('/service/activate', [RestaurantController::class, 'serviceActivate'])->name('restaurant.service.activate');
+                Route::patch('/service/app/activate', [RestaurantController::class, 'serviceAppActivate'])->name('restaurant.service.app.activate');
                 Route::get('/service/{type}/{number_of_branches}/calculate/{subscription_id}', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');
 
 
@@ -310,9 +316,7 @@ Route::group([
         Route::get('categories', [CategoryController::class, 'index']);
         Route::get('orders', [OrderController::class, 'index']);
 
-        Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class, 'asset'])
-            ->where('path', '(.*)')
-            ->name('stancl.tenancy.asset');
+      
     });
 
     Route::get('/change-language/{locale}', static function ($locale) {
@@ -331,7 +335,9 @@ Route::group([
         return Redirect::back();
     })->name('change.language');
 
-
+    Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class, 'asset'])
+    ->where('path', '(.*)')
+    ->name('stancl.tenancy.asset');
 });
 Route::middleware([
     'api',
@@ -389,6 +395,8 @@ Route::middleware([
                     });
                     Route::controller(ProfileController::class)->group(function () {
                         Route::post('change-password', 'changePassword');
+                        Route::get('get-profile', 'getProfile');
+                        Route::post('update-image', 'updateImage');
                     });
                 });
             });

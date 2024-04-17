@@ -138,9 +138,10 @@
                                     <!--begin::Name-->
                                     <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">
                                         @php
-                                            $restaurant->run(function() use ($restaurant){
+                                            $customer_app = null;
+                                            $restaurant->run(function() use ($restaurant,&$customer_app){
                                                 $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
-
+                                                $customer_app = App\Models\ROCustomerAppSub::first();
 												if ($restaurant->is_live()) {
                                                     echo <<<HTML
                                                         <img alt="Logo" src="$logo" class="h-70px logo" />
@@ -152,7 +153,7 @@
                                             });
                                         @endphp
                                         {{ $restaurant?->restaurant_name }}
-                                        @include('components.restaurant-status-badge')
+                                        @include('components.restaurant-status-badge',['customer_app'=>$customer_app])
                                     </a>
 
                                     <!--end::Name-->

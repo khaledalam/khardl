@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Sentry\Laravel\Integration;
+use Stancl\Tenancy\Exceptions\TenantCouldNotBeIdentifiedOnDomainException;
 use Throwable;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -26,6 +27,12 @@ class Handler extends ExceptionHandler
 
     public function report(Throwable $exception)
     {
+        // Exclude Exceptions
+        if ($exception instanceof TenantCouldNotBeIdentifiedOnDomainException ||
+            $exception instanceof NotFoundHttpException) {
+            return;
+        }
+
         if (app()->bound('sentry')) {
             app('sentry')->captureException($exception);
 //            Integration::captureUnhandledException($exception);

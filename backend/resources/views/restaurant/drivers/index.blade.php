@@ -18,9 +18,8 @@
                     <div class="card-title border-0 pt-5 d-flex align-items-center position-relative my-1">
                         <h3 class="card-title align-items-start flex-column mx-2">
                             <span class="card-label fw-bolder fs-3 mb-1">{{ __('drivers') }}
-                                <span class="text-muted mt-1 fw-bold fs-7">{{ __('drivers') }}</span>
                         </h3>
-                        <input type="text" value="{{ request('search') }}" placeholder="{{ __('By name, email, phone') }}" name="search" class="form-control  w-200px" placeholder="{{__('search')}}" />
+                        <input type="text" value="{{ request('search') }}" placeholder="{{ __('By name, email, phone') }}" name="search" class="form-control  w-200px" />
                         <div class="form-group mx-2">
                             <select name="status" id="status" class="form-select w-200px">
                                 <option value="">{{ __('Select') }}</option>
@@ -55,13 +54,14 @@
                             <thead>
                                 <tr class="fw-bolder text-muted">
                                     <th class="min-w-25px">#</th>
-                                    <th class="min-w-200px">{{ __('first-name') }}</th>
-                                    <th class="min-w-150px">{{ __('last-name') }}</th>
+                                    <th class="min-w-200px">{{ __('Name') }}</th>
+                                    <th class="min-w-200px">{{ __('Image') }}</th>
                                     <th class="min-w-150px">{{ __('Status') }}</th>
                                     <th class="min-w-150px">{{ __('Delivered orders') }}</th>
                                     <th class="min-w-150px">{{ __('This month') }}</th>
                                     <th class="min-w-150px">{{ __('phone-number') }}</th>
                                     <th class="min-w-150px">{{ __('email') }}</th>
+                                    <th class="min-w-150px">{{ __('Vehicle No.') }}</th>
                                     <th class="min-w-150px text-end">{{ __('actions') }}</th>
                                 </tr>
                             </thead>
@@ -76,12 +76,14 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a class="text-dark fw-bolder text-hover-khardl fs-6">{{ $driver->first_name }}</a>
+                                                <a class="text-dark fw-bolder text-hover-khardl fs-6">{{ $driver->full_name }}</a>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->last_name }}</a>
+                                        <div class="symbol symbol-60px symbol-lg-60px symbol-fixed position-relative">
+                                            <img alt="driver image" src="{{ $driver->image }}" />
+                                        </div>
                                     </td>
                                     <td>
                                         <span class="badge {{ $driver->status }}">
@@ -101,7 +103,13 @@
                                         <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->email }}</a>
                                     </td>
                                     <td>
+                                        <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->vehicle_number }}</a>
+                                    </td>
+                                    <td>
                                         <div class="d-flex justify-content-end flex-shrink-0">
+                                            <a href="{{ route('drivers.show', ['driver' => $driver->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
                                             <a href="{{ route('drivers.edit', ['driver' => $driver->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                 <span class="svg-icon svg-icon-3">

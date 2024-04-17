@@ -298,9 +298,8 @@
                             </a>
                             @endif
                         </div>
-                        {{-- //TODO: uncomment when driver app is ready --}}
                         <!-- drivers -->
-                        {{-- <div class="menu-item menu-accordion">
+                        <div class="menu-item menu-accordion">
                             @if(\App\Models\Tenant\Branch::first())
                             <a href="{{route('drivers.index')}}">
                                 <span class="{{ ($link == 'drivers') ? 'menu-link active' : 'menu-link ' }}">
@@ -328,7 +327,7 @@
                                 </span>
                             </a>
                             @endif
-                        </div> --}}
+                        </div>
 
                     <!-- menu -->
 
@@ -776,11 +775,12 @@
 <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
 @yield('js')
 @stack('scripts')
-
-<script
-    src="https://js.sentry-cdn.com/860125ea20f9254e5c411ffbdeb02c39.min.js"
-    crossorigin="anonymous"
-></script>
+@if(env('SENTRY_LARAVEL_DSN'))
+    <script
+        src="https://js.sentry-cdn.com/860125ea20f9254e5c411ffbdeb02c39.min.js"
+        crossorigin="anonymous"
+    ></script>
+@endif
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->
 </body>

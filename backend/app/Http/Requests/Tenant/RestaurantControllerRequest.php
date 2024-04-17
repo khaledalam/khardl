@@ -79,6 +79,7 @@ class RestaurantControllerRequest extends FormRequest
                 }, 'required|array'),
             ],
             'banner_images.*' => 'mimes:png,jpg,jpeg,mp4,avi,mov,wmv,gif|max:4096',
+            // @TODO: add validation for new attrs of: 2024_04_17_124822_add_new_design_attrs_to_restaurant_styles_table.php
         ];
     }
 

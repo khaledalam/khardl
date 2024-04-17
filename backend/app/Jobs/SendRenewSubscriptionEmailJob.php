@@ -25,7 +25,8 @@ class SendRenewSubscriptionEmailJob implements ShouldQueue
        public $user,
        public $restaurant_name,
        public $url,
-       public $period
+       public $period,
+       public $type
     )
     {
        
@@ -42,6 +43,7 @@ class SendRenewSubscriptionEmailJob implements ShouldQueue
                 restaurant_name: $this->restaurant_name,
                 url: $this->url,
                 period: $this->period,
+                type: $this->type,
             ));
             $actions = [
                 'en' => '[ok] An email was sent to alert the restaurant owner to renew the subscription',

@@ -24,6 +24,8 @@ use App\Models\Subscription as CentralSubscription;
 use App\Jobs\SendTAPLeadIDMerchantIDRequestEmailJob;
 use App\Packages\TapPayment\File\File as TapFileAPI;
 use App\Exports\Restaurant\ExportSubscriptionInvoice;
+use App\Http\Requests\Tenant\CustomerAppSubRequest;
+use App\Models\ROCustomerAppSub;
 use App\Models\Tenant\RestaurantUser;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
 use App\Packages\TapPayment\Requests\CreateLeadRequest;
@@ -180,9 +182,10 @@ class TapController extends Controller
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
 
     }
-
+  
     public function payments_submit_card_details(SaveCardRequest $request)
     {
+
         $data = $request->validated();
         $sub = ROSubscription::first();
         $centralSubscription = tenancy()->central(function(){
@@ -218,7 +221,10 @@ class TapController extends Controller
             redirect: route('tap.payments_redirect')
         );
         if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-            return redirect($charge['message']['transaction']['url']);
+            if(isset($charge['message']['transaction']['url'])){
+                return redirect($charge['message']['transaction']['url']);
+
+            }
         }
 
 
@@ -243,7 +249,7 @@ class TapController extends Controller
     public function payments_submit_lead($tenant,CreateLeadRequest $request) {
         $tenant = Tenant::findOrFail($tenant);
         $data = $request->all();
-     
+       
         // $tenant_id = tenant()->id;
         // $userBankIban = '';
         // tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
@@ -284,7 +290,7 @@ class TapController extends Controller
 
         }
 
-    
+
 
         $response = Lead::connect($data);
         if($response['http_code'] == ResponseHelper::HTTP_OK){
@@ -299,8 +305,8 @@ class TapController extends Controller
                     lead_id :  $response['message']['id'],
                 );
             });
-            
-           
+
+
 
             return redirect()->route('admin.view-restaurants',['tenant'=>$tenant])->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
         }
@@ -317,6 +323,10 @@ class TapController extends Controller
                     if(isset($charge['message']['metadata']['branch_id'])){
                         return redirect()->route('restaurant.branches')
                         ->with('success', __('You branch has been activated successfully'));
+                    }
+                    if(isset($charge['message']['metadata']['customer_app'])){
+                        return redirect()->route('restaurant.service')
+                        ->with('success', __('You have successfully subscribed to the application. The application will be activated in the coming days'));
                     }
                     return redirect()->route('restaurant.service')->with('success', __('You can now add a branch'));
                 } else {
@@ -354,10 +364,48 @@ class TapController extends Controller
             redirect: route('tap.payments_redirect')
         );
         if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-            return redirect($charge['message']['transaction']['url']);
+            if(isset($charge['message']['transaction']['url'])){
+                return redirect($charge['message']['transaction']['url']);
+            }
         }
 
 
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
     }
+    public function  payments_submit_customer_app(CustomerAppSubRequest $request){
+        $data = $request->validated();
+        $sub = ROCustomerAppSub::first();
+        $AppSubscription = tenancy()->central(function(){
+            return CentralSubscription::skip(1)->first();
+        });
+        if($sub){
+            $type = ROSubscription::RENEW_AFTER_ONE_YEAR;
+        }else {
+           $type = ROSubscription::NEW;
+        }
+     
+        $charge = TapCharge::createSub(
+            data : [
+                'amount'=> $AppSubscription->amount,
+                'metadata'=>[
+                    'restaurant_id'=> tenant()->id,
+                    'subscription'=> $type,
+                    'customer_app'=> true,
+                    'subscription_id'=>$AppSubscription->id
+                ],
+            ],
+            token_id: $data['token_id'],
+            redirect: route('tap.payments_redirect')
+        );
+        if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
+            if(isset($charge['message']['transaction']['url'])){
+                return redirect($charge['message']['transaction']['url']);
+
+            }
+        }
+
+
+
+       return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+   }
 }

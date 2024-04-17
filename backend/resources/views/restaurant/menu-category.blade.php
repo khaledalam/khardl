@@ -238,6 +238,9 @@
                                                         <div class="menu-item px-3">
                                                             <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('view') }}</a>
                                                         </div>
+                                                        <div class="menu-item px-3">
+                                                            <a href="{{ route('restaurant.edit-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('edit') }}</a>
+                                                        </div>
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
                                                         {{-- TODO:Edit item --}}
@@ -606,10 +609,11 @@
                             <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleEn[]" placeholder="{{ __('Title in english') }}">
                             <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[]" placeholder="{{ __('Title in arabic') }}">
 
-                            <input type="number" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" min="0" step="1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}">
+                            <input type="number" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" min="1" step="1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}">
                             <button class="delete-checkbox btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
+                    <hr>
                     <div id="inputContainer${checkboxCount}">
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
@@ -718,6 +722,7 @@
                             <button class="delete-selection btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
+                    <hr>
                     <div id="inputContainer${selectionCount}">
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
@@ -763,7 +768,7 @@
                     <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in arabic') }}">
 
                     <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
-                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;  }
             else {
@@ -773,7 +778,7 @@
                     <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in arabic') }}">
 
                     <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
-                    <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                    <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
 
@@ -825,6 +830,7 @@
                             <button class="delete-dropdown btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
+                    <hr>
                     <div id="inputContainer${dropdownCount}">
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
@@ -870,7 +876,7 @@
                         <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in arabic') }}">
 
                         <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
-                        <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                        <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                     </div>
             `; }else {
                 optionDiv.innerHTML = `
@@ -879,7 +885,7 @@
                         <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('Name in arabic') }}">
 
                         <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
-                        <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                        <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                     </div>
             `;
             const deleteOptionButton = optionDiv.querySelector('.delete-option');
