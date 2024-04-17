@@ -7,11 +7,11 @@
     color: #fff;
     background-color: #50cd89;
 }
-.badge.suspended,.badge.cancelled{
+.badge.suspended,.badge.cancelled,.badge.inactive{
     color: #fff;
     background-color: #f1416c;
 }
-.badge.inactive,.badge.ready,.badge.pending{
+.badge.ready,.badge.pending{
     color: #fff;
     background-color: #009ef7;
 }
