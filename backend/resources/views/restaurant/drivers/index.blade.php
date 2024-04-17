@@ -82,7 +82,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="symbol symbol-100px symbol-lg-60px symbol-fixed position-relative">
+                                        <div class="symbol symbol-60px symbol-lg-60px symbol-fixed position-relative">
                                             <img alt="driver image" src="{{ $driver->image }}" />
                                         </div>
                                     </td>
