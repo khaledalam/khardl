@@ -73,6 +73,9 @@ return new class extends Migration
             $table->integer('footer_text_fontSize')->default(10);
             $table->string('footer_text_color')->default('#000000');
             $table->string('price_color')->default('red')->change();
+
+            $table->integer('logo_border_radius')->default(0);
+            $table->string('logo_border_color')->default('white');
         });
     }
 
