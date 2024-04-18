@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('restaurant_styles', function (Blueprint $table) {
-            $table->integer('logo_border_radius')->default(25)->change();
-            $table->string('logo_border_color')->default('#fff')->change();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->string("tap_payment_method")->nullable();
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('tap_payment_method');
+        });
     }
 };
