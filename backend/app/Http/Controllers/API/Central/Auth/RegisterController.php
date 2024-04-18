@@ -131,7 +131,7 @@ class RegisterController extends BaseController
                 $tenant->run(function () use($user){
                     $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
                     $rUser->status = RestaurantUser::ACTIVE;
-                    $rUser->reject_reasons = json_encode([]);
+                    $rUser->reject_reasons = null;
                     $rUser->save();
                 });
 

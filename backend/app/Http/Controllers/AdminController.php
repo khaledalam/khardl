@@ -252,7 +252,11 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Restaurant is already approved');
         }
 
+        $user = User::find($restaurant->user_id);
+        $this->approveUserLogic($user);
+
         SendApprovedRestaurantEmailJob::dispatch($restaurant);
+
         $actions = [
             'en' => 'Has activate restaurant with an name of: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->restaurant_name </a>",
             'ar' => 'تم تفعيل المطعم بإسم: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->restaurant_name </a>",
@@ -539,14 +543,28 @@ class AdminController extends Controller
         return view('admin.unapproved', compact('unapprovedUsers', 'loggedUser'));
     }
 
+    private function approveUserLogic(?User $user) {
+        if ($user) {
+            $user->status = User::STATUS_ACTIVE;
+            $user->reject_reasons = null;
+            $user->save();
+
+            // set user status in tenant table too
+            $tenant = Tenant::findOrFail($user?->id);
+            $tenant->run(function () use($user){
+                $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
+                $rUser->status = RestaurantUser::ACTIVE;
+                $rUser->reject_reasons = null;
+                $rUser->save();
+            });
+        }
+    }
+
     public function approveUser($id)
     {
         $user = User::find($id);
 
-        if ($user) {
-            $user->isApproved = 1;
-            $user->save();
-        }
+        $this->approveUserLogic($user);
 
         SendApprovedEmailJob::dispatch($user);
 
