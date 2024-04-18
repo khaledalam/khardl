@@ -275,14 +275,14 @@ class RestaurantController extends BaseController
             compact('user')
         );
     }
-
+    
     public function branchOrders(Order $order)
     {
 
         $user = Auth::user();
         $order->load('user', 'items');
 
-        $orderStatusLogs = OrderStatusLogs::all()->sortByDesc("created_at");
+        $orderStatusLogs = OrderStatusLogs::orderBy("created_at",'desc')->where('order_id',$order->id)->get();
         $locale = app()->getLocale();
         return view(
             'restaurant.orders.show',
