@@ -557,11 +557,14 @@ export const RestuarantEditor = () => {
                 setIsPreview={setIsPreview}
                 isPreview={isPreview}
             />
-            <div className="flex flex-col md:flex-row bg-[#EEEEEE] h-[calc(100vh-56px)] w-full transition-all hide-scroll">
+            <div
+                style={{ backgroundColor: page_color }}
+                className={`flex flex-col md:flex-row h-[calc(100vh-56px)] w-full transition-all hide-scroll`}
+            >
                 {isPreview ? (
-                    <div className="md:flex-[25%] md:max-w-[240px]"></div>
+                    <div className="md:flex-0 md:max-w-[240px]"></div>
                 ) : (
-                    <div className="transition-all flex-[40px] md:flex-[25%] md:max-w-[240px] overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-[646px] border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
+                    <div className="transition-all flex-[40px] md:flex-[25%] overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-[646px] border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
                         {/* <SidebarEditor /> */}
                         <LeftSideBar
                             activeSubitem={activeSubitem}
@@ -575,12 +578,13 @@ export const RestuarantEditor = () => {
                     </div>
                 )}
                 <div
+                    style={{ backgroundColor: page_color }}
                     className={` transition-all h-full ${
-                        isSidebarCollapse ? "flex-[100%] w-full" : "flex-[50%]"
-                    } xl:flex-[80%] overflow-x-hidden bg-neutral-200`}
+                        isPreview ? "flex-[100%] w-full" : "flex-[50%]"
+                    } xl:flex-[80%] overflow-x-hidden`}
                 >
                     {template === "template-1" && (
-                        <div className="w-full h-full  flex flex-col gap-2">
+                        <div className="w-full h-full flex flex-col gap-2 max-w-[1200px] mx-auto">
                             {restaurantStyle?.headerPosition === "fixed" && (
                                 <div className="p-2">
                                     <HeaderEdit
@@ -617,10 +621,10 @@ export const RestuarantEditor = () => {
                     )}
                 </div>
                 {isPreview ? (
-                    <div className="md:flex-[25%] md:max-w-[240px]"></div>
+                    <div className="md:flex-0 md:max-w-[240px]"></div>
                 ) : (
                     <div
-                        className={`transition-all flex-[140px] max-h-[140px] md:max-h-full md:flex-[25%] md:max-w-[240px] overflow-x-hidden h-[646px] bg-white border-t md:border-t-0 md:border-l border-[rgba(0,0,0,0.3)]`}
+                        className={`transition-all flex-[140px] max-h-[140px] md:max-h-full md:flex-[25%] overflow-x-hidden h-[646px] bg-white border-t md:border-t-0 md:border-l border-[rgba(0,0,0,0.3)]`}
                     >
                         {/* <SidebarEditor /> */}
                         {width < 768 ? (
