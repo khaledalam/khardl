@@ -7,6 +7,7 @@ const PrimaryDropDown = ({
     defaultValue,
     handleChange,
     label,
+    innerClassName
 }) => {
     const [isOpen, setisOpen] = useState(false);
 
@@ -25,7 +26,7 @@ const PrimaryDropDown = ({
                     tabIndex={0}
                     role="button"
                     onClick={() => handleDropdown()}
-                    className="btn h-[30px] flex items-center  bg-white active:bg-white hover:bg-white"
+                    className={`btn h-[30px] flex items-center  bg-white active:bg-white hover:bg-white ${innerClassName}`}
                 >
                     <span className="">{defaultValue}</span>
                     <span className="">

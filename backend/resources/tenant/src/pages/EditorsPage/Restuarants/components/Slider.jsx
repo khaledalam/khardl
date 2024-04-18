@@ -19,7 +19,7 @@ const Slider = ({ banner_images }) => {
         useSelector((state) => state.restuarantEditorStyle.bannersUpload) || [];
     const bannerBgColor =
         useSelector(
-            (state) => state.restuarantEditorStyle.banner_background_color,
+            (state) => state.restuarantEditorStyle.banner_background_color
         ) || "";
     const { t } = useTranslation();
 
@@ -46,7 +46,7 @@ const Slider = ({ banner_images }) => {
                         type: "video",
                         url: URL.createObjectURL(selectedImage),
                     },
-                }),
+                })
             );
         } else {
             setUncroppedImage(URL.createObjectURL(selectedImage));
@@ -59,7 +59,7 @@ const Slider = ({ banner_images }) => {
                         type: "image",
                         url: URL.createObjectURL(selectedImage),
                     },
-                }),
+                })
             );
         }
     };
@@ -88,7 +88,7 @@ const Slider = ({ banner_images }) => {
             const croppedImage = await getCroppedImg(
                 uncroppedImage,
                 croppedAreaPixels,
-                rotation,
+                rotation
             );
             console.log("donee", { croppedImage });
             setUncroppedImage(null);
@@ -101,7 +101,7 @@ const Slider = ({ banner_images }) => {
                         type: "image",
                         url: croppedImage,
                     },
-                }),
+                })
             );
             toast.success(`${t("Done")}`);
 
@@ -120,8 +120,11 @@ const Slider = ({ banner_images }) => {
     };
 
     return (
-        <div style={{ backgroundColor: bannerBgColor }} className="w-full p-5">
-            <p
+        <div
+            style={{ backgroundColor: bannerBgColor }}
+            className="w-full h-full rounded-[10px]"
+        >
+            {/* <p
                 style={{
                     fontSize: "12px",
                     textAlign: "left",
@@ -129,17 +132,17 @@ const Slider = ({ banner_images }) => {
                 }}
             >
                 {t("SliderHintUpload")}
-            </p>
+            </p> */}
             <div className="mx-auto">
                 <ReactSlider {...settings}>
                     {Array(
                         bannersUpload.length > sliderCount
                             ? bannersUpload.length
-                            : sliderCount,
+                            : sliderCount
                     )
                         .fill(1)
                         .map((_, index) => (
-                            <div key={index} className={`h-[300px] !block`}>
+                            <div key={index} className={`h-full !block`}>
                                 <div
                                     style={{
                                         backgroundPosition: "center",
@@ -150,9 +153,9 @@ const Slider = ({ banner_images }) => {
                                             bannersUpload?.length > 0
                                                 ? `url(${bannersUpload[index]?.url})`
                                                 : banner_images &&
-                                                    banner_images?.length > 0
-                                                  ? `url(${banner_images[index]?.url})`
-                                                  : `url(${bannerPlaceholder})`,
+                                                  banner_images?.length > 0
+                                                ? `url(${banner_images[index]?.url})`
+                                                : `url(${bannerPlaceholder})`,
                                     }}
                                     className={`h-full w-full  rounded-md !flex items-center  justify-center  relative  shadow-md `}
                                 >
@@ -166,119 +169,42 @@ const Slider = ({ banner_images }) => {
                                         }
                                         className="hidden"
                                     />
-                                    {(bannersUpload &&
-                                        bannersUpload.length > 0 &&
-                                        bannersUpload[index]?.type ===
-                                            "video") ||
-                                    (banner_images.length &&
-                                        banner_images[index]?.type ===
-                                            "video") ? (
-                                        <>
-                                            <video
-                                                controls
-                                                autoplay
-                                                loop
-                                                className="absolute top-0 right-0 bottom-0 left-0 w-full max-h-[300px]"
-                                            >
-                                                <source
-                                                    src={
-                                                        bannersUpload[index]
-                                                            ?.url
-                                                            ? bannersUpload[
-                                                                  index
-                                                              ]?.url
-                                                            : banner_images[
-                                                                    index
-                                                                ]?.url
-                                                              ? banner_images[
-                                                                    index
-                                                                ]?.url
-                                                              : ""
-                                                    }
-                                                    type="video/mp4"
-                                                />
-                                                Your browser does not support
-                                                the video tag.
-                                            </video>
-                                            <div
-                                                style={{
-                                                    borderRadius: 12,
-                                                }}
-                                                className="w-14 h-14 rounded-lg p-2 flex z-10 items-center justify-center bg-neutral-100 relative"
-                                            >
-                                                <label
-                                                    htmlFor={
-                                                        "imageBanner" + index
-                                                    }
-                                                >
-                                                    {bannersUpload[index]
+                                    <div
+                                        style={{
+                                            borderRadius: 12,
+                                        }}
+                                        className="w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative"
+                                    >
+                                        <label htmlFor={"imageBanner" + index}>
+                                            <img
+                                                src={
+                                                    (bannersUpload[index]
                                                         ?.url ||
-                                                    banner_images[index]
-                                                        ?.url ? (
-                                                        <IoCloseOutline
-                                                            size={28}
-                                                            className="text-red-500"
-                                                            onClick={() =>
-                                                                handleRemoveImages(
-                                                                    index,
-                                                                )
-                                                            }
-                                                        />
-                                                    ) : (
-                                                        <BiCloudUpload
-                                                            size={28}
-                                                        />
-                                                    )}
-                                                </label>
-                                            </div>
-                                            <label
-                                                htmlFor={"imageBanner" + index}
+                                                        banner_images[index]
+                                                            ?.url) ??
+                                                    ImageIcon
+                                                }
+                                                alt={""}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </label>
+                                        {(bannersUpload[index]?.url ||
+                                            banner_images[index]?.url) && (
+                                            <div
+                                                onClick={() =>
+                                                    handleRemoveImages(index)
+                                                }
+                                                className="absolute top-[-0.8rem] right-[-1rem] cursor-pointer"
                                             >
-                                                <div className="w-1"></div>
-                                            </label>
-                                        </>
-                                    ) : (
-                                        <div
-                                            style={{
-                                                borderRadius: 12,
-                                            }}
-                                            className="w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative"
-                                        >
-                                            <label
-                                                htmlFor={"imageBanner" + index}
-                                            >
-                                                <img
-                                                    src={
-                                                        (bannersUpload[index]
-                                                            ?.url ||
-                                                            banner_images[index]
-                                                                ?.url) ??
-                                                        ImageIcon
-                                                    }
-                                                    alt={""}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            </label>
-                                            {(bannersUpload[index]?.url ||
-                                                banner_images[index]?.url) && (
-                                                <div
-                                                    onClick={() =>
-                                                        handleRemoveImages(
-                                                            index,
-                                                        )
-                                                    }
-                                                    className="absolute top-[-0.8rem] right-[-1rem] cursor-pointer"
-                                                >
-                                                    <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center cursor-pointer justify-center">
-                                                        <IoCloseOutline
-                                                            size={16}
-                                                            className="text-red-500 cursor-pointer"
-                                                        />
-                                                    </div>
+                                                <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center cursor-pointer justify-center">
+                                                    <IoCloseOutline
+                                                        size={16}
+                                                        className="text-red-500 cursor-pointer"
+                                                    />
                                                 </div>
-                                            )}
-                                        </div>
-                                    )}
+                                            </div>
+                                        )}
+                                    </div>
                                     <button
                                         onClick={removeEachSlide}
                                         disabled={sliderCount <= 2}
@@ -345,7 +271,7 @@ const Slider = ({ banner_images }) => {
                                     crop={crop}
                                     rotation={rotation}
                                     zoom={zoom}
-                                    aspect={4 / 1}
+                                    aspect={2 / 1}
                                     onCropChange={setCrop}
                                     onRotationChange={setRotation}
                                     onCropComplete={onCropComplete}
@@ -370,8 +296,3 @@ const Slider = ({ banner_images }) => {
 };
 
 export default Slider;
-/* 
-
-
-
-* */

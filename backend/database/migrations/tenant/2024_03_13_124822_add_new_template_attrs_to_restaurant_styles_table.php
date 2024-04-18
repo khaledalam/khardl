@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('restaurant_styles', function (Blueprint $table) {
-            $table->integer('logo_border_radius')->default(25);
-            $table->string('logo_border_color')->default('#fff');
+            $table->integer('logo_border_radius')->default(0);
+            $table->string('logo_border_color')->default('white');
         });
     }
 
@@ -22,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-
+        Schema::table('restaurant_styles', function (Blueprint $table) {
+            $table->dropColumn(['logo_border_radius', 'logo_border_color']);
+        });
     }
 };

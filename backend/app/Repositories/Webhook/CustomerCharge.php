@@ -33,6 +33,11 @@ class CustomerCharge
                     'transaction_id'=>$data['id']
                 ]);
             }
+            if(isset($data['source']['payment_method'])){
+                $order->update([
+                    'tap_payment_method'=>$data['source']['payment_method']
+                ]);
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
