@@ -115,7 +115,8 @@ class AdminController extends Controller
             'can_settings',
             'can_edit_profile',
             'can_delete_restaurants',
-            'can_see_restaurant_owners'
+            'can_see_restaurant_owners',
+            'can_manage_notifications_receipt'
         ];
 
         $insertData = [];
@@ -456,11 +457,11 @@ class AdminController extends Controller
 
     public function userManagementEdit($id){
 
-        $user = User::whereHas('roles',function($q){
+        $user = Auth::user();
+        $userEdit = User::whereHas('roles',function($q){
             return $q->where("name","Administrator");
         })->where("id",'!=',Auth::id())->findOrFail($id);
-
-        return view('admin.edit-user', compact('user'));
+        return view('admin.edit-user', compact('user','userEdit'));
 
     }
 
@@ -492,7 +493,7 @@ class AdminController extends Controller
             'can_edit_profile',
             'can_delete_restaurants',
             'can_see_restaurant_owners',
-
+            'can_manage_notifications_receipt'
 
         ];
 
