@@ -23,6 +23,7 @@ const SectionPanel = () => {
     const restuarantEditorStyle = useSelector(
         (state) => state.restuarantEditorStyle,
     );
+
     const [showSocialMedia, setShowSocialMedia] = useState(false);
 
     const {
