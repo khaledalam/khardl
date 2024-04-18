@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { MenuContext } from "react-flexible-sliding-menu";
 import GoBackHomeIcon from "../../../../assets/GoBackHomeIcon.png";
 import PrimaryDropDown from "./PrimaryDropDown";
+import { headerPosition } from "../../../../redux/NewEditor/restuarantEditorSlice";
 
 const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
     const { t } = useTranslation();
@@ -51,9 +52,91 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
         inputs.text_fontSize = restuarantStyle.text_fontSize;
         inputs.text_alignment = restuarantStyle.text_alignment;
         inputs.text_color = restuarantStyle.text_color;
+        inputs.socialMediaIcons_alignment =
+            restuarantStyle.socialMediaIcons_alignment;
+        inputs.social_media_color = restuarantStyle.social_media_color;
+        inputs.social_media_background_color =
+            restuarantStyle.social_media_background_color;
+        inputs.social_media_radius = restuarantStyle.social_media_radius;
+        inputs.page_color = restuarantStyle.page_color;
+        inputs.menu_card_background_color =
+            restuarantStyle.menu_card_background_color;
+        inputs.menu_card_text_font = restuarantStyle.menu_card_text_font;
+        inputs.menu_card_text_weight = restuarantStyle.menu_card_text_weight;
+        inputs.menu_card_text_size = restuarantStyle.menu_card_text_size;
+        inputs.menu_card_text_color = restuarantStyle.menu_card_text_color;
+        inputs.menu_name_background_color =
+            restuarantStyle.menu_name_background_color;
+        inputs.menu_name_text_font = restuarantStyle.menu_name_text_font;
+        inputs.menu_name_text_weight = restuarantStyle.menu_name_text_weight;
+        inputs.menu_name_text_size = restuarantStyle.menu_name_text_size;
+        inputs.menu_name_text_color = restuarantStyle.menu_name_text_color;
+        inputs.total_calories_background_color =
+            restuarantStyle.total_calories_background_color;
+        inputs.total_calories_text_font =
+            restuarantStyle.total_calories_text_font;
+        inputs.total_calories_text_weight =
+            restuarantStyle.total_calories_text_weight;
+        inputs.total_calories_text_size =
+            restuarantStyle.total_calories_text_size;
+        inputs.total_calories_text_color =
+            restuarantStyle.total_calories_text_color;
+        inputs.price_background_color = restuarantStyle.price_background_color;
+        inputs.price_text_font = restuarantStyle.price_text_font;
+        inputs.price_text_weight = restuarantStyle.price_text_weight;
+        inputs.price_text_size = restuarantStyle.price_text_size;
+        inputs.price_text_color = restuarantStyle.price_text_color;
+        inputs.logo_border_radius = restuarantStyle.logo_border_radius;
+        inputs.logo_border_color = restuarantStyle.logo_border_color;
+        inputs.header_color = restuarantStyle.header_color;
+        inputs.header_radius = restuarantStyle.header_radius;
+        inputs.side_menu_position = restuarantStyle.side_menu_position;
+        inputs.order_cart_position = restuarantStyle.order_cart_position;
+        inputs.order_cart_color = restuarantStyle.order_cart_color;
+        inputs.order_cart_radius = restuarantStyle.order_cart_radius;
+        inputs.home_position = restuarantStyle.home_position;
+        inputs.home_color = restuarantStyle.home_color;
+        inputs.home_radius = restuarantStyle.home_radius;
+        inputs.menu_category_background_color =
+            restuarantStyle.menu_category_background_color;
+        inputs.menu_category_font = restuarantStyle.menu_category_font;
+        inputs.menu_category_weight = restuarantStyle.menu_category_weight;
+        inputs.menu_category_size = restuarantStyle.menu_category_size;
+        inputs.menu_category_color = restuarantStyle.menu_category_color;
+        inputs.menu_category_position = restuarantStyle.menu_category_position;
+        inputs.menu_category_radius = restuarantStyle.menu_category_radius;
+        inputs.menu_section_background_color =
+            restuarantStyle.menu_section_background_color;
+        inputs.menu_section_radius = restuarantStyle.menu_section_radius;
+        inputs.menu_card_radius = restuarantStyle.menu_card_radius;
+        inputs.footer_color = restuarantStyle.footer_color;
+        inputs.footer_alignment = restuarantStyle.footer_alignment;
+        inputs.footer_text_fontFamily = restuarantStyle.footer_text_fontFamily;
+        inputs.footer_text_fontWeight = restuarantStyle.footer_text_fontWeight;
+        inputs.footer_text_fontSize = restuarantStyle.footer_text_fontSize;
+        inputs.footer_text_color = restuarantStyle.footer_text_color;
+        inputs.header_position = restuarantStyle.header_position;
+        inputs.category_background_color =
+            restuarantStyle.category_background_color;
         inputs.banner_image = restuarantStyle?.bannerUpload
             ? await fetch(restuarantStyle?.bannerUpload).then((r) => r.blob())
             : "";
+
+        // inputs.banner_images = restuarantStyle?.banner_images;
+        console.log("bannerUpload 1", restuarantStyle?.bannerUpload);
+        console.log("banner_images 1", restuarantStyle?.banner_images);
+
+        if (restuarantStyle.banner_type == "slider") {
+            const imagePromises = restuarantStyle?.bannersUpload
+                .filter((banner) => banner !== undefined || banner !== null)
+                .map(async (image) => {
+                    return await fetch(image.url).then((r) => r.blob());
+                });
+            console.log("imagePromises", await Promise.all(imagePromises));
+            inputs.banner_images = await Promise.all(imagePromises);
+        } else {
+            inputs.banner_images = "";
+        }
 
         if (
             restuarantStyle?.bannersUpload &&
@@ -64,10 +147,11 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
                 .map(async (image) => {
                     return await fetch(image.url).then((r) => r.blob());
                 });
+            console.log("imagePromises", await Promise.all(imagePromises));
             inputs.banner_images = await Promise.all(imagePromises);
             console.log("inputs.banner_images", inputs.banner_images);
         } else {
-            inputs.banner_images = "";
+            // inputs.banner_images = "";
         }
         inputs.logo = restuarantStyle?.logoUpload
             ? await fetch(restuarantStyle?.logoUpload).then((r) => r.blob())
@@ -82,6 +166,7 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
             restuarantStyle?.bannersUpload.length === 0
                 ? restuarantStyle.banner_images
                 : "";
+
         inputs.logo_type =
             restuarantStyle?.logoUpload === null ? "url" : "file";
 

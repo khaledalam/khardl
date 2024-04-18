@@ -149,16 +149,17 @@ function EditorSlider({
                             alt={category.name}
                             hoverColor={category_hover_color}
                             onClick={() => scrollToSection(category.name)}
-                            textColor={text_color}
+                            textColor={menu_category_color}
                             textAlign={text_alignment}
-                            fontWeight={text_fontWeight}
+                            textFontFamily={menu_category_font}
+                            fontWeight={menu_category_weight}
                             shape={category_shape}
                             isGrid={
                                 menu_category_position === "center"
                                     ? false
                                     : true
                             }
-                            fontSize={text_fontSize}
+                            fontSize={menu_category_size}
                             currentSubItem={currentSubItem}
                         />
                     ))}

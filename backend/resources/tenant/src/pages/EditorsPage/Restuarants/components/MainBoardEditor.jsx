@@ -16,6 +16,8 @@ import {
     setBannerUpload,
     moveSelectedIconsToMedia,
     setSelectedSocialMediaId,
+    bannerType,
+    BannerImages,
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
 import EmptyBackground from "../../../../assets/emptyBackground.png";
 import EmptyBackground60 from "../../../../assets/emptyBackground60.png";
@@ -222,6 +224,11 @@ const MainBoardEditor = ({
             }
             dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)));
             setShowCropSection(true);
+            if (listofBannerImages.length < 2) {
+                dispatch(bannerType("one-photo"));
+            } else {
+                dispatch(bannerType("slider"));
+            }
         }
     };
 
@@ -252,7 +259,7 @@ const MainBoardEditor = ({
                 })
             );
         }
-        if (banner_type == "one-image" && banner_image) {
+        if (banner_type == "one-photo" && banner_image) {
             setListofBannerImages([{ croppedImage: `${banner_image.url}` }]);
             setUploadedSingleBanner(`${banner_image.url}`);
         }
@@ -291,6 +298,11 @@ const MainBoardEditor = ({
             console.log("log list", listofBannerImages.splice(index, 1));
             setListofBannerImages(listofBannerImages.splice(index, 1));
             console.log("list of uploaded images - after", listofBannerImages);
+            if (listofBannerImages.length < 2) {
+                dispatch(bannerType("one-photo"));
+            } else {
+                dispatch(bannerType("slider"));
+            }
         } else {
             console.error("Index out of bounds!");
         }
@@ -383,7 +395,7 @@ const MainBoardEditor = ({
                 fontFamily: footer_text_fontFamily,
                 fontWeight: text_fontWeight,
             }}
-            className="w-full p-4 flex flex-col gap-[16px] relative "
+            className="w-full p-4 flex flex-col gap-[16px] relative"
         >
             {/* Header cart */}
             {headerPosition !== "fixed" && (
@@ -1029,6 +1041,23 @@ const MainBoardEditor = ({
                                         setIsBannerModalOpened(false);
                                         listofBannerImages.length == 0 &&
                                             setUploadedSingleBanner(null);
+
+                                        if (listofBannerImages.length < 2) {
+                                            dispatch(bannerType("one-photo"));
+                                        } else {
+                                            dispatch(
+                                                BannerImages(
+                                                    listofBannerImages.map(
+                                                        (image) => {
+                                                            return {
+                                                                url: image.croppedImage,
+                                                            };
+                                                        }
+                                                    )
+                                                )
+                                            );
+                                            dispatch(bannerType("slider"));
+                                        }
                                     }}
                                     className="w-14 h-6 bg-zinc-300 rounded-[50px] text-[#111827C4]/[0.77] text-[10px] font-light"
                                 >

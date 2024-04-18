@@ -435,6 +435,9 @@ const restuarantEditorSlice = createSlice({
                 ...action.payload,
             });
         },
+        BannerImages: (state, action) => {
+            state.banner_images = action.payload;
+        },
         setBannerUpload: (state, action) => {
             state.bannerUpload = action.payload;
         },
@@ -616,5 +619,6 @@ export const {
     MenuSectionBackgroundColor,
     MenuSectionRadius,
     MenuCardRadius,
+    BannerImages,
 } = restuarantEditorSlice.actions;
 export default restuarantEditorSlice.reducer;
