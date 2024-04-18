@@ -47,6 +47,7 @@ class Order extends Model
         'driver_phone',
         'manual_order_first_name',
         'manual_order_last_name',
+        'tap_payment_method',
         'refund_id',
         'accepted_at'
     ];
