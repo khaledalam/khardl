@@ -453,11 +453,11 @@ class AdminController extends Controller
 
     public function userManagementEdit($id){
 
-        $user = User::whereHas('roles',function($q){
+        $user = Auth::user();
+        $userEdit = User::whereHas('roles',function($q){
             return $q->where("name","Administrator");
         })->where("id",'!=',Auth::id())->findOrFail($id);
-
-        return view('admin.edit-user', compact('user'));
+        return view('admin.edit-user', compact('user','userEdit'));
 
     }
 
