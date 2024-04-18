@@ -116,7 +116,7 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_dashboard" value="1" checked name="can_access_dashboard" disabled>
-                                                            <label class="form-check-label" for="can_access_dashboard">{{ __('dashboard')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('email-must-be-verified') }}"></i></label>
+                                                            <label class="form-check-label" for="can_access_dashboard">{{ __('dashboard')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('dashboard') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -127,7 +127,7 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_restaurants" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_access_restaurants') == 1) checked @endif value="1" name="can_access_restaurants">
-                                                            <label class="form-check-label" for="can_access_restaurants">{{ __('access-restaurants')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('email-must-be-verified') }}"></i></label>
+                                                            <label class="form-check-label" for="can_access_restaurants">{{ __('access-restaurants')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('access-restaurants') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -138,8 +138,8 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_approved_restaurants" value="1" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_view_restaurants') == 1) checked @endif name="can_view_restaurants">
-                                                            <label class="form-check-label" for="can_access_approved_restaurants">{{ __('view-restaurants')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('view-restaurants-status') }}"></i></label>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_view_restaurants" value="1" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_view_restaurants') == 1) checked @endif name="can_view_restaurants">
+                                                            <label class="form-check-label" for="can_view_restaurants">{{ __('view-restaurants')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('view-restaurants-status') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -149,8 +149,8 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_pending_restaurants" value="1" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_delete_restaurants') == 1) checked @endif name="can_delete_restaurants">
-                                                            <label class="form-check-label" for="can_access_pending_restaurants">{{ __('delete-restaurants')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('delete-restaurants-status') }}"></i></label>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_delete_restaurants" value="1" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_delete_restaurants') == 1) checked @endif name="can_delete_restaurants">
+                                                            <label class="form-check-label" for="can_delete_restaurants">{{ __('delete-restaurants')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('delete-restaurants-status') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -160,8 +160,8 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_denied_restaurants" value="1" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_approve_restaurants') == 1) checked @endif name="can_approve_restaurants">
-                                                            <label class="form-check-label" for="can_access_denied_restaurants">{{ __('approve-restaurants')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('approve-restaurants-status') }}"></i></label>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_approve_restaurants" value="1" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_approve_restaurants') == 1) checked @endif name="can_approve_restaurants">
+                                                            <label class="form-check-label" for="can_approve_restaurants">{{ __('approve-restaurants')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('approve-restaurants-status') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -173,8 +173,8 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_add_user" value="1" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_see_admins') == 1) checked @endif name="can_see_admins">
-                                                            <label class="form-check-label" for="can_access_add_user">{{ __('see-admins')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('see-admins-status') }}"></i></label>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_see_admins" value="1" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_see_admins') == 1) checked @endif name="can_see_admins">
+                                                            <label class="form-check-label" for="can_see_admins">{{ __('see-admins')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('see-admins-status') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -184,8 +184,8 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_user_management" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_add_admins') == 1) checked @endif value="1" name="can_add_admins">
-                                                            <label class="form-check-label" for="can_access_user_management">{{ __('add-admins')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('add-admins-status') }}"></i></label>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_add_admins" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_add_admins') == 1) checked @endif value="1" name="can_add_admins">
+                                                            <label class="form-check-label" for="can_add_admins">{{ __('add-admins')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('add-admins-status') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -195,8 +195,8 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_logs" value="1" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_edit_admins') == 1) checked @endif name="can_edit_admins">
-                                                            <label class="form-check-label" for="can_access_logs">{{ __('edit-admins')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('edit-admins-status') }}"></i></label>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_admins" value="1" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_edit_admins') == 1) checked @endif name="can_edit_admins">
+                                                            <label class="form-check-label" for="can_edit_admins">{{ __('edit-admins')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('edit-admins-status') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -216,8 +216,8 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_coupons" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_promoters') == 1) checked @endif name="can_promoters">
-                                                            <label class="form-check-label" for="can_access_coupons">{{ __('access-promoters')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('access-promoters-status') }}"></i></label>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_promoters" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_promoters') == 1) checked @endif name="can_promoters">
+                                                            <label class="form-check-label" for="can_promoters">{{ __('access-promoters')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('access-promoters-status') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -227,8 +227,8 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_coupons" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_see_logs') == 1) checked @endif name="can_see_logs">
-                                                            <label class="form-check-label" for="can_access_coupons">{{ __('see-logs')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('see-logs-status') }}"></i></label>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_see_logs" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_see_logs') == 1) checked @endif name="can_see_logs">
+                                                            <label class="form-check-label" for="can_see_logs">{{ __('see-logs')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('see-logs-status') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -236,8 +236,8 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_coupons" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_edit_profile') == 1) checked @endif name="can_edit_profile">
-                                                            <label class="form-check-label" for="can_access_coupons">{{ __('edit-profile')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('edit-profile-status') }}"></i></label>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_profile" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_edit_profile') == 1) checked @endif name="can_edit_profile">
+                                                            <label class="form-check-label" for="can_edit_profile">{{ __('edit-profile')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('edit-profile-status') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -245,8 +245,16 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_coupons" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_settings') == 1) checked @endif name="can_settings">
-                                                            <label class="form-check-label" for="can_access_coupons">{{ __('edit-settings')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('edit-settings-status') }}"></i></label>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_settings" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_settings') == 1) checked @endif name="can_settings">
+                                                            <label class="form-check-label" for="can_settings">{{ __('edit-settings')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('edit-settings-status') }}"></i></label>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_manage_notifications_receipt" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_manage_notifications_receipt') == 1) checked @endif name="can_manage_notifications_receipt">
+                                                            <label class="form-check-label" for="can_manage_notifications_receipt">{{ __('Ability to Manage purchase notifications')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Manage purchase notifications') }}"></i></label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>

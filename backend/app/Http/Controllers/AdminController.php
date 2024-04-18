@@ -115,7 +115,8 @@ class AdminController extends Controller
             'can_settings',
             'can_edit_profile',
             'can_delete_restaurants',
-            'can_see_restaurant_owners'
+            'can_see_restaurant_owners',
+            'can_manage_notifications_receipt'
         ];
 
         $insertData = [];
@@ -488,7 +489,7 @@ class AdminController extends Controller
             'can_edit_profile',
             'can_delete_restaurants',
             'can_see_restaurant_owners',
-
+            'can_manage_notifications_receipt'
 
         ];
 
