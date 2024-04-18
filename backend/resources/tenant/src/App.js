@@ -39,7 +39,7 @@ import { CustomerPage } from "./pages/CustomerPage";
 import SuccessPayment from "./pages/SuccessPayment";
 import FailedPayment from "./pages/FailedPayment";
 import * as Sentry from "@sentry/react";
-import {t} from "i18next";
+import { t } from "i18next";
 
 // import { initializeApp } from "firebase/app";
 // const firebaseConfig = {
@@ -54,7 +54,7 @@ import {t} from "i18next";
 // // Initialize Firebase
 // const firstbaseApp = initializeApp(firebaseConfig);
 
-if (sentry_on == '1') {
+if (sentry_on == "1") {
     Sentry.init({
         dsn: "https://860125ea20f9254e5c411ffbdeb02c39@o4506502637420544.ingest.sentry.io/4506563222896640",
         integrations: [new Sentry.Replay()],
@@ -159,7 +159,7 @@ const App = () => {
                 >
                     <div>
                         <ToastContainer theme="colored" />{" "}
-                        {showHeader && <NavbarRestuarant />} {/*<Supports />*/}{" "}
+                        {/* {showHeader && <NavbarRestuarant />} <Supports />{" "} */}
                         <ScrollUp />
                         <div>
                             <Routes>
@@ -254,9 +254,12 @@ const App = () => {
                         {/*        <Footer />*/}
                         {/*    </div>*/}
                         {/*{" "}*/}
-                        {showFooter && !loading && (<div className="mini-footer">{t("All rights reserved")}</div>)}
+                        {showFooter && !loading && (
+                            <div className="mini-footer">
+                                {t("All rights reserved")}
+                            </div>
+                        )}
                     </div>{" "}
-
                 </div>{" "}
             </MenuProvider>
         </>

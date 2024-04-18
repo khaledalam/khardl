@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import ImgBurger from "../../../../assets/burger.png";
 import { useTranslation } from "react-i18next";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
+import GreenDot from "../../../../assets/greenDot.png";
 
 const CategoryItem = ({
     active,
@@ -16,23 +17,25 @@ const CategoryItem = ({
     shape,
     isGrid,
     fontSize,
+    textFontFamily,
     valuekey,
+    currentSubItem,
 }) => {
     const [isHover, setIsHover] = useState(false);
     const { t } = useTranslation();
 
-    const {branches} = useSelector((state) => state.restuarantEditorStyle);
+    const { branches, menu_category_position } = useSelector(
+        (state) => state.restuarantEditorStyle
+    );
 
-    if (!branches)return;
+    if (!branches) return;
 
     let selectedBranch = branches?.filter(
-        (b) => b?.id == localStorage.getItem("selected_branch_id"),
+        (b) => b?.id == localStorage.getItem("selected_branch_id")
     )[0];
-
 
     const handleMouseEnter = () => {
         setIsHover((prev) => !prev);
-        console.log("mouse Enter");
     };
 
     const handleMouseLeave = () => {
@@ -45,40 +48,55 @@ const CategoryItem = ({
             onMouseLeave={handleMouseLeave}
             onClick={onClick}
             key={valuekey}
-            className={`flex w-5/6 cursor-pointer ${
+            className={`flex w-full cursor-pointer ${
                 isGrid ? "flex-row" : "flex-col"
-            } gap-3 items-center`}
+            } gap-[16px] items-center`}
         >
-            {selectedBranch?.display_category_icon == '1' && <div
-                style={{
-                    backgroundColor: isHover
-                        ? hoverColor
-                        : active
-                          ? hoverColor
-                          : "#F5F5F5",
-                }}
-                className={`w-[75px] h-[75px] p-2  ${
-                    shape === "sharp" ? "" : "rounded-full"
-                }  flex items-center justify-center scale-100 hover:scale-125 transition-all duration-300   bg-neutral-100  `}
-            >
+            {selectedBranch?.display_category_icon == "1" && (
                 <div
-                    className={`w-[50px] h-[50px] flex items-center ${
+                    style={{
+                        backgroundColor: isHover
+                            ? hoverColor
+                            : active
+                            ? hoverColor
+                            : "#F5F5F5",
+                    }}
+                    className={` ${
+                        menu_category_position == "center"
+                            ? "w-[60px] h-[60px]"
+                            : "w-[40px] h-[40px]"
+                    } ${
                         shape === "sharp" ? "" : "rounded-full"
-                    } justify-center`}
+                    }  flex items-center justify-center transition-all duration-300  bg-neutral-100  `}
                 >
-
-                    <img
-                        src={imgSrc ? imgSrc : ImgBurger}
-                        alt={alt}
-                        className={`w-full h-full object-cover ${
+                    <div
+                        className={`w-full h-full flex items-center ${
                             shape === "sharp" ? "" : "rounded-full"
-                        } `}
-                    />
+                        } justify-center relative`}
+                    >
+                        <img
+                            src={imgSrc ? imgSrc : ImgBurger}
+                            alt={alt}
+                            className={`w-full h-full object-cover ${
+                                shape === "sharp" ? "" : "rounded-full"
+                            } `}
+                        />
+                        <img
+                            src={GreenDot}
+                            alt="green dot"
+                            className={`${
+                                currentSubItem == "Category"
+                                    ? "absolute w-[5px] h-[5px] right-0 top-0 z-[30]"
+                                    : "hidden"
+                            }`}
+                        />
+                    </div>
                 </div>
-            </div>}
+            )}
             <h3
                 style={{
                     color: textColor,
+                    fontFamily: textFontFamily,
                     fontWeight,
                     fontSize:
                         fontSize &&
@@ -86,17 +104,17 @@ const CategoryItem = ({
                         fontSize.includes("px")
                             ? Number(fontSize.slice(0, 2)) - 2
                             : typeof fontSize == "number"
-                              ? fontSize - 2
-                              : 14,
+                            ? fontSize - 2
+                            : 14,
                 }}
                 className={`font-normal w-max ${
                     textAlign === t("Center")
                         ? "text-center"
                         : textAlign === t("Left")
-                          ? "text-left"
-                          : textAlign === t("Right")
-                            ? "text-right"
-                            : ""
+                        ? "text-left"
+                        : textAlign === t("Right")
+                        ? "text-right"
+                        : ""
                 }`}
             >
                 {name}

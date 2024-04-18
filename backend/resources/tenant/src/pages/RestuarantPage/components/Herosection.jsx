@@ -11,7 +11,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const selectedCategory = useSelector(
-        (state) => state.categoryAPI.selected_category,
+        (state) => state.categoryAPI.selected_category
     );
     const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
 
@@ -45,37 +45,43 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                     "w-full  flex flex-col py-4 items-center justify-center gap-8"
                 }
             >
-                {/* <div
-          className={` w-full ${
-            restaurantStyle?.logo_alignment === t("Center") ||
-            restaurantStyle?.logo_alignment === "center"
-              ? " flex items-center justify-center"
-              : restaurantStyle?.logo_alignment === t("Left") ||
-                restaurantStyle?.logo_alignment === "left"
-              ? "items-center justify-start"
-              : "items-center justify-end"
-          }`}
-        >
-          <div
-            className={`w-[60px] h-[60px]  ${
-              restaurantStyle?.logo_shape === "rounded" ||
-              restaurantStyle?.logo_shape === t("Rounded")
-                ? "rounded-full"
-                : restaurantStyle?.logo_shape === "sharp" ||
-                  restaurantStyle?.logo_shape === t("Sharp")
-                ? "rounded-none"
-                : ""
-            }`}
-          >
-            <img
-              src={restaurantStyle?.logo ? restaurantStyle.logo : imgLogo}
-              alt='logo'
-              className={`w-full h-full object-cover ${
-                restaurantStyle?.logo_shape === t("Sharp") ? "" : "rounded-full"
-              }`}
-            />
-          </div>
-        </div> */}
+                <div
+                    className={` w-full ${
+                        restaurantStyle?.logo_alignment === t("Center") ||
+                        restaurantStyle?.logo_alignment === "center"
+                            ? " flex items-center justify-center"
+                            : restaurantStyle?.logo_alignment === t("Left") ||
+                              restaurantStyle?.logo_alignment === "left"
+                            ? "items-center justify-start"
+                            : "items-center justify-end"
+                    }`}
+                >
+                    <div
+                        className={`w-[60px] h-[60px]  ${
+                            restaurantStyle?.logo_shape === "rounded" ||
+                            restaurantStyle?.logo_shape === t("Rounded")
+                                ? "rounded-full"
+                                : restaurantStyle?.logo_shape === "sharp" ||
+                                  restaurantStyle?.logo_shape === t("Sharp")
+                                ? "rounded-none"
+                                : ""
+                        }`}
+                    >
+                        <img
+                            src={
+                                restaurantStyle?.logo
+                                    ? restaurantStyle.logo
+                                    : imgLogo
+                            }
+                            alt="logo"
+                            className={`w-full h-full object-cover ${
+                                restaurantStyle?.logo_shape === t("Sharp")
+                                    ? ""
+                                    : "rounded-full"
+                            }`}
+                        />
+                    </div>
+                </div>
                 {(restaurantStyle &&
                     restaurantStyle?.banner_type === "one-photo") ||
                 (restaurantStyle &&
@@ -138,7 +144,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                 {Array(
                                     restaurantStyle
                                         ? restaurantStyle?.banner_images?.length
-                                        : 3,
+                                        : 3
                                 )
                                     .fill(1)
                                     .map((_, index) => (
@@ -253,7 +259,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                             selectedCategoryAPI({
                                                 name: category.name,
                                                 id: category.id,
-                                            }),
+                                            })
                                         )
                                     }
                                 />
@@ -265,7 +271,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                 ) : (
                                     <p className="text-2xl font-medium text-center">
                                         {t(
-                                            "No categories to be found at the moment",
+                                            "No categories to be found at the moment"
                                         )}
                                     </p>
                                 )}
