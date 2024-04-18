@@ -52,7 +52,7 @@ const Footer = () => {
                             </div>
                         </div>
                         <h2 className="max-w-[500px] text-center">
-                            {t("Footer")}
+                            {t("Footer-text")}
                         </h2>
                         <div className="flex justify-center items-center flex-wrap  mt-[20px] gap-[15px]">
                             <div className="bg-black hover:bg-[#1D9BF0]  hover:text-white text-[var(--primary)] p-2 rounded-full transform transition-transform hover:-translate-y-2">
