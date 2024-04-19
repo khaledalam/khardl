@@ -276,7 +276,7 @@ class RestaurantController extends BaseController
             compact('user')
         );
     }
-    
+
     public function branchOrders(Order $order)
     {
 

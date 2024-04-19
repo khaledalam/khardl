@@ -13,7 +13,6 @@ class UpdateItemFormRequest extends FormRequest
     }
     public function rules()
     {
-        /* dd(request()->all()); */
         return [
             'calories' => ['required','numeric'],
             'price' => ['required','numeric'],
