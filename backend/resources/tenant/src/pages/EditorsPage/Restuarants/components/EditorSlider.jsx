@@ -113,7 +113,7 @@ function EditorSlider({
                                         name={category.name}
                                         imgSrc={category.photo}
                                         alt={category.name}
-                                        hoverColor={category_hover_color}
+                                        hoverColor={null}
                                         onClick={() =>
                                             scrollToSection(category.name)
                                         }
@@ -139,7 +139,7 @@ function EditorSlider({
                     </div>
                 </div>
             ) : (
-                <div className="flex flex-col items-center justify-between w-full h-full px-[16px]">
+                <div className="flex flex-col items-center justify-between w-full h-full px-[16px] space-y-[16px]">
                     {items.map((category, i) => (
                         <CategoryItem
                             key={i}
@@ -147,7 +147,7 @@ function EditorSlider({
                             name={category.name}
                             imgSrc={category.photo}
                             alt={category.name}
-                            hoverColor={category_hover_color}
+                            hoverColor={null}
                             onClick={() => scrollToSection(category.name)}
                             textColor={menu_category_color}
                             textAlign={text_alignment}

@@ -127,7 +127,8 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
         console.log("banner_images 1", restuarantStyle?.banner_images);
 
         if (restuarantStyle.banner_type == "slider") {
-            const imagePromises = restuarantStyle?.bannersUpload
+            console.log("inside");
+            const imagePromises = restuarantStyle?.banner_images
                 .filter((banner) => banner !== undefined || banner !== null)
                 .map(async (image) => {
                     return await fetch(image.url).then((r) => r.blob());

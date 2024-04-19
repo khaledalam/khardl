@@ -461,7 +461,6 @@
     "Template 2": "Template 2",
     "Template 3": "Template 3",
     "Publish": "Publish",
-    "Menu Card": "Menu Card",
     "Border Radius": "Border Radius",
     "Type": "Type",
     "Font": "Font",
@@ -472,5 +471,11 @@
     "Page Background": "Page Background",
     "Page": "Page",
     "text_2": "Text",
-    "Powered by @Khardl": "Powered by @Khardl"
+    "Powered by @Khardl": "Powered by @Khardl",
+    "Menu Section": "Menu Section",
+    "Menu Card": "Menu Card",
+    "Item Text": "Item Text",
+    "Extra Light": "Extra Light",
+    "Light": "Light",
+    "Semi Bold": "Semi Bold"
 }

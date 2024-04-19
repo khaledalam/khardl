@@ -15,9 +15,11 @@ const EditorColorSelect = ({
     const [isResetColor, setIsResetColor] = useState(false);
 
     return (
-        <div className={`flex flex-row items-center w-[208px] justify-between`}>
+        <div
+            className={`flex flex-row items-center w-[208px] xl:w-full justify-between`}
+        >
             {label && (
-                <label className="text-[12px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
+                <label className="text-[12px] xl:text-[16px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
                     {label}
                 </label>
             )}
@@ -34,7 +36,7 @@ const EditorColorSelect = ({
                         }}
                         className={`w-[28px] h-[28px] rounded-[50px] mx-1`}
                     ></div>
-                    <span className="ml-[6px] text-[12px] leading-[16px] font-light tracking-wide">
+                    <span className="ml-[6px] text-[12px] xl:text-[16px] leading-[16px] font-light tracking-wide">
                         {isResetColor ? `${t("#ffffff")}` : color}
                     </span>
                 </button>
