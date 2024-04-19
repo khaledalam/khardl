@@ -2,7 +2,7 @@
 .products .product_quantity {
     max-width: 70px;
 }
-.product_option_price{
+.product_option_price {
     float: right;
     padding: 0px 40px;
     color: #35af05;
@@ -17,8 +17,12 @@
     background-color: #50cd89;
 }
 
-.badge.suspended,
-.badge.rejected  ,
+.badge.suspended {
+    color: #fff;
+    background-color: darkviolet;
+}
+
+.badge.rejected,
 .badge.cancelled {
     color: #fff;
     background-color: #f1416c;
@@ -35,8 +39,8 @@
     color: #fff;
     background-color: #f7bd00;
 }
-.badge-khardl{
-    color: #101010!important;
+.badge-khardl {
+    color: #101010 !important;
     background-color: #c2da08;
     border: none !important;
 }
@@ -61,7 +65,7 @@
 }
 
 /* Branches */
-.revenues-container{
+.revenues-container {
     cursor: pointer;
 }
 .revenues-container .fw-bold {

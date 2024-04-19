@@ -88,9 +88,9 @@
                                           <div class="menu-item">
                                               <!--begin::Add label-->
                                               <span class="menu-link">
-                                                  <span class="menu-icon">
+                                                  <span class="menu-icon" id="menuIcon">
                                                       <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
-                                                      <span class="svg-icon svg-icon-2 me-3">
+                                                      <span class="svg-icon svg-icon-2 me-3" id="svgIcon">
                                                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                               <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
                                                               <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor" />
@@ -100,6 +100,12 @@
                                                   </span>
                                                   <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('add-new-category') }}</button>
                                               </span>
+
+                                              <script>
+                                                document.getElementById('svgIcon').addEventListener('click', function() {
+                                                    document.getElementById('addCategoryButton').click();
+                                                });
+                                              </script>
                                               <!--end::Add label-->
                                               <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit" enctype="multipart/form-data">
                                                 @csrf
@@ -709,7 +715,7 @@
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
                             <input type="hidden" name="selection_required[${selectionCount}]" value="false" />
-                            <input type="checkbox" name="selection_required_input[${selectionCount}]" id="" >&nbsp;{{ __('Required') }}
+                            <input type="checkbox" checked disabled name="selection_required_input[${selectionCount}]" id="" >&nbsp;{{ __('Required') }}
                         </label>
                     </div>
                     <!--end::Label-->

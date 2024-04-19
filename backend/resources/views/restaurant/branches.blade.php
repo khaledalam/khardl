@@ -386,7 +386,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                         @if ($branch->is_primary)
                                             <div
                                                 class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                <a href="#" class="fs-6 text-700 fw-bolder">{{ __('edit-site') }}</a>
+                                                <a href="{{route('restaurants.site_editor')}}" target="_blank" class="fs-6 text-700 fw-bolder">{{ __('edit-site') }}</a>
                                             </div>
                                         @endif
                                             <div

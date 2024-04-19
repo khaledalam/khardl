@@ -35,6 +35,15 @@
         <link href="{{ global_asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
     @endif
+
+    @if(app()->getLocale() === 'ar')
+                                <style>
+                                .menu-item.menu-accordion.show:not(.hiding):not(.menu-dropdown) > .menu-link .menu-arrow:after, .menu-item.menu-accordion.showing:not(.menu-dropdown) > .menu-link .menu-arrow:after {
+                                    transform: rotateZ(270deg);
+                                    transition: transform 0.3s ease;
+                                }
+                                </style>
+    @endif
     <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -62,7 +71,7 @@
                         icon: type,
                         title: message,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 1000
                     });
                 }
         </script>
