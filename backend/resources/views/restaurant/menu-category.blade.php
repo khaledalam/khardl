@@ -10,8 +10,8 @@
     let checkboxCount = -1;
 
     function createCheckbox(item = null, key = null, update = null) {
+
         if(update){
-            console.log(update);
             checkboxesContainer = document.getElementById(`checkboxes_${update}`);
         }
         checkboxCount++;
@@ -419,7 +419,6 @@
                 return;
             }
             var inputValueAR = document.querySelector('input[name=name_en]').value.trim();
-            console.log(inputValueAR);
             if (inputValueAR === '') {
                 alert('Please fill in the input in the (English) tab.');
                 return;
@@ -429,7 +428,7 @@
         });
     }
 
-    document.getElementById('kt_modal_new_target_form').addEventListener('submit', function(e) {
+    /* document.getElementById('kt_modal_new_target_form').addEventListener('submit', function(e) {
         e.preventDefault();
         var submitButton = document.querySelector('#kt_modal_new_target_submit');
 
@@ -484,7 +483,7 @@
 
 
 
-    });
+    }); */
 
 </script>
 @if($user->isRestaurantOwner())

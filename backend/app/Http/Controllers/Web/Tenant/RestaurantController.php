@@ -549,6 +549,9 @@ class RestaurantController extends BaseController
             'normal_from' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i')],
             'normal_to' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i|after:normal_from')],
             ...$daysRules
+        ], [
+            'lat-new_branch.required' => 'Select location',
+            'lng-new_branch.required' => 'Select location',
         ]);
 
         $branchesExist = DB::table('branches')->where('is_primary', 1)->exists();

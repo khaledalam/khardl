@@ -18,13 +18,16 @@ class OrderItemResource extends JsonResource
             'id' => $this->id,
             'price' => $this->price,
             'total' => $this->total,
-            'quantity'=>$this->quantity,
+            'quantity' => $this->quantity,
+            'name' => $this->item?->name,
+            'description' => $this->item?->description,
+            'image' => $this->item?->photo,
 
-            'notes'=>$this->notes,
-            'options_price'=>$this->options_price,
-            'checkbox_options'=>$this->slice_options($this->checkbox_options),
-            'selection_options'=>$this->slice_options($this->selection_options),
-            'dropdown_options'=>$this->slice_options($this->dropdown_options),
+            'notes' => $this->notes,
+            'options_price' => $this->options_price,
+            'checkbox_options' => $this->slice_options($this->checkbox_options),
+            'selection_options' => $this->slice_options($this->selection_options),
+            'dropdown_options' => $this->slice_options($this->dropdown_options),
         ];
         if ($request->has('item')) {
             $data['item'] = new ItemResource($this->item);
@@ -33,10 +36,12 @@ class OrderItemResource extends JsonResource
 
         return $data;
     }
-    public function slice_options($data){
-        if(!$data) return null;
+    public function slice_options($data)
+    {
+        if (!$data)
+            return null;
         $locale = app()->getLocale();
-        return array_map(function ($item)use($locale){
+        return array_map(function ($item) use ($locale) {
             return $item[$locale];
         }, $data);
     }

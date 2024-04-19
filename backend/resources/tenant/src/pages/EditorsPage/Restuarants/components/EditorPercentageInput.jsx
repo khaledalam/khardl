@@ -18,9 +18,11 @@ const EditorPercentageInput = ({
     const Language = useSelector((state) => state.languageMode.languageMode);
 
     return (
-        <div className={`flex flex-row items-center w-[208px] justify-between`}>
+        <div
+            className={`flex flex-row items-center w-[208px] xl:w-full justify-between`}
+        >
             {label && (
-                <label className="text-[12px] w-[81px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
+                <label className="text-[12px] xl:text-[16px] w-[81px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
                     {label}
                 </label>
             )}
@@ -34,7 +36,7 @@ const EditorPercentageInput = ({
                 <div className="w-[50px]">
                     <input
                         type="text"
-                        className="w-full h-full bg-[#F3F3F3] text-[12px] leading-[16px] font-light focus:outline-none"
+                        className="w-full h-full bg-[#F3F3F3] text-[12px] xl:text-[16px] leading-[16px] font-light focus:outline-none"
                         value={percentage}
                         onChange={(e) => handlePercentageChange(e.target.value)}
                     />

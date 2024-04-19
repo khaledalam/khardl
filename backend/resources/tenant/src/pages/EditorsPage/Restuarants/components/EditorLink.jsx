@@ -44,18 +44,16 @@ const EditorLink = ({ defaultValue, options, handleChange, label }) => {
     return (
         <div className="flex flex-col">
             <div
-                className={`flex flex-row items-center w-[208px] justify-between`}
+                className={`flex flex-row items-center w-[208px] xl:w-full justify-between`}
             >
                 {label && (
-                    <label className="text-[12px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
+                    <label className="text-[12px] xl:text-[16px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
                         {label}
                     </label>
                 )}
                 <div className={`dropdown`}>
                     <div
-                        className={`flex items-center h-[32px] w-[154px] rounded-[50px] ${
-                            Language == "ar" ? "pl-[16px]" : "pr-[16px]"
-                        } bg-[#F3F3F3] ${
+                        className={`flex items-center h-[32px] w-[154px] rounded-[50px] bg-[#F3F3F3] ${
                             selectedSocialIcons.length == 0 && "pl-[16px]"
                         } relative`}
                     >
@@ -67,11 +65,11 @@ const EditorLink = ({ defaultValue, options, handleChange, label }) => {
                             <img
                                 src={
                                     // ""
-                                    selectedSocialIcons?.find(
+                                    mediaCollection?.find(
                                         (socialIcon) =>
                                             socialIcon.id === selectedMediaId
                                     )?.imgUrl != null &&
-                                    selectedSocialIcons?.find(
+                                    mediaCollection?.find(
                                         (socialIcon) =>
                                             socialIcon.id === selectedMediaId
                                     )?.imgUrl
@@ -89,7 +87,6 @@ const EditorLink = ({ defaultValue, options, handleChange, label }) => {
                                 )?.link
                             }
                             onChange={(e) => {
-                                console.log(e.target.value);
                                 dispatch(
                                     updateSelectedIconInput({
                                         id: selectedMediaId,
@@ -98,42 +95,41 @@ const EditorLink = ({ defaultValue, options, handleChange, label }) => {
                                 );
                             }}
                             placeholder="URL..."
-                            className="bg-[#F3F3F3] w-full focus:outline-none text-[12px] leading-[16px] font-light text-[rgba(17,24,39,0.77)]"
+                            className="bg-[#F3F3F3] w-full focus:outline-none text-[12px] xl:text-[16px] leading-[16px] font-light text-[rgba(17,24,39,0.77)]"
                         />
+                        <div
+                            onClick={() =>
+                                handleMediaToSelected(selectedMediaId)
+                            }
+                            className="h-[32px] w-[32px] rounded-full border flex justify-center items-center bg-white"
+                        >
+                            ✓
+                        </div>
                     </div>
                 </div>
             </div>
             <div className="flex flex-row items-center flex-wrap gap-3 w-full p-3 h-full ">
-                {/* {console.log("ssi: ", selectedSocialIcons)}
-                {console.log("md: ", mediaCollection)}
-                {console.log(
-                    "MmMmM: ",
-                    mediaCollection.filter((media) =>
-                        selectedSocialIcons.some(
+                {mediaCollection
+                    .filter((media) => {
+                        return selectedSocialIcons.some(
                             (socialIcon) => socialIcon.id != media.id
-                        )
-                    )
-                )} */}
-                {/* {console.log("selectedID", selectedMediaId)} */}
-                {/* {console.log(
-                    "selectedID *** :",
-                    selectedSocialIcons.find(
-                        (socialIcon) => socialIcon.id === selectedMediaId
-                    ).imgUrl
-                )} */}
-                {mediaCollection.map((media) => (
-                    <div
-                        className="w-[35px] h-[35px] rounded-full bg-[#F3F3F3] p-1 flex items-center justify-center"
-                        key={media.id}
-                    >
-                        <img
-                            src={media.imgUrl}
-                            alt={media?.name ?? "social media"}
-                            className="cursor-pointer w-[20px] h-[20px] object-cover"
-                            onClick={() => handleMediaToSelected(media.id)}
-                        />
-                    </div>
-                ))}
+                        );
+                    })
+                    .map((media) => (
+                        <div
+                            className="w-[35px] h-[35px] rounded-full bg-[#F3F3F3] p-1 flex items-center justify-center"
+                            key={media.id}
+                        >
+                            <img
+                                src={media.imgUrl}
+                                alt={media?.name ?? "social media"}
+                                className="cursor-pointer w-[20px] h-[20px] object-cover"
+                                onClick={() =>
+                                    dispatch(setSelectedSocialMediaId(media.id))
+                                }
+                            />
+                        </div>
+                    ))}
             </div>
         </div>
     );

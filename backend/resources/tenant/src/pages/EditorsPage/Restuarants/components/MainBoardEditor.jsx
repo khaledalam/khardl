@@ -604,7 +604,7 @@ const MainBoardEditor = ({
                                 : menu_category_position === "right"
                                 ? "order-1 w-[75%]"
                                 : menu_category_position === "center"
-                                ? "w-full"
+                                ? "w-full max-w-[710px]"
                                 : "w-[75%]"
                         } py-[32]
                         ${
@@ -629,7 +629,7 @@ const MainBoardEditor = ({
                                             <div className="text-black text-opacity-75 text-lg font-medium mb-[16px]">
                                                 {category.name}
                                             </div>
-                                            <div className="flex flex-row flex-wrap gap-[25px] justify-start">
+                                            <div className="flex flex-row flex-wrap gap-[25px] justify-center">
                                                 {category.items.map(
                                                     (product, idx) => (
                                                         <ProductItem
@@ -791,9 +791,9 @@ const MainBoardEditor = ({
                                     src={socialMedia.imgUrl}
                                     alt={"whatsapp"}
                                     className="w-[20px] h-[20px] object-cover"
-                                    onClick={() =>
-                                        handleSocialMediaSelect(socialMedia.id)
-                                    }
+                                    // onClick={() =>
+                                    //     handleSocialMediaSelect(socialMedia.id)
+                                    // }
                                 />
                                 {
                                     <button

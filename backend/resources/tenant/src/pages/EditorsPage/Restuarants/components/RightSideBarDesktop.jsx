@@ -113,7 +113,7 @@ export const RightSideBarDesktop = ({
     return (
         <div className="flex flex-col px-[16px] h-full">
             <div className="flex flex-row">
-                <h2 className="font-medium text-[14px] leading-[18px] mt-[24px] pr-[10px]">
+                <h2 className="font-medium text-[14px] xl:text-[18px] leading-[18px] mt-[24px] pr-[10px]">
                     {t("Designs")}
                 </h2>
             </div>
@@ -142,10 +142,10 @@ export const RightSideBarDesktop = ({
                                 <li key={index}>
                                     <button
                                         type="button"
-                                        className="flex items-center justify-between w-[191px] py-3"
+                                        className="flex items-center justify-between w-[191px] lg:w-full py-3"
                                         onClick={() => handleItemClick(index)}
                                     >
-                                        <span className="text-[12px] leading-[16px] font-medium text-[#111827C4]/[.77]">
+                                        <span className="text-[12px] xl:text-[16px] leading-[16px] font-medium text-[#111827C4]/[.77]">
                                             {t(item)}
                                         </span>
                                         <span
@@ -171,7 +171,7 @@ export const RightSideBarDesktop = ({
                                             return (
                                                 <li
                                                     key={subIndex}
-                                                    className="py-1"
+                                                    className="py-1 xl:py-3"
                                                 >
                                                     {subItem ==
                                                     "positionLayout" ? (

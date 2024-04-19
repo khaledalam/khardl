@@ -1,5 +1,5 @@
-import EmptyBackground60 from "../../../assets/EmptyBackground60.png";
-import UploadIcon from "../../../assets/UploadIcon.png";
+import EmptyBackground60 from "../../../assets/emptyBackground60.png";
+import UploadIcon from "../../../assets/uploadIcon.png";
 import { useTranslation } from "react-i18next";
 
 const Logo = ({ restaurantStyle }) => {
