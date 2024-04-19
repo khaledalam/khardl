@@ -16,6 +16,7 @@
         }
         console.log(checkboxesContainer);
         checkboxCount++;
+        console.log(checkboxCount);
         const checkboxDiv = document.createElement('div');
         checkboxDiv.className = 'd-flex flex-column mb-8 fv-row';
         checkboxDiv.innerHTML = `
@@ -35,9 +36,9 @@
 
                     <div id="inputContainer${checkboxCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleEn[]"  placeholder="{{ __('Title in english') }}"
+                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleEn[${checkboxCount}]"  placeholder="{{ __('Title in english') }}"
                             value="${key !=null ? item.checkbox_input_titles[key][0]: ''}">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[]" placeholder="{{ __('Title in arabic') }}"
+                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[${checkboxCount}]" placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.checkbox_input_titles[key][1]: ''}">
 
                             <input type="number" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" min="0" step="1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}"
@@ -166,9 +167,9 @@
 
                     <div id="inputContainer${selectionCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[]" placeholder="{{ __('Title in english') }}"
+                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[${selectionCount}]" placeholder="{{ __('Title in english') }}"
                             value="${key !=null ? item.selection_input_titles[key][0]: ''}">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}"
+                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[${selectionCount}]"  placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.selection_input_titles[key][1]: ''}">
 
                             <button class="delete-selection btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
@@ -293,9 +294,9 @@
 
                     <div id="inputContainer${dropdownCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[]" placeholder="{{ __('Title in english') }}"
+                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[${dropdownCount}]" placeholder="{{ __('Title in english') }}"
                             value="${key !=null ? item.dropdown_input_titles[key][0]: ''}">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}"
+                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[${dropdownCount}]"  placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.dropdown_input_titles[key][1]: ''}">
 
                             <button class="delete-dropdown btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
@@ -645,6 +646,240 @@
                             </div>
                             <!--end::Pagination-->
                         </div>
+                        {{-- TODO:Refactor 2 loops and modal for every item--}}
+                        @foreach ($items as $item)
+                        <form class="form" action="{{ route('restaurant.update-item',['item' => $item->id]) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('post')
+                            <div class="modal fade" id="kt_modal_new_target_{{ $item->id }}" tabindex="-1" aria-hidden="true">
+                                <!--begin::Modal dialog-->
+                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                    <!--begin::Modal content-->
+                                    <div class="modal-content rounded">
+                                        <!--begin::Modal header-->
+                                        <div class="modal-header pb-0 border-0 justify-content-end">
+                                            <!--begin::Close-->
+                                            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                <span class="svg-icon svg-icon-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Close-->
+                                        </div>
+                                        <!--begin::Modal header-->
+                                        <!--begin::Modal body-->
+                                        <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
+                                            <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse start-0 {{app()->getLocale() != 'ar'?' transform-90':'transform-270'}} mt-20 gap-2">
+                                                <!--begin::Demos drawer toggle-->
+                                                <button id="addCheckbox_{{ $item->id }}" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Checkbox">
+                                                    <span id="create_new_checkbox">+ {{ __('Checkbox') }}</span>
+                                                </button>
+                                                <!--end::Demos drawer toggle-->
+                                                <!--begin::Help drawer toggle-->
+                                                <button id="addSelection_{{ $item->id }}" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Selection">
+                                                    <span id="create_new_selection">+ {{ __('Selection') }}</span>
+                                                </button>
+                                                <!--end::Help drawer toggle-->
+                                                <!--begin::Purchase link-->
+                                                <button id="addDropdown_{{ $item->id }}" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Dropdown">
+                                                    <span id="create_new_Dropdown">+ {{ __('Dropdown') }}</span>
+                                                </button>
+                                                <!--end::Purchase link-->
+                                            </div>
+
+
+                                            <!--begin:Form-->
+                                            @if($selectedCategory)
+                                                <!--begin::Heading-->
+                                                <div class="mb-13 text-center">
+                                                    <!--begin::Title-->
+                                                    <h1 class="mb-3">{{__('Update item')}}</h1>
+                                                    <!--end::Title-->
+                                                </div>
+                                                <!--end::Heading-->
+                                                <!--begin::Input group-->
+                                                <div class="d-flex flex-column mb-8 fv-row">
+                                                    <!--begin::Label-->
+                                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                        <span class="required">{{__('item-photo')}}</span>
+                                                    </label>
+                                                    <div class="row">
+                                                        <div class="col-md-9">
+                                                            <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <img alt="product_image" src="{{ $item->photo }}" class="rounded" style="max-height: 100%;max-width:100%" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end::Input group-->
+
+                                                <!--begin::Input group-->
+                                                <div class="d-flex flex-column mb-8">
+                                                    <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
+
+                                                    <ul class="nav nav-tabs">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en-{{ $item->id }}">{{ __('English') }}</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar-{{ $item->id }}">{{ __('Arabic') }}</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content mt-3">
+                                                        <div class="tab-pane fade show active" id="name-en-{{ $item->id }}">
+                                                            <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="item_name_en" value="{{ old('item_name_en') ??  $item->getTranslation('name', 'en') }}" />
+                                                        </div>
+                                                        <div class="tab-pane fade" id="name-ar-{{ $item->id }}">
+                                                            <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="item_name_ar" value="{{ old('item_name_ar') ?? $item->getTranslation('name', 'ar') }}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!--begin::Input group-->
+                                                <div class="d-flex flex-column mb-8 fv-row">
+                                                    <!--begin::Label-->
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                            <span class="required">{{__('item-availability')}}</span>
+                                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
+                                                        </label>
+                                                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                            <input type="checkbox" name="availability" value="1" {{ old('availability') || $item->availability ? 'checked' : '' }}>
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+                                                <div class="row g-9 mb-8">
+                                                    <!--begin::Col-->
+                                                    <div class="col-md-6 fv-row">
+                                                        <label class="required fs-6 fw-bold mb-2">{{ __('Price') }}</label>
+                                                        <!--begin::Input-->
+                                                        <div class="position-relative d-flex align-items-center">
+                                                            <!--begin::Datepicker-->
+                                                            <input type="number" min="0" step="0.1" value="{{ old('price') ?? $item->price }}" required name="price" class="form-control form-control-solid ps-12" />
+                                                            <!--end::Datepicker-->
+                                                        </div>
+                                                        <!--end::Input-->
+                                                    </div>
+                                                    <!--end::Col-->
+                                                    <!--begin::Col-->
+                                                    <div class="col-md-6 fv-row">
+                                                        <label class="required fs-6 fw-bold mb-2">{{ __('Calories') }}</label>
+                                                        <input type="number" step="0.1" min="1" required name="calories" value="{{ old('calories') ?? $item->calories }}" class="form-control form-control-solid ps-12" />
+                                                    </div>
+                                                    <!--end::Col-->
+
+                                                </div>
+                                                <!--end::Input group-->
+
+                                                <div class="d-flex flex-column mb-8">
+                                                    <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
+
+                                                    <ul class="nav nav-tabs">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en-{{ $item->id }}">{{ __('English') }}</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar-{{ $item->id }}">{{ __('Arabic') }}</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content mt-3">
+                                                        <div class="tab-pane fade show active" id="d-en-{{ $item->id }}">
+                                                            <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="description_en">
+                                                            {{ old('description_en') ?? $item->getTranslation('description', 'en') }}
+                                                            </textarea>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="d-ar-{{ $item->id }}">
+                                                            <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="description_ar">
+                                                            {{ old('description_ar') ?? $item->getTranslation('description', 'ar') }}
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end::Input group-->
+
+                                                <div id="checkboxes_{{ $item->id }}">
+                                                    <!-- Checkbox elements will be dynamically added here -->
+
+                                                </div>
+
+
+                                                <div id="selections_{{ $item->id }}">
+                                                    <!-- Checkbox elements will be dynamically added here -->
+                                                </div>
+
+
+                                                <div id="dropdowns_{{ $item->id }}">
+                                                    <!-- Checkbox elements will be dynamically added here -->
+                                                </div>
+                                                <script>
+                                                    var item = @json($item);
+                                                    var checkboxOptions = @json($item->checkbox_input_titles);
+                                                    if (checkboxOptions) {
+                                                        checkboxOptions.forEach(function(value, key) {
+                                                            createCheckbox(item, key);
+                                                        });
+                                                    }
+                                                    var selectionOptions = @json($item->selection_input_titles);
+                                                    if (selectionOptions) {
+                                                        selectionOptions.forEach(function(value, key) {
+                                                            createSelection(item, key);
+                                                        });
+                                                    }
+                                                    var dropdownOptions = @json($item->dropdown_input_titles);
+                                                    if (dropdownOptions) {
+                                                        dropdownOptions.forEach(function(value, key) {
+                                                            createDropdown(item, key);
+                                                        });
+                                                    }
+
+                                                    (function(item) { // Create a new scope for each iteration
+                                                        document.getElementById(`addSelection_${item.id}`).addEventListener('click', function(){
+                                                            createSelection(null, null, item.id);
+                                                        });
+                                                    })(item);
+                                                    (function(item) { // Create a new scope for each iteration
+                                                        document.getElementById(`addCheckbox_${item.id}`).addEventListener('click', function(){
+                                                            createCheckbox(null, null, item.id);
+                                                        });
+                                                    })(item);
+                                                    (function(item) { // Create a new scope for each iteration
+                                                        document.getElementById(`addDropdown_${item.id}`).addEventListener('click', function(){
+                                                            createDropdown(null, null, item.id);
+                                                        });
+                                                    })(item);
+
+                                                </script>
+
+                                                <!--begin::Actions-->
+                                                <div class="text-center">
+                                                    <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
+                                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                                                        <span class="indicator-label">{{__('submit')}}</span>
+                                                        <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
+                                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                    </button>
+                                                </div>
+                                                <!--end::Actions-->
+                                            @endif
+                                            <!--end:Form-->
+                                        </div>
+                                        <!--end::Modal body-->
+                                    </div>
+                                    <!--end::Modal content-->
+                                </div>
+                                <!--end::Modal dialog-->
+                            </div>
+                        </form>
+                        @endforeach
                         <div class="card-body p-1">
                             <!--begin::Table-->
                             <table class="table table-hover table-row-dashed fs-6 gy-5 my-0" id="kt_inbox_listing">
@@ -698,17 +933,8 @@
                                                     <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('view') }}</a>
                                                 </div>
                                                 <div class="menu-item px-3">
-                                                    {{-- <a href="{{ route('restaurant.edit-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('edit') }}</a> --}}
-                                                    <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target_{{ $item->id }}">
+                                                    <a href="#"  class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target_{{ $item->id }}">
                                                         {{ __('edit') }}
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
-                                                        <span class="svg-icon svg-icon-2 me-3">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
-                                                                <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor" />
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->
                                                     </a>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -733,241 +959,12 @@
                                         </td>
                                         <!--end::Date-->
                                     </tr>
-                                    <div class="modal fade" id="kt_modal_new_target_{{ $item->id }}" tabindex="-1" aria-hidden="true">
-                                        <!--begin::Modal dialog-->
-                                        <div class="modal-dialog modal-dialog-centered mw-650px">
-                                            <!--begin::Modal content-->
-                                            <div class="modal-content rounded">
-                                                <!--begin::Modal header-->
-                                                <div class="modal-header pb-0 border-0 justify-content-end">
-                                                    <!--begin::Close-->
-                                                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                                        <span class="svg-icon svg-icon-1">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                                                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->
-                                                    </div>
-                                                    <!--end::Close-->
-                                                </div>
-                                                <!--begin::Modal header-->
-                                                <!--begin::Modal body-->
-                                                <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
-                                                    <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse start-0 {{app()->getLocale() != 'ar'?' transform-90':'transform-270'}} mt-20 gap-2">
-                                                        <!--begin::Demos drawer toggle-->
-                                                        <button id="addCheckbox_{{ $item->id }}" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Checkbox">
-                                                            <span id="create_new_checkbox">+ {{ __('Checkbox') }}</span>
-                                                        </button>
-                                                        <!--end::Demos drawer toggle-->
-                                                        <!--begin::Help drawer toggle-->
-                                                        <button id="addSelection_{{ $item->id }}" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Selection">
-                                                            <span id="create_new_selection">+ {{ __('Selection') }}</span>
-                                                        </button>
-                                                        <!--end::Help drawer toggle-->
-                                                        <!--begin::Purchase link-->
-                                                        <button id="addDropdown_{{ $item->id }}" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Dropdown">
-                                                            <span id="create_new_Dropdown">+ {{ __('Dropdown') }}</span>
-                                                        </button>
-                                                        <!--end::Purchase link-->
-                                                    </div>
-
-
-                                                    <!--begin:Form-->
-                                                    @if($selectedCategory)
-                                                    <form class="form" action="{{ route('restaurant.update-item',['item' => $item->id]) }}" method="POST" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <!--begin::Heading-->
-                                                        <div class="mb-13 text-center">
-                                                            <!--begin::Title-->
-                                                            <h1 class="mb-3">{{__('Update item')}}</h1>
-                                                            <!--end::Title-->
-                                                        </div>
-                                                        <!--end::Heading-->
-                                                        <!--begin::Input group-->
-                                                        <div class="d-flex flex-column mb-8 fv-row">
-                                                            <!--begin::Label-->
-                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                                <span class="required">{{__('item-photo')}}</span>
-                                                            </label>
-                                                            <div class="row">
-                                                                <div class="col-md-9">
-                                                                    <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <img alt="product_image" src="{{ $item->photo }}" class="rounded" style="max-height: 100%;max-width:100%" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--end::Input group-->
-
-                                                        <!--begin::Input group-->
-                                                        <div class="d-flex flex-column mb-8">
-                                                            <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
-
-                                                            <ul class="nav nav-tabs">
-                                                                <li class="nav-item">
-                                                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en-{{ $item->id }}">{{ __('English') }}</a>
-                                                                </li>
-                                                                <li class="nav-item">
-                                                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar-{{ $item->id }}">{{ __('Arabic') }}</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="tab-content mt-3">
-                                                                <div class="tab-pane fade show active" id="name-en-{{ $item->id }}">
-                                                                    <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="item_name_en" value="{{ old('item_name_en') ??  $item->getTranslation('name', 'en') }}" />
-                                                                </div>
-                                                                <div class="tab-pane fade" id="name-ar-{{ $item->id }}">
-                                                                    <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="item_name_ar" value="{{ old('item_name_ar') ?? $item->getTranslation('name', 'ar') }}" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <!--begin::Input group-->
-                                                        <div class="d-flex flex-column mb-8 fv-row">
-                                                            <!--begin::Label-->
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                                    <span class="required">{{__('item-availability')}}</span>
-                                                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
-                                                                </label>
-                                                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                                    <input type="checkbox" name="availability" value="1" {{ old('availability') || $item->availability ? 'checked' : '' }}>
-                                                                </label>
-                                                            </div>
-
-                                                        </div>
-                                                        <!--end::Input group-->
-                                                        <!--begin::Input group-->
-                                                        <div class="row g-9 mb-8">
-                                                            <!--begin::Col-->
-                                                            <div class="col-md-6 fv-row">
-                                                                <label class="required fs-6 fw-bold mb-2">{{ __('Price') }}</label>
-                                                                <!--begin::Input-->
-                                                                <div class="position-relative d-flex align-items-center">
-                                                                    <!--begin::Datepicker-->
-                                                                    <input type="number" min="0" step="0.1" value="{{ old('price') ?? $item->price }}" required name="price" class="form-control form-control-solid ps-12" />
-                                                                    <!--end::Datepicker-->
-                                                                </div>
-                                                                <!--end::Input-->
-                                                            </div>
-                                                            <!--end::Col-->
-                                                            <!--begin::Col-->
-                                                            <div class="col-md-6 fv-row">
-                                                                <label class="required fs-6 fw-bold mb-2">{{ __('Calories') }}</label>
-                                                                <input type="number" step="0.1" min="1" required name="calories" value="{{ old('calories') ?? $item->calories }}" class="form-control form-control-solid ps-12" />
-                                                            </div>
-                                                            <!--end::Col-->
-
-                                                        </div>
-                                                        <!--end::Input group-->
-
-                                                        <div class="d-flex flex-column mb-8">
-                                                            <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
-
-                                                            <ul class="nav nav-tabs">
-                                                                <li class="nav-item">
-                                                                    <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en-{{ $item->id }}">{{ __('English') }}</a>
-                                                                </li>
-                                                                <li class="nav-item">
-                                                                    <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar-{{ $item->id }}">{{ __('Arabic') }}</a>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="tab-content mt-3">
-                                                                <div class="tab-pane fade show active" id="d-en-{{ $item->id }}">
-                                                                    <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="description_en">
-                                                                    {{ old('description_en') ?? $item->getTranslation('description', 'en') }}
-                                                                    </textarea>
-                                                                </div>
-                                                                <div class="tab-pane fade" id="d-ar-{{ $item->id }}">
-                                                                    <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="description_ar">
-                                                                    {{ old('description_ar') ?? $item->getTranslation('description', 'ar') }}
-                                                                    </textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--end::Input group-->
-
-                                                        <div id="checkboxes_{{ $item->id }}">
-                                                            <!-- Checkbox elements will be dynamically added here -->
-
-                                                        </div>
-
-
-                                                        <div id="selections_{{ $item->id }}">
-                                                            <!-- Checkbox elements will be dynamically added here -->
-                                                        </div>
-
-
-                                                        <div id="dropdowns_{{ $item->id }}">
-                                                            <!-- Checkbox elements will be dynamically added here -->
-                                                        </div>
-                                                        <script>
-                                                            var item = @json($item);
-                                                            var checkboxOptions = @json($item->checkbox_input_titles);
-                                                            if (checkboxOptions) {
-                                                                checkboxOptions.forEach(function(value, key) {
-                                                                    createCheckbox(item, key);
-                                                                });
-                                                            }
-                                                            (function(item) { // Create a new scope for each iteration
-                                                                document.getElementById(`addCheckbox_${item.id}`).addEventListener('click', function(){
-                                                                    createCheckbox(null, null, item.id);
-                                                                });
-                                                            })(item);
-                                                            var selectionOptions = @json($item->selection_input_titles);
-                                                            if (selectionOptions) {
-                                                                selectionOptions.forEach(function(value, key) {
-                                                                    createSelection(item, key);
-                                                                });
-                                                            }
-                                                            (function(item) { // Create a new scope for each iteration
-                                                                document.getElementById(`addSelection_${item.id}`).addEventListener('click', function(){
-                                                                    createSelection(null, null, item.id);
-                                                                });
-                                                            })(item);
-                                                            var dropdownOptions = @json($item->dropdown_input_titles);
-                                                            if (dropdownOptions) {
-                                                                dropdownOptions.forEach(function(value, key) {
-                                                                    createDropdown(item, key);
-                                                                });
-                                                            }
-                                                            (function(item) { // Create a new scope for each iteration
-                                                                document.getElementById(`addDropdown_${item.id}`).addEventListener('click', function(){
-                                                                    createDropdown(null, null, item.id);
-                                                                });
-                                                            })(item);
-
-                                                        </script>
-
-                                                        <!--begin::Actions-->
-                                                        <div class="text-center">
-                                                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
-                                                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                                                                <span class="indicator-label">{{__('submit')}}</span>
-                                                                <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
-                                                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                            </button>
-                                                        </div>
-                                                        <!--end::Actions-->
-                                                    </form>
-                                                    @endif
-                                                    <!--end:Form-->
-                                                </div>
-                                                <!--end::Modal body-->
-                                            </div>
-                                            <!--end::Modal content-->
-                                        </div>
-                                        <!--end::Modal dialog-->
-                                    </div>
                                     @endforeach
                                 </tbody>
                             <!--end::Table body-->
                             </table>
                             <!--end::Table-->
-                    </div>
+                        </div>
                 </div>
                 <!--end::Card-->
             </div>
