@@ -13,6 +13,7 @@
 
     function createCheckbox(item = null, key = null, update = null) {
         if(update){
+            console.log(update);
             checkboxesContainer = document.getElementById(`checkboxes_${update}`);
         }
         checkboxCount++;
@@ -84,6 +85,7 @@
             var checkboxItem = document.getElementById(`checkboxes_${item.id}`);
             checkboxItem.appendChild(checkboxDiv);
         } else {
+            console.log('get here');
             checkboxesContainer.appendChild(checkboxDiv);
             createCheckBoxOption(checkboxDiv, false);
         }
@@ -919,30 +921,33 @@
                                                         createCheckbox(item, key);
                                                     });
                                                 }
-                                                ListenButton = document.getElementById(`addCheckbox_${item.id}`);
-                                                ListenButton.addEventListener('click', function(){
-                                                    createCheckbox(null,null,item.id);
-                                                });
+                                                (function(item) { // Create a new scope for each iteration
+                                                    document.getElementById(`addCheckbox_${item.id}`).addEventListener('click', function(){
+                                                        createCheckbox(null, null, item.id);
+                                                    });
+                                                })(item);
                                                 var selectionOptions = @json($item->selection_input_titles);
                                                 if (selectionOptions) {
                                                     selectionOptions.forEach(function(value, key) {
                                                         createSelection(item, key);
                                                     });
                                                 }
-                                                ListenButton = document.getElementById(`addSelection_${item.id}`);
-                                                ListenButton.addEventListener('click', function(){
-                                                    createSelection(null,null,item.id);
-                                                });
+                                                (function(item) { // Create a new scope for each iteration
+                                                    document.getElementById(`addSelection_${item.id}`).addEventListener('click', function(){
+                                                        createSelection(null, null, item.id);
+                                                    });
+                                                })(item);
                                                 var dropdownOptions = @json($item->dropdown_input_titles);
                                                 if (dropdownOptions) {
                                                     dropdownOptions.forEach(function(value, key) {
                                                         createDropdown(item, key);
                                                     });
                                                 }
-                                                ListenButton = document.getElementById(`addDropdown_${item.id}`);
-                                                ListenButton.addEventListener('click', function(){
-                                                    createDropdown(null,null,item.id);
-                                                });
+                                                (function(item) { // Create a new scope for each iteration
+                                                    document.getElementById(`addDropdown_${item.id}`).addEventListener('click', function(){
+                                                        createDropdown(null, null, item.id);
+                                                    });
+                                                })(item);
 
                                             </script>
 
