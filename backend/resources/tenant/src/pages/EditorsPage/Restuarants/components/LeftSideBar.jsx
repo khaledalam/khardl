@@ -30,7 +30,7 @@ export const LeftSideBar = ({
 
     return (
         <div className="flex flex-row h-[38px] md:h-full md:flex-col pl-[16px] md:px-[16px] z-40">
-            <h2 className="font-medium my-auto border-r md:border-none py-[2px] md:py-0 pr-[13px] text-sm md:mt-[24px] md:mb-[21px]">
+            <h2 className="font-medium my-auto border-r md:border-none py-[2px] md:py-0 pr-[13px] text-sm xl:text-[18px] md:mt-[24px] md:mb-[21px]">
                 {t("Sections")}
             </h2>
             <ul
@@ -46,7 +46,7 @@ export const LeftSideBar = ({
                 {navItems.map((item, index) => (
                     <li
                         key={`section-${index}`}
-                        className="text-[#1118278A] text-[12px] font-light leading-[16px] relative w-full"
+                        className="text-[#1118278A] text-[12px]  xl:text-[16px] font-light leading-[16px] relative w-full"
                     >
                         <div
                             className={`${
@@ -116,7 +116,7 @@ export const LeftSideBar = ({
                             </ul>
                         ) : (
                             <ul
-                                className={`px-4 text-[10px] leading-[13px] space-y-[16px] font-medium overflow-hidden transition-all duration-300 ${
+                                className={`px-4 text-[10px] xl:text-[14px] leading-[13px] space-y-[16px] font-medium overflow-hidden transition-all duration-300 ${
                                     activeSection === index
                                         ? "max-h-40 mt-[16px]"
                                         : "max-h-0"

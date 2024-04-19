@@ -9,9 +9,11 @@ const EditorSelect = ({ defaultValue, options, handleChange, label }) => {
         setisOpen((prev) => !prev);
     }, []);
     return (
-        <div className={`flex flex-row items-start w-[208px] justify-between`}>
+        <div
+            className={`flex flex-row items-start w-[208px] xl:w-full justify-between`}
+        >
             {label && (
-                <label className="text-[12px] py-[8px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
+                <label className="text-[12px] xl:text-[16px] py-[8px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
                     {label}
                 </label>
             )}
@@ -22,7 +24,7 @@ const EditorSelect = ({ defaultValue, options, handleChange, label }) => {
                     onClick={() => handleDropdown()}
                     className="h-[32px] w-[154px] rounded-[50px] flex items-center justify-between px-[16px] bg-neutral-100 active:bg-neutral-100 hover:bg-neutral-100"
                 >
-                    <span className="text-[12px] leading-[16px] font-light text-[rgba(17,24,39,0.77)]">
+                    <span className="text-[12px] xl:text-[16px] leading-[16px] font-light text-[rgba(17,24,39,0.77)]">
                         {defaultValue}
                     </span>
                     <span className="">

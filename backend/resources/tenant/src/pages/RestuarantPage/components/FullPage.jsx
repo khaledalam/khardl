@@ -66,12 +66,17 @@ const FullPage = ({ categories }) => {
     } = restaurantStyle;
 
     return (
-        <div className=" h-full overflow-y-scroll hide-scroll">
+        <div
+            style={{
+                backgroundColor: page_color,
+            }}
+            className=" h-full overflow-y-scroll hide-scroll"
+        >
             <div
                 style={{
                     backgroundColor: page_color,
                 }}
-                className="w-full h-full p-4 flex flex-col gap-[16px] relative "
+                className="w-full h-full p-4 flex flex-col gap-[16px] relative mx-auto max-w-[1200px]"
             >
                 <Header
                     restaurantStyle={restaurantStyle}

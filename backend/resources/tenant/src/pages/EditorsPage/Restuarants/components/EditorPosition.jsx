@@ -29,7 +29,7 @@ const EditorPosition = ({ defaultValue, onChange, modalId }) => {
     return (
         <div id={modalId} className={""}>
             <div
-                className={`flex items-center justify-between w-[208px] h-[40px] bg-[#F3F3F3] rounded-[50px] py-[4px] px-[12px]`}
+                className={`flex items-center justify-between w-[208px] xl:w-full h-[40px] bg-[#F3F3F3] rounded-[50px] py-[4px] px-[12px]`}
             >
                 {alignments.map((alignment, idx) => (
                     <div
