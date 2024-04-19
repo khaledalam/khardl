@@ -45,6 +45,15 @@
     @stack('styles')
     @yield('css')
 
+    @if(app()->getLocale() === 'ar')
+                                <style>
+                                .menu-item.menu-accordion.show:not(.hiding):not(.menu-dropdown) > .menu-link .menu-arrow:after, .menu-item.menu-accordion.showing:not(.menu-dropdown) > .menu-link .menu-arrow:after {
+                                    transform: rotateZ(270deg);
+                                    transition: transform 0.3s ease;
+                                }
+                                </style>
+    @endif
+
 <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -71,7 +80,7 @@
                 icon: type,
                 title: message,
                 showConfirmButton: false,
-                timer: 3500
+                timer: 500
             });
         }
     </script>
@@ -86,7 +95,7 @@
                 icon: type,
                 title: message,
                 showConfirmButton: false,
-                timer: 3500
+                timer: 1000
             });
         }
     </script>

@@ -439,8 +439,17 @@ const ProductItem = ({
                 onClick={() => document.getElementById(id).showModal()}
             >
                 <div className="w-36 h-44 flex flex-col justify-between items-center">
-                    <div className="w-36 h-[86px] flex justify-center items-center">
-                        <img className="w-[60px] h-[60px]" src={imgSrc} />
+                    <div
+                        style={{
+                            backgroundImage: `url(${imgSrc})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            borderTopLeftRadius: `${menu_card_radius}px`,
+                            borderTopRightRadius: `${menu_card_radius}px`,
+                        }}
+                        className="w-36 h-[86px] flex justify-center items-center"
+                    >
+                        {/* <img className="w-[60px] h-[60px]" src={imgSrc} /> */}
                     </div>
                     <div
                         style={{

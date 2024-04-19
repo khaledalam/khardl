@@ -23,9 +23,11 @@ const EditorSizeSelect = ({ defaultValue, options, handleChange, label }) => {
         setisOpen((prev) => !prev);
     }, []);
     return (
-        <div className={`flex flex-row items-center w-[208px] justify-between`}>
+        <div
+            className={`flex flex-row items-center w-[208px] xl:w-full justify-between`}
+        >
             {label && (
-                <label className="text-[12px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
+                <label className="text-[12px] xl:text-[16px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
                     {label}
                 </label>
             )}
@@ -34,7 +36,7 @@ const EditorSizeSelect = ({ defaultValue, options, handleChange, label }) => {
                     <input
                         type="number"
                         value={currentValue}
-                        className="bg-[#F3F3F3] w-[30px] focus:outline-none text-[12px] leading-[16px] font-light text-[rgba(17,24,39,0.77)]"
+                        className="bg-[#F3F3F3] w-[30px] focus:outline-none text-[12px] xl:text-[16px] leading-[16px] font-light text-[rgba(17,24,39,0.77)]"
                     />
 
                     <div
