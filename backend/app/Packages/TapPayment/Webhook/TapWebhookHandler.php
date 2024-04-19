@@ -18,7 +18,6 @@ class TapWebhookHandler extends ProcessWebhookJob
     {
 
         $data = json_decode($this->webhookCall, true)['payload'];
-        logger($data);
         if(isset($data['metadata']['subscription_id'])){ // subscription for RO
             if(isset($data['metadata']['customer_app'])){
                 RestaurantCharge::updateOrCreateApp($data);
@@ -30,7 +29,7 @@ class TapWebhookHandler extends ProcessWebhookJob
             }
             try{
                 if ($data['status'] == 'CAPTURED') { 
-                    RestaurantCharge::NotifyUsers($data['amount']);
+                    RestaurantCharge::NotifyUsers($data);
                 }
             }catch(Exception $e){
                 \Sentry\captureException($e);

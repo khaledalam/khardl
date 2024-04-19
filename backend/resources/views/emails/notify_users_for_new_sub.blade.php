@@ -42,7 +42,7 @@
                                         </div>
 
                                         <p style="text-align: left;">
-                                            Hello {{ $user_name }}, we wanted to inform you that a new {{($this->type == NotificationReceipt::is_application_purchase?"Customer application subscription":"Restaurant subscription")}} has been booked from {{ $restaurant_name }} (ID: {{ $restaurant_id }}) on {{ $date_time }}. The cost of this subscription is {{ $cost }}.
+                                            Hello {{ $user_name }}, we wanted to inform you that a new {{$sub}} has been booked from {{ $restaurant_name }} (ID: {{ $restaurant_id }}) on {{ $date }}. The cost of this subscription is {{ $cost }}.
                                          
                                         </p>
                                         <br>

@@ -38,6 +38,14 @@ class NotifyUsersForNewSub extends Mailable
      */
     public function build()
     {
-        return $this->subject("Renew your $type")->view('emails.notify_users_for_new_sub');
+        if($this->type == NotificationReceipt::is_application_purchase){
+            $sub = "Customer application subscription";
+        }else {
+            $sub = "Restaurant subscription";
+        }
+        
+        return $this->subject("Renew your $sub")->view('emails.notify_users_for_new_sub', [
+            'sub' => $sub,
+        ]);
     }
 }

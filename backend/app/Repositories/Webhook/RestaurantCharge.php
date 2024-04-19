@@ -189,12 +189,12 @@ class RestaurantCharge
         ]);
        
     }
-    public static function NotifyUsers($amount){
+    public static function NotifyUsers($data){
         SendNotifyForNewSub::dispatch(
             Setting::first()->restaurant_name,
             tenant()->id,
-            $amount,
-            isset($data['metadata']['customer_app'])?NotificationReceipt::is_branch_purchase: NotificationReceipt::is_application_purchase,
+            $data['amount'],
+            isset($data['metadata']['customer_app'])?NotificationReceipt::is_application_purchase: NotificationReceipt::is_branch_purchase,
             now()->format('Y-m-d H:i'), 
         );
     }
