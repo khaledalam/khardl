@@ -14,11 +14,9 @@
             console.log(update);
             checkboxesContainer = document.getElementById(`checkboxes_${update}`);
         }
-        console.log(checkboxesContainer);
         checkboxCount++;
-        console.log(checkboxCount);
         const checkboxDiv = document.createElement('div');
-        checkboxDiv.className = 'd-flex flex-column mb-8 fv-row';
+        checkboxDiv.className = 'd-flex flex-column mb-8 fv-row checkbox-content';
         checkboxDiv.innerHTML = `
                 <hr />
                 <div class="d-flex flex-column fv-row">
@@ -43,7 +41,7 @@
 
                             <input type="number" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" min="0" step="1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}"
                             value="${key !=null ? item.checkbox_input_maximum_choices[key]: ''}">
-                            <button class="delete-checkbox btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                            <button class="delete-checkbox btn btn-sm btn-white" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -56,9 +54,17 @@
             `;
 
         const deleteCheckboxButton = checkboxDiv.querySelector('.delete-checkbox');
-        deleteCheckboxButton.addEventListener('click', () => {
-            checkboxesContainer.removeChild(checkboxDiv);
-        });
+        if(key!=null){
+            deleteCheckboxButton.addEventListener('click', () => {
+                const dataIndex = event.currentTarget.getAttribute('data-index');
+                document.getElementById(`checkboxes_${dataIndex}`).removeChild(checkboxDiv);
+            });
+        }else{
+            deleteCheckboxButton.addEventListener('click', () => {
+                const dataIndex = event.currentTarget.getAttribute('data-index');
+                checkboxesContainer.removeChild(checkboxDiv);
+            });
+        }
         const hiddenInput = checkboxDiv.querySelector(`input[name="checkbox_required_input[${checkboxCount}]"]`);
 
         hiddenInput.addEventListener('change', function() {
@@ -85,7 +91,6 @@
             var checkboxItem = document.getElementById(`checkboxes_${item.id}`);
             checkboxItem.appendChild(checkboxDiv);
         } else {
-            console.log('get here');
             checkboxesContainer.appendChild(checkboxDiv);
             createCheckBoxOption(checkboxDiv, false);
         }
@@ -119,7 +124,7 @@
 
                     <input type="number" step="0.1" min="0" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Price') }}"
                     value="${price ? price : ''}">
-                    <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                    <button class="delete-option btn btn-sm btn-white " type="button"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
 
@@ -172,7 +177,7 @@
                             <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[${selectionCount}]"  placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.selection_input_titles[key][1]: ''}">
 
-                            <button class="delete-selection btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                            <button class="delete-selection btn btn-sm btn-white" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -185,9 +190,17 @@
             `;
 
         const deleteSelectionButton = selectionDiv.querySelector('.delete-selection');
-        deleteSelectionButton.addEventListener('click', () => {
-            selectionsContainer.removeChild(selectionDiv);
-        });
+
+        if(key!=null){
+            deleteSelectionButton.addEventListener('click', () => {
+                const dataIndex = event.currentTarget.getAttribute('data-index');
+                document.getElementById(`selections_${dataIndex}`).removeChild(selectionDiv);
+            });
+        }else{
+            deleteSelectionButton.addEventListener('click', () => {
+                selectionsContainer.removeChild(selectionDiv);
+            });
+        }
         const hiddenInput = selectionDiv.querySelector(`input[name="selection_required_input[${selectionCount}]"]`);
 
         hiddenInput.addEventListener('change', function() {
@@ -247,7 +260,7 @@
 
                     <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
                     value="${price ? price : ''}">
-                    <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                    <button class="delete-option btn btn-sm btn-white" type="button"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
 
@@ -299,7 +312,7 @@
                             <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[${dropdownCount}]"  placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.dropdown_input_titles[key][1]: ''}">
 
-                            <button class="delete-dropdown btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                            <button class="delete-dropdown btn btn-sm btn-white" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -312,9 +325,17 @@
             `;
 
         const deleteDropdownButton = dropdownDiv.querySelector('.delete-dropdown');
-        deleteDropdownButton.addEventListener('click', () => {
-            dropdownsContainer.removeChild(dropdownDiv);
-        });
+
+        if(key!=null){
+            deleteDropdownButton.addEventListener('click', () => {
+                const dataIndex = event.currentTarget.getAttribute('data-index');
+                document.getElementById(`dropdowns_${dataIndex}`).removeChild(dropdownDiv);
+            });
+        }else{
+            deleteDropdownButton.addEventListener('click', () => {
+                dropdownsContainer.removeChild(dropdownDiv);
+            });
+        }
         const hiddenInput = dropdownDiv.querySelector(`input[name="dropdown_required_input[${dropdownCount}]"]`);
 
         hiddenInput.addEventListener('change', function() {
@@ -373,7 +394,7 @@
 
                         <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
                         value="${price ? price : ''}">
-                        <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                        <button class="delete-option btn btn-sm btn-white" type="button"><i class="fas fa-trash text-danger"></i></button>
                     </div>
             `;
             const deleteOptionButton = optionDiv.querySelector('.delete-option');
@@ -676,17 +697,17 @@
                                         <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
                                             <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse start-0 {{app()->getLocale() != 'ar'?' transform-90':'transform-270'}} mt-20 gap-2">
                                                 <!--begin::Demos drawer toggle-->
-                                                <button id="addCheckbox_{{ $item->id }}" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Checkbox">
+                                                <button id="addCheckbox_{{ $item->id }}" type="button" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Checkbox">
                                                     <span id="create_new_checkbox">+ {{ __('Checkbox') }}</span>
                                                 </button>
                                                 <!--end::Demos drawer toggle-->
                                                 <!--begin::Help drawer toggle-->
-                                                <button id="addSelection_{{ $item->id }}" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Selection">
+                                                <button id="addSelection_{{ $item->id }}" type="button" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Selection">
                                                     <span id="create_new_selection">+ {{ __('Selection') }}</span>
                                                 </button>
                                                 <!--end::Help drawer toggle-->
                                                 <!--begin::Purchase link-->
-                                                <button id="addDropdown_{{ $item->id }}" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Dropdown">
+                                                <button id="addDropdown_{{ $item->id }}" type="button" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Dropdown">
                                                     <span id="create_new_Dropdown">+ {{ __('Dropdown') }}</span>
                                                 </button>
                                                 <!--end::Purchase link-->
@@ -963,6 +984,7 @@
                                 </tbody>
                             <!--end::Table body-->
                             </table>
+                            {{-- TODO: load item when scroll down --}}
                             <!--end::Table-->
                         </div>
                 </div>
