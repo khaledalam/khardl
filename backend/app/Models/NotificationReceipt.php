@@ -16,6 +16,8 @@ class NotificationReceipt extends Model
         'is_application_purchase',
     ];
     /* Scopes */
+    const is_branch_purchase = "is_branch_purchase";
+    const is_application_purchase = "is_application_purchase";
     public function scopeWhenSearch($query,$search)
     {
         return $query->when($search != null, function ($q) use ($search) {

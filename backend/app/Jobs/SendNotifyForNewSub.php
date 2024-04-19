@@ -41,13 +41,13 @@ class SendNotifyForNewSub implements ShouldQueue
     public function handle(): void
     {
         try {
-            if($this->type == 'is_application_purchase'){
+            if($this->type == NotificationReceipt::is_application_purchase){
                 $type_en = "Customer application subscription";
                 $type_ar = " تطبيق العميل";
                 $log_success =  LogTypes::UserAppSubscriptionNotifySent;
                 $log_failed =  LogTypes::UserAppSubscriptionNotifyFail;
             }
-            else if ($this->type == 'is_branch_purchase'){
+            else if ($this->type == NotificationReceipt::is_branch_purchase){
                 $type_en = "Restaurant subscription";
                 $type_ar = "اشتراك المطعم";
                 $log_success = LogTypes::UserSubscriptionNotifySent;

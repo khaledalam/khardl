@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-
+use App\Models\NotificationReceipt;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -38,6 +38,6 @@ class NotifyUsersForNewSub extends Mailable
      */
     public function build()
     {
-        return $this->subject('Renew your restaurant subscription')->view('emails.renew_subscription');
+        return $this->subject("Renew your $type")->view('emails.notify_users_for_new_sub');
     }
 }

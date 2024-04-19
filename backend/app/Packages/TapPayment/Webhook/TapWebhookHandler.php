@@ -4,6 +4,8 @@ namespace App\Packages\TapPayment\Webhook;
 
 use Exception;
 use App\Models\ROSubscription;
+use App\Models\Tenant\Setting;
+use App\Jobs\SendNotifyForNewSub;
 use App\Repositories\Webhook\CustomerCharge;
 use App\Repositories\Webhook\RestaurantCharge;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
@@ -24,7 +26,16 @@ class TapWebhookHandler extends ProcessWebhookJob
                 RestaurantCharge::updateOrCreate($data);
             }else {
                 throw new Exception('Undefined subscription_id ');
+                return ;
             }
+            try{
+                if ($data['status'] == 'CAPTURED') { 
+                    RestaurantCharge::NotifyUsers($data['amount']);
+                }
+            }catch(Exception $e){
+                \Sentry\captureException($e);
+            }
+           
           
         }
         if(isset($data['metadata']['order_id'])){ // order for customer
