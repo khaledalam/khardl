@@ -476,7 +476,7 @@ function CompleteRegistration() {
                       {...register("national_id_number", {required: true})}
                       placeholder={t("National ID")}
                   />
-                  {errors.national_id && (
+                  {errors.national_id_number && (
                       <span className='text-red-500 text-xs mt-1 ms-2'>
                     {t("National ID Error")}
                   </span>
