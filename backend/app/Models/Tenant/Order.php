@@ -188,7 +188,11 @@ class Order extends Model
     public function scopeWhenStatus($query, $status)
     {
         return $query->when($status != null, function ($q) use ($status) {
-            return $q->where('status', $status);
+            if($status=='history'){
+                return $q->where('status', self::COMPLETED)->orWhere('status', self::CANCELLED);
+            }else{
+                return $q->where('status', $status);
+            }
         });
     }
     public function scopeWhenDateString($query, $date)

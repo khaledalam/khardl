@@ -48,7 +48,7 @@ class OrderService
                             ->orWhereNull('driver_id');
                     });
             })
-            ->when($request->status == 'accepted' || $request->status == 'cancelled' || $request->status == 'completed', function ($query) use ($request) {
+            ->when($request->status, function ($query) use ($request) {
                 return $query->whenStatus($request->status);
             })
             ->recent();
