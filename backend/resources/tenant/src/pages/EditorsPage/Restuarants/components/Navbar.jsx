@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useState, useEffect } from "react";
 import { FaPlay } from "react-icons/fa";
 import { IoMenuOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
@@ -9,12 +9,20 @@ import { MenuContext } from "react-flexible-sliding-menu";
 import GoBackHomeIcon from "../../../../assets/GoBackHomeIcon.png";
 import PrimaryDropDown from "./PrimaryDropDown";
 import { headerPosition } from "../../../../redux/NewEditor/restuarantEditorSlice";
+import Modal from "../../../../components/Modal";
+import NewSideBar from "../../../../components/NewSideBar";
+import Branches from "../../../../components/Branches";
+import { use } from "i18next";
 
 const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
     const { t } = useTranslation();
     const { toggleMenu } = useContext(MenuContext);
     const [isLoading, setIsLoading] = useState(false);
     const restuarantStyle = useSelector((state) => state.restuarantEditorStyle);
+
+    const currentLanguage = useSelector(
+        (state) => state.languageMode.languageMode
+    );
 
     const handleSubmitResStyle = async (e) => {
         e.preventDefault();
@@ -194,6 +202,16 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
         }
     };
 
+    const [isModelOpen, setIsModelOpen] = useState(false);
+    const [isBranchModelOpen, setIsBranchModelOpen] = useState(false);
+    useEffect(() => {
+        console.log("isModelOpen", isModelOpen);
+        console.log("isBranchModelOpen", isBranchModelOpen);
+        if (isModelOpen === true && isBranchModelOpen === true) {
+            () => setIsModelOpen(false);
+        }
+    }, [isBranchModelOpen]);
+
     if (isLoading) {
         return (
             <div
@@ -226,6 +244,41 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
 
     return (
         <Fragment>
+            {isBranchModelOpen ? (
+                <Modal
+                    open={isBranchModelOpen}
+                    onClose={() => {
+                        setIsBranchModelOpen(false);
+                    }}
+                    className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
+                >
+                    <Branches
+                        closingFunc={() => {
+                            setIsBranchModelOpen(false);
+                        }}
+                        closingFuncSideMenu={() => setIsModelOpen(false)}
+                    />
+                </Modal>
+            ) : (
+                <Modal
+                    open={isModelOpen}
+                    onClose={() => setIsModelOpen(false)}
+                    className={`fixed ${
+                        currentLanguage == "en" ? "left-[16px]" : "right-[16px]"
+                    } top-[88px] md:top-[104px] ${
+                        currentLanguage == "en"
+                            ? "md:left-[80px]"
+                            : "md:right-[80px]"
+                    }`}
+                >
+                    <NewSideBar
+                        onClose={() => setIsModelOpen(false)}
+                        isBranchModelOpen={isBranchModelOpen}
+                        setIsBranchModelOpen={setIsBranchModelOpen}
+                    />
+                </Modal>
+            )}
+
             <div className="relative z-40 h-[56px] w-full bg-white flex items-center justify-between px-[17px] border-b border-[rgba(0,0,0,0.3)]">
                 {/* <IoMenuOutline
                     size={42}
@@ -236,7 +289,10 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
                     src={GoBackHomeIcon}
                     className="hover:cursor-pointer"
                     alt="icon"
-                    onClick={toggleMenu}
+                    // onClick={toggleMenu}
+                    onClick={() => {
+                        setIsModelOpen(true);
+                    }}
                 />
                 <PrimaryDropDown
                     // handleChange={handleChange}
