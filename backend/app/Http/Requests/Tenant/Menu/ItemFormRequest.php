@@ -13,6 +13,7 @@ class ItemFormRequest extends FormRequest
     }
     public function rules()
     {
+        /* dd(request()->all()); */
         $rules = [
             'calories' => ['required','numeric'],
             'price' => ['required','numeric'],
@@ -23,11 +24,35 @@ class ItemFormRequest extends FormRequest
                     if(!isset($this->checkboxInputNameAr[$key])){
                         $fail(__('Options of title is required for Checkbox'));
                     }
+                    if(is_array($this->checkboxInputNameAr[$key])){
+                        foreach ($this->checkboxInputNameAr[$key] as $innerKey => $value) {
+                            if(!isset($value) || $value == null){
+                                $fail(__('Options[:num] name[AR] of checkbox can not be empty',['num' => $innerKey + 1]));
+                            }
+                        }
+                    }else{
+                        $fail(__('Options of title is required for Checkbox'));
+                    }
                 }
             }],
             'checkboxInputTitleEn' => ['array', function ($attribute, $titles, $fail)  {
                 foreach ($titles as $key => $title) {
                     if(!isset($this->checkboxInputNameEn[$key])){
+                        $fail(__('Options of title is required for Checkbox'));
+                    }
+                    if(!isset($this->checkboxInputPrice[$key])){
+                        $fail(__('Prices is required for Checkbox'));
+                    }
+                    if(is_array($this->checkboxInputNameEn[$key])){
+                        foreach ($this->checkboxInputNameEn[$key] as $innerKey => $value) {
+                            if(!isset($value) || $value == null){
+                                $fail(__('Options[:num] name[EN] of checkbox can not be empty',['num' => $innerKey + 1]));
+                            }
+                            if(!isset($this->checkboxInputPrice[$key][$innerKey]) || $this->checkboxInputPrice[$key][$innerKey] == null || $this->checkboxInputPrice[$key][$innerKey] < 0){
+                                $fail(__('Price[:num] of checkbox can not be empty',['num' => $innerKey + 1]));
+                            }
+                        }
+                    }else{
                         $fail(__('Options of title is required for Checkbox'));
                     }
                 }
@@ -37,11 +62,32 @@ class ItemFormRequest extends FormRequest
                     if(!isset($this->selectionInputNameAr[$key])){
                         $fail(__('Options of title is required for Selection'));
                     }
+                    if(is_array($this->selectionInputNameAr[$key])){
+                        foreach ($this->selectionInputNameAr[$key] as $innerKey => $value) {
+                            if(!isset($value) || $value == null){
+                                $fail(__('Options[:num] name[AR] of selection can not be empty',['num' => $innerKey + 1]));
+                            }
+                            if(!isset($this->selectionInputPrice[$key][$innerKey]) || $this->selectionInputPrice[$key][$innerKey] == null || $this->selectionInputPrice[$key][$innerKey] < 0){
+                                $fail(__('Price[:num] of selection can not be empty',['num' => $innerKey + 1]));
+                            }
+                        }
+                    }else{
+                        $fail(__('Options of title is required for Selection'));
+                    }
                 }
             }],
             'selectionInputTitleEn' => ['array', function ($attribute, $titles, $fail)  {
                 foreach ($titles as $key => $title) {
                     if(!isset($this->selectionInputNameEn[$key])){
+                        $fail(__('Options of title is required for Selection'));
+                    }
+                    if(is_array($this->selectionInputNameEn[$key])){
+                        foreach ($this->selectionInputNameEn[$key] as $innerKey => $value) {
+                            if(!isset($value) || $value == null){
+                                $fail(__('Options[:num] name[EN] of selection can not be empty',['num' => $innerKey + 1]));
+                            }
+                        }
+                    }else{
                         $fail(__('Options of title is required for Selection'));
                     }
                 }
@@ -51,11 +97,32 @@ class ItemFormRequest extends FormRequest
                     if(!isset($this->dropdownInputNameAr[$key])){
                         $fail(__('Options of title is required for Dropdown'));
                     }
+                    if(is_array($this->dropdownInputNameAr[$key])){
+                        foreach ($this->dropdownInputNameAr[$key] as $innerKey => $value) {
+                            if(!isset($value) || $value == null){
+                                $fail(__('Options[:num] name[AR] of dropdown can not be empty',['num' => $innerKey + 1]));
+                            }
+                            if(!isset($this->dropdownInputPrice[$key][$innerKey]) || $this->dropdownInputPrice[$key][$innerKey] == null || $this->dropdownInputPrice[$key][$innerKey] < 0){
+                                $fail(__('Price[:num] of dropdown can not be empty',['num' => $innerKey + 1]));
+                            }
+                        }
+                    }else{
+                        $fail(__('Options of title is required for Dropdown'));
+                    }
                 }
             }],
             'dropdownInputTitleEn' => ['array', function ($attribute, $titles, $fail)  {
                 foreach ($titles as $key => $title) {
                     if(!isset($this->dropdownInputNameEn[$key])){
+                        $fail(__('Options of title is required for Dropdown'));
+                    }
+                    if(is_array($this->dropdownInputNameEn[$key])){
+                        foreach ($this->dropdownInputNameEn[$key] as $innerKey => $value) {
+                            if(!isset($value) || $value == null){
+                                $fail(__('Options[:num] name[EN] of dropdown can not be empty',['num' => $innerKey + 1]));
+                            }
+                        }
+                    }else{
                         $fail(__('Options of title is required for Dropdown'));
                     }
                 }
@@ -76,5 +143,9 @@ class ItemFormRequest extends FormRequest
             'item_name_ar.regex' => __("Arabic name is not valid"),
             'item_name_ar.required' => __("Arabic name is required")
         ];
+    }
+    public function validateOptions()
+    {
+
     }
 }
