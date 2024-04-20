@@ -3,6 +3,7 @@
 namespace Database\Factories\tenant;
 
 use App\Models\Tenant\Branch;
+use Database\Seeders\HelperSeeder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -25,7 +26,7 @@ class RestaurantUserFactory extends Factory
             'phone' => fake()->numerify('966#########'),
             'status' => fake()->randomElement(['active', 'inactive', 'suspended']),
             'address' => fake()->address,
-            'password' => bcrypt('khardl@123'),
+            'password' => bcrypt(HelperSeeder::PASSWORD),
             'branch_id' => Branch::factory(),
             'remember_token' => Str::random(10),
         ];
