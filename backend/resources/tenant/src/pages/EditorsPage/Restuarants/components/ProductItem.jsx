@@ -672,7 +672,7 @@ const ProductItem = ({
                                                 </div>
                                                 <div className="w-[89px] h-6 left-[92px] top-0 absolute">
                                                     <div className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px] text-white text-[12px] font-normal flex justify-center items-center">
-                                                        Order Notes
+                                                        {t("Order Notes")}
                                                     </div>
                                                 </div>
                                             </div>
