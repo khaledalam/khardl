@@ -41,6 +41,8 @@ import Burger from "../../../../assets/burger.png";
 import KcalIcon from "../../../../assets/kcalIcon.png";
 import GreenDot from "../../../../assets/greenDot.png";
 
+import useWindowSize from "../../../../hooks/useWindowSize";
+
 const ProductItem = ({
     id,
     imgSrc,
@@ -87,6 +89,7 @@ const ProductItem = ({
     const [selectedRadio, setSelectedRadio] = useState([]);
     const [selectedDropdown, setSelectedDropdown] = useState([]);
     const [spinner, setSpinner] = useState(false);
+    const { width } = useWindowSize();
 
     const restuarantEditorStyle = useSelector(
         (state) => state.restuarantEditorStyle
@@ -536,93 +539,94 @@ const ProductItem = ({
                     }`}
                 />
             </div>
-            <dialog id={id} className="modal">
-                <div
-                    className={`modal-box bg-white !p-0 rounded-[6px] mx-auto w-[340px] ${
-                        checkboxItems[0]?.length > 0 ||
-                        radioItems[0]?.length > 0 ||
-                        dropdownItems[0]?.length > 0
-                            ? "h-[700px]"
-                            : "h-[550px]"
-                    } flex flex-col justify-end items-center`}
-                >
-                    <button
-                        className="btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-6 top-6"
-                        onClick={closeModal}
+            <dialog id={id} className="modal flex flex-row mx-auto">
+                <div className="flex flex-row mx-auto">
+                    <div
+                        className={`modal-box bg-white !p-0 rounded-[6px] w-[340px] ${
+                            checkboxItems[0]?.length > 0 ||
+                            radioItems[0]?.length > 0 ||
+                            dropdownItems[0]?.length > 0
+                                ? "h-[700px]"
+                                : "h-[550px]"
+                        } flex flex-col justify-end items-center`}
                     >
-                        ✕
-                    </button>
-                    {isLoggedIn ? (
-                        <Fragment>
-                            {spinner && (
-                                <div
-                                    role="status"
-                                    className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full z-100"
-                                >
-                                    <div className="absolute inset-0 bg-black opacity-25"></div>
-                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                        <svg
-                                            aria-hidden="true"
-                                            className="w-8 h-8 mr-2 text-gray-200 animate-spin fill-[var(--primary)]"
-                                            viewBox="0 0 100 101"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                                                fill="currentColor"
-                                            />
-                                            <path
-                                                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                                                fill="currentFill"
-                                            />
-                                        </svg>
-                                        <span className="sr-only">
-                                            Loading...
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
-
-                            <div
-                                className={`bg-white w-full rounded-t-[80px] relative flex flex-col justify-between ${
-                                    checkboxItems[0]?.length > 0 ||
-                                    radioItems[0]?.length > 0 ||
-                                    dropdownItems[0]?.length > 0
-                                        ? "h-[550px]"
-                                        : "h-[430px]"
-                                } `}
-                            >
-                                <div className="">
-                                    <div className="w-[100px] h-[100px] mt-[-5.8rem] mx-auto">
-                                        <img
-                                            src={imgSrc}
-                                            alt="product"
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                    <div className="flex flex-col items-center justify-center">
-                                        <h3 className="text-[18px] text-[#111827C4]/[0.77] font-semibold mt-[16px]">
-                                            {name}
-                                        </h3>
-                                        <h3 className="text-[10px] text-[#111827C4]/[0.77] font-light mt-[9px] max-w-[205px] text-center">
-                                            {description}
-                                        </h3>
-
-                                        <div className="flex flex-row items-center mt-[13px]">
-                                            <img
-                                                src={imgHotFire}
-                                                alt="hot"
-                                                className="w-[20px] h-[20px]"
-                                            />
-                                            <span className="text-[12px] font-normal">
-                                                {caloryInfo}
-                                            </span>
-                                            <span className="text-[10px] font-normal ml-[2px]">
-                                                {t("Kcal")}
+                        <button
+                            className="btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-6 top-6"
+                            onClick={closeModal}
+                        >
+                            ✕
+                        </button>
+                        {isLoggedIn ? (
+                            <Fragment>
+                                {spinner && (
+                                    <div
+                                        role="status"
+                                        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full z-100"
+                                    >
+                                        <div className="absolute inset-0 bg-black opacity-25"></div>
+                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                            <svg
+                                                aria-hidden="true"
+                                                className="w-8 h-8 mr-2 text-gray-200 animate-spin fill-[var(--primary)]"
+                                                viewBox="0 0 100 101"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                                    fill="currentColor"
+                                                />
+                                                <path
+                                                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                                    fill="currentFill"
+                                                />
+                                            </svg>
+                                            <span className="sr-only">
+                                                Loading...
                                             </span>
                                         </div>
-                                        {/* <div className="flex flex-row gap-1 items-end">
+                                    </div>
+                                )}
+
+                                <div
+                                    className={`bg-white w-full rounded-t-[80px] relative flex flex-col justify-between ${
+                                        checkboxItems[0]?.length > 0 ||
+                                        radioItems[0]?.length > 0 ||
+                                        dropdownItems[0]?.length > 0
+                                            ? "h-[550px]"
+                                            : "h-[430px]"
+                                    } `}
+                                >
+                                    <div className="">
+                                        <div className="w-[100px] h-[100px] mt-[-5.8rem] mx-auto">
+                                            <img
+                                                src={imgSrc}
+                                                alt="product"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <div className="flex flex-col items-center justify-center">
+                                            <h3 className="text-[20px] text-[#111827C4]/[0.77] font-semibold mt-[16px]">
+                                                {name}
+                                            </h3>
+                                            <h3 className="text-[14px] text-[#111827C4]/[0.77] font-light mt-[9px] max-w-[205px] text-center">
+                                                {description}
+                                            </h3>
+
+                                            <div className="flex flex-row items-center mt-[13px]">
+                                                <img
+                                                    src={imgHotFire}
+                                                    alt="hot"
+                                                    className="w-[20px] h-[20px]"
+                                                />
+                                                <span className="text-[16px] font-normal">
+                                                    {caloryInfo}
+                                                </span>
+                                                <span className="text-[14px] font-normal ml-[2px]">
+                                                    {t("Kcal")}
+                                                </span>
+                                            </div>
+                                            {/* <div className="flex flex-row gap-1 items-end">
                                         <span
                                             style={{
                                                 color: amountColor
@@ -645,36 +649,35 @@ const ProductItem = ({
                                                 finalPrice.toFixed(2)}
                                         </span>
                                     </div> */}
-                                        <div className="w-[275px] h-[88px] mt-[18px] relative">
-                                            <div className="w-[275px] h-[76px] left-0 top-[12px] absolute">
-                                                <div className="w-[275px] h-[76px] left-0 top-0 absolute bg-white rounded-[14px] border border-orange-100" />
-                                                {/* <div className="left-[16px] top-[24px] absolute text-black text-opacity-30 text-[9px] font-light font-['Plus Jakarta Sans']">
+                                            <div className="w-[275px] h-[88px] mt-[18px] relative">
+                                                <div className="w-[275px] h-[76px] left-0 top-[12px] absolute">
+                                                    <div className="w-[275px] h-[76px] left-0 top-0 absolute bg-white rounded-[14px] border border-orange-100" />
+                                                    {/* <div className="left-[16px] top-[24px] absolute text-black text-opacity-30 text-[9px] font-light font-['Plus Jakarta Sans']">
                                                 e.g. Please make the meat super
                                                 tender
                                             </div> */}
-                                                <textarea
-                                                    type="text"
-                                                    placeholder={t(
-                                                        "e.g. Please make the meat super tender."
-                                                    )}
-                                                    value={feedback}
-                                                    onChange={(e) =>
-                                                        setFeedback(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    className="outline-none w-[243px] h-[52px] left-[16px] top-[14px] absolute text-black text-[9px] font-light font-['Plus Jakarta Sans']"
-                                                />
-                                            </div>
-                                            <div className="w-[89px] h-6 left-[92px] top-0 absolute">
-                                                <div className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px]" />
-                                                <div className="left-[21px] top-[7px] absolute text-white text-[8px] font-normal font-['Plus Jakarta Sans']">
-                                                    Order Notes
+                                                    <textarea
+                                                        type="text"
+                                                        placeholder={t(
+                                                            "e.g. Please make the meat super tender."
+                                                        )}
+                                                        value={feedback}
+                                                        onChange={(e) =>
+                                                            setFeedback(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        className="outline-none w-[243px] h-[52px] left-[16px] top-[14px] absolute text-black text-[12px] font-light"
+                                                    />
+                                                </div>
+                                                <div className="w-[89px] h-6 left-[92px] top-0 absolute">
+                                                    <div className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px] text-white text-[12px] font-normal flex justify-center items-center">
+                                                        Order Notes
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {/* <div className="w-[90%] mx-auto">
+                                        {/* <div className="w-[90%] mx-auto">
                                     <h3 className="text-[1rem] font-bold mb-4">
                                         {t("feedback")}
                                     </h3>
@@ -699,233 +702,241 @@ const ProductItem = ({
 
                                     </div>
                                 </div> */}
-                                    <div
-                                        className={`px-6 w-full flex items-center justify-between mt-[16px] ${
-                                            checkboxItems[0]?.length > 0 ||
-                                            radioItems[0]?.length > 0 ||
-                                            dropdownItems[0]?.length > 0
-                                                ? ""
-                                                : "mt-5"
-                                        } `}
-                                    >
-                                        <div>
-                                            <span className="text-orange-600 text-[13px] font-light font-['Inter']">
-                                                {t("SAR")}
-                                            </span>{" "}
-                                            <span className="text-orange-600 text-base font-medium font-['Inter']">
-                                                {totalPrice &&
-                                                    finalPrice.toFixed(3)}
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center justify-between cursor-pointer w-[120px] h-8 bg-orange-100 bg-opacity-20 rounded-lg px-[7.89px]">
-                                            <div className="w-[22.11px] h-[22.40px] bg-orange-100 bg-opacity-30 rounded-md flex justify-center items-center">
-                                                <img
-                                                    src={MinusIcon}
-                                                    alt="minus icon"
-                                                    className="w-[7.89px] h-2 left-[15px]"
-                                                    onClick={decrementQty}
-                                                />
+                                        <div
+                                            className={`px-6 w-full flex items-center justify-between mt-[16px] ${
+                                                checkboxItems[0]?.length > 0 ||
+                                                radioItems[0]?.length > 0 ||
+                                                dropdownItems[0]?.length > 0
+                                                    ? ""
+                                                    : "mt-5"
+                                            } `}
+                                        >
+                                            <div>
+                                                <span className="text-orange-600 text-[13px] font-light font-['Inter']">
+                                                    {t("SAR")}
+                                                </span>{" "}
+                                                <span className="text-orange-600 text-base font-medium font-['Inter']">
+                                                    {totalPrice &&
+                                                        finalPrice.toFixed(3)}
+                                                </span>
                                             </div>
-                                            <h3 className="text-black text-sm font-medium">
-                                                {qtyCount}
-                                            </h3>
-                                            <div className="w-[22.11px] h-[22.40px] bg-orange-100 rounded-md flex justify-center items-center">
-                                                <img
-                                                    src={PlusIcon}
-                                                    alt="plus icon"
-                                                    className="w-[6.36px] h-[6.36px]"
-                                                    onClick={incrementQty}
-                                                />
+                                            <div className="flex items-center justify-between cursor-pointer w-[120px] h-8 bg-orange-100 bg-opacity-20 rounded-lg px-[7.89px]">
+                                                <div className="w-[22.11px] h-[22.40px] bg-orange-100 bg-opacity-30 rounded-md flex justify-center items-center">
+                                                    <img
+                                                        src={MinusIcon}
+                                                        alt="minus icon"
+                                                        className="w-[7.89px] h-2 left-[15px]"
+                                                        onClick={decrementQty}
+                                                    />
+                                                </div>
+                                                <h3 className="text-black text-sm font-medium">
+                                                    {qtyCount}
+                                                </h3>
+                                                <div className="w-[22.11px] h-[22.40px] bg-orange-100 rounded-md flex justify-center items-center">
+                                                    <img
+                                                        src={PlusIcon}
+                                                        alt="plus icon"
+                                                        className="w-[6.36px] h-[6.36px]"
+                                                        onClick={incrementQty}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {(checkboxItems[0]?.length > 0 ||
-                                        radioItems[0]?.length > 0 ||
-                                        dropdownItems[0]?.length > 0) && (
-                                        <div className="px-6 my-4 h-[550]">
-                                            <div className="flex flex-col gap-5 py-4 divide-y-[1px]">
-                                                {/* checkbox */}
-                                                {checkbox_input_titles &&
-                                                    checkbox_input_titles.length >
-                                                        0 &&
-                                                    checkbox_input_titles.map(
-                                                        (
-                                                            title,
-                                                            checkbox_idx
-                                                        ) => (
-                                                            <div
-                                                                id={"checkbox"}
-                                                                className=""
-                                                                key={
-                                                                    checkbox_idx
-                                                                }
-                                                            >
-                                                                {title[0] && (
-                                                                    <h3 className="text-[12px] font-medium mb-1 mt-[16px]">
-                                                                        {language ===
-                                                                        "en"
-                                                                            ? title[0]
-                                                                            : title[1]}
-                                                                        {checkbox_required[
-                                                                            checkbox_idx
-                                                                        ] ===
-                                                                            "true" && (
-                                                                            <span className="text-red-500">
-                                                                                *
-                                                                            </span>
-                                                                        )}
-                                                                    </h3>
-                                                                )}
-                                                                <div className="flex flex-col gap-2">
-                                                                    {checkboxItems &&
-                                                                        checkboxItems.length >
-                                                                            0 &&
-                                                                        checkboxItems[
-                                                                            checkbox_idx
-                                                                        ]?.map(
-                                                                            (
-                                                                                item,
-                                                                                idx
-                                                                            ) => (
-                                                                                <ProductDetailItem
-                                                                                    key={
-                                                                                        idx
-                                                                                    }
-                                                                                    label={
-                                                                                        language ===
-                                                                                        "en"
-                                                                                            ? item
-                                                                                                  ?.value[0]
-                                                                                            : item
-                                                                                                  ?.value[1]
-                                                                                    }
-                                                                                    name={
-                                                                                        "checkbox" +
-                                                                                            language ===
-                                                                                        "en"
-                                                                                            ? item
-                                                                                                  ?.value[0]
-                                                                                            : item
-                                                                                                  ?.value[1]
-                                                                                    }
-                                                                                    price={
-                                                                                        item.price ===
-                                                                                        0
-                                                                                            ? t(
-                                                                                                  "Free"
-                                                                                              )
-                                                                                            : `${Number(
-                                                                                                  item?.price
-                                                                                              )} ${t(
-                                                                                                  "SAR"
-                                                                                              )}`
-                                                                                    }
-                                                                                    isCheckbox
-                                                                                    onChange={(
-                                                                                        e
-                                                                                    ) =>
-                                                                                        handleCheckboxChange(
-                                                                                            checkbox_idx,
-                                                                                            idx,
-                                                                                            e
+                                        {width < 768 && (
+                                            <div>
+                                                {(checkboxItems[0]?.length >
+                                                    0 ||
+                                                    radioItems[0]?.length > 0 ||
+                                                    dropdownItems[0]?.length >
+                                                        0) && (
+                                                    <div className="px-6 my-4 h-[550]">
+                                                        <div className="flex flex-col gap-5 py-4 divide-y-[1px]">
+                                                            {/* checkbox */}
+                                                            {checkbox_input_titles &&
+                                                                checkbox_input_titles.length >
+                                                                    0 &&
+                                                                checkbox_input_titles.map(
+                                                                    (
+                                                                        title,
+                                                                        checkbox_idx
+                                                                    ) => (
+                                                                        <div
+                                                                            id={
+                                                                                "checkbox"
+                                                                            }
+                                                                            className=""
+                                                                            key={
+                                                                                checkbox_idx
+                                                                            }
+                                                                        >
+                                                                            {title[0] && (
+                                                                                <h3 className="text-[12px] font-medium mb-1 mt-[16px]">
+                                                                                    {language ===
+                                                                                    "en"
+                                                                                        ? title[0]
+                                                                                        : title[1]}
+                                                                                    {checkbox_required[
+                                                                                        checkbox_idx
+                                                                                    ] ===
+                                                                                        "true" && (
+                                                                                        <span className="text-red-500">
+                                                                                            *
+                                                                                        </span>
+                                                                                    )}
+                                                                                </h3>
+                                                                            )}
+                                                                            <div className="flex flex-col gap-2">
+                                                                                {checkboxItems &&
+                                                                                    checkboxItems.length >
+                                                                                        0 &&
+                                                                                    checkboxItems[
+                                                                                        checkbox_idx
+                                                                                    ]?.map(
+                                                                                        (
+                                                                                            item,
+                                                                                            idx
+                                                                                        ) => (
+                                                                                            <ProductDetailItem
+                                                                                                key={
+                                                                                                    idx
+                                                                                                }
+                                                                                                label={
+                                                                                                    language ===
+                                                                                                    "en"
+                                                                                                        ? item
+                                                                                                              ?.value[0]
+                                                                                                        : item
+                                                                                                              ?.value[1]
+                                                                                                }
+                                                                                                name={
+                                                                                                    "checkbox" +
+                                                                                                        language ===
+                                                                                                    "en"
+                                                                                                        ? item
+                                                                                                              ?.value[0]
+                                                                                                        : item
+                                                                                                              ?.value[1]
+                                                                                                }
+                                                                                                price={
+                                                                                                    item.price ===
+                                                                                                    0
+                                                                                                        ? t(
+                                                                                                              "Free"
+                                                                                                          )
+                                                                                                        : `${Number(
+                                                                                                              item?.price
+                                                                                                          )} ${t(
+                                                                                                              "SAR"
+                                                                                                          )}`
+                                                                                                }
+                                                                                                isCheckbox
+                                                                                                onChange={(
+                                                                                                    e
+                                                                                                ) =>
+                                                                                                    handleCheckboxChange(
+                                                                                                        checkbox_idx,
+                                                                                                        idx,
+                                                                                                        e
+                                                                                                    )
+                                                                                                }
+                                                                                            />
                                                                                         )
-                                                                                    }
-                                                                                />
-                                                                            )
-                                                                        )}
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    )}
-
-                                                {/* selection  */}
-                                                {selection_input_titles &&
-                                                    selection_input_titles.length >
-                                                        0 &&
-                                                    selection_input_titles.map(
-                                                        (
-                                                            title,
-                                                            selection_idx
-                                                        ) => (
-                                                            <div
-                                                                id={"radio"}
-                                                                className=""
-                                                                key={
-                                                                    selection_idx
-                                                                }
-                                                            >
-                                                                {title[0] && (
-                                                                    <h3 className="text-[12px] font-medium mb-1 mt-[16px]">
-                                                                        {language ===
-                                                                        "en"
-                                                                            ? title[0]
-                                                                            : title[1]}
-                                                                        {selection_required[
-                                                                            selection_idx
-                                                                        ] ===
-                                                                            "true" && (
-                                                                            <span className="text-red-500">
-                                                                                *
-                                                                            </span>
-                                                                        )}
-                                                                    </h3>
+                                                                                    )}
+                                                                            </div>
+                                                                        </div>
+                                                                    )
                                                                 )}
-                                                                <div className="flex flex-col gap-2">
-                                                                    {radioItems &&
-                                                                        radioItems.length >
-                                                                            0 &&
-                                                                        radioItems[
-                                                                            selection_idx
-                                                                        ]?.map(
-                                                                            (
-                                                                                item,
-                                                                                idx
-                                                                            ) => (
-                                                                                <ProductDetailItem
-                                                                                    key={
-                                                                                        idx
-                                                                                    }
-                                                                                    label={
-                                                                                        language ===
-                                                                                        "en"
-                                                                                            ? item
-                                                                                                  ?.value[0]
-                                                                                            : item
-                                                                                                  ?.value[1]
-                                                                                    }
-                                                                                    name={`radio_item_${selection_idx}`}
-                                                                                    price={
-                                                                                        item.price ===
-                                                                                        0
-                                                                                            ? t(
-                                                                                                  "Free"
-                                                                                              )
-                                                                                            : `${Number(
-                                                                                                  item?.price
-                                                                                              )} ${t(
-                                                                                                  "SAR"
-                                                                                              )}`
-                                                                                    }
-                                                                                    isRadio
-                                                                                    onChange={(
-                                                                                        e
-                                                                                    ) =>
-                                                                                        handleRadioChange(
-                                                                                            selection_idx,
-                                                                                            idx,
-                                                                                            e
-                                                                                        )
-                                                                                    }
-                                                                                />
-                                                                            )
-                                                                        )}
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    )}
 
-                                                {/* dropdown */}
-                                                {console.log(
+                                                            {/* selection  */}
+                                                            {selection_input_titles &&
+                                                                selection_input_titles.length >
+                                                                    0 &&
+                                                                selection_input_titles.map(
+                                                                    (
+                                                                        title,
+                                                                        selection_idx
+                                                                    ) => (
+                                                                        <div
+                                                                            id={
+                                                                                "radio"
+                                                                            }
+                                                                            className=""
+                                                                            key={
+                                                                                selection_idx
+                                                                            }
+                                                                        >
+                                                                            {title[0] && (
+                                                                                <h3 className="text-[12px] font-medium mb-1 mt-[16px]">
+                                                                                    {language ===
+                                                                                    "en"
+                                                                                        ? title[0]
+                                                                                        : title[1]}
+                                                                                    {selection_required[
+                                                                                        selection_idx
+                                                                                    ] ===
+                                                                                        "true" && (
+                                                                                        <span className="text-red-500">
+                                                                                            *
+                                                                                        </span>
+                                                                                    )}
+                                                                                </h3>
+                                                                            )}
+                                                                            <div className="flex flex-col gap-2">
+                                                                                {radioItems &&
+                                                                                    radioItems.length >
+                                                                                        0 &&
+                                                                                    radioItems[
+                                                                                        selection_idx
+                                                                                    ]?.map(
+                                                                                        (
+                                                                                            item,
+                                                                                            idx
+                                                                                        ) => (
+                                                                                            <ProductDetailItem
+                                                                                                key={
+                                                                                                    idx
+                                                                                                }
+                                                                                                label={
+                                                                                                    language ===
+                                                                                                    "en"
+                                                                                                        ? item
+                                                                                                              ?.value[0]
+                                                                                                        : item
+                                                                                                              ?.value[1]
+                                                                                                }
+                                                                                                name={`radio_item_${selection_idx}`}
+                                                                                                price={
+                                                                                                    item.price ===
+                                                                                                    0
+                                                                                                        ? t(
+                                                                                                              "Free"
+                                                                                                          )
+                                                                                                        : `${Number(
+                                                                                                              item?.price
+                                                                                                          )} ${t(
+                                                                                                              "SAR"
+                                                                                                          )}`
+                                                                                                }
+                                                                                                isRadio
+                                                                                                onChange={(
+                                                                                                    e
+                                                                                                ) =>
+                                                                                                    handleRadioChange(
+                                                                                                        selection_idx,
+                                                                                                        idx,
+                                                                                                        e
+                                                                                                    )
+                                                                                                }
+                                                                                            />
+                                                                                        )
+                                                                                    )}
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                )}
+
+                                                            {/* dropdown */}
+                                                            {/* {console.log(
                                                     "testing: ",
                                                     dropdownItems[0]?.length > 0
                                                 )}
@@ -1028,96 +1039,288 @@ const ProductItem = ({
                                                                 </div>
                                                             </div>
                                                         )
-                                                    )}
+                                                    )} */}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="w-full mt-[20px]">
-                                    <div
-                                        className="w-[308px] mx-auto h-10"
-                                        onClick={() => {
-                                            setSpinner(true);
-                                            handleAddToCart();
-                                        }}
-                                    >
-                                        <div className="w-[308px] h-10 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center">
-                                            <div className="w-16 h-[18.75px] text-center text-white text-xs font-medium font-['Plus Jakarta Sans']">
-                                                {t("Add to cart")}
+                                        )}
+                                    </div>
+                                    <div className="w-full mt-[20px]">
+                                        <div
+                                            className="w-[308px] mx-auto h-10"
+                                            onClick={() => {
+                                                setSpinner(true);
+                                                handleAddToCart();
+                                            }}
+                                        >
+                                            <div className="w-[308px] h-10 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center">
+                                                <div className="text-center text-white text-[14px] font-medium">
+                                                    {t("Add to cart")}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Fragment>
-                    ) : (
-                        <div className="bg-white w-full h-full flex flex-col items-center justify-center">
-                            <div className="">
-                                <MainText
-                                    Title={t("Login")}
-                                    classTitle="!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px]"
-                                />
-                                <div className="w-full flex items-center justify-center mt-8">
-                                    <form
-                                        onSubmit={handleSubmit(onSubmit)}
-                                        className="w-[100%] flex flex-col gap-8 px-[15px]"
-                                    >
-                                        {/* Input 1 */}
+                            </Fragment>
+                        ) : (
+                            <div className="bg-white w-full h-full flex flex-col items-center justify-center">
+                                <div className="">
+                                    <MainText
+                                        Title={t("Login")}
+                                        classTitle="!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px]"
+                                    />
+                                    <div className="w-full flex items-center justify-center mt-8">
+                                        <form
+                                            onSubmit={handleSubmit(onSubmit)}
+                                            className="w-[100%] flex flex-col gap-8 px-[15px]"
+                                        >
+                                            {/* Input 1 */}
 
-                                        <div>
-                                            <h4 className="mb-2 ms-2 text-[13px] font-semibold">
-                                                {t("Phone")}
-                                            </h4>
-                                            <input
-                                                type="tel"
-                                                className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
-                                                placeholder={
-                                                    t("e.g.") +
-                                                    " +966 123456789"
-                                                }
-                                                {...register("phone", {
-                                                    required: true,
-                                                })}
-                                                style={{ direction: "ltr" }}
-                                                minLength={9}
-                                                maxLength={13}
-                                            />
-                                            {errors.phone && (
-                                                <span className="text-red-500 text-xs mt-1 ms-2">
-                                                    {t("Phone Error")}
-                                                </span>
-                                            )}
-                                        </div>
+                                            <div>
+                                                <h4 className="mb-2 ms-2 text-[13px] font-semibold">
+                                                    {t("Phone")}
+                                                </h4>
+                                                <input
+                                                    type="tel"
+                                                    className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
+                                                    placeholder={
+                                                        t("e.g.") +
+                                                        " +966 123456789"
+                                                    }
+                                                    {...register("phone", {
+                                                        required: true,
+                                                    })}
+                                                    style={{ direction: "ltr" }}
+                                                    minLength={9}
+                                                    maxLength={13}
+                                                />
+                                                {errors.phone && (
+                                                    <span className="text-red-500 text-xs mt-1 ms-2">
+                                                        {t("Phone Error")}
+                                                    </span>
+                                                )}
+                                            </div>
 
-                                        <div className="flex flex-col justify-center items-center mt-4 mb-10">
-                                            <button
-                                                type="submit"
-                                                className={`font-bold bg-[var(--primary)] flex justify-center items-center gap-[3px] rounded-full transition-all delay-100  py-2 px-6 text-[18px] leading-6`}
-                                            >
-                                                {t("Login")}
-                                            </button>
-                                            <p className="text-sm font-semibold  mt-1">
-                                                {t("Don't have an account?")}
-                                                <Link to="/register">
-                                                    <input
-                                                        type="submit"
-                                                        className="text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md "
-                                                        value={t(
-                                                            "Create an account"
-                                                        )}
-                                                    />
-                                                </Link>
-                                            </p>
-                                        </div>
-                                    </form>
+                                            <div className="flex flex-col justify-center items-center mt-4 mb-10">
+                                                <button
+                                                    type="submit"
+                                                    className={`font-bold bg-[var(--primary)] flex justify-center items-center gap-[3px] rounded-full transition-all delay-100  py-2 px-6 text-[18px] leading-6`}
+                                                >
+                                                    {t("Login")}
+                                                </button>
+                                                <p className="text-sm font-semibold  mt-1">
+                                                    {t(
+                                                        "Don't have an account?"
+                                                    )}
+                                                    <Link to="/register">
+                                                        <input
+                                                            type="submit"
+                                                            className="text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md "
+                                                            value={t(
+                                                                "Create an account"
+                                                            )}
+                                                        />
+                                                    </Link>
+                                                </p>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
+                        )}
+                    </div>
+                    {width > 768 && (
+                        <div
+                            className={`modal-box bg-white !p-0 rounded-[6px] w-[340px] ${
+                                checkboxItems[0]?.length > 0 ||
+                                radioItems[0]?.length > 0 ||
+                                dropdownItems[0]?.length > 0
+                                    ? "h-[700px]"
+                                    : "hidden"
+                            } flex flex-col justify-start items-center ml-[80px]`}
+                        >
+                            {(checkboxItems[0]?.length > 0 ||
+                                radioItems[0]?.length > 0 ||
+                                dropdownItems[0]?.length > 0) && (
+                                <div className="px-6 my-4 h-[550] w-full">
+                                    <div className="flex flex-col gap-5 py-4 divide-y-[1px]">
+                                        {/* checkbox */}
+                                        {checkbox_input_titles &&
+                                            checkbox_input_titles.length > 0 &&
+                                            checkbox_input_titles.map(
+                                                (title, checkbox_idx) => (
+                                                    <div
+                                                        id={"checkbox"}
+                                                        className=""
+                                                        key={checkbox_idx}
+                                                    >
+                                                        {title[0] && (
+                                                            <h3 className="text-[16px] font-medium mb-1 mt-[16px]">
+                                                                {language ===
+                                                                "en"
+                                                                    ? title[0]
+                                                                    : title[1]}
+                                                                {checkbox_required[
+                                                                    checkbox_idx
+                                                                ] ===
+                                                                    "true" && (
+                                                                    <span className="text-red-500">
+                                                                        *
+                                                                    </span>
+                                                                )}
+                                                            </h3>
+                                                        )}
+                                                        <div className="flex flex-col gap-2">
+                                                            {checkboxItems &&
+                                                                checkboxItems.length >
+                                                                    0 &&
+                                                                checkboxItems[
+                                                                    checkbox_idx
+                                                                ]?.map(
+                                                                    (
+                                                                        item,
+                                                                        idx
+                                                                    ) => (
+                                                                        <ProductDetailItem
+                                                                            key={
+                                                                                idx
+                                                                            }
+                                                                            label={
+                                                                                language ===
+                                                                                "en"
+                                                                                    ? item
+                                                                                          ?.value[0]
+                                                                                    : item
+                                                                                          ?.value[1]
+                                                                            }
+                                                                            name={
+                                                                                "checkbox" +
+                                                                                    language ===
+                                                                                "en"
+                                                                                    ? item
+                                                                                          ?.value[0]
+                                                                                    : item
+                                                                                          ?.value[1]
+                                                                            }
+                                                                            price={
+                                                                                item.price ===
+                                                                                0
+                                                                                    ? t(
+                                                                                          "Free"
+                                                                                      )
+                                                                                    : `${Number(
+                                                                                          item?.price
+                                                                                      )} ${t(
+                                                                                          "SAR"
+                                                                                      )}`
+                                                                            }
+                                                                            isCheckbox
+                                                                            onChange={(
+                                                                                e
+                                                                            ) =>
+                                                                                handleCheckboxChange(
+                                                                                    checkbox_idx,
+                                                                                    idx,
+                                                                                    e
+                                                                                )
+                                                                            }
+                                                                        />
+                                                                    )
+                                                                )}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            )}
+
+                                        {/* selection  */}
+                                        {selection_input_titles &&
+                                            selection_input_titles.length > 0 &&
+                                            selection_input_titles.map(
+                                                (title, selection_idx) => (
+                                                    <div
+                                                        id={"radio"}
+                                                        className=""
+                                                        key={selection_idx}
+                                                    >
+                                                        {title[0] && (
+                                                            <h3 className="text-[16px] font-medium mb-1 mt-[16px]">
+                                                                {language ===
+                                                                "en"
+                                                                    ? title[0]
+                                                                    : title[1]}
+                                                                {selection_required[
+                                                                    selection_idx
+                                                                ] ===
+                                                                    "true" && (
+                                                                    <span className="text-red-500">
+                                                                        *
+                                                                    </span>
+                                                                )}
+                                                            </h3>
+                                                        )}
+                                                        <div className="flex flex-col gap-2">
+                                                            {radioItems &&
+                                                                radioItems.length >
+                                                                    0 &&
+                                                                radioItems[
+                                                                    selection_idx
+                                                                ]?.map(
+                                                                    (
+                                                                        item,
+                                                                        idx
+                                                                    ) => (
+                                                                        <ProductDetailItem
+                                                                            key={
+                                                                                idx
+                                                                            }
+                                                                            label={
+                                                                                language ===
+                                                                                "en"
+                                                                                    ? item
+                                                                                          ?.value[0]
+                                                                                    : item
+                                                                                          ?.value[1]
+                                                                            }
+                                                                            name={`radio_item_${selection_idx}`}
+                                                                            price={
+                                                                                item.price ===
+                                                                                0
+                                                                                    ? t(
+                                                                                          "Free"
+                                                                                      )
+                                                                                    : `${Number(
+                                                                                          item?.price
+                                                                                      )} ${t(
+                                                                                          "SAR"
+                                                                                      )}`
+                                                                            }
+                                                                            isRadio
+                                                                            onChange={(
+                                                                                e
+                                                                            ) =>
+                                                                                handleRadioChange(
+                                                                                    selection_idx,
+                                                                                    idx,
+                                                                                    e
+                                                                                )
+                                                                            }
+                                                                        />
+                                                                    )
+                                                                )}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            )}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
+                    <form method="dialog" className="modal-backdrop">
+                        <button>close</button>
+                    </form>
                 </div>
-                <form method="dialog" className="modal-backdrop">
-                    <button>close</button>
-                </form>
             </dialog>
         </Fragment>
     );
