@@ -40,6 +40,8 @@ class OrderResource extends JsonResource
             'manual_order_last_name' => $this->manual_order_last_name,
             'distance' => $this->distance,
             'own_driver_can_accept' => $this->driver_can_accept,
+            'assigned_to_me' => $this->assigned_to_me,
+            'time_remain_for_reject' => $this->time_remain_for_reject,
             'branch' => $this->whenLoaded('branch'),
             'customer' => $this->whenLoaded('user'),
             'driver_id' => new DriverResource($this->whenLoaded('driver')),
