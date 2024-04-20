@@ -109,7 +109,7 @@
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">{{__('payment-in-cash-upon-receiving')}}</span>
+														<span class="fw-bolder fs-5 mb-0">{{__('Payment upon receiving')}}</span>
 													</span>
                                                 <!--end::Label-->
                                             </label>
@@ -126,7 +126,7 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" @if(!($hasDeliveryCompanies||$hasActiveDrivers)) {{ 'disabled' }} @endif name="delivery_types[]"  value="{{\App\Models\Tenant\DeliveryType::DELIVERY}}" {{(isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  ($hasDeliveryCompanies||$hasActiveDrivers) )?'checked':''}}  />
+                                                <input class="form-check-input me-3" type="checkbox" @if(!($hasDeliveryCompanies||$hasActiveDrivers)) {{ 'disabled' }} @endif name="delivery_types[]"  value="{{\App\Models\Tenant\DeliveryType::DELIVERY}}" {{(isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  ($hasDeliveryCompanies||$hasActiveDrivers) && $branch->delivery_availability )?'checked':''}}  />
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
