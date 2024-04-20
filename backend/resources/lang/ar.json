@@ -1158,9 +1158,9 @@
     "Option in arabic":"الخيار بالعربية",
     "Item successfully added.":"تم اضافة المنتج بنجاح.",
     "Item successfully updated.":"تم تحديث المنتج بنجاح.",
-    "Options of title :num is required for Checkbox":"خيارات العناون ال:num للخيارات(اختيار متعدد) مطلوبة .",
-    "Options of title :num is required for Selection":"خيارات العناون ال:num للخيارات الحره مطلوبة .",
-    "Options of title :num is required for Dropdown":"خيارات العناون ال:num للخيارات من قائمه مطلوبة .",
+    "Options of title is required for Checkbox":"خيارات العنوان للخيارات(اختيار متعدد) مطلوبة .",
+    "Options of title is required for Selection":"خيارات العنوان للخيارات الحره مطلوبة .",
+    "Options of title is required for Dropdown":"خيارات العنوان للخيارات من قائمه مطلوبة .",
     "Vehicle number":"رقم المركبة",
     "Vehicle No.":"رقم المركبة",
     "View driver":"عرض السائق",
@@ -1181,6 +1181,16 @@
     "Edit user":"تعديل المستخدم",
     "Update item":"تحديث المنتج",
     "Manage purchase notifications":"إدارة إشعارات الشراء",
-    "Ability to Manage purchase notifications":"القدرة على إدارة إشعارات الشراء"
+    "Ability to Manage purchase notifications":"القدرة على إدارة إشعارات الشراء",
+    "Prices is required for Checkbox":"Prices is required for Checkbox",
+    "Options[:num] name[AR] of checkbox can not be empty":"الاسم العربي للخيار[:num] مطلوب للخيارات(اختيار متعدد) ",
+    "Options[:num] name[EN] of checkbox can not be empty":"الاسم الانجليزي للخيار[:num] مطلوب للخيارات(اختيار متعدد) ",
+    "Price[:num] of checkbox can not be empty":"السعر[:num] للخيارات(اختيار متعدد) مطلوب",
+    "Options[:num] name[AR] of selection can not be empty":"الاسم العربي للخيار[:num] مطلوب للخيارات الحره ",
+    "Options[:num] name[EN] of selection can not be empty":"الاسم الانجليزي للخيار[:num] مطلوب للخيارات الحره ",
+    "Price[:num] of selection can not be empty":"السعر[:num] للخيارات الحره مطلوب",
+    "Options[:num] name[AR] of dropdown can not be empty":"الاسم العربي للخيار[:num] مطلوب للخيارات من قائمه ",
+    "Options[:num] name[EN] of dropdown can not be empty":"الاسم الانجليزي للخيار[:num] مطلوب للخيارات من قائمه",
+    "Price[:num] of dropdown can not be empty":"السعر[:num] للخيارات من قائمه مطلوب"
 
 }
