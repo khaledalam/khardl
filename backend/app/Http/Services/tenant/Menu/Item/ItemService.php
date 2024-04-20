@@ -16,21 +16,6 @@ class ItemService
     }
     public function addItem(ItemFormRequest $request, $id, $branchId)
     {
-        // TODO @todo validate the remain fields of the coming request
-
-        if (!$request->validate([
-            'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
-            'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
-            'checkbox_input_maximum_choices' => 'nullable|int|min:1'
-        ], [
-            'item_name_en.regex'=>__("English name is not valid"),
-            'item_name_en.required'=>__("English name is required"),
-            'item_name_ar.regex'=>__("Arabic name is not valid"),
-            'item_name_ar.required'=>__("Arabic name is required")
-        ])) {
-            return redirect()->back()->with('error', __('Invalid Product Name'));
-        }
-
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
             $photoFile = $request->file('photo');

@@ -92,7 +92,7 @@
             checkboxItem.appendChild(checkboxDiv);
         } else {
             checkboxesContainer.appendChild(checkboxDiv);
-            createCheckBoxOption(checkboxDiv, false);
+            createCheckBoxOption(checkboxDiv, true);
         }
     }
 
@@ -228,7 +228,7 @@
             selectionItem.appendChild(selectionDiv);
         } else {
             selectionsContainer.appendChild(selectionDiv);
-            createSelectionOption(selectionDiv, selectionCount, false);
+            createSelectionOption(selectionDiv, selectionCount, true);
         }
     }
 
@@ -363,7 +363,7 @@
             dropDownItem.appendChild(dropdownDiv);
         } else {
             dropdownsContainer.appendChild(dropdownDiv);
-            createDropdownOption(dropdownDiv, false);
+            createDropdownOption(dropdownDiv, true);
         }
     }
 
