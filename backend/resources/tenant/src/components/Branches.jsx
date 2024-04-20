@@ -305,15 +305,15 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                         </div>
                     </div>
                     <div className="left-[113px] top-[104px] absolute text-black text-xs font-normal font-['Plus Jakarta Sans']">
-                        Branch working hours
+                        {t("Branch working hours")}
                     </div>
                     <div className="w-[250px] h-16 left-[50px] top-[135px] absolute">
                         <div className="w-[250px] h-16 left-0 top-0 absolute bg-orange-100 bg-opacity-30 rounded-[50px]" />
                         <div className="w-[37.50px] h-[14.86px] left-[20px] top-[11.43px] absolute text-black text-[10px] font-light font-['Plus Jakarta Sans']">
-                            FROM
+                            {t("FROM")}
                         </div>
                         <div className="w-[17.50px] h-[14.86px] left-[168.75px] top-[11.43px] absolute text-black text-[10px] font-light font-['Plus Jakarta Sans']">
-                            TO
+                            {t("TO")}
                         </div>
                         <div className="w-[72.50px] h-[17.14px] left-[20px] top-[34.29px] absolute text-black text-xs font-medium font-['Plus Jakarta Sans']">
                             {currentBranch?.[selectedDay + "_open"]
