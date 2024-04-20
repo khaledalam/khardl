@@ -39,20 +39,13 @@ class ItemService
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
             $photoFile = $request->file('photo');
-
-            $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
-
-            while (Storage::disk('public')->exists('items/' . $filename)) {
-                $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
-            }
-
-            $photoFile->storeAs('items', $filename, 'public');
+            $path = tenant_asset(store_image($photoFile, 'items'));
 
             DB::beginTransaction();
 
             try {
                 $itemData = [
-                    'photo' => tenant_asset('items/' . $filename),
+                    'photo' => $path,
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
                     'name' => trans_json($request->input('item_name_en'), $request->input('item_name_ar')),
@@ -95,19 +88,7 @@ class ItemService
             $photoFile = $request->file('photo');
 
             if ($photoFile) {
-                $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
-
-                while (Storage::disk('public')->exists('items/' . $filename)) {
-                    $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
-                }
-
-                $photoFile->storeAs('items', $filename, 'public');
-                //TODO: remove old image
-                if ($item->photo && Storage::disk('public')->exists($item->photo)) {
-                    Storage::disk('public')->delete($item->photo);
-                }
-
-                $item->photo = tenant_asset('items/' . $filename);
+                $item->photo = tenant_asset(store_image($photoFile, 'items', null, $item->photo));
             }
 
             $item->price = $request->input('price');
