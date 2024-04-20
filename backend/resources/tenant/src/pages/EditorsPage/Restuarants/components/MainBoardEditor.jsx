@@ -528,7 +528,7 @@ const MainBoardEditor = ({
                             backgroundSize: "cover",
                             backgroundRepeat: "no-repeat",
                         }}
-                        className={`w-full min-h-[180px] h-[300px] flex pt-[56px] md:pt-[80px] justify-center relative`}
+                        className={`w-full min-h-[180px] aspect-[2/1] flex pt-[56px] md:pt-[80px] justify-center relative`}
                         onClick={() => setIsBannerModalOpened(true)}
                     >
                         <div
