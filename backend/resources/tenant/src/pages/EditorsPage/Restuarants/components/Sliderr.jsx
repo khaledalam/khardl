@@ -23,14 +23,14 @@ const Sliderr = ({ banner_images, setIsBannerModalOpened }) => {
         });
     };
     return (
-        <div className="h-[300px] rounded-[10px] relative flex flex-col justify-center">
+        <div className="h-full rounded-[10px] relative flex flex-col justify-center">
             <div className="flex w-full h-full rounded-[10px] overflow-x-hidden">
                 {banner_images.map((image, index) => (
                     <img
                         key={index}
                         src={image.croppedImage}
                         alt="banner"
-                        className="h-[300px] w-full rounded-[10px] object-cover block shrink-0 grow-0 ease-in-out duration-300"
+                        className=" aspect-[2/1] w-full rounded-[10px] object-cover block shrink-0 grow-0 ease-in-out duration-300"
                         style={{ translate: `${-100 * imageIndex}%` }}
                         onClick={() => setIsBannerModalOpened(true)}
                     />

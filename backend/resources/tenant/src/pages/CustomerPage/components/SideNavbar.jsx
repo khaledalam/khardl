@@ -29,10 +29,10 @@ const SideNavbar = () => {
     const navigate = useNavigate();
     const [status, setStatus] = useState(true);
     const activeNavItem = useSelector(
-        (state) => state.customerAPI.activeNavItem,
+        (state) => state.customerAPI.activeNavItem
     );
     const saveProfileChange = useSelector(
-        (state) => state.customerAPI.saveProfileChanges,
+        (state) => state.customerAPI.saveProfileChanges
     );
 
     const navItems = [
@@ -72,7 +72,7 @@ const SideNavbar = () => {
             window.location.href.indexOf(`#${page.toLowerCase()}`) > -1 ||
             window.location.href.indexOf(`#${page.toUpperCase()}`) > -1 ||
             window.location.href.indexOf(
-                `#${page.charAt(0).toUpperCase() + page.slice(1)}`,
+                `#${page.charAt(0).toUpperCase() + page.slice(1)}`
             ) > -1
         ) {
             dispatch(setActiveNavItem(t(page)));
@@ -103,7 +103,6 @@ const SideNavbar = () => {
                     />
                 ))}
             </div>
-
             <div className={"mt-5"}>
                 <LanguageButton id={"test"} />
 

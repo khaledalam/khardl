@@ -49,11 +49,11 @@ const OuterSidebarNav = ({ id }) => {
                 if (!isClosed) {
                     let branchStart = moment(
                         eval("branch." + currentDay + "_open"),
-                        "HH:mm:ss",
+                        "HH:mm:ss"
                     );
                     let branchEnd = moment(
                         eval("branch." + currentDay + "_close"),
-                        "HH:mm:ss",
+                        "HH:mm:ss"
                     );
                     let branchRage = moment.range(branchStart, branchEnd);
                     isClosed = !branchRage.contains(currentHour);
@@ -80,7 +80,7 @@ const OuterSidebarNav = ({ id }) => {
     const { closeMenu } = useContext(MenuContext);
 
     const currentLanguage = useSelector(
-        (state) => state.languageMode.languageMode,
+        (state) => state.languageMode.languageMode
     );
 
     const refOuterNav = useRef(null);
@@ -121,22 +121,22 @@ const OuterSidebarNav = ({ id }) => {
             const restaurantCategoriesResponse = await AxiosInstance.get(
                 `categories?items&user&branch${
                     id ? `&selected_branch_id=${id}` : ""
-                }`,
+                }`
             );
 
             console.log(
                 "editor rest restaurantCategoriesResponse OuterSidebarNav",
-                restaurantCategoriesResponse.data,
+                restaurantCategoriesResponse.data
             );
             if (restaurantCategoriesResponse.data) {
                 dispatch(
-                    setCategoriesAPI(restaurantCategoriesResponse.data?.data),
+                    setCategoriesAPI(restaurantCategoriesResponse.data?.data)
                 );
                 dispatch(
                     selectedCategoryAPI({
                         name: restaurantCategoriesResponse.data?.data[0].name,
                         id: restaurantCategoriesResponse.data?.data[0].id,
-                    }),
+                    })
                 );
 
                 if (!branch_id) {
@@ -169,7 +169,7 @@ const OuterSidebarNav = ({ id }) => {
             fetchCategoriesData(selectedDeliveryBranch?.id);
             localStorage.setItem(
                 "selected_branch_id",
-                selectedDeliveryBranch.id,
+                selectedDeliveryBranch.id
             );
         }
     }, [selectedPickUpBranch, selectedDeliveryBranch]);
@@ -190,13 +190,13 @@ const OuterSidebarNav = ({ id }) => {
     let pickupFirstBranch = () => {
         const defaultBranches = branches?.filter(
             (branch) =>
-                branch.is_primary === 1 && branch.pickup_availability === 1,
+                branch.is_primary === 1 && branch.pickup_availability === 1
         );
         if (defaultBranches?.length > 0) {
             return defaultBranches[0];
         } else {
             return branches?.filter(
-                (branch) => branch.pickup_availability === 1,
+                (branch) => branch.pickup_availability === 1
             )[0];
         }
     };
@@ -204,13 +204,13 @@ const OuterSidebarNav = ({ id }) => {
     let deliveryFirstBranch = () => {
         const defaultBranches = branches?.filter(
             (branch) =>
-                branch.is_primary === 1 && branch.delivery_availability === 1,
+                branch.is_primary === 1 && branch.delivery_availability === 1
         );
         if (defaultBranches?.length > 0) {
             return defaultBranches[0];
         } else {
             return branches?.filter(
-                (branch) => branch.delivery_availability === 1,
+                (branch) => branch.delivery_availability === 1
             )[0];
         }
     };
@@ -277,7 +277,7 @@ const OuterSidebarNav = ({ id }) => {
                             branches
                                 ? branches?.filter(
                                       (branch) =>
-                                          branch.pickup_availability === 1,
+                                          branch.pickup_availability === 1
                                   )
                                 : []
                         }
@@ -297,7 +297,7 @@ const OuterSidebarNav = ({ id }) => {
                             branches
                                 ? branches?.filter(
                                       (branch) =>
-                                          branch.delivery_availability === 1,
+                                          branch.delivery_availability === 1
                                   )
                                 : []
                         }
