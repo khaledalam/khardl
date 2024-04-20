@@ -549,7 +549,7 @@
     "qr-maker" : "محرر كيو ار",
     "not_live":"غير مفعل",
     "receipt" : "استلام",
-    "payment-in-cash-upon-receipt" : "الدفع عند الاستلام",
+    "payment-in-cash-upon-receiving" : "الدفع عند الاستلام",
     "payment-gateway-approve-warning-text" : "حساب الاعمال الخاص بك علي بوابه الدفع لم يتم الموافقه عليه بعد، من فضلك",
     "payment-gateway-approve-warning-link-text" : "ارفع ملفات بوابه الدفع",
     "download-all-files":"تحميل كل الملفات",

@@ -109,7 +109,7 @@
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">{{__('payment-in-cash-upon-receipt')}}</span>
+														<span class="fw-bolder fs-5 mb-0">{{__('payment-in-cash-upon-receiving')}}</span>
 													</span>
                                                 <!--end::Label-->
                                             </label>

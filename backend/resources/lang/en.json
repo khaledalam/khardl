@@ -268,7 +268,7 @@
     "qr-maker" : "QR maker",
     "not_live":"Not live",
     "receipt" : "Receipt",
-    "payment-in-cash-upon-receipt" : "Payment upon receipt",
+    "payment-in-cash-upon-receiving" : "Payment upon receiving",
     "payment-gateway-approve-warning-text" : "Your payment gateway business account is not approved yet, please",
     "payment-gateway-approve-warning-link-text" : "submit your payment gateway documents.",
     "see-restaurant-owners":"See Restaurant owners",
