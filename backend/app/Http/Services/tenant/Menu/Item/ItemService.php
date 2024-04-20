@@ -2,16 +2,11 @@
 
 namespace App\Http\Services\tenant\Menu\Item;
 
-use App\Http\Requests\Tenant\Menu\UpdateItemFormRequest;
-use App\Models\Tenant\Cart;
+use App\Http\Requests\Tenant\Menu\ItemFormRequest;
 use App\Models\Tenant\CartItem;
 use App\Models\Tenant\Item;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class ItemService
 {
@@ -19,23 +14,8 @@ class ItemService
     {
         return view('restaurant.view-item', compact('item'));
     }
-    public function addItem($request, $id, $branchId)
+    public function addItem(ItemFormRequest $request, $id, $branchId)
     {
-        // TODO @todo validate the remain fields of the coming request
-
-        if (!$request->validate([
-            'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
-            'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
-            'checkbox_input_maximum_choices' => 'nullable|int|min:1'
-        ], [
-            'item_name_en.regex'=>__("English name is not valid"),
-            'item_name_en.required'=>__("English name is required"),
-            'item_name_ar.regex'=>__("Arabic name is not valid"),
-            'item_name_ar.required'=>__("Arabic name is required")
-        ])) {
-            return redirect()->back()->with('error', __('Invalid Product Name'));
-        }
-
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
             $photoFile = $request->file('photo');
@@ -81,7 +61,7 @@ class ItemService
             }
         }
     }
-    public function update(UpdateItemFormRequest $request, Item $item)
+    public function update(ItemFormRequest $request, Item $item)
     {
         DB::beginTransaction();
         try {
