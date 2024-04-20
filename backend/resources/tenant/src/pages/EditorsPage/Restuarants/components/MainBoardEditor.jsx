@@ -503,7 +503,7 @@ const MainBoardEditor = ({
                 listofBannerImages?.length > 1 ? (
                     <>
                         <div
-                            className={`w-full h-[304px] ${
+                            className={`w-full aspect-[2/1] ${
                                 navItems[activeSection]?.title === "Banner" &&
                                 "shadow-inner border-[#C0D123] border-[2px] rounded-[10px]"
                             }`}
