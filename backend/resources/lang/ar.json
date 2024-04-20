@@ -549,7 +549,8 @@
     "qr-maker" : "محرر كيو ار",
     "not_live":"غير مفعل",
     "receipt" : "استلام",
-    "payment-in-cash-upon-receiving" : "الدفع عند الاستلام",
+    "payment-in-cash-upon-receipt" : "الدفع عند الاستلام",
+    "Payment upon receiving" : "الدفع عند الاستلام",
     "payment-gateway-approve-warning-text" : "حساب الاعمال الخاص بك علي بوابه الدفع لم يتم الموافقه عليه بعد، من فضلك",
     "payment-gateway-approve-warning-link-text" : "ارفع ملفات بوابه الدفع",
     "download-all-files":"تحميل كل الملفات",
@@ -1080,7 +1081,7 @@
     "Max time for drivers to pickup order" : "أقصى وقت للسائقين لاستلام الطلب",
     "The number of minutes for drivers so he can pick up order before order goes to delivery companies" : "عدد الدقائق لدي السائق لالتقاط الطلب قبل خروج الطلب الي شركات التوصيل",
     "Number of minutes" : "عدد الدقائق",
-    "Max time for drivers to pickup order(in case if delivery companies exist or drivers)" : "الحد الأقصى للوقت الذي يستغرقه السائقون لاستلام الطلب (في حالة وجود شركات التوصيل اوالسائقين)",
+    "Max time for drivers to accept order(in case if delivery companies exist and drivers)" : "الحد الأقصى للوقت الذي يستغرقه السائقون لقبول الطلب (في حالة وجود شركات التوصيل  والسائقين)",
     "Default: :minutes minutes" : "الحالي : :minutes دقيقة",
     "Delivery companies option" : "تفعيل شركات التوصيل",
     "Drivers option" : "تفعيل السائقين",
@@ -1195,6 +1196,8 @@
     "Price[:num] of selection can not be empty":"السعر[:num] للخيارات الحره مطلوب",
     "Options[:num] name[AR] of dropdown can not be empty":"الاسم العربي للخيار[:num] مطلوب للخيارات من قائمه ",
     "Options[:num] name[EN] of dropdown can not be empty":"الاسم الانجليزي للخيار[:num] مطلوب للخيارات من قائمه",
-    "Price[:num] of dropdown can not be empty":"السعر[:num] للخيارات من قائمه مطلوب"
+    "Price[:num] of dropdown can not be empty":"السعر[:num] للخيارات من قائمه مطلوب",
+    "Global delivery fees for all branches":"رسوم التوصيل علي كل ال,فروع",
+    "To get a better experience please use a computer":"للحصول على تجربة افضل رجاء استخدام كمبيوتر"
 
 }

@@ -29,7 +29,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>{{ __('fees')}}</h2>
+                                            <h2>{{ __('Global delivery fees for all branches')}}</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -84,10 +84,10 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="form-label">{{ __('Max time for drivers to pickup order(in case if delivery companies exist or drivers)')}}</label>
+                                            <label class="form-label">{{ __('Max time for drivers to accept order(in case if delivery companies exist and drivers)')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" min="1" name="limit_delivery_company" id="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('Number of minutes')}}" value="{{$settings->limit_delivery_company}}" />
+                                            <input type="number" min="1" name="limit_delivery_company" id="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('Number of minutes')}}" value="{{$settings->limit_delivery_company ?? config('application.limit_delivery_company')}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{__('The number of minutes for drivers so he can pick up order before order goes to delivery companies')}} ({{ __('Default: :minutes minutes',['minutes' => $settings->limit_delivery_company ?? config('application.limit_delivery_company')]) }})</div>
@@ -96,6 +96,7 @@
                                         <!--end::Input group-->
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
+                                        {{-- TODO: make options for every branch --}}
                                         <div class="row mb-0 mt-5">
                                             <!--begin::Label-->
                                             <div class="form-check form-check-solid form-switch fv-row">
