@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Sentry\Laravel\Integration;
 use Stancl\Tenancy\Exceptions\TenantCouldNotBeIdentifiedOnDomainException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Throwable;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -29,7 +31,7 @@ class Handler extends ExceptionHandler
     {
         // Exclude Exceptions
         if ($exception instanceof TenantCouldNotBeIdentifiedOnDomainException ||
-            $exception instanceof NotFoundHttpException) {
+            $exception instanceof NotFoundHttpException || $exception instanceof MethodNotAllowedHttpException) {
             return;
         }
 
