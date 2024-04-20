@@ -32,6 +32,9 @@ class ChangeStatusRequest extends FormRequest
             Order::COMPLETED,
         ]), function ($attribute, $value, $fail) use ($order) {
             // Check status based on order and user
+            if($order->branch_id != getAuth()->branch_id){
+                $fail(__('Order is not for you branch'));
+            }
             if ($value == Order::COMPLETED) {
                 if($order->status != Order::ACCEPTED){
                     $fail(__('Order is not accepted yet'));

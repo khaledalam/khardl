@@ -48,7 +48,7 @@ class OrderService
                             ->orWhereNull('driver_id');
                     });
             })
-            ->when($request->status == 'accepted' || $request->status == 'cancelled' || $request->status == 'completed', function ($query) use ($request) {
+            ->when($request->status, function ($query) use ($request) {
                 return $query->whenStatus($request->status);
             })
             ->recent();
@@ -113,6 +113,7 @@ class OrderService
         if(
             ($order->status == Order::RECEIVED_BY_RESTAURANT || $order->status == Order::READY)
             && ($order->driver_id == null || $order->driver_id == $user->id)
+            && ($order->branch_id == $user->branch_id)
             && $order->deliver_by == null
         ){
             $order->driver_id = $user->id;
