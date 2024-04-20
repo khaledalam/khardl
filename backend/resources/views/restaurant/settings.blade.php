@@ -84,7 +84,7 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="form-label">{{ __('Max time for drivers to pickup order(in case if delivery companies exist and drivers)')}}</label>
+                                            <label class="form-label">{{ __('Max time for drivers to pickup order(in case if delivery companies exist or drivers)')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="number" min="1" name="limit_delivery_company" id="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('Number of minutes')}}" value="{{$settings->limit_delivery_company}}" />
