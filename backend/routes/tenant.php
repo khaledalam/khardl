@@ -364,7 +364,9 @@ Route::middleware([
                 Route::controller(NotificationController::class)->group(function () {
                     Route::get('get-all', 'index');
                     Route::post('/read-notification/{id}','show');
+                    Route::post('/unread-notification/{id}','unread');
                     Route::post('/read-all','markAllAsRead');
+                    Route::post('/unread-all','markAllAsUnRead');
                 });
                 Route::controller(ProfileController::class)->group(function () {
                     Route::post('change-password', 'changePassword');
