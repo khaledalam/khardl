@@ -328,5 +328,9 @@ class Order extends Model
         }
         return false;
     }
+    public function getAssignedToMeAttribute()
+    {
+        return $this->driver_id == getAuth()->id;
+    }
 
 }
