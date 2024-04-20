@@ -925,10 +925,10 @@ const ProductItem = ({
                                                     )}
 
                                                 {/* dropdown */}
-                                                {console.log(
-                                                    "testing: ",
-                                                    dropdownItems[0]?.length > 0
-                                                )}
+                                                {/*{console.log(*/}
+                                                {/*    "testing: ",*/}
+                                                {/*    dropdownItems[0]?.length > 0*/}
+                                                {/*)}*/}
                                                 {dropdown_input_titles &&
                                                     dropdown_input_titles.length >
                                                         0 &&
