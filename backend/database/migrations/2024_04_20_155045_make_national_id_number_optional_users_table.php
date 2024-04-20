@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\User;
+use Doctrine\DBAL\Types\StringType;
+use Doctrine\DBAL\Types\Type;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,9 +14,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('restaurant_styles', function (Blueprint $table) {
-            $table->integer('logo_border_radius')->default(25)->change();
-            $table->string('logo_border_color')->default('#fff')->change();
+        Schema::table('trader_requirements', function (Blueprint $table) {
+            $table->string('national_id_number')->nullable()->change();
         });
     }
 
@@ -22,6 +24,5 @@ return new class extends Migration
      */
     public function down(): void
     {
-
     }
 };

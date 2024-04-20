@@ -98,7 +98,7 @@
                             <th class="text-end min-w-100px">{{ __('payment-status') }}</th>
 
                             <th class="text-end min-w-100px">{{ __('Total') }}</th>
-                            <th class="text-end min-w-100px">{{ __('Address') }}</th>
+                            <th class="text-end min-w-100px">{{ __('Address') }} <i class="fas fa-info-circle"></i></th>
                             <th class="text-end min-w-100px">{{ __('Date') }}</th>
                             <th class="text-end min-w-100px">
                                 <a href="{{ route('restaurant.orders_add') }}">
@@ -165,7 +165,7 @@
                         </td> --}}
                         <td class="text-end pe-0" >
                             <!--begin::Badges-->
-                            <div class="fw-bolder"> {{$order->branch->name}}</div>
+                            <div class="fw-bolder"> {{$order->branch?->name}}</div>
 
                             <!--end::Badges-->
                         </td>
@@ -179,11 +179,11 @@
                         <!--end::Status=-->
 
                         <td class="text-end pe-0">
-                            <span class="fw-bolder">{{__(''.$order->payment_method->name)}}</span>
+                            <span class="fw-bolder">{{__(''.$order->payment_method?->name)}}</span>
                         </td><td class="text-end pe-0">
                             <span class="fw-bolder">
 
-                                @if($order->delivery_type->name == \App\Models\Tenant\DeliveryType::DELIVERY)
+                                @if($order->delivery_type?->name == \App\Models\Tenant\DeliveryType::DELIVERY)
                                     {{__(''.$order->delivery_type->name)}}
                                     @if($order->status == \App\Models\Tenant\Order::RECEIVED_BY_RESTAURANT)
                                         <?php $delivery_companies = $order->getAcceptedDelivery();?>
@@ -205,7 +205,7 @@
                                         @endif
                                     @endif
                                 @else
-                                    {{__(''.$order->delivery_type->name)}}
+                                    {{__(''.$order->delivery_type?->name)}}
                                 @endif
                             </span>
                         </td>
@@ -227,7 +227,21 @@
                         </td>
                         <!--end::Total=-->
                         <td>
-                            <span class="fw-bolder">{{$order->shipping_address ?? $order->user->address ?? $order->address ?? __('NA')}}</span>
+                            <span class="fw-bolder">
+                                @if ($order->shipping_address)
+                                <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $order->shipping_address }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">{{ Str::limit($order->shipping_address, 20, '...') }}</span>
+                                @else
+                                    @if ($order->user?->address)
+                                    <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $order->user?->address }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">{{ Str::limit($order->user?->address, 20, '...') }}</span>
+                                    @else
+                                        @if ($order->address)
+                                        <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $order->address }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">{{ Str::limit($order->address, 20, '...') }}</span>
+                                        @else
+                                        {{  __('NA') }}
+                                        @endif
+                                    @endif
+                                @endif
+                            </span>
                         </td>
                         <!--begin::Date Added=-->
                         <td class="text-end" data-order="2022-03-22">
@@ -251,7 +265,7 @@
                                     <a href="{{route('restaurant.branch.order',['order'=>$order->id])}}" class="menu-link px-3">{{ __('View') }}</a>
                                 </div>
                                 <!--end::Menu item-->
-                            
+
                                 <!--end::Menu item-->
                                 <!--begin::Menu item-->
                                 {{-- <div class="menu-item px-3">

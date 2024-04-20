@@ -283,7 +283,7 @@ class RestaurantController extends BaseController
         $user = Auth::user();
         $order->load('user', 'items');
 
-        $orderStatusLogs = OrderStatusLogs::all()->sortByDesc("created_at");
+        $orderStatusLogs = OrderStatusLogs::orderBy("created_at",'desc')->where('order_id',$order->id)->get();
         $locale = app()->getLocale();
         return view(
             'restaurant.orders.show',
@@ -549,6 +549,9 @@ class RestaurantController extends BaseController
             'normal_from' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i')],
             'normal_to' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i|after:normal_from')],
             ...$daysRules
+        ], [
+            'lat-new_branch.required' => 'Select location',
+            'lng-new_branch.required' => 'Select location',
         ]);
 
         $branchesExist = DB::table('branches')->where('is_primary', 1)->exists();

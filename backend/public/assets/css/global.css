@@ -5,6 +5,11 @@
         max-width: none !important;
     }
 }
+@media (max-width: 990px) {
+    .mobile-alert{
+        display: block!important;
+    }
+}
 
 .delivery_companies .tab-pane {
     max-height: 241px;

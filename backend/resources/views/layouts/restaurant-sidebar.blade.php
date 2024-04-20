@@ -45,6 +45,15 @@
     @stack('styles')
     @yield('css')
 
+    @if(app()->getLocale() === 'ar')
+                                <style>
+                                .menu-item.menu-accordion.show:not(.hiding):not(.menu-dropdown) > .menu-link .menu-arrow:after, .menu-item.menu-accordion.showing:not(.menu-dropdown) > .menu-link .menu-arrow:after {
+                                    transform: rotateZ(270deg);
+                                    transition: transform 0.3s ease;
+                                }
+                                </style>
+    @endif
+
 <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -71,7 +80,7 @@
                 icon: type,
                 title: message,
                 showConfirmButton: false,
-                timer: 3500
+                timer: 500
             });
         }
     </script>
@@ -86,7 +95,7 @@
                 icon: type,
                 title: message,
                 showConfirmButton: false,
-                timer: 3500
+                timer: 1000
             });
         }
     </script>
@@ -529,6 +538,7 @@
         <div class="m-4 wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
         @include('restaurant.components.payment-tap-documents-alert')
         @include('restaurant.components.subscription-alert')
+        @include('restaurant.components.mobile-alert')
         <!--begin::Header-->
             <div id="kt_header" class="header align-items-stretch">
                 <!--begin::Container-->

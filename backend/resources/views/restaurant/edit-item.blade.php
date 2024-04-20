@@ -88,17 +88,17 @@
 
                                             <ul class="nav nav-tabs" >
                                                 <li class="nav-item">
-                                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">{{ __('English') }}</a>
+                                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en-{{ $item->id }}">{{ __('English') }}</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">{{ __('Arabic') }}</a>
+                                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar-{{ $item->id }}">{{ __('Arabic') }}</a>
                                                 </li>
                                             </ul>
                                             <div class="tab-content mt-3">
-                                                <div class="tab-pane fade show active" id="name-en">
+                                                <div class="tab-pane fade show active" id="name-en-{{ $item->id }}">
                                                     <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in english') }}" name="item_name_en" value="{{ old('item_name_en') ??  $item->getTranslation('name', 'en') }}"/>
                                                 </div>
-                                                <div class="tab-pane fade" id="name-ar">
+                                                <div class="tab-pane fade" id="name-ar-{{ $item->id }}">
                                                     <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}" name="item_name_ar" value="{{ old('item_name_ar') ?? $item->getTranslation('name', 'ar') }}"/>
                                                 </div>
                                             </div>

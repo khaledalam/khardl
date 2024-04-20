@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
             'status'=> 'active',
             'address' => 'test address',
             'position'=>"Super Admin",
-            'password' => bcrypt('khardl@123'),
+            'password' => bcrypt(HelperSeeder::PASSWORD),
             'remember_token' => Str::random(10),
         ]);
 
@@ -94,7 +94,7 @@ class UserSeeder extends Seeder
             'position'=>"Restaurant Owner",
             'restaurant_name' => $restaurant_name,
             'restaurant_name_ar' =>'مطعم' . $id,
-            'password' => bcrypt('khardl@123'),
+            'password' => bcrypt(HelperSeeder::PASSWORD),
             'remember_token' => Str::random(10),
         ]);
         $faker = (new Factory())::create();

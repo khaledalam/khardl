@@ -77,7 +77,12 @@ function openModal(modalID) {
     var modalContent = $('#' + modalID).html();
 
     $('#modal_base_content').html(modalContent);
-    
+    if(modalID == 'kt_modal_renew_sub'){
+        @if($RO_subscription && $RO_subscription->status == \App\Models\ROSubscription::ACTIVE)
+            calculateRenewPrice();
+        @endif
+    }
+   
     $('#kt_modal_default').modal('show');
 }     
 
@@ -208,7 +213,7 @@ function openModal(modalID) {
                                                                     </div>
                                                                     @elseif($RO_subscription?->status == \App\Models\ROSubscription::ACTIVE && $RO_subscription->end_at->isPast())
                                                                     <a href="#" class="btn btn-sm btn-warning "  onclick="openModal('kt_modal_suspend_sub')" ><svg style="margin-left:10px" xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="red" viewBox="0 0 512 512">
-                                                                            <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></svg>{{__('Renew Subscription')}}</a>
+                                                                        <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></svg>{{__('Renew Subscription')}}</a>
 
                                                                     @elseif($RO_subscription?->status == \App\Models\ROSubscription::DEACTIVATE)
                                                                     <div class="row" style="width: 115%">
@@ -223,9 +228,9 @@ function openModal(modalID) {
                                                                     </div>
                                                                     @elseif($RO_subscription?->status == \App\Models\ROSubscription::SUSPEND)
                                                                     <a href="#" class="btn btn-sm btn-warning " onclick="openModal('kt_modal_suspend_sub')" ><svg style="margin-left:10px" xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="red" viewBox="0 0 512 512">
-                                                                            <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></svg>{{__('Renew Subscription')}}</a>
+                                                                        <path d="M2x56 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></svg>{{__('Renew Subscription')}}</a>
                                                                     @else
-                                                                    <a href="#" class="btn btn-sm btn-khardl" onclick="openModal('kt_modal_new_target')" ><i class="fas fa-shopping-cart"></i>{{__('loly')}}</a>
+                                                                    <a href="#" class="btn btn-sm btn-khardl" onclick="openModal('kt_modal_new_target')" ><i class="fas fa-shopping-cart"></i>{{__('Buy now')}}</a>
                                                                     @endif
 
                                                                 </div>
@@ -243,7 +248,6 @@ function openModal(modalID) {
                                                                             </div>
                                                                             <div id="root"></div>
                                                                             <p id="msg"></p>
-                                                                            <input type="hidden" name="token_id" id="token_id" value="">
                                                                             <div class="modal-body" id="modal_base_content">
 
                                                                             </div>
@@ -263,6 +267,8 @@ function openModal(modalID) {
                                                                 <!--begin::Modal content-->
                                                                 <div class="modal-content rounded ">
                                                                     <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::NEW}}">
+                                                                    <input type="hidden" name="token_id" id="token_id" value="">
+
                                                                     <!--begin::Modal header-->
                                                                     <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                         <h5 class="modal-title text-center">{{$subscription->name}}</h5>
@@ -309,6 +315,8 @@ function openModal(modalID) {
                                                                     <!--begin::Modal content-->
                                                                     <div class="modal-content rounded ">
                                                                         <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::RENEW_TO_CURRENT_END_DATE}}">
+                                                                        <input type="hidden" name="token_id" id="token_id" value="">
+
                                                                         <!--begin::Modal header-->
                                                                         <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                             <h5 class="modal-title text-center">{{$subscription->name}} ({{__('Adding new branches')}})</h5>
@@ -373,6 +381,7 @@ function openModal(modalID) {
                                                                     <div class="modal-content rounded ">
                                                                         <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::RENEW_AFTER_ONE_YEAR}}">
                                                                         <input type="hidden" class="form-control" id="n_branches" name="n_branches" value="0">
+                                                                        <input type="hidden" name="token_id" id="token_id" value="">
 
                                                                         <!--begin::Modal header-->
                                                                         <div class="modal-header pb-0 border-0  d-flex justify-content-center">
@@ -690,21 +699,34 @@ function openModal(modalID) {
                                                         <!--end::Title-->
                                                         <!--begin::Price-->
                                                         <div class="text-center">
-                                                            <span class="fs-2x fw-bolder text-khardl text-center">"{{__('Free')}}"</span>
+                                                            <span class="fs-2x fw-bolder text-khardl text-center">{{__('Free')}}</span>
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
                                                     <!--end::Heading-->
 
                                                     <div class="w-100"><span class="text-khardl fw-bolder text-right m-5">{{__('download now :')}} </span></div>
-                                                    <div class="d-flex justify-content-center align-items-center mt-3">
-                                                        <div class="mx-3">
-                                                            <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">{{__('iPhone')}}</a>
+                                                    <div class="d-flex justify-content-center p-2" >
+                                                        <div class="mr-auto p-2">
+                                                            <div>
+                                                                <a href="https://play.google.com/store/apps/details?id=com.khardl.orders" target="_blank">
+                                                                    <img src="{{global_asset('images/logo_playstore.svg')}}" width="130"/>
+                                                                </a>
+                                                            </div>
                                                         </div>
-                                                        <div class="mx-3">
-                                                            <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">{{__('Android')}}</a>
+                                                        <div class="p-2">
+                                                            <div>
+                                                                <a href="https://apps.apple.com/us/app/khardl-orders/id6478204383" target="_blank">
+                                                                    <img src="{{global_asset('images/logo_appstore.svg')}}" width="130"/>
+                                                                </a>
+                                                            </div>
                                                         </div>
+                      
+                                            
+                                    
+
                                                     </div>
+            
                                                 </div>
                                                 <!--end::Option-->
                                             </div>
@@ -787,9 +809,7 @@ function openModal(modalID) {
                 const factor = parseFloat(factorInput.value) || 1;
                 priceInput.value = "{{$subscription->amount}}" * factor;
             }
-            @if($RO_subscription && $RO_subscription->status == \App\Models\ROSubscription::ACTIVE)
-                calculateRenewPrice();
-            @endif
+           
 
         </script>
      </div>

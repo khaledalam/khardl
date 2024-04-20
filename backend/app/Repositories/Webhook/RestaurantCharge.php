@@ -2,11 +2,14 @@
 
 namespace App\Repositories\Webhook;
 
-use App\Models\ROCustomerAppSub;
 use Closure;
 use Exception;
 use App\Models\Tenant\Branch;
 use App\Models\ROSubscription;
+use App\Models\Tenant\Setting;
+use App\Models\ROCustomerAppSub;
+use App\Jobs\SendNotifyForNewSub;
+use App\Models\NotificationReceipt;
 use Illuminate\Support\Facades\DB;
 use App\Models\ROSubscriptionInvoice;
 use App\Models\Tenant\RestaurantUser;
@@ -89,8 +92,9 @@ class RestaurantCharge
                 'card_id' => $data['card']['id'] ?? null,
                 'type' => $data['metadata']['subscription'],
             ]);
-         
+            
             DB::commit();
+      
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
@@ -184,5 +188,14 @@ class RestaurantCharge
             'type' => $data['metadata']['subscription'],
         ]);
        
+    }
+    public static function NotifyUsers($data){
+        SendNotifyForNewSub::dispatch(
+            Setting::first()->restaurant_name,
+            tenant()->id,
+            $data['amount'],
+            isset($data['metadata']['customer_app'])?NotificationReceipt::is_application_purchase: NotificationReceipt::is_branch_purchase,
+            now()->format('Y-m-d H:i'), 
+        );
     }
 }
