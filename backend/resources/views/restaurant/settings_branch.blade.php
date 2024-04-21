@@ -172,7 +172,7 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="delivery_types[]" value="{{\App\Models\Tenant\DeliveryType::PICKUP}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::PICKUP] ?? false)?'checked':''}}  />
+                                                <input class="form-check-input me-3" type="checkbox" name="pickup_availability" value="1" {{($delivery_types[\App\Models\Tenant\DeliveryType::PICKUP] ?? false)?'checked':''}}  />
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">

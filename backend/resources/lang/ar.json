@@ -1201,6 +1201,8 @@
     "To get a better experience please use a computer":"للحصول على تجربة افضل رجاء استخدام كمبيوتر",
     "Order is not for you branch":"الطلب ليس لك فرعك",
     "The delivery":"التوصيل",
-    "Own drivers":"السائقين الخاصيين"
+    "Own drivers":"السائقين الخاصيين",
+    "Can not enable drivers option if you do not have active drivers.":"لا يمكنك تمكين خيار السائقين إذا لم يكن لديك سائقين نشطيين.",
+    "Can not enable delivery company option if you do not signed with any delivery company.":"لا يمكن تمكين خيار شركة التوصيل إذا لم تقم بالتسجيل مع أي شركة توصيل."
 
 }
