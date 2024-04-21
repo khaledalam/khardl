@@ -46,7 +46,8 @@ class Branch extends Model
         'sunday_close',
         'sunday_closed',
         'preparation_time_delivery',
-        'delivery_availability',
+        'delivery_companies_option',
+        'drivers_option',
         'pickup_availability',
         'active',
         'display_category_icon'

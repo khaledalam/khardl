@@ -219,31 +219,26 @@ class RestaurantController extends BaseController
             }
             $payment_methods[] = PaymentMethod::where('name', $method)->first()->id;
         }
-        $hasActiveDrivers = RestaurantUser::activeDrivers()->get()->count();
-        $hasDeliveryCompanies = DeliveryCompanies::all()->count();
-        $branch->update([
-            'delivery_availability'=>false,
-            'pickup_availability'=>false
-        ]);
-        foreach ($request->delivery_types ?? [] as $method) {
-            if($method == DeliveryType::DELIVERY && !$hasActiveDrivers  && !$hasDeliveryCompanies){
-                return redirect()->back()->with('error', __('you are not signed with any delivery company as well as no active drivers'));
-            }
-            if($method == DeliveryType::DELIVERY && ($hasActiveDrivers  || $hasDeliveryCompanies)){
-                $branch->update([
-                    'delivery_availability'=>true
-                ]);
-            }
-
-            if($method == DeliveryType::PICKUP){
-                $branch->update([
-                    'pickup_availability'=>true
-                ]);
-            }
-            $delivery_types[] = DeliveryType::where('name', $method)->first()->id;
-        }
         $branch->payment_methods()->sync($payment_methods);
+
+        if($request->filled('pickup_availability')){
+            $data['pickup_availability'] = 1;
+            $delivery_types[] = DeliveryType::where('name', DeliveryType::PICKUP)->first()->id;
+        }else{
+            $data['pickup_availability'] = 0;
+        }
+        if($request->filled('delivery_companies_option') || $request->filled('drivers_option')){
+            $delivery_types[] = DeliveryType::where('name', DeliveryType::DELIVERY)->first()->id;
+            $data['delivery_companies_option'] = $request->filled('delivery_companies_option') ? 1 : 0;
+            $data['drivers_option'] = $request->filled('drivers_option') ? 1 : 0;
+        }else{
+            $data['delivery_companies_option'] = 0;
+            $data['drivers_option'] = 0;
+            $delivery_types = null;
+        }
+        $branch->update($data);
         $branch->delivery_types()->sync($delivery_types);
+
         if($request->preparation_time_delivery){
             $branch->update(['preparation_time_delivery' => $request->preparation_time_delivery]);
         }
