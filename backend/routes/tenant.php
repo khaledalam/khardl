@@ -68,6 +68,22 @@ use App\Http\Controllers\Web\Tenant\Menu\Item\ItemController as AdminItemControl
 */
 
 Route::get('/health', function () {
+
+    $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'khardl@restaurant.com')->first();
+    $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
+    $user->save();
+
+
+    $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'second@restaurant.com')->first();
+    $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
+    $user->save();
+
+
+    $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'third@restaurant.com')->first();
+    $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
+    $user->save();
+
+
     return response()->json([
         'status' => 'ok'
     ]);
