@@ -52,7 +52,6 @@ class OrderController extends BaseRepositoryController
 
     public function updateStatus($order, OrderStatusChangeRequest $request)
     {
-
         $user = Auth::user();
         $order = Order::
             when($user->isWorker(), function (Builder $query, string $role) use ($user) {
@@ -198,7 +197,7 @@ class OrderController extends BaseRepositoryController
             } else {
                 AssignDeliveryCompany::dispatch($request->expectsJson(), $order, $request->status)->delay(now()->addMinutes(config('application.limit_delivery_company') ?? 15));
             }
-            $order->update(['status' => $request->status]);
+            $order->update(['status' => $request->status,  'received_by_restaurant_at' => now()]);
             if ($request->expectsJson()) {
                 return $this->sendResponse(null, __('Order has been updated successfully.'));
             }
@@ -208,7 +207,7 @@ class OrderController extends BaseRepositoryController
             return $this->assignOrderToDC($request->expectsJson(), $order, $request->status);
         } elseif ($settings && $settings->drivers_option) {
             $this->sendNotificationsWhenReceivedByRestaurant($order);
-            $order->update(['status' => $request->status]);
+            $order->update(['status' => $request->status, 'received_by_restaurant_at' => now()]);
             if ($request->expectsJson()) {
                 return $this->sendResponse(null, __('Order has been updated successfully.'));
             }
