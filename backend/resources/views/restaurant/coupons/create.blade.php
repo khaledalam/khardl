@@ -66,12 +66,12 @@
                                                                     <div class="fv-row">
                                                                         <div class="row">
                                                                             <!--begin::Col 1-->
-                                                                            <div class="col-lg-6">
+                                                                            <div class="col-lg-5">
                                                                                 <!--begin::Option 1-->
                                                                                 <input type="radio" class="btn-check" name="type"  value="percentage" checked id="kt_create_account_form_account_type_percentage" />
                                                                                 <label class="btn btn-outline btn-outline-dashed btn-outline-default p-3 d-flex align-items-center mb-10" for="kt_create_account_form_account_type_percentage">
                                                                                     <!--begin::Info-->
-                                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                                    <div class="d-flex justify-content-between gap-3 align-items-center">
                                                                                         <div>
                                                                                             <span>%</span>
                                                                                         </div>
@@ -85,13 +85,17 @@
                                                                             </div>
                                                                             <!--end::Col 1-->
 
+                                                                            <div class="col-lg-1">
+                                                                                <span class="mt-5 d-flex justify-content-center align-items-center">{{__("or")}}</span>
+                                                                            </div>
+
                                                                             <!--begin::Col 2-->
                                                                             <div class="col-lg-6">
                                                                                 <!--begin::Option 2-->
                                                                                 <input type="radio" class="btn-check" name="type" value="fixed" id="kt_create_account_form_account_type_sar" />
                                                                                 <label class="btn btn-outline btn-outline-dashed btn-outline-default p-3 d-flex align-items-center mb-10" for="kt_create_account_form_account_type_sar">
                                                                                     <!--begin::Info-->
-                                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                                    <div class="d-flex justify-content-between gap-3 align-items-center">
                                                                                         <div>
                                                                                             <span>{{ __('SAR') }}</span>
                                                                                         </div>
