@@ -89,7 +89,7 @@ Route::group([
         $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', 'first')->first()?->id);
         // set user status in tenant table too
         $tenant->run(function (){
-            $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'khardl@restaurant.com')->first();
+            $user = \App\Models\Tenant\RestaurantUser::find(1)->first();
             $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
             $user->save();
         });
@@ -97,7 +97,7 @@ Route::group([
         $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', 'second')->first()?->id);
         // set user status in tenant table too
         $tenant->run(function (){
-            $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'second@restaurant.com')->first();
+            $user = RestaurantUser::find(1)->first();
             $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
             $user->save();
         });
@@ -105,7 +105,7 @@ Route::group([
         $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', 'third')->first()?->id);
         // set user status in tenant table too
         $tenant->run(function (){
-            $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'third@restaurant.com')->first();
+            $user = \App\Models\Tenant\RestaurantUser::find(1)->first();
             $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
             $user->save();
         });
