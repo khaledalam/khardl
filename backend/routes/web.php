@@ -173,6 +173,8 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
+                    Route::get('/promoters-subscriptions', [AdminController::class, 'promotersSub'])->middleware('permission:can_promoters')->name('promoters.sub');
+                    Route::post('/promoters-subscriptions', [AdminController::class, 'savePromotersSub'])->middleware('permission:can_promoters')->name('save.promoters.sub');
                     Route::resource('/notifications-receipt', NotificationReceiptController::class)->middleware('permission:can_manage_notifications_receipt');
                     Route::post('/notifications-receipt/toggle-status/{notifications_receipt}',[NotificationReceiptController::class,'toggleStatus'])
                     ->name('notifications-change-status')

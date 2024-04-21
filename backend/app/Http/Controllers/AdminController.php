@@ -2,34 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Admin\LogTypes;
-use App\Http\Requests\Central\Promoter\AddPromoterFormRequest;
-use App\Jobs\SendApprovedEmailJob;
-use App\Jobs\SendApprovedRestaurantEmailJob;
-use App\Jobs\SendDeniedEmailJob;
-use App\Models\CentralSetting;
-use App\Models\Tenant\OrderStatusLogs;
-use App\Models\Tenant\Setting as TenantSettings;
-use App\Models\Tenant;
-use App\Models\Tenant\RestaurantUser;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Contracts\Mail\Mailable;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Log;
+use App\Models\User;
+use App\Models\Tenant;
+use App\Models\Promoter;
 use App\Mail\DeniedEmail;
 use App\Mail\ApprovedEmail;
-use App\Mail\ApprovedRestaurant;
-use App\Models\User;
-use App\Models\Log;
-use App\Models\Promoter;
-use App\Models\Subscription;
 use Illuminate\Support\Str;
+use App\Models\Subscription;
+use Illuminate\Http\Request;
+use App\Enums\Admin\LogTypes;
+use App\Models\CentralSetting;
+use App\Jobs\SendDeniedEmailJob;
+use App\Mail\ApprovedRestaurant;
+use App\Jobs\SendApprovedEmailJob;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Tenant\RestaurantUser;
+use App\Models\Tenant\OrderStatusLogs;
+use Illuminate\Contracts\Mail\Mailable;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 use Spatie\Permission\Models\Permission;
+use App\Jobs\SendApprovedRestaurantEmailJob;
+use App\Http\Requests\AddSubDiscountFormRequest;
+use App\Models\Tenant\Setting as TenantSettings;
+use App\Http\Requests\Central\Promoter\AddPromoterFormRequest;
+use App\Models\ROSubscriptionCoupon;
 
 class AdminController extends Controller
 {
@@ -49,7 +51,27 @@ class AdminController extends Controller
         $user = Auth::user();
         return view('admin.promoters', compact('user', 'promoters'));
     }
+    public function promotersSub(){
+        $promoters = Promoter::orderBy('id','desc')->get();
+        $coupons = ROSubscriptionCoupon::orderBy('id','desc')
+        ->paginate(config('application.perPage') ?? 15);
+        $user = Auth::user();
+        return view('admin.promoters_sub', compact('user','coupons', 'promoters'));
+    }
+    public function savePromotersSub(AddSubDiscountFormRequest $request){
 
+        ROSubscriptionCoupon::create([
+            'code'=> $request->code,
+            'amount'=> $request->type == 'fixed' ? $request->fixed:$request->percentage,
+            'is_branch_purchase'=>  $request->is_branch_purchase ?? false,
+            'is_application_purchase'=>  $request->is_application_purchase ?? false,
+            'type'=>  $request->type,
+            'max_use'=> $request->max_use ?? null ,
+            'promoter_id'=> $request->promoter_id ,
+        ]);
+        return redirect()->back()->with(['success' => __('Created successfully')]);
+
+    }
     public function addPromoter(AddPromoterFormRequest $request){
 
         $name = $request['name'];
