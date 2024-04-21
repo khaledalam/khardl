@@ -198,7 +198,7 @@
                           @endif
                             @if($user?->hasPermissionWorker('can_modify_and_see_other_workers'))
                             <!-- Staff -->
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'workers' || $link == 'orders-add' || $link == 'unavailable-products') ? 'show' : '' }}">
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'workers' || $link == 'orders-add') ? 'show' : '' }}">
                                 <span class="menu-link {{ ($link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
