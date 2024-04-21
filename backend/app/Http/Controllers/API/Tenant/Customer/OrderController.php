@@ -142,6 +142,8 @@ class OrderController
                 }
                 return $charge['message']['transaction']['url'];
             }
+            \Sentry\captureMessage('TAP: order charge failed  '.json_encode($charge));
+
         }catch(Exception $e){
             \Sentry\captureMessage('failed charge '.$e->getMessage());
         }
