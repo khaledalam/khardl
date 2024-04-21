@@ -811,7 +811,7 @@ class RestaurantController extends BaseController
                         return;
                 }
 
-                $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
+                $query->where('branch_id', $user->branch->id);
             })
             ->where('category_id', $selectedCategory?->id)
             ->where('branch_id', $branchId)
