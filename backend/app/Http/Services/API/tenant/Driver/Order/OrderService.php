@@ -62,7 +62,7 @@ class OrderService
             })
             ->when($request->status, function ($query) use ($request, $user) {
                 return $query->where('driver_id', $user->id)
-                ->whenStatus($request->status);
+                ->whenDriverStatus($request->status);
             })
             ->recent();
 
@@ -77,7 +77,7 @@ class OrderService
         $query = $user->driver_orders()
             ->with(['user'])
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
-            ->whenStatus($request['status'] ?? null)
+            ->whenDriverStatus($request['status'] ?? null)
             ->WhenDateString($request['date_string'] ?? null)
             ->recent();
 
