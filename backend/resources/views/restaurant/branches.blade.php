@@ -238,14 +238,14 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                             <span
                                                 class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
                                                 <p>
-                                                    <a data-bs-toggle="modal" data-bs-target="#modalTime{{ $branch->id }}" class="text-light bg-dark p-1 rounded cursor-pointer">{{$branch->phone ?? ''}} <?xml version="1.0" ?><svg class="feather feather-edit" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></a>
+                                                    <a data-bs-toggle="modal" data-bs-target="#modalTime{{ $branch->id }}" class="text-light bg-dark p-1 rounded cursor-pointer">{{$branch->phone ?? ''}} <svg class="feather feather-edit" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></a>
                                                 </p>
                                                 <style>
                                                     .cursor-pointer:hover {
                                                         cursor: pointer;
                                                     }
                                                 </style>
-                                                
+
 
                                             </div>
                                             <div class="flex-shrink-0 me-5 ">
@@ -443,7 +443,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 <!--end::Close-->
             </div>
 
-            
+
             <!--begin::Modal header-->
             <!--begin::Modal body-->
             <div class="modal-body scroll-y pt-0 pb-15">
@@ -480,7 +480,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             <!--end::Modal dialog-->
             </div>
             <!--end::Modal - New Target-->
-        
+
     </div>
 
         <div class="modal fade" id="kt_modal_new_target{{ $branch->id }}" tabindex="-1" aria-hidden="true">
@@ -507,7 +507,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 <!--end::Close-->
             </div>
 
-            
+
             <!--begin::Modal header-->
             <!--begin::Modal body-->
             <div class="modal-body scroll-y pt-0 pb-15">
