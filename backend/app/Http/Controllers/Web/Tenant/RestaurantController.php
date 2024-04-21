@@ -720,6 +720,19 @@ class RestaurantController extends BaseController
             ->with('success', 'Branch updated successfully');
     }
 
+    public function updatePhone(Request $request, $id)
+    {
+        $branch = Branch::findOrFail($id);
+        
+        $branch->phone = $request->phone;
+        
+        $branch->save();
+        
+        return redirect()->back()
+            ->with('success', 'Branch updated successfully');
+    }
+
+
     public function updateBranchLocation(Request $request, $id)
     {
 
