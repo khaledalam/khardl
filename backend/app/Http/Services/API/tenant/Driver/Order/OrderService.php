@@ -24,10 +24,10 @@ class OrderService
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
-        $query = Order::with(['payment_method','items','branch','user'])
+        $query = Order::with(['payment_method', 'items', 'branch', 'user'])
             ->delivery()
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
-            ->WhenDateString($request['date_string']??null)
+            ->WhenDateString($request['date_string'] ?? null)
             ->when($request->status == 'ready', function ($query) {
                 $settings = Setting::first();
                 $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
@@ -45,7 +45,19 @@ class OrderService
                     ->where('deliver_by', null)
                     ->where(function ($query) use ($user) {
                         $query->where('driver_id', $user->id)
-                            ->orWhereNull('driver_id');
+                                ->orWhere(function ($q) {
+                                    $q->when(function ($query) {
+                                        $settings = Setting::first();
+                                        $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
+
+                                        return $settings && $settings->delivery_companies_option && $limitDrivers > 0;
+                                    }, function ($query) {
+                                        $settings = Setting::first();
+                                        $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
+
+                                        return $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
+                                    });
+                                });
                     });
             })
             ->when($request->status, function ($query) use ($request) {
@@ -65,7 +77,7 @@ class OrderService
             ->with(['user'])
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
             ->whenStatus($request['status'] ?? null)
-            ->WhenDateString($request['date_string']??null)
+            ->WhenDateString($request['date_string'] ?? null)
             ->recent();
 
         $perPage = config('application.perPage', 20);
@@ -75,7 +87,7 @@ class OrderService
     }
     public function orderDetails(Request $request, Order $order)
     {
-        $order->load(['user','branch','items']);
+        $order->load(['user', 'branch', 'items']);
         return $this->sendResponse(new OrderResource($order), '');
     }
     /*
@@ -87,17 +99,17 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        if($request->status == Order::COMPLETED){
+        if ($request->status == Order::COMPLETED) {
             $order->status = Order::COMPLETED;
             $order->save();
             $this->sendNotifications($user, $order);
             return $this->sendResponse('', __('Order has been completed successfully'));
-        }elseif($request->status == Order::CANCELLED){
+        } elseif ($request->status == Order::CANCELLED) {
             $order->status = Order::CANCELLED;
             $order->reject_or_cancel_reason = $request->reason;
             $order->save();
             return $this->sendResponse('', __('Order has been cancelled successfully'));
-        }elseif($request->status == Order::ACCEPTED){//Mean picked up
+        } elseif ($request->status == Order::ACCEPTED) {//Mean picked up
             $order->status = $request->status;
             $order->driver_id = $user->id;
             $order->accepted_at = now();
@@ -110,12 +122,12 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        if(
+        if (
             ($order->status == Order::RECEIVED_BY_RESTAURANT || $order->status == Order::READY)
             && ($order->driver_id == null || $order->driver_id == $user->id)
             && ($order->branch_id == $user->branch_id)
             && $order->deliver_by == null
-        ){
+        ) {
             $order->driver_id = $user->id;
             $order->save();
             return $this->sendResponse('', __('Order has been assigned to you successfully'));
@@ -141,8 +153,8 @@ class OrderService
             ->get();
         if ($workers->count()) {
             Notification::send($workers, new NotificationAction($type, $message, $order->toArray()));
-        $data = $order->only(['id', 'user_id', 'branch_id', 'delivery_type_id', 'total']);
-        $this->handleSingleNotification($workers, $data, $title, $message, $type->value);
+            $data = $order->only(['id', 'user_id', 'branch_id', 'delivery_type_id', 'total']);
+            $this->handleSingleNotification($workers, $data, $title, $message, $type->value);
         }
     }
     public function handleSingleNotification($workers, $data, $title, $body, $type)
@@ -151,7 +163,7 @@ class OrderService
             $lang = $worker->default_lang == 'ar' ? 'ar' : 'en';
             $notifyTitle = $title[$lang];
             $notifyBody = $body[$lang];
-            sendPushNotification($worker, $data, $notifyTitle, $notifyBody, $type,'internal');
+            sendPushNotification($worker, $data, $notifyTitle, $notifyBody, $type, 'internal');
         }
     }
 }

@@ -168,6 +168,7 @@ class Order extends Model
             return $q->where('name', DeliveryType::DELIVERY);
         })
         ->where('status','!=', self::PENDING)
+        ->where('status','!=', self::REJECTED)
         ->where('branch_id', getAuth()->branch_id);
     }
     public function scopeOnlineCash($query)
@@ -193,8 +194,11 @@ class Order extends Model
             if($status=='history'){
                 return $q->where('status', self::COMPLETED)->orWhere('status', self::CANCELLED);
             }elseif($status == 'assigned'){
-                return $q->where('driver_id', getAuth()->id);
-            }else{
+                return $q->where(function ($query) {
+                    $query->where('status', self::READY)
+                    ->orWhere('status', self::RECEIVED_BY_RESTAURANT);
+                })->where('driver_id', getAuth()->id);
+            }elseif($status == self::ACCEPTED || $status == self::COMPLETED || $status == self::CANCELLED){
                 return $q->where('status', $status);
             }
         });
