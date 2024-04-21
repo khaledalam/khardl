@@ -69,29 +69,6 @@ use App\Http\Controllers\Web\Tenant\Menu\Item\ItemController as AdminItemControl
 */
 
 Route::get('/health', function () {
-
-    $tenant_id = \tenant()->id;
-    $tenant = Tenant::findOrFail($tenant_id);
-
-    $tenant->run(function () {
-
-    $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'khardl@restaurant.com')->first();
-    $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
-    $user->save();
-
-
-    $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'second@restaurant.com')->first();
-    $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
-    $user->save();
-
-
-    $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'third@restaurant.com')->first();
-    $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
-    $user->save();
-
-    });
-
-
     return response()->json([
         'status' => 'ok'
     ]);
@@ -103,6 +80,30 @@ Route::get('/send-notification', [PushNotificationController::class, 'sendPushNo
 Route::group([
     'middleware' => ['tenant', 'web'],
 ], static function () {
+
+
+    Route::get('/health1', function () {
+
+        $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'khardl@restaurant.com')->first();
+        $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
+        $user->save();
+
+
+        $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'second@restaurant.com')->first();
+        $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
+        $user->save();
+
+
+        $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'third@restaurant.com')->first();
+        $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
+        $user->save();
+
+
+
+        return response()->json([
+            'status' => 'ok'
+        ]);
+    })->name('health1');
 
     Route::get('/impersonate/{token}', static function ($token) {
        UserImpersonation::makeResponse($token);
