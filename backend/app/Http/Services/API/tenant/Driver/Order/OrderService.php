@@ -60,8 +60,9 @@ class OrderService
                                 });
                     });
             })
-            ->when($request->status, function ($query) use ($request) {
-                return $query->whenStatus($request->status);
+            ->when($request->status, function ($query) use ($request, $user) {
+                return $query->where('driver_id', $user->id)
+                ->whenStatus($request->status);
             })
             ->recent();
 
