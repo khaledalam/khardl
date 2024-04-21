@@ -82,40 +82,6 @@ Route::group([
     'middleware' => ['tenant', 'web'],
 ], static function () {
 
-
-    Route::get('/health1', function () {
-
-
-        $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', 'first')->first()?->id);
-        // set user status in tenant table too
-        $tenant->run(function (){
-            $user = \App\Models\Tenant\RestaurantUser::find(1)->first();
-            $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
-            $user->save();
-        });
-
-        $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', 'second')->first()?->id);
-        // set user status in tenant table too
-        $tenant->run(function (){
-            $user = RestaurantUser::find(1)->first();
-            $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
-            $user->save();
-        });
-
-        $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', 'third')->first()?->id);
-        // set user status in tenant table too
-        $tenant->run(function (){
-            $user = \App\Models\Tenant\RestaurantUser::find(1)->first();
-            $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
-            $user->save();
-        });
-
-
-        return response()->json([
-            'status' => 'ok'
-        ]);
-    })->name('health1');
-
     Route::get('/impersonate/{token}', static function ($token) {
        UserImpersonation::makeResponse($token);
        return redirect()->route('restaurant.service');
