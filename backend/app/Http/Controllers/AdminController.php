@@ -254,7 +254,17 @@ class AdminController extends Controller
         }
 
         $user = User::find($restaurant->user_id);
-        $this->approveUserLogic($user);
+
+        $user->status = User::STATUS_ACTIVE;
+        $user->reject_reasons = null;
+        $user->save();
+
+        $restaurant->run(function () use($user){
+            $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
+            $rUser->status = RestaurantUser::ACTIVE;
+            $rUser->reject_reasons = null;
+            $rUser->save();
+        });
 
         SendApprovedRestaurantEmailJob::dispatch($restaurant);
 
@@ -544,28 +554,23 @@ class AdminController extends Controller
         return view('admin.unapproved', compact('unapprovedUsers', 'loggedUser'));
     }
 
-    private function approveUserLogic(?User $user) {
-        if ($user) {
-            $user->status = User::STATUS_ACTIVE;
-            $user->reject_reasons = null;
-            $user->save();
-
-            // set user status in tenant table too
-            $tenant = Tenant::findOrFail($user?->id);
-            $tenant->run(function () use($user){
-                $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
-                $rUser->status = RestaurantUser::ACTIVE;
-                $rUser->reject_reasons = null;
-                $rUser->save();
-            });
-        }
-    }
-
     public function approveUser($id)
     {
         $user = User::find($id);
 
-        $this->approveUserLogic($user);
+        $user->status = User::STATUS_ACTIVE;
+        $user->reject_reasons = null;
+        $user->save();
+
+        // set user status in tenant table too
+        $tenant = Tenant::findOrFail($user?->id);
+
+        $tenant->run(function () use($user){
+            $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
+            $rUser->status = RestaurantUser::ACTIVE;
+            $rUser->reject_reasons = null;
+            $rUser->save();
+        });
 
         SendApprovedEmailJob::dispatch($user);
 

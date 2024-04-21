@@ -42,43 +42,42 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
             {isCheckbox && (
                 <div className="form-control " key={id}>
                     <label className="cursor-pointer flex items-center justify-between">
-                        <p className="text-[10px] font-normal">{label}</p>
                         <div className="flex flex-row items-center gap-2 ">
-                            <span className="label-text text-[10px] font-semibold">
-                                + {t("SAR")}
-                                {price}
-                            </span>
                             <input
                                 id={id}
-                                type={isCheckbox ? "checkbox" : "text"}
+                                type="checkbox"
                                 name={name}
-                                className={`${
-                                    isCheckbox ? "" : ""
-                                } w-[16px] h-[16px] border-[1px] checked:bg-[#7D0A0A]`}
+                                className={`w-[16px] h-[16px] accent-[#FFECD6] border-[1px] border-[#e5e7eb] checked:border-[#7D0A0A] rounded-[4px] checked:accent-[#FFECD6] focus:accent-[#FFECD6] checked:ring-1 checked:ring-[#7D0A0A]`}
                                 onChange={onChange}
                             />
+                            <p className="text-[14px] font-normal">{label}</p>
                         </div>
+                        <span className="label-text text-[14px] font-semibold">
+                            {/* + {t("SAR")} */}
+                            {price}
+                        </span>
                     </label>
                 </div>
             )}
             {isRadio && (
                 <div className="form-control  ">
                     <label className="cursor-pointer flex items-center justify-between ">
-                        <p className="text-[10px] font-normal">{label}</p>
                         <div className="flex flex-row items-center gap-2 ">
-                            <span className="label-text text-[10px] font-semibold">
-                                + {t("SAR")}&nbsp;{price}
-                            </span>
                             <input
                                 id={id}
                                 type={isRadio ? "radio" : "text"}
                                 name={name}
                                 className={`${
                                     isRadio ? "radio" : ""
-                                } w-[12px] h-[12px] border-[1px] checked:border-[3px] checked:bg-[#7D0A0A]`}
+                                } w-[14px] h-[14px] border-[1px] checked:border-[3px] checked:bg-[#7D0A0A]`}
                                 onChange={onChange}
                             />
+                            <p className="text-[14px] font-normal">{label}</p>
                         </div>
+                        <span className="label-text text-[14px] font-semibold">
+                            {/* + {t("SAR")}&nbsp; */}
+                            {price}
+                        </span>
                     </label>
                 </div>
             )}

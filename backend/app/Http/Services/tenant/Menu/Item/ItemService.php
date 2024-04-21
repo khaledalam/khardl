@@ -2,16 +2,11 @@
 
 namespace App\Http\Services\tenant\Menu\Item;
 
-use App\Http\Requests\Tenant\Menu\UpdateItemFormRequest;
-use App\Models\Tenant\Cart;
+use App\Http\Requests\Tenant\Menu\ItemFormRequest;
 use App\Models\Tenant\CartItem;
 use App\Models\Tenant\Item;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class ItemService
 {
@@ -19,40 +14,56 @@ class ItemService
     {
         return view('restaurant.view-item', compact('item'));
     }
-    public function addItem($request, $id, $branchId)
+    public function addItem(ItemFormRequest $request, $id, $branchId)
     {
         // TODO @todo validate the remain fields of the coming request
 
-        if (!$request->validate([
+        $fields = [
             'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
             'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
             'checkbox_input_maximum_choices' => 'nullable|int|min:1'
-        ], [
+        ];
+
+        $arabic_optional_text = ['checkboxInputNameAr', 'description_ar', 'selectionInputNameAr', 'dropdownInputNameAr'];
+        $english_optional_text = ['checkboxInputNameEn', 'description_en', 'selectionInputNameEn', 'dropdownInputNameEn'];
+        foreach ($arabic_optional_text as $field) {
+            if ($request->has($field)) {
+                $fields[$field] = 'regex:/^[0-9\p{Arabic}\s]+$/u';
+            }
+        }
+        foreach ($english_optional_text as $field) {
+            if ($request->has($field)) {
+                $fields[$field] = 'regex:/^[0-9a-zA-Z\s]+$/';
+            }
+        }
+
+        if (!$request->validate($fields, [
             'item_name_en.regex'=>__("English name is not valid"),
             'item_name_en.required'=>__("English name is required"),
+            'description_en.regex' => __("English description is not valid"),
+            'checkboxInputNameEn.regex' => __("English options is not valid"),
+            'selectionInputNameEn.regex' => __("English options is not valid"),
+            'dropdownInputNameEn.regex' => __("English options is not valid"),
+            'description_ar.regex' => __("Arabic description is not valid"),
+            'checkboxInputNameAr.regex' => __("Arabic options is not valid"),
+            'selectionInputNameAr.regex' => __("Arabic options is not valid"),
+            'dropdownInputNameAr.regex' => __("Arabic options is not valid"),
             'item_name_ar.regex'=>__("Arabic name is not valid"),
             'item_name_ar.required'=>__("Arabic name is required")
         ])) {
-            return redirect()->back()->with('error', __('Invalid Product Name'));
+            return redirect()->back()->with('error', __('Invalid Product Data'));
         }
 
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
             $photoFile = $request->file('photo');
-
-            $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
-
-            while (Storage::disk('public')->exists('items/' . $filename)) {
-                $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
-            }
-
-            $photoFile->storeAs('items', $filename, 'public');
+            $path = tenant_asset(store_image($photoFile, 'items'));
 
             DB::beginTransaction();
 
             try {
                 $itemData = [
-                    'photo' => tenant_asset('items/' . $filename),
+                    'photo' => $path,
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
                     'name' => trans_json($request->input('item_name_en'), $request->input('item_name_ar')),
@@ -88,26 +99,14 @@ class ItemService
             }
         }
     }
-    public function update(UpdateItemFormRequest $request, Item $item)
+    public function update(ItemFormRequest $request, Item $item)
     {
         DB::beginTransaction();
         try {
             $photoFile = $request->file('photo');
 
             if ($photoFile) {
-                $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
-
-                while (Storage::disk('public')->exists('items/' . $filename)) {
-                    $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
-                }
-
-                $photoFile->storeAs('items', $filename, 'public');
-                //TODO: remove old image
-                if ($item->photo && Storage::disk('public')->exists($item->photo)) {
-                    Storage::disk('public')->delete($item->photo);
-                }
-
-                $item->photo = tenant_asset('items/' . $filename);
+                $item->photo = tenant_asset(store_image($photoFile, 'items', null, $item->photo));
             }
 
             $item->price = $request->input('price');

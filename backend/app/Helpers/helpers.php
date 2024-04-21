@@ -61,14 +61,13 @@ if (!function_exists('store_image')) {
             }
         }
         try {
-
-            if ($name) {
-                $filename = $name . '.' . $image->guessExtension();
-                if (Storage::disk('public')->exists($store_at . '/' . $filename)) {
-                    Storage::delete($store_at . '/' . $filename);
-                }
-            } else {
-                $filename = uniqid() . '.' . $image->guessExtension();
+            if($name){
+                $filename = $name . '.' . $image->getClientOriginalExtension();
+            }else{
+                $filename = Str::random(40) . '.' . $image->getClientOriginalExtension();
+            }
+            while (Storage::disk('public')->exists('items/' . $filename)) {
+                $filename = Str::random(40) . '.' . $image->getClientOriginalExtension();
             }
             $image->storeAs($store_at, $filename, 'public');
             return $store_at . '/' . $filename;

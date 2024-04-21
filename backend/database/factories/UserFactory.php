@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Seeders\HelperSeeder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -40,7 +41,7 @@ class UserFactory extends Factory
             'status'=> 'active',
             'address' => 'test address',
             'position'=>"Super Admin",
-            'password' => bcrypt('khardl@123'),
+            'password' => bcrypt(HelperSeeder::PASSWORD),
             'remember_token' => Str::random(10),
         ];
     }
