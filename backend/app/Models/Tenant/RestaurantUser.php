@@ -165,6 +165,12 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
             return $q->where('status', 'like',$status);
         });
     }
+    public function scopeWhenBranch($query,$branch_id)
+    {
+        return $query->when($branch_id!= null, function ($q) use ($branch_id) {
+            return $q->where('branch_id',$branch_id);
+        });
+    }
     /* Scopes */
     public function branch()
     {
