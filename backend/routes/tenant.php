@@ -10,6 +10,7 @@ use App\Http\Controllers\API\Tenant\Notification\NotificationController;
 use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
+use App\Models\Tenant;
 use App\Models\Tenant\RestaurantStyle;
 use App\Models\Tenant\Setting;
 use App\Models\User;
@@ -69,6 +70,11 @@ use App\Http\Controllers\Web\Tenant\Menu\Item\ItemController as AdminItemControl
 
 Route::get('/health', function () {
 
+    $tenant_id = \tenant()->id;
+    $tenant = Tenant::findOrFail($tenant_id);
+
+    $tenant->run(function () {
+
     $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'khardl@restaurant.com')->first();
     $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
     $user->save();
@@ -82,6 +88,8 @@ Route::get('/health', function () {
     $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'third@restaurant.com')->first();
     $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
     $user->save();
+
+    });
 
 
     return response()->json([
