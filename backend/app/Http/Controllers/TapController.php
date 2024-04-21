@@ -226,6 +226,8 @@ class TapController extends Controller
 
             }
         }
+        \Sentry\captureMessage('TAP: sub failed charge '.json_encode($charge));
+
 
 
 
@@ -368,6 +370,7 @@ class TapController extends Controller
                 return redirect($charge['message']['transaction']['url']);
             }
         }
+        \Sentry\captureMessage('TAP:  sub failed renew branch '.json_encode($charge));
 
 
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
@@ -403,6 +406,8 @@ class TapController extends Controller
 
             }
         }
+        \Sentry\captureMessage('TAP: app customer sub failed charge '.json_encode($charge));
+
 
 
 
