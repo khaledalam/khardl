@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantStyle;
+use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -84,20 +85,30 @@ Route::group([
 
     Route::get('/health1', function () {
 
-        $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'khardl@restaurant.com')->first();
-        $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
-        $user->save();
 
+        $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', 'first'));
+        // set user status in tenant table too
+        $tenant->run(function (){
+            $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'khardl@restaurant.com')->first();
+            $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
+            $user->save();
+        });
 
-        $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'second@restaurant.com')->first();
-        $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
-        $user->save();
+        $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', 'second'));
+        // set user status in tenant table too
+        $tenant->run(function (){
+            $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'second@restaurant.com')->first();
+            $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
+            $user->save();
+        });
 
-
-        $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'third@restaurant.com')->first();
-        $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
-        $user->save();
-
+        $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', 'third'));
+        // set user status in tenant table too
+        $tenant->run(function (){
+            $user = \App\Models\Tenant\RestaurantUser::where('emai', '=', 'third@restaurant.com')->first();
+            $user->password = \Illuminate\Support\Facades\Hash::make('khardl@Pass');
+            $user->save();
+        });
 
 
         return response()->json([
