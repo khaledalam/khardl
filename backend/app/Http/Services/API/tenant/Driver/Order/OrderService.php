@@ -5,6 +5,7 @@ namespace App\Http\Services\API\tenant\Driver\Order;
 use App\Http\Resources\API\Tenant\Collection\Driver\DriverOrderCollection;
 use App\Http\Resources\API\Tenant\OrderResource;
 use App\Models\Tenant\Order;
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Setting;
 use App\Traits\APIResponseTrait;
@@ -60,7 +61,7 @@ class OrderService
                                 });
                     });
             })
-            ->when($request->status, function ($query) use ($request, $user) {
+            ->when($request->status!='ready' && $request->status !='all', function ($query) use ($request, $user) {
                 return $query->where('driver_id', $user->id)
                 ->whenDriverStatus($request->status);
             })
@@ -102,6 +103,9 @@ class OrderService
         $user = Auth::user();
         if ($request->status == Order::COMPLETED) {
             $order->status = Order::COMPLETED;
+            if($order->isCashOnDelivery()){
+                $order->payment_status = PaymentMethod::PAID;
+            }
             $order->save();
             $this->sendNotifications($user, $order);
             return $this->sendResponse('', __('Order has been completed successfully'));

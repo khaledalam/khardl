@@ -270,6 +270,10 @@ class Order extends Model
     {
         return $this->delivery_type?->name == DeliveryType::DELIVERY;
     }
+    public function isCashOnDelivery()
+    {
+        return $this->payment_method?->name == PaymentMethod::CASH_ON_DELIVERY;
+    }
     public function user()
     {
         return $this->belongsTo(RestaurantUser::class);
@@ -350,12 +354,13 @@ class Order extends Model
     {
         $settings = Setting::first();
         $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 5);
+        $limitDriversInSeconds = $limitDrivers * 60;
         if($settings && $settings->delivery_companies_option && $settings->drivers_option && $limitDrivers > 0){
             if($this->received_by_restaurant_at){
                 $receivedTime = Carbon::parse($this->received_by_restaurant_at);
                 $currentTime = Carbon::now();
-                $diffInMinutes = $receivedTime->diffInMinutes($currentTime);
-                return ($limitDrivers - $diffInMinutes) > 0 ? ($limitDrivers - $diffInMinutes) : 0;
+                $diffInSeconds = $receivedTime->diffInSeconds($currentTime);
+                return ($limitDriversInSeconds - $diffInSeconds) > 0 ? ($limitDriversInSeconds - $diffInSeconds) : 0;
             }else{
                 return 0;
             }
