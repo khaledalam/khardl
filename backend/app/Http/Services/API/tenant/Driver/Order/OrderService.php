@@ -36,7 +36,7 @@ class OrderService
                     ->where('deliver_by', null)
                     ->where('driver_id', null)
                     ->readyForDriver()
-                    ->when($settings && $settings->delivery_companies_option && $limitDrivers > 0, function ($query) use ($limitDrivers) {
+                    ->when($settings && $settings->delivery_companies_option && $settings->drivers_option && $limitDrivers > 0, function ($query) use ($limitDrivers) {
                         return $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
                     });
             })
@@ -50,7 +50,7 @@ class OrderService
                                         $settings = Setting::first();
                                         $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
 
-                                        return $settings && $settings->delivery_companies_option && $limitDrivers > 0;
+                                        return $settings && $settings->delivery_companies_option && $settings->drivers_option && $limitDrivers > 0;
                                     }, function ($query) {
                                         $settings = Setting::first();
                                         $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
