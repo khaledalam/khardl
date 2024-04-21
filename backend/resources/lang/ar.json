@@ -1199,6 +1199,8 @@
     "Price[:num] of dropdown can not be empty":"السعر[:num] للخيارات من قائمه مطلوب",
     "Global delivery fees for all branches":"رسوم التوصيل علي كل ال,الفروع",
     "To get a better experience please use a computer":"للحصول على تجربة افضل رجاء استخدام كمبيوتر",
-    "Order is not for you branch":"الطلب ليس لك فرعك"
+    "Order is not for you branch":"الطلب ليس لك فرعك",
+    "The delivery":"التوصيل",
+    "Own drivers":"السائقين الخاصيين"
 
 }
