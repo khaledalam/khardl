@@ -52,6 +52,13 @@ class Branch extends Model
         'active',
         'display_category_icon'
     ];
+    protected $appends = [
+        'delivery_availability'
+    ];
+    protected $casts = [
+        'drivers_option' => 'boolean',
+        'delivery_companies_option' => 'boolean',
+    ];
 
 
     // public $translatable = ['name'];
@@ -92,6 +99,10 @@ class Branch extends Model
                 'number_formatted' => getAmount((float)$total),
                 'number' => $total
         ];
+    }
+    public function getDeliveryAvailabilityAttribute()
+    {
+        return $this->delivery_companies_option && $this->drivers_option;
     }
     /* End attributes */
 

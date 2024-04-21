@@ -30,15 +30,12 @@ class OrderService
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
             ->WhenDateString($request['date_string'] ?? null)
             ->when($request->status == 'ready', function ($query) {
-                $settings = Setting::first();
-                $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
-
                 return $query
                     ->where('deliver_by', null)
                     ->where('driver_id', null)
                     ->readyForDriver()
-                    ->when($settings && $settings->delivery_companies_option && $settings->drivers_option && $limitDrivers > 0, function ($query) use ($limitDrivers) {
-                        return $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
+                    ->where(function ($query) {
+                        $query->shouldLimitDrivers()->shouldAssignDriver();
                     });
             })
             ->when($request->status == 'all' || !$request->status, function ($query) use ($user) {
@@ -46,19 +43,9 @@ class OrderService
                     ->where('deliver_by', null)
                     ->where(function ($query) use ($user) {
                         $query->where('driver_id', $user->id)
-                                ->orWhere(function ($q) {
-                                    $q->when(function ($query) {
-                                        $settings = Setting::first();
-                                        $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
-
-                                        return $settings && $settings->delivery_companies_option && $settings->drivers_option && $limitDrivers > 0;
-                                    }, function ($query) {
-                                        $settings = Setting::first();
-                                        $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
-
-                                        return $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
-                                    });
-                                });
+                        ->orWhere(function ($query) {
+                            $query->shouldLimitDrivers()->shouldAssignDriver();
+                        });
                     });
             })
             ->when($request->status!='ready' && $request->status !='all', function ($query) use ($request, $user) {
@@ -68,7 +55,7 @@ class OrderService
             ->recent();
 
         $perPage = config('application.perPage', 20);
-        $orders = $query->paginate($perPage);
+        $orders = $query->paginate(100);
         return $this->sendResponse(new OrderCollection($orders), '');
     }
     public function history(Request $request)

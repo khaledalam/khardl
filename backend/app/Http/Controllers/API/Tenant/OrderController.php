@@ -178,9 +178,8 @@ class OrderController extends BaseRepositoryController
     }
     public function handelDeliveryOrderWhenReady($order)
     {
-        $settings = Setting::first();
         //Check that deliver companies not assign driver and drivers options is enabled
-        if ($order->deliver_by == null && $settings && $settings->drivers_option) {
+        if ($order->deliver_by == null  && $order->branch?->drivers_option) {
             if ($order->driver_id == null) {//Check that no driver assigned to this order yet
                 $this->sendNotificationsWhenReady($order);
             } else {// there is driver assigned to this order
@@ -191,7 +190,7 @@ class OrderController extends BaseRepositoryController
     public function handelDeliveryOrderWhenReceived($order, $request)
     {
         $settings = Setting::first();
-        if ($settings && $settings->drivers_option && $settings->delivery_companies_option) {
+        if ($settings && $order->branch?->drivers_option && $order->branch?->delivery_companies_option) {
             if ($settings->limit_delivery_company) {
                 AssignDeliveryCompany::dispatch($request->expectsJson(), $order, $request->status)->delay(now()->addMinutes($settings->limit_delivery_company));
             } else {
@@ -202,10 +201,10 @@ class OrderController extends BaseRepositoryController
                 return $this->sendResponse(null, __('Order has been updated successfully.'));
             }
             return redirect()->back()->with('success', __('Order has been updated successfully.'));
-        } elseif ($settings && $settings->delivery_companies_option) {
+        } elseif ($settings && $order->branch?->delivery_companies_option) {
             $order->update(['status' => $request->status]);
             return $this->assignOrderToDC($request->expectsJson(), $order, $request->status);
-        } elseif ($settings && $settings->drivers_option) {
+        } elseif ($settings && $order->branch?->drivers_option) {
             $this->sendNotificationsWhenReceivedByRestaurant($order);
             $order->update(['status' => $request->status, 'received_by_restaurant_at' => now()]);
             if ($request->expectsJson()) {

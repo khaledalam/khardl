@@ -210,7 +210,8 @@ return [
         "ios_url"=>"رابط الايفون",
         "calories" => "السعرات",
         "old_password" => "كلمة المرور القديمة",
-        "image" => "الصورة"
+        "image" => "الصورة",
+        "pickup_availability" => "الاستلام من المطعم"
 
     ],
     'values' => [
