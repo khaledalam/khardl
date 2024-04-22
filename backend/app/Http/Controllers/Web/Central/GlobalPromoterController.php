@@ -35,8 +35,10 @@ class GlobalPromoterController extends Controller
             return redirect()->route('home');
         }
         $promoter = Promoter::with(['users'])->where('name', $name)->first();
+       
         if ($promoter) {
-            return view('global.promoters.show', compact('promoter'));
+            $sub_coupon = $promoter->sub_coupon;
+            return view('global.promoters.show', compact('promoter','sub_coupon'));
         } else {
             $this->increaseFailedAttempts();
             return view('global.promoters.not_found');

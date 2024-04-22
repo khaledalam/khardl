@@ -228,7 +228,7 @@ function openModal(modalID) {
                                                                     </div>
                                                                     @elseif($RO_subscription?->status == \App\Models\ROSubscription::SUSPEND)
                                                                     <a href="#" class="btn btn-sm btn-warning " onclick="openModal('kt_modal_suspend_sub')" ><svg style="margin-left:10px" xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="red" viewBox="0 0 512 512">
-                                                                        <path d="M2x56 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></svg>{{__('Renew Subscription')}}</a>
+                                                                        <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></svg>{{__('Renew Subscription')}}</a>
                                                                     @else
                                                                     <a href="#" class="btn btn-sm btn-khardl" onclick="openModal('kt_modal_new_target')" ><i class="fas fa-shopping-cart"></i>{{__('Buy now')}}</a>
                                                                     @endif
@@ -268,7 +268,6 @@ function openModal(modalID) {
                                                                 <div class="modal-content rounded ">
                                                                     <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::NEW}}">
                                                                     <input type="hidden" name="token_id" id="token_id" value="">
-
                                                                     <!--begin::Modal header-->
                                                                     <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                         <h5 class="modal-title text-center">{{$subscription->name}}</h5>
@@ -285,11 +284,36 @@ function openModal(modalID) {
 
                                                                         <div class="form-group">
                                                                             <label for="factor">{{__('Total Price')}}</label>
-                                                                 
                                                                             <input type="text" class="form-control bg-secondary" id="price" name="price" value="{{ $subscription->amount }}" readonly>
                                                                         </div>
                                                                     
+                                                                        <div class="form-group">
+                                                                            <label  class="">{{__('Add a coupon code')}}</label>
+                                                                            <div class="d-flex flex-row bd-highlight" style="height: 55px">
+                                                                                <div class="p-2 bd-highlight">
+                                                                                    <input type="text"  name="coupon_code" value="" id="coupon_code_web" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center mb-10"  >
 
+                                                                                </div>
+                                                                                <div class="p-2 bd-highlight" >
+                                                                                    <a href="#" id="apply_copoun_web"   class="btn btn-khardl">{{__('Apply')}}</a>
+                                                                                  
+                                                                                   
+                                                                                   
+                                                                                </div>
+                                                                                <div class="p-2 bd-highlight">
+                                                                                    <span class="indicator-progress " id="apply_copoun_web_spinner" style="margin-top: 10px">
+                                                                                        <span class="spinner-border spinner-border-sm align-middle ms-2" style="width: 20px;height:20px"></span>
+                                                                                    </span>
+                                                                                </div>
+                                                                                
+                                                                              </div>
+                                                                              <h5 id="coupon_message_web" class="text-danger " style="margin-right: 15px"></h5>
+
+
+                                                                        </div>
+                                                                        <div id="discount_web"></div>
+                                                                        
+                                                                    
                                                                         <button id="tap-btn"   type="submit"   onclick="submitPayment(event,'root')" class="btn btn-khardl text-white ">
 
                                                                             <span class="indicator-label"> {{__("purchase")}} ✔️</span>
@@ -447,7 +471,32 @@ function openModal(modalID) {
                                                                                     <label for="factor">{{__('Total Price')}}</label>
                                                                                     <input type="text" class="form-control bg-secondary" name="price" value="{{ $customer_app_sub->amount }}" readonly>
                                                                                 </div>
-                        
+                                                                                <div class="form-group">
+                                                                                    <label  class="">{{__('Add a coupon code')}}</label>
+                                                                                    <div class="d-flex flex-row bd-highlight" style="height: 55px">
+                                                                                        <div class="p-2 bd-highlight">
+                                                                                            <input type="text"  name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center mb-10"  >
+        
+                                                                                        </div>
+                                                                                        <div class="p-2 bd-highlight" >
+                                                                                            <a href="#" id="apply_copoun_app"   class="btn btn-khardl">{{__('Apply')}}</a>
+                                                                                          
+                                                                                           
+                                                                                           
+                                                                                        </div>
+                                                                                        <div class="p-2 bd-highlight">
+                                                                                            <span class="indicator-progress " id="apply_copoun_app_spinner" style="margin-top: 10px">
+                                                                                                <span class="spinner-border spinner-border-sm align-middle ms-2" style="width: 20px;height:20px"></span>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                        
+                                                                                      </div>
+                                                                                      <h5 id="coupon_message_app" class="text-danger " style="margin-right: 15px"></h5>
+        
+        
+                                                                                </div>
+                                                                                <div id="discount_app"></div>
+
                                                                                 <button id="tap-btn"   type="submit"   onclick="submitPayment(event,'root_customer_app')" class="btn btn-khardl text-white ">
 
                                                                                     <span class="indicator-label"> {{__("purchase")}} ✔️</span>
@@ -763,7 +812,76 @@ function openModal(modalID) {
 
 
         <script>
-        
+            function applyCoupon(){
+                $('#coupon_message_web').empty();
+                    var waiting = document.querySelector('#apply_copoun_web_spinner');
+                    waiting.style.display = 'block';
+                    setTimeout(() => {
+                            $.ajax({
+                            type: 'GET',
+                            url:  `{{ route('restaurant.service.coupon.check', ['coupon'=>':coupon','type'=>':type','number_of_branches'=>':number_of_branches']) }}`
+                            .replace(':number_of_branches',  document.getElementById('n_branches').value)
+                            .replace(':coupon',  document.getElementById('coupon_code_web').value)
+                            .replace(':type', 'is_branch_purchase'),
+                            success: function(response) {
+                                if(response.cost){
+                                    $('#coupon_code_web').css({'background-color':'forestgreen','color':'white'});
+                                    $('#coupon_message_web')
+    
+                                    .removeClass('text-danger')
+                                    .append('<div class="form-group mt-5 "><label for="factor">{{__("Total Price after discount")}}</label><input type="text" class="form-control bg-secondary" id="coupon_discount_input_web" value="' + response.cost + '" readonly ></div>');
+
+                                }else {
+                                    $('#coupon_code_web').css('background-color','crimson');
+                                    $('#coupon_message_web').append("{{__('Invalid coupon')}}");
+                                }
+                            },
+                            error: function(error) {
+                                console.error('Error calculating cost: ' + error.responseText);
+                            }
+                        });
+                        waiting.style.display = 'none';
+                    },500);
+            }
+            function applyAppCoupon(){
+                $('#coupon_message_app').empty();
+                    var waiting = document.querySelector('#apply_copoun_app_spinner');
+                    waiting.style.display = 'block';
+                    setTimeout(() => {
+                            $.ajax({
+                            type: 'GET',
+                            url:  `{{ route('restaurant.service.coupon.check', ['coupon'=>':coupon','type'=>':type']) }}`
+                            .replace(':coupon',  document.getElementById('coupon_code_app').value)
+                            .replace(':type', 'is_application_purchase'),
+                            success: function(response) {
+                                if(response.cost){
+                                    $('#coupon_code_app').css({'background-color':'forestgreen','color':'white'});
+                                    $('#coupon_message_app')
+    
+                                    .removeClass('text-danger')
+                                    .append('<div class="form-group mt-5 "><label for="factor">{{__("Total Price after discount")}}</label><input type="text" class="form-control bg-secondary" id="coupon_discount_input_web" value="' + response.cost + '" readonly ></div>');
+
+                                }else {
+                                    $('#coupon_code_app').css('background-color','crimson');
+                                    $('#coupon_message_app').append("{{__('Invalid coupon')}}");
+                                }
+                            },
+                            error: function(error) {
+                                console.error('Error calculating cost: ' + error.responseText);
+                            }
+                        });
+                        waiting.style.display = 'none';
+                    },500);
+            }
+            $('#modal_base_content').on('click', '#apply_copoun_web', function(e) {
+                applyCoupon();
+                
+            });
+            $('#modal_base_content').on('click', '#apply_copoun_app', function(e) {
+                applyAppCoupon();
+                
+            });
+    
             // Execute the AJAX request when the radio button changes
             $('input[name=n_branches]').change(function() {
                 calculateRenewPrice();
@@ -772,6 +890,7 @@ function openModal(modalID) {
                 e.preventDefault();
                 BuyNewSlots();
             });
+         
             function calculateRenewPrice(){                
                 $.ajax({
                     type: 'GET',
@@ -807,7 +926,14 @@ function openModal(modalID) {
                 const priceInput = document.getElementById('price');
                 const factorInput = document.getElementById('n_branches');
                 const factor = parseFloat(factorInput.value) || 1;
+                var inputValue = $('#coupon_discount_input_web').val();
+
+                if (inputValue) {
+                    applyCoupon();
+                }
                 priceInput.value = "{{$subscription->amount}}" * factor;
+
+              
             }
            
 
