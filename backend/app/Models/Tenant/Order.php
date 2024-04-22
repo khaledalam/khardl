@@ -166,7 +166,10 @@ class Order extends Model
     {
         return $query->whereHas('delivery_type', function ($q) {
             return $q->where('name', DeliveryType::DELIVERY);
-        })->where('status','!=', self::PENDING);
+        })
+        ->where('status','!=', self::PENDING)
+        ->where('status','!=', self::REJECTED)
+        ->where('branch_id', getAuth()->branch_id);
     }
     public function scopeOnlineCash($query)
     {
@@ -189,6 +192,21 @@ class Order extends Model
     {
         return $query->when($status != null, function ($q) use ($status) {
             return $q->where('status', $status);
+        });
+    }
+    public function scopeWhenDriverStatus($query, $status)
+    {
+        return $query->when($status != null, function ($q) use ($status) {
+            if($status=='history'){
+                return $q->where('status', self::COMPLETED)->orWhere('status', self::CANCELLED);
+            }elseif($status == 'assigned'){
+                return $q->where(function ($query) {
+                    $query->where('status', self::READY)
+                    ->orWhere('status', self::RECEIVED_BY_RESTAURANT);
+                })->where('driver_id', getAuth()->id);
+            }elseif($status == self::ACCEPTED || $status == self::COMPLETED || $status == self::CANCELLED){
+                return $q->where('status', $status);
+            }
         });
     }
     public function scopeWhenDateString($query, $date)
@@ -237,6 +255,30 @@ class Order extends Model
             return $q->where('payment_status', $status);
         });
     }
+    public function scopeShouldLimitDrivers($query)
+    {
+        return $query->when($this->hasDeliverAllOptions(clone $query), function ($query) {
+            $settings = Setting::first();
+            $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
+
+            return $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
+        });
+    }
+
+    public function scopeShouldAssignDriver($query)
+    {
+        return $query->when(!$this->hasDeliverAllOptions(clone $query), function ($query) {
+            return $query->where('driver_id', null);
+        });
+    }
+
+    private function hasDeliverAllOptions($query)
+    {
+        return $query->whereHas('branch',function($subQ){
+            return $subQ->where('delivery_companies_option',true)
+            ->where('drivers_option',true);
+        })->count();
+    }
     /* End Scoped */
     public static function ChangeStatus($status)
     {
@@ -251,6 +293,10 @@ class Order extends Model
     public function isDelivery()
     {
         return $this->delivery_type?->name == DeliveryType::DELIVERY;
+    }
+    public function isCashOnDelivery()
+    {
+        return $this->payment_method?->name == PaymentMethod::CASH_ON_DELIVERY;
     }
     public function user()
     {
@@ -315,14 +361,36 @@ class Order extends Model
             && $this->deliver_by == null
         ){
             $settings = Setting::first();
-            $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
-            if($settings && $settings->delivery_companies_option && $limitDrivers > 0){
+            $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 5);
+            if($settings && $this->branch?->delivery_companies_option && $this->branch?->drivers_option && $limitDrivers > 0){
                 return $this->received_by_restaurant_at > Carbon::now()->subMinutes($limitDrivers);
             }else{
                 return true;
             }
         }
         return false;
+    }
+    public function getAssignedToMeAttribute()
+    {
+        return $this->driver_id == getAuth()->id;
+    }
+    public function getTimeRemainForRejectAttribute()
+    {
+        $settings = Setting::first();
+        $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 5);
+        if($settings && $this->branch?->delivery_companies_option && $this->branch->drivers_option && $limitDrivers > 0){
+        $limitDriversInSeconds = $limitDrivers * 60;
+            if($this->received_by_restaurant_at){
+                $receivedTime = Carbon::parse($this->received_by_restaurant_at);
+                $currentTime = Carbon::now();
+                $diffInSeconds = $receivedTime->diffInSeconds($currentTime);
+                return ($limitDriversInSeconds - $diffInSeconds) > 0 ? ($limitDriversInSeconds - $diffInSeconds) : 0;
+            }else{
+                return 0;
+            }
+        }else{
+            return null;
+        }
     }
 
 }

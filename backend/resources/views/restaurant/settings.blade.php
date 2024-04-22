@@ -94,33 +94,6 @@
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        {{-- TODO: make options for every branch --}}
-                                        <div class="row mb-0 mt-5">
-                                            <!--begin::Label-->
-                                            <div class="form-check form-check-solid form-switch fv-row">
-                                                <input class="form-check-input w-35px h-20px" type="checkbox" id="delivery_companies_option" value="1" name="delivery_companies_option"
-                                                @if($settings->delivery_companies_option || old('delivery_companies_option') == "1")
-                                                {{ 'checked' }}
-                                                @endif>
-                                                <label class="form-check-label" for="delivery_companies_option">{{ __('Delivery companies option')}}</label>
-                                            </div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <div class="row mb-0 mt-5">
-                                            <!--begin::Label-->
-                                            <div class="form-check form-check-solid form-switch fv-row">
-                                                <input class="form-check-input w-35px h-20px" type="checkbox" id="drivers_option" value="1" name="drivers_option"
-                                                @if($settings->drivers_option || old('drivers_option') == "1")
-                                                {{ 'checked' }}
-                                                @endif>
-                                                <label class="form-check-label" for="drivers_option">{{ __('Drivers option')}}</label>
-                                            </div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <!--end::Input group-->
-
 
                                     </div>
                                     <!--end::Card header-->

@@ -1139,6 +1139,7 @@
     "Your request is pending and waiting for the respond of payment gateway.":"طلبك معلق وينتظر رد بوابة الدفع.",
     "You need to contact adminstration because of your payment gateway is not set.":"تحتاج إلى الاتصال بالإدارة لأن بوابة الدفع الخاصة بك لم يتم تعيينها.",
     "Save":"حفظ",
+    "or": "أو",
     "Branches":"الفروع",
     "QR Maker": "صانع QR",
     "Make a new QR Code": "صناعه QR جديد",
@@ -1197,7 +1198,12 @@
     "Options[:num] name[AR] of dropdown can not be empty":"الاسم العربي للخيار[:num] مطلوب للخيارات من قائمه ",
     "Options[:num] name[EN] of dropdown can not be empty":"الاسم الانجليزي للخيار[:num] مطلوب للخيارات من قائمه",
     "Price[:num] of dropdown can not be empty":"السعر[:num] للخيارات من قائمه مطلوب",
-    "Global delivery fees for all branches":"رسوم التوصيل علي كل ال,فروع",
-    "To get a better experience please use a computer":"للحصول على تجربة افضل رجاء استخدام كمبيوتر"
+    "Global delivery fees for all branches":"رسوم التوصيل علي كل ال,الفروع",
+    "To get a better experience please use a computer":"للحصول على تجربة افضل رجاء استخدام كمبيوتر",
+    "Order is not for you branch":"الطلب ليس لك فرعك",
+    "The delivery":"التوصيل",
+    "Own drivers":"السائقين الخاصيين",
+    "Can not enable drivers option if you do not have active drivers.":"لا يمكنك تمكين خيار السائقين إذا لم يكن لديك سائقين نشطيين.",
+    "Can not enable delivery company option if you do not signed with any delivery company.":"لا يمكن تمكين خيار شركة التوصيل إذا لم تقم بالتسجيل مع أي شركة توصيل."
 
 }

@@ -33,7 +33,7 @@ class DriverStoreFormRequest extends FormRequest
             'phone' => 'required|regex:/^(966)?\d{9}$/|unique:users,phone',
             'address' => 'nullable|max:255',
             'branch_id' => 'required|exists:branches,id',
-            'image' => ['required','mimes:png,jpg,jpeg,gif','max:4096']
+            'image' => ['nullable','mimes:png,jpg,jpeg,gif','max:4096']
         ];
     }
     protected function prepareForValidation()
