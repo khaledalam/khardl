@@ -428,62 +428,6 @@
         });
     }
 
-    /* document.getElementById('kt_modal_new_target_form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        var submitButton = document.querySelector('#kt_modal_new_target_submit');
-
-        submitButton.disabled = true;
-
-        var inputValue = document.querySelector('textarea[name=description_en]').value.trim();
-        var inputNameValue = document.querySelector('input[name=item_name_en]').value;
-        var inputValueAR = document.querySelector('textarea[name=description_ar]').value.trim();
-        var inputNameValueAR = document.querySelector('input[name=item_name_ar]').value;
-
-        if (inputNameValue === '') {
-            alert(`Please fill name input in (English) tab.`);
-            submitButton.disabled = false;
-
-            return;
-        } else if (inputNameValueAR === '') {
-            alert(`Please fill name input in (Arabic) tab .`);
-            submitButton.disabled = false;
-            return;
-        }
-
-        if (inputValueAR === '' && inputValue != '') {
-            alert("{{__('Please fill description in (Arabic) tab.')}}");
-            submitButton.disabled = false;
-
-            return;
-        } else if (inputValue === '' && inputValueAR != '') {
-            alert("{{__('Please fill description in (English) tab.')}}");
-            submitButton.disabled = false;
-            return;
-        }
-
-        var englishRegex = /^[0-9a-zA-Z\s]+$/;
-        var arabicRegex = /^[\u0600-\u06FF0-9\s]+$/;
-
-        if (!englishRegex.test(inputNameValue)) {
-            alert("{{__('English name is not valid')}}")
-            submitButton.disabled = false;
-            return;
-        }
-
-        if (!arabicRegex.test(inputNameValueAR)) {
-            alert("{{__('Arabic name is not valid')}}");
-            submitButton.disabled = false;
-            return;
-        }
-
-        var waiting = document.querySelector('#waiting-item');
-        waiting.style.display = 'block';
-
-        document.getElementById('kt_modal_new_target_form').submit();
-
-
-
-    }); */
 
 </script>
 @if($user->isRestaurantOwner())
@@ -1221,6 +1165,61 @@
 
 <!--begin::Javascript-->
 <script>
+      document.getElementById('kt_modal_new_target_form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var submitButton = document.querySelector('#kt_modal_new_target_submit');
+
+        submitButton.disabled = true;
+
+        var inputValue = document.querySelector('#kt_modal_new_target_form textarea[name=description_en]').value.trim();
+        var inputValueAR = document.querySelector('#kt_modal_new_target_form textarea[name=description_ar]').value.trim();
+        var inputNameValue = document.querySelector('#kt_modal_new_target_form input[name=item_name_en]').value;
+        var inputNameValueAR = document.querySelector('#kt_modal_new_target_form input[name=item_name_ar]').value;
+        if (inputNameValue === '') {
+            alert("{{ __('Please fill name input in (English) tab.') }}");
+            submitButton.disabled = false;
+
+            return;
+        } else if (inputNameValueAR === '') {
+            alert("{{ __('Please fill name input in (Arabic) tab .') }}");
+            submitButton.disabled = false;
+            return;
+        }
+
+        if (inputValueAR === '' && inputValue != '') {
+            alert("{{__('Please fill description in (Arabic) tab.')}}");
+            submitButton.disabled = false;
+
+            return;
+        }/*  else if (inputValue === '' && inputValueAR != '') {
+            alert("{{__('Please fill description in (English) tab.')}}");
+            submitButton.disabled = false;
+            return;
+        } */
+
+        var englishRegex = /^[0-9a-zA-Z\s]+$/;
+        var arabicRegex = /^[\u0600-\u06FF0-9\s]+$/;
+
+        if (!englishRegex.test(inputNameValue)) {
+            alert("{{__('English name is not valid, please use english characters')}}")
+            submitButton.disabled = false;
+            return;
+        }
+
+        if (!arabicRegex.test(inputNameValueAR)) {
+            alert("{{__('Arabic name is not valid, please use arabic characters')}}");
+            submitButton.disabled = false;
+            return;
+        }
+
+        var waiting = document.querySelector('#waiting-item');
+        waiting.style.display = 'block';
+
+        document.getElementById('kt_modal_new_target_form').submit();
+
+
+
+    });
     var modal = document.getElementById('kt_modal_new_target');
     modal.addEventListener('hidden.bs.modal', function() {
         document.getElementById("kt_modal_new_target_form").reset();

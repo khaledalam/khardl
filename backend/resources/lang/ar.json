@@ -1207,6 +1207,10 @@
     "Can not enable drivers option if you do not have active drivers.":"لا يمكنك تمكين خيار السائقين إذا لم يكن لديك سائقين نشطيين.",
     "Can not enable delivery company option if you do not signed with any delivery company.":"لا يمكن تمكين خيار شركة التوصيل إذا لم تقم بالتسجيل مع أي شركة توصيل.",
     "If you enable own drivers option and delivery companies option at any branch, the orders at first (when accepted by restaurant) will automatically goes to your own drivers and there will be timer (Which you determine bellow) after this timer the orders goes automatically to all delivery companies you already assigned with.":"إذا قمت بتمكين خيار السائقين الخاصين وخيار شركات التوصيل في اي فرع لديك، فستنتقل الطلبات في البداية (عند قبولها من قبل المطعم) تلقائيًا إلى السائقين الخاصين بك وسيكون هناك مؤقت (الذي تحدده أدناه) بعد هذا المؤقت، تنتقل الطلبات تلقائيًا إلى جميع شركات التوصيل التي تعاقدت معها بالفعل.",
-    "You can not pickup order because branch disable own drivers to pickup orders.":"لا يمكنك التقاط الطلب لأن فرع قام بتعطيل توصيل الطلبات للسائقين الخاصيين"
+    "You can not pickup order because branch disable own drivers to pickup orders.":"لا يمكنك التقاط الطلب لأن فرع قام بتعطيل توصيل الطلبات للسائقين الخاصيين",
+    "Please fill name input in (English) tab.":"يرجى إدخال الاسم في علامة التبويب (الإنجليزية).",
+    "Please fill name input in (Arabic) tab .":"يرجى إدخال الاسم في علامة التبويب (العربية).",
+    "Arabic name is not valid, please use arabic characters":"الاسم العربي غير صالح ، يرجى استخدام الأحرف العربية",
+    "English name is not valid, please use english characters":"اسم اللغة الإنجليزية غير صالح ، يرجى استخدام الأحرف الإنجليزية"
 
 }
