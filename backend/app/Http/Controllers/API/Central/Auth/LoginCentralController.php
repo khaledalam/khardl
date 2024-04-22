@@ -17,7 +17,7 @@ class LoginCentralController extends BaseController
             'email' => 'required|string|email|min:10|max:255',
             'password' => 'required|string|min:6|max:255',
             'remember_me' => 'nullable|boolean',
-            'code' => 'required|string|min:5|max:5',
+            'login_code' => 'required|string|min:5|max:5',
         ]);
 
         if ($validator->fails()) {
@@ -33,12 +33,12 @@ class LoginCentralController extends BaseController
         return $tenant->run(function () use($request) {
             return (new LoginController())->login($request);
         });
-
     }
+
     public function logout(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'code' => 'required|string|min:5|max:5',
+            'login_code' => 'required|string|min:5|max:5',
         ]);
 
         if ($validator->fails()) {

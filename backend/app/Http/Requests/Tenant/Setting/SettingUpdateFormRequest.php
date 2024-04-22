@@ -26,8 +26,6 @@ class SettingUpdateFormRequest extends FormRequest
         return [
             'delivery_fee' => 'required|numeric|min:0',
             'limit_delivery_company' => 'nullable|integer|min:0',
-            'delivery_companies_option' => 'nullable|in:1',
-            'drivers_option' => 'nullable|in:1',
         ];
     }
 }
