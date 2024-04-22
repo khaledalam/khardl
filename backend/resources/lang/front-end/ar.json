@@ -554,5 +554,7 @@
     "Select this branch": "اختر هذا الفرع",
     "Maximum number of choises: ": "الحد الأقصى لعدد الخيارات: ",
     "select option": "اختر الخيار",
-    "e.g. Please make the meat super tender.": "مثال: يرجى جعل اللحم لينًا جدًا"
+    "e.g. Please make the meat super tender.": "مثال: يرجى جعل اللحم لينًا جدًا",
+    "Login Code": "رمز الدخول",
+    "Login Code Error": "رمز دخول خاطئ"
 }
