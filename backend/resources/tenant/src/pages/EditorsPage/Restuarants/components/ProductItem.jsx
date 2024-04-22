@@ -460,11 +460,11 @@ const ProductItem = ({
                     backgroundColor: menu_card_background_color,
                     borderRadius: `${menu_card_radius}px`,
                 }}
-                className="w-36 h-44 relative hover:scale-110 transform transition-transform duration-300 ease-in-out"
+                className="w-full max-w-32 sm:max-w-36 h-44 relative hover:scale-110 transform transition-transform duration-300 ease-in-out"
                 key={valuekey}
                 onClick={() => document.getElementById(id).showModal()}
             >
-                <div className="w-36 h-44 flex flex-col justify-between items-center">
+                <div className="w-full max-w-32 sm:max-w-36 h-44 flex flex-col justify-between items-center">
                     <div
                         style={{
                             backgroundImage: `url(${imgSrc})`,
@@ -473,7 +473,7 @@ const ProductItem = ({
                             borderTopLeftRadius: `${menu_card_radius}px`,
                             borderTopRightRadius: `${menu_card_radius}px`,
                         }}
-                        className="w-36 h-[86px] flex justify-center items-center"
+                        className="w-full max-w-32 sm:max-w-36 h-[86px] flex justify-center items-center"
                     >
                         {/* <img className="w-[60px] h-[60px]" src={imgSrc} /> */}
                     </div>

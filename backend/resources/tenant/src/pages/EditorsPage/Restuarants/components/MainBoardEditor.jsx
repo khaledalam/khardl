@@ -617,7 +617,7 @@ const MainBoardEditor = ({
                             className={`w-full h-full flex flex-col max-h-[610px] items-start justify-center `}
                         >
                             <div
-                                className={`flex flex-col gap-[30px] h-fit p-4 overflow-y-scroll hide-scroll`}
+                                className={`flex flex-col gap-[30px] h-fit p-3 md:p-4 overflow-y-scroll hide-scroll`}
                             >
                                 {categories &&
                                     categories.map((category, i) => (
