@@ -56,7 +56,7 @@ class LoginController extends BaseController
             'login_code' => 'nullable|string|min:5|max:5',
         ]);
 
-        if ($request->has('login_code')) {
+        if ($request->has('login_code') && $request->login_code) {
             $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->code)->first();
             if (!$tenant) {
                 return $this->sendError('Validation Error. R!');
