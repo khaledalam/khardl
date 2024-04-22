@@ -16,44 +16,6 @@ class ItemService
     }
     public function addItem(ItemFormRequest $request, $id, $branchId)
     {
-        // TODO @todo validate the remain fields of the coming request
-
-        $fields = [
-            'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
-            'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
-            'checkbox_input_maximum_choices' => 'nullable|int|min:1'
-        ];
-
-        $arabic_optional_text = ['checkboxInputNameAr', 'description_ar', 'selectionInputNameAr', 'dropdownInputNameAr'];
-        $english_optional_text = ['checkboxInputNameEn', 'description_en', 'selectionInputNameEn', 'dropdownInputNameEn'];
-        foreach ($arabic_optional_text as $field) {
-            if ($request->has($field)) {
-                $fields[$field] = 'regex:/^[0-9\p{Arabic}\s]+$/u';
-            }
-        }
-        foreach ($english_optional_text as $field) {
-            if ($request->has($field)) {
-                $fields[$field] = 'regex:/^[0-9a-zA-Z\s]+$/';
-            }
-        }
-
-        if (!$request->validate($fields, [
-            'item_name_en.regex'=>__("English name is not valid"),
-            'item_name_en.required'=>__("English name is required"),
-            'description_en.regex' => __("English description is not valid"),
-            'checkboxInputNameEn.regex' => __("English options is not valid"),
-            'selectionInputNameEn.regex' => __("English options is not valid"),
-            'dropdownInputNameEn.regex' => __("English options is not valid"),
-            'description_ar.regex' => __("Arabic description is not valid"),
-            'checkboxInputNameAr.regex' => __("Arabic options is not valid"),
-            'selectionInputNameAr.regex' => __("Arabic options is not valid"),
-            'dropdownInputNameAr.regex' => __("Arabic options is not valid"),
-            'item_name_ar.regex'=>__("Arabic name is not valid"),
-            'item_name_ar.required'=>__("Arabic name is required")
-        ])) {
-            return redirect()->back()->with('error', __('Invalid Product Data'));
-        }
-
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
             $photoFile = $request->file('photo');
