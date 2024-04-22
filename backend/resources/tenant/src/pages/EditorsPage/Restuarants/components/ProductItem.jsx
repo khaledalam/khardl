@@ -548,7 +548,7 @@ const ProductItem = ({
                             dropdownItems[0]?.length > 0
                                 ? "h-[700px]"
                                 : "h-[550px]"
-                        } flex flex-col justify-end items-center`}
+                        } flex flex-col justify-end items-center z-[100]`}
                     >
                         <button
                             className="btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-6 top-6"
@@ -667,6 +667,9 @@ const ProductItem = ({
                                                                 e.target.value
                                                             )
                                                         }
+                                                        style={{
+                                                            resize: "none",
+                                                        }}
                                                         className="outline-none w-[243px] h-[52px] left-[16px] top-[14px] absolute text-black text-[12px] font-light"
                                                     />
                                                 </div>
@@ -1054,7 +1057,7 @@ const ProductItem = ({
                                                 handleAddToCart();
                                             }}
                                         >
-                                            <div className="w-[308px] h-10 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center">
+                                            <div className="w-[308px] h-10 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center hover:cursor-pointer">
                                                 <div className="text-center text-white text-[14px] font-medium">
                                                     {t("Add to cart")}
                                                 </div>
@@ -1138,7 +1141,7 @@ const ProductItem = ({
                                 dropdownItems[0]?.length > 0
                                     ? "h-[700px]"
                                     : "hidden"
-                            } flex flex-col justify-start items-center ml-[80px]`}
+                            } flex flex-col justify-start items-center mr-[-10px]`}
                         >
                             {(checkboxItems[0]?.length > 0 ||
                                 radioItems[0]?.length > 0 ||
