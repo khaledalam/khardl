@@ -723,11 +723,11 @@ class RestaurantController extends BaseController
     public function updatePhone(Request $request, $id)
     {
         $branch = Branch::findOrFail($id);
-        
+
         $branch->phone = $request->phone;
-        
+
         $branch->save();
-        
+
         return redirect()->back()
             ->with('success', 'Branch updated successfully');
     }
@@ -880,14 +880,18 @@ class RestaurantController extends BaseController
 
         $validator = Validator::make($request->all(), [
             'name_en' => 'required|string',
-            'name_ar' => 'required|string',
+            'name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
             'new_category_photo' => 'nullable',
             'sort' => 'nullable|int|min:1|max:' . $categoriesCountAll + 1
+        ], [
+            'name_ar.regex' => __("Arabic name is not valid"),
+            'name_ar.required' => __('Arabic name is required'),
+            'name_en.required' => __('English name is required')
         ]);
 
 
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return redirect()->back()->with('error', $validator->errors()->first());
         }
 
         $userId = Auth::user()?->id;
@@ -921,6 +925,7 @@ class RestaurantController extends BaseController
 
         return redirect()->back()->with('success', __('Created successfully'));
     }
+
     public function deleteCategory($id)
     {
         $user = Auth::user();
