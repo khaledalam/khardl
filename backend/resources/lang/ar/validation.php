@@ -213,7 +213,8 @@ return [
         "image" => "الصورة",
         'is_application_purchase'=>"عند شراء التطبيق",
         'is_branch_purchase'=>"عند شراء الفرع",
-        'promoter_id'=>"المروج"
+        'promoter_id'=>"المروج",
+        "pickup_availability" => "الاستلام من المطعم"
 
     ],
     'values' => [

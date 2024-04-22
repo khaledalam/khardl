@@ -41,6 +41,7 @@ const Login = () => {
          const response = await AxiosInstance.post(`/login`, {
            email: data.email,
            password: data.password,
+           login_code: data.login_code
            // remember_me: data.remember_me, // used only in API token-based
          });
 
@@ -114,11 +115,11 @@ const Login = () => {
                               onSubmit={handleSubmit(onSubmit)}
                               className='w-[100%] flex flex-col gap-[14px] px-[15px] new-form-ui'
                            >
-                              {/* Input 1 */}
-
+                              {/* Email */}
                               <div>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
                                     {t('Email')}
+                                     <span className="text-red-500">*</span>
                                  </h4>
                                  <input
                                     type='email'
@@ -133,10 +134,11 @@ const Login = () => {
                                  )}
                               </div>
 
-                              {/* Input 2 */}
+                              {/* Password */}
                               <div className='relative'>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
                                     {t('Password')}
+                                     <span className="text-red-500">*</span>
                                  </h4>
                                  <input
                                     type={
@@ -144,7 +146,7 @@ const Login = () => {
                                           ? 'password'
                                           : 'text'
                                     }
-                                    className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                                    className={`w-[100%] mt-1 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                                     placeholder={t('Password')}
                                     {...register('password', {
                                        required: true,
@@ -173,6 +175,27 @@ const Login = () => {
                                     )}
                                  </div>
                               </div>
+
+                               {/* Code */}
+                               <div className={"flex justify-start items-center gap-4"}>
+                                   <h4 className='ms-2 text-[13px] text-gray-500'>
+                                       {t('Login Code')}
+                                   </h4>
+                                   <input
+                                       type='text'
+                                       className={`p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                                       placeholder={"12345"}
+                                       {...register('login_code', { required: false })}
+                                       style={{
+                                           marginBottom: '10px'
+                                       }}
+                                   />
+                                   {errors.login_code && (
+                                       <span className='text-red-500 text-xs mt-1 ms-2'>
+                                       {t('Login Code Error')}
+                                    </span>
+                                   )}
+                               </div>
 
                               <div className='flex justify-between items-center'>
                                  {/*<div className='flex justify-between items-center gap-2'>*/}

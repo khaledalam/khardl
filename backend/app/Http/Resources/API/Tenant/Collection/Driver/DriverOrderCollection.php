@@ -41,6 +41,8 @@ class DriverOrderCollection extends BaseCollection
             'total' => $total,
             'total_paid' => $totalPaidAmount,
             'total_unpaid' => $totalUnPaidAmount,
+            'start_date' => request('start_date') ?? null,
+            'end_date' => request('end_date') ?? null,
             'orders' => $this->template(),
         ];
     }

@@ -22,12 +22,26 @@
                         <input type="text" value="{{ request('search') }}" placeholder="{{ __('By name, email, phone') }}" name="search" class="form-control  w-200px" />
                         <div class="form-group mx-2">
                             <select name="status" id="status" class="form-select w-200px">
-                                <option value="">{{ __('Select') }}</option>
+                                <option value="">{{ __('Status') }}</option>
                                 <option value="active" {{ request('status') == 'active' ? 'selected' : ''  }}>{{ __('active') }}</option>
                                 <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : ''  }}>{{ __('inactive') }}</option>
                                 <option value="suspended" {{ request('status') == 'suspended' ? 'selected' : ''  }}>{{ __('suspended') }}</option>
                             </select>
                         </div>
+                        @if (!$user->isWorker())
+                            <div class="form-group mx-2">
+                                <select name="branch_id" id="branch" class="form-select w-200px">
+                                    <option value="">{{ __('Branch') }}</option>
+                                    @foreach ($branches as $branch)
+                                    <option value="{{ $branch->id }}"
+                                        @if (request('branch_id') == $branch->id)
+                                        {{ 'selected' }}
+                                        @endif>{{ $branch->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
+
                         <button type="submit" class="btn btn-secondary"> {{ __('Filter') }}</button>
                         <div class="card-toolbar mx-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{ __('Add') }}">
                             <a href="{{ route('drivers.create') }}" class="btn btn-sm btn-light btn-active-khardl">
@@ -56,12 +70,14 @@
                                     <th class="min-w-25px">#</th>
                                     <th class="min-w-200px">{{ __('Name') }}</th>
                                     <th class="min-w-200px">{{ __('Image') }}</th>
+                                    <th class="min-w-150px">{{ __('Branch') }}</th>
                                     <th class="min-w-150px">{{ __('Status') }}</th>
                                     <th class="min-w-150px">{{ __('Delivered orders') }}</th>
                                     <th class="min-w-150px">{{ __('This month') }}</th>
                                     <th class="min-w-150px">{{ __('phone-number') }}</th>
                                     <th class="min-w-150px">{{ __('email') }}</th>
                                     <th class="min-w-150px">{{ __('Vehicle No.') }}</th>
+                                    <th class="min-w-150px">{{ __('Created at') }}</th>
                                     <th class="min-w-150px text-end">{{ __('actions') }}</th>
                                 </tr>
                             </thead>
@@ -81,9 +97,20 @@
                                         </div>
                                     </td>
                                     <td>
+                                        @if ($driver->image)
                                         <div class="symbol symbol-60px symbol-lg-60px symbol-fixed position-relative">
                                             <img alt="driver image" src="{{ $driver->image }}" />
                                         </div>
+                                        @else
+                                        <div class="symbol symbol-60px symbol-lg-60px symbol-fixed position-relative">
+                                            <img alt="driver image" src="{{ global_asset('images/driver_logo.jpg') }}" />
+                                        </div>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span>
+                                            {{ $driver->branch?->name }}
+                                        </span>
                                     </td>
                                     <td>
                                         <span class="badge {{ $driver->status }}">
@@ -104,6 +131,9 @@
                                     </td>
                                     <td>
                                         <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->vehicle_number }}</a>
+                                    </td>
+                                    <td>
+                                        <span>{{ $driver?->created_at?->format('Y-m-d') }}</span>
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-end flex-shrink-0">

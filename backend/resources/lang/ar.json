@@ -350,6 +350,7 @@
     "status" : "الحالة",
     "save-changes" : "حفظ التغييرات",
     "discard" : "تخلص",
+    "are-you-sure-you-want-to-close-without-saving": "Are you sure you want to close without saving?",
     "control-panel" : "لوحة التحكم",
     "registration" : "تسجيل",
     "login" : "دخول",
@@ -1093,7 +1094,7 @@
     "branch ":"فرع",
     "Buy New branch":"شراء فرع جديد",
     "Max time for drivers to pickup order" : "أقصى وقت للسائقين لاستلام الطلب",
-    "The number of minutes for drivers so he can pick up order before order goes to delivery companies" : "عدد الدقائق لدي السائق لالتقاط الطلب قبل خروج الطلب الي شركات التوصيل",
+    "The number of minutes for own drivers so he can accept order before order goes to delivery companies" : "عدد الدقائق لدي السائقين الخاصيين لقبول الطلب قبل خروج الطلب الي شركات التوصيل",
     "Number of minutes" : "عدد الدقائق",
     "Max time for drivers to accept order(in case if delivery companies exist and drivers)" : "الحد الأقصى للوقت الذي يستغرقه السائقون لقبول الطلب (في حالة وجود شركات التوصيل  والسائقين)",
     "Default: :minutes minutes" : "الحالي : :minutes دقيقة",
@@ -1153,6 +1154,7 @@
     "Your request is pending and waiting for the respond of payment gateway.":"طلبك معلق وينتظر رد بوابة الدفع.",
     "You need to contact adminstration because of your payment gateway is not set.":"تحتاج إلى الاتصال بالإدارة لأن بوابة الدفع الخاصة بك لم يتم تعيينها.",
     "Save":"حفظ",
+    "or": "أو",
     "Branches":"الفروع",
     "QR Maker": "صانع QR",
     "Make a new QR Code": "صناعه QR جديد",
@@ -1211,8 +1213,14 @@
     "Options[:num] name[AR] of dropdown can not be empty":"الاسم العربي للخيار[:num] مطلوب للخيارات من قائمه ",
     "Options[:num] name[EN] of dropdown can not be empty":"الاسم الانجليزي للخيار[:num] مطلوب للخيارات من قائمه",
     "Price[:num] of dropdown can not be empty":"السعر[:num] للخيارات من قائمه مطلوب",
-    "Global delivery fees for all branches":"رسوم التوصيل علي كل ال,فروع",
+    "Global delivery fees for all branches":"رسوم التوصيل علي كل ال,الفروع",
     "To get a better experience please use a computer":"للحصول على تجربة افضل رجاء استخدام كمبيوتر",
-    "Order is not for you branch":"الطلب ليس لك فرعك"
+    "Order is not for you branch":"الطلب ليس لك فرعك",
+    "The delivery":"التوصيل",
+    "Own drivers":"السائقين الخاصيين",
+    "Can not enable drivers option if you do not have active drivers.":"لا يمكنك تمكين خيار السائقين إذا لم يكن لديك سائقين نشطيين.",
+    "Can not enable delivery company option if you do not signed with any delivery company.":"لا يمكن تمكين خيار شركة التوصيل إذا لم تقم بالتسجيل مع أي شركة توصيل.",
+    "If you enable own drivers option and delivery companies option at any branch, the orders at first (when accepted by restaurant) will automatically goes to your own drivers and there will be timer (Which you determine bellow) after this timer the orders goes automatically to all delivery companies you already assigned with.":"إذا قمت بتمكين خيار السائقين الخاصين وخيار شركات التوصيل في اي فرع لديك، فستنتقل الطلبات في البداية (عند قبولها من قبل المطعم) تلقائيًا إلى السائقين الخاصين بك وسيكون هناك مؤقت (الذي تحدده أدناه) بعد هذا المؤقت، تنتقل الطلبات تلقائيًا إلى جميع شركات التوصيل التي تعاقدت معها بالفعل.",
+    "You can not pickup order because branch disable own drivers to pickup orders.":"لا يمكنك التقاط الطلب لأن فرع قام بتعطيل توصيل الطلبات للسائقين الخاصيين"
 
 }

@@ -241,31 +241,26 @@ class RestaurantController extends BaseController
             }
             $payment_methods[] = PaymentMethod::where('name', $method)->first()->id;
         }
-        $hasActiveDrivers = RestaurantUser::activeDrivers()->get()->count();
-        $hasDeliveryCompanies = DeliveryCompanies::all()->count();
-        $branch->update([
-            'delivery_availability'=>false,
-            'pickup_availability'=>false
-        ]);
-        foreach ($request->delivery_types ?? [] as $method) {
-            if($method == DeliveryType::DELIVERY && !$hasActiveDrivers  && !$hasDeliveryCompanies){
-                return redirect()->back()->with('error', __('you are not signed with any delivery company as well as no active drivers'));
-            }
-            if($method == DeliveryType::DELIVERY && ($hasActiveDrivers  || $hasDeliveryCompanies)){
-                $branch->update([
-                    'delivery_availability'=>true
-                ]);
-            }
-
-            if($method == DeliveryType::PICKUP){
-                $branch->update([
-                    'pickup_availability'=>true
-                ]);
-            }
-            $delivery_types[] = DeliveryType::where('name', $method)->first()->id;
-        }
         $branch->payment_methods()->sync($payment_methods);
+
+        if($request->filled('pickup_availability')){
+            $data['pickup_availability'] = 1;
+            $delivery_types[] = DeliveryType::where('name', DeliveryType::PICKUP)->first()->id;
+        }else{
+            $data['pickup_availability'] = 0;
+        }
+        if($request->filled('delivery_companies_option') || $request->filled('drivers_option')){
+            $delivery_types[] = DeliveryType::where('name', DeliveryType::DELIVERY)->first()->id;
+            $data['delivery_companies_option'] = $request->filled('delivery_companies_option') ? 1 : 0;
+            $data['drivers_option'] = $request->filled('drivers_option') ? 1 : 0;
+        }else{
+            $data['delivery_companies_option'] = 0;
+            $data['drivers_option'] = 0;
+            $delivery_types = null;
+        }
+        $branch->update($data);
         $branch->delivery_types()->sync($delivery_types);
+
         if($request->preparation_time_delivery){
             $branch->update(['preparation_time_delivery' => $request->preparation_time_delivery]);
         }
@@ -747,6 +742,19 @@ class RestaurantController extends BaseController
             ->with('success', 'Branch updated successfully');
     }
 
+    public function updatePhone(Request $request, $id)
+    {
+        $branch = Branch::findOrFail($id);
+
+        $branch->phone = $request->phone;
+
+        $branch->save();
+
+        return redirect()->back()
+            ->with('success', 'Branch updated successfully');
+    }
+
+
     public function updateBranchLocation(Request $request, $id)
     {
 
@@ -833,7 +841,7 @@ class RestaurantController extends BaseController
                         return;
                 }
 
-                $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
+                $query->where('branch_id', $user->branch->id);
             })
             ->where('category_id', $selectedCategory?->id)
             ->where('branch_id', $branchId)
@@ -894,14 +902,18 @@ class RestaurantController extends BaseController
 
         $validator = Validator::make($request->all(), [
             'name_en' => 'required|string',
-            'name_ar' => 'required|string',
+            'name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
             'new_category_photo' => 'nullable',
             'sort' => 'nullable|int|min:1|max:' . $categoriesCountAll + 1
+        ], [
+            'name_ar.regex' => __("Arabic name is not valid"),
+            'name_ar.required' => __('Arabic name is required'),
+            'name_en.required' => __('English name is required')
         ]);
 
 
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return redirect()->back()->with('error', $validator->errors()->first());
         }
 
         $userId = Auth::user()?->id;
@@ -935,6 +947,7 @@ class RestaurantController extends BaseController
 
         return redirect()->back()->with('success', __('Created successfully'));
     }
+
     public function deleteCategory($id)
     {
         $user = Auth::user();

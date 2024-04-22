@@ -74,10 +74,10 @@
                                         </div>
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{ __('Image')}}</label>
+                                            <label class="form-label">{{ __('Image')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="file" class="form-control form-control-solid" placeholder="{{ __('Photo') }}" name="image" accept="image/*" required />
+                                            <input type="file" class="form-control form-control-solid" placeholder="{{ __('Photo') }}" name="image" accept="image/*" />
                                             <!--end::Input-->
                                         </div>
                                         <div class="mb-10 fv-row">

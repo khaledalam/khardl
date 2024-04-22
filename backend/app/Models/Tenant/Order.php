@@ -162,12 +162,16 @@ class Order extends Model
     {
         return $query->where('status', self::REJECTED);
     }
-    public function scopeDelivery($query)
+    public function scopeDriverOrders($query)
     {
         return $query->whereHas('delivery_type', function ($q) {
             return $q->where('name', DeliveryType::DELIVERY);
         })
         ->where('status','!=', self::PENDING)
+        ->where('status','!=', self::REJECTED)
+        ->whereHas('branch', function($q){
+            return $q->where('drivers_option',true);
+        })
         ->where('branch_id', getAuth()->branch_id);
     }
     public function scopeOnlineCash($query)
@@ -190,11 +194,20 @@ class Order extends Model
     public function scopeWhenStatus($query, $status)
     {
         return $query->when($status != null, function ($q) use ($status) {
+            return $q->where('status', $status);
+        });
+    }
+    public function scopeWhenDriverStatus($query, $status)
+    {
+        return $query->when($status != null, function ($q) use ($status) {
             if($status=='history'){
                 return $q->where('status', self::COMPLETED)->orWhere('status', self::CANCELLED);
             }elseif($status == 'assigned'){
-                return $q->where('driver_id', getAuth()->id);
-            }else{
+                return $q->where(function ($query) {
+                    $query->where('status', self::READY)
+                    ->orWhere('status', self::RECEIVED_BY_RESTAURANT);
+                })->where('driver_id', getAuth()->id);
+            }elseif($status == self::ACCEPTED || $status == self::COMPLETED || $status == self::CANCELLED){
                 return $q->where('status', $status);
             }
         });
@@ -203,32 +216,48 @@ class Order extends Model
     {
         return $query->when($date != null, function ($q) use ($date) {
             if ($date == 'today') {
+                request()->merge(['start_date' => now()->toDateString()]);
+                request()->merge(['end_date' => now()->toDateString()]);
                 return $q->whereDate('created_at', now()->toDateString());
             } elseif ($date == 'last_day') {
+                request()->merge(['start_date' => now()->subDay()->toDateString()]);
+                request()->merge(['end_date' => now()->subDay()->toDateString()]);
                 return $q->whereDate('created_at', now()->subDay()->toDateString());
             } elseif ($date == 'this_week') {
                 $startDate = now()->startOfWeek();
                 $endDate = now()->endOfWeek();
+                request()->merge(['start_date' => $startDate?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endDate->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startDate, $endDate]);
             } elseif ($date == 'last_week') {
                 $startDate = Carbon::now()->subDays(7)->startOfDay();
                 $endDate = Carbon::now()->subDays(1)->endOfDay();
+                request()->merge(['start_date' => $startDate?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endDate->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startDate, $endDate]);
             }  elseif ($date == 'this_month') {
                 $startOfMonth = now()->startOfMonth();
                 $endOfMonth = now()->endOfMonth();
+                request()->merge(['start_date' => $startOfMonth?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endOfMonth->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
             } elseif ($date == 'last_month') {
                 $startOfLastMonth = now()->subMonth()->startOfMonth();
                 $endOfLastMonth = now()->subMonth()->endOfMonth();
+                request()->merge(['start_date' => $startOfLastMonth?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endOfLastMonth->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth]);
             } elseif ($date == 'this_year') {
                 $startOfYear = now()->startOfYear();
                 $endOfYear = now()->endOfYear();
+                request()->merge(['start_date' => $startOfYear?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endOfYear->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startOfYear, $endOfYear]);
             } elseif ($date == 'last_year') {
                 $startOfLastYear = now()->subYear()->startOfYear();
                 $endOfLastYear = now()->subYear()->endOfYear();
+                request()->merge(['start_date' => $startOfLastYear?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endOfLastYear->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startOfLastYear, $endOfLastYear]);
             }
         });
@@ -245,6 +274,30 @@ class Order extends Model
             return $q->where('payment_status', $status);
         });
     }
+    public function scopeShouldLimitDrivers($query)
+    {
+        return $query->when($this->hasDeliveryAllOptions(clone $query), function ($query) {
+            $settings = Setting::first();
+            $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
+
+            return $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
+        });
+    }
+
+    public function scopeShouldAssignDriver($query)
+    {
+        return $query->when(!$this->hasDeliveryAllOptions(clone $query), function ($query) {
+            return $query->where('driver_id', null);
+        });
+    }
+
+    private function hasDeliveryAllOptions($query)
+    {
+        return $query->whereHas('branch',function($subQ){
+            return $subQ->where('delivery_companies_option',true)
+            ->where('drivers_option',true);
+        })->count();
+    }
     /* End Scoped */
     public static function ChangeStatus($status)
     {
@@ -259,6 +312,10 @@ class Order extends Model
     public function isDelivery()
     {
         return $this->delivery_type?->name == DeliveryType::DELIVERY;
+    }
+    public function isCashOnDelivery()
+    {
+        return $this->payment_method?->name == PaymentMethod::CASH_ON_DELIVERY;
     }
     public function user()
     {
@@ -324,7 +381,7 @@ class Order extends Model
         ){
             $settings = Setting::first();
             $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 5);
-            if($settings && $settings->delivery_companies_option && $settings->drivers_option && $limitDrivers > 0){
+            if($settings && $this->branch?->delivery_companies_option && $this->branch?->drivers_option && $limitDrivers > 0){
                 return $this->received_by_restaurant_at > Carbon::now()->subMinutes($limitDrivers);
             }else{
                 return true;
@@ -340,12 +397,13 @@ class Order extends Model
     {
         $settings = Setting::first();
         $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 5);
-        if($settings && $settings->delivery_companies_option && $settings->drivers_option && $limitDrivers > 0){
+        if($settings && $this->branch?->delivery_companies_option && $this->branch?->drivers_option && $limitDrivers > 0){
+        $limitDriversInSeconds = $limitDrivers * 60;
             if($this->received_by_restaurant_at){
                 $receivedTime = Carbon::parse($this->received_by_restaurant_at);
                 $currentTime = Carbon::now();
-                $diffInMinutes = $receivedTime->diffInMinutes($currentTime);
-                return ($limitDrivers - $diffInMinutes) > 0 ? ($limitDrivers - $diffInMinutes) : 0;
+                $diffInSeconds = $receivedTime->diffInSeconds($currentTime);
+                return ($limitDriversInSeconds - $diffInSeconds) > 0 ? ($limitDriversInSeconds - $diffInSeconds) : 0;
             }else{
                 return 0;
             }

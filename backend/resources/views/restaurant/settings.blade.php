@@ -75,6 +75,9 @@
                                     <div class="card-header">
                                         <div class="card-title">
                                             <h2>{{ __('Delivery options')}}</h2>
+                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
+                                            title="{{ __('If you enable own drivers option and delivery companies option at any branch, the orders at first (when accepted by restaurant) will automatically goes to your own drivers and there will be timer (Which you determine bellow) after this timer the orders goes automatically to all delivery companies you already assigned with.') }}">
+                                            </i>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -90,37 +93,10 @@
                                             <input type="number" min="1" name="limit_delivery_company" id="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('Number of minutes')}}" value="{{$settings->limit_delivery_company ?? config('application.limit_delivery_company')}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{__('The number of minutes for drivers so he can pick up order before order goes to delivery companies')}} ({{ __('Default: :minutes minutes',['minutes' => $settings->limit_delivery_company ?? config('application.limit_delivery_company')]) }})</div>
+                                            <div class="text-muted fs-7">{{__('The number of minutes for own drivers so he can accept order before order goes to delivery companies')}} ({{ __('Default: :minutes minutes',['minutes' => $settings->limit_delivery_company ?? config('application.limit_delivery_company')]) }})</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        {{-- TODO: make options for every branch --}}
-                                        <div class="row mb-0 mt-5">
-                                            <!--begin::Label-->
-                                            <div class="form-check form-check-solid form-switch fv-row">
-                                                <input class="form-check-input w-35px h-20px" type="checkbox" id="delivery_companies_option" value="1" name="delivery_companies_option"
-                                                @if($settings->delivery_companies_option || old('delivery_companies_option') == "1")
-                                                {{ 'checked' }}
-                                                @endif>
-                                                <label class="form-check-label" for="delivery_companies_option">{{ __('Delivery companies option')}}</label>
-                                            </div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <div class="row mb-0 mt-5">
-                                            <!--begin::Label-->
-                                            <div class="form-check form-check-solid form-switch fv-row">
-                                                <input class="form-check-input w-35px h-20px" type="checkbox" id="drivers_option" value="1" name="drivers_option"
-                                                @if($settings->drivers_option || old('drivers_option') == "1")
-                                                {{ 'checked' }}
-                                                @endif>
-                                                <label class="form-check-label" for="drivers_option">{{ __('Drivers option')}}</label>
-                                            </div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <!--end::Input group-->
-
 
                                     </div>
                                     <!--end::Card header-->
@@ -155,7 +131,7 @@
 @endsection
 @section('js')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+   /*  document.addEventListener('DOMContentLoaded', function() {
         // Function to toggle the disabled attribute of limit_delivery_company input
         function toggleLimitDeliveryCompany() {
             var driversOptionCheckbox = document.getElementById('drivers_option');
@@ -180,7 +156,7 @@
         document.getElementById('delivery_companies_option').addEventListener('change', function() {
             toggleLimitDeliveryCompany();
         });
-    });
+    }); */
 </script>
 
 @endsection
