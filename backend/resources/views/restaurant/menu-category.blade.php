@@ -406,29 +406,6 @@
 
         optionsDiv.appendChild(optionDiv);
     }
-    var categorySubmit = document.getElementById('category-submit');
-    if(categorySubmit){
-        categorySubmit.getElementById('category-submit').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var submitButton = document.querySelector('#saveCategoryBtn');
-            submitButton.disabled = true;
-
-            var inputValue = document.querySelector('input[name=name_ar]').value.trim();
-            if (inputValue === '') {
-                alert('Please fill in the input in (Arabic) tab.');
-                return;
-            }
-            var inputValueAR = document.querySelector('input[name=name_en]').value.trim();
-            if (inputValueAR === '') {
-                alert('Please fill in the input in the (English) tab.');
-                return;
-            }
-
-            document.getElementById('category-submit').submit();
-        });
-    }
-
-
 </script>
 @if($user->isRestaurantOwner())
 <div class="content d-flex flex-column flex-column pt-0" id="kt_content">
@@ -612,7 +589,7 @@
                         </div>
                         {{-- TODO:Refactor 2 loops and modal for every item--}}
                         @foreach ($items as $item)
-                        <form class="form" action="{{ route('restaurant.update-item',['item' => $item->id]) }}" method="POST" enctype="multipart/form-data">
+                        <form class="form item_form" action="{{ route('restaurant.update-item',['item' => $item->id]) }}"  method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('post')
                             <div class="modal fade" id="kt_modal_new_target_{{ $item->id }}" tabindex="-1" aria-hidden="true">
@@ -910,7 +887,7 @@
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
 
-                                            <div class="menu-item px-3">
+                                            <div class="menu-item px-3" style="border-top-style: solid;border-top-width: 1px;border-top-color: #ccc;">
                                                 <form class="delete-form" action="{{ route('restaurant.delete-item', ['id' => $item->id]) }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
@@ -987,7 +964,7 @@
 
                 <!--begin:Form-->
                 @if($selectedCategory)
-                <form id="kt_modal_new_target_form" class="form" action="{{ route('restaurant.add-item', ['id' => $selectedCategory->id, 'branchId' => $branchId]) }}" method="POST" enctype="multipart/form-data">
+                <form id="kt_modal_new_target_form" class="form item_form" action="{{ route('restaurant.add-item', ['id' => $selectedCategory->id, 'branchId' => $branchId]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--begin::Heading-->
                     <div class="mb-13 text-center">
@@ -1164,61 +1141,61 @@
 <!--end::Scrolltop-->
 
 <!--begin::Javascript-->
+{{-- Items form validations --}}
 <script>
-      document.getElementById('kt_modal_new_target_form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        var submitButton = document.querySelector('#kt_modal_new_target_submit');
+    document.addEventListener('submit', function(e) {
+        if(e.target.classList.contains('item_form')){
+            e.preventDefault();
+            var submitButton = e.target.querySelector('#kt_modal_new_target_submit');
 
-        submitButton.disabled = true;
+            submitButton.disabled = true;
 
-        var inputValue = document.querySelector('#kt_modal_new_target_form textarea[name=description_en]').value.trim();
-        var inputValueAR = document.querySelector('#kt_modal_new_target_form textarea[name=description_ar]').value.trim();
-        var inputNameValue = document.querySelector('#kt_modal_new_target_form input[name=item_name_en]').value;
-        var inputNameValueAR = document.querySelector('#kt_modal_new_target_form input[name=item_name_ar]').value;
-        if (inputNameValue === '') {
-            alert("{{ __('Please fill name input in (English) tab.') }}");
-            submitButton.disabled = false;
+            var inputValue = e.target.querySelector('textarea[name=description_en]').value.trim();
+            var inputValueAR = e.target.querySelector('textarea[name=description_ar]').value.trim();
+            var inputNameValue = e.target.querySelector('input[name=item_name_en]').value;
+            var inputNameValueAR = e.target.querySelector('input[name=item_name_ar]').value;
+            if (inputNameValue === '') {
+                alert("{{ __('Please fill name input in (English) tab.') }}");
+                submitButton.disabled = false;
 
-            return;
-        } else if (inputNameValueAR === '') {
-            alert("{{ __('Please fill name input in (Arabic) tab .') }}");
-            submitButton.disabled = false;
-            return;
+                return;
+            } else if (inputNameValueAR === '') {
+                alert("{{ __('Please fill name input in (Arabic) tab .') }}");
+                submitButton.disabled = false;
+                return;
+            }
+
+            if (inputValueAR === '' && inputValue != '') {
+                alert("{{__('Please fill description in (Arabic) tab.')}}");
+                submitButton.disabled = false;
+
+                return;
+            } else if (inputValue === '' && inputValueAR != '') {
+                alert("{{__('Please fill description in (English) tab.')}}");
+                submitButton.disabled = false;
+                return;
+            }
+
+            var englishRegex = /^[0-9a-zA-Z\s]+$/;
+            var arabicRegex = /^[\u0600-\u06FF0-9\s]+$/;
+
+            if (!englishRegex.test(inputNameValue)) {
+                alert("{{__('English name is not valid, please use english characters')}}")
+                submitButton.disabled = false;
+                return;
+            }
+
+            if (!arabicRegex.test(inputNameValueAR)) {
+                alert("{{__('Arabic name is not valid, please use arabic characters')}}");
+                submitButton.disabled = false;
+                return;
+            }
+
+            var waiting = document.querySelector('#waiting-item');
+            waiting.style.display = 'block';
+
+            e.target.submit();
         }
-
-        if (inputValueAR === '' && inputValue != '') {
-            alert("{{__('Please fill description in (Arabic) tab.')}}");
-            submitButton.disabled = false;
-
-            return;
-        }/*  else if (inputValue === '' && inputValueAR != '') {
-            alert("{{__('Please fill description in (English) tab.')}}");
-            submitButton.disabled = false;
-            return;
-        } */
-
-        var englishRegex = /^[0-9a-zA-Z\s]+$/;
-        var arabicRegex = /^[\u0600-\u06FF0-9\s]+$/;
-
-        if (!englishRegex.test(inputNameValue)) {
-            alert("{{__('English name is not valid, please use english characters')}}")
-            submitButton.disabled = false;
-            return;
-        }
-
-        if (!arabicRegex.test(inputNameValueAR)) {
-            alert("{{__('Arabic name is not valid, please use arabic characters')}}");
-            submitButton.disabled = false;
-            return;
-        }
-
-        var waiting = document.querySelector('#waiting-item');
-        waiting.style.display = 'block';
-
-        document.getElementById('kt_modal_new_target_form').submit();
-
-
-
     });
     var modal = document.getElementById('kt_modal_new_target');
     modal.addEventListener('hidden.bs.modal', function() {
@@ -1251,9 +1228,27 @@
             });
         });
     });
-
 </script>
+{{-- Category validations --}}
+<script>
+    document.getElementById('category-submit').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var submitButton = document.querySelector('#saveCategoryBtn');
 
+        var inputValue = document.querySelector('input[name=name_ar]').value.trim();
+        if (inputValue === '') {
+            alert("{{ __('Please fill in the input in (Arabic) tab.') }}");
+            return;
+        }
+        var inputValueAR = document.querySelector('input[name=name_en]').value.trim();
+        if (inputValueAR === '') {
+            alert("{{ __('Please fill in the input in the (English) tab.') }}");
+            return;
+        }
+
+        document.getElementById('category-submit').submit();
+    });
+</script>
 
 <!--begin::Javascript-->
 <script>

@@ -1211,6 +1211,8 @@
     "Please fill name input in (English) tab.":"يرجى إدخال الاسم في علامة التبويب (الإنجليزية).",
     "Please fill name input in (Arabic) tab .":"يرجى إدخال الاسم في علامة التبويب (العربية).",
     "Arabic name is not valid, please use arabic characters":"الاسم العربي غير صالح ، يرجى استخدام الأحرف العربية",
-    "English name is not valid, please use english characters":"اسم اللغة الإنجليزية غير صالح ، يرجى استخدام الأحرف الإنجليزية"
+    "English name is not valid, please use english characters":"اسم اللغة الإنجليزية غير صالح ، يرجى استخدام الأحرف الإنجليزية",
+    "Please fill in the input in (Arabic) tab.":"يرجى ملء المدخلات في علامة التبويب (العربية).",
+    "Please fill in the input in the (English) tab." :"يرجى ملء المدخلات في علامة التبويب (الإنجليزية)."
 
 }
