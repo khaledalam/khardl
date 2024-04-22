@@ -75,6 +75,7 @@ const ProductItem = ({
     currentSubItem,
 }) => {
     const dropdDownRef = useRef([]);
+    const modalRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const language = useSelector((state) => state.languageMode.languageMode);
@@ -157,6 +158,19 @@ const ProductItem = ({
     let selectedcheckboxitems = [];
     let selectedradioitems = [];
     let selecteddropdownitems = [];
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                closeModal();
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [closeModal]);
     useEffect(() => {
         if (checkboxItems.length > 0) {
             selectedcheckboxitems = [];
@@ -549,7 +563,7 @@ const ProductItem = ({
                 />
             </div>
             <dialog id={id} className="modal flex flex-row mx-auto">
-                <div className="relative mx-auto">
+                <div className="relative mx-auto" ref={modalRef}>
                     <button
                         className="btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-[-10px] top-[-30px]"
                         onClick={closeModal}
