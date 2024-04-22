@@ -647,7 +647,7 @@
                                                 <div class="d-flex flex-column mb-8 fv-row">
                                                     <!--begin::Label-->
                                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                        <span class="required">{{__('item-photo')}}</span>
+                                                        <span >{{__('item-photo')}}</span>
                                                     </label>
                                                     <div class="row">
                                                         <div class="col-md-9">
@@ -1154,6 +1154,16 @@
             var inputValueAR = e.target.querySelector('textarea[name=description_ar]').value.trim();
             var inputNameValue = e.target.querySelector('input[name=item_name_en]').value;
             var inputNameValueAR = e.target.querySelector('input[name=item_name_ar]').value;
+            /*
+            //TODO: validate image if moved or deleted
+            const fileInput = e.target.querySelector('input[type="file"]');
+            console.log(fileInput.files[0]);
+            if (fileInput.required && ( fileInput.files.length === 0 || !fileInput.files[0])) {
+                event.preventDefault();
+                alert('Please select a file.');
+                submitButton.disabled = false;
+                return;
+            } */
             if (inputNameValue === '') {
                 alert("{{ __('Please fill name input in (English) tab.') }}");
                 submitButton.disabled = false;
