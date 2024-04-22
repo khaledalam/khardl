@@ -87,13 +87,14 @@ const Login = () => {
 
          } else {
              setSpinner(false)
-            throw new Error(`${response?.data?.error || t('Login failed')}`)
+            throw new Error(`${response?.data?.message || response?.data?.error || t('Login failed')}`)
          }
       } catch (error) {
+          console.log(error);
          setSpinner(false)
          dispatch(changeLogState(false))
          setStatusCode(HTTP_NOT_AUTHENTICATED)
-         toast.error(`${error?.response?.data?.data?.error || t('Login failed')}`)
+         toast.error(`${error?.response?.data?.message || error?.response?.data?.error || t('Login failed')}`)
       }
    }
    /////////////////////////////////////////////////////////////////////////////////////

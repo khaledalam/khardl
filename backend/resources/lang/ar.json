@@ -146,6 +146,7 @@
     "Restaurant has been activated successfully.":"تم تفعيل المطعم بنجاح",
     "Subscription has been updated":"تم تعديل الاشتراك",
     "There is no delivery available for your order yet":"لا يوجد شريكات توصيل لطلبك الان",
+    "Validation Error. R!": "البيانات غير صحيحه",
     "This restaurant name already taken":"اسم المطعم موجود بالفعل",
     "Invalid user":"مستخدم غير صحيح",
     "Super master admin can not blocked":"لا يمكنك حظر المشرف الرئيسي",
