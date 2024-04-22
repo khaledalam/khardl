@@ -39,7 +39,7 @@
                             <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[${checkboxCount}]" placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.checkbox_input_titles[key][1]: ''}">
 
-                            <input type="number" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" min="0" step="1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}"
+                            <input type="number" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" min="1" step="1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}"
                             value="${key !=null ? item.checkbox_input_maximum_choices[key]: ''}">
                             <button class="delete-checkbox btn btn-sm btn-white" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash text-danger"></i></button>
                         </div>
@@ -1185,7 +1185,27 @@
     <!--end::Modal dialog-->
 </div>
 <!--end::Modal - New Target-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+    $(document).ready(function() {
+        function confirmCloseModal() {
+            return confirm("{{ __('are-you-sure-you-want-to-close-without-saving') }}");
+        }
+
+        $('.btn[data-bs-dismiss="modal"]').click(function() {
+            if (!confirmCloseModal()) {
+                return false;
+            }
+        });
+
+        $('#kt_modal_new_target').on('hide.bs.modal', function (e) {
+            if (!confirmCloseModal()) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
 <!--begin::Scrolltop-->
 <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
     <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->

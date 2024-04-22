@@ -216,32 +216,48 @@ class Order extends Model
     {
         return $query->when($date != null, function ($q) use ($date) {
             if ($date == 'today') {
+                request()->merge(['start_date' => now()->toDateString()]);
+                request()->merge(['end_date' => now()->toDateString()]);
                 return $q->whereDate('created_at', now()->toDateString());
             } elseif ($date == 'last_day') {
+                request()->merge(['start_date' => now()->subDay()->toDateString()]);
+                request()->merge(['end_date' => now()->subDay()->toDateString()]);
                 return $q->whereDate('created_at', now()->subDay()->toDateString());
             } elseif ($date == 'this_week') {
                 $startDate = now()->startOfWeek();
                 $endDate = now()->endOfWeek();
+                request()->merge(['start_date' => $startDate?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endDate->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startDate, $endDate]);
             } elseif ($date == 'last_week') {
                 $startDate = Carbon::now()->subDays(7)->startOfDay();
                 $endDate = Carbon::now()->subDays(1)->endOfDay();
+                request()->merge(['start_date' => $startDate?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endDate->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startDate, $endDate]);
             }  elseif ($date == 'this_month') {
                 $startOfMonth = now()->startOfMonth();
                 $endOfMonth = now()->endOfMonth();
+                request()->merge(['start_date' => $startOfMonth?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endOfMonth->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
             } elseif ($date == 'last_month') {
                 $startOfLastMonth = now()->subMonth()->startOfMonth();
                 $endOfLastMonth = now()->subMonth()->endOfMonth();
+                request()->merge(['start_date' => $startOfLastMonth?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endOfLastMonth->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth]);
             } elseif ($date == 'this_year') {
                 $startOfYear = now()->startOfYear();
                 $endOfYear = now()->endOfYear();
+                request()->merge(['start_date' => $startOfYear?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endOfYear->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startOfYear, $endOfYear]);
             } elseif ($date == 'last_year') {
                 $startOfLastYear = now()->subYear()->startOfYear();
                 $endOfLastYear = now()->subYear()->endOfYear();
+                request()->merge(['start_date' => $startOfLastYear?->format('Y-m-d')]);
+                request()->merge(['end_date' => $endOfLastYear->format('Y-m-d')]);
                 return $q->whereBetween('created_at', [$startOfLastYear, $endOfLastYear]);
             }
         });

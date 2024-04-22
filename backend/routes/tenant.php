@@ -206,7 +206,6 @@ Route::group([
                     Route::post('orders-add', 'store')->name('restaurant.order.store');
                     Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
                     Route::get('get-product-by-id/{item}', 'getProduct')->name('restaurant.getProduct');
-                    Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
                     Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
                 });
                 Route::resource('coupons',CouponController::class)->withTrashed(['show','restore','edit','update']);
