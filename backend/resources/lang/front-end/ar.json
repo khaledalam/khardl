@@ -551,5 +551,6 @@
     "Pickup": "أخذ الطلب",
     "CLOSE": "اغلاق",
     "OPEN": "فتح",
-    "Select this branch": "اختر هذا الفرع"
+    "Select this branch": "اختر هذا الفرع",
+    "Maximum number of choises: ": "الحد الأقصى لعدد الخيارات: "
 }

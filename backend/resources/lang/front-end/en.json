@@ -496,5 +496,6 @@
     "Pickup": "Pickup",
     "CLOSE": "CLOSE",
     "OPEN": "OPEN",
-    "Select this branch": "Select this branch"
+    "Select this branch": "Select this branch",
+    "Maximum number of choises: ": "Maximum number of choises: "
 }
