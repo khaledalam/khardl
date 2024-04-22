@@ -114,6 +114,9 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
+        if(!$order->branch?->drivers_option){
+            return $this->sendError('',__('You can not pickup order because branch disable own drivers to pickup orders.'));
+        }
         if (
             ($order->status == Order::RECEIVED_BY_RESTAURANT || $order->status == Order::READY)
             && ($order->driver_id == null || $order->driver_id == $user->id)
