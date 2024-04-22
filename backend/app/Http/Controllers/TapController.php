@@ -241,7 +241,7 @@ class TapController extends Controller
                 'subscription_id'=>$centralSubscription->id
             ]
         ];
-        if($chargeData['coupon_code']){
+        if(isset($chargeData['coupon_code'])){
             $payload['metadata']['coupon_code'] = $chargeData['coupon_code'];
             $payload['metadata']['sub_amount'] = $chargeData['sub_amount'];
         }

@@ -81,7 +81,7 @@ class RestaurantCharge
                  
 
                 }else {
-                    if($data['metadata']['coupon_code']){
+                    if(isset($data['metadata']['coupon_code'])){
                         $db['coupon_code'] = $data['metadata']['coupon_code'];
                         $db['discount'] = $data['amount'];
                         $db['amount'] =$data['metadata']['sub_amount'];
@@ -99,7 +99,7 @@ class RestaurantCharge
                 'card_id' => $data['card']['id'] ?? null,
                 'type' => $data['metadata']['subscription'],
             ];
-            if($data['metadata']['coupon_code'] && $data['metadata']['subscription'] == ROSubscription::NEW){
+            if(isset($data['metadata']['coupon_code']) && $data['metadata']['subscription'] == ROSubscription::NEW){
                 $invoice['coupon_code'] = $data['metadata']['coupon_code'];
                 $invoice['discount'] = $data['amount'];
                 $invoice['amount'] =$data['metadata']['sub_amount'];
@@ -119,7 +119,7 @@ class RestaurantCharge
     {
         return self::processSubscription($data, function ($user, $data, $subscription) {
             $db = self::getSubscriptionAttributes($user, $data);
-            if($data['metadata']['coupon_code']){
+            if(isset($data['metadata']['coupon_code'])){
                 $db['coupon_code'] = $data['metadata']['coupon_code'];
                 $db['discount'] = $data['amount'];
                 $db['amount'] =$data['metadata']['sub_amount'];
@@ -206,7 +206,7 @@ class RestaurantCharge
             'card_id' => $data['card']['id'] ?? null,
             'type' => $data['metadata']['subscription'],
         ];
-        if($data['metadata']['coupon_code'] && $data['metadata']['subscription'] == ROSubscription::NEW){
+        if(isset($data['metadata']['coupon_code']) && $data['metadata']['subscription'] == ROSubscription::NEW){
             $invoice['coupon_code'] = $data['metadata']['coupon_code'];
             $invoice['discount'] = $data['amount'];
             $invoice['amount'] =$data['metadata']['sub_amount'];

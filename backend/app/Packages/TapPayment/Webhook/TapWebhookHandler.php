@@ -29,7 +29,7 @@ class TapWebhookHandler extends ProcessWebhookJob
             }
             try{
                 if ($data['status'] == 'CAPTURED') { 
-                    if($data['metadata']['coupon_code']){
+                    if(isset($data['metadata']['coupon_code'])){
                         RestaurantCharge::updateCoupon($data);
                     }
                     RestaurantCharge::NotifyUsers($data);
