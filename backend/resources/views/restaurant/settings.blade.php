@@ -75,6 +75,9 @@
                                     <div class="card-header">
                                         <div class="card-title">
                                             <h2>{{ __('Delivery options')}}</h2>
+                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
+                                            title="{{ __('If you enable own drivers option and delivery companies option the orders at first (when accepted by restaurant) will automatically goes to your own drivers and there will be timer (Which you determine bellow) after this timer the orders goes automatically to all delivery companies you already assigned with.') }}">
+                                            </i>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -128,7 +131,7 @@
 @endsection
 @section('js')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+   /*  document.addEventListener('DOMContentLoaded', function() {
         // Function to toggle the disabled attribute of limit_delivery_company input
         function toggleLimitDeliveryCompany() {
             var driversOptionCheckbox = document.getElementById('drivers_option');
@@ -153,7 +156,7 @@
         document.getElementById('delivery_companies_option').addEventListener('change', function() {
             toggleLimitDeliveryCompany();
         });
-    });
+    }); */
 </script>
 
 @endsection

@@ -54,8 +54,8 @@ class OrderService
             })
             ->recent();
 
-        $perPage = config('application.perPage', 20);
-        $orders = $query->paginate(100);
+        $perPage = $request['perPage'] ?? config('application.perPage', 20);
+        $orders = $query->paginate($perPage);
         return $this->sendResponse(new OrderCollection($orders), '');
     }
     public function history(Request $request)
@@ -69,7 +69,7 @@ class OrderService
             ->WhenDateString($request['date_string'] ?? null)
             ->recent();
 
-        $perPage = config('application.perPage', 20);
+        $perPage = $request['perPage'] ?? config('application.perPage', 20);
         $orders = $query->paginate($perPage);
 
         return $this->sendResponse(new DriverOrderCollection($orders), '');
