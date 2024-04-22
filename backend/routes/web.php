@@ -184,6 +184,7 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::get('/order-inquiry', [AdminController::class, 'orderInquiry'])->middleware('permission:can_access_restaurants')->name('order-inquiry');
                     Route::delete('/user-management/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('permission:can_edit_admins')->name('delete-user');
                     Route::delete('/promoters/delete/{id}', [AdminController::class, 'deletePromoter'])->middleware('permission:can_promoters')->name('delete-promoter');
+                    Route::delete('/promoters/coupon/delete/{id}', [AdminController::class, 'deletePromoterCoupon'])->middleware('permission:can_promoters')->name('delete-promoter-coupon');
                     Route::get('/user-management/edit/{id}', [AdminController::class, 'userManagementEdit'])->middleware('permission:can_edit_admins')->name('user-management-edit');
                     Route::put('/update-user-permissions/{userId}', [AdminController::class, 'updateUserPermissions'])->middleware('permission:can_edit_admins')->name('update-user-permissions');
                     Route::get('/profile', [AdminController::class, 'profile'])->name('profile');

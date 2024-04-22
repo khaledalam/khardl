@@ -176,6 +176,7 @@ Route::group([
                 Route::patch('/service/activate', [RestaurantController::class, 'serviceActivate'])->name('restaurant.service.activate');
                 Route::patch('/service/app/activate', [RestaurantController::class, 'serviceAppActivate'])->name('restaurant.service.app.activate');
                 Route::get('/service/{type}/{number_of_branches}/calculate/{subscription_id}', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');
+                Route::get('/service/{coupon}/{type}/check/{number_of_branches?}', [RestaurantController::class, 'serviceCoupon'])->name('restaurant.service.coupon.check');
 
 
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');

@@ -212,7 +212,8 @@ return [
         "old_password" => "كلمة المرور القديمة",
         "image" => "الصورة",
         'is_application_purchase'=>"عند شراء التطبيق",
-        'is_branch_purchase'=>"عند شراء الفرع"
+        'is_branch_purchase'=>"عند شراء الفرع",
+        'promoter_id'=>"المروج"
 
     ],
     'values' => [

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->boolean('is_branch_purchase');
             $table->enum('type', CouponTypes::values())->default(CouponTypes::FIXED_COUPON);
             $table->integer('max_use')->nullable();
-         
+            $table->integer('n_of_usage')->default(0);
             $table->unsignedBigInteger('promoter_id')->unique();
             $table->foreign('promoter_id')->references('id')->on('promoters')->onDelete('cascade');
             $table->timestamps();

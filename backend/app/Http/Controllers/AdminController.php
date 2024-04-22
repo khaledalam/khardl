@@ -53,7 +53,7 @@ class AdminController extends Controller
     }
     public function promotersSub(){
         $promoters = Promoter::orderBy('id','desc')->get();
-        $coupons = ROSubscriptionCoupon::orderBy('id','desc')
+        $coupons = ROSubscriptionCoupon::with('promoter')->orderBy('id','desc')
         ->paginate(config('application.perPage') ?? 15);
         $user = Auth::user();
         return view('admin.promoters_sub', compact('user','coupons', 'promoters'));
@@ -389,6 +389,11 @@ class AdminController extends Controller
             else
                 return redirect()->back()->with('success', 'حذف بنجاح.');
 
+    }
+    public function deletePromoterCoupon($id){
+        $sub_coupon = ROSubscriptionCoupon::findOrFail($id);
+        $sub_coupon->delete();
+        return redirect()->back()->with('success', __('Deleted successfully'));
     }
 
     public function settings()

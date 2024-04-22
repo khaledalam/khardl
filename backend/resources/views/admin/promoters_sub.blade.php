@@ -188,11 +188,13 @@
                                       <thead>
                                           <tr class="fw-bolder text-muted">
                                               <th class="min-w-25px">#</th>
-                                              <th class="min-w-200px">{{ __('name') }}</th>
-                                              <th class="min-w-150px">{{ __('url') }}</th>
-                                              <th class="min-w-150px">{{ __('entered') }}</th>
-                                              <th class="min-w-150px">{{ __('registered') }}</th>
-                                              <th class="min-w-150px">{{ __('External URL') }}</th>
+                                              <th class="min-w-200px">{{ __('Promoter') }}</th>
+                                              <th class="min-w-150px">{{ __('Code') }}</th>
+                                              <th class="min-w-150px">{{ __('discount') }}</th>
+                                              <th class="min-w-150px">{{ __('Type') }}</th>
+                                              <th class="min-w-150px">{{ __('Number of usage') }}</th>
+                                              <th class="min-w-150px">{{ __('app subscription') }}</th>
+                                              <th class="min-w-150px">{{ __('restaurant subscription') }}</th>
                                               <th class="min-w-150px text-end">{{ __('actions')}}</th>
                                           </tr>
                                       </thead>
@@ -202,32 +204,38 @@
 
                                     @foreach ($coupons as $coupon)
                                             <tr>
-                                                {{-- <td class="text-muted fw-bolder">
-                                                    {{ $coupons->id }}
+                                                <td class="text-muted fw-bolder">
+                                                    {{ $coupon->id }}
                                                 </td>
                                                 <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="d-flex justify-content-start flex-column">
-                                                            <a class="text-dark fw-bolder text-hover-primary fs-6">{{ $coupons->name }}</a>
-                                                        </div>
+                                                    <div>
+                                                        <a href="{{ route('global.promoter.show', ['name' => $coupon->promoter->name]) }}" target="_blank">
+                                                          <i class="fa fa-eye"></i>
+                                                          {{$coupon->promoter->name}}
+                                                        </a>
                                                     </div>
                                                 </td>
                                             
                                                 <td>
-                                                    <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $coupons->entered }}</span>
+                                                    <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $coupon->code }}</span>
                                                 </td>
                                                 <td>
-                                                    <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $coupons->registered }}</span>
+                                                    <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $coupon->amount }}</span>
                                                 </td>
                                                 <td>
-                                                    <div>
-                                                        <a href="{{ route('global.promoter.show', ['name' => $promoter->name]) }}" target="_blank">
-                                                          <i class="fa fa-eye"></i>
-                                                        </a>
-                                                    </div>
+                                                    <span class="badge badge-light-success fw-bolder px-4 py-3">{{ __($coupon->type) }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge badge-light-success fw-bolder px-4 py-3">{{ __($coupon->n_of_usage) }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge  fw-bolder px-4 py-3">{{ $coupon->is_application_purchase ? '✅':'❌' }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge  fw-bolder px-4 py-3">{{ $coupon->is_branch_purchase ? '✅':'❌' }}</span>
                                                 </td>
                                                 <td class="text-end">
-                                                    <form class="delete-form justify-content-end" action="{{ route('admin.delete-promoter', ['id' => $promoter->id]) }}" method="POST">
+                                                    <form class="delete-form justify-content-end" action="{{ route('admin.delete-promoter-coupon', ['id' => $coupon->id]) }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
@@ -242,7 +250,7 @@
                                                           <!--end::Svg Icon-->
                                                         </button>
                                                       </form>
-                                                </td> --}}
+                                                </td> 
                                             </tr>
                                         @endforeach 
                                       </tbody>
@@ -262,6 +270,7 @@
               </div>
           <!--end::Post-->
       </div>
+    </div>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
