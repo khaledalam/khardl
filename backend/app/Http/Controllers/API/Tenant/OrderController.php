@@ -202,7 +202,6 @@ class OrderController extends BaseRepositoryController
             }
             return redirect()->back()->with('success', __('Order has been updated successfully.'));
         } elseif ($settings && $order->branch?->delivery_companies_option) {
-            $order->update(['status' => $request->status]);
             return $this->assignOrderToDC($request->expectsJson(), $order, $request->status);
         } elseif ($settings && $order->branch?->drivers_option) {
             $this->sendNotificationsWhenReceivedByRestaurant($order);
