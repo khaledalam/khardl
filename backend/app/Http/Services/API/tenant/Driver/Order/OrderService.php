@@ -26,7 +26,7 @@ class OrderService
         $user = Auth::user();
 
         $query = Order::with(['payment_method', 'items', 'branch', 'user'])
-            ->delivery()
+            ->driverOrders()
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
             ->WhenDateString($request['date_string'] ?? null)
             ->when($request->status == 'ready', function ($query) {
@@ -54,8 +54,8 @@ class OrderService
             })
             ->recent();
 
-        $perPage = config('application.perPage', 20);
-        $orders = $query->paginate(100);
+        $perPage = $request['perPage'] ?? config('application.perPage', 20);
+        $orders = $query->paginate($perPage);
         return $this->sendResponse(new OrderCollection($orders), '');
     }
     public function history(Request $request)
@@ -69,7 +69,7 @@ class OrderService
             ->WhenDateString($request['date_string'] ?? null)
             ->recent();
 
-        $perPage = config('application.perPage', 20);
+        $perPage = $request['perPage'] ?? config('application.perPage', 20);
         $orders = $query->paginate($perPage);
 
         return $this->sendResponse(new DriverOrderCollection($orders), '');
@@ -114,6 +114,9 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
+        if(!$order->branch?->drivers_option){
+            return $this->sendError('',__('You can not pickup order because branch disable own drivers to pickup orders.'));
+        }
         if (
             ($order->status == Order::RECEIVED_BY_RESTAURANT || $order->status == Order::READY)
             && ($order->driver_id == null || $order->driver_id == $user->id)
