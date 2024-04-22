@@ -89,7 +89,7 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
                     value={selectValue}
                 >
                     <option disabled value="">
-                        select option
+                        {t("select option")}
                     </option>
                     {options.map((option, idx) => (
                         <option key={idx} value={idx}>
