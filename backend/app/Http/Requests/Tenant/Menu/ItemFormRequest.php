@@ -14,11 +14,26 @@ class ItemFormRequest extends FormRequest
     public function rules()
     {
         /* dd(request()->all()); */
+        $regexRules = [
+            'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
+            'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
+            'checkbox_input_maximum_choices' => 'nullable|int|min:1'
+        ];
+        $arabic_optional_text = ['checkboxInputNameAr', 'description_ar', 'selectionInputNameAr', 'dropdownInputNameAr'];
+        $english_optional_text = ['checkboxInputNameEn', 'description_en', 'selectionInputNameEn', 'dropdownInputNameEn'];
+        foreach ($arabic_optional_text as $field) {
+            if (request()->has($field) && request()->$field !=null) {
+                $regexRules[$field] = 'regex:/^[0-9\p{Arabic}\s]+$/u';
+            }
+        }
+        foreach ($english_optional_text as $field) {
+            if (request()->has($field) && request()->$field !=null) {
+                $regexRules[$field] = 'regex:/^[0-9a-zA-Z\s]+$/';
+            }
+        }
         $rules = [
             'calories' => ['required','numeric'],
             'price' => ['required','numeric'],
-            'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
-            'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
             'checkboxInputTitleAr' => ['array', function ($attribute, $titles, $fail)  {
                 foreach ($titles as $key => $title) {
                     if(!isset($this->checkboxInputNameAr[$key])){
@@ -133,7 +148,7 @@ class ItemFormRequest extends FormRequest
         }else{
             $rules['photo'] =  ['required','mimes:png,jpg,jpeg,gif','max:4096'];
         }
-        return $rules;
+        return array_merge($regexRules,$rules);
     }
     public function messages()
     {
@@ -141,7 +156,15 @@ class ItemFormRequest extends FormRequest
             'item_name_en.regex' => __("English name is not valid"),
             'item_name_en.required' => __("English name is required"),
             'item_name_ar.regex' => __("Arabic name is not valid"),
-            'item_name_ar.required' => __("Arabic name is required")
+            'item_name_ar.required' => __("Arabic name is required"),
+            'description_en.regex' => __("English description is not valid"),
+            'checkboxInputNameEn.regex' => __("English options is not valid"),
+            'selectionInputNameEn.regex' => __("English options is not valid"),
+            'dropdownInputNameEn.regex' => __("English options is not valid"),
+            'description_ar.regex' => __("Arabic description is not valid"),
+            'checkboxInputNameAr.regex' => __("Arabic options is not valid"),
+            'selectionInputNameAr.regex' => __("Arabic options is not valid"),
+            'dropdownInputNameAr.regex' => __("Arabic options is not valid"),
         ];
     }
     public function validateOptions()
