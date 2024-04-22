@@ -75,6 +75,9 @@
                                     <div class="card-header">
                                         <div class="card-title">
                                             <h2>{{ __('Delivery options')}}</h2>
+                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
+                                            title="{{ __('If you enable own drivers option and delivery companies option at any branch, the orders at first (when accepted by restaurant) will automatically goes to your own drivers and there will be timer (Which you determine bellow) after this timer the orders goes automatically to all delivery companies you already assigned with.') }}">
+                                            </i>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -90,7 +93,7 @@
                                             <input type="number" min="1" name="limit_delivery_company" id="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('Number of minutes')}}" value="{{$settings->limit_delivery_company ?? config('application.limit_delivery_company')}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{__('The number of minutes for drivers so he can pick up order before order goes to delivery companies')}} ({{ __('Default: :minutes minutes',['minutes' => $settings->limit_delivery_company ?? config('application.limit_delivery_company')]) }})</div>
+                                            <div class="text-muted fs-7">{{__('The number of minutes for own drivers so he can accept order before order goes to delivery companies')}} ({{ __('Default: :minutes minutes',['minutes' => $settings->limit_delivery_company ?? config('application.limit_delivery_company')]) }})</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
@@ -128,7 +131,7 @@
 @endsection
 @section('js')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+   /*  document.addEventListener('DOMContentLoaded', function() {
         // Function to toggle the disabled attribute of limit_delivery_company input
         function toggleLimitDeliveryCompany() {
             var driversOptionCheckbox = document.getElementById('drivers_option');
@@ -153,7 +156,7 @@
         document.getElementById('delivery_companies_option').addEventListener('change', function() {
             toggleLimitDeliveryCompany();
         });
-    });
+    }); */
 </script>
 
 @endsection

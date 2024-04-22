@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ChangeStatusRequest extends FormRequest
 {
+    /* protected $stopOnFirstFailure = true; */
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -25,51 +26,54 @@ class ChangeStatusRequest extends FormRequest
     {
         $order = $this->route('order');
 
-    return [
-        'status' => ['required', 'in:' . implode(',', [
-            Order::ACCEPTED,
-            Order::CANCELLED,
-            Order::COMPLETED,
-        ]), function ($attribute, $value, $fail) use ($order) {
-            // Check status based on order and user
-            if($order->branch_id != getAuth()->branch_id){
-                $fail(__('Order is not for you branch'));
-            }
-            if ($value == Order::COMPLETED) {
-                if($order->status != Order::ACCEPTED){
-                    $fail(__('Order is not accepted yet'));
+        return [
+            'status' => ['required', 'in:' . implode(',', [
+                Order::ACCEPTED,
+                Order::CANCELLED,
+                Order::COMPLETED,
+            ]), function ($attribute, $value, $fail) use ($order) {
+                // Check status based on order and user
+                if($order->branch_id != getAuth()->branch_id){
+                    $fail(__('Order is not for you branch'));
                 }
-                if($order->driver_id != auth()->id()){
-                    $fail(__('Order is not for you'));
-                }
-            } elseif ($value == Order::CANCELLED) {
-                if($order->status != Order::ACCEPTED){
-                    $fail(__('Order is not accepted yet'));
-                }
-                if($order->driver_id != auth()->id()){
-                    $fail(__('Order is not for you'));
-                }
-            } elseif ($value == Order::ACCEPTED) {
-                if(($order->driver_id != null && $order->driver_id != auth()->id())||$order->status == Order::ACCEPTED){
-                    $fail(__('Order has assigned for someone else'));
-                    return;
-                }
-                if (($order->status != Order::RECEIVED_BY_RESTAURANT && $order->status != Order::READY)){
-                    $fail(__('You can not receive this order because its not ready or accepted by restaurant'));
-                }
-                if($order->deliver_by != null){
-                    $fail(__('Order has assigned for someone else'));
-                }
-                $settings = Setting::first();
-                $limitDrivers = $settings->limit_delivery_company;
-                if ($limitDrivers && $limitDrivers > 0) {
-                    if (!($order->received_by_restaurant_at > now()->subMinutes($limitDrivers))) {
-                        return $fail(__('You cannot pick up this order now because you have exceeded the time allowed for order pickup'));
+                if ($value == Order::COMPLETED) {
+                    if($order->status != Order::ACCEPTED){
+                        $fail(__('Order is not accepted yet'));
+                    }
+                    if($order->driver_id != auth()->id()){
+                        $fail(__('Order is not for you'));
+                    }
+                } elseif ($value == Order::CANCELLED) {
+                    if($order->status != Order::ACCEPTED){
+                        $fail(__('Order is not accepted yet'));
+                    }
+                    if($order->driver_id != auth()->id()){
+                        $fail(__('Order is not for you'));
+                    }
+                } elseif ($value == Order::ACCEPTED) {
+                    if(!$order->branch?->drivers_option){
+                        $fail(__('You can not pickup order because branch disable own drivers to pickup orders.'));
+                    }
+                    if(($order->driver_id != null && $order->driver_id != auth()->id())||$order->status == Order::ACCEPTED){
+                        $fail(__('Order has assigned for someone else'));
+                        return;
+                    }
+                    if (($order->status != Order::RECEIVED_BY_RESTAURANT && $order->status != Order::READY)){
+                        $fail(__('You can not receive this order because its not ready or accepted by restaurant'));
+                    }
+                    if($order->deliver_by != null){
+                        $fail(__('Order has assigned for someone else'));
+                    }
+                    $settings = Setting::first();
+                    $limitDrivers = $settings->limit_delivery_company;
+                    if ($limitDrivers && $limitDrivers > 0 && $order->branch?->drivers_option && $order->branch?->delivery_companies_option) {
+                        if (!($order->received_by_restaurant_at > now()->subMinutes($limitDrivers))) {
+                            return $fail(__('You cannot pick up this order now because you have exceeded the time allowed for order pickup'));
+                        }
                     }
                 }
-            }
-        }],
-        'reason' => ['required_if:status,' . Order::CANCELLED],
-    ];
+            }],
+            'reason' => ['required_if:status,' . Order::CANCELLED],
+        ];
     }
 }
