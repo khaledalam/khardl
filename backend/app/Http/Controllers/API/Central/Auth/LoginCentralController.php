@@ -25,7 +25,7 @@ class LoginCentralController extends BaseController
         }
 
 
-        $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->code)->first();
+        $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->login_code)->first();
         if (!$tenant) {
             return $this->sendError(__('Validation Error. R!'));
         }
@@ -45,7 +45,7 @@ class LoginCentralController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->code)->first();
+        $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->login_code)->first();
         if (!$tenant) {
             return $this->sendError(ــ('Validation Error. R!'));
         }
