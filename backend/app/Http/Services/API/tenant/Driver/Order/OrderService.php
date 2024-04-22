@@ -26,7 +26,7 @@ class OrderService
         $user = Auth::user();
 
         $query = Order::with(['payment_method', 'items', 'branch', 'user'])
-            ->delivery()
+            ->driverOrders()
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
             ->WhenDateString($request['date_string'] ?? null)
             ->when($request->status == 'ready', function ($query) {

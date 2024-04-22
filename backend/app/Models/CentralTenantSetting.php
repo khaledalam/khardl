@@ -58,8 +58,6 @@ class CentralTenantSetting extends Model implements SyncMaster
             'merchant_id',
             'lead_response',
             'limit_delivery_company',
-            'drivers_option',
-            'delivery_companies_option',
         ];
     }
 }
