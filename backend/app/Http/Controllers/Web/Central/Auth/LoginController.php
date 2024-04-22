@@ -59,7 +59,7 @@ class LoginController extends BaseController
         if ($request->has('login_code') && $request->login_code) {
             $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->code)->first();
             if (!$tenant) {
-                return $this->sendError('Validation Error. R!');
+                return $this->sendError(__('Validation Error. R!'));
             }
 
             return $tenant->run(function () use($request) {
