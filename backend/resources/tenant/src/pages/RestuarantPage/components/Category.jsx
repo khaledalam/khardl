@@ -140,6 +140,11 @@ const Category = ({ restaurantStyle, categories }) => {
                                                         "false",
                                                     ]
                                                 }
+                                                dropdown_input_prices={
+                                                    product?.dropdown_input_prices ?? [
+                                                        [],
+                                                    ]
+                                                }
                                                 dropdown_input_titles={
                                                     product?.dropdown_input_titles ?? [
                                                         [],

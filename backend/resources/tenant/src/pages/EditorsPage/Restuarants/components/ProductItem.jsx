@@ -323,11 +323,19 @@ const ProductItem = ({
 
     const handleAddToCart = async () => {
         let passMandatoryDrodowns = true;
-        dropdown_required.map((isRequired, index) => {
-            if (isRequired === "true" && isNaN(selectedDropdown[index])) {
-                passMandatoryDrodowns = false;
-            }
-        });
+
+        if (
+            dropdown_input_titles &&
+            dropdown_input_prices?.length > 0 &&
+            dropdown_input_titles.length > 0 &&
+            dropdownItems[0]?.length > 0
+        ) {
+            dropdown_required.map((isRequired, index) => {
+                if (isRequired === "true" && isNaN(selectedDropdown[index])) {
+                    passMandatoryDrodowns = false;
+                }
+            });
+        }
 
         if (passMandatoryDrodowns) {
             try {
@@ -950,6 +958,8 @@ const ProductItem = ({
 
                                                                 {/* dropdown */}
                                                                 {dropdown_input_titles &&
+                                                                    dropdown_input_prices?.length >
+                                                                        0 &&
                                                                     dropdown_input_titles.length >
                                                                         0 &&
                                                                     dropdownItems[0]
@@ -1332,8 +1342,9 @@ const ProductItem = ({
                                                 )}
 
                                             {/* dropdown */}
-
                                             {dropdown_input_titles &&
+                                                dropdown_input_prices?.length >
+                                                    0 &&
                                                 dropdown_input_titles.length >
                                                     0 &&
                                                 dropdownItems[0]?.length > 0 &&
