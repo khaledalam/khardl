@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\ROSubscriptionInvoice;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\ROCustomerAppSubInvoice;
+use App\Models\ROSubscriptionCoupon;
 use Spatie\WebhookClient\Models\WebhookCall;
 use App\Models\Subscription as CentralSubscription;
 
@@ -75,14 +76,20 @@ class RestaurantCharge
                         $db['created_at'] = $now;
                         $db['updated_at'] = $now;
                     }
+                    
                     $subscription->update($db);
                  
 
                 }else {
+                    if(isset($data['metadata']['coupon_code'])){
+                        $db['coupon_code'] = $data['metadata']['coupon_code'];
+                        $db['discount'] = $data['amount'];
+                        $db['amount'] =$data['metadata']['sub_amount'];
+                    }
                     ROCustomerAppSub::create($db);
                 }
             }
-            ROCustomerAppSubInvoice::create([
+            $invoice = [
                 'amount' => $data['amount'],
                 'user_id' => $user->id,
                 'status' => ($data['status'] == 'CAPTURED') ? ROSubscription::ACTIVE : $data['status'],
@@ -91,7 +98,13 @@ class RestaurantCharge
                 'cus_id' => env('TAP_DEFAULT_CUSTOMER_ID', 'cus_LV06G4620241548c2JK1002613'),
                 'card_id' => $data['card']['id'] ?? null,
                 'type' => $data['metadata']['subscription'],
-            ]);
+            ];
+            if(isset($data['metadata']['coupon_code']) && $data['metadata']['subscription'] == ROSubscription::NEW){
+                $invoice['coupon_code'] = $data['metadata']['coupon_code'];
+                $invoice['discount'] = $data['amount'];
+                $invoice['amount'] =$data['metadata']['sub_amount'];
+            }
+            ROCustomerAppSubInvoice::create($invoice);
             
             DB::commit();
       
@@ -105,7 +118,14 @@ class RestaurantCharge
     public static function createNewSubscription($data)
     {
         return self::processSubscription($data, function ($user, $data, $subscription) {
-            ROSubscription::create(self::getSubscriptionAttributes($user, $data));
+            $db = self::getSubscriptionAttributes($user, $data);
+            if(isset($data['metadata']['coupon_code'])){
+                $db['coupon_code'] = $data['metadata']['coupon_code'];
+                $db['discount'] = $data['amount'];
+                $db['amount'] =$data['metadata']['sub_amount'];
+            }
+            ROSubscription::create($db);
+          
         });
     }
     public static function renewSubscription($data)
@@ -175,8 +195,7 @@ class RestaurantCharge
             if( $data['metadata']['subscription'] == ROSubscription::RENEW_AFTER_ONE_YEAR)   // soft delete branches 
                 Branch::where('active',false)->delete();
         }
-
-        ROSubscriptionInvoice::create([
+        $invoice = [
             'amount' => $data['amount'],
             'number_of_branches' =>  $data['metadata']['n-branches'],
             'user_id' => $user->id,
@@ -186,7 +205,14 @@ class RestaurantCharge
             'cus_id' => env('TAP_DEFAULT_CUSTOMER_ID', 'cus_LV06G4620241548c2JK1002613'),
             'card_id' => $data['card']['id'] ?? null,
             'type' => $data['metadata']['subscription'],
-        ]);
+        ];
+        if(isset($data['metadata']['coupon_code']) && $data['metadata']['subscription'] == ROSubscription::NEW){
+            $invoice['coupon_code'] = $data['metadata']['coupon_code'];
+            $invoice['discount'] = $data['amount'];
+            $invoice['amount'] =$data['metadata']['sub_amount'];
+        }
+        ROSubscriptionInvoice::create($invoice);
+       
        
     }
     public static function NotifyUsers($data){
@@ -197,5 +223,15 @@ class RestaurantCharge
             isset($data['metadata']['customer_app'])?NotificationReceipt::is_application_purchase: NotificationReceipt::is_branch_purchase,
             now()->format('Y-m-d H:i'), 
         );
+    }
+    public static function updateCoupon($data){
+        return tenancy()->central(function()use($data){
+            $coupon = ROSubscriptionCoupon::where('code',$data['metadata']['coupon_code'])->first();
+            if($coupon){
+                $coupon->update([
+                    'n_of_usage' => DB::raw('n_of_usage + 1'),
+                ]);
+            }
+        });
     }
 }

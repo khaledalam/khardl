@@ -173,6 +173,8 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
+                    Route::get('/promoters-subscriptions', [AdminController::class, 'promotersSub'])->middleware('permission:can_promoters')->name('promoters.sub');
+                    Route::post('/promoters-subscriptions', [AdminController::class, 'savePromotersSub'])->middleware('permission:can_promoters')->name('save.promoters.sub');
                     Route::resource('/notifications-receipt', NotificationReceiptController::class)->middleware('permission:can_manage_notifications_receipt');
                     Route::post('/notifications-receipt/toggle-status/{notifications_receipt}',[NotificationReceiptController::class,'toggleStatus'])
                     ->name('notifications-change-status')
@@ -182,6 +184,7 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::get('/order-inquiry', [AdminController::class, 'orderInquiry'])->middleware('permission:can_access_restaurants')->name('order-inquiry');
                     Route::delete('/user-management/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('permission:can_edit_admins')->name('delete-user');
                     Route::delete('/promoters/delete/{id}', [AdminController::class, 'deletePromoter'])->middleware('permission:can_promoters')->name('delete-promoter');
+                    Route::delete('/promoters/coupon/delete/{id}', [AdminController::class, 'deletePromoterCoupon'])->middleware('permission:can_promoters')->name('delete-promoter-coupon');
                     Route::get('/user-management/edit/{id}', [AdminController::class, 'userManagementEdit'])->middleware('permission:can_edit_admins')->name('user-management-edit');
                     Route::put('/update-user-permissions/{userId}', [AdminController::class, 'updateUserPermissions'])->middleware('permission:can_edit_admins')->name('update-user-permissions');
                     Route::get('/profile', [AdminController::class, 'profile'])->name('profile');

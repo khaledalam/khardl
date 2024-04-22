@@ -22,7 +22,7 @@
 
         .container {
             text-align: center;
-            max-width: 600px;
+            max-width: 800px;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -57,6 +57,9 @@
                 <th class="fs-4 font-weight-bold text-black">{{ __('URL') }}</th>
                 <th class="fs-4 font-weight-bold text-black">{{ __('The number of users who used the link') }}</th>
                 <th class="fs-4 font-weight-bold text-black">{{ __('Registered Users Count') }}</th>
+                
+                @if($sub_coupon)<th class="fs-4 font-weight-bold text-black">{{ __('The number of users who used subscription coupon') }}</th>@endif
+
             </thead>
             <tbody>
                 <tr>
@@ -104,6 +107,11 @@
                     <td>
                         <strong class="text-success">{{ $promoter->registered }}</strong>
                     </td>
+                    @if($sub_coupon)
+                    <td>
+                        <strong class="text-success">{{ $sub_coupon->n_of_usage }}</strong>
+                    </td>
+                    @endif
                 </tr>
             </tbody>
         </table>
