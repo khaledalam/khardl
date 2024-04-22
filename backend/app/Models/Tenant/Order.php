@@ -162,13 +162,16 @@ class Order extends Model
     {
         return $query->where('status', self::REJECTED);
     }
-    public function scopeDelivery($query)
+    public function scopeDriverOrders($query)
     {
         return $query->whereHas('delivery_type', function ($q) {
             return $q->where('name', DeliveryType::DELIVERY);
         })
         ->where('status','!=', self::PENDING)
         ->where('status','!=', self::REJECTED)
+        ->whereHas('branch', function($q){
+            return $q->where('drivers_option',true);
+        })
         ->where('branch_id', getAuth()->branch_id);
     }
     public function scopeOnlineCash($query)
@@ -273,7 +276,7 @@ class Order extends Model
     }
     public function scopeShouldLimitDrivers($query)
     {
-        return $query->when($this->hasDeliverAllOptions(clone $query), function ($query) {
+        return $query->when($this->hasDeliveryAllOptions(clone $query), function ($query) {
             $settings = Setting::first();
             $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
 
@@ -283,12 +286,12 @@ class Order extends Model
 
     public function scopeShouldAssignDriver($query)
     {
-        return $query->when(!$this->hasDeliverAllOptions(clone $query), function ($query) {
+        return $query->when(!$this->hasDeliveryAllOptions(clone $query), function ($query) {
             return $query->where('driver_id', null);
         });
     }
 
-    private function hasDeliverAllOptions($query)
+    private function hasDeliveryAllOptions($query)
     {
         return $query->whereHas('branch',function($subQ){
             return $subQ->where('delivery_companies_option',true)
@@ -394,7 +397,7 @@ class Order extends Model
     {
         $settings = Setting::first();
         $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 5);
-        if($settings && $this->branch?->delivery_companies_option && $this->branch->drivers_option && $limitDrivers > 0){
+        if($settings && $this->branch?->delivery_companies_option && $this->branch?->drivers_option && $limitDrivers > 0){
         $limitDriversInSeconds = $limitDrivers * 60;
             if($this->received_by_restaurant_at){
                 $receivedTime = Carbon::parse($this->received_by_restaurant_at);

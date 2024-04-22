@@ -102,7 +102,7 @@ class Branch extends Model
     }
     public function getDeliveryAvailabilityAttribute()
     {
-        return $this->delivery_companies_option && $this->drivers_option;
+        return $this->delivery_companies_option || $this->drivers_option;
     }
     /* End attributes */
 
