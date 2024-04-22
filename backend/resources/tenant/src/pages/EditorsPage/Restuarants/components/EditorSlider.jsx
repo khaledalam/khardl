@@ -102,7 +102,7 @@ function EditorSlider({
                     keyBoardControl={true}
                     customTransition="all .5"
                     transitionDuration={500}
-                    containerClass="carousel-container h-full w-full "
+                    containerClass="carousel-container h-full w-full justify-center"
                     dotListClass="custom-dot-list-style"
                     sliderClass=""
                     itemClass="flex items-center justify-center w-full h-full"
