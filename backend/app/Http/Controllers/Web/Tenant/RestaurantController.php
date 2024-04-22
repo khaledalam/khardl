@@ -141,7 +141,6 @@ class RestaurantController extends BaseController
                 }
                 $after_discount = ($coupon->type == CouponTypes::FIXED_COUPON->value)? $cost * ($number_of_branches ?? 1) - $coupon->amount : (($cost * ($number_of_branches ?? 1)) - ((($cost * ($number_of_branches ?? 1)) * $coupon->amount) / 100));
                 return [
-           
                     'cost'=> $after_discount
                 ];
             }));

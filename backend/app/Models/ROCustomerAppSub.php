@@ -25,7 +25,9 @@ class ROCustomerAppSub extends Model
         'android_url',
         'reminder_email_sent',
         'reminder_suspend_email_sent',
-        'subscription_id' 
+        'subscription_id' ,
+        'discount',
+        'coupon_code'
     ];
 
 

@@ -10,9 +10,14 @@ use App\Models\Tenant\Branch;
 use App\Utils\ResponseHelper;
 use App\Models\ROSubscription;
 use App\Models\Tenant\Setting;
+use App\Enums\Admin\CouponTypes;
+use App\Models\ROCustomerAppSub;
+use App\Models\NotificationReceipt;
+use App\Models\ROSubscriptionCoupon;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\ROSubscriptionInvoice;
+use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\Tap\TapBusiness;
 use App\Packages\TapPayment\Lead\Lead;
 use App\Jobs\SendApprovedBusinessEmailJob;
@@ -20,13 +25,11 @@ use App\Models\Tenant\Tap\TapBusinessFile;
 use App\Http\Requests\Tenant\SaveCardRequest;
 use App\Packages\TapPayment\Business\Business;
 use App\Http\Requests\Tenant\RenewBranchRequest;
+use App\Http\Requests\Tenant\CustomerAppSubRequest;
 use App\Models\Subscription as CentralSubscription;
 use App\Jobs\SendTAPLeadIDMerchantIDRequestEmailJob;
 use App\Packages\TapPayment\File\File as TapFileAPI;
 use App\Exports\Restaurant\ExportSubscriptionInvoice;
-use App\Http\Requests\Tenant\CustomerAppSubRequest;
-use App\Models\ROCustomerAppSub;
-use App\Models\Tenant\RestaurantUser;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
 use App\Packages\TapPayment\Requests\CreateLeadRequest;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
@@ -185,7 +188,7 @@ class TapController extends Controller
   
     public function payments_submit_card_details(SaveCardRequest $request)
     {
-
+        
         $data = $request->validated();
         $sub = ROSubscription::first();
         $centralSubscription = tenancy()->central(function(){
@@ -204,19 +207,46 @@ class TapController extends Controller
             }
 
         }else {
-            $chargeData = ROSubscription::serviceCalculate(ROSubscription::NEW, $data['n_branches'],$centralSubscription->id);
-        }
+            if($request->coupon_code){
+                $chargeData = tenancy()->central(function()use($data,$request,$centralSubscription){
+                    $coupon = ROSubscriptionCoupon::
+                    where('code',$request->coupon_code)
+                    ->where(NotificationReceipt::is_branch_purchase,true)
+                    ->whereColumn('max_use', '>', 'n_of_usage')->first();
+                    if(!$coupon) return $coupon;
+                    return [
+                        'cost'=> ($coupon->type == CouponTypes::FIXED_COUPON->value)? $centralSubscription->amount * $data['n_branches'] - $coupon->amount : (( $centralSubscription->amount * $data['n_branches']) - ((($centralSubscription->amount * $data['n_branches']) * $coupon->amount) / 100)),
+                        'number_of_branches'=> $data['n_branches'],
+                        'coupon_code'=>$request->coupon_code,
+                        'sub_amount'=>$centralSubscription->amount * $data['n_branches']
+                    ];
+                });
+                if(!$chargeData){
+                    return redirect()->route('restaurant.service')->with('error', __('Invalid coupon'));
 
+                }
+
+
+            }else {
+                $chargeData = ROSubscription::serviceCalculate(ROSubscription::NEW, $data['n_branches'],$centralSubscription->id);
+            }
+        }
+       
+        $payload = [
+            'amount'=> $chargeData['cost'],
+            'metadata'=>[
+                'restaurant_id'=> tenant()->id,
+                'subscription'=> $data['type'],
+                'n-branches'=> $chargeData['number_of_branches'],
+                'subscription_id'=>$centralSubscription->id
+            ]
+        ];
+        if($chargeData['coupon_code']){
+            $payload['metadata']['coupon_code'] = $chargeData['coupon_code'];
+            $payload['metadata']['sub_amount'] = $chargeData['sub_amount'];
+        }
         $charge = TapCharge::createSub(
-            data : [
-                'amount'=> $chargeData['cost'],
-                'metadata'=>[
-                    'restaurant_id'=> tenant()->id,
-                    'subscription'=> $data['type'],
-                    'n-branches'=> $chargeData['number_of_branches'],
-                    'subscription_id'=>$centralSubscription->id
-                ],
-            ],
+            data : $payload,
             token_id: $data['token_id'],
             redirect: route('tap.payments_redirect')
         );
@@ -318,6 +348,7 @@ class TapController extends Controller
 
     }
     public function payments_redirect(Request $request){
+        // TODO : improve : wait for 2 sec for the db webhook  
         if ($request->tap_id) {
             $charge = TapCharge::retrieveSub($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
@@ -381,22 +412,47 @@ class TapController extends Controller
         $AppSubscription = tenancy()->central(function(){
             return CentralSubscription::skip(1)->first();
         });
+      
         if($sub){
             $type = ROSubscription::RENEW_AFTER_ONE_YEAR;
         }else {
            $type = ROSubscription::NEW;
+            if($request->coupon_code){
+                $chargeData = tenancy()->central(function()use($data,$request,$AppSubscription){
+                    $coupon = ROSubscriptionCoupon::
+                    where('code',$request->coupon_code)
+                    ->where(NotificationReceipt::is_application_purchase,true)
+                    ->whereColumn('max_use', '>', 'n_of_usage')->first();
+                    if(!$coupon) return $coupon;
+                    return [
+                        'cost'=> ($coupon->type == CouponTypes::FIXED_COUPON->value)? $AppSubscription->amount  - $coupon->amount : ( $AppSubscription->amount  - (($AppSubscription->amount  * $coupon->amount) / 100)),
+                        'coupon_code'=>$request->coupon_code,
+                        'sub_amount'=>$AppSubscription->amount
+                    ];
+                });
+                if(!$chargeData){
+                    return redirect()->route('restaurant.service')->with('error', __('Invalid coupon'));
+                }
+               
+            }
         }
-     
-        $charge = TapCharge::createSub(
-            data : [
-                'amount'=> $AppSubscription->amount,
-                'metadata'=>[
-                    'restaurant_id'=> tenant()->id,
-                    'subscription'=> $type,
-                    'customer_app'=> true,
-                    'subscription_id'=>$AppSubscription->id
-                ],
+       
+        $payload = [
+            'amount'=> $AppSubscription->amount,
+            'metadata'=>[
+                'restaurant_id'=> tenant()->id,
+                'subscription'=> $type,
+                'customer_app'=> true,
+                'subscription_id'=>$AppSubscription->id
             ],
+        ];
+        if(isset($chargeData)){
+            $payload['amount'] = $chargeData['cost'];
+            $payload['metadata']['coupon_code'] = $chargeData['coupon_code'];
+            $payload['metadata']['sub_amount'] = $chargeData['sub_amount'];
+        }
+        $charge = TapCharge::createSub(
+            data : $payload,
             token_id: $data['token_id'],
             redirect: route('tap.payments_redirect')
         );

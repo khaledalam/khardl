@@ -26,7 +26,9 @@ class ROSubscription extends Model
         'type',
         'reminder_email_sent',
         'reminder_suspend_email_sent',
-        'subscription_id' // central subscription id
+        'subscription_id' ,// central subscription id,
+        'discount',
+        'coupon_code'
     ];
     //type
     public const NEW ="new";

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('ro_subscription_coupons', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
+            $table->string('code')->unique();
             $table->decimal('amount',8,2);
             $table->boolean('is_application_purchase');
             $table->boolean('is_branch_purchase');
