@@ -36,6 +36,23 @@ class NotificationController extends Controller
     $user->notifications()->where('read_at', null)->get()->markAsRead();
     return $this->sendResponse([], 'Done');
   }
+  public function unread($id)
+  {
+    $user = getAuth();
+
+    $notification = $user->notifications()->findOrFail($id);
+    $notification->markAsUnread();
+
+    return $this->sendResponse(['unread_count' => $user->count_unread_notifications], 'Done');
+  }
+
+  public function markAllAsUnRead()
+  {
+    $user = getAuth();
+
+    $user->notifications()->where('read_at','!=', null)->get()->markAsUnread();
+    return $this->sendResponse([], 'Done');
+  }
   public function toggleNotification()
   {
     $user = getAuth();

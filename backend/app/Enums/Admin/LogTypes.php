@@ -40,4 +40,8 @@ enum LogTypes: string
   case TAPLeadIDMerchantIDFail ="TAP request to create Merchant ID from Lead ID fail";
   case TAPRestaurantMerchantID ="Update restaurant merchant id";
   case ContactUsForm ="Contact US Form";
+  case UserSubscriptionNotifySent ="Notify for new/renew website restaurant subscription sent";
+  case UserSubscriptionNotifyFail ="Notify for new/renew website restaurant subscription fail";
+  case UserAppSubscriptionNotifySent ="Notify for new/renew customer application subscription sent";
+  case UserAppSubscriptionNotifyFail ="Notify for new/renew customer application subscription fail";
 }

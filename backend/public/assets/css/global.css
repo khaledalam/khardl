@@ -1,8 +1,15 @@
 /* ALL */
-
+.form-check-input:disabled{
+    background-color: black !important;
+}
 @media (min-width: 1400px) {
     .container-xxl {
         max-width: none !important;
+    }
+}
+@media (max-width: 990px) {
+    .mobile-alert{
+        display: block!important;
     }
 }
 

@@ -29,7 +29,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>{{ __('fees')}}</h2>
+                                            <h2>{{ __('Global delivery fees for all branches')}}</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -84,42 +84,16 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="form-label">{{ __('Max time for drivers to pickup order(in case if delivery companies exist and drivers)')}}</label>
+                                            <label class="form-label">{{ __('Max time for drivers to accept order(in case if delivery companies exist and drivers)')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" min="1" name="limit_delivery_company" id="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('Number of minutes')}}" value="{{$settings->limit_delivery_company}}" />
+                                            <input type="number" min="1" name="limit_delivery_company" id="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('Number of minutes')}}" value="{{$settings->limit_delivery_company ?? config('application.limit_delivery_company')}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{__('The number of minutes for drivers so he can pick up order before order goes to delivery companies')}} ({{ __('Default: :minutes minutes',['minutes' => $settings->limit_delivery_company ?? config('application.limit_delivery_company')]) }})</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="row mb-0 mt-5">
-                                            <!--begin::Label-->
-                                            <div class="form-check form-check-solid form-switch fv-row">
-                                                <input class="form-check-input w-35px h-20px" type="checkbox" id="delivery_companies_option" value="1" name="delivery_companies_option"
-                                                @if($settings->delivery_companies_option || old('delivery_companies_option') == "1")
-                                                {{ 'checked' }}
-                                                @endif>
-                                                <label class="form-check-label" for="delivery_companies_option">{{ __('Delivery companies option')}}</label>
-                                            </div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <div class="row mb-0 mt-5">
-                                            <!--begin::Label-->
-                                            <div class="form-check form-check-solid form-switch fv-row">
-                                                <input class="form-check-input w-35px h-20px" type="checkbox" id="drivers_option" value="1" name="drivers_option"
-                                                @if($settings->drivers_option || old('drivers_option') == "1")
-                                                {{ 'checked' }}
-                                                @endif>
-                                                <label class="form-check-label" for="drivers_option">{{ __('Drivers option')}}</label>
-                                            </div>
-                                            <!--end::Label-->
-                                        </div>
-                                        <!--end::Input group-->
-
 
                                     </div>
                                     <!--end::Card header-->

@@ -109,7 +109,7 @@
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">{{__('payment-in-cash-upon-receipt')}}</span>
+														<span class="fw-bolder fs-5 mb-0">{{__('Payment upon receiving')}}</span>
 													</span>
                                                 <!--end::Label-->
                                             </label>
@@ -124,26 +124,47 @@
                                             <div class="separator separator-dashed my-6"></div>
 
                                             <!--begin::Option-->
-                                            <label class="form-check form-check-custom form-check-solid align-items-start">
-                                                <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" @if(!($hasDeliveryCompanies||$hasActiveDrivers)) {{ 'disabled' }} @endif name="delivery_types[]"  value="{{\App\Models\Tenant\DeliveryType::DELIVERY}}" {{(isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  ($hasDeliveryCompanies||$hasActiveDrivers) )?'checked':''}}  />
-                                                <!--end::Input-->
+                                            <div class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">{{__('delivery')}}</span>
+														<span class="fw-bolder fs-5 mb-0">{{__('The delivery')}}</span>
                                                     @if(!$hasDeliveryCompanies)
-                                                    <small style="color: red;">{{__('you are not signed with any delivery company yet')}}</small>
+                                                        <div class="d-flex my-4">
+                                                            <label for="delivery_companies_option">
+                                                                <input class="form-check-input me-3" id="delivery_companies_option" type="checkbox" {{ !$branch->delivery_companies_option ? 'disabled' : '' }} name="delivery_companies_option"  value="1" {{ isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  $branch->delivery_companies_option ?'checked':''}}  />
+                                                                <span class="fw-bolder fs-5 mb-0">{{__('Delivery companies')}}</span>
+                                                                <small class="m-2 text-danger">({{__('you are not signed with any delivery company yet')}})</small>
+                                                            </label>
+                                                        </div>
                                                     @else
-                                                        <small style="color: green;">{{__('you are signed with delivery company')}}</small>
+                                                        <label for="delivery_companies_option">
+                                                            <div class="d-flex my-4">
+                                                                <input class="form-check-input me-3" id="delivery_companies_option" type="checkbox" name="delivery_companies_option"  value="1" {{ isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  $branch->delivery_companies_option ?'checked':''}}  />
+                                                                <span class="fw-bolder fs-5 mb-0">{{__('Delivery companies')}}</span>
+                                                                <small class="m-2 text-success">({{__('you are signed with delivery company')}})</small>
+                                                            </div>
+                                                        </label>
                                                     @endif
                                                     @if(!$hasActiveDrivers)
-                                                    <small style="color: red;">{{__('You do not have any active drivers')}}</small>
+                                                        <label for="drivers_option">
+                                                            <div class="d-flex my-4">
+                                                                <input class="form-check-input me-3" id="drivers_option" type="checkbox" name="drivers_option" value="" {{ !$branch->drivers_option ? 'disabled' : '' }} value="1" {{ isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  $branch->drivers_option ?'checked':''}}  />
+                                                                <span class="fw-bolder fs-5 mb-0">{{__('Own drivers')}}</span>
+                                                                <small class="m-2 text-danger">({{__('You do not have any active drivers')}})</small>
+                                                            </div>
+                                                        </label>
                                                     @else
-                                                        <small style="color: green;">{{__('You have active drivers')}}</small>
+                                                        <label for="drivers_option">
+                                                            <div class="d-flex my-4">
+                                                                <input class="form-check-input me-3" type="checkbox" id="drivers_option" name="drivers_option"  value="1" {{ isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  $branch->drivers_option ?'checked':''}}  />
+                                                                <span class="fw-bolder fs-5 mb-0">{{__('Own drivers')}}</span>
+                                                                <small class="m-2 text-success">({{__('You have active drivers')}})</small>
+                                                            </div>
+                                                        </label>
                                                     @endif
-													</span>
+                                                </span>
                                                 <!--end::Label-->
-                                            </label>
+                                            </div>
                                             <!--end::Option-->
                                             <!--begin::Option-->
                                             <div class="separator separator-dashed my-6"></div>
@@ -151,7 +172,7 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="delivery_types[]" value="{{\App\Models\Tenant\DeliveryType::PICKUP}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::PICKUP] ?? false)?'checked':''}}  />
+                                                <input class="form-check-input me-3" type="checkbox" name="pickup_availability" value="1" {{($delivery_types[\App\Models\Tenant\DeliveryType::PICKUP] ?? false)?'checked':''}}  />
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">

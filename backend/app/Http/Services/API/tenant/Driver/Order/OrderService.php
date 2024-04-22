@@ -5,6 +5,7 @@ namespace App\Http\Services\API\tenant\Driver\Order;
 use App\Http\Resources\API\Tenant\Collection\Driver\DriverOrderCollection;
 use App\Http\Resources\API\Tenant\OrderResource;
 use App\Models\Tenant\Order;
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Setting;
 use App\Traits\APIResponseTrait;
@@ -24,20 +25,17 @@ class OrderService
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
-        $query = Order::with(['payment_method','items','branch','user'])
+        $query = Order::with(['payment_method', 'items', 'branch', 'user'])
             ->delivery()
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
-            ->WhenDateString($request['date_string']??null)
+            ->WhenDateString($request['date_string'] ?? null)
             ->when($request->status == 'ready', function ($query) {
-                $settings = Setting::first();
-                $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
-
                 return $query
                     ->where('deliver_by', null)
                     ->where('driver_id', null)
                     ->readyForDriver()
-                    ->when($settings && $settings->delivery_companies_option && $limitDrivers > 0, function ($query) use ($limitDrivers) {
-                        return $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
+                    ->where(function ($query) {
+                        $query->shouldLimitDrivers()->shouldAssignDriver();
                     });
             })
             ->when($request->status == 'all' || !$request->status, function ($query) use ($user) {
@@ -45,16 +43,19 @@ class OrderService
                     ->where('deliver_by', null)
                     ->where(function ($query) use ($user) {
                         $query->where('driver_id', $user->id)
-                            ->orWhereNull('driver_id');
+                        ->orWhere(function ($query) {
+                            $query->shouldLimitDrivers()->shouldAssignDriver();
+                        });
                     });
             })
-            ->when($request->status == 'accepted' || $request->status == 'cancelled' || $request->status == 'completed', function ($query) use ($request) {
-                return $query->whenStatus($request->status);
+            ->when($request->status!='ready' && $request->status !='all', function ($query) use ($request, $user) {
+                return $query->where('driver_id', $user->id)
+                ->whenDriverStatus($request->status);
             })
             ->recent();
 
         $perPage = config('application.perPage', 20);
-        $orders = $query->paginate($perPage);
+        $orders = $query->paginate(100);
         return $this->sendResponse(new OrderCollection($orders), '');
     }
     public function history(Request $request)
@@ -64,8 +65,8 @@ class OrderService
         $query = $user->driver_orders()
             ->with(['user'])
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
-            ->whenStatus($request['status'] ?? null)
-            ->WhenDateString($request['date_string']??null)
+            ->whenDriverStatus($request['status'] ?? null)
+            ->WhenDateString($request['date_string'] ?? null)
             ->recent();
 
         $perPage = config('application.perPage', 20);
@@ -75,7 +76,7 @@ class OrderService
     }
     public function orderDetails(Request $request, Order $order)
     {
-        $order->load(['user','branch','items']);
+        $order->load(['user', 'branch', 'items']);
         return $this->sendResponse(new OrderResource($order), '');
     }
     /*
@@ -87,17 +88,20 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        if($request->status == Order::COMPLETED){
+        if ($request->status == Order::COMPLETED) {
             $order->status = Order::COMPLETED;
+            if($order->isCashOnDelivery()){
+                $order->payment_status = PaymentMethod::PAID;
+            }
             $order->save();
             $this->sendNotifications($user, $order);
             return $this->sendResponse('', __('Order has been completed successfully'));
-        }elseif($request->status == Order::CANCELLED){
+        } elseif ($request->status == Order::CANCELLED) {
             $order->status = Order::CANCELLED;
             $order->reject_or_cancel_reason = $request->reason;
             $order->save();
             return $this->sendResponse('', __('Order has been cancelled successfully'));
-        }elseif($request->status == Order::ACCEPTED){//Mean picked up
+        } elseif ($request->status == Order::ACCEPTED) {//Mean picked up
             $order->status = $request->status;
             $order->driver_id = $user->id;
             $order->accepted_at = now();
@@ -110,11 +114,12 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        if(
+        if (
             ($order->status == Order::RECEIVED_BY_RESTAURANT || $order->status == Order::READY)
             && ($order->driver_id == null || $order->driver_id == $user->id)
+            && ($order->branch_id == $user->branch_id)
             && $order->deliver_by == null
-        ){
+        ) {
             $order->driver_id = $user->id;
             $order->save();
             return $this->sendResponse('', __('Order has been assigned to you successfully'));
@@ -140,8 +145,8 @@ class OrderService
             ->get();
         if ($workers->count()) {
             Notification::send($workers, new NotificationAction($type, $message, $order->toArray()));
-        $data = $order->only(['id', 'user_id', 'branch_id', 'delivery_type_id', 'total']);
-        $this->handleSingleNotification($workers, $data, $title, $message, $type->value);
+            $data = $order->only(['id', 'user_id', 'branch_id', 'delivery_type_id', 'total']);
+            $this->handleSingleNotification($workers, $data, $title, $message, $type->value);
         }
     }
     public function handleSingleNotification($workers, $data, $title, $body, $type)
@@ -150,7 +155,7 @@ class OrderService
             $lang = $worker->default_lang == 'ar' ? 'ar' : 'en';
             $notifyTitle = $title[$lang];
             $notifyBody = $body[$lang];
-            sendPushNotification($worker, $data, $notifyTitle, $notifyBody, $type,'internal');
+            sendPushNotification($worker, $data, $notifyTitle, $notifyBody, $type, 'internal');
         }
     }
 }

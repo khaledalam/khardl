@@ -127,7 +127,7 @@ class SuspendExpiredSubscription extends Command
     
                 });
             }catch(Exception $e){
-                \Sentry\captureMessage("error occur while running suspend expired command for restaurant #$restaurant->id");
+                \Sentry\captureException($e);
             }
            
         }

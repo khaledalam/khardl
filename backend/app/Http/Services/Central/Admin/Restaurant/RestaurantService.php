@@ -55,7 +55,7 @@ class RestaurantService
             $restaurants = $query->paginate(config('application.perPage') ?? 20);
         }
         $user = Auth::user();
-  
+
         return view('admin.restaraunts', compact('restaurants', 'user', 'totalRestaurantsCount'));
     }
     public function appRequested(){
@@ -66,7 +66,7 @@ class RestaurantService
 
         // TODO @todo make sub active or not tag with search
         $tenants = [];
-    
+
         $restaurants = $query->paginate(config('application.perPage') ?? 20);
         $user = Auth::user();
 
@@ -109,14 +109,14 @@ class RestaurantService
         $traderRegistrationRequirement = $restaurant->user->traderRegistrationRequirement;
         $compareEarningResult = $dailyEarning > $last7DaysAverageEarning ? 'higher' : 'lower';
         $compareOrderResult = $dailyOrders > $last7DaysAverageOrders ? 'higher' : 'lower';
-            
+
         $path = storage_path("app/private/user_files/{$restaurant->user?->id}");
         if (!file_exists($path)) {
             $filesCount = 0;
         } else {
             $filesCount = count(\File::allFiles($path));
         }
-  
+
 
         return view(
             'admin.Restaurants.Layout.view',
@@ -158,7 +158,6 @@ class RestaurantService
 
     protected function getRestaurantData(Tenant $restaurant)
     {
-    
         $data = $restaurant->run(function ($restaurant) {
             $tenantRestaurantService = new TenantRestaurantService();
             $info = $restaurant->info(false);
@@ -185,7 +184,7 @@ class RestaurantService
             $RO =  RestaurantUser::first();
             $restaurant_name = $setting->restaurant_name;
             $customer_app = ROCustomerAppSub::first();
-           
+
             return [
                 $info['logo'],
                 $info['is_live'],

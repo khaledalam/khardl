@@ -115,7 +115,8 @@ class AdminController extends Controller
             'can_settings',
             'can_edit_profile',
             'can_delete_restaurants',
-            'can_see_restaurant_owners'
+            'can_see_restaurant_owners',
+            'can_manage_notifications_receipt'
         ];
 
         $insertData = [];
@@ -252,7 +253,21 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Restaurant is already approved');
         }
 
+        $user = User::find($restaurant->user_id);
+
+        $user->status = User::STATUS_ACTIVE;
+        $user->reject_reasons = null;
+        $user->save();
+
+        $restaurant->run(function () use($user){
+            $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
+            $rUser->status = RestaurantUser::ACTIVE;
+            $rUser->reject_reasons = null;
+            $rUser->save();
+        });
+
         SendApprovedRestaurantEmailJob::dispatch($restaurant);
+
         $actions = [
             'en' => 'Has activate restaurant with an name of: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->restaurant_name </a>",
             'ar' => 'تم تفعيل المطعم بإسم: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->restaurant_name </a>",
@@ -452,11 +467,11 @@ class AdminController extends Controller
 
     public function userManagementEdit($id){
 
-        $user = User::whereHas('roles',function($q){
+        $user = Auth::user();
+        $userEdit = User::whereHas('roles',function($q){
             return $q->where("name","Administrator");
         })->where("id",'!=',Auth::id())->findOrFail($id);
-
-        return view('admin.edit-user', compact('user'));
+        return view('admin.edit-user', compact('user','userEdit'));
 
     }
 
@@ -488,7 +503,7 @@ class AdminController extends Controller
             'can_edit_profile',
             'can_delete_restaurants',
             'can_see_restaurant_owners',
-
+            'can_manage_notifications_receipt'
 
         ];
 
@@ -543,10 +558,19 @@ class AdminController extends Controller
     {
         $user = User::find($id);
 
-        if ($user) {
-            $user->isApproved = 1;
-            $user->save();
-        }
+        $user->status = User::STATUS_ACTIVE;
+        $user->reject_reasons = null;
+        $user->save();
+
+        // set user status in tenant table too
+        $tenant = Tenant::findOrFail($user?->id);
+
+        $tenant->run(function () use($user){
+            $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
+            $rUser->status = RestaurantUser::ACTIVE;
+            $rUser->reject_reasons = null;
+            $rUser->save();
+        });
 
         SendApprovedEmailJob::dispatch($user);
 

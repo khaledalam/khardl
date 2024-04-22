@@ -61,7 +61,7 @@ class OrderRepository
             $statusLog = new OrderStatusLogs();
             $statusLog->order_id = $order->id;
             $statusLog->status = Order::PENDING;
-            $statusLog->notes = 'Order Notes: ' . $request->order_notes;
+            $statusLog->notes = $request->order_notes;
             $statusLog->saveOrFail();
             $this->sendNotifications($user, $order);
             if($cart->hasPaymentCashOnDelivery($request->payment_method)){

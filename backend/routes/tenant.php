@@ -10,7 +10,9 @@ use App\Http\Controllers\API\Tenant\Notification\NotificationController;
 use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
+use App\Models\Tenant;
 use App\Models\Tenant\RestaurantStyle;
+use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -113,6 +115,7 @@ Route::group([
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
             Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
+            Route::put('/branches/{id}/phone', [RestaurantController::class, 'updatePhone'])->middleware('permission:can_modify_working_time')->name('restaurant.update-phone');
             Route::get('/branches/{id}/toggleBranch', [RestaurantController::class, 'toggleBranch'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-branch-status');
             Route::get('/no_branches', [RestaurantController::class, 'noBranches'])->middleware('permission:can_edit_menu')->name('restaurant.no_branches');
 //            Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->middleware('permission:can_edit_menu')->name('restaurant.menu');
@@ -364,7 +367,9 @@ Route::middleware([
                 Route::controller(NotificationController::class)->group(function () {
                     Route::get('get-all', 'index');
                     Route::post('/read-notification/{id}','show');
+                    Route::post('/unread-notification/{id}','unread');
                     Route::post('/read-all','markAllAsRead');
+                    Route::post('/unread-all','markAllAsUnRead');
                 });
                 Route::controller(ProfileController::class)->group(function () {
                     Route::post('change-password', 'changePassword');

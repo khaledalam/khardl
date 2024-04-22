@@ -6,6 +6,7 @@ use App\Models\ROSubscription;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\Setting;
 use Carbon\Carbon;
+use Database\Seeders\HelperSeeder;
 use Illuminate\Support\Facades\DB;
 use Tests\TenantTestCase;
 
@@ -82,7 +83,7 @@ class TenantVerificationCodeTest extends TenantTestCase
     public function test_verify_otp_is_already_verified()
     {
         $this->user->update(['phone_verified_at' => now()]);
-        $data = ['otp' => '1234'];
+        $data = ['otp' => HelperSeeder::OTP];
         $response = $this->ownPostJson(self::path."/verify",$data);
         $response->assertStatus(203)
         ->assertJson([

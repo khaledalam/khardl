@@ -4,6 +4,7 @@ namespace Database\Seeders\Tenant;
 
 use App\Models\Tenant\Branch;
 use Carbon\Carbon;
+use Database\Seeders\HelperSeeder;
 use Database\Seeders\Tenant\BranchSeeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -31,7 +32,7 @@ class DriverSeeder extends Seeder
             'address' => 'test address',
             "lat" => 24.7136,
             "lng" => 46.6753,
-            'password' => bcrypt('khardl@123'),
+            'password' => bcrypt(HelperSeeder::PASSWORD),
             'remember_token' => Str::random(10),
         ]);
         $user->branch()->associate($branch);

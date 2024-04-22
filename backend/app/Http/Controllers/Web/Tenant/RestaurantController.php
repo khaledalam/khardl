@@ -219,31 +219,26 @@ class RestaurantController extends BaseController
             }
             $payment_methods[] = PaymentMethod::where('name', $method)->first()->id;
         }
-        $hasActiveDrivers = RestaurantUser::activeDrivers()->get()->count();
-        $hasDeliveryCompanies = DeliveryCompanies::all()->count();
-        $branch->update([
-            'delivery_availability'=>false,
-            'pickup_availability'=>false
-        ]);
-        foreach ($request->delivery_types ?? [] as $method) {
-            if($method == DeliveryType::DELIVERY && !$hasActiveDrivers  && !$hasDeliveryCompanies){
-                return redirect()->back()->with('error', __('you are not signed with any delivery company as well as no active drivers'));
-            }
-            if($method == DeliveryType::DELIVERY && ($hasActiveDrivers  || $hasDeliveryCompanies)){
-                $branch->update([
-                    'delivery_availability'=>true
-                ]);
-            }
-
-            if($method == DeliveryType::PICKUP){
-                $branch->update([
-                    'pickup_availability'=>true
-                ]);
-            }
-            $delivery_types[] = DeliveryType::where('name', $method)->first()->id;
-        }
         $branch->payment_methods()->sync($payment_methods);
+
+        if($request->filled('pickup_availability')){
+            $data['pickup_availability'] = 1;
+            $delivery_types[] = DeliveryType::where('name', DeliveryType::PICKUP)->first()->id;
+        }else{
+            $data['pickup_availability'] = 0;
+        }
+        if($request->filled('delivery_companies_option') || $request->filled('drivers_option')){
+            $delivery_types[] = DeliveryType::where('name', DeliveryType::DELIVERY)->first()->id;
+            $data['delivery_companies_option'] = $request->filled('delivery_companies_option') ? 1 : 0;
+            $data['drivers_option'] = $request->filled('drivers_option') ? 1 : 0;
+        }else{
+            $data['delivery_companies_option'] = 0;
+            $data['drivers_option'] = 0;
+            $delivery_types = null;
+        }
+        $branch->update($data);
         $branch->delivery_types()->sync($delivery_types);
+
         if($request->preparation_time_delivery){
             $branch->update(['preparation_time_delivery' => $request->preparation_time_delivery]);
         }
@@ -283,7 +278,7 @@ class RestaurantController extends BaseController
         $user = Auth::user();
         $order->load('user', 'items');
 
-        $orderStatusLogs = OrderStatusLogs::all()->sortByDesc("created_at");
+        $orderStatusLogs = OrderStatusLogs::orderBy("created_at",'desc')->where('order_id',$order->id)->get();
         $locale = app()->getLocale();
         return view(
             'restaurant.orders.show',
@@ -549,6 +544,9 @@ class RestaurantController extends BaseController
             'normal_from' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i')],
             'normal_to' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i|after:normal_from')],
             ...$daysRules
+        ], [
+            'lat-new_branch.required' => 'Select location',
+            'lng-new_branch.required' => 'Select location',
         ]);
 
         $branchesExist = DB::table('branches')->where('is_primary', 1)->exists();
@@ -722,6 +720,19 @@ class RestaurantController extends BaseController
             ->with('success', 'Branch updated successfully');
     }
 
+    public function updatePhone(Request $request, $id)
+    {
+        $branch = Branch::findOrFail($id);
+        
+        $branch->phone = $request->phone;
+        
+        $branch->save();
+        
+        return redirect()->back()
+            ->with('success', 'Branch updated successfully');
+    }
+
+
     public function updateBranchLocation(Request $request, $id)
     {
 
@@ -808,7 +819,7 @@ class RestaurantController extends BaseController
                         return;
                 }
 
-                $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
+                $query->where('branch_id', $user->branch->id);
             })
             ->where('category_id', $selectedCategory?->id)
             ->where('branch_id', $branchId)

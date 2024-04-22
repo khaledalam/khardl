@@ -237,7 +237,14 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                             @endif
                                             <span
                                                 class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
-                                                <p > <a href="#" class="text-light bg-dark p-1 rounded">{{$branch->phone ?? ''}}</a> </p>
+                                                <p>
+                                                    <a data-bs-toggle="modal" data-bs-target="#modalTime{{ $branch->id }}" class="text-light bg-dark p-1 rounded cursor-pointer">{{$branch->phone ?? ''}} <svg class="feather feather-edit" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></a>
+                                                </p>
+                                                <style>
+                                                    .cursor-pointer:hover {
+                                                        cursor: pointer;
+                                                    }
+                                                </style>
 
 
                                             </div>
@@ -386,7 +393,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                         @if ($branch->is_primary)
                                             <div
                                                 class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                <a href="#" class="fs-6 text-700 fw-bolder">{{ __('edit-site') }}</a>
+                                                <a href="{{route('restaurants.site_editor')}}" target="_blank" class="fs-6 text-700 fw-bolder">{{ __('edit-site') }}</a>
                                             </div>
                                         @endif
                                             <div
@@ -411,6 +418,71 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             <!--end::Container-->
         </div>
 
+
+        <div class="modal fade" id="modalTime{{ $branch->id }}" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content rounded">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+                <!--end::Close-->
+            </div>
+
+
+            <!--begin::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y pt-0 pb-15">
+                <!--begin:Form-->
+                <form id="modalTimeForm{{ $branch->id }}" class="form" action="{{ route('restaurant.update-phone', ['id' => $branch->id]) }}" method="POST" id="myForm">
+                    @csrf
+                    @method('PUT')
+                    <!--begin::Heading-->
+                    <div class="mb-13 text-center">
+                        <!--begin::Title-->
+                        <input class="form-control form-control-solid" name="phone" id="phoneText" required value="{{ $branch->phone }}">
+                        <label class="form-check-label" for="phoneText">Phone</label>
+                        <!--end::Title-->
+                    </div>
+                    <!--end::Heading-->
+
+
+                    <!--begin::Actions-->
+                    <div class="text-center">
+                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
+                            <span class="indicator-label">{{ __('submit') }}</span>
+                            <span class="indicator-progress">{{ __('please-wait') }}
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                    </div>
+                    <!--end::Actions-->
+                </form>
+                <!--end:Form-->
+            </div>
+            <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+            </div>
+            <!--end::Modal - New Target-->
+
+    </div>
+
         <div class="modal fade" id="kt_modal_new_target{{ $branch->id }}" tabindex="-1" aria-hidden="true">
             <!--begin::Modal dialog-->
             <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -434,6 +506,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 </div>
                 <!--end::Close-->
             </div>
+
+
             <!--begin::Modal header-->
             <!--begin::Modal body-->
             <div class="modal-body scroll-y pt-0 pb-15">
