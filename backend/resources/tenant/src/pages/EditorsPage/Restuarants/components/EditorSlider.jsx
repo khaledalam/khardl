@@ -13,6 +13,8 @@ import { selectedCategoryAPI } from "../../../../redux/NewEditor/categoryAPISlic
 import { useSelector, useDispatch } from "react-redux";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import GreenDot from "../../../../assets/greenDot.png";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 // Install Swiper modules
 SwiperCore.use([Navigation]);
@@ -23,6 +25,25 @@ function EditorSlider({
     isHighlighted,
     currentSubItem,
 }) {
+    const responsive = {
+        superLargeDesktop: {
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5,
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 5,
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 3,
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1,
+        },
+    };
+
     const restuarantEditorStyle = useSelector(
         (state) => state.restuarantEditorStyle
     );
@@ -52,16 +73,8 @@ function EditorSlider({
         menu_category_radius,
     } = restuarantEditorStyle;
 
-    // const swiper = useSwiper();
-
-    const [swiper, setSwiper] = useState(null);
-
     return (
         <div
-            // style={{
-            //     backgroundColor: page_category_color,
-            //     borderRadius: category_shape === "sharp" ? 0 : 12,
-            // }}
             style={{
                 backgroundColor: menu_category_background_color
                     ? menu_category_background_color
@@ -71,75 +84,31 @@ function EditorSlider({
                     : "50px",
             }}
             className={`${
-                menu_category_position == "center" ? "h-40" : "h-full"
+                menu_category_position == "center" ? "h-30 md:h-40" : "h-full"
             } w-full  py-3 flex items-center justify-between ${
                 isHighlighted && "shadow-inner border-[#C0D123] border-[2px]"
-            }`}
+            } relative`}
         >
             {menu_category_position == "center" ? (
-                <div
-                    className={`flex items-center justify-between w-full px-[16px] ${
-                        Language == "ar" && "flex-row-reverse"
-                    }`}
+                <Carousel
+                    swipeable={true}
+                    draggable={true}
+                    showDots={false}
+                    responsive={responsive}
+                    ssr={false}
+                    infinite={true}
+                    autoPlay={false}
+                    autoPlaySpeed={1000}
+                    keyBoardControl={true}
+                    customTransition="all .5"
+                    transitionDuration={500}
+                    containerClass="carousel-container h-full w-full "
+                    dotListClass="custom-dot-list-style"
+                    sliderClass=""
+                    itemClass="flex items-center justify-center w-full h-full"
+                    customLeftArrow={<CustomLeftArrow />}
+                    customRightArrow={<CustomRightArrow />}
                 >
-                    <div>
-                        <SlidePrevButton swiper={swiper} />
-                    </div>
-                    <Swiper
-                        slidesPerView={width > 1024 ? 5 : width > 768 ? 3 : 1}
-                        spaceBetween={0}
-                        loop={true}
-                        modules={[Navigation]}
-                        onSwiper={setSwiper}
-                        className="flex flex-row w-full h-full !justify-center"
-                    >
-                        <div
-                            className={`flex ${
-                                menu_category_position === "center"
-                                    ? "flex-row gap-[30px] "
-                                    : "flex-col gap-6"
-                            } items-center !justify-center w-full`}
-                        >
-                            {items.map((category, i) => (
-                                <SwiperSlide
-                                    key={i}
-                                    className="flex justify-center items-center"
-                                >
-                                    <CategoryItem
-                                        key={i}
-                                        active={
-                                            selectedCategory.id === category.id
-                                        }
-                                        name={category.name}
-                                        imgSrc={category.photo}
-                                        alt={category.name}
-                                        hoverColor={null}
-                                        onClick={() =>
-                                            scrollToSection(category.name)
-                                        }
-                                        textColor={menu_category_color}
-                                        textAlign={text_alignment}
-                                        textFontFamily={menu_category_font}
-                                        fontWeight={menu_category_weight}
-                                        shape={category_shape}
-                                        isGrid={
-                                            menu_category_position === "center"
-                                                ? false
-                                                : true
-                                        }
-                                        fontSize={menu_category_size}
-                                        currentSubItem={currentSubItem}
-                                    />
-                                </SwiperSlide>
-                            ))}
-                        </div>
-                    </Swiper>
-                    <div>
-                        <SlideNextButton swiper={swiper} />
-                    </div>
-                </div>
-            ) : (
-                <div className="flex flex-col items-center justify-between w-full h-full px-[16px] space-y-[16px]">
                     {items.map((category, i) => (
                         <CategoryItem
                             key={i}
@@ -163,6 +132,33 @@ function EditorSlider({
                             currentSubItem={currentSubItem}
                         />
                     ))}
+                </Carousel>
+            ) : (
+                <div className="flex flex-col items-center justify-between w-full h-full px-[16px] space-y-[16px]">
+                    {items.map((category, i) => (
+                        <CategoryItem
+                            key={i}
+                            active={selectedCategory.id === category.id}
+                            name={category.name}
+                            imgSrc={category.photo}
+                            alt={category.name}
+                            hoverColor={null}
+                            onClick={() => scrollToSection(category.name)}
+                            textColor={menu_category_color}
+                            textAlign={text_alignment}
+                            textFontFamily={menu_category_font}
+                            fontWeight={menu_category_weight}
+                            shape={category_shape}
+                            isGrid={
+                                menu_category_position === "center"
+                                    ? false
+                                    : true
+                            }
+                            fontSize={menu_category_size}
+                            currentSubItem={currentSubItem}
+                            isSide={true}
+                        />
+                    ))}
                 </div>
             )}
         </div>
@@ -171,24 +167,32 @@ function EditorSlider({
 
 export default EditorSlider;
 
-function SlideNextButton({ swiper }) {
+const CustomRightArrow = ({ onClick, ...rest }) => {
+    const {
+        onMove,
+        carouselState: { currentSlide, deviceType },
+    } = rest;
     return (
         <button
-            onClick={() => swiper.slideNext()}
-            className="w-[25px] h-[25px] bg-black/10 rounded-full flex justify-center items-center"
+            onClick={() => onClick()}
+            className="w-[25px] h-[25px] bg-black/10 rounded-full flex justify-center items-center absolute right-[16px]"
         >
             <img src={RightIcon} alt="right icon" />
         </button>
     );
-}
+};
 
-function SlidePrevButton({ swiper }) {
+const CustomLeftArrow = ({ onClick, ...rest }) => {
+    const {
+        onMove,
+        carouselState: { currentSlide, deviceType },
+    } = rest;
     return (
         <button
-            onClick={() => swiper.slidePrev()}
-            className="w-[25px] h-[25px] bg-black/10 rounded-full flex justify-center items-center"
+            onClick={() => onClick()}
+            className="w-[25px] h-[25px] bg-black/10 rounded-full flex justify-center items-center absolute left-[16px]"
         >
             <img src={LeftIcon} alt="left icon" />
         </button>
     );
-}
+};
