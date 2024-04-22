@@ -437,7 +437,7 @@ const ProductItem = ({
                     backgroundColor: menu_card_background_color,
                     borderRadius: `${menu_card_radius}px`,
                 }}
-                className="w-36 h-44 relative"
+                className="w-36 h-44 relative hover:scale-110 transform transition-transform duration-300 ease-in-out"
                 key={valuekey}
                 onClick={() => document.getElementById(id).showModal()}
             >
