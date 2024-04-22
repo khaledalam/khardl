@@ -84,7 +84,7 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
             {isDropDown && (
                 <select
                     ref={ref}
-                    className="select w-full max-w-[90%] select-bordered cursor-pointer"
+                    className="select w-full select-bordered cursor-pointer"
                     onChange={handleDropdownChange}
                     value={selectValue}
                 >

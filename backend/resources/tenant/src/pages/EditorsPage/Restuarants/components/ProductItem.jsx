@@ -939,110 +939,109 @@ const ProductItem = ({
                                                                 )}
 
                                                             {/* dropdown */}
-                                                            {/* {console.log(
-                                                    "testing: ",
-                                                    dropdownItems[0]?.length > 0
-                                                )}
-                                                {dropdown_input_titles &&
-                                                    dropdown_input_titles.length >
-                                                        0 &&
-                                                    dropdownItems[0]?.length >
-                                                        0 &&
-                                                    dropdown_input_titles.map(
-                                                        (
-                                                            title,
-                                                            dropdown_idx
-                                                        ) => (
-                                                            <div
-                                                                id={"dropdown"}
-                                                                className=""
-                                                                key={
-                                                                    dropdown_idx
-                                                                }
-                                                            >
-                                                                {title[0] && (
-                                                                    <h3 className="text-[12px] font-medium mb-1 mt-[16px]">
-                                                                        {language ===
-                                                                        "en"
-                                                                            ? title[0]
-                                                                            : title[1]}
-                                                                        {dropdown_required[
-                                                                            dropdown_idx
-                                                                        ] ===
-                                                                            "true" && (
-                                                                            <span className="text-red-500">
-                                                                                *
-                                                                            </span>
-                                                                        )}
-                                                                    </h3>
-                                                                )}
-                                                                <div className="flex flex-col gap-2 mb-3">
-                                                                    {dropdownItems &&
-                                                                        dropdownItems.length >
-                                                                            0 &&
-                                                                        dropdownItems[
-                                                                            dropdown_idx
-                                                                        ][0]
-                                                                            ?.value[0] &&
-                                                                        dropdownItems[
-                                                                            dropdown_idx
-                                                                        ]?.map(
-                                                                            (
-                                                                                item,
-                                                                                idx
-                                                                            ) => {
-                                                                                if (
-                                                                                    idx ===
-                                                                                    0
-                                                                                ) {
-                                                                                    return (
-                                                                                        <ProductDetailItem
-                                                                                            ref={(
-                                                                                                el
-                                                                                            ) =>
-                                                                                                (dropdDownRef.current[
-                                                                                                    dropdown_idx
-                                                                                                ] =
-                                                                                                    el)
-                                                                                            }
-                                                                                            key={
-                                                                                                idx
-                                                                                            }
-                                                                                            isDropDown
-                                                                                            language={
-                                                                                                language
-                                                                                            }
-                                                                                            options={
-                                                                                                dropdownItems[
-                                                                                                    dropdown_idx
-                                                                                                ]
-                                                                                            }
-                                                                                            optionsPrice={
-                                                                                                dropdown_input_prices[
-                                                                                                    dropdown_idx
-                                                                                                ]
-                                                                                            }
-                                                                                            onChange={(
-                                                                                                e
-                                                                                            ) =>
-                                                                                                handleDropdownChange(
-                                                                                                    dropdown_idx,
-                                                                                                    Number(
-                                                                                                        e
-                                                                                                            .target
-                                                                                                            .value
-                                                                                                    )
-                                                                                                )
-                                                                                            }
-                                                                                        />
-                                                                                    );
-                                                                                }
+                                                            {dropdown_input_titles &&
+                                                                dropdown_input_titles.length >
+                                                                    0 &&
+                                                                dropdownItems[0]
+                                                                    ?.length >
+                                                                    0 &&
+                                                                dropdown_input_titles.map(
+                                                                    (
+                                                                        title,
+                                                                        dropdown_idx
+                                                                    ) => (
+                                                                        <div
+                                                                            id={
+                                                                                "dropdown"
                                                                             }
-                                                                        )}
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    )} */}
+                                                                            className=""
+                                                                            key={
+                                                                                dropdown_idx
+                                                                            }
+                                                                        >
+                                                                            {title[0] && (
+                                                                                <h3 className="text-[12px] font-medium mb-[8px] mt-[16px]">
+                                                                                    {language ===
+                                                                                    "en"
+                                                                                        ? title[0]
+                                                                                        : title[1]}
+                                                                                    {dropdown_required[
+                                                                                        dropdown_idx
+                                                                                    ] ===
+                                                                                        "true" && (
+                                                                                        <span className="text-red-500">
+                                                                                            *
+                                                                                        </span>
+                                                                                    )}
+                                                                                </h3>
+                                                                            )}
+                                                                            <div className="flex flex-col gap-2 mb-3">
+                                                                                {dropdownItems &&
+                                                                                    dropdownItems.length >
+                                                                                        0 &&
+                                                                                    dropdownItems[
+                                                                                        dropdown_idx
+                                                                                    ][0]
+                                                                                        ?.value[0] &&
+                                                                                    dropdownItems[
+                                                                                        dropdown_idx
+                                                                                    ]?.map(
+                                                                                        (
+                                                                                            item,
+                                                                                            idx
+                                                                                        ) => {
+                                                                                            if (
+                                                                                                idx ===
+                                                                                                0
+                                                                                            ) {
+                                                                                                return (
+                                                                                                    <ProductDetailItem
+                                                                                                        ref={(
+                                                                                                            el
+                                                                                                        ) =>
+                                                                                                            (dropdDownRef.current[
+                                                                                                                dropdown_idx
+                                                                                                            ] =
+                                                                                                                el)
+                                                                                                        }
+                                                                                                        key={
+                                                                                                            idx
+                                                                                                        }
+                                                                                                        isDropDown
+                                                                                                        language={
+                                                                                                            language
+                                                                                                        }
+                                                                                                        options={
+                                                                                                            dropdownItems[
+                                                                                                                dropdown_idx
+                                                                                                            ]
+                                                                                                        }
+                                                                                                        optionsPrice={
+                                                                                                            dropdown_input_prices[
+                                                                                                                dropdown_idx
+                                                                                                            ]
+                                                                                                        }
+                                                                                                        onChange={(
+                                                                                                            e
+                                                                                                        ) =>
+                                                                                                            handleDropdownChange(
+                                                                                                                dropdown_idx,
+                                                                                                                Number(
+                                                                                                                    e
+                                                                                                                        .target
+                                                                                                                        .value
+                                                                                                                )
+                                                                                                            )
+                                                                                                        }
+                                                                                                    />
+                                                                                                );
+                                                                                            }
+                                                                                        }
+                                                                                    )}
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                )}
                                                         </div>
                                                     </div>
                                                 )}
@@ -1141,7 +1140,7 @@ const ProductItem = ({
                                 dropdownItems[0]?.length > 0
                                     ? "h-[700px]"
                                     : "hidden"
-                            } flex flex-col justify-start items-center mr-[-10px]`}
+                            } flex flex-col justify-start items-center mr-[-10px] hide-scroll`}
                         >
                             {(checkboxItems[0]?.length > 0 ||
                                 radioItems[0]?.length > 0 ||
@@ -1310,6 +1309,102 @@ const ProductItem = ({
                                                                             }
                                                                         />
                                                                     )
+                                                                )}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            )}
+
+                                        {/* dropdown */}
+
+                                        {dropdown_input_titles &&
+                                            dropdown_input_titles.length > 0 &&
+                                            dropdownItems[0]?.length > 0 &&
+                                            dropdown_input_titles.map(
+                                                (title, dropdown_idx) => (
+                                                    <div
+                                                        id={"dropdown"}
+                                                        className=""
+                                                        key={dropdown_idx}
+                                                    >
+                                                        {title[0] && (
+                                                            <h3 className="text-[16px] font-medium mb-[8px] mt-[16px]">
+                                                                {language ===
+                                                                "en"
+                                                                    ? title[0]
+                                                                    : title[1]}
+                                                                {dropdown_required[
+                                                                    dropdown_idx
+                                                                ] ===
+                                                                    "true" && (
+                                                                    <span className="text-red-500">
+                                                                        *
+                                                                    </span>
+                                                                )}
+                                                            </h3>
+                                                        )}
+                                                        <div className="flex flex-col gap-2 mb-3">
+                                                            {dropdownItems &&
+                                                                dropdownItems.length >
+                                                                    0 &&
+                                                                dropdownItems[
+                                                                    dropdown_idx
+                                                                ][0]
+                                                                    ?.value[0] &&
+                                                                dropdownItems[
+                                                                    dropdown_idx
+                                                                ]?.map(
+                                                                    (
+                                                                        item,
+                                                                        idx
+                                                                    ) => {
+                                                                        if (
+                                                                            idx ===
+                                                                            0
+                                                                        ) {
+                                                                            return (
+                                                                                <ProductDetailItem
+                                                                                    ref={(
+                                                                                        el
+                                                                                    ) =>
+                                                                                        (dropdDownRef.current[
+                                                                                            dropdown_idx
+                                                                                        ] =
+                                                                                            el)
+                                                                                    }
+                                                                                    key={
+                                                                                        idx
+                                                                                    }
+                                                                                    isDropDown
+                                                                                    language={
+                                                                                        language
+                                                                                    }
+                                                                                    options={
+                                                                                        dropdownItems[
+                                                                                            dropdown_idx
+                                                                                        ]
+                                                                                    }
+                                                                                    optionsPrice={
+                                                                                        dropdown_input_prices[
+                                                                                            dropdown_idx
+                                                                                        ]
+                                                                                    }
+                                                                                    onChange={(
+                                                                                        e
+                                                                                    ) =>
+                                                                                        handleDropdownChange(
+                                                                                            dropdown_idx,
+                                                                                            Number(
+                                                                                                e
+                                                                                                    .target
+                                                                                                    .value
+                                                                                            )
+                                                                                        )
+                                                                                    }
+                                                                                />
+                                                                            );
+                                                                        }
+                                                                    }
                                                                 )}
                                                         </div>
                                                     </div>
