@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
+use App\Enums\Admin\CouponTypes;
 use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
-use App\Models\Subscription;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\QrCode;
 use App\Models\Tenant\RestaurantStyle;
@@ -34,8 +34,10 @@ use App\Models\Subscription as CentralSubscription;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
+use App\Models\NotificationReceipt;
 use App\Models\ROCustomerAppSub;
 use App\Models\ROSubscription;
+use App\Models\ROSubscriptionCoupon;
 use App\Models\Tenant\DeliveryCompany;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
@@ -124,6 +126,26 @@ class RestaurantController extends BaseController
     public function serviceCalculate($type, $number_of_branches,$subscription_id)
     {
         return ROSubscription::serviceCalculate($type, $number_of_branches,$subscription_id,true);
+    }
+    public function serviceCoupon($coupon,$type,$number_of_branches = null){
+      
+        if($type == NotificationReceipt::is_application_purchase || $type == NotificationReceipt::is_branch_purchase) {
+            return response()->json( tenancy()->central(function()use($coupon,$type,$number_of_branches){
+                $coupon = ROSubscriptionCoupon::where('code',$coupon)->where($type,true)->whereColumn('max_use', '>', 'n_of_usage')->first();
+                if(!$coupon) return $coupon;
+                
+                if($type == NotificationReceipt::is_branch_purchase ){
+                    $cost = CentralSubscription::first()->amount;
+                }elseif ($type == NotificationReceipt::is_application_purchase ){
+                    $cost = CentralSubscription::skip(1)->first()->amount;
+                }
+                $after_discount = ($coupon->type == CouponTypes::FIXED_COUPON->value)? $cost * ($number_of_branches ?? 1) - $coupon->amount : (($cost * ($number_of_branches ?? 1)) - ((($cost * ($number_of_branches ?? 1)) * $coupon->amount) / 100));
+                return [
+                    'cost'=> $after_discount
+                ];
+            }));
+        }return false;
+      
     }
     public function delivery(Request $request)
     {

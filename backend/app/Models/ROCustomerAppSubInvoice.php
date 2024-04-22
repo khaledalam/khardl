@@ -17,6 +17,8 @@ class ROCustomerAppSubInvoice extends Model
         'cus_id',
         'card_id',
         'status',
-        'subscription_id'
+        'subscription_id',
+        'discount',
+        'coupon_code'
     ];
 }
