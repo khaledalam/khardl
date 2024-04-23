@@ -20,6 +20,7 @@ const CategoryItem = ({
     textFontFamily,
     valuekey,
     currentSubItem,
+    isSide,
 }) => {
     const [isHover, setIsHover] = useState(false);
     const { t } = useTranslation();
@@ -50,7 +51,7 @@ const CategoryItem = ({
             key={valuekey}
             className={`flex w-full cursor-pointer ${
                 isGrid ? "flex-row" : "flex-col"
-            } gap-[16px] items-center`}
+            } gap-[16px] items-center ${isSide ? "w-full" : "max-w-[60px]"}`}
         >
             {selectedBranch?.display_category_icon == "1" && (
                 <div
