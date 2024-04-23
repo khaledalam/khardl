@@ -61,11 +61,13 @@ const Login = () => {
             // console.log("responseData>", responseData)
             //  return;
 
-
-            localStorage.setItem(
-               'user-info',
-               JSON.stringify(responseData?.data?.user)
-            );
+            if(responseData?.data?.user){
+               localStorage.setItem(
+                  'user-info',
+                  JSON.stringify(responseData?.data?.user)
+               );
+            }
+           
 
 
             if (responseData?.data?.user?.status === 'inactive') {
@@ -79,13 +81,13 @@ const Login = () => {
                responseData?.data?.step2_status === 'completed' &&
                responseData.data?.user?.status === 'active'
             ) {
-                setStatusCode(HTTP_OK);
-                toast.success(`${t('You have been logged in successfully')}`)
+               setStatusCode(HTTP_OK);
+               toast.success(`${t('You have been logged in successfully')}`)
             }  else if (
-                responseData?.data?.url
+               responseData?.data?.url
             ) {
-                setStatusCode(HTTP_OK);
-                toast.success(`${t('You have been logged in successfully')}`)
+               window.location.href = responseData?.data?.url;
+               toast.success(`${t('You have been logged in successfully')}`)
             } else {
                navigate('/error')
             }
