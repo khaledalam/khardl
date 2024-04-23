@@ -4,6 +4,7 @@ namespace App\Http\Services\API\tenant;
 
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\Setting;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\APIResponseTrait;
 use Illuminate\Support\Facades\Auth;
@@ -134,8 +135,11 @@ class RestaurantStyleService
 
             $data->logo_url = $data->logo_url ?: $data->logo;
 
-            $setting = Setting::first();
-            $restaurant_name = $setting->restaurant_name;
+            $restaurant_name = '';
+
+            tenancy()->central(function ($tenant) use (&$restaurant_name) {
+                $restaurant_name = app()->getLocale() == 'en' ? $tenant->restaurant_name : $tenant->restaurant_name_ar;
+            });
 
             $data->restaurant_name = $restaurant_name;
 
