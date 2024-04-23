@@ -620,140 +620,151 @@ const MainBoardEditor = ({
                                 className={`flex flex-col gap-[30px] h-fit p-3 md:p-4 overflow-y-scroll hide-scroll`}
                             >
                                 {categories &&
-                                    categories.map((category, i) => (
-                                        <div
-                                            className="flex flex-col"
-                                            key={i}
-                                            id={category.name}
-                                        >
-                                            <div className="text-black text-opacity-75 text-lg font-medium mb-[16px]">
-                                                {category.name}
-                                            </div>
-                                            <div className="flex flex-row flex-wrap gap-[25px] justify-center">
-                                                {category.items.map(
-                                                    (product, idx) => (
-                                                        <ProductItem
-                                                            key={idx + "prdt"}
-                                                            id={product.id}
-                                                            name={product.name}
-                                                            imgSrc={
-                                                                product.photo
-                                                            }
-                                                            description={
-                                                                product.description
-                                                            }
-                                                            amount={
-                                                                product.price
-                                                            }
-                                                            caloryInfo={
-                                                                product.calories
-                                                            }
-                                                            checkbox_required={
-                                                                product?.checkbox_required ?? [
-                                                                    "true",
-                                                                    "false",
-                                                                ]
-                                                            }
-                                                            checkbox_input_titles={
-                                                                product?.checkbox_input_titles ?? [
-                                                                    [],
-                                                                ]
-                                                            }
-                                                            checkbox_input_names={
-                                                                product?.checkbox_input_names ?? [
-                                                                    [],
-                                                                ]
-                                                            }
-                                                            checkbox_input_prices={
-                                                                product?.checkbox_input_prices ?? [
-                                                                    [],
-                                                                ]
-                                                            }
-                                                            checkbox_input_maximum_choices={
-                                                                product?.checkbox_input_maximum_choices ?? [
-                                                                    [],
-                                                                ]
-                                                            }
-                                                            selection_required={
-                                                                product?.selection_required ?? [
-                                                                    "true",
-                                                                    "false",
-                                                                ]
-                                                            }
-                                                            selection_input_titles={
-                                                                product?.selection_input_titles ?? [
-                                                                    [],
-                                                                ]
-                                                            }
-                                                            selection_input_names={
-                                                                product?.selection_input_names ?? [
-                                                                    [],
-                                                                ]
-                                                            }
-                                                            selection_input_prices={
-                                                                product?.selection_input_prices ?? [
-                                                                    [],
-                                                                ]
-                                                            }
-                                                            dropdown_required={
-                                                                product?.dropdown_required ?? [
-                                                                    "true",
-                                                                    "false",
-                                                                ]
-                                                            }
-                                                            dropdown_input_prices={
-                                                                product?.dropdown_input_prices ?? [
-                                                                    [],
-                                                                ]
-                                                            }
-                                                            dropdown_input_titles={
-                                                                product?.dropdown_input_titles ?? [
-                                                                    [],
-                                                                ]
-                                                            }
-                                                            dropdown_input_names={
-                                                                product?.dropdown_input_names ?? [
-                                                                    [],
-                                                                ]
-                                                            }
-                                                            cartBgcolor={
-                                                                categoryDetail_cart_color
-                                                            }
-                                                            amountColor={
-                                                                price_color
-                                                            }
-                                                            textColor={
-                                                                text_color
-                                                            }
-                                                            textAlign={
-                                                                text_alignment
-                                                            }
-                                                            fontWeight={
-                                                                text_fontWeight
-                                                            }
-                                                            shape={
-                                                                categoryDetail_shape
-                                                            }
-                                                            fontSize={
-                                                                text_fontSize
-                                                            }
-                                                            currentSubItem={
-                                                                activeSubitem !=
-                                                                null
-                                                                    ? navItems[
-                                                                          activeSection
-                                                                      ]
-                                                                          .subItems[
-                                                                          activeSubitem
-                                                                      ].title
-                                                                    : null
-                                                            }
-                                                        />
-                                                    )
-                                                )}
-                                            </div>
-                                        </div>
-                                    ))}
+                                    categories.map(
+                                        (category, i) =>
+                                            category.items?.length > 0 && (
+                                                <div
+                                                    className="flex flex-col"
+                                                    key={i}
+                                                    id={category.name}
+                                                >
+                                                    <div className="text-black text-opacity-75 text-lg font-medium mb-[16px]">
+                                                        {category.name}
+                                                    </div>
+                                                    <div className="flex flex-row flex-wrap gap-[25px] justify-center">
+                                                        {category.items.map(
+                                                            (product, idx) => (
+                                                                <ProductItem
+                                                                    key={
+                                                                        idx +
+                                                                        "prdt"
+                                                                    }
+                                                                    id={
+                                                                        product.id
+                                                                    }
+                                                                    name={
+                                                                        product.name
+                                                                    }
+                                                                    imgSrc={
+                                                                        product.photo
+                                                                    }
+                                                                    description={
+                                                                        product.description
+                                                                    }
+                                                                    amount={
+                                                                        product.price
+                                                                    }
+                                                                    caloryInfo={
+                                                                        product.calories
+                                                                    }
+                                                                    checkbox_required={
+                                                                        product?.checkbox_required ?? [
+                                                                            "true",
+                                                                            "false",
+                                                                        ]
+                                                                    }
+                                                                    checkbox_input_titles={
+                                                                        product?.checkbox_input_titles ?? [
+                                                                            [],
+                                                                        ]
+                                                                    }
+                                                                    checkbox_input_names={
+                                                                        product?.checkbox_input_names ?? [
+                                                                            [],
+                                                                        ]
+                                                                    }
+                                                                    checkbox_input_prices={
+                                                                        product?.checkbox_input_prices ?? [
+                                                                            [],
+                                                                        ]
+                                                                    }
+                                                                    checkbox_input_maximum_choices={
+                                                                        product?.checkbox_input_maximum_choices ?? [
+                                                                            [],
+                                                                        ]
+                                                                    }
+                                                                    selection_required={
+                                                                        product?.selection_required ?? [
+                                                                            "true",
+                                                                            "false",
+                                                                        ]
+                                                                    }
+                                                                    selection_input_titles={
+                                                                        product?.selection_input_titles ?? [
+                                                                            [],
+                                                                        ]
+                                                                    }
+                                                                    selection_input_names={
+                                                                        product?.selection_input_names ?? [
+                                                                            [],
+                                                                        ]
+                                                                    }
+                                                                    selection_input_prices={
+                                                                        product?.selection_input_prices ?? [
+                                                                            [],
+                                                                        ]
+                                                                    }
+                                                                    dropdown_required={
+                                                                        product?.dropdown_required ?? [
+                                                                            "true",
+                                                                            "false",
+                                                                        ]
+                                                                    }
+                                                                    dropdown_input_prices={
+                                                                        product?.dropdown_input_prices ?? [
+                                                                            [],
+                                                                        ]
+                                                                    }
+                                                                    dropdown_input_titles={
+                                                                        product?.dropdown_input_titles ?? [
+                                                                            [],
+                                                                        ]
+                                                                    }
+                                                                    dropdown_input_names={
+                                                                        product?.dropdown_input_names ?? [
+                                                                            [],
+                                                                        ]
+                                                                    }
+                                                                    cartBgcolor={
+                                                                        categoryDetail_cart_color
+                                                                    }
+                                                                    amountColor={
+                                                                        price_color
+                                                                    }
+                                                                    textColor={
+                                                                        text_color
+                                                                    }
+                                                                    textAlign={
+                                                                        text_alignment
+                                                                    }
+                                                                    fontWeight={
+                                                                        text_fontWeight
+                                                                    }
+                                                                    shape={
+                                                                        categoryDetail_shape
+                                                                    }
+                                                                    fontSize={
+                                                                        text_fontSize
+                                                                    }
+                                                                    currentSubItem={
+                                                                        activeSubitem !=
+                                                                        null
+                                                                            ? navItems[
+                                                                                  activeSection
+                                                                              ]
+                                                                                  .subItems[
+                                                                                  activeSubitem
+                                                                              ]
+                                                                                  .title
+                                                                            : null
+                                                                    }
+                                                                />
+                                                            )
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )
+                                    )}
                             </div>
                         </div>
                     </div>
