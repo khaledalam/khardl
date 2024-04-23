@@ -134,6 +134,12 @@ class RestaurantStyleService
 
             $data->logo_url = $data->logo_url ?: $data->logo;
 
+            $setting = Setting::first();
+            $restaurant_name = $setting->restaurant_name;
+
+            $data->restaurant_name = $restaurant_name;
+
+
             // get branches of restaurant
             $data['branches'] = Branch::where('active',true)->get([
                 'name',
