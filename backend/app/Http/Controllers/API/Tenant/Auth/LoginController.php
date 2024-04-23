@@ -24,7 +24,7 @@ class LoginController extends BaseController
             'password' => 'required|string|min:6|max:255',
             'remember_me' => 'nullable|boolean',
         ]);
-
+      
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
@@ -42,9 +42,9 @@ class LoginController extends BaseController
 
         $user = RestaurantUser::where('email', '=', Auth::user()?->email)->first();
 
-        if(!$user->isWorker()){
+        if(!$user->isWorker() &&  !$user->isDriver()){
             Auth::logout();
-            return $this->sendError(__('Unauthorized'), ['error' => __('Only workers can logged in')]);
+            return $this->sendError(__('Unauthorized'), ['error' => __('Only workers and drivers can logged in')]);
         }
 
         if(!$user->branch?->active){
