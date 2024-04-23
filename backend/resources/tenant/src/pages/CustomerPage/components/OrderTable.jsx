@@ -155,7 +155,7 @@ const OrderTable = ({ data }) => {
                                         </td>
                                         <td>
                                                 <Eyes cursorPointer={true} onClick={() =>
-                                                    navigate(`/dashboard?orderId=${order.id}`)
+                                                    navigate(`/profile-summary?orderId=${order.id}`)
                                                 } />
                                         </td>
                                     </tr>

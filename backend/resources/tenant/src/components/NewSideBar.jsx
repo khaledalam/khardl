@@ -116,7 +116,7 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
                     </div>
                 </div>
                 <div
-                    onClick={() => navigate("/dashboard#Dashboard")}
+                    onClick={() => navigate("/profile-summary#Dashboard")}
                     className="w-56 h-8 left-[24px] top-[104px] absolute hover:cursor-pointer"
                 >
                     <div className="w-56 h-8 left-0 top-0 absolute bg-white hover:bg-orange-100 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100" />

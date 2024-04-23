@@ -176,7 +176,7 @@ const OuterSidebarNav = ({ id }) => {
 
     const handleRedirect = (role) => {
         if (role.toLowerCase() == "customer") {
-            navigate("/dashboard#Dashboard");
+            navigate("/profile-summary#Dashboard");
         } else if (role.toLowerCase() == "driver") {
             window.open(window.location.href + "orders-all");
         } else if (role.toLowerCase() == "worker") {

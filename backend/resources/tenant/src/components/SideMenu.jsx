@@ -41,7 +41,7 @@ export const SideMenu = () => {
 
     const redirectToDashboard = () => {
         // Redirect to an external URL (window.location.href)
-        window.location.href = "/dashboard#Dashboard";
+        window.location.href = "/profile-summary#Dashboard";
     };
 
     const handleLogout = async (e) => {

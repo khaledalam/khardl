@@ -23,4 +23,11 @@ class DashboardController extends Controller
             default => view('tenant', compact('logo', 'restaurant_name'))
         };
     }
+    public function profile()
+    {
+
+        $logo = RestaurantStyle::first()?->logo;
+        $restaurant_name = Setting::first()->restaurant_name;
+        return view('tenant', compact('logo', 'restaurant_name'));
+    }
 }

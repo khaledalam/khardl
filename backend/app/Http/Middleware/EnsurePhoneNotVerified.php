@@ -25,7 +25,7 @@ class EnsurePhoneNotVerified
                     'is_loggedin' => true
                 ], ResponseHelper::HTTP_VERIFIED);
             }
-            return redirect()->route("dashboard");
+            return redirect()->route("profile-summary");
         }
         return $next($request);
     }

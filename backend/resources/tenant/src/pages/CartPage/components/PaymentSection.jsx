@@ -159,7 +159,7 @@ const PaymentSection = ({
                         toast.success(
                             `${t("Order has been created successfully")}`,
                         );
-                        navigate(`/dashboard#orders`);
+                        navigate(`/profile-summary#orders`);
                         // navigate(`/dashboard?OrderId=${cartResponse.data?.order?.id}#orders`);
                     }
                 } catch (error) {

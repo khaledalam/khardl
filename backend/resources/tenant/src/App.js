@@ -83,7 +83,7 @@ const App = () => {
 
     const showHeader = ![
         "/policies",
-        "/dashboard",
+        "/profile-summary",
         "/privacy",
         "/site-editor/restaurants",
         "/restaurant-not-live",
@@ -98,7 +98,7 @@ const App = () => {
         "/",
         "/branches",
         "/cart",
-        "/dashboard",
+        "/profile-summary",
         "/site-editor/restaurants",
         "/login",
         "/login-admins",
@@ -238,7 +238,7 @@ const App = () => {
                                     {/* <Route
                 {/* <Route path='/dashboard' element={<CustomersPreview />} />{" "} */}{" "}
                                     <Route
-                                        path="/dashboard"
+                                        path="/profile-summary"
                                         element={<CustomerPage />}
                                     />{" "}
                                     <Route

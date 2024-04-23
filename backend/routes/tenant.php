@@ -100,7 +100,7 @@ Route::group([
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+        Route::get('/profile-summary', [DashboardController::class, 'profile'])->name('profile-summary');
         Route::get('/customer-style', [CustomerStyleController::class, 'fetch'])->name('restaurant.customer.style.fetch');
 
         Route::middleware(['restaurantOrWorker','ActiveRestaurantAndBranch'])->group(function () {
