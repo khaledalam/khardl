@@ -54,6 +54,8 @@ const Login = () => {
          //
          // return;
 
+          console.log("here", response?.data?.data?.url)
+
          if (response?.data?.success) {
             const responseData = response?.data;
             // console.log("responseData>", responseData)
@@ -76,6 +78,11 @@ const Login = () => {
             } else if (
                responseData?.data?.step2_status === 'completed' &&
                responseData.data?.user?.status === 'active'
+            ) {
+                setStatusCode(HTTP_OK);
+                toast.success(`${t('You have been logged in successfully')}`)
+            }  else if (
+                responseData?.data?.url
             ) {
                 setStatusCode(HTTP_OK);
                 toast.success(`${t('You have been logged in successfully')}`)
