@@ -8,8 +8,14 @@ import Banner from "./Banner";
 import Category from "./Category";
 import SocialMedia from "./SocialMedia";
 import Footer from "./Footer";
+import Login from "./Login";
+import Register from "./Register";
 
-import { SetSideBar } from "../../../redux/NewEditor/restuarantEditorSlice";
+import {
+    SetSideBar,
+    SetLoginModal,
+    SetRegisterModal,
+} from "../../../redux/NewEditor/restuarantEditorSlice";
 import Modal from "../../../components/Modal";
 import NewSideBar from "../../../components/NewSideBar";
 import Branches from "../../../components/Branches";
@@ -19,7 +25,8 @@ const FullPage = ({ categories }) => {
     const { t } = useTranslation();
     const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
 
-    const { page_color, isSideBarOpen } = restaurantStyle;
+    const { page_color, isSideBarOpen, isLoginModalOpen, isRegisterModalOpen } =
+        restaurantStyle;
 
     let isModelOpen = isSideBarOpen;
     let setIsModelOpen = (value) => dispatch(SetSideBar(value));
@@ -34,6 +41,10 @@ const FullPage = ({ categories }) => {
             () => setIsModelOpen(false);
         }
     }, [isBranchModelOpen]);
+
+    useEffect(() => {
+        setIsModelOpen(false);
+    }, [isBranchModelOpen, isLoginModalOpen]);
 
     return (
         <div
@@ -74,6 +85,22 @@ const FullPage = ({ categories }) => {
                             }}
                             closingFuncSideMenu={() => setIsModelOpen(false)}
                         />
+                    </Modal>
+                ) : isLoginModalOpen ? (
+                    <Modal
+                        open={isLoginModalOpen}
+                        onClose={() => dispatch(SetLoginModal(false))}
+                        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[400px]"
+                    >
+                        <Login />
+                    </Modal>
+                ) : isRegisterModalOpen ? (
+                    <Modal
+                        open={isRegisterModalOpen}
+                        onClose={() => dispatch(SetRegisterModal(false))}
+                        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[400px]"
+                    >
+                        <Register />
                     </Modal>
                 ) : (
                     <Modal
