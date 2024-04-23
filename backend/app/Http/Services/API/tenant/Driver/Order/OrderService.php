@@ -52,7 +52,7 @@ class OrderService
                 return $query->where('driver_id', $user->id)
                 ->whenDriverStatus($request->status);
             })
-            ->recent();
+            ->recentUpdated();
 
         $perPage = $request['perPage'] ?? config('application.perPage', 20);
         $orders = $query->paginate($perPage);
