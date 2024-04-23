@@ -69,6 +69,7 @@
     "You does not have an subscription.":"ليس لديك اي اشتراك",
     "Invalid email or password":"البريد الإلكتروني أو كلمة السر خاطئة",
     "Only workers can logged in":"يمكن للعمال فقط تسجيل الدخول",
+    "Only workers and drivers can logged in":"فقط العمال والسائقين الذين يمكنهم تسجيل الدخول",
     "Phone number is not exist":"رقم الهاتف غير موجود",
     "Coupon has been added successfully" :"تمت إضافة القسيمة بنجاح",
     "Added successfully" :"تم الاضافة بنجاح",
