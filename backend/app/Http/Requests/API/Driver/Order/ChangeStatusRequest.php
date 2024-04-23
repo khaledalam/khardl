@@ -64,11 +64,13 @@ class ChangeStatusRequest extends FormRequest
                     if($order->deliver_by != null){
                         $fail(__('Order has assigned for someone else'));
                     }
-                    $settings = Setting::first();
-                    $limitDrivers = $settings->limit_delivery_company;
-                    if ($limitDrivers && $limitDrivers > 0 && $order->branch?->drivers_option && $order->branch?->delivery_companies_option) {
-                        if (!($order->received_by_restaurant_at > now()->subMinutes($limitDrivers))) {
-                            return $fail(__('You cannot pick up this order now because you have exceeded the time allowed for order pickup'));
+                    if($order->driver_id == null){// Make timer only for orders that does not have driver yet
+                        $settings = Setting::first();
+                        $limitDrivers = $settings->limit_delivery_company;
+                        if ($limitDrivers && $limitDrivers > 0 && $order->branch?->drivers_option && $order->branch?->delivery_companies_option) {
+                            if (!($order->received_by_restaurant_at > now()->subMinutes($limitDrivers))) {
+                                return $fail(__('You cannot pick up this order now because you have exceeded the time allowed for order pickup'));
+                            }
                         }
                     }
                 }
