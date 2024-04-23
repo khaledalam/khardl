@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Central\Auth;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\BaseController;
+use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -52,7 +53,19 @@ class LoginController extends BaseController
             'email' => 'required|string|email|min:10|max:255',
             'password' => 'required|string|min:6|max:255',
             'remember_me' => 'nullable|boolean',
+            'login_code' => 'nullable|string|min:5|max:5',
         ]);
+
+        if ($request->has('login_code') && $request->login_code) {
+            $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->code)->first();
+            if (!$tenant) {
+                return $this->sendError(__('Validation Error. R!'));
+            }
+
+            return $tenant->run(function () use($request) {
+                return (new \App\Http\Controllers\API\Tenant\Auth\LoginController())->logout($request);
+            });
+        }
 
         $credentials = request(['email', 'password']);
 
@@ -69,15 +82,15 @@ class LoginController extends BaseController
             $register->sendVerificationCode($request);
         }
         $user->force_logout = 0;
-     
+
         if($user->restaurant){
             $user->restaurant->run(function ($tenant) {
                 $RO =  RestaurantUser::first();
-               
+
                 if($RO){
                     $RO->force_logout = 0;
                     $RO->save();
-        
+
                 }
             });
         }

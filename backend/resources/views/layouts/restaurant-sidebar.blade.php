@@ -80,7 +80,7 @@
                 icon: type,
                 title: message,
                 showConfirmButton: false,
-                timer: 500
+                timer: 1500
             });
         }
     </script>
@@ -95,7 +95,7 @@
                 icon: type,
                 title: message,
                 showConfirmButton: false,
-                timer: 1000
+                timer: 1500
             });
         }
     </script>
@@ -341,7 +341,7 @@
                     <!-- menu -->
 
                         <!-- Orders -->
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'order-inquiry' || $link == 'orders-all' || $link == 'orders-add' || $link == 'unavailable-products') ? 'show' : '' }}">
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'order-inquiry' || $link == 'orders-all' || $link == 'orders-add') ? 'show' : '' }}">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -376,14 +376,6 @@
                                             <span class="bullet bullet-dot {{ ($link == 'orders-add') ? 'bg-light' : '' }}"></span>
                                         </span>
                                         <span class="menu-title">{{__('orders-add')}}</span>
-                                    </div>
-                                </a>
-                                <a href="{{route('restaurant.unavailable-products')}}">
-                                    <div class="{{ ($link == 'unavailable-products') ? 'menu-link active' : 'menu-link ' }}">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot {{ ($link == 'unavailable-products') ? 'bg-light' : '' }}"></span>
-                                        </span>
-                                        <span class="menu-title">{{__('Unavailable products')}}</span>
                                     </div>
                                 </a>
                             </div>

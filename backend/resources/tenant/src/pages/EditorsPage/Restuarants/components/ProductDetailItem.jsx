@@ -84,12 +84,12 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
             {isDropDown && (
                 <select
                     ref={ref}
-                    className="select w-full max-w-[90%] select-bordered cursor-pointer"
+                    className="select w-full select-bordered cursor-pointer"
                     onChange={handleDropdownChange}
                     value={selectValue}
                 >
                     <option disabled value="">
-                        select option
+                        {t("select option")}
                     </option>
                     {options.map((option, idx) => (
                         <option key={idx} value={idx}>

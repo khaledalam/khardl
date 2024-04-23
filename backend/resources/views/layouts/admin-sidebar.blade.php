@@ -288,7 +288,41 @@
                             @endif
                             @if($user?->hasPermission('can_promoters'))
                              <!-- Staff evaluation -->
-                             <div class="menu-item">
+                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'promoters' || $admin_link == 'promoters-subscriptions') ? 'show' : ''}}">
+                                <span class="{{ ($admin_link == 'promoters'  ) ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                           <i class=" fa fa-user-shield"></i>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">{{ __('promoters')}}</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                         
+                                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                    <div class="menu-item">
+                                        <a class="menu-link {{($admin_link == 'promoters') ? 'active' : ''}}" href="{{ route('admin.promoters') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">{{ __('promoters')}}</span>
+                                        </a>
+                                    </div>                               
+                                </div>
+                                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                    <div class="menu-item">
+                                        <a class="menu-link {{($admin_link == 'promoters-subscriptions') ? 'active' : ''}}" href="{{ route('admin.promoters.sub') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">{{ __('Subscription coupons')}}</span>
+                                        </a>
+                                    </div>                               
+                                </div>
+                            </div>
+                             {{-- <div class="menu-item">
                                 <a href="{{ route('admin.promoters') }}">
                                 <span class="{{ ($admin_link == 'promoters'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -300,8 +334,8 @@
                                     </span>
                                     <span class="menu-title">{{ __('promoters')}}</span>
                                 </span>
-                            </a>
-                            </div>
+                            </a> --}}
+                         
                             @endif
                             @if($user?->hasPermission('can_see_logs'))
                             <!-- Logs -->

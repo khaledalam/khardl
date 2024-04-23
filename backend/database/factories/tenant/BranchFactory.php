@@ -45,7 +45,8 @@ class BranchFactory extends Factory
             'sunday_open' => fake()->dateTime(),
             'sunday_close' => fake()->dateTime(),
             'sunday_closed' => fake()->boolean,
-            'delivery_availability' => fake()->boolean,
+            'delivery_companies_option' => fake()->boolean,
+            'drivers_option' => fake()->boolean,
             'pickup_availability' => fake()->boolean,
             'preparation_time_delivery' => fake()->dateTime(),
         ];

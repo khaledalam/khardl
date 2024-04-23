@@ -10,7 +10,9 @@ use App\Http\Controllers\API\Tenant\Notification\NotificationController;
 use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
+use App\Models\Tenant;
 use App\Models\Tenant\RestaurantStyle;
+use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -113,6 +115,7 @@ Route::group([
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
             Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
+            Route::put('/branches/{id}/phone', [RestaurantController::class, 'updatePhone'])->middleware('permission:can_modify_working_time')->name('restaurant.update-phone');
             Route::get('/branches/{id}/toggleBranch', [RestaurantController::class, 'toggleBranch'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-branch-status');
             Route::get('/no_branches', [RestaurantController::class, 'noBranches'])->middleware('permission:can_edit_menu')->name('restaurant.no_branches');
 //            Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->middleware('permission:can_edit_menu')->name('restaurant.menu');
@@ -174,6 +177,7 @@ Route::group([
                 Route::patch('/service/activate', [RestaurantController::class, 'serviceActivate'])->name('restaurant.service.activate');
                 Route::patch('/service/app/activate', [RestaurantController::class, 'serviceAppActivate'])->name('restaurant.service.app.activate');
                 Route::get('/service/{type}/{number_of_branches}/calculate/{subscription_id}', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');
+                Route::get('/service/{coupon}/{type}/check/{number_of_branches?}', [RestaurantController::class, 'serviceCoupon'])->name('restaurant.service.coupon.check');
 
 
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
@@ -203,7 +207,6 @@ Route::group([
                     Route::post('orders-add', 'store')->name('restaurant.order.store');
                     Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
                     Route::get('get-product-by-id/{item}', 'getProduct')->name('restaurant.getProduct');
-                    Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
                     Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
                 });
                 Route::resource('coupons',CouponController::class)->withTrashed(['show','restore','edit','update']);

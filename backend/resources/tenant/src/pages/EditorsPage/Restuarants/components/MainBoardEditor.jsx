@@ -669,6 +669,11 @@ const MainBoardEditor = ({
                                                                     [],
                                                                 ]
                                                             }
+                                                            checkbox_input_maximum_choices={
+                                                                product?.checkbox_input_maximum_choices ?? [
+                                                                    [],
+                                                                ]
+                                                            }
                                                             selection_required={
                                                                 product?.selection_required ?? [
                                                                     "true",
@@ -694,6 +699,11 @@ const MainBoardEditor = ({
                                                                 product?.dropdown_required ?? [
                                                                     "true",
                                                                     "false",
+                                                                ]
+                                                            }
+                                                            dropdown_input_prices={
+                                                                product?.dropdown_input_prices ?? [
+                                                                    [],
                                                                 ]
                                                             }
                                                             dropdown_input_titles={

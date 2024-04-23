@@ -4,6 +4,8 @@ namespace App\Http\Requests\Tenant\BranchSettings;
 
 
 use App\Models\Tenant\Item;
+use App\Models\Tenant\RestaurantUser;
+use App\Packages\DeliveryCompanies\DeliveryCompanies;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateBranchSettingFromRequest extends FormRequest
@@ -26,12 +28,27 @@ class UpdateBranchSettingFromRequest extends FormRequest
      */
     public function rules()
     {
+        /* dd(request()->all()); */
         return [
             'payment_methods' => ['required','array'],
-            'delivery_types' => ['required','array'],
-            'delivery_types.*' => ['required', 'min:1', 'in:Delivery,PICKUP'],
             'payment_methods.*' => ['required', 'min:1', 'in:Online,Cash on Delivery'],
-            'preparation_time_delivery'=>'nullable|date_format:"H:i:s"'
+            'preparation_time_delivery'=>'nullable|date_format:"H:i:s"',
+            'drivers_option' => ['nullable', function ($attribute, $value, $fail) {
+                $hasActiveDrivers = RestaurantUser::activeDrivers()->get()->count();
+                if($value == 1){
+                    if(!$hasActiveDrivers){
+                        $fail(__('Can not enable drivers option if you do not have active drivers.'));
+                    }
+                }
+            }],
+            'delivery_companies_option' => ['nullable', function ($attribute, $value, $fail) {
+                $hasDeliveryCompanies = DeliveryCompanies::all()->count();
+                if($value == 1){
+                    if(!$hasDeliveryCompanies){
+                        $fail(__('Can not enable delivery company option if you do not signed with any delivery company.'));
+                    }
+                }
+            }]
         ];
     }
 

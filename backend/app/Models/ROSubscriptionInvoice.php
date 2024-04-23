@@ -19,7 +19,9 @@ class ROSubscriptionInvoice extends Model
         'card_id',
         'status',
         'type',
-        'subscription_id' // central subscription id
+        'subscription_id', // central subscription id
+        'discount',
+        'coupon_code'
     ];
     /* Start Relations */
     public function getSubscriptionAttribute()
