@@ -1231,6 +1231,7 @@
     "English name is not valid, please use english characters":"اسم اللغة الإنجليزية غير صالح ، يرجى استخدام الأحرف الإنجليزية",
     "Please fill in the input in (Arabic) tab.":"يرجى ملء المدخلات في علامة التبويب (العربية).",
     "Please fill in the input in the (English) tab." :"يرجى ملء المدخلات في علامة التبويب (الإنجليزية).",
-    "Are you sure you want to delete this driver ?":"هل أنت متأكد أنك تريد حذف هذا السائق؟"
+    "Are you sure you want to delete this driver ?":"هل أنت متأكد أنك تريد حذف هذا السائق؟",
+    "Rejected":"مرفوضة"
 
 }
