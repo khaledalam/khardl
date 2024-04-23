@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\RegisterWorkerRequest;
 use App\Models\Subscription as CentralSubscription;
+use App\Models\Subscription;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
@@ -469,7 +470,7 @@ class RestaurantController extends BaseController
         $branch_left = '';
         if($current_sub = ROSubscription::first()){
             $subscription = tenancy()->central(function () {
-                return Subscription::first();
+                return CentralSubscription::first();
             });
             $branch_cost =number_format($current_sub->calculateDaysLeftCost($subscription->amount),2);
             $branch_left = $current_sub->getDateLeftAttribute();
