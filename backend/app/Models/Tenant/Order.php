@@ -184,6 +184,10 @@ class Order extends Model
     {
         return $query->orderBy('created_at', 'DESC');
     }
+    public function scopeRecentUpdated($query)
+    {
+        return $query->orderBy('updated_at', 'DESC');
+    }
     public function scopeWhenSearch($query, $search)
     {
         return $query->when($search != null, function ($q) use ($search) {
