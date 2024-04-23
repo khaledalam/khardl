@@ -955,10 +955,27 @@ class RestaurantController extends BaseController
 
         $selectedCategory = DB::table('categories')->where('id', $id)->first();
 
-        if ($selectedCategory && $user->id == $selectedCategory->user_id) {
+        if ($user->isRestaurantOwner() || ($selectedCategory && $user->id == $selectedCategory->user_id)) {
+
+            $branch_id = DB::table('items')->where('category_id', $id)->first()?->branch_id;
 
             DB::table('items')->where('category_id', $id)->delete();
             DB::table('categories')->where('id', $id)->delete();
+
+            $otherCategories = DB::table('categories')
+                ->where('id', '!=', $id)
+                ->where('branch_id', '=', $branch_id)
+                ->orderBy('sort')
+                ->get()->all();
+
+            $idx = 1;
+            foreach($otherCategories as $otherCategory) {
+                $category = Category::findOrFail($otherCategory?->id);
+                $category->update([
+                    'sort' => $idx++,
+                    'branch_id' => $category->branch_id
+                ]);
+            }
 
             return redirect()->route('restaurant.get-category', ['id' => Category::where('branch_id', $selectedCategory->branch_id)?->first()?->id ?? -1, 'branchId' => $selectedCategory->branch_id])->with('success', 'Category successfully deleted.');
 

@@ -107,9 +107,11 @@ class ItemService
     {
         $user = Auth::user();
 
+        dd($user);
+
         $selectedItem = DB::table('items')->where('id', $id)->first();
 
-        if ($selectedItem && $user->id == $selectedItem->user_id) {
+        if ($user->isRestaurantOwner() || ($selectedItem && $user->id == $selectedItem->user_id)) {
 
             DB::table('items')->where('id', $id)->delete();
 
