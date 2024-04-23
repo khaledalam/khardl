@@ -8,7 +8,7 @@
             border: 2px solid #e80000;
         }
 </style>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -30,15 +30,72 @@
 
                                     <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
                                         <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{__('search-for-place')}}" value="{{$branch->address}}">
-                                        <div id="map{{ $branch->id }}" class="google_map"></div>
-                                            <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
-                                                <input type="hidden" id="lng{{ $branch->id }}" name="lng" value="{{ $branch->lng }}" />
-                                                <input type="hidden" id="location{{ $branch->id }}" name="location" value="{{ $branch->address }}" />
-                                                <button id="save-location{{ $branch->id }}" type="submit" class="btn btn-khardl my-4 w-100">{{ __('save-location')}}</button>
-                                            </form>
+                                        <div class="map-container" data-branch-id="{{ $branch->id }}">
+                                        <div id="map{{ $branch->id }}" class="google_map">
+                                            <div class="map-overlay">
+                                                <div class="overlay-text">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.19 512.19" style="enable-background:new 0 0 512.19 512.19;" xml:space="preserve" width="48" height="48"><g><circle cx="256.095" cy="256.095" r="85.333"/><path d="M496.543,201.034C463.455,147.146,388.191,56.735,256.095,56.735S48.735,147.146,15.647,201.034   c-20.862,33.743-20.862,76.379,0,110.123c33.088,53.888,108.352,144.299,240.448,144.299s207.36-90.411,240.448-144.299   C517.405,277.413,517.405,234.777,496.543,201.034z M256.095,384.095c-70.692,0-128-57.308-128-128s57.308-128,128-128   s128,57.308,128,128C384.024,326.758,326.758,384.024,256.095,384.095z"/></g></svg>
+                                                </div>
+                                                <img src="{{ global_asset("images/blured_map.png") }}" class="img-fluid" alt="">
+                                            </div>
+                                        </div>
+    
+                                        <style>
+    
+                                            .google_map {
+                                                position: relative;
+                                                width: 100%;
+                                                height: auto;
+                                            }
+    
+                                            .map-overlay {
+                                                position: relative;
+                                                cursor: pointer;
+                                            }
+    
+                                            .overlay-text {
+                                                position: absolute;
+                                                border-radius: 25px;
+                                                top: 50%;
+                                                left: 50%;
+                                                transform: translate(-50%, -50%);
+                                                font-size: 16px;
+                                                color: white;
+                                                text-align: center;
+                                            }
+    
+                                            .overlay-text::after {
+                                                content: "";
+                                                display: block;
+                                                width: 100%;
+                                                height: 100%;
+                                                position: absolute;
+                                                top: 0;
+                                                left: 0;
+                                                z-index: -1;
+                                            }
+    
+                                            img {
+                                                display: block;
+                                                width: 100%;
+                                                height: auto;
+                                            }
+    
+                                        </style>
+    
+    
+    
+                                        @if(!$branch->deleted_at)
+                                        <form  method="POST">
+                                            @csrf
+                                            <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
+                                            <input type="hidden" id="lng{{ $branch->id }}" name="lng" value="{{ $branch->lng }}" />
+                                            <input type="hidden" id="location{{ $branch->id }}" name="location" value="{{ $branch->address }}" />
+                                            <div id="save-location{{ $branch->id }}" lass="btn btn-khardl my-4 w-100"></div>
+                                        </form>
+                                        @endif
                                     </div>
+                                </div>
                                 <!--end::Image-->
                             </div>
                             <!--end::Col-->
@@ -525,11 +582,11 @@
 
 @section('js')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
 
     @include('components.map')
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
-    <script>
+   <script>
         document.addEventListener("DOMContentLoaded", (event) => {
             // Initialize the timepicker with the existing value or default value
             flatpickr(".time-24", {
