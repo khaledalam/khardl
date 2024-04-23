@@ -460,11 +460,11 @@ const ProductItem = ({
                     backgroundColor: menu_card_background_color,
                     borderRadius: `${menu_card_radius}px`,
                 }}
-                className="w-36 h-44 relative"
+                className="w-full max-w-32 shadow-md sm:max-w-36 h-44 relative hover:scale-110 transform transition-transform duration-300 ease-in-out"
                 key={valuekey}
                 onClick={() => document.getElementById(id).showModal()}
             >
-                <div className="w-36 h-44 flex flex-col justify-between items-center">
+                <div className="w-full max-w-32 sm:max-w-36 h-44 flex flex-col justify-between items-center">
                     <div
                         style={{
                             backgroundImage: `url(${imgSrc})`,
@@ -473,7 +473,7 @@ const ProductItem = ({
                             borderTopLeftRadius: `${menu_card_radius}px`,
                             borderTopRightRadius: `${menu_card_radius}px`,
                         }}
-                        className="w-36 h-[86px] flex justify-center items-center"
+                        className="w-full max-w-32 sm:max-w-36 h-[86px] flex justify-center items-center"
                     >
                         {/* <img className="w-[60px] h-[60px]" src={imgSrc} /> */}
                     </div>
@@ -526,7 +526,11 @@ const ProductItem = ({
                     </div>
                     <div className="w-28 h-6">
                         <div
-                            style={{ backgroundColor: price_background_color }}
+                            style={{
+                                backgroundColor: price_background_color,
+                                boxShadow:
+                                    "0px -2px 10px 0px rgba(0, 0, 0, 0.3)",
+                            }}
                             className="w-28 h-6 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center relative"
                         >
                             <div
@@ -751,28 +755,28 @@ const ProductItem = ({
                                                             )}
                                                     </span>
                                                 </div>
-                                                <div className="flex items-center justify-between cursor-pointer w-[120px] h-8 bg-orange-100 bg-opacity-20 rounded-lg px-[7.89px]">
-                                                    <div className="w-[22.11px] h-[22.40px] bg-orange-100 bg-opacity-30 rounded-md flex justify-center items-center">
+                                                <div className="flex shadow-sm items-center justify-between cursor-pointer w-[120px] h-8 bg-orange-100 bg-opacity-20 rounded-lg px-[7.89px]">
+                                                    <div
+                                                        onClick={decrementQty}
+                                                        className="w-[22.11px] h-[22.40px] bg-orange-100 bg-opacity-30 rounded-md flex justify-center items-center"
+                                                    >
                                                         <img
                                                             src={MinusIcon}
                                                             alt="minus icon"
                                                             className="w-[7.89px] h-2 left-[15px]"
-                                                            onClick={
-                                                                decrementQty
-                                                            }
                                                         />
                                                     </div>
                                                     <h3 className="text-black text-sm font-medium">
                                                         {qtyCount}
                                                     </h3>
-                                                    <div className="w-[22.11px] h-[22.40px] bg-orange-100 rounded-md flex justify-center items-center">
+                                                    <div
+                                                        onClick={incrementQty}
+                                                        className="w-[22.11px] h-[22.40px] bg-orange-100 rounded-md flex justify-center items-center"
+                                                    >
                                                         <img
                                                             src={PlusIcon}
                                                             alt="plus icon"
                                                             className="w-[6.36px] h-[6.36px]"
-                                                            onClick={
-                                                                incrementQty
-                                                            }
                                                         />
                                                     </div>
                                                 </div>
@@ -1101,7 +1105,13 @@ const ProductItem = ({
                                                     handleAddToCart();
                                                 }}
                                             >
-                                                <div className="w-[308px] h-10 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center hover:cursor-pointer">
+                                                <div
+                                                    style={{
+                                                        boxShadow:
+                                                            "0px -3px 10px 0px rgba(0, 0, 0, 0.3)",
+                                                    }}
+                                                    className="w-[308px] h-10 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center hover:cursor-pointer"
+                                                >
                                                     <div className="text-center text-white text-[14px] font-medium">
                                                         {t("Add to cart")}
                                                     </div>
