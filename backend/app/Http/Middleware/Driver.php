@@ -26,7 +26,7 @@ class Driver
                     'is_loggedin' => true
                 ], ResponseHelper::HTTP_FORBIDDEN);
             }
-            return abort(403, 'Unauthorized');
+            return abort(403, __('Unauthorized'));
         }
         // If the user is not a "Restaurant Owner" or has already fulfilled registration requirements, continue.
         return $next($request);

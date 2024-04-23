@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Tenant;
 
 use App\Enums\Admin\CouponTypes;
 use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
+use App\Models\Subscription;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\QrCode;
 use App\Models\Tenant\RestaurantStyle;
@@ -31,7 +32,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\RegisterWorkerRequest;
 use App\Models\Subscription as CentralSubscription;
-use App\Models\Subscription;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
@@ -129,12 +129,12 @@ class RestaurantController extends BaseController
         return ROSubscription::serviceCalculate($type, $number_of_branches,$subscription_id,true);
     }
     public function serviceCoupon($coupon,$type,$number_of_branches = null){
-      
+
         if($type == NotificationReceipt::is_application_purchase || $type == NotificationReceipt::is_branch_purchase) {
             return response()->json( tenancy()->central(function()use($coupon,$type,$number_of_branches){
                 $coupon = ROSubscriptionCoupon::where('code',$coupon)->where($type,true)->whereColumn('max_use', '>', 'n_of_usage')->first();
                 if(!$coupon) return $coupon;
-                
+
                 if($type == NotificationReceipt::is_branch_purchase ){
                     $cost = CentralSubscription::first()->amount;
                 }elseif ($type == NotificationReceipt::is_application_purchase ){
@@ -146,7 +146,7 @@ class RestaurantController extends BaseController
                 ];
             }));
         }return false;
-      
+
     }
     public function delivery(Request $request)
     {
@@ -827,7 +827,7 @@ class RestaurantController extends BaseController
         $user = Auth::user();
 
         if (!$user->isRestaurantOwner() && $user->branch->id != $branchId) {
-            return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
+            return redirect()->route('restaurant.branches')->with('error', __('Unauthorized'));
         }
 
         $categories = Category::where('branch_id', $branchId)

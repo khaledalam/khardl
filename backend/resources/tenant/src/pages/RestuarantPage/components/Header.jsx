@@ -5,8 +5,11 @@ import HeaderSidebar from "../../../assets/headerSidebar.svg";
 import HeaderHomeIcon from "../../../assets/headerHomeIcon.svg";
 import HedaerIconCart from "../../../assets/headerIconCart.svg";
 
+import { SetSideBar } from "../../../redux/NewEditor/restuarantEditorSlice";
+
 const Header = ({ restaurantStyle, categories }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const cartItemsCount = useSelector(
         (state) => state.categoryAPI.cartItemsCount
@@ -24,6 +27,7 @@ const Header = ({ restaurantStyle, categories }) => {
         home_position,
         home_color,
         home_radius,
+        isSideBarOpen,
     } = restaurantStyle;
 
     return (
@@ -44,7 +48,7 @@ const Header = ({ restaurantStyle, categories }) => {
                 }`}
             >
                 <div
-                    // onClick={toggleSidebarCollapse}
+                    onClick={() => dispatch(SetSideBar(!isSideBarOpen))}
                     style={{ fontWeight: restaurantStyle?.text_fontWeight }}
                     className={`flex items-center gap-3 cursor-pointer relative`}
                 >
@@ -86,6 +90,9 @@ const Header = ({ restaurantStyle, categories }) => {
                 style={{
                     backgroundColor: home_color ? home_color : "#F3F3F3",
                     borderRadius: home_radius ? `${home_radius}px` : "50px",
+                }}
+                onClick={() => {
+                    navigate("/");
                 }}
                 className={`pt-[6px] pb-[9px] pr-[7px] pl-[8px] bg-[#F3F3F3] rounded-full relative self-center ${
                     home_position == "left"
