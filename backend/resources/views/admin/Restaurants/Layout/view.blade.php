@@ -265,7 +265,7 @@
                     
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="overview" role="tab-panel">
-                            @include('admin.Restaurants.Overview.view')
+                            @include('admin.Restaurants.Overview.view',['sub'=>$subscription])
                         </div>
                         <div class="tab-pane fade" id="restuarant_orders" role="tab-panel">
                             @include('admin.Restaurants.Orders.view')
