@@ -87,8 +87,10 @@ Route::group([
        return redirect()->route('restaurant.branches');
     })->name("impersonate");
 
-    Route::post('login', [LoginCustomerController::class, 'login'])->name('tenant_login');
-    Route::post('login-admins', [LoginController::class, 'login']);
+    Route::post('login-tenant', [LoginCustomerController::class, 'login'])->name('tenant_login');
+//    Route::post('login-admins', [LoginController::class, 'login']);
+
+
     // guest
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout_get');
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
@@ -262,7 +264,7 @@ Route::group([
         })->name('cart');
 
 
-        Route::post('register', [RegisterController::class, 'register'])->name('tenant_register');
+        Route::post('register-tenant', [RegisterController::class, 'register'])->name('tenant_register');
 
         Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');

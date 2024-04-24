@@ -55,7 +55,7 @@ const useAxiosAuth = () => {
                 localStorage.setItem("isLoggedIn", "");
                 // if (location.pathname === '/register') navigate('/register')
                 if (!privateRoute) navigate(location.pathname);
-                else navigate("/login");
+                else navigate("/");
                 // return
                 // return <Navigate to='/login' state={{ from: location }} replace />
             }

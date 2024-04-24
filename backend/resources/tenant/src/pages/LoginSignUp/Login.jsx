@@ -59,7 +59,7 @@ const Login = () => {
     const onSubmit = async (data) => {
         try {
             setSpinner(true);
-            const response = await AxiosInstance.post(`/login`, {
+            const response = await AxiosInstance.post(`/login-tenant`, {
                 phone: data.phone,
 
                 // remember_me: data.remember_me, // used only in API token-based
