@@ -556,5 +556,18 @@
     "select option": "اختر الخيار",
     "e.g. Please make the meat super tender.": "مثال: يرجى جعل اللحم لينًا جدًا",
     "Login Code": "رمز الدخول",
-    "Login Code Error": "رمز دخول خاطئ"
+    "Login Code Error": "رمز دخول خاطئ",
+    "Register here!": "سجل هنا!",
+    "Phone number": "رقم",
+    "Still didn't get it? ": "لم تصلك؟ ",
+    "Resend now.": "إعادة الإرسال الآن.",
+    "We sent a code to": "لقد أرسلنا رمزًا إلى",
+    "Enter your SMS OTP code": "أدخل رمز OTP الخاص بك",
+    "Your phone number": "رقم هاتفك",
+    "Write your first name here...": "اكتب اسمك الأول هنا..",
+    "Write your last name here....": "اكتب اسمك الأخير هنا...",
+    "Write your email address here...": "اكتب عنوان بريدك الإلكتروني هنا...",
+    "Have an account?": "هل لديك حساب؟",
+    "Login here.": "تسجيل الدخول هنا.",
+    "Register": "تسجيل"
 }
