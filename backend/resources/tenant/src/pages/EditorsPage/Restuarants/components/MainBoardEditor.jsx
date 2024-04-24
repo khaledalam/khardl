@@ -797,7 +797,7 @@ const MainBoardEditor = ({
                             className="cursor-pointer"
                         >
                             <div
-                                className={`w-[35px] h-[35px] bg-[#F3F3F3] flex justify-center items-center relative`}
+                                className={`w-[35px] h-[35px] bg-[#F3F3F3] flex justify-center items-center relative shadow-md`}
                                 style={{
                                     borderRadius: social_media_radius
                                         ? social_media_radius + "%"
