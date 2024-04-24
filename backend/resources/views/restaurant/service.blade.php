@@ -290,7 +290,11 @@ function openModal(modalID) {
                                                                         <div class="form-group">
                                                                             <label  class="">{{__('Add a coupon code')}}</label>
                                                                             <div class="d-flex flex-row bd-highlight" style="height: 55px">
+                                                                                <div class="p-2 bd-highlight mt-4">
+                                                                                <a href="" class="text-white bg-danger mr-5 rounded-circle p-2 m-1" id="cancel_coupn_web">X</a>
+                                                                                </div>
                                                                                 <div class="p-2 bd-highlight">
+
                                                                                     <input type="text"  name="coupon_code" value="" id="coupon_code_web" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center mb-10"  >
 
                                                                                 </div>
@@ -474,6 +478,9 @@ function openModal(modalID) {
                                                                                 <div class="form-group">
                                                                                     <label  class="">{{__('Add a coupon code')}}</label>
                                                                                     <div class="d-flex flex-row bd-highlight" style="height: 55px">
+                                                                                        <div class="p-2 bd-highlight mt-4">
+                                                                                            <a href="" class="text-white bg-danger mr-5 rounded-circle p-2 m-1" id="cancel_coupn_app">X</a>
+                                                                                            </div>
                                                                                         <div class="p-2 bd-highlight">
                                                                                             <input type="text"  name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center mb-10"  >
         
@@ -881,7 +888,21 @@ function openModal(modalID) {
                 applyAppCoupon();
                 
             });
-    
+            $('#modal_base_content').on('click', '#cancel_coupn_web', function(e) {
+                e.preventDefault();
+                $('#coupon_message_web').empty();
+                $('#coupon_code_web')
+                .val('')
+                .css('background-color','#fff');
+            });
+            $('#modal_base_content').on('click', '#cancel_coupn_app', function(e) {
+                e.preventDefault();
+                $('#coupon_message_app').empty();
+                $('#coupon_code_app')
+                .val('')
+                .css('background-color','#fff');
+            });
+            
             // Execute the AJAX request when the radio button changes
             $('input[name=n_branches]').change(function() {
                 calculateRenewPrice();
