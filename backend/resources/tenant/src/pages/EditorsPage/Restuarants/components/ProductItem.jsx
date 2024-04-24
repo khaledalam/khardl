@@ -573,7 +573,7 @@ const ProductItem = ({
                 />
             </div>
             <dialog id={id} className="modal flex flex-row mx-auto">
-                <div className="relative mx-auto">
+                <div ref={modalRef} className="relative mx-auto">
                     <button
                         className="btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-[-10px] top-[-30px]"
                         onClick={closeModal}
