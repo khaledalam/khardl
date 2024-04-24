@@ -596,7 +596,7 @@ const ProductItem = ({
                                         role="status"
                                         className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full z-100"
                                     >
-                                        <div className="absolute inset-0 bg-black opacity-25"></div>
+                                        <div className="absolute inset-0 bg-white"></div>
                                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                                             <svg
                                                 aria-hidden="true"
