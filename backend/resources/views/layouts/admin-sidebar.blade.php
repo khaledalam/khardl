@@ -66,7 +66,7 @@
                         icon: type,
                         title: message,
                         showConfirmButton: false,
-                        timer: 1000
+                        timer: 3500
                     });
                 }
         </script>
