@@ -221,12 +221,7 @@ const Register = ({ closingFunc }) => {
         <div className="w-full max-w-[400px] bg-white p-[40px] rounded-[30px] flex flex-col items-center ">
             <div className="mb-[24px]">
                 <img
-                    src={
-                        // restaurantStyle?.logo
-                        //     ? restaurantStyle.logo
-                        //     :
-                        imgLogo
-                    }
+                    src={restaurantStyle?.logo ? restaurantStyle.logo : imgLogo}
                     alt="logo"
                     className={`w-[60px] h-[60px] object-cover`}
                     style={{
@@ -238,7 +233,7 @@ const Register = ({ closingFunc }) => {
                 />
             </div>
             <div className="text-center text-neutral-700 text-3xl font-medium mb-[12px] leading-[38px]">
-                Your Burger Queen
+                {restaurantStyle?.restaurant_name}
             </div>
             <div className="text-center text-zinc-600 text-base font-normal leading-normal">
                 {t("Register")}
@@ -307,7 +302,7 @@ const Register = ({ closingFunc }) => {
                         <input
                             type="tel"
                             className={`w-[100%] h-8 px-4 py-[7px] bg-white rounded-[50px] border border-gray-200 justify-start items-center gap-1.5 inline-flex text-zinc-500 text-xs font-normal leading-[18px] outline-none`}
-                            placeholder={"Your phone number"}
+                            placeholder={t("Your phone number")}
                             {...register("phone", {
                                 required: true,
                             })}
