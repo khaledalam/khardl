@@ -1217,7 +1217,7 @@
     "Options[:num] name[AR] of dropdown can not be empty":"الاسم العربي للخيار[:num] مطلوب للخيارات من قائمه ",
     "Options[:num] name[EN] of dropdown can not be empty":"الاسم الانجليزي للخيار[:num] مطلوب للخيارات من قائمه",
     "Price[:num] of dropdown can not be empty":"السعر[:num] للخيارات من قائمه مطلوب",
-    "Global delivery fees for all branches":"رسوم التوصيل علي كل ال,الفروع",
+    "Global delivery fees for all branches":"رسوم التوصيل علي كل الفروع",
     "To get a better experience please use a computer":"للحصول على تجربة افضل رجاء استخدام كمبيوتر",
     "Order is not for you branch":"الطلب ليس لك فرعك",
     "The delivery":"التوصيل",
@@ -1231,6 +1231,8 @@
     "Arabic name is not valid, please use arabic characters":"الاسم العربي غير صالح ، يرجى استخدام الأحرف العربية",
     "English name is not valid, please use english characters":"اسم اللغة الإنجليزية غير صالح ، يرجى استخدام الأحرف الإنجليزية",
     "Please fill in the input in (Arabic) tab.":"يرجى ملء المدخلات في علامة التبويب (العربية).",
-    "Please fill in the input in the (English) tab." :"يرجى ملء المدخلات في علامة التبويب (الإنجليزية)."
+    "Please fill in the input in the (English) tab." :"يرجى ملء المدخلات في علامة التبويب (الإنجليزية).",
+    "Are you sure you want to delete this driver ?":"هل أنت متأكد أنك تريد حذف هذا السائق؟",
+    "Rejected":"مرفوضة"
 
 }

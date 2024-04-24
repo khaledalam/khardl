@@ -47,7 +47,7 @@
 }
 /* Branches */
 .branches-google-maps .google_map{
-    height: 350px;
+    max-height: 350px;
     margin: 10px 0;
 }
 /* Key frames */

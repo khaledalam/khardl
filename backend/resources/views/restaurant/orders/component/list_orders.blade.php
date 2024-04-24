@@ -15,14 +15,19 @@
                 </div>
                 <!--end::Modal dialog-->
             </div>
+
             <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                 <!--begin::Card title-->
                 <div class="card-title">
                     <h2>{{ __('Orders') }}</h2>
                 </div>
                 <!--end::Card title-->
-                <!--begin::Card toolbar-->
+
+
+            <!--begin::Card toolbar-->
                 <div class="card-toolbar flex-row-fluid justify-content-start gap-5" @if(app()->getLocale() === 'ar') style=" flex-direction: revert;" @endif>
+
+
                     <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->

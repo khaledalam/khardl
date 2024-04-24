@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('orders-all'))
+@section('title', __('orders'))
 
 @section('content')
 
