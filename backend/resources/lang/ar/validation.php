@@ -214,7 +214,17 @@ return [
         'is_application_purchase'=>"عند شراء التطبيق",
         'is_branch_purchase'=>"عند شراء الفرع",
         'promoter_id'=>"المروج",
-        "pickup_availability" => "الاستلام من المطعم"
+        "pickup_availability" => "الاستلام من المطعم",
+        "commercial registration number"=>"رقم التسجيل التجاري",
+        'commercial_registration' => "التسجيل التجاري",
+        'tax_registration_certificate' => 'شهادة التسجيل الضريبي'
+        'bank_certificate' => 'شهادةالبنك'
+        'Identity_of_owner_or_manager' =>"هويةالمالك او المدير"
+        'national_address' => 'العنوان الوطني'
+        'IBAN' => 'إيبان'
+        'facility_name' => 'إسم المنشأة'
+        'national_id_number' => 'رقم الهوية الوطنية'
+        'dob' => 'تاريخ الميلاد'
 
     ],
     'values' => [
