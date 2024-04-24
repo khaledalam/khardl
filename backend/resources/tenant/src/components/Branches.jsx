@@ -19,6 +19,7 @@ import Modal from "./Modal";
 
 import DoubleRightArrows from "../assets/doubleRightArrows.png";
 import XIcon from "../assets/xIcon.png";
+import { set } from "react-hook-form";
 
 const Branches = ({ closingFunc, closingFuncSideMenu }) => {
     console.log("Closing: ", closingFunc);
@@ -30,6 +31,15 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
     const restuarantStyle = useSelector((state) => {
         return state.restuarantEditorStyle;
     });
+
+    console.log(
+        "currently branches :",
+        localStorage.getItem("selected_branch_id")
+    );
+
+    useEffect(() => {
+        setSelectedBranch(localStorage.getItem("selected_branch_id") - 1);
+    }, []);
 
     const branches = (function () {
         try {
@@ -136,10 +146,16 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                         onClick={() => setSelectedBranch(index)}
                         className="w-full max-w-[616px] flex justify-between p-[16px] bg-white rounded-[10px] shadow border border-black border-opacity-10 relative"
                     >
+                        {console.log("branch index: ", index)}
+                        {console.log("select index: ", selectedBranch)}
                         <div className="flex flex-col">
                             <div className="mb-[18px] flex flex-row items-center">
                                 <div className="w-[30px] h-[30px] mr-[8px]">
-                                    .
+                                    <img
+                                        src={restuarantStyle?.logo}
+                                        alt="Branch Image"
+                                        className="w-full h-full"
+                                    />
                                 </div>
                                 <div className="text-black text-[16px] font-medium">
                                     {branch.name}
@@ -148,27 +164,34 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                                     ~ Jeddah
                                 </div>
                             </div>
-                            <div className="flex flex-row space-x-[16px]">
-                                <div className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center">
+                            <div className="flex flex-row ">
+                                <a
+                                    href={`https://www.google.com/maps/search/?api=1&query=${branch.lat},${branch.lng}`}
+                                    target="_blank"
+                                    className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center mx-[8px]"
+                                >
                                     <img
                                         className="w-[7.63px] h-[7.63px] md:w-[11px] md:h-[11px]"
                                         src={LocationIcon}
                                         alt="Location Icon"
                                     />
-                                </div>
-                                <div className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center">
+                                </a>
+                                <a
+                                    href={`tel:+1234567890`}
+                                    className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center mx-[8px]"
+                                >
                                     <img
                                         className="w-[7.63px] h-[7.63px] md:w-[11px] md:h-[11px]"
                                         src={PhoneIcon}
                                         alt="Location Icon"
                                     />
-                                </div>
+                                </a>
                                 <div
                                     onClick={() => {
                                         setIsWorkingHours(true);
                                         setCurrentBranch(branch);
                                     }}
-                                    className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center"
+                                    className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center mx-[8px]"
                                 >
                                     <img
                                         className="w-[7.63px] h-[7.63px] md:w-[11px] md:h-[11px]"
@@ -209,7 +232,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                                 )}
                             </div>
                         </div>
-                        {selectedBranch === index && (
+                        {selectedBranch == index && (
                             <div className="w-[25px] h-[25px] absolute right-[-12px] top-[-12px] bg-orange-100 rounded-full flex justify-center items-center">
                                 <div className="">✓</div>
                             </div>
