@@ -77,6 +77,7 @@ class OrderController extends BaseRepositoryController
             && $order->payment_method->name == PaymentMethod::ONLINE
             && $order->payment_status == PaymentMethod::PAID
             && $order->transaction_id
+            && !$order->refund_id //Check if order already refunded
             && $setting->merchant_id
         ) {
 

@@ -29,7 +29,7 @@ class ChangeStatusRequest extends FormRequest
         return [
             'status' => ['required', 'in:' . implode(',', [
                 Order::ACCEPTED,
-                Order::CANCELLED,
+                /* Order::CANCELLED, */
                 Order::COMPLETED,
             ]), function ($attribute, $value, $fail) use ($order) {
                 // Check status based on order and user
@@ -43,14 +43,7 @@ class ChangeStatusRequest extends FormRequest
                     if($order->driver_id != auth()->id()){
                         $fail(__('Order is not for you'));
                     }
-                } elseif ($value == Order::CANCELLED) {
-                    if($order->status != Order::ACCEPTED){
-                        $fail(__('Order is not accepted yet'));
-                    }
-                    if($order->driver_id != auth()->id()){
-                        $fail(__('Order is not for you'));
-                    }
-                } elseif ($value == Order::ACCEPTED) {
+                }elseif ($value == Order::ACCEPTED) {
                     if(!$order->branch?->drivers_option){
                         $fail(__('You can not pickup order because branch disable own drivers to pickup orders.'));
                     }
@@ -75,7 +68,7 @@ class ChangeStatusRequest extends FormRequest
                     }
                 }
             }],
-            'reason' => ['required_if:status,' . Order::CANCELLED],
+            /* 'reason' => ['required_if:status,' . Order::CANCELLED], */
         ];
     }
 }
