@@ -18,6 +18,11 @@ import {
     setCategoriesAPI,
 } from "../redux/NewEditor/categoryAPISlice";
 
+import {
+    SetLoginModal,
+    SetRegisterModal,
+} from "../redux/NewEditor/restuarantEditorSlice";
+
 import Modal from "./Modal";
 import XIcon from "../assets/xIcon.png";
 
@@ -116,12 +121,12 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
                     </div>
                 </div>
                 <div
-                    onClick={() => navigate("/dashboard#Dashboard")}
+                    onClick={() => navigate(dispatch(SetLoginModal(true)))}
                     className="w-56 h-8 left-[24px] top-[104px] absolute hover:cursor-pointer"
                 >
                     <div className="w-56 h-8 left-0 top-0 absolute bg-white hover:bg-orange-100 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100" />
                     <div className="left-[35px] top-[9px] absolute text-gray-900 text-xs font-light font-['Plus Jakarta Sans']">
-                        {t("Login as a customer")}
+                        {t("Login")}
                     </div>
                 </div>
                 <div
