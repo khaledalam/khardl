@@ -39,7 +39,7 @@ const Header = ({ restaurantStyle, categories }) => {
             className={`w-full h-[56px] z-10 grid grid-cols-3 px-[16px] md:mt-[8px]`}
         >
             <div
-                className={`flex justify-start w-[30px] self-center ${
+                className={`flex justify-center items-center w-[30px] h-[30px] rounded-full self-center shadow-md ${
                     side_menu_position == "left"
                         ? "justify-self-start"
                         : side_menu_position == "right"
@@ -70,7 +70,7 @@ const Header = ({ restaurantStyle, categories }) => {
                         ? `${order_cart_radius}px`
                         : "50px",
                 }}
-                className={`w-[30px] h-[30px] pl-[8px] pr-[7px] pb-[9px] pt-[6px] relative flex items-center justify-center cursor-pointer self-center ${
+                className={`w-[30px] h-[30px] pl-[8px] pr-[7px] pb-[9px] pt-[6px] relative flex items-center justify-center cursor-pointer self-center shadow-md ${
                     order_cart_position == "left"
                         ? "justify-self-start"
                         : order_cart_position == "right"
@@ -94,7 +94,7 @@ const Header = ({ restaurantStyle, categories }) => {
                 onClick={() => {
                     navigate("/");
                 }}
-                className={`pt-[6px] pb-[9px] pr-[7px] pl-[8px] bg-[#F3F3F3] rounded-full relative self-center ${
+                className={`pt-[6px] pb-[9px] pr-[7px] pl-[8px] bg-[#F3F3F3] rounded-full relative self-center shadow-md ${
                     home_position == "left"
                         ? "justify-self-start"
                         : home_position == "right"
