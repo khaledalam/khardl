@@ -263,11 +263,13 @@ class AdminController extends Controller
     public function activateRestaurant(Tenant $restaurant){
 
         $error = false;
-        $restaurant->run(static function() use (&$error){
+        $restaurant->run(static function() use (&$error,$restaurant){
             if (TenantSettings::first()->is_live) {
                 $error = true;
             } else {
                 TenantSettings::first()->update(['is_live' => true]);
+                $restaurant->user->status = User::STATUS_ACTIVE;
+                $restaurant->user->save();
             }
         });
 
