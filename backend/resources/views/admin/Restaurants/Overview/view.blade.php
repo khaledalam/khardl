@@ -387,6 +387,10 @@
                         <div class="card-title m-0 d-flex justify-content-between align-items-center w-100">
                             <div>
                                 <h3 class="fw-bolder m-0"> {{ __('files') }}</h3>
+                                @if($restaurant->user->traderRegistrationRequirement)
+                                <small> {{__('Created at')}} {{$restaurant->user->traderRegistrationRequirement->created_at->format('Y-m-d H:m')}}</small>
+                             
+                                @endif
                             </div>
                             <div>
                                 <a href="{{ route('admin.download.file',  ['path' =>\App\Models\User::STORAGE .'/'. $restaurant->user->id, 'fileName'=>$restaurant->restaurant_name.' - Trader requirements' ]) }}" class="btn btn-khardl ">
@@ -430,6 +434,7 @@
                             <div class="">
                                 @if ($restaurant->user->traderRegistrationRequirement->national_address)
                                 <a href="{{ route('admin.download.file', ['path' =>$restaurant->user->traderRegistrationRequirement->national_address,'fileName'=>$restaurant->restaurant_name.' - National Address']) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
+                            
                                 @else
                                 {{ __('no-file-available') }}
                                 @endif
