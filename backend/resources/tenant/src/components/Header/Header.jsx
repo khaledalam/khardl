@@ -28,7 +28,7 @@ const Header = () => {
 
     const redirectToDashboard = () => {
         // Redirect to an external URL (window.location.href)
-        window.location.href = "/dashboard";
+        window.location.href = "/profile-summary";
     };
     const handleLogout = async (e) => {
         e.preventDefault();
