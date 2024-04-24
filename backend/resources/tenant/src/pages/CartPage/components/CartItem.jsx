@@ -7,8 +7,10 @@ import { Button } from "primereact/button";
 import { MdDelete } from "react-icons/md";
 import AxiosInstance from "../../../axios/axios";
 import { toast } from "react-toastify";
-import {BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill} from "react-icons/bs";
-
+import {
+    BsFillArrowLeftCircleFill,
+    BsFillArrowRightCircleFill,
+} from "react-icons/bs";
 
 import "./CartItem.scss";
 import parseOptionItems from "./Utils";
@@ -27,7 +29,7 @@ const CartItem = ({ cartitem, onReload }) => {
         try {
             const response = await AxiosInstance.delete(
                 `/carts/` + cartItemId,
-                {},
+                {}
             );
 
             if (response?.data) {
@@ -91,21 +93,51 @@ const CartItem = ({ cartitem, onReload }) => {
                                         ? cartitem.item.name.en
                                         : cartitem.item.name.ar}
                                 </h2>
-                                {optionsItems.length > 0 && (<>
-                                    <p className={language == 'en' ? "mr-2" : "ml-2"}>{`${t("Extras")}:`}</p>
-                                    <ul>
-                                        {optionsItems.map(
-                                            item => <li className={"text-gray-900"}>
-                                                <span className={"flex justify-start items-center"}>
-                                                    {language == 'en'
-                                                        ? <BsFillArrowRightCircleFill color={"#c0c0c0"} size={20} className={"mx-1"} />
-                                                        : <BsFillArrowLeftCircleFill color={"#c0c0c0"} size={20} className={"mx-1"} />
-                                                    } {item}
-                                                </span>
-                                            </li>)
-                                        }
-                                    </ul>
-                                </>)}
+                                {optionsItems.length > 0 && (
+                                    <>
+                                        <p
+                                            className={
+                                                language == "en"
+                                                    ? "mr-2"
+                                                    : "ml-2"
+                                            }
+                                        >{`${t("Extras")}:`}</p>
+                                        <ul>
+                                            {optionsItems.map((item) => (
+                                                <li className={"text-gray-900"}>
+                                                    <span
+                                                        className={
+                                                            "flex justify-start items-center"
+                                                        }
+                                                    >
+                                                        {language == "en" ? (
+                                                            <BsFillArrowRightCircleFill
+                                                                color={
+                                                                    "#c0c0c0"
+                                                                }
+                                                                size={20}
+                                                                className={
+                                                                    "mx-1"
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            <BsFillArrowLeftCircleFill
+                                                                color={
+                                                                    "#c0c0c0"
+                                                                }
+                                                                size={20}
+                                                                className={
+                                                                    "mx-1"
+                                                                }
+                                                            />
+                                                        )}{" "}
+                                                        {item}
+                                                    </span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <InputTextarea
@@ -115,13 +147,18 @@ const CartItem = ({ cartitem, onReload }) => {
                             rows={5}
                             cols={30}
                             placeholder={t(
-                                "Item notes : e.g. Please make the meat medium cook",
+                                "Item notes : e.g. Please make the meat medium cook"
                             )}
+                            style={{
+                                resize: "none",
+                            }}
                         />
                     </div>
                     <div className="mt-4 xl:mt-0 col-span-12 xl:col-span-3 flex flex-col items-center xl:items-end justify-end">
                         <div className="h-20 w-40">
-                            <h2 className="text-center">{`${cartitem.total} ${t("SAR")}`}</h2>
+                            <h2 className="text-center">{`${cartitem.total} ${t(
+                                "SAR"
+                            )}`}</h2>
                             <div className="flex quantityBtn bg-neutral-50">
                                 <div className="w-2/6 py-1 text-center">
                                     <Button

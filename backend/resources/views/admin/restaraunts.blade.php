@@ -139,10 +139,12 @@
                                     <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">
                                         @php
                                             $customer_app = null;
-                                            $restaurant->run(function() use ($restaurant,&$customer_app){
+                                            $sub = null;
+                                            $restaurant->run(function() use ($restaurant,&$customer_app,&$sub){
                                                 $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
+                                                $sub = \App\Models\ROSubscription::first();
                                                 $customer_app = App\Models\ROCustomerAppSub::first();
-												if ($restaurant->is_live()) {
+												if ($logo) {
                                                     echo <<<HTML
                                                         <img alt="Logo" src="$logo" class="h-70px logo" />
                                                     HTML;
@@ -188,7 +190,7 @@
 
 </style>
 
-@include('components.restaurant-status-badge',['customer_app'=>$customer_app])
+@include('components.restaurant-status-badge',['customer_app'=>$customer_app,'sub'=>$sub])
 
 @if($restaurant?->user?->isRejected() && count(json_decode($restaurant?->user?->reject_reasons) ?? []) > 0)
     <div class="custom-tooltip">

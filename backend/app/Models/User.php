@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public const STATUS_ACTIVE = "active";
     public const STATUS_INACTIVE = "inactive";
     public const RESTAURANT_ROLE = "Restaurant Owner";
-
+    const RE_UPLOAD_FILES = 're_upload_files';
     public const STATUSES = [
         self::STATUS_BLOCKED,
         self::STATUS_ACTIVE,

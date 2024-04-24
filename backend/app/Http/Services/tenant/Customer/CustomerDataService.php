@@ -14,13 +14,22 @@ class CustomerDataService
     {
         /** @var RestaurantUser $user */
         $user  = Auth::user();
-        $allCustomers = RestaurantUser::with(['branch'])->Customers()->orderBy('created_at', 'DESC')->paginate(config('application.perPage')??20);
-        return view('restaurant.customers_data.list', compact('user','allCustomers'));
+        $allCustomers = RestaurantUser::with(['branch'])
+        ->Customers()
+        ->whenSearch($request['search']??null)
+        ->whenStatus($request['status']??null)
+        ->orderBy('created_at', 'DESC')
+        ->paginate(config('application.perPage')??20);
+        $customerStatuses = RestaurantUser::STATUS;
+        return view('restaurant.customers_data.list', compact('user','allCustomers','customerStatuses'));
     }
     public function show(Request $request,RestaurantUser $restaurantUser)
     {
         /** @var RestaurantUser $user */
         $user  = Auth::user();
+        if($restaurantUser->roles()->count()){
+            return abort(403);
+        }
         $restaurantUser->load(['branch','recent_orders','recent_orders.branch','recent_orders.delivery_type']);
         $orders = $restaurantUser
         ->recent_orders()
@@ -33,6 +42,9 @@ class CustomerDataService
     }
     public function edit(Request $request,RestaurantUser $restaurantUser)
     {
+        if($restaurantUser->roles()->count()){
+            return abort(403);
+        }
         return view('restaurant.customers_data.edit', compact('restaurantUser'));
     }
     public function update($request,RestaurantUser $restaurantUser)

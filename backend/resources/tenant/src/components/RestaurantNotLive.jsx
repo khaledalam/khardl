@@ -61,7 +61,7 @@ const RestaurantNotLive = () => {
                                                     </Link>
                                                 ) : (
                                                     <Link
-                                                        to={"/login-trial"}
+                                                        to={url_central+"/login"}
                                                         className={`flex items-center justify-center bg-[#ececec] cta-btn shadow-lg transition-all delay-100  py-2 px-6 text-[1rem] hover:bg-[#d6eb16] hover:text-black hover:bg-gray-50`}
                                                     >
                                                         {" "}

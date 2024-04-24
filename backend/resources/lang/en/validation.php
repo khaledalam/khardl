@@ -197,7 +197,8 @@ return [
         "wallet.bank.documents.0.number" => "Bank Statement Number",
         "wallet.bank.documents.0.images.0" => "Bank statement file",
         "wallet.bank.documents.0.issuing_date" => "Bank Issuing date",
-        "brand.logo" => "Restaurant Logo"
+        "brand.logo" => "Restaurant Logo",
+        'dob'=>"Date of birth"
     ],
 
 ];

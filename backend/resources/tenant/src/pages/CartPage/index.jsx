@@ -31,6 +31,8 @@ import { GoSellElements } from "@tap-payments/gosell";
 import "./index.scss";
 import OrderReviewSummary from "./components/OrderReviewSummary";
 import { isSafari } from "react-device-detect";
+import LeftArrow from "../../assets/leftIcon.png";
+import BackArrow from "../../assets/backArrow.svg";
 import {
     ApplePayButton,
     ThemeMode,
@@ -154,7 +156,7 @@ const CartPage = () => {
                         toast.success(
                             `${t("Order has been created successfully")}`
                         );
-                        navigate(`/dashboard#orders`);
+                        navigate(`/profile-summary#orders`);
                     }
                 } catch (error) {
                     toast.error(error.response.data.message);
@@ -174,7 +176,8 @@ const CartPage = () => {
             const redirect = await AxiosInstance.post(
                 `/orders/payment/redirect`,
                 {
-                    payment_method: paymentMethod == "Apple Pay" ? "Online" : paymentMethod,
+                    payment_method:
+                        paymentMethod == "Apple Pay" ? "Online" : paymentMethod,
                     delivery_type: deliveryType,
                     notes: orderNotes,
                     couponCode: coupon,
@@ -216,9 +219,20 @@ const CartPage = () => {
                 <>
                     {cartItemsData && cartItemsData.length > 0 ? (
                         <>
+                            <Button
+                                className="w-12 h-10 text-white shadow-md rounded-full text-sm mt-4 mb-4 flex justify-center items-center"
+                                onClick={() => navigate("/")}
+                            >
+                                <img
+                                    src={BackArrow}
+                                    className="w-full h-full"
+                                    alt="left arrow"
+                                />
+                            </Button>
                             <h1 className="font-bold text-xl">
                                 {t("Your Cart")}
                             </h1>
+
                             <div className="grid grid-cols-12 gap-x-6 pt-8">
                                 <div className="sm:col-span-7 col-span-12">
                                     <div className="flex flex-col gap-y-6">
@@ -556,7 +570,7 @@ const CartPage = () => {
 
                             <Button
                                 label={t("Continue Shopping")}
-                                className="w-64 h-10 bg-[color:var(--myColor)] text-white text-sm mt-4"
+                                className="w-64 h-10 bg-[#7D0A0A] text-white text-sm mt-4"
                                 onClick={() => navigate("/")}
                             />
                         </div>

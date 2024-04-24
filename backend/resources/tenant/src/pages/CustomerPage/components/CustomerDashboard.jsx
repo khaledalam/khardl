@@ -111,7 +111,7 @@ const CustomerDashboard = () => {
             {slicedOrderData.length > 0 && (
                 <div className="w-full p-5 flex items-center justify-center cursor-pointer">
                     <div
-                        onClick={() => navigate("/dashboard#Orders")}
+                        onClick={() => navigate("/profile-summary#Orders")}
                         className="flex items-center gap-2 w-36 rounded-2xl bg-[var(--customer)] p-3 text-white"
                     >
                         <BsChevronDoubleDown size={20} color={"#fff"} />

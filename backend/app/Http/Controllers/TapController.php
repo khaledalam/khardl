@@ -348,10 +348,11 @@ class TapController extends Controller
 
     }
     public function payments_redirect(Request $request){
-        // TODO : improve : wait for 2 sec for the db webhook  
+     
         if ($request->tap_id) {
             $charge = TapCharge::retrieveSub($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
+                sleep(3);
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
                     if(isset($charge['message']['metadata']['branch_id'])){
                         return redirect()->route('restaurant.branches')
