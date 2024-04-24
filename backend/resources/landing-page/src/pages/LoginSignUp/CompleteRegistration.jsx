@@ -65,10 +65,10 @@ function CompleteRegistration() {
 
   // API POST REQUEST
   const onSubmit = async (data) => {
-    if (loading) return
     setLoading(true)
 
     try {
+   
         for(let $fileName in $filesNames) {
             if(!selectedFiles[$filesNames]){
                 selectedFiles[$filesNames] = null;
@@ -121,11 +121,11 @@ function CompleteRegistration() {
       toast.error(`${t(error.response.data.message)}`)
     }
     setLoading(false)
+
   }
 
 
     const fetchStep2Data = async () => {
-        if (loading) return
         setLoading(true)
 
         try {
@@ -187,6 +187,7 @@ function CompleteRegistration() {
               classSubTitle='max-w-[380px] !text-[14px] mb-4'
             />
           </div>
+          
           <form
             onSubmit={handleSubmit(onSubmit)}
             className='flex flex-col items-center gap-6 w-[80%] max-sm:w-[90%]'

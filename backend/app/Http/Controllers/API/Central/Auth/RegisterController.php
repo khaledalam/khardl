@@ -122,7 +122,7 @@ class RegisterController extends BaseController
 
         if ($user->isRejected()) {
 
-            $user->status = User::STATUS_ACTIVE;
+            $user->status = User::RE_UPLOAD_FILES;
             $user->save();
 
             $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', $user->restaurant_name)->first()?->id);

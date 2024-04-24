@@ -53,7 +53,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'image'
     ];
     const STATUS = [
-        self::ACTIVE,
+        self::ACTIVE,   
         self::INACTIVE,
         self::SUSPENDED,
         self::REJECTED,
@@ -62,6 +62,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     const INACTIVE = 'inactive';
     const SUSPENDED = 'suspended';
     const REJECTED = 'rejected';
+ 
     protected $dateFormat = 'Y-m-d H:i:s';
     /**
      * The attributes that should be hidden for serialization.
