@@ -1040,11 +1040,13 @@ class RestaurantController extends BaseController
 
     public function workers($branchId)
     {
-
-        $branch = Branch::findOrFail($branchId);
+        /* TODO: make policy for workers */
         $user = Auth::user();
-        // $workers = User::where('role', 2)->where('restaurant_name', $user->restaurant_name)->where('branch_id', $branchId)
-        // ->paginate(15);
+        if($user->isWorker() && $branchId != $user->branch_id){
+            return abort(403);
+        }
+        $branch = Branch::findOrFail($branchId);
+
         $workers = $branch->workers()
 //            ->where('id', '!=', $user->id)
             ->whereHas('roles', function ($query) {
