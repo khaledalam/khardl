@@ -136,13 +136,11 @@ class RestaurantStyleService
             $data->logo_url = $data->logo_url ?: $data->logo;
 
             $restaurant_name = '';
-
             tenancy()->central(function ($tenant) use (&$restaurant_name) {
                 $restaurant_name = app()->getLocale() == 'en' ? $tenant->restaurant_name : $tenant->restaurant_name_ar;
             });
 
             $data->restaurant_name = $restaurant_name;
-
 
             // get branches of restaurant
             $data['branches'] = Branch::where('active',true)->get([

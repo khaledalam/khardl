@@ -201,7 +201,7 @@ Route::group([
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
                 Route::controller(TenantOrderController::class)->group(function () {
-                    Route::get('/order-inquiry', 'inquiry')->name('restaurant.order-inquiry');
+//                    Route::get('/order-inquiry', 'inquiry')->name('restaurant.order-inquiry');
                     Route::get('orders-all', 'index')->name('restaurant.orders_all');
                     Route::get('orders-add', 'create')->name('restaurant.orders_add');
                     Route::post('orders-add', 'store')->name('restaurant.order.store');

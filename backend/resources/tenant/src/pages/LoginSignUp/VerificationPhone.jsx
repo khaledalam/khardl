@@ -8,8 +8,8 @@ import { GrPowerReset } from "react-icons/gr";
 import { useAuthContext } from "../../components/context/AuthContext";
 import { HTTP_OK, PREFIX_KEY } from "../../config";
 import AxiosInstance from "../../axios/axios";
-import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice";
-import {useDispatch, useSelector} from "react-redux";
+import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const VerificationPhone = () => {
     const { t } = useTranslation();
@@ -63,6 +63,7 @@ const VerificationPhone = () => {
 
     // API POST REQUEST
     const onSubmit = async (data) => {
+        console.log("data otp2: ", data);
         try {
             const response = await AxiosInstance.post(`/phone/verify`, {
                 otp: data.otp,
@@ -74,7 +75,7 @@ const VerificationPhone = () => {
                 setStatusCode(HTTP_OK);
                 navigate("/");
                 toast.success(
-                    `${t("The code has been verified successfully")}`,
+                    `${t("The code has been verified successfully")}`
                 );
             } else {
                 throw new Error(`${t("Code verification failed")}`);
@@ -109,13 +110,13 @@ const VerificationPhone = () => {
 
     useEffect(() => {
         let timer = startTimer();
-        fetchResStyleData()
+        fetchResStyleData();
     }, []);
 
     const fetchResStyleData = async () => {
         try {
             AxiosInstance.get(`restaurant-style`).then((response) =>
-                dispatch(changeRestuarantEditorStyle(response.data?.data)),
+                dispatch(changeRestuarantEditorStyle(response.data?.data))
             );
         } catch (error) {
             // toast.error(`${t('Failed to send verification code')}`)
@@ -136,17 +137,21 @@ const VerificationPhone = () => {
                     <div className="py-[80px] max-md:py-[60px]">
                         <div className="max-[860px]:w-[80vw] w-[450px] bg-white py-10 max-[860px]:px-2 shadow-lg rounded-2xl">
                             <div className="px-8 mb-3 flex flex-col items-center text-center">
-                                {restuarantStyle?.logo ? <img
-                                    src={restuarantStyle?.logo}
-                                    className={`w-[80px] h-[80px]`}
-                                    alt="logo"
-                                /> : <div className="skeleton w-[80px] h-[80px] shrink-0"/> }
+                                {restuarantStyle?.logo ? (
+                                    <img
+                                        src={restuarantStyle?.logo}
+                                        className={`w-[80px] h-[80px]`}
+                                        alt="logo"
+                                    />
+                                ) : (
+                                    <div className="skeleton w-[80px] h-[80px] shrink-0" />
+                                )}
                                 <h3 className="pt-8 mb-3 text-md font-bold">
                                     {t("Please verify your phone number")}
                                 </h3>
                                 <p className="text-sm text-gray-700">
                                     {t(
-                                        "You're almost there! We sent an SMS to",
+                                        "You're almost there! We sent an SMS to"
                                     )}
                                 </p>
                                 {user_phone ? <p>{user_phone}</p> : <p></p>}
