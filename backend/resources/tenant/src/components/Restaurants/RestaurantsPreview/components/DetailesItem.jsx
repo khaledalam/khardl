@@ -711,7 +711,7 @@ const DetailesItem = ({
                                                 onClick={() =>
                                                     isLoggedIn
                                                         ? handleAddToCart()
-                                                        : navigate("/login")
+                                                        : navigate("/")
                                                 }
                                             >
                                                 {isLoggedIn && (

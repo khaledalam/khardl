@@ -399,7 +399,7 @@ const OuterSidebarNav = ({ id }) => {
 
                         <div
                             onClick={() => {
-                                navigate("/login");
+                                navigate("/");
                                 closeMenu();
                             }}
                             className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg cursor-pointer border  items-center "
