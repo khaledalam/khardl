@@ -142,7 +142,7 @@
                                             $sub = null;
                                             $restaurant->run(function() use ($restaurant,&$customer_app,&$sub){
                                                 $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
-                                                $sub = \App\Models\ROSubscription::where('status',\App\Models\ROSubscription::ACTIVE)->first();
+                                                $sub = \App\Models\ROSubscription::first();
                                                 $customer_app = App\Models\ROCustomerAppSub::first();
 												if ($logo) {
                                                     echo <<<HTML

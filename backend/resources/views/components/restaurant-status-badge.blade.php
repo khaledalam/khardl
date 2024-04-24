@@ -13,9 +13,13 @@
     <span class="badge badge-light-danger fw-bolder">{{ __('not_live')}}</span>
 @endif
 
-@if(isset($sub))
-<span class="badge badge-light-success fw-bolder">{{ __('Have a subscription')}}</span>
+@if(isset($sub) && $sub->status == \App\Models\ROSubscription::ACTIVE)
+<span class="badge badge-light-success fw-bolder">{{ __('Active subscription')}}</span>
+@elseif(isset($sub) )
+<span class="badge badge-warning fw-bolder">{{ __('subscription not active')}}</span>
+
 @else
+
 <span class="badge badge-danger fw-bolder">{{ __('No subscription')}}</span>
 @endif
 @if($customer_app && $customer_app->status == \App\Models\ROCustomerAppSub::REQUESTED)
