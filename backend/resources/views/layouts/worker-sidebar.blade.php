@@ -254,7 +254,8 @@
                             @if($user?->hasPermissionWorker('can_control_payment')&&App\Models\Tenant\Setting::first()->lead_id)
                             <!-- Payments -->
                             <div class="menu-item menu-accordion">
-                                <span class="menu-link">
+                                <a href="{{route('tap.payments')}}">
+                                <span class="{{ ($link == 'payments') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -262,10 +263,9 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="{{route('tap.payments')}}">
                                         <span class="menu-title">{{__('payments')}}</span>
-                                    </a>
-                                </span>
+                                    </span>
+                                </a>
                             </div>
                             @endif
                         </div>
@@ -278,7 +278,7 @@
             <!--end::Aside-->
 
             <!--begin::Wrapper-->
-            <div class="m-4 wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <div class="m-4 wrapper d-flex flex-column flex-row-fluid position-relative" id="kt_wrapper">
                 @include('restaurant.components.mobile-alert')
                  <!--begin::Header-->
                  <div id="kt_header" class="header align-items-stretch">

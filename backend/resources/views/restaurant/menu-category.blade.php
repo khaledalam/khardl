@@ -494,7 +494,7 @@
                                                                         </span>
                                                                     </div>
                                                                 </span>
-                                                                    @endif
+                                                            @endif
                                                             <span class="badge badge-light-info mt-1">{{ $category->sort }}</span>
                                                             <span class="badge badge-light-success mt-1">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }} {{__('Products')}}</span>
                                                         </div>
@@ -539,15 +539,15 @@
                                             <!--end::Svg Icon-->
                                         </span>
                                         <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('add-new-category') }}</button>
-                                        
+
                                         <script>
                                             document.getElementById('svgIcon').addEventListener('click', function() {
                                                 document.getElementById('addCategoryButton').click();
                                             });
-                                        </script>                                        
+                                        </script>
                                     </span>
                                     <!--end::Add label-->
-                                    <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit" enctype="multipart/form-data">
+                                    <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" class="mb-2" method="POST" id="category-submit" enctype="multipart/form-data">
                                         @csrf
                                         <div id="categoryForm" class="mt-2" style="display: none !important;">
                                             <ul class="nav nav-tabs" id="languageTabs">
@@ -587,7 +587,7 @@
                                         </div>
                                     </form>
 
-                                    <form method="POST" id="category-edit" enctype="multipart/form-data">
+                                    <form method="POST" id="category-edit" enctype="multipart/form-data" class="mb-2">
                                         @csrf
 
                                         <div id="category-edit-form" class="mt-2" style="display: none !important;">
@@ -1423,10 +1423,11 @@
         categoryForm.style.display = "block";
         var form = document.getElementById('category-edit');
         form.action = `{{ route('restaurant.edit-category', ['categoryId' => ':categoryId', 'branchId' => ':branchId']) }}`.replace(':categoryId', category_id).replace(':branchId', {{$branchId}});
+        form.scrollIntoView({ behavior: 'smooth' });
     }
 
     const hideCategoryEditForm = function(){
-        document.getElementById("category-edit-form").style.display = 'none';
+        document.getElementById("categoryForm").style.display = 'none';
     }
 </script>
 
