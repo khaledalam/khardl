@@ -27,6 +27,9 @@ class CustomerDataService
     {
         /** @var RestaurantUser $user */
         $user  = Auth::user();
+        if($restaurantUser->roles()->count()){
+            return abort(403);
+        }
         $restaurantUser->load(['branch','recent_orders','recent_orders.branch','recent_orders.delivery_type']);
         $orders = $restaurantUser
         ->recent_orders()
