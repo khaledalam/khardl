@@ -529,8 +529,7 @@
                                 <div class="menu-item">
                                     <!--begin::Add label-->
                                     <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
+                                        <span class="menu-icon" id="svgIcon">
                                             <span class="svg-icon svg-icon-2 me-3">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                     <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
@@ -540,6 +539,12 @@
                                             <!--end::Svg Icon-->
                                         </span>
                                         <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('add-new-category') }}</button>
+                                        
+                                        <script>
+                                            document.getElementById('svgIcon').addEventListener('click', function() {
+                                                document.getElementById('addCategoryButton').click();
+                                            });
+                                        </script>                                        
                                     </span>
                                     <!--end::Add label-->
                                     <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit" enctype="multipart/form-data">
