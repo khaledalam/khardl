@@ -355,17 +355,7 @@
                         </div>
                         <!--end::Col-->
                     </div>
-                    <div class="row mb-7">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 fw-bold text-muted">{{ __('Bank name') }}
-                            <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Bank name"></i></label>
-                        <!--end::Label-->
-                        <!--begin::Col-->
-                        <div class="col-lg-8">
-                            {{$restaurant->user->traderRegistrationRequirement->bank_name}}
-                        </div>
-                        <!--end::Col-->
-                    </div>
+                   
                     <div class="row mb-7">
                         <!--begin::Label-->
                         <label class="col-lg-4 fw-bold text-muted">{{ __('IBAN') }}

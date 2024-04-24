@@ -358,10 +358,7 @@ new DataTree({
                             <input type="checkbox" class="form-check-input" id="bank_certificate" name="options[]" value="bank_certificate">
                             <label class="form-check-label" for="bank_certificate">{{ __('bank-certificate') }}</label>
                         </div>
-                        <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="bank_name" name="options[]" value="bank_name">
-                            <label class="form-check-label" for="bank_name">{{ __('Bank name') }}</label>
-                        </div>
+                     
                         <div class="form-check my-2">
                             <input type="checkbox" class="form-check-input" id="IBAN" name="options[]" value="IBAN">
                             <label class="form-check-label" for="IBAN">{{ __('IBAN') }}</label>
