@@ -42,6 +42,9 @@ class CustomerDataService
     }
     public function edit(Request $request,RestaurantUser $restaurantUser)
     {
+        if($restaurantUser->roles()->count()){
+            return abort(403);
+        }
         return view('restaurant.customers_data.edit', compact('restaurantUser'));
     }
     public function update($request,RestaurantUser $restaurantUser)
