@@ -90,17 +90,23 @@ const FullPage = ({ categories }) => {
                     <Modal
                         open={isLoginModalOpen}
                         onClose={() => dispatch(SetLoginModal(false))}
-                        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[400px]"
+                        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[400px] p-[10px]"
                     >
-                        <Login />
+                        <Login
+                            closingFunc={() => dispatch(SetLoginModal(false))}
+                        />
                     </Modal>
                 ) : isRegisterModalOpen ? (
                     <Modal
                         open={isRegisterModalOpen}
                         onClose={() => dispatch(SetRegisterModal(false))}
-                        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[400px]"
+                        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[400px] p-[10px]"
                     >
-                        <Register />
+                        <Register
+                            closingFunc={() =>
+                                dispatch(SetRegisterModal(false))
+                            }
+                        />
                     </Modal>
                 ) : (
                     <Modal
