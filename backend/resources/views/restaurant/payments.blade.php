@@ -368,46 +368,6 @@ $tap_info = $settings->lead_response;
                                                                 <!--end::Item-->
                                                             </tr>
                                                             @endif
-                                                            {{-- @if (isset($tap_info['brand']['channel_services'][0]['channel'])&&isset($tap_info['brand']['channel_services'][0]['address']))
-                                                                <tr>
-                                                                    <!--begin::Item-->
-                                                                    <td>
-                                                                        <span class="text-start">{{__('Brand channel')}}</span>
-                                                            </td>
-                                                            <td class="text-dark">
-                                                                <span class="py-3 px-4 fs-23">{{ $tap_info['brand']['channel_services'][0]['channel'] }}</span>
-                                                            </td>
-                                                            <!--end::Item-->
-                                                            </tr>
-                                                            <tr>
-                                                                <!--begin::Item-->
-                                                                <td>
-                                                                    <span class="text-start">{{__('Brand address')}}</span>
-                                                                </td>
-                                                                <td class="text-dark">
-                                                                    <span class="py-3 px-4 fs-23">{{ $tap_info['brand']['channel_services'][0]['address'] }}</span>
-                                                                </td>
-                                                                <!--end::Item-->
-                                                            </tr>
-                                                            @endif --}}
-                                                            {{-- @if (isset($tap_info['brand']['operations']['sales']['period'])&&isset($tap_info['brand']['operations']['sales']['range']))
-                                                                <tr>
-                                                                    <!--begin::Item-->
-                                                                    <td>
-                                                                        <span class="text-start">{{__('Bussiness expected sales')}}</span>
-                                                            </td>
-                                                            <td class="text-dark">
-                                                                <span class="py-3 px-4 fs-23">
-                                                                    {{ __('From') }}
-                                                                    {{ $tap_info['brand']['operations']['sales']['range']['from'] }}
-                                                                    {{ __('To') }}
-                                                                    {{ $tap_info['brand']['operations']['sales']['range']['to'] }}
-                                                                    {{ __($tap_info['brand']['operations']['sales']['currency']) }} {{ __($tap_info['brand']['operations']['sales']['period']) }}
-                                                                </span>
-                                                            </td>
-                                                            <!--end::Item-->
-                                                            </tr>
-                                                            @endif --}}
                                                             @if (isset($tap_info['entity']['country'])&&isset($tap_info['entity']['license']))
                                                             <tr>
                                                                 <!--begin::Item-->
@@ -416,10 +376,6 @@ $tap_info = $settings->lead_response;
                                                                 </td>
                                                                 <td class="text-dark">
                                                                     <span class="py-3 px-4 fs-23">
-{{--                                                                         <span class="py-3 px-4 fs-23">
-                                                                            {{ $tap_info['entity']['country'] }}
-                                                                            ({{ $tap_info['entity']['license']['city'] }})
-                                                                        </span> --}}
                                                                         <span class="py-3 px-4 fs-23">
                                                                             @if($tap_info['entity']['is_licensed'])
                                                                             <span>
@@ -567,99 +523,6 @@ $tap_info = $settings->lead_response;
                                                                         <!--end::Item-->
                                                                     </tr>
                                                                     @endif
-                                                                  {{--   @if (isset($tap_info['user']['birth']))
-                                                                    <tr>
-                                                                            <!--begin::Item-->
-                                                                            <td>
-                                                                                <span class="text-start">{{__('Birthday')}}< /span>
-                                                                        </td>
-                                                                        <td class="text-dark">
-                                                                            <span class="py-3 px-4 fs-23">
-                                                                                {{ $tap_info['user']['birth']['date'] }}
-                                                                            </span>
-                                                                        </td>
-                                                                        <!--end::Item-->
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <!--begin::Item-->
-                                                                            <td>
-                                                                                <span class="text-start">{{__('Birthday city')}}</span>
-                                                                            </td>
-                                                                            <td class="text-dark">
-                                                                                <span class="py-3 px-4 fs-23">
-                                                                                    {{ $tap_info['user']['birth']['country'] }} - {{ $tap_info['user']['birth']['city'] }}
-                                                                                </span>
-                                                                            </td>
-                                                                            <!--end::Item-->
-                                                                        </tr>
-                                                                        @endif --}}
-                                                                        {{-- @if (isset($tap_info['user']['address'][0]))
-                                                                        <tr>
-                                                                            <!--begin::Item-->
-                                                                            <td>
-                                                                                <span class="text-start">{{__('Country')}}</span>
-                                                                            </td>
-                                                                            <td class="text-dark">
-                                                                                <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['country'] }}
-                                                                                    ({{ __($tap_info['user']['address'][0]['type']) }})
-                                                                                </span>
-                                                                            </td>
-                                                                            <!--end::Item-->
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <!--begin::Item-->
-                                                                            <td>
-                                                                                <span class="text-start">{{__('City')}}</span>
-                                                                            </td>
-                                                                            <td class="text-dark">
-                                                                                <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['city'] }}</span>
-                                                                            </td>
-                                                                            <!--end::Item-->
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <!--begin::Item-->
-                                                                            <td>
-                                                                                <span class="text-start">{{__('ZIP code')}}</span>
-                                                                            </td>
-                                                                            <td class="text-dark">
-                                                                                <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['zip_code'] }}</span>
-                                                                            </td>
-                                                                            <!--end::Item-->
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <!--begin::Item-->
-                                                                            <td>
-                                                                                <span class="text-start">{{__('Address Line 1')}}</span>
-                                                                            </td>
-                                                                            <td class="text-dark">
-                                                                                <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['line1'] }}</span>
-                                                                            </td>
-                                                                            <!--end::Item-->
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <!--begin::Item-->
-                                                                            <td>
-                                                                                <span class="text-start">{{__('Address Line 2')}}</span>
-                                                                            </td>
-                                                                            <td class="text-dark">
-                                                                                <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['line2'] }}</span>
-                                                                            </td>
-                                                                            <!--end::Item-->
-                                                                        </tr>
-                                                                        @endif --}}
-                                                                        {{-- @if (isset($tap_info['user']['identification']))
-                                                                        <tr>
-                                                                            <!--begin::Item-->
-                                                                            <td>
-                                                                                <span class="text-start">{{__('National ID')}}</span>
-                                                                        </td>
-                                                                        <td class="text-dark">
-                                                                            <span class="py-3 px-4 fs-23">{{ $tap_info['user']['identification']['number'] }}
-                                                                            </span>
-                                                                        </td>
-                                                                        <!--end::Item-->
-                                                                        </tr>
-                                                                        @endif --}}
                                                                         @if (isset($tap_info['user']['phone'][0]))
                                                                         <tr>
                                                                             <!--begin::Item-->
@@ -746,18 +609,6 @@ $tap_info = $settings->lead_response;
                                                                         </td>
                                                                         <!--end::Item-->
                                                                     </tr>
-                                                                    {{-- <tr>
-                                                                        <!--begin::Item-->
-                                                                        <td>
-                                                                            <span class="text-start">{{__('Bank SWIFT code')}}</span>
-                                                                        </td>
-                                                                        <td class="text-dark">
-                                                                            <span class="py-3 px-4 fs-23">
-                                                                                {{ $tap_info['wallet']['bank']['account']['swift'] }}
-                                                                            </span>
-                                                                        </td>
-                                                                        <!--end::Item-->
-                                                                    </tr> --}}
                                                                     <tr>
                                                                         <!--begin::Item-->
                                                                         <td>
@@ -839,7 +690,6 @@ $tap_info = $settings->lead_response;
         </div>
     </div>
 </div>
-
 <!--end::Content-->
 @else
 <div class="alert alert-warning mx-10 p-10 text-center">

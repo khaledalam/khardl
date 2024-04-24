@@ -83,18 +83,18 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
         <div class="post d-flex flex-column-fluid mb-10" id="kt_post">
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
-                <div class="card card-flush border-0 h-md-100">
+                <div class="card card-flush border-0">
                     <!--begin::Body-->
                     <div class="card-body py-2">
                         <!--begin::Row-->
-                        <div class="row gx-9 h-100">
-                            <div class="d-flex justify-content-center align-items-center bg-white pt-4">
+                        <div class="row gx-9">
+                            <div class="d-flex justify-content-center align-items-center bg-white pt-2">
                                 <p class="fw-bolder mx-3">{{ __('branches-available-to-add') }}</p>
                                 <p class="badge badge-light-success">{{$available_branches}}</p>
                             </div>
                             @if($available_branches > 0)
                             <div class="row gx-9 d-flex justify-content-center align-items-center">
-                                <a href="#" class="fs-6 text-700 fw-bolder text-center p-5 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">+ {{ __('add-new-branch') }}</a>
+                                <a href="#" class="fs-6 text-700 fw-bolder text-center p-3 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">+ {{ __('add-new-branch') }}</a>
                             </div>
                             @endif
                         </div>

@@ -157,6 +157,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
             ->orWhere('last_name', 'like', '%' . $search . '%')
             ->orWhere('phone', 'like', '%' . $search . '%')
             ->orWhere('vehicle_number', 'like', '%' . $search . '%')
+            ->orWhere('address', 'like', '%' . $search . '%')
             ->orWhere('email', 'like', '%' . $search . '%');
         });
     }
