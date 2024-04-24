@@ -527,7 +527,7 @@
         <!--end::Aside-->
 
         <!--begin::Wrapper-->
-        <div class="m-4 wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+        <div class="m-4 wrapper d-flex flex-column flex-row-fluid position-relative" id="kt_wrapper">
         @include('restaurant.components.payment-tap-documents-alert')
         @include('restaurant.components.subscription-alert')
         @include('restaurant.components.mobile-alert')

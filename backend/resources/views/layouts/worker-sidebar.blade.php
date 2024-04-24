@@ -278,7 +278,7 @@
             <!--end::Aside-->
 
             <!--begin::Wrapper-->
-            <div class="m-4 wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <div class="m-4 wrapper d-flex flex-column flex-row-fluid position-relative" id="kt_wrapper">
                 @include('restaurant.components.mobile-alert')
                  <!--begin::Header-->
                  <div id="kt_header" class="header align-items-stretch">
