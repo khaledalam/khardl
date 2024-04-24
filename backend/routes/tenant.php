@@ -277,11 +277,12 @@ Route::group([
 
 
             Route::middleware('notVerifiedPhone')->group(function () {
-                Route::get('verification-phone', static function () {
-                    $setting = Setting::first();
-                    $restaurant_name = $setting->restaurant_name;
-                    return view("tenant", compact('restaurant_name'));
-                })->name("verification-phone");
+//                Route::get('verification-phone', static function () {
+//                    $setting = Setting::first();
+//                    $restaurant_name = $setting->restaurant_name;
+//                    return view("tenant", compact('restaurant_name'));
+//                })->name("verification-phone");
+//
                 Route::post('phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
                 Route::post('phone/verify', [RegisterController::class, 'verify']);
             });
