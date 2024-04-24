@@ -460,7 +460,7 @@ const ProductItem = ({
                     backgroundColor: menu_card_background_color,
                     borderRadius: `${menu_card_radius}px`,
                 }}
-                className="w-full max-w-32 shadow-md sm:max-w-36 h-44 relative hover:scale-110 transform transition-transform duration-300 ease-in-out"
+                className="w-full max-w-32 shadow-md sm:max-w-36 h-44 relative hover:scale-110 transform transition-transform duration-300 ease-in-out hover:cursor-pointer"
                 key={valuekey}
                 onClick={() => document.getElementById(id).showModal()}
             >
@@ -582,7 +582,7 @@ const ProductItem = ({
                                 dropdownItems[0]?.length > 0
                                     ? "h-[700px]"
                                     : "h-[550px]"
-                            } flex flex-col justify-end items-center z-[100]`}
+                            } flex flex-col justify-end items-center z-[100] mr-[-10px]`}
                         >
                             {isLoggedIn ? (
                                 <Fragment>

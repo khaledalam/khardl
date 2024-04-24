@@ -624,7 +624,7 @@ const MainBoardEditor = ({
                                         (category, i) =>
                                             category.items?.length > 0 && (
                                                 <div
-                                                    className="flex flex-col"
+                                                    className="flex flex-col items-center"
                                                     key={i}
                                                     id={category.name}
                                                 >
