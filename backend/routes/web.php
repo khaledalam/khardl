@@ -181,7 +181,7 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     ->middleware('permission:can_manage_notifications_receipt');
                     Route::get('/user-management', [AdminController::class, 'userManagement'])->middleware('permission:can_see_admins')->name('user-management');
                     Route::get('/restaurant-owner-management', [AdminController::class, 'restaurantOwnerManagement'])->middleware('permission:can_see_restaurant_owners')->name('restaurant-owner-management');
-                    Route::get('/order-inquiry', [AdminController::class, 'orderInquiry'])->middleware('permission:can_access_restaurants')->name('order-inquiry');
+//                    Route::get('/order-inquiry', [AdminController::class, 'orderInquiry'])->middleware('permission:can_access_restaurants')->name('order-inquiry');
                     Route::delete('/user-management/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('permission:can_edit_admins')->name('delete-user');
                     Route::delete('/promoters/delete/{id}', [AdminController::class, 'deletePromoter'])->middleware('permission:can_promoters')->name('delete-promoter');
                     Route::delete('/promoters/coupon/delete/{id}', [AdminController::class, 'deletePromoterCoupon'])->middleware('permission:can_promoters')->name('delete-promoter-coupon');

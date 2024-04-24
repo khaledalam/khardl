@@ -848,6 +848,7 @@ class RestaurantController extends BaseController
             ->where('branch_id', $branchId)
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'DESC')
+            ->orderByRaw('availability DESC')
             ->get();
 
         $branches = Branch::all();
