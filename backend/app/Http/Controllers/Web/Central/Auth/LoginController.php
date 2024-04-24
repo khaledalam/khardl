@@ -47,27 +47,36 @@ class LoginController extends BaseController
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request): JsonResponse
+    public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|string|email|min:10|max:255',
             'password' => 'required|string|min:6|max:255',
             'remember_me' => 'nullable|boolean',
-            'login_code' => 'nullable|string|min:5|max:5',
         ]);
 
-        if ($request->has('login_code') && $request->login_code) {
-            $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->code)->first();
+        $credentials = request(['email', 'password']);
+
+        if ($request->has('login_code') && $request->login_code){
+
+            $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->login_code)->first();
             if (!$tenant) {
                 return $this->sendError(__('Validation Error. R!'));
             }
 
-            return $tenant->run(function () use($request) {
-                return (new \App\Http\Controllers\API\Tenant\Auth\LoginController())->logout($request);
+            return $tenant->run(function () use($credentials,$tenant) {
+                if (!Auth::attempt($credentials,true)) {
+                    return $this->sendError(__('Unauthorized'), ['error' => __('Invalid email or password')]);
+                } else {
+                    $user = Auth::user();
+                    $url = $tenant->impersonationUrl($user->id,'dashboard');
+                    return $this->sendResponse([
+                        'url' => $url
+                    ], __('OK User logged in successfully.'));
+
+                }
             });
         }
-
-        $credentials = request(['email', 'password']);
 
         if (!Auth::attempt($credentials,true)) {
             return $this->sendError('Unauthorized.', ['error' => __('Invalid email or password')]);

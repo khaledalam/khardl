@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import MainText from '../../components/MainText'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
+import { AiFillEye, AiFillEyeInvisible, AiOutlineTeam, AiOutlineVerticalAlignMiddle } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeLogState } from '../../redux/auth/authSlice'
@@ -25,13 +25,18 @@ const Login = () => {
       handleSubmit,
       formState: { errors },
    } = useForm()
-   const [openEyePassword, setOpenEyePassword] = useState(false)
+    const [openEyePassword, setOpenEyePassword] = useState(false)
+    const [openEyeLoginCode, setOpenEyeLoginCode] = useState(false)
    const Language = useSelector((state) => state.languageMode.languageMode)
    const [spinner, setSpinner] = useState(false)
 
-   const EyePassword = () => {
-      setOpenEyePassword(!openEyePassword)
-   }
+    const EyePassword = () => {
+        setOpenEyePassword(!openEyePassword)
+    }
+
+    const EyeLoginCode = () => {
+        setOpenEyeLoginCode(!openEyeLoginCode)
+    }
 
    // **API POST REQUEST**
 
@@ -49,16 +54,20 @@ const Login = () => {
          //
          // return;
 
+          console.log("here", response?.data?.data?.url)
+
          if (response?.data?.success) {
             const responseData = response?.data;
             // console.log("responseData>", responseData)
             //  return;
 
-
-            localStorage.setItem(
-               'user-info',
-               JSON.stringify(responseData?.data?.user)
-            );
+            if(responseData?.data?.user){
+               localStorage.setItem(
+                  'user-info',
+                  JSON.stringify(responseData?.data?.user)
+               );
+            }
+           
 
 
             if (responseData?.data?.user?.status === 'inactive') {
@@ -72,8 +81,13 @@ const Login = () => {
                responseData?.data?.step2_status === 'completed' &&
                responseData.data?.user?.status === 'active'
             ) {
-                setStatusCode(HTTP_OK);
-                toast.success(`${t('You have been logged in successfully')}`)
+               setStatusCode(HTTP_OK);
+               toast.success(`${t('You have been logged in successfully')}`)
+            }  else if (
+               responseData?.data?.url
+            ) {
+               window.location.href = responseData?.data?.url;
+               toast.success(`${t('You have been logged in successfully')}`)
             } else {
                navigate('/error')
             }
@@ -178,24 +192,26 @@ const Login = () => {
                               </div>
 
                                {/* Code */}
-                               <div className={"flex justify-start items-center gap-4"}>
-                                   <h4 className='ms-2 text-[13px] text-gray-500'>
-                                       {t('Login Code')}
-                                   </h4>
-                                   <input
-                                       type='text'
-                                       className={`p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                                       placeholder={"12345"}
-                                       {...register('login_code', { required: false })}
-                                       style={{
-                                           marginBottom: '10px'
-                                       }}
-                                   />
-                                   {errors.login_code && (
-                                       <span className='text-red-500 text-xs mt-1 ms-2'>
-                                       {t('Login Code Error')}
-                                    </span>
-                                   )}
+                               <div className={"flex justify-start items-center gap-3"} >
+                                   <div className={"justify-start items-center gap-3"} style={{display: openEyeLoginCode ? 'flex' : 'none'}}>
+                                       <h4 className='ms-2 text-[13px] text-gray-500'>
+                                           {t('Login Code')}
+                                       </h4>
+                                       <input
+                                           type='text'
+                                           className={`p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                                           placeholder={"12345"}
+                                           {...register('login_code', { required: false })}
+                                           style={{
+                                               marginBottom: '10px'
+                                           }}
+                                       />
+                                       {errors.login_code && (
+                                           <span className='text-red-500 text-xs mt-1 ms-2'>
+                                           {t('Login Code Error')}
+                                        </span>
+                                       )}
+                                   </div>
                                </div>
 
                               <div className='flex justify-between items-center'>
@@ -218,6 +234,17 @@ const Login = () => {
                                        {t('Forgot your password?')}
                                     </label>
                                  </Link>
+                                  {openEyeLoginCode === false ? (
+                                      <AiOutlineTeam
+                                          onClick={EyeLoginCode}
+                                          className='text-[var(--primary)] cursor-pointer'
+                                      />
+                                  ) : (
+                                      <AiOutlineVerticalAlignMiddle
+                                          onClick={EyeLoginCode}
+                                          className='text-[var(--primary)] cursor-pointer'
+                                      />
+                                  )}
                               </div>
                               <div className='flex flex-col justify-center items-center mt-4 mb-10'>
                                  <button

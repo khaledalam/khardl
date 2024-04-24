@@ -38,32 +38,34 @@ class OrderService
         return view('restaurant.orders.list', compact('user', 'orders'));
     }
 
-    public function inquiry($request)
-    {
-        $order = null;
-        $orderStatusLogs = null;
-        $locale = app()->getLocale();
-        $user = Auth::user();
+//    public function inquiry($request)
+//    {
+//        $order = null;
+//        $orderStatusLogs = null;
+//        $locale = app()->getLocale();
+//        $user = Auth::user();
+//
+//        if ($request->has('order_id')) {
+//            $validatedData = $request->validate([
+//                'order_id' => 'required|string|min:12|max:12',
+//            ], [
+//                'order_id.required'=>__("Order id is required"),
+//                'order_id.min' => __('Enter valid Order id consists of 12 characters'),
+//                'order_id.max' => __('Enter valid Order id consists of 12 characters')
+//            ]);
+//
+//            $order_id = $validatedData['order_id'];
+//
+//            $order = Tenant\Order::find($order_id)?->first();
+//            $orderStatusLogs = OrderStatusLogs::all()->where('order_id', '=', $order?->id)
+//                ?->sortByDesc("created_at");
+//        }
+//
+//        return view('restaurant.order-inquiry', compact('user','order', 'locale', 'orderStatusLogs'));
+//
+//    }
 
-        if ($request->has('order_id')) {
-            $validatedData = $request->validate([
-                'order_id' => 'required|string|min:12|max:12',
-            ], [
-                'order_id.required'=>__("Order id is required"),
-                'order_id.min' => __('Enter valid Order id consists of 12 characters'),
-                'order_id.max' => __('Enter valid Order id consists of 12 characters')
-            ]);
 
-            $order_id = $validatedData['order_id'];
-
-            $order = Tenant\Order::find($order_id)?->first();
-            $orderStatusLogs = OrderStatusLogs::all()->where('order_id', '=', $order?->id)
-                ?->sortByDesc("created_at");
-        }
-
-        return view('restaurant.order-inquiry', compact('user','order', 'locale', 'orderStatusLogs'));
-
-    }
     public function create()
     {
         /** @var RestaurantUser $user */

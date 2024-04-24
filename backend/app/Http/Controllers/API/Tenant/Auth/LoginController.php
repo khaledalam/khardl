@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API\Tenant\Auth;
 
+use App\Models\Tenant;
+use App\Models\Tenant\RestaurantUser;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,37 +19,38 @@ class LoginController extends BaseController
 {
     public function login(Request $request): JsonResponse
     {
-
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|min:10|max:255',
             'password' => 'required|string|min:6|max:255',
             'remember_me' => 'nullable|boolean',
         ]);
-
-
+      
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
+
         $credentials = request(['email', 'password']);
 
         if (!Auth::attempt($credentials,true)) {
-            return $this->sendError('Unauthorized.', ['error' => __('Invalid email or password')]);
+            return $this->sendError(__('Unauthorized'), ['error' => __('Invalid email or password')]);
         }
-        $user = Auth::user();
+
         if(!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE){
             Auth::logout();
-            return $this->sendError('Unauthorized.', ['error' => __("Website doesn't have active subscription, Only restaurant owner can login")]);
+            return $this->sendError(__('Unauthorized'), ['error' => __("Website doesn't have active subscription, Only restaurant owner can login")]);
         }
-        if(!Auth::user()->isWorker()&&!Auth::user()->isDriver()){
+
+        $user = RestaurantUser::where('email', '=', Auth::user()?->email)->first();
+
+        if(!$user->isWorker() &&  !$user->isDriver()){
             Auth::logout();
-            return $this->sendError('Unauthorized.', ['error' => __('Only workers can logged in')]);
+            return $this->sendError(__('Unauthorized'), ['error' => __('Only workers and drivers can logged in')]);
         }
 
         if(!$user->branch?->active){
             Auth::logout();
-            return $this->sendError('Unauthorized.', ['error' => __('Cannot login, Branch is not active')]);
+            return $this->sendError(__('Unauthorized'), ['error' => __('Cannot login, Branch is not active')]);
         }
-
 
         // @TODO: uncomment if need!
         $data = [
@@ -62,13 +65,17 @@ class LoginController extends BaseController
         } else {
             $token->expires_at = Carbon::now()->addWeeks(1);
         }
+
         $user->load(['roles']);
-        $data= [
+
+
+        $data = [
             'user'=>$user,
             'token_type' => 'Bearer',
             'access_token' => $token,
+            'worker_login' => $request->has('login_code') && $request->login_code
+                ? Tenant::where('restaurant_name', '=', \tenant()->restaurant_name)->first()->impersonationUrl('') : null
         ];
-
 
         return $this->sendResponse($data, __('User logged in successfully.'));
     }
