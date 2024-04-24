@@ -739,7 +739,7 @@ const ProductItem = ({
                                                     dropdownItems[0]?.length >
                                                         0) && (
                                                     <div className="px-6 my-4 h-[550]">
-                                                        <div className="flex flex-col gap-5 py-4 divide-y-[1px]">
+                                                        <div className="flex flex-col gap-5 py-4">
                                                             {/* checkbox */}
                                                             {checkbox_input_titles &&
                                                                 checkbox_input_titles.length >
@@ -1091,7 +1091,7 @@ const ProductItem = ({
                                     radioItems[0]?.length > 0 ||
                                     dropdownItems[0]?.length > 0) && (
                                     <div className="px-6 my-4 h-[550] w-full">
-                                        <div className="flex flex-col gap-5 py-4 divide-y-[1px]">
+                                        <div className="flex flex-col gap-5 py-4">
                                             {/* checkbox */}
                                             {checkbox_input_titles &&
                                                 checkbox_input_titles.length >
