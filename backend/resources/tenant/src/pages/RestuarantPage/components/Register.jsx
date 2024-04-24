@@ -340,10 +340,10 @@ const Register = ({ closingFunc }) => {
                             <h3 className="pt-8 mb-3 text-[12px] font-normal leading-[18px]">
                                 {t("Enter your SMS OTP code")}
                             </h3>
-                            <span className="text-[10px] text-[#3B3B3B]">
+                            <span className="text-[12px] text-[#3B3B3B]">
                                 {t("We sent a code to")}{" "}
                                 {user_phone ? (
-                                    <span className="text-[10px] text-[#3B3B3B]">
+                                    <span className="text-[12px] text-[#3B3B3B]">
                                         {user_phone}
                                     </span>
                                 ) : (
