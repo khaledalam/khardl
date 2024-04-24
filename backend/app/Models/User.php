@@ -111,7 +111,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     public function traderRegistrationRequirement()
     {
-        return $this->hasOne(TraderRequirement::class);
+        return $this->hasOne(TraderRequirement::class)->latest();
     }
 
     public function generateVerificationCode()
