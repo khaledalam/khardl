@@ -165,7 +165,7 @@
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
                             <input type="hidden" name="selection_required[${selectionCount}]" value="false" />
-                            <input type="checkbox" name="selection_required_input[${selectionCount}]" ${key !=null ? (item.selection_required[key] == "true"  ? 'checked':'') : ''} >&nbsp;{{ __('Required') }}
+                            <input type="checkbox" name="selection_required_input[${selectionCount}]" disabled checked >&nbsp;{{ __('Required') }}
                         </label>
                     </div>
                     <!--end::Label-->
@@ -300,7 +300,7 @@
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
                             <input type="hidden" name="dropdown_required[${dropdownCount}]" value="false" />
-                            <input type="checkbox" name="dropdown_required_input[${dropdownCount}]"  ${key !=null ? (item.dropdown_required[key] == "true"  ? 'checked':'') : ''} >&nbsp;{{ __('Required') }}
+                            <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" disabled checked >&nbsp;{{ __('Required') }}
                         </label>
                     </div>
                     <!--end::Label-->
