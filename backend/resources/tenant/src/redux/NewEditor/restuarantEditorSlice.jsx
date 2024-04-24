@@ -186,6 +186,10 @@ const restuarantEditorSlice = createSlice({
 
         logo_border_radius: 0,
         logo_border_color: "white",
+
+        isSideBarOpen: false,
+        isLoginModalOpen: false,
+        isRegisterModalOpen: false,
     },
     reducers: {
         headerPosition: (state, action) => {
@@ -426,6 +430,16 @@ const restuarantEditorSlice = createSlice({
             state.menu_card_radius = action.payload;
         },
 
+        SetSideBar: (state, action) => {
+            state.isSideBarOpen = action.payload;
+        },
+        SetLoginModal: (state, action) => {
+            state.isLoginModalOpen = action.payload;
+        },
+        SetRegisterModal: (state, action) => {
+            state.isRegisterModalOpen = action.payload;
+        },
+
         changeRestuarantEditorStyle: (state, action) => {
             // action.payload.page_color = "green";
             const root = document.querySelector(":root");
@@ -620,5 +634,8 @@ export const {
     MenuSectionRadius,
     MenuCardRadius,
     BannerImages,
+    SetSideBar,
+    SetLoginModal,
+    SetRegisterModal,
 } = restuarantEditorSlice.actions;
 export default restuarantEditorSlice.reducer;

@@ -139,12 +139,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     }
     public function info($run_on_tenant = true){
         $is_live = $this->is_live($run_on_tenant);
-        if($is_live){
-            $logo = $this->logo($run_on_tenant) ?? '';
-        }else {
-            $logo = null;
-        }
-        return ['is_live'=>$is_live,'logo'=>$logo];
+        return ['is_live'=>$is_live,'logo'=>$this->logo($run_on_tenant) ?? null];
     }
     /* Start Scope */
     public function scopeWhenSearch($query,$search)

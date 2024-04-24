@@ -43,7 +43,14 @@ const Footer = ({ restaurantStyle }) => {
             }
              leading-3 tracking-tight relative`}
             >
-                <span>{t("Powered by @Khardl")}</span>
+                <span>{t("Powered by")}</span>
+                <a
+                    href="https://khardl.com/"
+                    className="text-[#7D0A0A] font-medium hover:cursor-pointer"
+                >
+                    {" "}
+                    {t("Khardl")}
+                </a>
             </h3>
         </div>
     );

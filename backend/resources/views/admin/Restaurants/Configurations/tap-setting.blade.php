@@ -359,7 +359,7 @@
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
                                 <span class="">{{__('Bank Name')}}</span>
                             </label>
-                            <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][name]" value="{{old('wallet.bank.name')   ?? $traderRegistrationRequirement->bank_name}}" /><br />
+                            <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][name]" value="{{old('wallet.bank.name') }}" /><br />
 
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
                                 <span class="">{{__('Company Name')}}</span>

@@ -122,20 +122,17 @@ class RegisterController extends BaseController
 
         if ($user->isRejected()) {
 
-            if (!count($userRejectedReasons)) {
-                $user->status = User::STATUS_ACTIVE;
-                $user->save();
+            $user->status = User::RE_UPLOAD_FILES;
+            $user->save();
 
-                $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', $user->restaurant_name)->first()?->id);
-                // set user status in tenant table too
-                $tenant->run(function () use($user){
-                    $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
-                    $rUser->status = RestaurantUser::ACTIVE;
-                    $rUser->reject_reasons = null;
-                    $rUser->save();
-                });
-
-            }
+            $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', $user->restaurant_name)->first()?->id);
+            // set user status in tenant table too
+            $tenant->run(function () use($user){
+                $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
+                $rUser->status = RestaurantUser::ACTIVE;
+                $rUser->reject_reasons = null;
+                $rUser->save();
+            });
 
             $url = Tenant::where('restaurant_name', '=', $user?->restaurant_name)->first()->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID); //  USER restaurant owner id
 

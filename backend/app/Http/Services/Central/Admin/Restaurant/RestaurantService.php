@@ -58,7 +58,7 @@ class RestaurantService
 
         return view('admin.restaraunts', compact('restaurants', 'user', 'totalRestaurantsCount'));
     }
-    public function appRequested(){
+    public function appRequested($request){
         $query = Tenant::query()->with('primary_domain')
         ->whenSearch($request['search'] ?? null);
         $restaurants = $query->orderBy('created_at','DESC')->get();

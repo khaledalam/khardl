@@ -207,7 +207,7 @@ const App = () => {
                                 {/*<Route path='/prices' element={<Prices />} />*/}{" "}
                                 {/*<Route path='/fqa' element={<FQA />} />*/}{" "}
                                 <Route element={<Layout />}>
-                                    <Route path="/login" element={<Login />} />{" "}
+                                    {/* <Route path="/login" element={<Login />} />{" "}
                                     <Route
                                         path="/register"
                                         element={<Register />}
@@ -215,14 +215,14 @@ const App = () => {
                                     <Route
                                         path="/login-admins"
                                         element={<LoginAdmin />}
-                                    />{" "}
+                                    />{" "} */}
                                 </Route>{" "}
                                 {/*Editor*/}{" "}
                                 <Route element={<PrivateRoute />}>
-                                    <Route
+                                    {/* <Route
                                         path="/verification-phone"
                                         element={<VerificationPhone />}
-                                    />{" "}
+                                    />{" "} */}
                                     <Route
                                         path="/site-editor"
                                         element={<EditorSwitcher />}

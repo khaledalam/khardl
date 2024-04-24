@@ -80,7 +80,7 @@
                 icon: type,
                 title: message,
                 showConfirmButton: false,
-                timer: 1500
+                timer: 3500
             });
         }
     </script>
@@ -95,7 +95,7 @@
                 icon: type,
                 title: message,
                 showConfirmButton: false,
-                timer: 1500
+                timer: 3500
             });
         }
     </script>
@@ -332,7 +332,7 @@
                                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('staff-modification')}}</span>
+                                    <span class="menu-title">{{__('drivers')}}</span>
                                 </span>
                             </a>
                             @endif
@@ -341,12 +341,12 @@
                     <!-- menu -->
 
                         <!-- Orders -->
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'order-inquiry' || $link == 'orders-all' || $link == 'orders-add') ? 'show' : '' }}">
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'orders-all' || $link == 'orders-add') ? 'show' : '' }}">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg fill="{{ ($link == 'order-inquiry' || $link == 'orders-all' || $link == 'orders-add' || $link == 'products-out-of-stock') ? '#c2da08' : '#000000' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M78.8,62.1l-3.6-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,70.6c-1.2,0.6-2.7,0.6-3.9,0L26.5,60.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.6,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,78.5c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,65,80.4,62.8,78.8,62.1z"></path> </g> <g> <path d="M78.8,48.1l-3.7-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,56.6c-1.2,0.6-2.7,0.6-3.9,0L26.6,46.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.7,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,64.6c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,51.1,80.4,48.9,78.8,48.1 z"></path> </g> <g> <path d="M21.2,37.8l26.8,12.7c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7c1.6-0.8,1.6-2.9,0-3.7L51.9,21.4 c-1.2-0.6-2.7-0.6-3.9,0L21.2,34.2C19.6,34.9,19.6,37.1,21.2,37.8z"></path> </g> </g> </g></svg>
+                                            <svg fill="{{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'products-out-of-stock') ? '#c2da08' : '#000000' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M78.8,62.1l-3.6-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,70.6c-1.2,0.6-2.7,0.6-3.9,0L26.5,60.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.6,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,78.5c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,65,80.4,62.8,78.8,62.1z"></path> </g> <g> <path d="M78.8,48.1l-3.7-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,56.6c-1.2,0.6-2.7,0.6-3.9,0L26.6,46.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.7,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,64.6c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,51.1,80.4,48.9,78.8,48.1 z"></path> </g> <g> <path d="M21.2,37.8l26.8,12.7c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7c1.6-0.8,1.6-2.9,0-3.7L51.9,21.4 c-1.2-0.6-2.7-0.6-3.9,0L21.2,34.2C19.6,34.9,19.6,37.1,21.2,37.8z"></path> </g> </g> </g></svg>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
@@ -354,20 +354,20 @@
                                     <span class="menu-arrow"></span>
                                 </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                <a href="{{route('restaurant.order-inquiry')}}">
-                                    <div class="{{ ($link == 'order-inquiry') ? 'menu-link active' : 'menu-link ' }}">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot {{ ($link == 'order-inquiry') ? 'bg-light' : '' }}"></span>
-                                        </span>
-                                        <span class="menu-title">{{__('order inquiry')}}</span>
-                                    </div>
-                                </a>
+{{--                                <a href="{{route('restaurant.order-inquiry')}}">--}}
+{{--                                    <div class="{{ ($link == 'order-inquiry') ? 'menu-link active' : 'menu-link ' }}">--}}
+{{--                                        <span class="menu-bullet">--}}
+{{--                                            <span class="bullet bullet-dot {{ ($link == 'order-inquiry') ? 'bg-light' : '' }}"></span>--}}
+{{--                                        </span>--}}
+{{--                                        <span class="menu-title">{{__('order inquiry')}}</span>--}}
+{{--                                    </div>--}}
+{{--                                </a>--}}
                                 <a href="{{route('restaurant.orders_all')}}">
                                     <div class="{{ ($link == 'orders-all') ? 'menu-link active' : 'menu-link ' }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot {{ ($link == 'orders-all') ? 'bg-light' : '' }}"></span>
                                         </span>
-                                        <span class="menu-title">{{__('orders-all')}}</span>
+                                        <span class="menu-title">{{__('orders')}}</span>
                                     </div>
                                 </a>
                                 <a href="{{route('restaurant.orders_add')}}">
@@ -527,7 +527,7 @@
         <!--end::Aside-->
 
         <!--begin::Wrapper-->
-        <div class="m-4 wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+        <div class="m-4 wrapper d-flex flex-column flex-row-fluid position-relative" id="kt_wrapper">
         @include('restaurant.components.payment-tap-documents-alert')
         @include('restaurant.components.subscription-alert')
         @include('restaurant.components.mobile-alert')

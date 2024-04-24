@@ -9,6 +9,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseController;
 
+/**
+ * For login with worker from central api.
+ */
 class LoginCentralController extends BaseController
 {
     public function login(Request $request): JsonResponse
@@ -24,10 +27,9 @@ class LoginCentralController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-
-        $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->code)->first();
+        $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->login_code)->first();
         if (!$tenant) {
-            return $this->sendError('Validation Error. R!');
+            return $this->sendError(__('Validation Error. R!'));
         }
 
         return $tenant->run(function () use($request) {
@@ -45,9 +47,9 @@ class LoginCentralController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->code)->first();
+        $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->login_code)->first();
         if (!$tenant) {
-            return $this->sendError('Validation Error. R!');
+            return $this->sendError(__('Validation Error. R!'));
         }
 
         return $tenant->run(function () use($request) {

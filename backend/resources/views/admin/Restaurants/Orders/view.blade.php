@@ -54,7 +54,7 @@
                                                     {{__("$order->status")}}
                                                 </span>
                                             </td>
-                                            <td class="ps-0">{{ $order->branch->name }}</td>
+                                            <td class="ps-0">{{ $order?->branch?->name }}</td>
                                             <td class="text-success">{{ $order->total }}</td>
                                             <td>{{ $order->payment_method->name }}</td>
                                             <td class="text-center">

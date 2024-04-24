@@ -70,16 +70,16 @@ const Login = () => {
                 console.log("login-response", responseData);
                 localStorage.setItem(
                     "user-info",
-                    JSON.stringify(responseData?.data?.user),
+                    JSON.stringify(responseData?.data?.user)
                 );
                 localStorage.setItem(
                     "i18nextLng",
-                    response?.data?.user?.default_lang ?? "ar",
+                    response?.data?.user?.default_lang ?? "ar"
                 );
                 if (responseData.data.user.status === "inactive") {
                     sessionStorage.setItem(
                         PREFIX_KEY + "phone",
-                        responseData?.data?.user?.phone,
+                        responseData?.data?.user?.phone
                     );
 
                     const userRole =
@@ -110,7 +110,11 @@ const Login = () => {
             dispatch(changeUserState(null));
             setStatusCode(HTTP_NOT_AUTHENTICATED);
             toast.error(
-                `${error?.response?.data?.data || error?.response?.data?.message || t("Login failed")}`,
+                `${
+                    error?.response?.data?.data ||
+                    error?.response?.data?.message ||
+                    t("Login failed")
+                }`
             );
         }
     };
@@ -221,7 +225,7 @@ const Login = () => {
                                                         type="button"
                                                         className="text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md "
                                                         value={t(
-                                                            "Create an account",
+                                                            "Create an account"
                                                         )}
                                                     />
                                                 </Link>
@@ -273,11 +277,11 @@ const Login = () => {
                                             "center"
                                             ? " flex items-center justify-center"
                                             : restaurantStyle?.logo_alignment ===
-                                                    t("Left") ||
-                                                restaurantStyle?.logo_alignment ===
-                                                    "left"
-                                              ? "items-center justify-start"
-                                              : "items-center justify-end"
+                                                  t("Left") ||
+                                              restaurantStyle?.logo_alignment ===
+                                                  "left"
+                                            ? "items-center justify-start"
+                                            : "items-center justify-end"
                                     }`}
                                 >
                                     <div
@@ -288,11 +292,11 @@ const Login = () => {
                                                 t("Rounded")
                                                 ? "rounded-full"
                                                 : restaurantStyle?.logo_shape ===
-                                                        "sharp" ||
-                                                    restaurantStyle?.logo_shape ===
-                                                        t("Sharp")
-                                                  ? "rounded-none"
-                                                  : ""
+                                                      "sharp" ||
+                                                  restaurantStyle?.logo_shape ===
+                                                      t("Sharp")
+                                                ? "rounded-none"
+                                                : ""
                                         }`}
                                     >
                                         <img

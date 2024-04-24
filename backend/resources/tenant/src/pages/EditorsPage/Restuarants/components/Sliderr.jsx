@@ -36,13 +36,13 @@ const Sliderr = ({ banner_images, setIsBannerModalOpened }) => {
                     />
                 ))}
             </div>
-
+            {/* 
             <button className="w-[25px] h-[25px] bg-white rounded-full flex justify-center items-center absolute left-[16px] hover:cursor-pointer">
                 <img src={LeftIcon} alt="left" onClick={showPreviousImage} />
             </button>
             <button className="w-[25px] h-[25px] bg-white rounded-full flex justify-center items-center absolute right-[16px] hover:cursor-pointer">
                 <img src={RightIcon} alt="right" onClick={showNextImage} />
-            </button>
+            </button> */}
             <div className="absolute bottom-[8px] left-[50%] translate-x-[-50%] flex gap-[3px] bg-black/[0.1] rounded-[50px] px-[35px] py-[6px]">
                 {banner_images.map((image, index) => (
                     <button onClick={() => setImageIndex(index)} key={index}>

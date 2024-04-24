@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Tenant;
 
 use App\Enums\Admin\CouponTypes;
 use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
+use App\Models\Subscription;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\QrCode;
 use App\Models\Tenant\RestaurantStyle;
@@ -128,12 +129,12 @@ class RestaurantController extends BaseController
         return ROSubscription::serviceCalculate($type, $number_of_branches,$subscription_id,true);
     }
     public function serviceCoupon($coupon,$type,$number_of_branches = null){
-      
+
         if($type == NotificationReceipt::is_application_purchase || $type == NotificationReceipt::is_branch_purchase) {
             return response()->json( tenancy()->central(function()use($coupon,$type,$number_of_branches){
                 $coupon = ROSubscriptionCoupon::where('code',$coupon)->where($type,true)->whereColumn('max_use', '>', 'n_of_usage')->first();
                 if(!$coupon) return $coupon;
-                
+
                 if($type == NotificationReceipt::is_branch_purchase ){
                     $cost = CentralSubscription::first()->amount;
                 }elseif ($type == NotificationReceipt::is_application_purchase ){
@@ -145,7 +146,7 @@ class RestaurantController extends BaseController
                 ];
             }));
         }return false;
-      
+
     }
     public function delivery(Request $request)
     {
@@ -469,7 +470,7 @@ class RestaurantController extends BaseController
         $branch_left = '';
         if($current_sub = ROSubscription::first()){
             $subscription = tenancy()->central(function () {
-                return Subscription::first();
+                return CentralSubscription::first();
             });
             $branch_cost =number_format($current_sub->calculateDaysLeftCost($subscription->amount),2);
             $branch_left = $current_sub->getDateLeftAttribute();
@@ -826,7 +827,7 @@ class RestaurantController extends BaseController
         $user = Auth::user();
 
         if (!$user->isRestaurantOwner() && $user->branch->id != $branchId) {
-            return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
+            return redirect()->route('restaurant.branches')->with('error', __('Unauthorized'));
         }
 
         $categories = Category::where('branch_id', $branchId)
@@ -847,6 +848,7 @@ class RestaurantController extends BaseController
             ->where('branch_id', $branchId)
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'DESC')
+            ->orderByRaw('availability DESC')
             ->get();
 
         $branches = Branch::all();
@@ -954,10 +956,27 @@ class RestaurantController extends BaseController
 
         $selectedCategory = DB::table('categories')->where('id', $id)->first();
 
-        if ($selectedCategory && $user->id == $selectedCategory->user_id) {
+        if ($user->isRestaurantOwner() || ($selectedCategory && $user->id == $selectedCategory->user_id)) {
+
+            $branch_id = DB::table('items')->where('category_id', $id)->first()?->branch_id;
 
             DB::table('items')->where('category_id', $id)->delete();
             DB::table('categories')->where('id', $id)->delete();
+
+            $otherCategories = DB::table('categories')
+                ->where('id', '!=', $id)
+                ->where('branch_id', '=', $branch_id)
+                ->orderBy('sort')
+                ->get()->all();
+
+            $idx = 1;
+            foreach($otherCategories as $otherCategory) {
+                $category = Category::findOrFail($otherCategory?->id);
+                $category->update([
+                    'sort' => $idx++,
+                    'branch_id' => $category->branch_id
+                ]);
+            }
 
             return redirect()->route('restaurant.get-category', ['id' => Category::where('branch_id', $selectedCategory->branch_id)?->first()?->id ?? -1, 'branchId' => $selectedCategory->branch_id])->with('success', 'Category successfully deleted.');
 
@@ -1021,11 +1040,13 @@ class RestaurantController extends BaseController
 
     public function workers($branchId)
     {
-
-        $branch = Branch::findOrFail($branchId);
+        /* TODO: make policy for workers */
         $user = Auth::user();
-        // $workers = User::where('role', 2)->where('restaurant_name', $user->restaurant_name)->where('branch_id', $branchId)
-        // ->paginate(15);
+        if($user->isWorker() && $branchId != $user->branch_id){
+            return abort(403);
+        }
+        $branch = Branch::findOrFail($branchId);
+
         $workers = $branch->workers()
 //            ->where('id', '!=', $user->id)
             ->whereHas('roles', function ($query) {
@@ -1153,7 +1174,10 @@ class RestaurantController extends BaseController
         $user = Auth::user();
 
         $worker = RestaurantUser::findOrFail($id);
-
+        $user = Auth::user();
+        if(($user->isWorker() && $worker->branch_id != $user->branch_id) || !$worker->isWorker()){
+            return abort(403);
+        }
         if ($user?->id == $worker?->id) {
             return redirect()->back()->with('error', __('not allowed'));
         }

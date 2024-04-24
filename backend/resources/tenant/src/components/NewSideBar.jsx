@@ -18,6 +18,11 @@ import {
     setCategoriesAPI,
 } from "../redux/NewEditor/categoryAPISlice";
 
+import {
+    SetLoginModal,
+    SetRegisterModal,
+} from "../redux/NewEditor/restuarantEditorSlice";
+
 import Modal from "./Modal";
 import XIcon from "../assets/xIcon.png";
 
@@ -28,6 +33,8 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
     const { t } = useTranslation();
     const { setStatusCode } = useAuthContext();
 
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
     const handleLogout = async (e) => {
         e.preventDefault();
 
@@ -37,8 +44,9 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
                 .then((res) => {
                     setStatusCode(HTTP_NOT_AUTHENTICATED);
                     // dispatch(getCartItemsCount(0));
-                    navigate("/login", { replace: true });
+                    // navigate("/login", { replace: true });
                     toast.success(t("You have been logged out successfully"));
+                    onClose();
                 });
         } catch (err) {
             console.error(err.message);
@@ -105,71 +113,55 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
 
     return (
         <>
-            <div className="w-[280px] h-[646px] relative bg-white rounded-[10px] shadow border-r">
-                <div
-                    onClick={() => setIsBranchModelOpen(true)}
-                    className="w-56 h-8 left-[24px] top-[48px] absolute hover:cursor-pointer"
-                >
-                    <div className="w-56 h-8 left-0 top-0 absolute bg-white hover:bg-orange-100 bg-opacity-30 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100" />
-                    <div className="left-[35px] top-[8px] absolute text-gray-900 text-xs font-light font-['Plus Jakarta Sans']">
-                        {t("Branches")}
+            <div className="w-[280px] h-[646px] bg-white flex flex-col items-center pt-[48px] pb-[16px] rounded-[10px] shadow border-r relative">
+                <div className="flex flex-col items-center space-y-[24px]">
+                    <div
+                        onClick={() => setIsBranchModelOpen(true)}
+                        className="w-56 h-8 hover:cursor-pointer px-[10px] items-center bg-white hover:bg-orange-100 bg-opacity-30 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100 text-gray-900 text-xs font-light flex justify-between"
+                    >
+                        <div className=" ">{t("Branches")}</div>
+                        <img className="w-2.5 h-2.5 opacity-80" src={Branch} />
+                    </div>
+                    {!isLoggedIn && (
+                        <div
+                            onClick={() =>
+                                navigate(dispatch(SetLoginModal(true)))
+                            }
+                            className="w-56 h-8 hover:cursor-pointer px-[10px] items-center bg-white hover:bg-orange-100 bg-opacity-30 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100 text-gray-900 text-xs font-light flex justify-between"
+                        >
+                            <div className="">{t("Login")}</div>
+                            <img className="w-3 h-3 " src={Login} />
+                        </div>
+                    )}
+                    <div
+                        onClick={handleLanguageChange}
+                        className="w-56 h-8 hover:cursor-pointer px-[10px] items-center bg-white hover:bg-orange-100 bg-opacity-30 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100 text-gray-900 text-xs font-light flex justify-between"
+                    >
+                        <div>{buttonText}</div>
+                        <img className="w-3 h-3" src={Lang} />
                     </div>
                 </div>
-                <div
-                    onClick={() => navigate("/profile-summary#Dashboard")}
-                    className="w-56 h-8 left-[24px] top-[104px] absolute hover:cursor-pointer"
-                >
-                    <div className="w-56 h-8 left-0 top-0 absolute bg-white hover:bg-orange-100 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100" />
-                    <div className="left-[35px] top-[9px] absolute text-gray-900 text-xs font-light font-['Plus Jakarta Sans']">
-                        {t("Login as a customer")}
+                {isLoggedIn && (
+                    <div
+                        onClick={handleLogout}
+                        className="mt-auto w-56 h-8 hover:cursor-pointer px-[10px] items-center bg-white hover:bg-orange-100 bg-opacity-30 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100 text-gray-900 text-xs font-light flex justify-between"
+                    >
+                        <div className="">{t("Log out")}</div>
+                        <img className="w-3 h-3 " src={Login} />
                     </div>
-                </div>
-                <div
-                    onClick={handleLanguageChange}
-                    className="w-56 h-8 left-[24px] top-[160px] absolute hover:cursor-pointer"
-                >
-                    <div className="w-56 h-8 left-0 top-0 absolute bg-white hover:bg-orange-100 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100" />
-                    <div className="left-[38px] top-[8px] absolute text-gray-900 text-xs font-light font-['Plus Jakarta Sans']">
-                        {buttonText}
-                    </div>
-                </div>
-                <div
-                    onClick={handleLogout}
-                    className="w-56 h-8 left-[24px] top-[598px] absolute hover:cursor-pointer"
-                >
-                    <div className="w-56 h-8 left-0 top-0 absolute bg-white hover:bg-orange-100 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100" />
-                    <div className="left-[33px] top-[8px] absolute text-gray-900 text-xs font-light font-['Plus Jakarta Sans']">
-                        {t("Log out")}
-                    </div>
-                </div>
+                )}
+            </div>
+            <div
+                onClick={() => onClose()}
+                className={`w-[25px] h-[25px] bg-white flex justify-center items-center rounded-full border border-black border-opacity-30 absolute  top-0 ${
+                    currentLanguage == "ar" ? "left-[-30px]" : "right-[-30px]"
+                }`}
+            >
                 <img
-                    className="w-2.5 h-2.5 left-[34px] top-[59px] absolute opacity-80"
-                    src={Branch}
+                    src={XIcon}
+                    alt="x icon"
+                    className="w-[6.25px] h-[6.25px]"
                 />
-                <div className="w-3 h-3 left-[36px] top-[126px] absolute origin-top-left -rotate-180 opacity-80" />
-                <div className="w-3 h-3 left-[36px] top-[182px] absolute origin-top-left -rotate-180 opacity-80" />
-                <img
-                    className="w-3 h-3 left-[32px] top-[170px] absolute"
-                    src={Lang}
-                />
-                <img
-                    className="w-3 h-3 left-[44px] top-[620px] absolute origin-top-left -rotate-180 opacity-80"
-                    src={Login}
-                />
-                <img
-                    className="w-3 h-3 left-[32px] top-[115px] absolute"
-                    src={Login}
-                />
-                <div
-                    onClick={() => onClose()}
-                    className="w-[25px] h-[25px] bg-white flex justify-center items-center rounded-full border border-black border-opacity-30 absolute right-[-30px] top-0"
-                >
-                    <img
-                        src={XIcon}
-                        alt="x icon"
-                        className="w-[6.25px] h-[6.25px]"
-                    />
-                </div>
             </div>
         </>
     );

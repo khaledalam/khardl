@@ -206,13 +206,17 @@
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Name-->
+                                           <a href="{{ route('customers_data.show',['restaurantUser' => $order->user?->id]) }}">
                                             <span class="text-gray-600 text-hover-khardl">{{$order?->manual_order_first_name
-                                                            ? $order?->manual_order_first_name . ' ' . $order?->manual_order_last_name
-                                                            : $order?->user->fullName}}</span>
+                                                ? $order?->manual_order_first_name . ' ' . $order?->manual_order_last_name
+                                                : $order?->user?->fullName}}
+                                            </span>
 
                                             @if($order?->manual_order_first_name)
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="{{__('Manual order name')}}"></i>
-                                        @endif
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="{{__('Manual order name')}}"></i>
+                                            @endif
+                                            </a>
+
 
                                         <!--end::Name-->
                                         </div>
@@ -234,7 +238,7 @@
                                             {{__('email')}}</div>
                                     </td>
                                     <td class="fw-bolder text-end">
-                                        <a href="mailto:{{$order->user->email}}" class="text-gray-600 text-hover-khardl">{{$order->user->email}}</a>
+                                        <a href="mailto:{{$order->user?->email}}" class="text-gray-600 text-hover-khardl">{{$order->user?->email}}</a>
                                     </td>
                                 </tr>
                                 <!--end::Payment method-->
@@ -252,7 +256,7 @@
                                             <!--end::Svg Icon-->{{__('phone')}}</div>
                                     </td>
                                     <td class="fw-bolder text-end">
-                                        <a href="tel:{{$order->user->phone}}" class="text-gray-600 text-hover-khardl">{{$order->user->phone}}</a>
+                                        <a href="tel:{{$order->user?->phone}}" class="text-gray-600 text-hover-khardl">{{$order->user?->phone}}</a>
                                     </td>
                                 </tr>
                                 <!--end::Date-->

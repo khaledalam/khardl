@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RiMenuFoldFill } from "react-icons/ri";
 import { IoCloseOutline } from "react-icons/io5";
-import { logoUpload } from "../../../../redux/NewEditor/restuarantEditorSlice";
+import {
+    logoUpload,
+    SetSideBar,
+} from "../../../../redux/NewEditor/restuarantEditorSlice";
 import ImgPlaceholder from "../../../../assets/imgPlaceholder.png";
 import HeaderSidebar from "../../../../assets/headerSidebar.svg";
 import HeaderHomeIcon from "../../../../assets/headerHomeIcon.svg";
@@ -81,6 +84,7 @@ const HeaderEdit = ({
         home_position,
         home_color,
         home_radius,
+        isSideBarOpen,
     } = restuarantEditorStyle;
     const handleLogoUpload = (event) => {
         event.preventDefault();
@@ -105,7 +109,7 @@ const HeaderEdit = ({
             }`}
         >
             <div
-                className={`flex justify-start w-[30px] self-center ${
+                className={`flex justify-center items-center w-[30px] h-[30px] rounded-full self-center shadow-md ${
                     side_menu_position == "left"
                         ? "justify-self-start"
                         : side_menu_position == "right"
@@ -114,7 +118,7 @@ const HeaderEdit = ({
                 }`}
             >
                 <div
-                    onClick={toggleSidebarCollapse}
+                    // onClick={() => dispatch(SetSideBar(!isSideBarOpen))}
                     style={{ fontWeight: restaurantStyle?.text_fontWeight }}
                     className={`flex items-center gap-3 cursor-pointer relative`}
                 >
@@ -132,11 +136,11 @@ const HeaderEdit = ({
             </div>
 
             <div
-                onClick={
-                    categories && categories.length > 0
-                        ? handleGotoCart
-                        : () => {}
-                }
+                // onClick={
+                //     categories && categories.length > 0
+                //         ? handleGotoCart
+                //         : () => {}
+                // }
                 style={{
                     backgroundColor: order_cart_color
                         ? order_cart_color
@@ -145,7 +149,7 @@ const HeaderEdit = ({
                         ? `${order_cart_radius}px`
                         : "50px",
                 }}
-                className={`w-[30px] h-[30px] pl-[8px] pr-[7px] pb-[9px] pt-[6px] relative flex items-center justify-center cursor-pointer self-center ${
+                className={`w-[30px] h-[30px] pl-[8px] pr-[7px] pb-[9px] pt-[6px] relative flex items-center justify-center cursor-pointer self-center shadow-md ${
                     order_cart_position == "left"
                         ? "justify-self-start"
                         : order_cart_position == "right"
@@ -175,7 +179,8 @@ const HeaderEdit = ({
                     backgroundColor: home_color ? home_color : "#F3F3F3",
                     borderRadius: home_radius ? `${home_radius}px` : "50px",
                 }}
-                className={`pt-[6px] pb-[9px] pr-[7px] pl-[8px] bg-[#F3F3F3] rounded-full relative self-center ${
+                // onClick={() => navigate("/")}
+                className={`pt-[6px] pb-[9px] pr-[7px] pl-[8px] rounded-full relative self-center hover:cursor-pointer shadow-md ${
                     home_position == "left"
                         ? "justify-self-start"
                         : home_position == "right"

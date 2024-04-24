@@ -1,6 +1,4 @@
-@section('title', __('order inquiry'))
 
-@section('content')
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
@@ -23,7 +21,7 @@
                 </div>
             </form>
 
-            <hr class="w-50 py-1 my-5 m-auto" />
+            <hr class="w-50 my-1 m-auto" />
 
             @if (request('order_id') && $order)
                 <div class="conatiner m-2 alert alert-success">
@@ -42,4 +40,3 @@
     <!--end::Post-->
 </div>
 <!--end::Content-->
-@endsection

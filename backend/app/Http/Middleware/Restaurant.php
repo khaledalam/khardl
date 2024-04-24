@@ -26,7 +26,7 @@ class Restaurant
                     'is_loggedin' => true
                 ], ResponseHelper::HTTP_FORBIDDEN);
             }
-            return abort(403, 'Unauthorized');
+            return abort(403, __('Unauthorized'));
         }
 
         if ($user->isRejected()) {

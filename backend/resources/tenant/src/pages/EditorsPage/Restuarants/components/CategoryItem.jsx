@@ -20,6 +20,7 @@ const CategoryItem = ({
     textFontFamily,
     valuekey,
     currentSubItem,
+    isSide,
 }) => {
     const [isHover, setIsHover] = useState(false);
     const { t } = useTranslation();
@@ -48,9 +49,9 @@ const CategoryItem = ({
             onMouseLeave={handleMouseLeave}
             onClick={onClick}
             key={valuekey}
-            className={`flex w-full cursor-pointer ${
+            className={`flex w-full cursor-pointer hover:scale-110 transform transition-transform duration-300 ease-in-out ${
                 isGrid ? "flex-row" : "flex-col"
-            } gap-[16px] items-center`}
+            } gap-[16px] items-center ${isSide ? "w-full" : "max-w-[60px]"}`}
         >
             {selectedBranch?.display_category_icon == "1" && (
                 <div

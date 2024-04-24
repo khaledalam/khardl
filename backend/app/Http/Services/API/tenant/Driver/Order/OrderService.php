@@ -52,7 +52,7 @@ class OrderService
                 return $query->where('driver_id', $user->id)
                 ->whenDriverStatus($request->status);
             })
-            ->recent();
+            ->recentUpdated();
 
         $perPage = $request['perPage'] ?? config('application.perPage', 20);
         $orders = $query->paginate($perPage);
@@ -96,12 +96,12 @@ class OrderService
             $order->save();
             $this->sendNotifications($user, $order);
             return $this->sendResponse('', __('Order has been completed successfully'));
-        } elseif ($request->status == Order::CANCELLED) {
+        } /* elseif ($request->status == Order::CANCELLED) {
             $order->status = Order::CANCELLED;
             $order->reject_or_cancel_reason = $request->reason;
             $order->save();
             return $this->sendResponse('', __('Order has been cancelled successfully'));
-        } elseif ($request->status == Order::ACCEPTED) {//Mean picked up
+        }  */elseif ($request->status == Order::ACCEPTED) {//Mean picked up
             $order->status = $request->status;
             $order->driver_id = $user->id;
             $order->accepted_at = now();

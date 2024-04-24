@@ -21,16 +21,17 @@ class ItemFormRequest extends FormRequest
         ];
         $arabic_optional_text = ['checkboxInputNameAr', 'description_ar', 'selectionInputNameAr', 'dropdownInputNameAr'];
         $english_optional_text = ['checkboxInputNameEn', 'description_en', 'selectionInputNameEn', 'dropdownInputNameEn'];
-        foreach ($arabic_optional_text as $field) {
-            if (request()->has($field) && request()->$field !=null) {
-                $regexRules[$field] = 'regex:/^[0-9\p{Arabic}\s]+$/u';
-            }
-        }
-        foreach ($english_optional_text as $field) {
-            if (request()->has($field) && request()->$field !=null) {
-                $regexRules[$field] = 'regex:/^[0-9a-zA-Z\s]+$/';
-            }
-        }
+        // @TODO: to be handled later
+//        foreach ($arabic_optional_text as $field) {
+//            if (request()->has($field) && request()->$field !=null) {
+//                $regexRules[$field] = 'regex:/^[0-9\p{Arabic}\s]+$/u';
+//            }
+//        }
+//        foreach ($english_optional_text as $field) {
+//            if (request()->has($field) && request()->$field !=null) {
+//                $regexRules[$field] = 'regex:/^[0-9a-zA-Z\s]+$/';
+//            }
+//        }
         $rules = [
             'calories' => ['required','numeric'],
             'price' => ['required','numeric'],

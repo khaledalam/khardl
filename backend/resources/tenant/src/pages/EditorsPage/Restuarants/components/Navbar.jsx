@@ -1,24 +1,29 @@
 import { Fragment, useContext, useState, useEffect } from "react";
 import { FaPlay } from "react-icons/fa";
 import { IoMenuOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
 import AxiosInstance from "../../../../axios/axios";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { MenuContext } from "react-flexible-sliding-menu";
 import GoBackHomeIcon from "../../../../assets/GoBackHomeIcon.png";
 import PrimaryDropDown from "./PrimaryDropDown";
-import { headerPosition } from "../../../../redux/NewEditor/restuarantEditorSlice";
+import {
+    headerPosition,
+    SetSideBar,
+} from "../../../../redux/NewEditor/restuarantEditorSlice";
 import Modal from "../../../../components/Modal";
 import NewSideBar from "../../../../components/NewSideBar";
 import Branches from "../../../../components/Branches";
 import { use } from "i18next";
+import { useSelector, useDispatch } from "react-redux";
 
 const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
     const { t } = useTranslation();
     const { toggleMenu } = useContext(MenuContext);
     const [isLoading, setIsLoading] = useState(false);
     const restuarantStyle = useSelector((state) => state.restuarantEditorStyle);
+
+    const dispatch = useDispatch();
 
     const currentLanguage = useSelector(
         (state) => state.languageMode.languageMode
@@ -202,7 +207,11 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
         }
     };
 
-    const [isModelOpen, setIsModelOpen] = useState(false);
+    let isModelOpen = restuarantStyle.isSideBarOpen;
+    let setIsModelOpen = (value) => dispatch(SetSideBar(value));
+
+    // const [isModelOpen, setIsModelOpen] = useState(false);
+
     const [isBranchModelOpen, setIsBranchModelOpen] = useState(false);
     useEffect(() => {
         console.log("isModelOpen", isModelOpen);
