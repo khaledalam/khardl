@@ -1175,7 +1175,7 @@ class RestaurantController extends BaseController
 
         $worker = RestaurantUser::findOrFail($id);
         $user = Auth::user();
-        if($user->isWorker() && $worker->branch_id != $user->branch_id){
+        if(($user->isWorker() && $worker->branch_id != $user->branch_id) || !$worker->isWorker()){
             return abort(403);
         }
         if ($user?->id == $worker?->id) {
