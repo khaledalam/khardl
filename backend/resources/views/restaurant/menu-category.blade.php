@@ -547,7 +547,7 @@
                                         </script>
                                     </span>
                                     <!--end::Add label-->
-                                    <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit" enctype="multipart/form-data">
+                                    <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" class="mb-2" method="POST" id="category-submit" enctype="multipart/form-data">
                                         @csrf
                                         <div id="categoryForm" class="mt-2" style="display: none !important;">
                                             <ul class="nav nav-tabs" id="languageTabs">
@@ -587,7 +587,7 @@
                                         </div>
                                     </form>
 
-                                    <form method="POST" id="category-edit" enctype="multipart/form-data">
+                                    <form method="POST" id="category-edit" enctype="multipart/form-data" class="mb-2">
                                         @csrf
 
                                         <div id="category-edit-form" class="mt-2" style="display: none !important;">
@@ -1427,7 +1427,7 @@
     }
 
     const hideCategoryEditForm = function(){
-        document.getElementById("category-edit-form").style.display = 'none';
+        document.getElementById("categoryForm").style.display = 'none';
     }
 </script>
 
