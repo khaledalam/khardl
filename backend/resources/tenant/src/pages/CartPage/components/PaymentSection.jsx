@@ -159,7 +159,7 @@ const PaymentSection = ({
                         toast.success(
                             `${t("Order has been created successfully")}`,
                         );
-                        navigate(`/dashboard#orders`);
+                        navigate(`/profile-summary#orders`);
                         // navigate(`/dashboard?OrderId=${cartResponse.data?.order?.id}#orders`);
                     }
                 } catch (error) {
@@ -429,7 +429,7 @@ const PaymentSection = ({
                             // The billing contact information
                             customer={{
                                 id: tap.tap_customer_id,
-                               
+
                             }}
                             //for styling button
                             interface={{
@@ -838,7 +838,7 @@ const PaymentSection = ({
                 message={t("You need to login first")}
                 onClose={() => {
                     setShowAlert(false);
-                    navigate("/login");
+                    navigate("/");
                 }}
             />
             <div className="w-full lg:w-1/2 mx-auto my-8">

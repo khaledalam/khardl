@@ -43,7 +43,7 @@ const CreateNewPassword = () => {
             });
             if (response.data.success) {
                 sessionStorage.removeItem("email");
-                navigate("/login-admins");
+                navigate("/");
                 toast.success(
                     `${t("The password has been reset successfully")}`,
                 );

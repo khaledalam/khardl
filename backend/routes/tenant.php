@@ -87,8 +87,10 @@ Route::group([
        return redirect()->route('restaurant.branches');
     })->name("impersonate");
 
-    Route::post('login', [LoginCustomerController::class, 'login'])->name('tenant_login');
-    Route::post('login-admins', [LoginController::class, 'login']);
+    Route::post('login-tenant', [LoginCustomerController::class, 'login'])->name('tenant_login');
+//    Route::post('login-admins', [LoginController::class, 'login']);
+
+
     // guest
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout_get');
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
@@ -100,7 +102,7 @@ Route::group([
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+        Route::get('/profile-summary', [DashboardController::class, 'profile'])->name('profile-summary');
         Route::get('/customer-style', [CustomerStyleController::class, 'fetch'])->name('restaurant.customer.style.fetch');
 
         Route::middleware(['restaurantOrWorker','ActiveRestaurantAndBranch'])->group(function () {
@@ -262,7 +264,7 @@ Route::group([
         })->name('cart');
 
 
-        Route::post('register', [RegisterController::class, 'register'])->name('tenant_register');
+        Route::post('register-tenant', [RegisterController::class, 'register'])->name('tenant_register');
 
         Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
@@ -277,11 +279,12 @@ Route::group([
 
 
             Route::middleware('notVerifiedPhone')->group(function () {
-                Route::get('verification-phone', static function () {
-                    $setting = Setting::first();
-                    $restaurant_name = $setting->restaurant_name;
-                    return view("tenant", compact('restaurant_name'));
-                })->name("verification-phone");
+//                Route::get('verification-phone', static function () {
+//                    $setting = Setting::first();
+//                    $restaurant_name = $setting->restaurant_name;
+//                    return view("tenant", compact('restaurant_name'));
+//                })->name("verification-phone");
+//
                 Route::post('phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
                 Route::post('phone/verify', [RegisterController::class, 'verify']);
             });

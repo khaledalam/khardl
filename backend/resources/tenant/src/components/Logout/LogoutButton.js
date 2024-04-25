@@ -32,7 +32,7 @@ const LogoutButton = () => {
                 .then((res) => {
                     setStatusCode(HTTP_NOT_AUTHENTICATED);
                     dispatch(getCartItemsCount(0))
-                    navigate("/login", { replace: true });
+                    navigate("/", { replace: true });
                     closeMenu();
                     toast.success(t("You have been logged out successfully"));
                 });

@@ -176,7 +176,7 @@ const OuterSidebarNav = ({ id }) => {
 
     const handleRedirect = (role) => {
         if (role.toLowerCase() == "customer") {
-            navigate("/dashboard#Dashboard");
+            navigate("/profile-summary#Dashboard");
         } else if (role.toLowerCase() == "driver") {
             window.open(window.location.href + "orders-all");
         } else if (role.toLowerCase() == "worker") {
@@ -399,7 +399,7 @@ const OuterSidebarNav = ({ id }) => {
 
                         <div
                             onClick={() => {
-                                navigate("/login");
+                                navigate("/");
                                 closeMenu();
                             }}
                             className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg cursor-pointer border  items-center "

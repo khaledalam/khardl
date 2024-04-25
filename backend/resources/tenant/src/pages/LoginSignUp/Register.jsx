@@ -45,7 +45,7 @@ const Register = () => {
     const onSubmit = async (data) => {
         try {
             setSpinner(true);
-            const response = await AxiosInstance.post(`/register`, {
+            const response = await AxiosInstance.post(`/register-tenant`, {
                 first_name: data.first_name,
                 last_name: data.last_name,
                 email: data.email,

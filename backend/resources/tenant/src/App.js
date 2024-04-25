@@ -6,15 +6,11 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer/Footer";
-import Login from "./pages/LoginSignUp/Login";
 import { Helmet } from "react-helmet";
-import LoginAdmin from "./pages/LoginSignUp/LoginAdmin";
-import Register from "./pages/LoginSignUp/Register";
 import RestaurantNotLive from "./components/RestaurantNotLive";
 import RestaurantNotSubscribed from "./components/RestaurantNotSubscribed";
 import "aos/dist/aos.css";
 import "react-phone-input-2/lib/style.css";
-import VerificationPhone from "./pages/LoginSignUp/VerificationPhone";
 import ScrollUp from "./components/ScrollUp";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -83,7 +79,7 @@ const App = () => {
 
     const showHeader = ![
         "/policies",
-        "/dashboard",
+        "/profile-summary",
         "/privacy",
         "/site-editor/restaurants",
         "/restaurant-not-live",
@@ -98,7 +94,7 @@ const App = () => {
         "/",
         "/branches",
         "/cart",
-        "/dashboard",
+        "/profile-summary",
         "/site-editor/restaurants",
         "/login",
         "/login-admins",
@@ -238,7 +234,7 @@ const App = () => {
                                     {/* <Route
                 {/* <Route path='/dashboard' element={<CustomersPreview />} />{" "} */}{" "}
                                     <Route
-                                        path="/dashboard"
+                                        path="/profile-summary"
                                         element={<CustomerPage />}
                                     />{" "}
                                     <Route

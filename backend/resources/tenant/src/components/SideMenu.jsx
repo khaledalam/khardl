@@ -41,7 +41,7 @@ export const SideMenu = () => {
 
     const redirectToDashboard = () => {
         // Redirect to an external URL (window.location.href)
-        window.location.href = "/dashboard#Dashboard";
+        window.location.href = "/profile-summary#Dashboard";
     };
 
     const handleLogout = async (e) => {
@@ -53,7 +53,7 @@ export const SideMenu = () => {
                 .then((res) => {
                     setStatusCode(HTTP_NOT_AUTHENTICATED);
                     dispatch(getCartItemsCount(0))
-                    navigate("/login", { replace: true });
+                    navigate("/", { replace: true });
                     toast.success(t("You have been logged out successfully"));
                 });
         } catch (err) {

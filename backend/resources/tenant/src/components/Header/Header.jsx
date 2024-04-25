@@ -28,7 +28,7 @@ const Header = () => {
 
     const redirectToDashboard = () => {
         // Redirect to an external URL (window.location.href)
-        window.location.href = "/dashboard";
+        window.location.href = "/profile-summary";
     };
     const handleLogout = async (e) => {
         e.preventDefault();
@@ -40,7 +40,7 @@ const Header = () => {
                     setStatusCode(HTTP_NOT_AUTHENTICATED);
                     setStatusCode(HTTP_NOT_AUTHENTICATED);
                     dispatch(getCartItemsCount(0))
-                    navigate("/login", { replace: true });
+                    navigate("/", { replace: true });
                     toast.success(t("You have been logged out successfully"));
                 });
         } catch (err) {
