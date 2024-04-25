@@ -118,6 +118,40 @@
                                     <!--end::Stats-->
                                 </div>
                                 <!--end::Label-->
+                                <!--begin::Label-->
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-8px h-6px rounded-2 me-3 bg-danger"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-gray-500 flex-grow-1 me-4">
+                                        {{ __('Cancelled')}}
+                                    </div>
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="fw-boldest text-gray-700 text-xxl-end">
+                                        {{ $cancelledOrders }}
+                                    </div>
+                                    <!--end::Stats-->
+                                </div>
+                                <!--end::Label-->
+                                <!--begin::Label-->
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-8px h-6px rounded-2 me-3 bg-danger"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-gray-500 flex-grow-1 me-4">
+                                        {{ __('Rejected')}}
+                                    </div>
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="fw-boldest text-gray-700 text-xxl-end">
+                                        {{ $rejectedOrders }}
+                                    </div>
+                                    <!--end::Stats-->
+                                </div>
+                                <!--end::Label-->
                             </div>
                             <!--end::Labels-->
                         </div>
@@ -355,7 +389,7 @@
                         </div>
                         <!--end::Col-->
                     </div>
-                   
+
                     <div class="row mb-7">
                         <!--begin::Label-->
                         <label class="col-lg-4 fw-bold text-muted">{{ __('IBAN') }}
@@ -379,7 +413,7 @@
                                 <h3 class="fw-bolder m-0"> {{ __('files') }}</h3>
                                 @if($restaurant->user->traderRegistrationRequirement)
                                 <small> {{__('Created at')}} {{$restaurant->user->traderRegistrationRequirement->created_at->format('Y-m-d H:m')}}</small>
-                             
+
                                 @endif
                             </div>
                             <div>
@@ -424,7 +458,7 @@
                             <div class="">
                                 @if ($restaurant->user->traderRegistrationRequirement->national_address)
                                 <a href="{{ route('admin.download.file', ['path' =>$restaurant->user->traderRegistrationRequirement->national_address,'fileName'=>$restaurant->restaurant_name.' - National Address']) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
-                            
+
                                 @else
                                 {{ __('no-file-available') }}
                                 @endif
