@@ -92,9 +92,6 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
                         {t("select option")}
                     </option>
                     {options.map((option, idx) => {
-
-                        console.log(option);
-
                         return (
                             <option key={idx} value={idx}>
                                 {`${
