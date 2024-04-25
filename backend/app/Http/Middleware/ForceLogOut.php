@@ -21,7 +21,7 @@ class ForceLogOut
             $user->force_logout = 0;
             $user->save();
             Auth::logout();
-            return redirect()->route('tenant_login');
+            return redirect()->route('login');
         }
         return $next($request);
     }
