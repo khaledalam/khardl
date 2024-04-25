@@ -168,7 +168,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                                 <a
                                     href={`https://www.google.com/maps/search/?api=1&query=${branch.lat},${branch.lng}`}
                                     target="_blank"
-                                    className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center mx-[8px]"
+                                    className="cursor-pointer w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center mx-[8px]"
                                 >
                                     <img
                                         className="w-[7.63px] h-[7.63px] md:w-[11px] md:h-[11px]"
@@ -178,7 +178,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                                 </a>
                                 <a
                                     href={`tel:+1234567890`}
-                                    className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center mx-[8px]"
+                                    className="cursor-pointer w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center mx-[8px]"
                                 >
                                     <img
                                         className="w-[7.63px] h-[7.63px] md:w-[11px] md:h-[11px]"
@@ -191,7 +191,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                                         setIsWorkingHours(true);
                                         setCurrentBranch(branch);
                                     }}
-                                    className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center mx-[8px]"
+                                    className="cursor-pointer w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center mx-[8px]"
                                 >
                                     <img
                                         className="w-[7.63px] h-[7.63px] md:w-[11px] md:h-[11px]"
@@ -258,7 +258,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                     <div className="w-[302px] h-10 left-[24px] top-[24px] absolute flex space-x-[4px]">
                         <div
                             onClick={() => setSelectedDay("monday")}
-                            className={`w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
+                            className={`cursor-pointer w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
                                 selectedDay == "monday"
                                     ? "text-white text-[10px] font-semibold bg-red-900"
                                     : "text-black text-[8px] font-normal bg-white"
@@ -268,7 +268,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                         </div>
                         <div
                             onClick={() => setSelectedDay("tuesday")}
-                            className={`w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
+                            className={`cursor-pointer w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
                                 selectedDay == "tuesday"
                                     ? "text-white text-[10px] font-semibold bg-red-900"
                                     : "text-black text-[8px] font-normal bg-white"
@@ -278,7 +278,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                         </div>
                         <div
                             onClick={() => setSelectedDay("wednesday")}
-                            className={`w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
+                            className={`cursor-pointer w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
                                 selectedDay == "wednesday"
                                     ? "text-white text-[10px] font-semibold bg-red-900"
                                     : "text-black text-[8px] font-normal bg-white"
@@ -288,7 +288,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                         </div>
                         <div
                             onClick={() => setSelectedDay("thursday")}
-                            className={`w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
+                            className={`cursor-pointer w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
                                 selectedDay == "thursday"
                                     ? "text-white text-[10px] font-semibold bg-red-900"
                                     : "text-black text-[8px] font-normal bg-white"
@@ -298,7 +298,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                         </div>
                         <div
                             onClick={() => setSelectedDay("friday")}
-                            className={`w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
+                            className={`cursor-pointer w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
                                 selectedDay == "friday"
                                     ? "text-white text-[10px] font-semibold bg-red-900"
                                     : "text-black text-[8px] font-normal bg-white"
@@ -308,7 +308,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                         </div>
                         <div
                             onClick={() => setSelectedDay("saturday")}
-                            className={`w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
+                            className={`cursor-pointer w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
                                 selectedDay == "saturday"
                                     ? "text-white text-[10px] font-semibold bg-red-900"
                                     : "text-black text-[8px] font-normal bg-white"
@@ -318,7 +318,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                         </div>
                         <div
                             onClick={() => setSelectedDay("sunday")}
-                            className={`w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
+                            className={`cursor-pointer w-10 h-10 rounded-[13px] border border-red-900 flex justify-center items-center ${
                                 selectedDay == "sunday"
                                     ? "text-white text-[10px] font-semibold bg-red-900"
                                     : "text-black text-[8px] font-normal bg-white"
@@ -341,12 +341,12 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                         <div className="w-[72.50px] h-[17.14px] left-[20px] top-[34.29px] absolute text-black text-xs font-medium font-['Plus Jakarta Sans']">
                             {currentBranch?.[selectedDay + "_open"]
                                 ? currentBranch?.[selectedDay + "_open"]
-                                : "00:00:00"}
+                                : t('NA')}
                         </div>
                         <div className="w-[67.50px] h-[17.14px] left-[168.75px] top-[34.29px] absolute text-black text-xs font-medium font-['Plus Jakarta Sans']">
-                            {currentBranch?.[selectedDay + "_closed"]
-                                ? currentBranch?.[selectedDay + "_closed"]
-                                : "00:00:00"}
+                            {currentBranch?.[selectedDay + "_close"]
+                                ? currentBranch?.[selectedDay + "_close"]
+                                : t('NA')}
                         </div>
                         <img
                             className="w-[12.50px] h-[11.43px] left-[118.75px] top-[36.57px] absolute"
@@ -355,7 +355,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                     </div>
                     <div
                         onClick={() => setIsWorkingHours(false)}
-                        className="w-[25px] h-[25px] bg-white flex justify-center items-center rounded-full border border-black border-opacity-30 absolute right-0 top-[-30px]"
+                        className="cursor-pointer w-[25px] h-[25px] bg-white flex justify-center items-center rounded-full border border-black border-opacity-30 absolute right-0 top-[-30px]"
                     >
                         <img
                             src={XIcon}
@@ -367,7 +367,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
             </Modal>
             <div
                 onClick={() => closingFunc()}
-                className="w-[25px] h-[25px] bg-white flex justify-center items-center rounded-full border border-black border-opacity-30 absolute right-0 top-[-30px]"
+                className="cursor-pointer w-[25px] h-[25px] bg-white flex justify-center items-center rounded-full border border-black border-opacity-30 absolute right-0 top-[-30px]"
             >
                 <img
                     src={XIcon}

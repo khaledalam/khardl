@@ -39,18 +39,18 @@ const Header = ({ restaurantStyle, categories }) => {
             className={`w-full h-[56px] z-10 grid grid-cols-3 px-[16px] md:mt-[8px]`}
         >
             <div
-                className={`flex justify-center items-center w-[30px] h-[30px] rounded-full self-center shadow-md ${
+                className={`flex cursor-pointer  justify-center items-center w-[30px] h-[30px] rounded-full self-center shadow-md ${
                     side_menu_position == "left"
                         ? "justify-self-start"
                         : side_menu_position == "right"
                         ? "justify-self-end"
                         : "justify-self-center"
                 }`}
+                onClick={() => dispatch(SetSideBar(!isSideBarOpen))}
             >
                 <div
-                    onClick={() => dispatch(SetSideBar(!isSideBarOpen))}
                     style={{ fontWeight: restaurantStyle?.text_fontWeight }}
-                    className={`flex items-center gap-3 cursor-pointer relative`}
+                    className={`flex items-center gap-3 relative`}
                 >
                     <img src={HeaderSidebar} alt="sidebar icon" />
                 </div>
