@@ -377,7 +377,7 @@
                                                 </div>
                                                 <a href="#"
                                                     class="fw-bold text-muted text-hover-khardl fs-7">{{ Auth::user()->email }}</a>
-                                                <small class="my-4">{{__("Restaurant code")}} <code id="r-code" class="cursor-pointer">test</code></small>
+                                                <small class="my-4">{{__("Restaurant code")}} <code id="r-code" class="cursor-pointer">{{tenant()->mapper_hash}}</code></small>
                                             </div>
                                             <!--end::Username-->
                                         </div>
