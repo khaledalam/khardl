@@ -146,6 +146,11 @@
                                             <span class="badge badge-success p-2 fs-6">
                                                 {{ $subscription->end_at?->format('Y-m-d') }}
                                             </span>
+                                        @elseif($subscription)
+                                        <span class="fw-bold fs-6 text-black fw-bolder">{{__('Plan')}}</span>
+                                            <span class="badge badge-warning p-2 fs-6">
+                                                {{__("subscription not active")}}
+                                            </span>
                                         @else
                                             <span class="fw-bold fs-6 text-black fw-bolder">{{__('Plan')}}</span>
                                             <span class="badge badge-dark p-2 fs-6">
@@ -229,7 +234,7 @@
                         <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder">
                             <!--begin::Nav item-->
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" data-bs-toggle="tab" href="#overview">{{ __('overview')}}</a>
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 {{!request()->has('config')?'active':""}}" data-bs-toggle="tab" href="#overview">{{ __('overview')}}</a>
                             </li>
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
@@ -247,7 +252,7 @@
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#delivery_companies">{{ __('Delivery companies')}}</a>
                             </li>
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#config">{{ __('configurations')}}</a>
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 {{request()->has('config')?'active':""}}" data-bs-toggle="tab" href="#config">{{ __('configurations')}}</a>
                             </li>
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#tap">{{ __('Payment gateway')}}</a>
@@ -264,7 +269,7 @@
                     </div>
                     
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="overview" role="tab-panel">
+                        <div class="tab-pane fade  {{!request()->has('config')?'active show':""}}" id="overview" role="tab-panel">
                             @include('admin.Restaurants.Overview.view',['sub'=>$subscription])
                         </div>
                         <div class="tab-pane fade" id="restuarant_orders" role="tab-panel">
@@ -276,7 +281,7 @@
                         <div class="tab-pane fade delivery_companies" id="delivery_companies" role="tab-panel">
                             @include('admin.Restaurants.Delivery_companies.view')
                         </div>
-                        <div class="tab-pane fade config" id="config" role="tab-panel">
+                        <div class="tab-pane fade config {{request()->has('config')?'active show':""}}" id="config" role="tab-panel">
                             @include('admin.Restaurants.Configurations.config')
                         </div>
 
