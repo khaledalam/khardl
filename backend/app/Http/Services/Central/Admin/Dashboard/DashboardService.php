@@ -31,6 +31,7 @@ class DashboardService
         $cancelledOrders = 0;
         $readyOrders = 0;
         $receivedByResOrders = 0;
+        $rejectedOrders = 0;
         $self = $this;
         foreach ($restaurantsAll as $restaurant) {
             $restaurant->run(static function ($tenant) use (
@@ -43,7 +44,7 @@ class DashboardService
                 &$cancelledOrders,
                 &$readyOrders,
                 &$receivedByResOrders,
-
+                &$rejectedOrders
                 ) {
                 $setting = Setting::first();
                 if ($setting&&$setting->is_live) {
@@ -57,6 +58,7 @@ class DashboardService
                 $acceptedOrders += $self->getOrderStatusCount(clone $orders, 'accepted');
                 $completedOrders += $self->getOrderStatusCount(clone $orders, 'completed');
                 $cancelledOrders += $self->getOrderStatusCount(clone $orders, 'cancelled');
+                $rejectedOrders += $self->getOrderStatusCount(clone $orders, 'rejected');
                 $readyOrders += $self->getOrderStatusCount(clone $orders, 'ready');
                 $receivedByResOrders += $self->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
                 $totalOrders += $orders->count();
@@ -80,6 +82,7 @@ class DashboardService
                 'cancelledOrders',
                 'readyOrders',
                 'receivedByResOrders',
+                'rejectedOrders'
             )
         );
     }
