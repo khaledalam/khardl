@@ -91,15 +91,20 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
                     <option disabled value="">
                         {t("select option")}
                     </option>
-                    {options.map((option, idx) => (
-                        <option key={idx} value={idx}>
-                            {`${
-                                language === "en"
-                                    ? option.value[0]
-                                    : option.value[1]
-                            } (${optionsPrice[idx]} ${t("SAR")})`}
-                        </option>
-                    ))}
+                    {options.map((option, idx) => {
+
+                        console.log(option);
+
+                        return (
+                            <option key={idx} value={idx}>
+                                {`${
+                                    language === "en"
+                                        ? option?.value[0]
+                                        : option?.value[1]
+                                } (${optionsPrice[idx]} ${t("SAR")})`}
+                            </option>
+                        )
+                    })}
                 </select>
             )}
         </Fragment>
