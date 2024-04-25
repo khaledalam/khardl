@@ -90,16 +90,7 @@ class RestaurantStyle extends Model
 
    
     public static function changeImage($value){
-        if(is_string($value)){
-            if (strpos($value, "http://") === 0 || strpos($value, "https://") === 0) {
-                return $value;
-            }else {
-                return tenant_route(tenant()->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'home').'/tenancy/assets/'.$value;
-            }
-        }else {
-            return $value;
-        }
-       
+        return  getImageFromTenant($value);
     }
        
 }

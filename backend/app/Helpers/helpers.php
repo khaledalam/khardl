@@ -92,6 +92,27 @@ if (!function_exists('store_image')) {
 
     }
 }
+if (!function_exists('getImageFromTenant')) {
+    function getImageFromTenant($value)
+    {
+        if(is_string($value)){
+            if (strpos($value, "http://") === 0 || strpos($value, "https://") === 0) {
+                return $value;
+            }else {
+                return tenant_route(tenant()->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'home').'/tenancy/assets/'.$value;
+            }
+        }else if(is_array($value)){
+            $values = null;
+            foreach($value as $image){
+                $values[] = getImageFromTenant($image);
+            }
+            return $values;
+        }else {
+            return $value;
+        }
+    }
+}
+
 if (!function_exists('getAmount')) {
     function getAmount($input)
     {

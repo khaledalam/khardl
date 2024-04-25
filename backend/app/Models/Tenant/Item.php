@@ -69,6 +69,11 @@ class Item extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function getPhotoAttribute()
+    {
+        if(!isset($this->attributes['photo']))return null;
+        return getImageFromTenant($this->attributes['photo']);
+    }
     /* End Relations */
     /* Start Scopes */
     public function scopeWhenSearch($query, $search)

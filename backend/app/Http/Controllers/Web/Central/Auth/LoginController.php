@@ -63,12 +63,13 @@ class LoginController extends BaseController
             if (!$tenant) {
                 return $this->sendError(__('Validation Error. R!'));
             }
-
+           
             return $tenant->run(function () use($credentials,$tenant) {
                 if (!Auth::attempt($credentials,true)) {
                     return $this->sendError(__('Unauthorized'), ['error' => __('Invalid email or password')]);
                 } else {
                     $user = Auth::user();
+                   
                     $url = $tenant->impersonationUrl($user->id,'dashboard');
                     return $this->sendResponse([
                         'url' => $url

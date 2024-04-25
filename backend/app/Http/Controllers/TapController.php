@@ -352,7 +352,7 @@ class TapController extends Controller
         if ($request->tap_id) {
             $charge = TapCharge::retrieveSub($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-                sleep(3);
+                sleep(4);
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
                     if(isset($charge['message']['metadata']['branch_id'])){
                         return redirect()->route('restaurant.branches')
@@ -429,7 +429,7 @@ class TapController extends Controller
                         'cost'=> ($coupon->type == CouponTypes::FIXED_COUPON->value)? $AppSubscription->amount  - $coupon->amount : ( $AppSubscription->amount  - (($AppSubscription->amount  * $coupon->amount) / 100)),
                         'coupon_code'=>$request->coupon_code,
                         'sub_amount'=>$AppSubscription->amount
-                    ];
+                    ]; 
                 });
                 if(!$chargeData){
                     return redirect()->route('restaurant.service')->with('error', __('Invalid coupon'));

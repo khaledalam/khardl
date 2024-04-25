@@ -97,6 +97,7 @@
                                         </div>
                                     </td>
                                     <td>
+
                                         @if ($driver->image)
                                         <div class="symbol symbol-60px symbol-lg-60px symbol-fixed position-relative">
                                             <img alt="driver image" src="{{ $driver->image }}" />
