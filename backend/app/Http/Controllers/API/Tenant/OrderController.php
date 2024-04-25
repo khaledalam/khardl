@@ -197,6 +197,7 @@ class OrderController extends BaseRepositoryController
             } else {
                 AssignDeliveryCompany::dispatch($request->expectsJson(), $order, $request->status)->delay(now()->addMinutes(config('application.limit_delivery_company') ?? 15));
             }
+            $this->sendNotificationsWhenReceivedByRestaurant($order);
             $order->update(['status' => $request->status,  'received_by_restaurant_at' => now()]);
             if ($request->expectsJson()) {
                 return $this->sendResponse(null, __('Order has been updated successfully.'));
