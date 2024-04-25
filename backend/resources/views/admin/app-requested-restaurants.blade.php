@@ -30,6 +30,7 @@
                                         <tr>
                                             <th class="min-w-250px">{{ __('owner')}}</th>
                                             <th class="min-w-150px">{{ __('Request date')}}</th>
+                                            <th class="min-w-90px">{{ __('Icon')}}</th>
                                             <th class="min-w-90px">{{ __('status')}}</th>
                                             <th class="min-w-90px">{{ __('Start date')}}</th>
                                             <th class="min-w-90px">{{ __('End date')}}</th>
@@ -73,7 +74,7 @@
                                                     <!--begin::Info-->
                 
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="mb-1 text-gray-800 text-hover-primary">{{ $restaurant->restaurant_name }}</a>
+                                                        <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}?config=1" class="mb-1 text-gray-800 text-hover-primary">{{ $restaurant->restaurant_name }}</a>
                                                         <div class="fw-bold fs-6 text-gray-400">{{ $restaurant->email }}</div>
                                                     </div>
                                                     <!--end::Info-->
@@ -81,7 +82,12 @@
                                                 <!--end::User-->
                                             </td>
                                             <td>{{ $customer_app?->getOriginal('created_at')->format('Y-m-d') }}</td>
-                
+                                            <td>
+                                                @if($customer_app->icon ?? null)
+                                                <img src="{{$customer_app->icon}}" alt="" width="50" height="50" class="rounded-circle ">
+                                                @endif
+                                            </td>
+
                                             <td>
                                                 @if($customer_app && $customer_app->status == \App\Models\ROSubscription::ACTIVE)
                                                 <span class="badge badge-success fw-bolder">{{ __('active')}}</span>

@@ -73,7 +73,7 @@
                 <!--end::Label-->
                 <!--begin::Col-->
                 <div class="col-lg-6">
-                    <input type="file" class="form-control " name="icon" >
+                    <input type="file" class="form-control " name="icon"  accept="image/x-png,image/gif,image/jpeg" >
                 </div>
                 <div class="col-lg-1 ">
                     <img alt="Logo" src="{{ $customer_app->icon ?? global_asset('assets/default_logo.png') }}" width="40" />
