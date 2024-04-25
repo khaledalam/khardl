@@ -62,13 +62,11 @@ const EditorLink = ({ defaultValue, options, handleChange, label }) => {
                                 selectedSocialIcons.length == 0 && "hidden"
                             }`}
                         >
-                            <img
+                            {mediaCollection?.find(
+                            (socialIcon) =>
+                            socialIcon.id === selectedMediaId
+                            )?.imgUrl != null && <img
                                 src={
-                                    // ""
-                                    mediaCollection?.find(
-                                        (socialIcon) =>
-                                            socialIcon.id === selectedMediaId
-                                    )?.imgUrl != null &&
                                     mediaCollection?.find(
                                         (socialIcon) =>
                                             socialIcon.id === selectedMediaId
@@ -76,7 +74,7 @@ const EditorLink = ({ defaultValue, options, handleChange, label }) => {
                                 }
                                 alt="social media"
                                 className="w-[20px] h-[20px] object-cover"
-                            />
+                            />}
                         </div>
                         <input
                             type="text"

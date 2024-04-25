@@ -32,6 +32,7 @@
     "User logged in successfully.":"تم تسجيل الدخول بنجاح",
     "Item has been updated successfully.":"تم تحديث المنتج بنجاح",
     "Branch has been updated successfully.":"تم تحديث بيانات الفرع بنجاح",
+    "Restaurant code": "رمز المطعم",
     "Order has been updated successfully.":"تم تحديث بيانات الطلب",
     "Order status logs fetched":"تم جمع حالات الطلب المتاحة",
     ":delivery_company is not activated yet":":delivery_company ليست مفعلة",
