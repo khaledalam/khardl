@@ -37,7 +37,7 @@ const EditorAlignment = ({ defaultValue, onChange, modalId }) => {
             >
                 {alignments.map((alignment, idx) => (
                     <div
-                        className={`${
+                        className={`cursor-pointer ${
                             alignment.position === activeAlign
                                 ? "bg-white rounded-[50px] py-[10px] px-[25px]"
                                 : "rounded-[50px] py-[10px] px-[25px]"
