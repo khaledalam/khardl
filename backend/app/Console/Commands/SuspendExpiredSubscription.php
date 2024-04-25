@@ -34,7 +34,9 @@ class SuspendExpiredSubscription extends Command
      */
     public function handle()
     {   
-      
+        // TODO remove Sentry message after testing 
+        \Sentry\captureMessage('Cronjob executed here');
+
         $days= CentralSetting::first()->active_days_after_sub_expired;
         $restaurants = Tenant::all();
         foreach($restaurants as $restaurant){
