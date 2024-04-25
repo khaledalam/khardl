@@ -74,7 +74,6 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
         }
     })();
 
-    console.log("branches", branches);
     const [selectedBranch, setSelectedBranch] = useState(null);
 
     let branch_id = localStorage.getItem("selected_branch_id");
@@ -177,7 +176,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                                     />
                                 </a>
                                 <a
-                                    href={`tel:+1234567890`}
+                                    href={`tel:` + branch?.phone}
                                     className="cursor-pointer w-[25px] h-[25px] md:w-[35px] md:h-[35px] bg-orange-100 bg-opacity-30 rounded-full flex justify-center items-center mx-[8px]"
                                 >
                                     <img
