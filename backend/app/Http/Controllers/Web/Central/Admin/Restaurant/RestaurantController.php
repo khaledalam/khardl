@@ -80,9 +80,7 @@ class RestaurantController extends Controller
             }
 
             if($request->icon){
-
-                $logo = store_image($request->file('icon'), RestaurantStyle::STORAGE, 'customer_app');
-                $customer_app->icon =  tenant_route($tenant->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'home').'/tenancy/assets/'.$logo;
+                $customer_app->icon = store_image($request->file('icon'), RestaurantStyle::STORAGE, 'customer_app');
             }
 
             $customer_app->save();

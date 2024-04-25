@@ -29,7 +29,13 @@ class ROCustomerAppSub extends Model
         'discount',
         'coupon_code'
     ];
-
+    protected static function booted()
+    {
+        static::retrieved(function ($model) {
+            $model->icon = self::changeIcon($model->icon);
+        });
+    }
+    protected $appends = ['icon'];
 
 
     public const ACTIVE = 'active';
@@ -47,5 +53,12 @@ class ROCustomerAppSub extends Model
     public function getEndAtAttribute()
     {
         return Carbon::parse($this->attributes['end_at']);
+    }
+    public static function changeIcon($value){
+        if (strpos($value, "http://") === 0 || strpos($value, "https://") === 0) {
+            return $value;
+        }else {
+            return tenant_route(tenant()->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'home').'/tenancy/assets/'.$value;
+        }
     }
 }

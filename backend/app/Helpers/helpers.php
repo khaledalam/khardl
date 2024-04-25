@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
-use App\Http\Services\Notification\PushNotificationService;
 use App\Models\Tenant;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Services\Notification\PushNotificationService;
 
 if (!function_exists('generate_token')) {
     function generateToken($length = 5)
@@ -62,13 +63,26 @@ if (!function_exists('store_image')) {
         }
         try {
             if($name){
-                $filename = $name . '.' . $image->getClientOriginalExtension();
+                if($image->getClientOriginalExtension()   != ''){
+                    $filename = $name . '.' . $image->getClientOriginalExtension();
+                }else {
+                    $filename = $name . '.' . $image->guessExtension();
+                }
             }else{
-                $filename = Str::random(40) . '.' . $image->getClientOriginalExtension();
+                if($image->getClientOriginalExtension()   != ''){
+                    $filename = Str::random(40) . '.' . $image->getClientOriginalExtension();
+                }else {
+                    $filename = Str::random(40) . '.' . $image->guessExtension();
+                }
             }
             while (Storage::disk('public')->exists('items/' . $filename)) {
-                $filename = Str::random(40) . '.' . $image->getClientOriginalExtension();
+                if($image->getClientOriginalExtension()   != ''){
+                    $filename = Str::random(40) . '.' . $image->getClientOriginalExtension();
+                }else {
+                    $filename = Str::random(40) . '.' . $image->guessExtension();
+                }
             }
+     
             $image->storeAs($store_at, $filename, 'public');
             return $store_at . '/' . $filename;
         } catch (Exception $e) {

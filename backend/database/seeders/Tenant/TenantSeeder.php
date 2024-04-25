@@ -25,7 +25,7 @@ class TenantSeeder extends Seeder
             .'.'.config("tenancy.central_domains")[0]
         // route
             ,'stancl.tenancy.asset') . '/';
-
+        
         if(env('APP_ENV') == 'local'){
             $seeders= [
                 RolesAndPermissionsSeeder::class,
