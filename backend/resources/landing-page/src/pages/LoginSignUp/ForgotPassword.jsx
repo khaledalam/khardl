@@ -8,12 +8,15 @@ import { toast } from 'react-toastify'
 import AxiosInstance from "../../axios/axios";
 import {CgSpinner} from "react-icons/cg";
 import MainText from '../../components/MainText'
-
+import { AiOutlineTeam, AiOutlineVerticalAlignMiddle } from 'react-icons/ai'
 const ForgotPassword = () => {
    const { t } = useTranslation()
    const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
-
+    const [openEyeLoginCode, setOpenEyeLoginCode] = useState(false)
+     const EyeLoginCode = () => {
+         setOpenEyeLoginCode(!openEyeLoginCode)
+     }
    const {
       register,
       handleSubmit,
@@ -27,7 +30,8 @@ const ForgotPassword = () => {
 
       try {
          const response = await AxiosInstance.post(`/password/forgot`, {
-           email: data.email
+           email: data.email,
+           login_code: data.login_code
          })
          console.log("=>>>" , response?.data);
          console.log(response?.data?.success);
@@ -66,7 +70,7 @@ const ForgotPassword = () => {
                            Title={t('Forgot your password?')}
                            classTitle='!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px] new-form-ui'
                         />
-                      
+
                         <p className='text-sm text-gray-700 mt-5'>
                            {t('Reset Text')}
                         </p>
@@ -95,6 +99,39 @@ const ForgotPassword = () => {
                               </span>
                            )}
                         </div>
+
+                        <div className={"flex justify-start items-center gap-3"} >
+                            <div className={"justify-start items-center gap-3"} style={{display: openEyeLoginCode ? 'flex' : 'none'}}>
+                                <h4 className='ms-2 text-[13px] text-gray-500'>
+                                    {t('Login Code')}
+                                </h4>
+                                <input
+                                    type='text'
+                                    className={`p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                                    placeholder={"12345"}
+                                    {...register('login_code', { required: false })}
+                                    style={{
+                                        marginBottom: '10px'
+                                    }}
+                                />
+                                {errors.login_code && (
+                                    <span className='text-red-500 text-xs mt-1 ms-2'>
+                                    {t('Login Code Error')}
+                                </span>
+                                )}
+                            </div>
+                        </div>
+                        {openEyeLoginCode === false ? (
+                            <AiOutlineTeam
+                                onClick={EyeLoginCode}
+                                className='text-[var(--primary)] cursor-pointer'
+                            />
+                        ) : (
+                            <AiOutlineVerticalAlignMiddle
+                                onClick={EyeLoginCode}
+                                className='text-[var(--primary)] cursor-pointer'
+                            />
+                        )}
                         <div className='text-center'>
                            <button
                                disabled={loading}
