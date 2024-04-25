@@ -608,6 +608,7 @@
                                                 </div>
                                                 <a href="{{route('restaurant.profile')}}"
                                                    class="fw-bold text-muted text-hover-khardl fs-7">{{ Auth::user()->email }}</a>
+                                                <small class="my-4">{{__("Restaurant code")}} <code id="r-code" class="cursor-pointer">test</code></small>
                                             </div>
                                             <!--end::Username-->
                                         </div>
@@ -761,6 +762,21 @@
         crossorigin="anonymous"
     ></script>
 @endif
+
+<script>
+    const r_code = document.getElementById("r-code");
+
+    r_code.onclick = function() {
+        document.execCommand("copy");
+    }
+
+    r_code.addEventListener("copy", function(event) {
+        event.preventDefault();
+        if (event.clipboardData) {
+            event.clipboardData.setData("text/plain", r_code.textContent);
+        }
+    });
+</script>
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->
 </body>
