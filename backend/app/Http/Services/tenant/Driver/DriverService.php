@@ -83,7 +83,7 @@ class DriverService
     }
     public function handleImage($request, $update = null)
     {
-        $image = tenant_asset(store_image($request->file('image'), self::DriverPath, null, $update));
+        $image = store_image($request->file('image'), self::DriverPath, null, $update);
         return $image;
     }
     private function request_data($request)

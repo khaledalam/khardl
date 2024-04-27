@@ -53,7 +53,7 @@ class CategoryItemSeeder extends Seeder
                     $photo_file = new UploadedFile(public_path(Item::STORAGE_SEEDER."/$kk.jpg"), true);
                     $photo = store_image($photo_file,Item::STORAGE_SEEDER,$kk);
                     $category->items()->save(new Item([
-                        'photo' => $assets.$photo,
+                        'photo' => $photo,
                         'price' => $faker->numberBetween(10, 500),
                         'calories' => $faker->numberBetween(0, 500),
                         'name' =>  trans_json("Item " . $kk,"Item " . $kk),

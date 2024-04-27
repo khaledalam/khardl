@@ -161,6 +161,7 @@ class RestaurantService
     protected function getRestaurantData(Tenant $restaurant)
     {
         $data = $restaurant->run(function ($restaurant) {
+         
             $tenantRestaurantService = new TenantRestaurantService();
             $info = $restaurant->info(false);
             $orders = $restaurant->orders(false);
@@ -187,7 +188,7 @@ class RestaurantService
             $RO =  RestaurantUser::first();
             $restaurant_name = $setting->restaurant_name;
             $customer_app = ROCustomerAppSub::first();
-
+       
             return [
                 $info['logo'],
                 $info['is_live'],

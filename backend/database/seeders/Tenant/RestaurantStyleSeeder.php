@@ -19,13 +19,13 @@ class RestaurantStyleSeeder extends Seeder
     {
         // use public seeder folder
         $logo_file = new UploadedFile(public_path('assets/default_logo.png'), true);
-        $logo = $assets . store_image($logo_file, RestaurantStyle::STORAGE, 'logo');
+        $logo =  store_image($logo_file, RestaurantStyle::STORAGE, 'logo');
 
         $banner1_file = new UploadedFile(public_path('seeders/banner_1.jpeg'), true);
-        $banner1 = $assets . store_image($banner1_file, RestaurantStyle::STORAGE, 'banner_1');
+        $banner1 =  store_image($banner1_file, RestaurantStyle::STORAGE, 'banner_1');
 
         $banner2_file = new UploadedFile(public_path('seeders/banner_2.jpg'), true);
-        $banner2 = $assets . store_image($banner2_file, RestaurantStyle::STORAGE, 'banner_2');
+        $banner2 =  store_image($banner2_file, RestaurantStyle::STORAGE, 'banner_2');
 
 
         RestaurantStyle::create([
