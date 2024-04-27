@@ -225,6 +225,7 @@ return [
         'facility_name' => 'إسم المنشأة',
         'national_id_number' => 'رقم الهوية الوطنية',
         'dob' => 'تاريخ الميلاد',
+        "at_least_one_permission"=>"علي الاقل صلاحية واحدة"
 
     ],
     'values' => [
