@@ -518,6 +518,8 @@
     "add-new-branch" : "إضافة فرع جديد",
     "name-branch" : "اسم الفرع",
     "location-branch" : "موقع الفرع",
+    "city": "المدينة",
+    "neighborhood": "بجوار",
     "copy-menu" : "نسخ قائمة الطعام",
     "None" : "لا شيء",
     "none" : "لا شيء",

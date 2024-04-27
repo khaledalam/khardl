@@ -21,6 +21,8 @@ class Branch extends Model
         'name',
         'lat',
         'lng',
+        'city',
+        'neighborhood',
         'phone',
         'address',
         'is_primary',
