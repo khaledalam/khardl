@@ -89,6 +89,7 @@ class RestaurantService
             $completedOrders,
             $acceptedOrders,
             $cancelledOrders,
+            $rejectedOrders,
             $readyOrders,
             $receivedByResOrders,
             $salesThisMonth,
@@ -138,6 +139,7 @@ class RestaurantService
                 'completedOrders',
                 'acceptedOrders',
                 'cancelledOrders',
+                'rejectedOrders',
                 'readyOrders',
                 'receivedByResOrders',
                 'salesThisMonth',
@@ -172,6 +174,7 @@ class RestaurantService
             $acceptedOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'accepted');
             $completedOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'completed');
             $cancelledOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'cancelled');
+            $rejectedOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'rejected');
             $readyOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'ready');
             $receivedByResOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
             $salesThisMonth = $tenantRestaurantService->getTotalPriceThisMonth(clone $orders);
@@ -200,6 +203,7 @@ class RestaurantService
                 $completedOrders,
                 $acceptedOrders,
                 $cancelledOrders,
+                $rejectedOrders,
                 $readyOrders,
                 $receivedByResOrders,
                 $salesThisMonth,

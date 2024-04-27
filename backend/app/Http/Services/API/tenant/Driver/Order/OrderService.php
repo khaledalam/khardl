@@ -41,6 +41,8 @@ class OrderService
             ->when($request->status == 'all' || !$request->status, function ($query) use ($user) {
                 return $query
                     ->where('deliver_by', null)
+                    ->where('status','!=', Order::CANCELLED)
+                    ->where('status','!=', Order::COMPLETED)
                     ->where(function ($query) use ($user) {
                         $query->where('driver_id', $user->id)
                         ->orWhere(function ($query) {

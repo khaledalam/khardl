@@ -39,7 +39,7 @@ const SocialMedia = ({ restaurantStyle }) => {
                             }}
                         >
                             <img
-                                src={socialMedia.imgUrl}
+                                src={socialMedia?.imgUrl}
                                 alt={"whatsapp"}
                                 className="w-[20px] h-[20px] object-cover"
                             />

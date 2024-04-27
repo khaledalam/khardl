@@ -32,6 +32,7 @@
     "User logged in successfully.":"تم تسجيل الدخول بنجاح",
     "Item has been updated successfully.":"تم تحديث المنتج بنجاح",
     "Branch has been updated successfully.":"تم تحديث بيانات الفرع بنجاح",
+    "Restaurant code": "رمز المطعم",
     "Order has been updated successfully.":"تم تحديث بيانات الطلب",
     "Order status logs fetched":"تم جمع حالات الطلب المتاحة",
     ":delivery_company is not activated yet":":delivery_company ليست مفعلة",
@@ -179,6 +180,7 @@
     "Request for app":"تم طلب التطبيقات",
     "Customer application":"تطبيق الزبون",
     "Request date":"تاريخ الطلب",
+    "Icon":"أيقونة",
     "End Date":"ميعاد الانتهاء",
     "subscription not active":"اشتراك غير فعال",
     "Active subscription":" اشتراك فعال",
@@ -1239,6 +1241,8 @@
     "Are you sure you want to delete this driver ?":"هل أنت متأكد أنك تريد حذف هذا السائق؟",
     "Rejected":"مرفوضة",
     "Customers":"العملاء",
-    "Name, email, phone, adress":"الاسم والبريد والهاتف والعنوان"
+    "Name, email, phone, adress":"الاسم والبريد والهاتف والعنوان",
+    "Invalid login code.":"رمز تسجيل الدخول غير صالح.",
+    "Wrong credentials":"بيانات خاطئة"
 
 }

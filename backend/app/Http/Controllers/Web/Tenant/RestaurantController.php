@@ -132,7 +132,10 @@ class RestaurantController extends BaseController
 
         if($type == NotificationReceipt::is_application_purchase || $type == NotificationReceipt::is_branch_purchase) {
             return response()->json( tenancy()->central(function()use($coupon,$type,$number_of_branches){
-                $coupon = ROSubscriptionCoupon::where('code',$coupon)->where($type,true)->whereColumn('max_use', '>', 'n_of_usage')->first();
+                $coupon = ROSubscriptionCoupon::where('code',$coupon)->where($type,true)->where(function ($query) {
+                    $query->whereColumn('max_use', '>', 'n_of_usage')
+                          ->orWhereNull('max_use');
+                })->first();
                 if(!$coupon) return $coupon;
 
                 if($type == NotificationReceipt::is_branch_purchase ){

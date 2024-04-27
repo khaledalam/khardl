@@ -212,7 +212,10 @@ class TapController extends Controller
                     $coupon = ROSubscriptionCoupon::
                     where('code',$request->coupon_code)
                     ->where(NotificationReceipt::is_branch_purchase,true)
-                    ->whereColumn('max_use', '>', 'n_of_usage')->first();
+                    ->where(function ($query) {
+                        $query->whereColumn('max_use', '>', 'n_of_usage')
+                              ->orWhereNull('max_use');
+                    })->first();
                     if(!$coupon) return $coupon;
                     return [
                         'cost'=> ($coupon->type == CouponTypes::FIXED_COUPON->value)? $centralSubscription->amount * $data['n_branches'] - $coupon->amount : (( $centralSubscription->amount * $data['n_branches']) - ((($centralSubscription->amount * $data['n_branches']) * $coupon->amount) / 100)),
@@ -423,7 +426,10 @@ class TapController extends Controller
                     $coupon = ROSubscriptionCoupon::
                     where('code',$request->coupon_code)
                     ->where(NotificationReceipt::is_application_purchase,true)
-                    ->whereColumn('max_use', '>', 'n_of_usage')->first();
+                    ->where(function ($query) {
+                        $query->whereColumn('max_use', '>', 'n_of_usage')
+                              ->orWhereNull('max_use');
+                    })->first();
                     if(!$coupon) return $coupon;
                     return [
                         'cost'=> ($coupon->type == CouponTypes::FIXED_COUPON->value)? $AppSubscription->amount  - $coupon->amount : ( $AppSubscription->amount  - (($AppSubscription->amount  * $coupon->amount) / 100)),

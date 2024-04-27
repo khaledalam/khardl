@@ -976,7 +976,9 @@ const ProductItem = ({
                                                                             <div className="flex flex-col gap-2 mb-3">
                                                                                 {dropdownItems &&
                                                                                     dropdownItems.length >
-                                                                                        0 &&
+                                                                                        0 && dropdownItems[
+                                                                                    dropdown_idx
+                                                                                    ].length > 0 &&
                                                                                     dropdownItems[
                                                                                         dropdown_idx
                                                                                     ][0]

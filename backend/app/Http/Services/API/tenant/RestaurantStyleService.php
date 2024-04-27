@@ -145,6 +145,7 @@ class RestaurantStyleService
             // get branches of restaurant
             $data['branches'] = Branch::where('active',true)->get([
                 'name',
+                'phone',
                 'id',
                 'lat',
                 'lng',
