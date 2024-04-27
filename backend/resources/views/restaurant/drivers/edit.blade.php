@@ -83,7 +83,15 @@
                                                     <input type="file" class="form-control form-control-solid" placeholder="{{ __('Photo') }}" name="image" accept="image/*"  />
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <img alt="driver image" src="{{ $driver->image }}" class="rounded" style="max-height: 100%;max-width:100%"/>
+                                                    @if ($driver->image)
+                                                    <div class="symbol symbol-60px symbol-lg-60px symbol-fixed position-relative">
+                                                        <img alt="driver image" src="{{ $driver->image }}" />
+                                                    </div>
+                                                    @else
+                                                    <div class="symbol symbol-60px symbol-lg-60px symbol-fixed position-relative">
+                                                        <img alt="driver image" src="{{ global_asset('images/driver_logo.jpg') }}" />
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <!--end::Input-->
