@@ -42,9 +42,6 @@ class RestaurantStyle extends Model
     public function getBannerImageAttribute()
     {
         $url = $this->attributes['banner_image'];
-        if ($url) {
-            $url .= '?ver=' . random_hash();
-        }
 
         return [
             'url' => $url,
@@ -61,9 +58,6 @@ class RestaurantStyle extends Model
 
             $new['type'] = $this->getFileType(pathinfo(parse_url($image, PHP_URL_PATH), PATHINFO_EXTENSION));
 
-            if ($image) {
-                $image .= '?ver=' . random_hash();
-            }
             $new['url'] = $image;
             $images[] = $new;
         }
