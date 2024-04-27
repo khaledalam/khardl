@@ -743,7 +743,7 @@ class RestaurantController extends BaseController
         DB::table('branches')->where('id', $id)->update($formattedData);
 
         return redirect()->back()
-            ->with('success', 'Branch updated successfully');
+            ->with('success', __('Branch updated successfully'));
     }
 
     public function updatePhone(Request $request, $id)
@@ -755,7 +755,7 @@ class RestaurantController extends BaseController
         $branch->save();
 
         return redirect()->back()
-            ->with('success', 'Branch updated successfully');
+            ->with('success', __('Branch updated successfully'));
     }
 
 

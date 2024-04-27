@@ -1103,6 +1103,7 @@
     "Delivery options" : "خيارات التوصيل",
     "branch ":"فرع",
     "Buy New branch":"شراء فرع جديد",
+    "Branch updated successfully":"تم تحديث الفرع بنجاح",
     "Max time for drivers to pickup order" : "أقصى وقت للسائقين لاستلام الطلب",
     "The number of minutes for own drivers so he can accept order before order goes to delivery companies" : "عدد الدقائق لدي السائقين الخاصيين لقبول الطلب قبل خروج الطلب الي شركات التوصيل",
     "Number of minutes" : "عدد الدقائق",

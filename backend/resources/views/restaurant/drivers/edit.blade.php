@@ -80,7 +80,7 @@
                                             <!--begin::Input-->
                                             <div class="row">
                                                 <div class="col-md-9">
-                                                    <input type="file" class="form-control form-control-solid" placeholder="{{ __('Photo') }}" name="image" accept="image/*" required />
+                                                    <input type="file" class="form-control form-control-solid" placeholder="{{ __('Photo') }}" name="image" accept="image/*"  />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <img alt="driver image" src="{{ $driver->image }}" class="rounded" style="max-height: 100%;max-width:100%"/>
