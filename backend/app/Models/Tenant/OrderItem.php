@@ -35,22 +35,8 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Order::class);
     }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
     public function item()
     {
         return $this->belongsTo(Item::class);
-    }
-    public function extras()
-    {
-        return $this->belongsToMany(ProductExtra::class, 'order_item_extras');
-    }
-
-    public function size()
-    {
-        return $this->belongsTo(ProductSize::class);
     }
 }
