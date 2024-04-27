@@ -439,8 +439,27 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <!--begin::Heading-->
                                 <div class="mb-13 text-center">
                                     <!--begin::Title-->
+                                    <label class="form-check-label" for="phoneText">{{__('phone')}}</label>
                                     <input class="form-control form-control-solid" name="phone" id="phoneText" required value="{{ $branch->phone }}">
-                                    <label class="form-check-label" for="phoneText">Phone</label>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Heading-->
+
+                                <!--begin::Heading-->
+                                <div class="mb-13 text-center">
+                                    <!--begin::Title-->
+                                    <label class="form-check-label" for="cityText">{{__('city')}}</label>
+                                    <input class="form-control form-control-solid" name="city" id="cityText" required value="{{ $branch->city }}">
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Heading-->
+
+
+                                <!--begin::Heading-->
+                                <div class="mb-13 text-center">
+                                    <!--begin::Title-->
+                                    <label class="form-check-label" for="neighborhoodText">{{__('neighborhood')}}</label>
+                                    <input class="form-control form-control-solid" name="neighborhood" id="neighborhoodText" required value="{{ $branch->neighborhood }}">
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
