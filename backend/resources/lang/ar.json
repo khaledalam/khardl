@@ -1248,6 +1248,9 @@
     "This code is required when workers log in to the restaurant and also when retrieving the password.":"مطلوب هذا الرمز عندما يقوم العمال بتسجيل الدخول إلى المطعم وأيضًا عند استرداد كلمة المرور.",
     "Available":"متاح",
     "Not available":"غير متاح",
-    "Orders count":"عدد الطلبات"
+    "Orders count":"عدد الطلبات",
+    "each additional 1KM":"كل 1 كيلومتر",
+    "First 8KM for":"أول 8 كيلومترات ل",
+    "Max coverage":"اقصي تغطية"
 
 }
