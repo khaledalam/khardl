@@ -444,6 +444,7 @@ class AdminController extends Controller
             return $q->where("name","Administrator");
         })
         ->where('id','!=',Auth::id())
+        ->where('id','!=',1)
         ->orderBy('id','DESC')
         ->paginate(15);
         $user = Auth::user();
