@@ -6,10 +6,9 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
+import { AiFillEye, AiFillEyeInvisible, AiOutlineVerticalAlignMiddle,AiOutlineTeam } from 'react-icons/ai'
 import {API_ENDPOINT} from "../../config";
 import AxiosInstance from "../../axios/axios";
-
 const CreateNewPassword = () => {
    const { t } = useTranslation()
    const navigate = useNavigate()
@@ -20,6 +19,10 @@ const CreateNewPassword = () => {
    } = useForm()
    const [openEyePassword, setOpenEyePassword] = useState(false)
    const [openEyeRePassword, setOpenEyeRePassword] = useState(false)
+    const [openEyeLoginCode, setOpenEyeLoginCode] = useState(false)
+    const EyeLoginCode = () => {
+        setOpenEyeLoginCode(!openEyeLoginCode)
+    }
    const Language = useSelector((state) => state.languageMode.languageMode)
    let user_email = sessionStorage.getItem('email')
    if(!user_email) {
@@ -40,7 +43,8 @@ const CreateNewPassword = () => {
              email: user_email,
              password: data.password,
              c_password: data.confirm_password,
-             token: data.token
+             token: data.token,
+             login_code: data.login_code
          })
          if (response.data.success) {
             sessionStorage.removeItem('email')
@@ -144,7 +148,6 @@ const CreateNewPassword = () => {
                                  )}
                               </div>
                            </div>
-
                            {/* Input 4 */}
                            <div className='relative mt-4'>
                               <h4 className='mb-2 ms-2 text-[13px] text-start font-semibold'>
@@ -185,6 +188,38 @@ const CreateNewPassword = () => {
                                  )}
                               </div>
                            </div>
+                           <div className={"flex justify-start items-center gap-3"} >
+                                <div className={"justify-start items-center gap-3"} style={{display: openEyeLoginCode ? 'flex' : 'none'}}>
+                                    <h4 className='ms-2 text-[13px] text-gray-500'>
+                                        {t('Login Code')}
+                                    </h4>
+                                    <input
+                                        type='text'
+                                        className={`p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                                        placeholder={"12345"}
+                                        {...register('login_code', { required: false })}
+                                        style={{
+                                            marginBottom: '10px'
+                                        }}
+                                    />
+                                    {errors.login_code && (
+                                        <span className='text-red-500 text-xs mt-1 ms-2'>
+                                        {t('Login Code Error')}
+                                    </span>
+                                    )}
+                                </div>
+                            </div>
+                            {openEyeLoginCode === false ? (
+                                <AiOutlineTeam
+                                    onClick={EyeLoginCode}
+                                    className='text-[var(--primary)] cursor-pointer'
+                                />
+                            ) : (
+                                <AiOutlineVerticalAlignMiddle
+                                    onClick={EyeLoginCode}
+                                    className='text-[var(--primary)] cursor-pointer'
+                                />
+                            )}
                         </div>
                         <div className='text-center'>
                            <button

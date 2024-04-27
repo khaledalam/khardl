@@ -24,11 +24,11 @@ const EditorColorSelect = ({
                 </label>
             )}
             <div className="">
-                <button className="h-[32px] w-[154px] rounded-[50px] bg-[#F3F3F3] flex items-center p-[2px] px-[2px]">
-                    <div
+                <button className="h-[32px] w-[154px] rounded-[50px] bg-[#F3F3F3] flex items-center p-[2px] px-[2px]"
                         onClick={() =>
                             document.getElementById(modalId).showModal()
-                        }
+                        }>
+                    <div
                         style={{
                             backgroundColor: isResetColor
                                 ? newdefaultColor

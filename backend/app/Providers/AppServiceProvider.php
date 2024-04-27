@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Tenant;
 use URL;
 use App\Models\CentralSetting;
 use App\Models\User;

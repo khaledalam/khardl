@@ -134,6 +134,23 @@
                                     <!--end::Stats-->
                                 </div>
                                 <!--end::Label-->
+                                <!--begin::Label-->
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3 my-3">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-8px h-6px rounded-2 bg-danger me-3"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-gray-500 flex-grow-1 me-4">
+                                        {{ __('Rejected')}}
+                                    </div>
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="fw-boldest text-gray-700 text-xxl-end">
+                                       {{ $rejectedOrders }}
+                                    </div>
+                                    <!--end::Stats-->
+                                </div>
+                                <!--end::Label-->
                             </div>
                             <!--end::Labels-->
                         </div>

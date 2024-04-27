@@ -440,9 +440,9 @@ const DetailesItem = ({
                                                                             {Language ==
                                                                             "en"
                                                                                 ? item
-                                                                                      .value[0]
+                                                                                      ?.value[0]
                                                                                 : item
-                                                                                      .value[1]}
+                                                                                      ?.value[1]}
                                                                         </label>
                                                                     </div>
                                                                 ),
@@ -528,9 +528,9 @@ const DetailesItem = ({
                                                                             {Language ==
                                                                             "en"
                                                                                 ? item
-                                                                                      .value[0]
+                                                                                      ?.value[0]
                                                                                 : item
-                                                                                      .value[1]}
+                                                                                      ?.value[1]}
                                                                         </label>
                                                                     </div>
                                                                 ),
@@ -615,9 +615,9 @@ const DetailesItem = ({
                                                                             {Language ==
                                                                             "en"
                                                                                 ? item
-                                                                                      .value[0]
+                                                                                      ?.value[0]
                                                                                 : item
-                                                                                      .value[1]}
+                                                                                      ?.value[1]}
                                                                         </option>
                                                                     ),
                                                                 )}
