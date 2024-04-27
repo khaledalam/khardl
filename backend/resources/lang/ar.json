@@ -1244,6 +1244,7 @@
     "Customers":"العملاء",
     "Name, email, phone, adress":"الاسم والبريد والهاتف والعنوان",
     "Invalid login code.":"رمز تسجيل الدخول غير صالح.",
-    "Wrong credentials":"بيانات خاطئة"
+    "Wrong credentials":"بيانات خاطئة",
+    "This code is required when workers log in to the restaurant and also when retrieving the password.":"مطلوب هذا الرمز عندما يقوم العمال بتسجيل الدخول إلى المطعم وأيضًا عند استرداد كلمة المرور."
 
 }
