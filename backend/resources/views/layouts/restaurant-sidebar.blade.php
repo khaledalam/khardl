@@ -608,7 +608,12 @@
                                                 </div>
                                                 <a href="{{route('restaurant.profile')}}"
                                                    class="fw-bold text-muted text-hover-khardl fs-7">{{ Auth::user()->email }}</a>
-                                                <small class="my-4">{{__("Restaurant code")}} <code id="r-code" class="cursor-pointer">{{tenant()->mapper_hash}}</code></small>
+                                                <small class="my-4">{{__("Restaurant code")}}
+                                                    <code id="r-code" class="cursor-pointer">{{tenant()->mapper_hash}}</code>
+                                                    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
+                                                    title="{{ __('This code is required when workers log in to the restaurant and also when retrieving the password.') }}">
+                                                    </i>
+                                                </small>
                                             </div>
                                             <!--end::Username-->
                                         </div>
