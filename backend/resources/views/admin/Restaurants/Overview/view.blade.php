@@ -546,14 +546,20 @@
     </div>
     <!--end::Post-->
 </div>
-
-@section('charts')
+<style>
+    canvas{
+      width: 100%!important;
+      height:100%!important;
+      position: relative;
+    }
+  </style>
+@section('js')
     @if($profitDays&&$is_live)
     {!! $profitDays->renderChartJsLibrary() !!}
     {!! $profitDays->renderJs() !!}
     @endif
     @if($profitMonths&&$is_live)
-    {!! $profitDays->renderChartJsLibrary() !!}
+    {!! $profitMonths->renderChartJsLibrary() !!}
     {!! $profitMonths->renderJs() !!}
     @endif
 @endsection
