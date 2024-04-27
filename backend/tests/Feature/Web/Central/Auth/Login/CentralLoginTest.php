@@ -68,7 +68,7 @@ class CentralLoginTest extends TestCase
         $response->assertStatus($statusCode)
             ->assertJson([
                 'success' => false,
-                'message' => 'Unauthorized.',
+                'message' => __('Unauthorized.'),
                 'is_loggedin' => false,
             ]);
     }
