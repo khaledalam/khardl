@@ -157,11 +157,11 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                                     />
                                 </div>
                                 <div className="text-black text-[16px] font-medium">
-                                    {branch.name}
+                                    {branch?.name}
                                 </div>
-                                <div className="text-black/[0.77] text-[13px] font-medium">
-                                    ~ Jeddah
-                                </div>
+                                {branch?.city && <div className="text-black/[0.77] text-[13px] font-medium mx-1">
+                                    ~ {branch?.city}
+                                </div>}
                             </div>
                             <div className="flex flex-row ">
                                 <a
@@ -198,6 +198,9 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                                         alt="Location Icon"
                                     />
                                 </div>
+                                {branch?.neighborhood && <div className="flex justify-center text-gray-700 items-center text-[13px] font-medium mx-1">
+                                    {branch?.neighborhood}
+                                </div>}
                             </div>
                         </div>
                         <div className="flex flex-col items-end">
@@ -216,19 +219,19 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
                             )}
                             <div className="flex flex-col space-y-[8px]">
                                 {branch.delivery_availability ? (
-                                    <div className="w-12 h-4 bg-red-900 rounded-[50px] border flex justify-center items-center">
+                                    <div className="p-1 w-14 h-5 bg-red-900 rounded-[50px] border flex justify-center items-center">
                                         <div className="text-white text-[8px] font-medium">
                                             {t("Delivery")}
                                         </div>
                                     </div>
                                 ) : null}
-                                {branch.pickup_availability && (
-                                    <div className="w-12 h-4 bg-red-900 rounded-[50px] border flex justify-center items-center">
+                                {branch.pickup_availability ? (
+                                    <div className="p-1 w-14 h-5 bg-red-900 rounded-[50px] border flex justify-center items-center">
                                         <div className="text-white text-[8px] font-medium">
                                             {t("Pickup")}
                                         </div>
                                     </div>
-                                )}
+                                ) : null}
                             </div>
                         </div>
                         {selectedBranch == index && (

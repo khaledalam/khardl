@@ -736,6 +736,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 </div>
                                 <!--end::Input-->
                             </div>
+                            <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-md-12 fv-row">
                                 <label class="required fs-6 fw-bold mb-2">{{ __('location-branch') }}</label>
@@ -743,6 +744,30 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
                                 <input type="hidden" id="lat-new_branch" name="lat-new_branch" />
                                 <input type="hidden" id="lng-new_branch" name="lng-new_branch" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--end::Col-->
+                            <div class="col-md-12 fv-row">
+                                <label class="fs-6 fw-bold mb-2">{{ __('city') }}</label>
+                                <!--begin::Input-->
+                                <div class="position-relative d-flex align-items-center">
+                                    <!--begin::Datepicker-->
+                                    <input value="{{ old('city') }}" required name="city" class="form-control form-control-solid " type="text" />
+                                    <!--end::Datepicker-->
+                                </div>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--end::Col-->
+                            <div class="col-md-12 fv-row">
+                                <label class="fs-6 fw-bold mb-2">{{ __('neighborhood') }}</label>
+                                <!--begin::Input-->
+                                <div class="position-relative d-flex align-items-center">
+                                    <!--begin::Datepicker-->
+                                    <input value="{{ old('neighborhood') }}" required name="neighborhood" class="form-control form-control-solid " type="text" />
+                                    <!--end::Datepicker-->
+                                </div>
                                 <!--end::Input-->
                             </div>
                             <!--end::Col-->
