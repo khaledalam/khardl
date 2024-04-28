@@ -132,7 +132,7 @@
                                                         <div class="d-flex my-4">
                                                             <label for="delivery_companies_option">
                                                                 <input class="form-check-input me-3" id="delivery_companies_option" type="checkbox" {{ !$branch->delivery_companies_option ? 'disabled' : '' }} name="delivery_companies_option"  value="1" {{ isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  $branch->delivery_companies_option ?'checked':''}}  />
-                                                                <span class="fw-bolder fs-5 mb-0">{{__('Delivery companies')}}</span>
+                                                                <span class="fw-bolder fs-5 mb-0 form-check-label">{{__('Delivery companies')}}</span>
                                                                 <small class="m-2 text-danger">({{__('you are not signed with any delivery company yet')}})</small>
                                                             </label>
                                                         </div>
@@ -149,7 +149,7 @@
                                                         <label for="drivers_option">
                                                             <div class="d-flex my-4">
                                                                 <input class="form-check-input me-3" id="drivers_option" type="checkbox" name="drivers_option" value="" {{ !$branch->drivers_option ? 'disabled' : '' }} value="1" {{ isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  $branch->drivers_option ?'checked':''}}  />
-                                                                <span class="fw-bolder fs-5 mb-0">{{__('Own drivers')}}</span>
+                                                                <span class="fw-bolder fs-5 mb-0 form-check-label">{{__('Own drivers')}}</span>
                                                                 <small class="m-2 text-danger">({{__('You do not have any active drivers')}})</small>
                                                             </div>
                                                         </label>
