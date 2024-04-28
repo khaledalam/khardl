@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('app:suspend-expired-subscription')->everyThreeMinutes();
+        $schedule->command('app:suspend-expired-subscription')->daily();
     }
 
     /**
