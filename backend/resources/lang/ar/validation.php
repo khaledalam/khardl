@@ -129,6 +129,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'shipping_address' => [
+            'required_if' => 'عنوان التوصيل مطلوب'
+        ]
 
     ],
     'attributes' => [
@@ -227,6 +230,9 @@ return [
         'dob' => 'تاريخ الميلاد',
         'drivers_option' => 'خيار السائقين الخاصيين',
         'delivery_companies_option' => 'خيار شركات التوصيل',
+        'branch_id' => 'الفرع',
+        "shipping_address" => "عنوان الشحن",
+        "delivery_type_id" => "طريقة التوصيل"
 
     ],
     'values' => [
