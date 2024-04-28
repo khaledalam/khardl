@@ -225,6 +225,8 @@ return [
         'facility_name' => 'إسم المنشأة',
         'national_id_number' => 'رقم الهوية الوطنية',
         'dob' => 'تاريخ الميلاد',
+        'drivers_option' => 'خيار السائقين الخاصيين',
+        'delivery_companies_option' => 'خيار شركات التوصيل',
 
     ],
     'values' => [
