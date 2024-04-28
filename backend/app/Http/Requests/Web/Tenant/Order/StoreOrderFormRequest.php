@@ -86,7 +86,8 @@ class StoreOrderFormRequest extends FormRequest
     {
         $locale = app()->getLocale();
         foreach ($item->selection_required as $key => $option) {
-            if ($option == 'true' && !isset($this->product_options[$item->id][$copy]['selection_input'][$key])) {
+            //Make radio option always required
+            if (/* $option == 'true' &&  */!isset($this->product_options[$item->id][$copy]['selection_input'][$key])) {
                 $validator->errors()->add('selectedRadio', __(':option is required for :item', [
                     'option' => ($locale == 'en') ? $item->selection_input_titles[$key][0] : $item->selection_input_titles[$key][1],
                     'item' => $item->name
@@ -100,7 +101,8 @@ class StoreOrderFormRequest extends FormRequest
     {
         $locale = app()->getLocale();
         foreach ($item->dropdown_required as $key => $option) {
-            if ($option == 'true' && !isset($this->product_options[$item->id][$copy]['dropdown_input'][$key]) ?? false) {
+            //Make dropdown option always required
+            if (/* $option == 'true' &&  */!isset($this->product_options[$item->id][$copy]['dropdown_input'][$key]) ?? false) {
                 $validator->errors()->add('selectedDropdown', __(':option is required for :item', [
                     'option' => ($locale == 'en') ? $item->dropdown_input_titles[$key][0] : $item->dropdown_input_titles[$key][1],
                     'item' => $item->name
