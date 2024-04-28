@@ -88,7 +88,7 @@
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Input group-->
-                                            <div class="fv-row" id="ship_address_section">
+                                            <div class="fv-row {{ old('delivery_type_id')&& old('delivery_type_id') != 1 ? 'd-none' :'' }}" id="ship_address_section">
                                                 <!--begin::Label-->
                                                 <label class="required form-label">{{ __('Shipping address') }}</label>
                                                 <!--end::Label-->
@@ -676,9 +676,12 @@
 
             if (e.target.value == 1) { // delivery
                 $('#ship_address_section').show();
-                $('#ship_address_section').append(`
-                     <input id="address" type="text" name="shipping_address" placeholder="{{ __('Address') }}" class="form-control mb-2" value="{{ old('shipping_address') }}" required />
-                `);
+                $('#ship_address_section').removeClass('d-none');
+                if (!$('#address').length) {
+                    $('#ship_address_section').append(`
+                        <input id="address" type="text" name="shipping_address" placeholder="{{ __('Address') }}" class="form-control mb-2" value="{{ old('shipping_address') }}" required />
+                    `);
+                }
             } else { // pickup
                 $('#ship_address_section').hide();
                 $('#address').remove();

@@ -377,7 +377,12 @@
                                                 </div>
                                                 <a href="#"
                                                     class="fw-bold text-muted text-hover-khardl fs-7">{{ Auth::user()->email }}</a>
-                                                <small class="my-4">{{__("Restaurant code")}} <code id="r-code" class="cursor-pointer">{{tenant()->mapper_hash}}</code></small>
+                                                <small class="my-4">{{__("Restaurant code")}}
+                                                    <code id="r-code" class="cursor-pointer">{{tenant()->mapper_hash}}</code>
+                                                    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
+                                                    title="{{ __('This code is required when workers log in to the restaurant and also when retrieving the password.') }}">
+                                                    </i>
+                                                </small>
                                             </div>
                                             <!--end::Username-->
                                         </div>
@@ -460,7 +465,9 @@
                 </div>
                 <!--end::Header-->
                 <!--begin::Content-->
-                @yield('content')
+                <div class="content d-flex flex-column flex-column-fluid pt-0">
+                    @yield('content')
+                </div>
                 <!--end::Content-->
                 <!--begin::Footer-->
                 <div class="footer mt-10 py-2 d-flex flex-lg-column" id="kt_footer">

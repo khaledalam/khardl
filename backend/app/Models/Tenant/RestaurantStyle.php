@@ -92,5 +92,6 @@ class RestaurantStyle extends Model
     public static function changeImage($value){
         return  getImageFromTenant($value);
     }
+
        
 }

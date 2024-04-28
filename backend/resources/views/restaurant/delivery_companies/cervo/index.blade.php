@@ -101,7 +101,7 @@
                                 <!--begin::Info-->
                                 <div class="fw-bold ms-5 text-gray-600">
 
-                                    Max:
+                                    {{ __('Max coverage') }}:
                                     <!--begin::Time-->
                                     <div class="fs-5 mb-3">{{__('cover-area')}}</div>
                                     <!--end::Time-->
@@ -132,10 +132,10 @@
                             <!--begin::Time-->
                             <div class="fs-5 mb-3">{{__('main-cost')}}</div>
                             <!--end::Time-->
-                            First 8KM for <span class="badge badge-lg badge-light-khardl">14 {{__('sar')}}</span>
+                            {{ __('First 8KM for') }}  <span class="badge badge-lg badge-light-khardl">14 {{__('sar')}}</span>
                             <br /><br />
                             <div class="fs-5 mb-3">{{__('additional-cost')}}</div>
-                            each additional 1KM: <span class="badge badge-lg badge-light-khardl">+1 {{__('sar')}}</span>
+                            {{ __('each additional 1KM') }}: <span class="badge badge-lg badge-light-khardl">+1 {{__('sar')}}</span>
                         </div>
 
                     </div>

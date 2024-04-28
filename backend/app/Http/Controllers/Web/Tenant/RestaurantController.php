@@ -564,6 +564,8 @@ class RestaurantController extends BaseController
             'name' => 'required|string|max:255',
             'phone' => 'required|string',
             'address' => 'required|string',
+            'city' => 'nullable|string',
+            'neighborhood' => 'nullable|string',
             'lat-new_branch' => 'required',
             'lng-new_branch' => 'required',
             'copy_menu' => 'required',
@@ -592,6 +594,8 @@ class RestaurantController extends BaseController
             'name' => $validatedData['name'],
             'phone' => $validatedData['phone'],
             'address' => $validatedData['address'],
+            'city' => $validatedData['city'],
+            'neighborhood' => $validatedData['neighborhood'],
             'lat' => (float) $validatedData['lat-new_branch'],
             'lng' => (float) $validatedData['lng-new_branch'],
             'is_primary' => !$branchesExist,
@@ -743,19 +747,22 @@ class RestaurantController extends BaseController
         DB::table('branches')->where('id', $id)->update($formattedData);
 
         return redirect()->back()
-            ->with('success', 'Branch updated successfully');
+            ->with('success', __('Branch updated successfully'));
     }
 
-    public function updatePhone(Request $request, $id)
+    public function updateBranchDetails(Request $request, $id)
     {
         $branch = Branch::findOrFail($id);
 
+        $branch->name = $request->name;
         $branch->phone = $request->phone;
+        $branch->city = $request->city;
+        $branch->neighborhood = $request->neighborhood;
 
         $branch->save();
 
         return redirect()->back()
-            ->with('success', 'Branch updated successfully');
+            ->with('success', __('Branch updated successfully'));
     }
 
 

@@ -77,6 +77,7 @@
     "Added successfully" :"تم الاضافة بنجاح",
     "Add a coupon code":"إضافة قسيمة خصم",
     "Updated successfully" :"تم التحديث بنجاح",
+    "Branch updated successfully": "تم تحديث بيانات المطعم بنجاح",
     "Apply":"تطبيق",
     "Time from should be before to": "التوقيت من يجب ان يسبق التوقيت الي",
     "Renewing the branch subscription period":"تجديد فترة الاشتراك للفرع",
@@ -518,6 +519,8 @@
     "add-new-branch" : "إضافة فرع جديد",
     "name-branch" : "اسم الفرع",
     "location-branch" : "موقع الفرع",
+    "city": "المدينة",
+    "neighborhood": "بجوار",
     "copy-menu" : "نسخ قائمة الطعام",
     "None" : "لا شيء",
     "none" : "لا شيء",
@@ -1243,6 +1246,13 @@
     "Customers":"العملاء",
     "Name, email, phone, adress":"الاسم والبريد والهاتف والعنوان",
     "Invalid login code.":"رمز تسجيل الدخول غير صالح.",
-    "Wrong credentials":"بيانات خاطئة"
+    "Wrong credentials":"بيانات خاطئة",
+    "This code is required when workers log in to the restaurant and also when retrieving the password.":"مطلوب هذا الرمز عندما يقوم العمال بتسجيل الدخول إلى المطعم وأيضًا عند استرداد كلمة المرور.",
+    "Available":"متاح",
+    "Not available":"غير متاح",
+    "Orders count":"عدد الطلبات",
+    "each additional 1KM":"كل 1 كيلومتر",
+    "First 8KM for":"أول 8 كيلومترات ل",
+    "Max coverage":"اقصي تغطية"
 
 }

@@ -35,7 +35,7 @@
         "test": "tests"
     },
     "dependencies": {
-        "@reach/combobox": "^0.18.0",
+        "@re,ach/combobox": "^0.18.0",
         "@react-google-maps/api": "^2.19.2",
         "@reduxjs/toolkit": "^1.9.5",
         "@sentry/react": "^7.93.0",
