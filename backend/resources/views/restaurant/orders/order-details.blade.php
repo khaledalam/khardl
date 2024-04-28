@@ -75,7 +75,7 @@
                                                          </span>
                                             <!--end::Svg Icon-->{{__('branch')}}</div>
                                     </td>
-                                    <td class="fw-bolder text-end">{{$order->branch->name}}</td>
+                                    <td class="fw-bolder text-end">{{$order?->branch?->name}}</td>
                                 </tr>
                                 <!--end::Branch-->
                                 <!--begin::Date-->

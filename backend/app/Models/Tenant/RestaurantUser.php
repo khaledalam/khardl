@@ -113,6 +113,11 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+    public function getImageAttribute()
+    {
+        if(!isset($this->attributes['image']))return null;
+        return getImageFromTenant($this->attributes['image']);
+    }
     public function getPhoneWithoutCountryCodeAttribute()
     {
         return substr($this->phone, 3);

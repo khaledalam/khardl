@@ -104,16 +104,16 @@ class RestaurantStyleService
 
         ];
         if (isset($request->logo) && $request->logo) {
-            $logo = tenant_asset(store_image($request->file('logo'), RestaurantStyle::STORAGE, 'logo'));
+            $logo = store_image($request->file('logo'), RestaurantStyle::STORAGE, 'logo');
             $data['logo'] = $logo;
         }
         if (isset($request->banner_image) && $request->banner_image) {
-            $banner_image = tenant_asset(store_image($request->file('banner_image'), RestaurantStyle::STORAGE, 'banner_image'));
+            $banner_image = store_image($request->file('banner_image'), RestaurantStyle::STORAGE, 'banner_image');
             $data['banner_image'] = $banner_image;
         }
         if (isset($request->banner_images) && $request->banner_images) {
             foreach ($request->banner_images as $k => $image) {
-                $banner_image = tenant_asset(store_image($image, RestaurantStyle::STORAGE, 'banner_image_' . $k + 1));
+                $banner_image = store_image($image, RestaurantStyle::STORAGE, 'banner_image_' . $k + 1);
                 $banner_images[] = $banner_image;
 
             }

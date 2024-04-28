@@ -19,7 +19,7 @@ class ItemService
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
             $photoFile = $request->file('photo');
-            $path = tenant_asset(store_image($photoFile, 'items'));
+            $path = store_image($photoFile, 'items');
 
             DB::beginTransaction();
 
@@ -68,7 +68,7 @@ class ItemService
             $photoFile = $request->file('photo');
 
             if ($photoFile) {
-                $item->photo = tenant_asset(store_image($photoFile, 'items', null, $item->photo));
+                $item->photo = store_image($photoFile, 'items', null, $item->photo);
             }
 
             $item->price = $request->input('price');
@@ -107,7 +107,7 @@ class ItemService
     {
         $user = Auth::user();
 
-        dd($user);
+     
 
         $selectedItem = DB::table('items')->where('id', $id)->first();
 
