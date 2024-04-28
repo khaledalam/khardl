@@ -61,6 +61,15 @@ class Item extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+    public function orders()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+    public function getTotalOrderedCount()
+    {
+        return $this->orders()
+            ->sum('quantity');
+    }
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
