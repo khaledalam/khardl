@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import Lang from "../assets/langSide.png";
 import Login from "../assets/loginSide.png";
+import Dashboard from "../assets/dashboardSide.png";
 import Branch from "../assets/branchSide.png";
 
 import { useAuthContext } from "./context/AuthContext";
@@ -133,6 +134,22 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
                             <img className="w-3 h-3 " src={Login} />
                         </div>
                     )}
+
+                    {isLoggedIn && (
+                        <div
+                            onClick={() =>
+                                navigate('profile-summary')
+                            }
+                            className="w-56 h-8 hover:cursor-pointer px-[10px] items-center bg-white hover:bg-orange-100 bg-opacity-30 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100 text-gray-900 text-xs font-light flex justify-between"
+                        >
+                            <div className="">{t("Customer Dashboard")}</div>
+                            <img className="w-3 h-3 " src={Dashboard} />
+
+                        </div>
+                    )}
+
+
+
                     <div
                         onClick={handleLanguageChange}
                         className="w-56 h-8 hover:cursor-pointer px-[10px] items-center bg-white hover:bg-orange-100 bg-opacity-30 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100 text-gray-900 text-xs font-light flex justify-between"
