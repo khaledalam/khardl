@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Database\Factories\UserFactory;
+use App\Models\Tenant\Branch;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
+use Database\Factories\UserFactory;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -74,7 +75,10 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'phone_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
     public function isAdmin()
     {
         return $this->hasRole("Administrator");
