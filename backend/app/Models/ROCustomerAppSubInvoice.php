@@ -21,4 +21,11 @@ class ROCustomerAppSubInvoice extends Model
         'discount',
         'coupon_code'
     ];
+    public function getSubscriptionAttribute()
+    {
+        $subscription_id = $this->subscription_id;
+        return tenancy()->central(function ($tenant) use ($subscription_id) {
+            return Subscription::find($subscription_id);
+        });
+    }
 }

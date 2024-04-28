@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class ExportSubscriptionInvoice implements FromCollection,  WithHeadings, WithMapping
+class ExportAppSubscriptionInvoice implements FromCollection,  WithHeadings, WithMapping
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -26,7 +26,6 @@ class ExportSubscriptionInvoice implements FromCollection,  WithHeadings, WithMa
         return [
             __('Package'),
             __('Status'),
-            __('Number of branches'),
             __('Price'),
             __('Date'),
         ];
@@ -37,7 +36,6 @@ class ExportSubscriptionInvoice implements FromCollection,  WithHeadings, WithMa
         return [
             $invoice->subscription?->name,
             __('' . $invoice->status),
-            $invoice->number_of_branches,
             ($invoice->discount ??  $invoice->amount ).' '.__('SAR'),
             $invoice->created_at?->format('Y-m-d'),
         ];
