@@ -433,14 +433,42 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                         <!--begin::Modal body-->
                         <div class="modal-body scroll-y pt-0 pb-15">
                             <!--begin:Form-->
-                            <form id="modalTimeForm{{ $branch->id }}" class="form" action="{{ route('restaurant.update-phone', ['id' => $branch->id]) }}" method="POST" id="myForm">
+                            <form id="modalTimeForm{{ $branch->id }}" class="form" action="{{ route('restaurant.update-branch-details', ['id' => $branch->id]) }}" method="POST" id="myForm">
                                 @csrf
                                 @method('PUT')
                                 <!--begin::Heading-->
                                 <div class="mb-13 text-center">
                                     <!--begin::Title-->
+                                    <label class="form-check-label" for="phoneText">{{__('name')}}</label>
+                                    <input class="form-control form-control-solid" name="name" id="phoneText" required value="{{ $branch->name }}">
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Heading-->
+
+                                <!--begin::Heading-->
+                                <div class="mb-13 text-center">
+                                    <!--begin::Title-->
+                                    <label class="form-check-label" for="phoneText">{{__('phone')}}</label>
                                     <input class="form-control form-control-solid" name="phone" id="phoneText" required value="{{ $branch->phone }}">
-                                    <label class="form-check-label" for="phoneText">Phone</label>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Heading-->
+
+                                <!--begin::Heading-->
+                                <div class="mb-13 text-center">
+                                    <!--begin::Title-->
+                                    <label class="form-check-label" for="cityText">{{__('city')}}</label>
+                                    <input class="form-control form-control-solid" name="city" id="cityText" required value="{{ $branch->city }}">
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Heading-->
+
+
+                                <!--begin::Heading-->
+                                <div class="mb-13 text-center">
+                                    <!--begin::Title-->
+                                    <label class="form-check-label" for="neighborhoodText">{{__('neighborhood')}}</label>
+                                    <input class="form-control form-control-solid" name="neighborhood" id="neighborhoodText" required value="{{ $branch->neighborhood }}">
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
@@ -736,6 +764,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 </div>
                                 <!--end::Input-->
                             </div>
+                            <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-md-12 fv-row">
                                 <label class="required fs-6 fw-bold mb-2">{{ __('location-branch') }}</label>
@@ -743,6 +772,30 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
                                 <input type="hidden" id="lat-new_branch" name="lat-new_branch" />
                                 <input type="hidden" id="lng-new_branch" name="lng-new_branch" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--end::Col-->
+                            <div class="col-md-12 fv-row">
+                                <label class="fs-6 fw-bold mb-2">{{ __('city') }}</label>
+                                <!--begin::Input-->
+                                <div class="position-relative d-flex align-items-center">
+                                    <!--begin::Datepicker-->
+                                    <input value="{{ old('city') }}" required name="city" class="form-control form-control-solid " type="text" />
+                                    <!--end::Datepicker-->
+                                </div>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--end::Col-->
+                            <div class="col-md-12 fv-row">
+                                <label class="fs-6 fw-bold mb-2">{{ __('neighborhood') }}</label>
+                                <!--begin::Input-->
+                                <div class="position-relative d-flex align-items-center">
+                                    <!--begin::Datepicker-->
+                                    <input value="{{ old('neighborhood') }}" required name="neighborhood" class="form-control form-control-solid " type="text" />
+                                    <!--end::Datepicker-->
+                                </div>
                                 <!--end::Input-->
                             </div>
                             <!--end::Col-->

@@ -27,6 +27,8 @@ class BranchSeeder extends Seeder
         $branch = Branch::create([
             'id' => self::BRANCH_ID,
             'name' => 'Branch 1',
+            'city' => $faker->city,
+            'neighborhood' => $faker->streetAddress,
             'lat' => '37.7',
             'lng' => '37.7',
             'phone'=> '966123456789',
@@ -64,6 +66,8 @@ class BranchSeeder extends Seeder
             'id' => self::BRANCH_B_ID,
             'name' => 'Branch 2',
             'address'=>"Riyadh",
+            'city' => $faker->city,
+            'neighborhood' => $faker->streetAddress,
             'lat' => '27.7',
             'lng' => '27.7',
             'phone'=> '966123456789',

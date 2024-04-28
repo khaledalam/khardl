@@ -3,7 +3,7 @@
     background-color: black !important;
 }
 .footer{
-    position: absolute;
+    /* position: absolute; */
     bottom: 5px;
     background-color: #fff;
     width: 100%;

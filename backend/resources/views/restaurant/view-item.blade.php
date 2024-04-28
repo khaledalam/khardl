@@ -112,7 +112,17 @@
                                         <span class="text-start">{{__('Category')}}</span>
                                     </td>
                                     <td class="text-dark">
-                                        <span class="py-3 px-4 fs-23">{{ $item->category->name }}</span>
+                                        <span class="py-3 px-4 fs-23">{{ $item->category?->name }}</span>
+                                    </td>
+                                </tr>
+                                <!--end::Item-->
+                                 <!--begin::Item-->
+                                 <tr>
+                                    <td>
+                                        <span class="text-start">{{__('Orders count')}}</span>
+                                    </td>
+                                    <td class="text-dark">
+                                        <span class="py-3 px-4 fs-23">{{ $item?->getTotalOrderedCount() }}</span>
                                     </td>
                                 </tr>
                                 <!--end::Item-->
@@ -122,9 +132,9 @@
                                         <span class="text-start">{{__('Availability')}}</span>
                                     </td>
                                     <td class="text-dark">
-                                        @if(!$item->availability)<span class="badge badge-danger mx-1">Not available</span>
+                                        @if(!$item->availability)<span class="badge badge-danger mx-1">{{ __('Not available') }}</span>
                                         @else
-                                        <span class="badge badge-success mx-1">Available</span>
+                                        <span class="badge badge-success mx-1">{{ __('Available') }}</span>
                                         @endif
                                     </td>
                                 </tr>

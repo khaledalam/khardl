@@ -631,7 +631,9 @@
                 </div>
                 <!--end::Header-->
                 <!--begin::Content-->
-                @yield('content')
+                <div class="content d-flex flex-column flex-column-fluid pt-0">
+                    @yield('content')
+                </div>
                 <!--end::Content-->
                 <!--begin::Footer-->
                 <div class="footer mt-10 py-2 d-flex flex-lg-column" id="kt_footer">

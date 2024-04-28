@@ -228,6 +228,8 @@
     "add-new-branch": "Add new branch",
     "name-branch": "Branch name",
     "location-branch": "Location Branch",
+    "city": "City",
+    "neighborhood": "Neighborhood",
     "copy-menu": "Copy menu",
     "add-branch": "Add Branch",
     "edit-worker": "Edit Worker",

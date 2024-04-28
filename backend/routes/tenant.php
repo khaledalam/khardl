@@ -84,6 +84,7 @@ Route::group([
 
     Route::get('/impersonate/{token}', static function ($token) {
        UserImpersonation::makeResponse($token);
+       if(Auth::user()?->isRestaurantOwner())return redirect()->route('restaurant.summary');
        return redirect()->route('restaurant.branches');
     })->name("impersonate");
 
@@ -117,7 +118,7 @@ Route::group([
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
             Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
-            Route::put('/branches/{id}/phone', [RestaurantController::class, 'updatePhone'])->middleware('permission:can_modify_working_time')->name('restaurant.update-phone');
+            Route::put('/branches/{id}/phone', [RestaurantController::class, 'updateBranchDetails'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch-details');
             Route::get('/branches/{id}/toggleBranch', [RestaurantController::class, 'toggleBranch'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-branch-status');
             Route::get('/no_branches', [RestaurantController::class, 'noBranches'])->middleware('permission:can_edit_menu')->name('restaurant.no_branches');
 //            Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->middleware('permission:can_edit_menu')->name('restaurant.menu');

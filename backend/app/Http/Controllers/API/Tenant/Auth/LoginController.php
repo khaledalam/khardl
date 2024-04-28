@@ -24,7 +24,7 @@ class LoginController extends BaseController
             'password' => 'required|string|min:6|max:255',
             'remember_me' => 'nullable|boolean',
         ]);
-      
+
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
@@ -73,6 +73,7 @@ class LoginController extends BaseController
             'user'=>$user,
             'token_type' => 'Bearer',
             'access_token' => $token,
+            'subdomain' => $request->has('login_code') && $request->login_code ? tenant()?->restaurant_name : null,
             'worker_login' => $request->has('login_code') && $request->login_code
                 ? Tenant::where('restaurant_name', '=', \tenant()->restaurant_name)->first()->impersonationUrl('') : null
         ];
