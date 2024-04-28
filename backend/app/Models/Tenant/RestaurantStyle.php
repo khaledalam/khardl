@@ -23,7 +23,12 @@ class RestaurantStyle extends Model
     {
         return $this->belongsTo(RestaurantUser::class);
     }
-
+    protected static function booted()
+    {
+        static::retrieved(function ($model) {
+            $model->logo = self::changeImage($model->getAttributes()['logo']);       
+        });
+    }
     public function getFileType($extension)
     {
         $imageExtensions = ['png', 'jpg', 'jpeg','gif', 'webp'];
@@ -39,30 +44,54 @@ class RestaurantStyle extends Model
         return 'unknown';
     }
 
+    public function getBannerImagesAttribute()
+    {
+        $values = null; 
+        foreach(json_decode($this->attributes['banner_images']) as $image) {
+            if (strpos($image, "http://") === 0 || strpos($image, "https://") === 0) {
+                $url = '';
+            }else {
+                $url = tenant_route(tenant()->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'home').'/tenancy/assets/'.$image;
+            }
+            if ($url) {
+                $url .= '?ver=' . random_hash();
+            }
+            $values[]= [
+                'url' => $url,
+                'type' => $this->getFileType(
+                    pathinfo(parse_url($this->attributes['banner_image'], PHP_URL_PATH), PATHINFO_EXTENSION)
+                ),
+            ];
+        }
+        return $values;
+      
+
+       
+    }
     public function getBannerImageAttribute()
     {
         $url = $this->attributes['banner_image'];
+        if (strpos($url, "http://") === 0 || strpos($url, "https://") === 0) {
+            $url = '';
+        }else {
+            $url = tenant_route(tenant()->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'home').'/tenancy/assets/'.$url;
+        }
+        if ($url) {
+            $url .= '?ver=' . random_hash();
+        }
 
         return [
             'url' => $url,
             'type' => $this->getFileType(
-                pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION)
+                pathinfo(parse_url($this->attributes['banner_image'], PHP_URL_PATH), PATHINFO_EXTENSION)
             ),
         ];
     }
 
-    public function getBannerImagesAttribute()
-    {
-        $images = [];
-        foreach (json_decode($this->attributes['banner_images']) as $image) {
-
-            $new['type'] = $this->getFileType(pathinfo(parse_url($image, PHP_URL_PATH), PATHINFO_EXTENSION));
-
-            $new['url'] = $image;
-            $images[] = $new;
-        }
-        return $images;
+   
+    public static function changeImage($value){
+        return  getImageFromTenant($value);
     }
 
-
+       
 }

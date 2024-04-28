@@ -232,7 +232,8 @@ return [
         'delivery_companies_option' => 'خيار شركات التوصيل',
         'branch_id' => 'الفرع',
         "shipping_address" => "عنوان الشحن",
-        "delivery_type_id" => "طريقة التوصيل"
+        "delivery_type_id" => "طريقة التوصيل",
+        "at_least_one_permission"=>"علي الاقل صلاحية واحدة"
 
     ],
     'values' => [

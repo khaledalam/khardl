@@ -59,9 +59,16 @@
                             <tr>
                                 <td>{{ __("Image") }}</td>
                                 <td>
-                                    <div class="symbol symbol-100px symbol-lg-100px symbol-fixed position-relative">
+                                    @if ($driver->image)
+                                    <div class="symbol symbol-60px symbol-lg-60px symbol-fixed position-relative">
                                         <img alt="driver image" src="{{ $driver->image }}" />
                                     </div>
+                                    @else
+                                    <div class="symbol symbol-60px symbol-lg-60px symbol-fixed position-relative">
+                                        <img alt="driver image" src="{{ global_asset('images/driver_logo.jpg') }}" />
+                                    </div>
+                                    @endif
+                                  
                                 </td>
                             </tr>
                         </tbody>

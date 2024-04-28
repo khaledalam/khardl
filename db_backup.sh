@@ -11,4 +11,4 @@ cd $DIR && /usr/bin/mysqldump $DATABASE_NAME  \
   --skip-extended-insert --no-tablespaces;
 
 # Remove old backups (modified files more than 30 days ago)
-find $DIR/db_backups/* -mtime +30 -exec rm {} \;
+find $DIR/db_backups/* -mtime +30 -exec rm -f {} \;

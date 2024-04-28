@@ -32,7 +32,11 @@ class Category extends Model
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
-
+    public function getPhotoAttribute()
+    {
+        if(!isset($this->attributes['photo']))return null;
+        return getImageFromTenant($this->attributes['photo']);
+    }
     /**
      * Retrieve branch (if exists).
      */

@@ -20,6 +20,7 @@ use App\Models\ROSubscriptionInvoice;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\Tap\TapBusiness;
 use App\Packages\TapPayment\Lead\Lead;
+use App\Models\ROCustomerAppSubInvoice;
 use App\Jobs\SendApprovedBusinessEmailJob;
 use App\Models\Tenant\Tap\TapBusinessFile;
 use App\Http\Requests\Tenant\SaveCardRequest;
@@ -32,6 +33,7 @@ use App\Packages\TapPayment\File\File as TapFileAPI;
 use App\Exports\Restaurant\ExportSubscriptionInvoice;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
 use App\Packages\TapPayment\Requests\CreateLeadRequest;
+use App\Exports\Restaurant\ExportAppSubscriptionInvoice;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
 
 
@@ -48,20 +50,30 @@ class TapController extends Controller
         ->whenPaymentStatus($request['payment_status']?? null)
         ->recent()
         ->paginate(config('application.perPage',10));
-
-        if ($user->ROSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'csv') {
-            return $this->handleDownload($request, $user->ROSubscriptionInvoices);
+        $ROSubscription = ROSubscription::first();
+        $ROCustomerAppSubscription = ROCustomerAppSub::first();
+        $ROCustomerAppSubscriptionInvoices = ROCustomerAppSubInvoice::orderBy('id','DESC')->get();
+        $ROSubscriptionInvoices = ROSubscriptionInvoice::orderBy('id','DESC')->get();
+        if ($ROSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'csv') {
+            return $this->handleDownload($request, $ROSubscriptionInvoices);
+        }
+        if ($ROCustomerAppSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'download_app') {
+            return $this->handleDownload($request, $ROCustomerAppSubscriptionInvoices);
         }
 
-        return view('restaurant.payments', compact('user', 'settings','orders'));
+        return view('restaurant.payments', compact('user','ROCustomerAppSubscription','ROSubscriptionInvoices','ROCustomerAppSubscriptionInvoices','settings','ROSubscription','orders'));
     }
     private function handleDownload($request, $model)
     {
         try {
             $todayDate = Carbon::now()->format('Y-m-d');
             $filename = "subscription_invoice_$todayDate.csv";
+            return match(true){ 
+                $model[0] instanceof ROSubscriptionInvoice => Excel::download(new ExportSubscriptionInvoice($model), $filename),
+                $model[0] instanceof ROCustomerAppSubInvoice => Excel::download(new ExportAppSubscriptionInvoice($model), $filename),
+                default => null
+            };
 
-            return Excel::download(new ExportSubscriptionInvoice($model), $filename);
         } catch (\Exception $e) {
             logger($e);
             return redirect()->route('tap.payments');
@@ -355,7 +367,7 @@ class TapController extends Controller
         if ($request->tap_id) {
             $charge = TapCharge::retrieveSub($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-                sleep(3);
+                sleep(4);
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
                     if(isset($charge['message']['metadata']['branch_id'])){
                         return redirect()->route('restaurant.branches')
@@ -435,7 +447,7 @@ class TapController extends Controller
                         'cost'=> ($coupon->type == CouponTypes::FIXED_COUPON->value)? $AppSubscription->amount  - $coupon->amount : ( $AppSubscription->amount  - (($AppSubscription->amount  * $coupon->amount) / 100)),
                         'coupon_code'=>$request->coupon_code,
                         'sub_amount'=>$AppSubscription->amount
-                    ];
+                    ]; 
                 });
                 if(!$chargeData){
                     return redirect()->route('restaurant.service')->with('error', __('Invalid coupon'));

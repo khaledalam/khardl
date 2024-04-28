@@ -42,6 +42,7 @@ class RestaurantCharge
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            logger($e->getMessage());
             throw $e;
         }
         
@@ -65,6 +66,7 @@ class RestaurantCharge
                     'reminder_suspend_email_sent'=>false,
                     'cus_id' => env('TAP_DEFAULT_CUSTOMER_ID', 'cus_LV06G4620241548c2JK1002613'),
                     'card_id' => $data['card']['id'] ?? null,
+                    'discount'=>null,
                     'subscription_id' => $data['metadata']['subscription_id'],
                 ];
                 if($subscription){
@@ -180,6 +182,7 @@ class RestaurantCharge
             'status' => ROSubscription::ACTIVE,
             'reminder_email_sent'=>false,
             'reminder_suspend_email_sent'=>false,
+            'discount'=>null,
             'subscription_id' => $data['metadata']['subscription_id'],
         ];
     }

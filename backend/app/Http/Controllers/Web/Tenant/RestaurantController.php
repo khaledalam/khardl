@@ -627,7 +627,7 @@ class RestaurantController extends BaseController
                     Item::create([
                         'branch_id' => $newBranchId,
                         'category_id' => $newCategoryId,
-                        'photo' => tenant_asset($newFilename),
+                        'photo' => $newFilename,
                         'price' => $item->price,
                         'calories' => $item->calories,
                         'name' => $item->name,
@@ -674,7 +674,7 @@ class RestaurantController extends BaseController
             DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP
         ]);
 
-        return redirect()->back()->with('success', __('Branch successfully created'));
+        return redirect()->back()->with('success', __('Branch successfully created.'));
 
     }
     private function can_create_branch()
@@ -748,10 +748,11 @@ class RestaurantController extends BaseController
             ->with('success', __('Branch updated successfully'));
     }
 
-    public function updatePhone(Request $request, $id)
+    public function updateBranchDetails(Request $request, $id)
     {
         $branch = Branch::findOrFail($id);
 
+        $branch->name = $request->name;
         $branch->phone = $request->phone;
         $branch->city = $request->city;
         $branch->neighborhood = $request->neighborhood;
@@ -898,7 +899,7 @@ class RestaurantController extends BaseController
                 $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
             }
             $photoFile->storeAs('categories', $filename, 'public');
-            $category->update(['photo' => tenant_asset('categories/' . $filename)]);
+            $category->update(['photo' => 'categories/' . $filename]);
         }
 
         return redirect()->back()->with('success', __('Updated successfully'));
@@ -946,7 +947,7 @@ class RestaurantController extends BaseController
         //     return;
         Category::create([
             'name' => trans_json($request->input('name_en'), $request->input('name_ar')),
-            'photo' => $filename ? tenant_asset('categories/' . $filename) : null,
+            'photo' => $filename ? 'categories/' . $filename : null,
             'sort' =>  $categoriesCountAll + 1,
             'user_id' => $userId,
             'branch_id' => $branchId,
