@@ -1090,7 +1090,8 @@ class RestaurantController extends BaseController
             'can_edit_menu',
             'can_control_payment',
             'can_view_revenues',
-            'can_edit_and_view_drivers'
+            'can_edit_and_view_drivers',
+            'can_mange_orders'
         ];
         $insertData = [];
 
@@ -1158,7 +1159,8 @@ class RestaurantController extends BaseController
             'can_edit_menu',
             'can_control_payment',
             'can_view_revenues',
-            'can_edit_and_view_drivers'
+            'can_edit_and_view_drivers',
+            'can_mange_orders'
         ];
 
         $updateData = [];
