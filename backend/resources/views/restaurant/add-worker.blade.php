@@ -187,7 +187,7 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_and_view_drivers" value="1" name="can_edit_and_view_drivers" {{old('can_edit_and_view_drivers') ? 'checked' : ''}}>
-                                                            <label class="form-check-label" for="can_edit_and_view_drivers">{{ __('Can control drivers')}}</label>
+                                                            <label class="form-check-label" for="can_edit_and_view_drivers">{{ __('Can access drivers')}}</label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -197,7 +197,7 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_mange_orders" value="1" name="can_mange_orders" {{old('can_mange_orders') ? 'checked' : ''}}>
-                                                            <label class="form-check-label" for="can_mange_orders">{{ __('Can manage orders')}}</label>
+                                                            <label class="form-check-label" for="can_mange_orders">{{ __('Can access orders')}}</label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
