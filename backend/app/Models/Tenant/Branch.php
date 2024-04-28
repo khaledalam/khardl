@@ -6,6 +6,7 @@ use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\PaymentMethod;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Translatable\HasTranslations;
 use Database\Factories\tenant\BranchFactory;
 use App\Packages\DeliveryCompanies\DeliveryCompanies;
@@ -91,6 +92,14 @@ class Branch extends Model
         return $query->when($user->isWorker(), function ($q)use($user) {
             $q->where('id', $user->branch->id);
         });
+    }
+    public function scopeWhenPermissions($query)
+    {
+        $user = Auth::user();
+        if($user->isRestaurantOwner())return $query;
+        else{
+            return $query->where('id',$user->branch_id);
+        }
     }
     /* End Scope */
     /* Start attributes */
