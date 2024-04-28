@@ -93,7 +93,7 @@
                                                 <label class="required form-label">{{ __('Shipping address') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="address" type="text" name="shipping_address" placeholder="{{ __('Address') }}" class="form-control mb-2" value="{{ old('shipping_address') }}" required />
+                                                <input id="address" type="text" name="shipping_address" placeholder="{{ __('Address') }}" class="form-control mb-2" value="{{ old('shipping_address') }}" />
                                                 <!--end::Editor-->
                                             </div>
                                             <!--end::Input group-->
@@ -158,6 +158,7 @@
                                                 <!--end::Total price-->
                                             </div>
                                             <!--end::Input group-->
+                                            @if (getAuth()->isRestaurantOwner())
                                             <!--begin::Separator-->
                                             <label class="required form-label">{{ __('Select branch first') }}</label>
                                             <select id="branchSelect" name="branch_id" required class="form-select" style="width: 300px;">
@@ -171,6 +172,8 @@
                                             </select>
                                             <div class="separator"></div>
                                             <!--end::Separator-->
+                                            @endif
+
                                             <!--begin::Search products-->
                                             <label class="required form-label">{{ __('Select products') }}</label>
 
@@ -695,6 +698,10 @@
         onChangeCheckBox();
         //Track on change Radio
         onChangeRadio();
+        //Auto select branch if auth is not super admin
+        @if(!getAuth()->isRestaurantOwner())
+        initializeProductSelect({{ getAuth()->branch_id }});
+        @endif
     });
 
 </script>

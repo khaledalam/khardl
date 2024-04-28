@@ -39,18 +39,15 @@
                                     <div class="card-title m-0 float-right">
 
                                         @if($branch->active)
-
-                                        <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}" id="Activate"
-                                            class="btn btn-danger text-center"><label for="Activate">{{__('Deactivate')}}</label> <i class="fa  fa-play text-white m-2"></i>
-                                                </a>
-
-
+                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to deactivate this branch ?') }}`)" class="btn btn-danger text-center">
+                                            <label for="Activate">{{ __('Deactivate') }}</label>
+                                            <i class="fa fa-play text-white m-2"></i>
+                                        </a>
                                         @else
-
-                                                <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}" id="Activate"
-                                            class="btn btn-success text-center"><label for="Activate">{{__('Activate')}}</label> <i class="fa  fa-play text-white m-2"></i>
-                                                </a>
-
+                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to activate this branch ?') }}`)" class="btn btn-success text-center">
+                                            <label for="Activate">{{ __('Activate') }}</label>
+                                            <i class="fa fa-play text-white m-2"></i>
+                                        </a>
                                         @endif
 
                                     </div>
@@ -132,7 +129,7 @@
                                                         <div class="d-flex my-4">
                                                             <label for="delivery_companies_option">
                                                                 <input class="form-check-input me-3" id="delivery_companies_option" type="checkbox" {{ !$branch->delivery_companies_option ? 'disabled' : '' }} name="delivery_companies_option"  value="1" {{ isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  $branch->delivery_companies_option ?'checked':''}}  />
-                                                                <span class="fw-bolder fs-5 mb-0">{{__('Delivery companies')}}</span>
+                                                                <span class="fw-bolder fs-5 mb-0 form-check-label">{{__('Delivery companies')}}</span>
                                                                 <small class="m-2 text-danger">({{__('you are not signed with any delivery company yet')}})</small>
                                                             </label>
                                                         </div>
@@ -149,7 +146,7 @@
                                                         <label for="drivers_option">
                                                             <div class="d-flex my-4">
                                                                 <input class="form-check-input me-3" id="drivers_option" type="checkbox" name="drivers_option" value="" {{ !$branch->drivers_option ? 'disabled' : '' }} value="1" {{ isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  $branch->drivers_option ?'checked':''}}  />
-                                                                <span class="fw-bolder fs-5 mb-0">{{__('Own drivers')}}</span>
+                                                                <span class="fw-bolder fs-5 mb-0 form-check-label">{{__('Own drivers')}}</span>
                                                                 <small class="m-2 text-danger">({{__('You do not have any active drivers')}})</small>
                                                             </div>
                                                         </label>
@@ -260,5 +257,22 @@
                 disableMobile: true
             });
         });
+        function confirmAction(url, message) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '{{ __("Yes") }}',
+                cancelButtonText: '{{ __("No") }}'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        }
     </script>
 @endsection

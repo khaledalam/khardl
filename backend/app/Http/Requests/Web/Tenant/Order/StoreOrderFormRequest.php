@@ -16,11 +16,10 @@ class StoreOrderFormRequest extends FormRequest
     }
     public function rules()
     {
-        return [
+        $rules = [
             'phone' => 'required|regex:/^(966)?\d{9}$/',
             'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'branch_id' => 'required|integer|exists:branches,id',
             'delivery_type_id' => 'required|integer|exists:delivery_types,id',
             'shipping_address' => 'required_if:delivery_type_id,1|max:255',
             'order_notes' => 'nullable|max:255',
@@ -29,6 +28,10 @@ class StoreOrderFormRequest extends FormRequest
             'product_options' => ['nullable', 'array'],
             'product_options.*' => ['required', 'min:1'],
         ];
+        if (getAuth()->isRestaurantOwner()) {
+            $rules['branch_id'] = 'required|integer|exists:branches,id';
+        }
+        return $rules;
     }
     public function withValidator($validator)
     {
