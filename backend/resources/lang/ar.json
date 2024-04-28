@@ -15,6 +15,7 @@
     ":name is not available":":name غير متاح",
     ":branch is closed":":branch مغلق",
     ":option is required":":option مطلوب",
+    "Cannot login as a driver":"لا يمكن تسجيل الدخول كسائق",
     "files re-uploaded":"تم رفع الملفات مرة اخري",
     ":option is required for :item":":option مطلوب للمنتج :item",
     "Maximum :option options for :item is ":"اقصي عدد خيارات للخبار :option للمنتح :item هو",
