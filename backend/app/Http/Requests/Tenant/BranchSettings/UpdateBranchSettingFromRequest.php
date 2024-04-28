@@ -28,11 +28,11 @@ class UpdateBranchSettingFromRequest extends FormRequest
      */
     public function rules()
     {
-        /* dd(request()->all()); */
         return [
             'payment_methods' => ['required','array'],
             'payment_methods.*' => ['required', 'min:1', 'in:Online,Cash on Delivery'],
             'preparation_time_delivery'=>'nullable|date_format:"H:i:s"',
+            'pickup_availability' => 'required_without_all:drivers_option,delivery_companies_option|boolean',
             'drivers_option' => ['nullable', function ($attribute, $value, $fail) {
                 $hasActiveDrivers = RestaurantUser::activeDrivers()->get()->count();
                 if($value == 1){

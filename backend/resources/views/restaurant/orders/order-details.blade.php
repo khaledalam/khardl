@@ -109,7 +109,7 @@
                                             <!--end::Svg Icon-->{{__('payment-method')}}</div>
                                     </td>
                                     <td class="fw-bolder text-end">
-                                        {{__(''.$order->payment_method->name)}}
+                                        {{__(''.$order->payment_method?->name)}}
 
                                     @if($order->payment_method->name == \App\Models\Tenant\PaymentMethod::ONLINE)
                                         @if($order?->tap_payment_method == 'APPLE_PAY')
@@ -142,7 +142,7 @@
                                                      </span>
                                             <!--end::Svg Icon-->{{__('shipping-method')}}</div>
                                     </td>
-                                    <td class="fw-bolder text-end">{{__(''.$order->delivery_type->name)}}</td>
+                                    <td class="fw-bolder text-end">{{__(''.$order->delivery_type?->name)}}</td>
                                 </tr>
                                 <!--end::Date-->
                                 </tbody>
@@ -206,16 +206,28 @@
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Name-->
-                                           <a href="{{ route('customers_data.show',['restaurantUser' => $order->user?->id]) }}">
-                                            <span class="text-gray-600 text-hover-khardl">{{$order?->manual_order_first_name
-                                                ? $order?->manual_order_first_name . ' ' . $order?->manual_order_last_name
-                                                : $order?->user?->fullName}}
-                                            </span>
+                                            @if(Auth::user()->isWorker())
+                                                <span class="text-gray-600 text-hover-khardl">{{$order?->manual_order_first_name
+                                                    ? $order?->manual_order_first_name . ' ' . $order?->manual_order_last_name
+                                                    : $order?->user?->fullName}}
+                                                </span>
 
-                                            @if($order?->manual_order_first_name)
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="{{__('Manual order name')}}"></i>
+                                                @if($order?->manual_order_first_name)
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="{{__('Manual order name')}}"></i>
+                                                @endif
+                                            @else
+                                                <a href="{{ route('customers_data.show',['restaurantUser' => $order->user?->id]) }}">
+                                                <span class="text-gray-600 text-hover-khardl">{{$order?->manual_order_first_name
+                                                    ? $order?->manual_order_first_name . ' ' . $order?->manual_order_last_name
+                                                    : $order?->user?->fullName}}
+                                                </span>
+
+                                                @if($order?->manual_order_first_name)
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="{{__('Manual order name')}}"></i>
+                                                @endif
+                                                </a>
                                             @endif
-                                            </a>
+
 
 
                                         <!--end::Name-->
@@ -347,7 +359,7 @@
                         <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
 
                             <!--begin::Shipping address-->
-                        @if($order->delivery_type->name != App\Models\Tenant\DeliveryType::PICKUP)
+                        @if($order->delivery_type?->name != App\Models\Tenant\DeliveryType::PICKUP)
                             <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
                                 <!--begin::Background-->
                                 <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">

@@ -167,6 +167,14 @@
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_mange_orders" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_mange_orders') == 1) checked @endif value="1" name="can_mange_orders">
+                                                            <label class="form-check-label" for="can_mange_orders">{{ __('Can manage orders')}}</label>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
                                                     <!--end::Input group-->
                                                     <!--end::Input group-->
 

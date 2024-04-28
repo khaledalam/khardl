@@ -232,24 +232,23 @@
                                     </div>
                                 </div>
                             </div>
-                             <!-- drivers -->
-                             <div class="menu-item menu-accordion">
-                                @if($user?->hasPermissionWorker('can_edit_and_view_drivers') && \App\Models\Tenant\Branch::first())
-                                <a href="{{route('drivers.index')}}">
-                                    <span class="{{ ($link == 'drivers') ? 'menu-link active' : 'menu-link ' }}">
-                                        <span class="menu-icon">
-                                            <!--begin::Svg Icon -->
-                                            <span class="svg-icon svg-icon-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{{ ($link == 'workers') ? '#c2da08' : '#000000' }}" class="bi bi-person" viewBox="0 0 16 16">
-                                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
-                                            <!--end::Svg Icon-->
+                            {{-- Orders --}}
+                                @if($user?->hasPermissionWorker('can_mange_orders') && \App\Models\Tenant\Branch::first())
+                                <div class="menu-item menu-accordion">
+                                    <a href="{{route('restaurant.orders_all')}}">
+                                        <span class="{{ ($link == 'orders-all' || $link == 'orders-add') ? 'menu-link active' : 'menu-link ' }}">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg fill="{{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'products-out-of-stock') ? '#c2da08' : '#000000' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M78.8,62.1l-3.6-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,70.6c-1.2,0.6-2.7,0.6-3.9,0L26.5,60.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.6,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,78.5c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,65,80.4,62.8,78.8,62.1z"></path> </g> <g> <path d="M78.8,48.1l-3.7-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,56.6c-1.2,0.6-2.7,0.6-3.9,0L26.6,46.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.7,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,64.6c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,51.1,80.4,48.9,78.8,48.1 z"></path> </g> <g> <path d="M21.2,37.8l26.8,12.7c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7c1.6-0.8,1.6-2.9,0-3.7L51.9,21.4 c-1.2-0.6-2.7-0.6-3.9,0L21.2,34.2C19.6,34.9,19.6,37.1,21.2,37.8z"></path> </g> </g> </g></svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">{{__('orders')}}</span>
                                         </span>
-                                        <span class="menu-title">{{__('drivers')}}</span>
-                                    </span>
-                                </a>
+                                    </a>
+                                </div>
                                 @endif
-                            </div>
-
                             @endif
                             @if($user?->hasPermissionWorker('can_control_payment')&&App\Models\Tenant\Setting::first()->lead_id)
                             <!-- Payments -->
