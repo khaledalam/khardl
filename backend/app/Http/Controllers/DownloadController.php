@@ -44,7 +44,7 @@ class DownloadController extends Controller
                 }
             }
         }catch(Exception $e){
-
+            \Sentry\captureMessage('failed to download '. json_encode($e->getMessage()));
         }
         return redirect()->back()->with('error',__('failed to download'));
 
@@ -55,7 +55,7 @@ class DownloadController extends Controller
 
             return $pdf->stream($repository->fileName());
         }  catch(Exception $e){
-
+            \Sentry\captureMessage('failed to download '. json_encode($e->getMessage()));
             return redirect()->back()->with('error',__('failed to download'));
         }
     }
