@@ -299,10 +299,9 @@ class RestaurantController extends BaseController
 
     public function branchOrders(Order $order)
     {
-
         $user = Auth::user();
+        if($user->isWorker() && $order->branch_id != $user->branch_id)return abort(403);
         $order->load('user', 'items');
-
         $orderStatusLogs = OrderStatusLogs::orderBy("created_at",'desc')->where('order_id',$order->id)->get();
         $locale = app()->getLocale();
         return view(
