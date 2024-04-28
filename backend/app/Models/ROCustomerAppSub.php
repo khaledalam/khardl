@@ -48,4 +48,11 @@ class ROCustomerAppSub extends Model
     {
         return Carbon::parse($this->attributes['end_at']);
     }
+    public function getSubscriptionAttribute()
+    {
+        $subscription_id = $this->subscription_id;
+        return tenancy()->central(function ($tenant) use ($subscription_id) {
+            return Subscription::find($subscription_id);
+        });
+    }
 }
