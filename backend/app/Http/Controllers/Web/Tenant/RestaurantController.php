@@ -750,10 +750,11 @@ class RestaurantController extends BaseController
             ->with('success', __('Branch updated successfully'));
     }
 
-    public function updatePhone(Request $request, $id)
+    public function updateBranchDetails(Request $request, $id)
     {
         $branch = Branch::findOrFail($id);
 
+        $branch->name = $request->name;
         $branch->phone = $request->phone;
         $branch->city = $request->city;
         $branch->neighborhood = $request->neighborhood;

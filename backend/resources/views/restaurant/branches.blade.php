@@ -433,9 +433,18 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                         <!--begin::Modal body-->
                         <div class="modal-body scroll-y pt-0 pb-15">
                             <!--begin:Form-->
-                            <form id="modalTimeForm{{ $branch->id }}" class="form" action="{{ route('restaurant.update-phone', ['id' => $branch->id]) }}" method="POST" id="myForm">
+                            <form id="modalTimeForm{{ $branch->id }}" class="form" action="{{ route('restaurant.update-branch-details', ['id' => $branch->id]) }}" method="POST" id="myForm">
                                 @csrf
                                 @method('PUT')
+                                <!--begin::Heading-->
+                                <div class="mb-13 text-center">
+                                    <!--begin::Title-->
+                                    <label class="form-check-label" for="phoneText">{{__('name')}}</label>
+                                    <input class="form-control form-control-solid" name="name" id="phoneText" required value="{{ $branch->name }}">
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Heading-->
+
                                 <!--begin::Heading-->
                                 <div class="mb-13 text-center">
                                     <!--begin::Title-->
