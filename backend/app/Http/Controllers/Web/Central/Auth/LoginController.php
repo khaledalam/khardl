@@ -57,36 +57,36 @@ class LoginController extends BaseController
 
         $credentials = request(['email', 'password']);
 
-        if ($request->has('login_code') && $request->login_code){
-
-            $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->login_code)->first();
-            if (!$tenant) {
-                return $this->sendError(__('Validation Error. R!'));
-            }
-           
-            return $tenant->run(function () use($credentials,$tenant) {
-                if (!Auth::attempt($credentials,true)) {
-                    return $this->sendError(__('Unauthorized'), ['error' => __('Invalid email or password')]);
-                } else {
-                    $user = Auth::user();
-                   
-                    $url = $tenant->impersonationUrl($user->id,'dashboard');
-                    return $this->sendResponse([
-                        'url' => $url
-                    ], __('OK User logged in successfully.'));
-
-                }
-            });
-        }
-
+        
         if (!Auth::attempt($credentials,true)) {
-            return $this->sendError('Unauthorized.', ['error' => __('Invalid email or password')]);
+            if ($request->has('login_code') && $request->login_code){
+
+                $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->login_code)->first();
+                if (!$tenant) {
+                    return $this->sendError(__('Validation Error. R!'));
+                }
+                return $tenant->run(function () use($credentials,$tenant) {
+                    if (!Auth::attempt($credentials,true)) {
+                        return $this->sendError(__('Unauthorized'), ['error' => __('Invalid email or password')]);
+                    } else {
+                        $user = Auth::user();
+                        $url = $tenant->impersonationUrl($user->id,'dashboard');
+                        logger($url);
+                        logger($user);
+                        return $this->sendResponse([
+                            'url' => $url
+                        ], __('OK User logged in successfully.'));
+    
+                    }
+                });
+            }
+            return $this->sendError(__('Unauthorized.'), ['error' => __('Invalid email or password')]);
         }
 
         $user = Auth::user();
         if($user->isBlocked() ){
             Auth::logout();
-            return $this->sendError('Unauthorized.', ['error' => __('blocked-user')]);
+            return $this->sendError(__('Unauthorized.'), ['error' => __('blocked-user')]);
         }elseif(!$user->isActive()){
             $register = new RegisterController();
             $register->sendVerificationCode($request);

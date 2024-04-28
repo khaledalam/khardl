@@ -573,15 +573,15 @@
                                                 </div>
                                                 <div class="tab-pane fade" id="logo">
                                                     <label>{{__('category-logo')}}</label>
-                                                    <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" />
+                                                    <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
                                                 </div>
                                                 <div class="tab-pane fade" id="sort">
                                                     <label>{{__('sort')}}</label>
                                                     <input type="number" name="sort" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control form-control-solid" placeholder="{{__('The sorting order of category')}}" />
                                                 </div>
                                             </div>
-                                            <div class="d-none justify-content-center" id="update-category-btn">
-                                                <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Update') }}</button>
+                                            <div class="justify-content-center" >
+                                                <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Create') }}</button>
                                                 <button type="button" onclick="hideCategoryEditForm()" class="btn btn-sm btn-info mx-1 mt-2">{{ __('Close') }}</button>
                                             </div>
                                         </div>
