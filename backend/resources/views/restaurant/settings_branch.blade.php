@@ -39,18 +39,15 @@
                                     <div class="card-title m-0 float-right">
 
                                         @if($branch->active)
-
-                                        <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}" id="Activate"
-                                            class="btn btn-danger text-center"><label for="Activate">{{__('Deactivate')}}</label> <i class="fa  fa-play text-white m-2"></i>
-                                                </a>
-
-
+                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to deactivate this branch ?') }}`)" class="btn btn-danger text-center">
+                                            <label for="Activate">{{ __('Deactivate') }}</label>
+                                            <i class="fa fa-play text-white m-2"></i>
+                                        </a>
                                         @else
-
-                                                <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}" id="Activate"
-                                            class="btn btn-success text-center"><label for="Activate">{{__('Activate')}}</label> <i class="fa  fa-play text-white m-2"></i>
-                                                </a>
-
+                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to activate this branch ?') }}`)" class="btn btn-success text-center">
+                                            <label for="Activate">{{ __('Activate') }}</label>
+                                            <i class="fa fa-play text-white m-2"></i>
+                                        </a>
                                         @endif
 
                                     </div>
@@ -260,5 +257,22 @@
                 disableMobile: true
             });
         });
+        function confirmAction(url, message) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '{{ __("Yes") }}',
+                cancelButtonText: '{{ __("No") }}'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        }
     </script>
 @endsection

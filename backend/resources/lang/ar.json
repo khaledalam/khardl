@@ -1252,6 +1252,8 @@
     "Orders count":"عدد الطلبات",
     "each additional 1KM":"كل 1 كيلومتر",
     "First 8KM for":"أول 8 كيلومترات ل",
-    "Max coverage":"اقصي تغطية"
+    "Max coverage":"اقصي تغطية",
+    "Are you sure you want to deactivate this branch ?":"هل أنت متأكد من أنك تريد إلغاء تنشيط هذا الفرع؟",
+    "Are you sure you want to activate this branch ?":"هل أنت متأكد أنك تريد تفعيل هذا الفرع؟"
 
 }
