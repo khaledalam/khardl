@@ -73,14 +73,21 @@ class LoginController extends BaseController
                     }
                     // TODO refactor use Restaurant user model not User Model instead
                     if (!Auth::attempt($credentials,true)) {
-                        return $this->sendError(__('Unauthorized'), ['error' => __('Invalid email or password')]);
+                        return $this->sendError(__('Invalid email or password'), ['error' => __('Invalid email or password')]);
                     } else {
                         $user = Auth::user();
+                        if(!$user->isWorker()){
+                            Auth::logout();
+                            return $this->sendError(__('Cannot login as a driver'));
+                        }
                         if(!$user->branch?->active){
+                            Auth::logout();
                             return $this->sendError(__('Cannot login, Branch is not active'));
                         }
+                       
                         $url = $tenant->impersonationUrl($user->id,'dashboard');
-                        Auth::logout();
+                    
+                      
                         return $this->sendResponse([
                             'url' => $url
                         ], __('OK User logged in successfully.'));
@@ -88,7 +95,7 @@ class LoginController extends BaseController
                     }
                 });
             }
-            return $this->sendError(__('Unauthorized.'), ['error' => __('Invalid email or password')]);
+            return $this->sendError(__('Invalid email or password.'), ['error' => __('Invalid email or password')]);
         }
 
         $user = Auth::user();

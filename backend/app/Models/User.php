@@ -79,6 +79,14 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->belongsTo(Branch::class);
     }
+    public function isDriver()
+    {
+        return $this->hasRole("Driver");
+    }
+    public function isWorker()
+    {
+        return $this->hasRole("Worker");
+    }
     public function isAdmin()
     {
         return $this->hasRole("Administrator");
