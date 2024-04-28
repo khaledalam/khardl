@@ -61,4 +61,11 @@ class ROCustomerAppSub extends Model
             return tenant_route(tenant()->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'home').'/tenancy/assets/'.$value;
         }
     }
+    public function getSubscriptionAttribute()
+    {
+        $subscription_id = $this->subscription_id;
+        return tenancy()->central(function ($tenant) use ($subscription_id) {
+            return Subscription::find($subscription_id);
+        });
+    }
 }
