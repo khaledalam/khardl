@@ -260,7 +260,6 @@ class RestaurantController extends BaseController
         }else{
             $data['delivery_companies_option'] = 0;
             $data['drivers_option'] = 0;
-            $delivery_types = null;
         }
         $branch->update($data);
         $branch->delivery_types()->sync($delivery_types);
