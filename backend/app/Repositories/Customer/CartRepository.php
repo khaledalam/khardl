@@ -45,7 +45,7 @@ class CartRepository
     }
     public function update(CartItem $cartItem,UpdateItemCartRequest $request)
     {
-        $this->updateCartItem($cartItem, $request->all());
+        $this->updateCartItem($cartItem, $request);
         return $this->data(__('The meal has been updated successfully.'));
     }
 
@@ -134,24 +134,31 @@ class CartRepository
         $checkbox_options = null;
         $selection_options = null;
         $dropdown_options = null;
+        $updateData = [];
         if($request['selectedCheckbox'] ?? false){
             $options_price += $this->loopingTroughCheckboxOptions($cartItem->item,$request['selectedCheckbox'],$checkbox_options);
+            $updateData['checkbox_options'] = $checkbox_options;
         }
         if($request['selectedRadio'] ?? false){
             $options_price += $this->loopingTroughSelectionOptions($cartItem->item,$request['selectedRadio'],$selection_options);
+            $updateData['selection_options'] = $selection_options;
         }
         if($request['selectedDropdown'] ?? false){
             $options_price += $this->loopingTroughDropdownOptions($cartItem->item,$request['selectedDropdown'],$dropdown_options);
+            $updateData['dropdown_options'] = $dropdown_options;
+        }
+        if($options_price!=0){
+            $total = ($cartItem->item?->price + $options_price) * $request->input('quantity');
+        }else{
+            $total = ($cartItem->item?->price + $cartItem->options_price) * $request->input('quantity');
         }
 
-        return $cartItem->update([
-            'notes'     => $request['notes'] ?? $cartItem->notes,
-            'quantity'  => $request['quantity'],
-            'checkbox_options' =>  $checkbox_options,
-            'selection_options' =>  $selection_options,
-            'dropdown_options' =>  $dropdown_options,
-            'total' =>($cartItem->item->price + $options_price) * $request['quantity'] ,
-        ]);
+        $updateData = [
+            'notes'     => $request->input('notes', $cartItem->notes),
+            'quantity'  => $request->input('quantity'),
+            'total'     => $total,
+        ];
+        return $cartItem->update($updateData);
     }
 
     public function setQuantity($id, $quantity)
