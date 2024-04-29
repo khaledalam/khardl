@@ -583,7 +583,7 @@ const MainBoardEditor = ({
               backgroundColor: menu_section_background_color,
               borderRadius: `${menu_section_radius}px`,
             }}
-            className={`h-full  ${
+            className={`overflow-hidden h-full  ${
               menu_category_position === "left"
                 ? "order-2 w-[75%]"
                 : menu_category_position === "right"
@@ -723,8 +723,9 @@ const MainBoardEditor = ({
         <div className="flex items-center gap-5">
           {selectedSocialIcons?.map((socialMedia) => (
             <a
-              href={socialMedia.link ? socialMedia.link : null}
               key={socialMedia.id}
+              href={socialMedia.link ? socialMedia.link : null}
+              target="_blank"
               className="cursor-pointer"
             >
               <div
@@ -750,7 +751,11 @@ const MainBoardEditor = ({
                   <button
                     key={socialMedia.id}
                     className="absolute top-[-5px] right-[-4px] text-[10px] text-bold h-fit w-fit rounded-full bg-red-500 p-[3px] text-white"
-                    onClick={() => handleRemoveMediaSelect(socialMedia.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      handleRemoveMediaSelect(socialMedia.id);
+                    }}
                   >
                     <AiOutlineClose size={7} />
                   </button>

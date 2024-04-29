@@ -506,11 +506,11 @@ const restuarantEditorSlice = createSlice({
       const iconToMove = state.selectedSocialIcons.find(
         (icon) => icon.id === iconIdToMove,
       );
+
       if (iconToMove) {
         state.selectedSocialIcons = state.selectedSocialIcons.filter(
           (icon) => icon.id !== iconIdToMove,
         );
-        state.mediaCollection.push(iconToMove);
       }
     },
     setTemplate: (state, action) => {

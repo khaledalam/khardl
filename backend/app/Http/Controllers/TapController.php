@@ -404,7 +404,7 @@ class TapController extends Controller
                 'metadata'=>[
                     'restaurant_id'=> tenant()->id,
                     'subscription'=> ROSubscription::RENEW_BRANCH,
-                    'branch_id'=> $request->currenBranch,
+                    'branch_id'=> $request->currentBranch,
                     'n-branches'=> 1,
                     'subscription_id'=>$centralSubscription->id
                 ],
