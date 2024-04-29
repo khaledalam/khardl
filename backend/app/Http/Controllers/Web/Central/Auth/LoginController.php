@@ -18,6 +18,7 @@ use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\Web\BaseController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
+use Illuminate\Auth\EloquentUserProvider;
 
 class LoginController extends BaseController
 {
@@ -62,7 +63,6 @@ class LoginController extends BaseController
         
         if (!Auth::attempt($credentials,true)) {
             if ($request->has('login_code') && $request->login_code){
-
                 $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->login_code)->first();
                 if (!$tenant) {
                     return $this->sendError(__('Validation Error. R!'));
@@ -71,23 +71,26 @@ class LoginController extends BaseController
                     if(!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE){
                         return $this->sendError(__("Website doesn't have active subscription, Only restaurant owner can login"));
                     }
-                    // TODO refactor use Restaurant user model not User Model instead
+                    // switch to another guard
+                    Auth::forgetGuards();
+                    app('config')->set('auth.providers.users.model', RestaurantUser::class);
+
                     if (!Auth::attempt($credentials,true)) {
                         return $this->sendError(__('Invalid email or password'), ['error' => __('Invalid email or password')]);
                     } else {
                         $user = Auth::user();
+                        
                         if(!$user->isWorker()){
                             Auth::logout();
-                            return $this->sendError(__('Cannot login as a driver'));
+                            return $this->sendError(__('Only worker can access this restaurant'));
                         }
                         if(!$user->branch?->active){
                             Auth::logout();
                             return $this->sendError(__('Cannot login, Branch is not active'));
                         }
-                       
+
                         $url = $tenant->impersonationUrl($user->id,'dashboard');
-                    
-                      
+                        Auth::logout();
                         return $this->sendResponse([
                             'url' => $url
                         ], __('OK User logged in successfully.'));
@@ -95,7 +98,7 @@ class LoginController extends BaseController
                     }
                 });
             }
-            return $this->sendError(__('Invalid email or password.'), ['error' => __('Invalid email or password')]);
+            return $this->sendError(__('Invalid email or password'), ['error' => __('Invalid email or password')]);
         }
 
         $user = Auth::user();
