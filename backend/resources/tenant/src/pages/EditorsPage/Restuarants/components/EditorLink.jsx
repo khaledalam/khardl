@@ -12,6 +12,8 @@ const EditorLink = ({ label }) => {
     (state) => state.restuarantEditorStyle,
   );
 
+  console.log({ selectedSocialIcons });
+
   const usedMediaIds = selectedSocialIcons.map((socialIcon) =>
     parseInt(socialIcon.id),
   );
@@ -25,10 +27,12 @@ const EditorLink = ({ label }) => {
     availableMedias[0]?.id,
   );
 
-  const hasNoSelected = selectedSocialIcons.length === 0;
+  const hasNoSelected = !setSelectedMediaId;
   const selectedMedia = mediaCollection?.find(
     (socialIcon) => socialIcon.id === selectedMediaId,
   );
+
+  console.log("selectedMedia", selectedMedia, selectedMediaId);
 
   const handleInputKeyDown = (e) => {
     if (e.key === "Enter") {
