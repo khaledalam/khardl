@@ -81,8 +81,7 @@ a[x-apple-data-detectors='true'] {
   text-decoration: none !important;
 }
 
-table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: underline; }
-    </style>
+table, td { color: #000000; } </style>
   
   
 
@@ -93,7 +92,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 <body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #F7F8F9;color: #000000">
   <!--[if IE]><div class="ie-container"><![endif]-->
   <!--[if mso]><div class="mso-container"><![endif]-->
-  <table id="u_body" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #F7F8F9;width:100%" cellpadding="0" cellspacing="0">
+  <table style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #F7F8F9;width:100%" cellpadding="0" cellspacing="0">
   <tbody>
   <tr style="vertical-align: top">
     <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
@@ -137,7 +136,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 2px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><strong>Subscription Expired</strong></span></h1>
+    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><span><span><strong>New Branch Added</strong></span></span></span></span></h1>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -171,7 +170,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-family: 'Cabin',sans-serif; font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Dear {{ $user->first_name }},</strong></p>
+    <p style="line-height: 140%;"><strong>Dear {{ $name }},</strong></p>
   </div>
 
       </td>
@@ -185,15 +184,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">We hope this message finds you well.</p>
-<p><span style="color: #000000; text-align: center; white-space: normal; background-color: #ffffff; float: none; display: inline;">@if($type == 'website')</span></p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has expired. To ensure the uninterrupted activity of your restaurant and to continue providing excellent service to your customers, we're offering you a grace period of {{$period}} days to renew your subscription.</p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">To proceed with the renewal, please follow this link: <a href="{{ $url }}" style="box-sizing: border-box; color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1)); text-decoration-line: underline;">Renew Subscription</a>. Our team is ready to assist you throughout the process and answer any questions you may have.</p>
-<p><span style="color: #000000; text-align: center; white-space: normal; background-color: #ffffff; float: none; display: inline;">@elseif($type == 'app')</span></p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has expired. To ensure the uninterrupted activity of your restaurant and to continue providing excellent service to your customers, we're offering you a grace period of {{$period}} days to renew your subscription.</p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">Unfortunately, your customers cannot place orders through the app during this grace period. To proceed with the renewal, please follow this link: <a href="{{ $url }}" style="box-sizing: border-box; color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1)); text-decoration-line: underline;">Renew Subscription</a>. Our team is ready to assist you throughout the process and answer any questions you may have.</p>
-<p><span style="color: #000000; text-align: center; white-space: normal; background-color: #ffffff; float: none; display: inline;">@endif</span></p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">Thank you for choosing our services. We value your partnership and look forward to continuing our collaboration.</p></h4>
+    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><span><span>A new branch has been added successfully to your restaurant upon your request.</span></span></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
