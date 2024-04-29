@@ -583,7 +583,7 @@ const MainBoardEditor = ({
               backgroundColor: menu_section_background_color,
               borderRadius: `${menu_section_radius}px`,
             }}
-            className={`h-full  ${
+            className={`overflow-hidden h-full  ${
               menu_category_position === "left"
                 ? "order-2 w-[75%]"
                 : menu_category_position === "right"
