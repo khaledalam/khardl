@@ -28,7 +28,7 @@ class CategoryResource extends JsonResource
             $data['user'] = $this->user;
         }
         if ($request->has('items')) {
-            $data['items'] = ItemResource::collection($this->items);
+            $data['items'] = ItemResource::collection($this->available_items);
         }
         if ($request->has('lang')) {
              $data['sd']=   $request->lang;
