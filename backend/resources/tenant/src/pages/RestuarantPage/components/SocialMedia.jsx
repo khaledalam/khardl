@@ -23,8 +23,9 @@ const SocialMedia = ({ restaurantStyle }) => {
       <div className="flex items-center gap-5">
         {selectedSocialIcons?.map((socialMedia) => (
           <a
-            href={socialMedia.link ? socialMedia.link : null}
             key={socialMedia.id}
+            href={socialMedia.link ? socialMedia.link : null}
+            target="_blank"
             className="cursor-pointer"
           >
             <div

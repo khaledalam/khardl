@@ -7,7 +7,6 @@ import EditorPosition from "./EditorPosition";
 import EditorPercentageInput from "./EditorPercentageInput";
 import EditorSizeSelect from "./EditorSizeSelect";
 import EditorLink from "./EditorLink";
-import SocialMediaCollection from "./SocialMediaCollection";
 import { IoAdd } from "react-icons/io5";
 import PhoneInput from "react-phone-input-2";
 import { useSelector, useDispatch } from "react-redux";
