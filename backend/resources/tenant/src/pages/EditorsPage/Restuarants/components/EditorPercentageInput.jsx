@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import { ChromePicker } from "react-color";
-import { IoIosClose } from "react-icons/io";
-import { useTranslation } from "react-i18next";
+import React from "react";
+import { useSelector } from "react-redux";
 import Percentage from "../../../../assets/percentage.png";
-import { useDispatch, useSelector } from "react-redux";
 
 const EditorPercentageInput = ({
   label,
@@ -11,10 +8,6 @@ const EditorPercentageInput = ({
   handlePercentageChange,
   defaultPercentage,
 }) => {
-  const { t } = useTranslation();
-  const newdefaultColor = `#ffffff`;
-  const [isResetColor, setIsResetColor] = useState(false);
-
   const Language = useSelector((state) => state.languageMode.languageMode);
 
   return (
@@ -40,7 +33,13 @@ const EditorPercentageInput = ({
           />
         </div>
         <div className="bg-white rounded-[50px] flex justify-center items-center my-[2px]">
-          <img src={Percentage} alt="percentage icon" className="m-[6px]" />
+          <img
+            src={Percentage}
+            width={16}
+            height={16}
+            alt="percentage icon"
+            className="m-[6px]"
+          />
         </div>
       </div>
     </div>

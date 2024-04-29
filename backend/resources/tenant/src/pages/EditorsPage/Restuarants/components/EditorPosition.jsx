@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useEffect, useState } from "react";
 import AlignLeft from "../../../../assets/alignLeft.png";
 import AlignCenter from "../../../../assets/alignCenter.png";
-import AlignRight from "../../../../assets/alignRight.png";
+import { cn } from "../../../../utils/styles";
 
 const EditorPosition = ({ defaultValue, onChange, modalId }) => {
   const [activeAlign, setActiveAlign] = useState(defaultValue);
@@ -10,11 +9,15 @@ const EditorPosition = ({ defaultValue, onChange, modalId }) => {
   const alignments = [
     {
       position: "left",
-      icon: <img src={AlignLeft} alt="align left icon" />,
+      icon: (
+        <img src={AlignLeft} width={12} height={12} alt="align left icon" />
+      ),
     },
     {
       position: "center",
-      icon: <img src={AlignCenter} alt="align center icon" />,
+      icon: (
+        <img src={AlignCenter} width={12} height={12} alt="align center icon" />
+      ),
     },
   ];
 
@@ -33,11 +36,9 @@ const EditorPosition = ({ defaultValue, onChange, modalId }) => {
       >
         {alignments.map((alignment, idx) => (
           <div
-            className={`cursor-pointer ${
-              alignment.position === activeAlign
-                ? "bg-white rounded-[50px] py-[10px] px-[25px]"
-                : "rounded-[50px] py-[10px] px-[25px]"
-            }`}
+            className={cn("cursor-pointer rounded-full py-2.5 px-6", {
+              "bg-white": alignment.position === activeAlign,
+            })}
             key={idx}
             onClick={() => {
               onChange(alignment.position);
