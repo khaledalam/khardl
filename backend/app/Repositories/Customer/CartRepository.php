@@ -156,8 +156,21 @@ class CartRepository
         $updateData = [
             'notes'     => $request->input('notes', $cartItem->notes),
             'quantity'  => $request->input('quantity'),
-            'total'     => $total,
+            'total'     => ($cartItem->item->price + $options_price) * $request->input('quantity'),
         ];
+
+        if ($checkbox_options !== null) {
+            $updateData['checkbox_options'] = $checkbox_options;
+        }
+
+        if ($selection_options !== null) {
+            $updateData['selection_options'] = $selection_options;
+        }
+
+        if ($dropdown_options !== null) {
+            $updateData['dropdown_options'] = $dropdown_options;
+        }
+
         return $cartItem->update($updateData);
     }
 
