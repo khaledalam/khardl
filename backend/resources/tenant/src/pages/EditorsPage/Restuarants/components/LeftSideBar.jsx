@@ -105,7 +105,10 @@ const Section = ({ title, subItems, active, activeSubitem, onClick }) => {
       </div>
 
       <ul
-        className={cn(isMobile ? listMobileClassName : listDesktopClassName)}
+        className={cn(
+          isMobile ? listMobileClassName : listDesktopClassName,
+          subItems.length === 1 && "hidden", // hide subitems if there is only one
+        )}
         style={
           !isMobile
             ? undefined
