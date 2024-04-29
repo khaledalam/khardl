@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const categorySlice = createSlice({
-    name: "category",
-    initialState: {
-        selectedCategory: "Tabs",
+  name: "category",
+  initialState: {
+    selectedCategory: "Tabs",
+  },
+  reducers: {
+    selectCategory: (state, action) => {
+      state.selectedCategory = action.payload;
     },
-    reducers: {
-        selectCategory: (state, action) => {
-            state.selectedCategory = action.payload;
-        },
-    },
+  },
 });
 
 export const { selectCategory } = categorySlice.actions;

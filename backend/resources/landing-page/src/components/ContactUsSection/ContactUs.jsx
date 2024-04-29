@@ -36,13 +36,13 @@ function ContactUs() {
             Accept: "application/json",
             "X-CSRF-TOKEN": window.csrfToken,
           },
-        }
+        },
       );
       console.log(data);
       if (data.success) {
         // const responseData = await response.json()
         toast.success(
-          `${t("Your contact information has been sent successfully")}`
+          `${t("Your contact information has been sent successfully")}`,
         );
         reset();
       } else {
@@ -79,7 +79,9 @@ function ContactUs() {
             <div className="contact-footer-section">
               {/* <h3 className="contact-heading text-left mt-2 mb-5"> */}
               {/* className={language === "en" ? "text-left" : " header-ar"} */}
-              <h3 className={`${language === "en" ? "text-left" : "header-ar"} mt-2 mb-5 contact-heading `}>
+              <h3
+                className={`${language === "en" ? "text-left" : "header-ar"} mt-2 mb-5 contact-heading `}
+              >
                 {t("Contact Information")}
               </h3>
 
@@ -90,7 +92,9 @@ function ContactUs() {
                 <span>
                   <img src={mail} />
                 </span>
-                  <a href={"mailto:contact-us@khardl.com"}>contact-us@khardl.com</a>
+                <a href={"mailto:contact-us@khardl.com"}>
+                  contact-us@khardl.com
+                </a>
               </div>
               {/* <div className="contact-details"><span><img src={location}/>
 

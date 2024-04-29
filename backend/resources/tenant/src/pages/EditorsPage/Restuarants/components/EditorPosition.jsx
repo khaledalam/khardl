@@ -5,50 +5,50 @@ import AlignCenter from "../../../../assets/alignCenter.png";
 import AlignRight from "../../../../assets/alignRight.png";
 
 const EditorPosition = ({ defaultValue, onChange, modalId }) => {
-    const [activeAlign, setActiveAlign] = useState(defaultValue);
+  const [activeAlign, setActiveAlign] = useState(defaultValue);
 
-    const alignments = [
-        {
-            position: "left",
-            icon: <img src={AlignLeft} alt="align left icon" />,
-        },
-        {
-            position: "center",
-            icon: <img src={AlignCenter} alt="align center icon" />,
-        },
-    ];
+  const alignments = [
+    {
+      position: "left",
+      icon: <img src={AlignLeft} alt="align left icon" />,
+    },
+    {
+      position: "center",
+      icon: <img src={AlignCenter} alt="align center icon" />,
+    },
+  ];
 
-    useEffect(() => {
-        setActiveAlign(defaultValue);
-    }, [defaultValue]);
+  useEffect(() => {
+    setActiveAlign(defaultValue);
+  }, [defaultValue]);
 
-    // const handleActiveAlign = useCallback((position) => {
-    //     setActiveAlign(position);
-    //     onChange(position);
-    // }, []);
-    return (
-        <div id={modalId} className={""}>
-            <div
-                className={`flex items-center justify-between w-[208px] xl:w-full h-[40px] bg-[#F3F3F3] rounded-[50px] py-[4px] px-[12px]`}
-            >
-                {alignments.map((alignment, idx) => (
-                    <div
-                        className={`cursor-pointer ${
-                            alignment.position === activeAlign
-                                ? "bg-white rounded-[50px] py-[10px] px-[25px]"
-                                : "rounded-[50px] py-[10px] px-[25px]"
-                        }`}
-                        key={idx}
-                        onClick={() => {
-                            onChange(alignment.position);
-                        }}
-                    >
-                        {alignment.icon}
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+  // const handleActiveAlign = useCallback((position) => {
+  //     setActiveAlign(position);
+  //     onChange(position);
+  // }, []);
+  return (
+    <div id={modalId} className={""}>
+      <div
+        className={`flex items-center justify-between w-[208px] xl:w-full h-[40px] bg-[#F3F3F3] rounded-[50px] py-[4px] px-[12px]`}
+      >
+        {alignments.map((alignment, idx) => (
+          <div
+            className={`cursor-pointer ${
+              alignment.position === activeAlign
+                ? "bg-white rounded-[50px] py-[10px] px-[25px]"
+                : "rounded-[50px] py-[10px] px-[25px]"
+            }`}
+            key={idx}
+            onClick={() => {
+              onChange(alignment.position);
+            }}
+          >
+            {alignment.icon}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default EditorPosition;

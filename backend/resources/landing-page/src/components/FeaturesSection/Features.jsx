@@ -104,7 +104,7 @@ function FeaturesSection() {
           <div className="absolute flex items-center flex-col feature-section-green top-1/2 left-1/2 transform -translate-x-1/2 text-center justify-center">
             <h3 className="text-[#000000] mb-5">
               {t(
-                "You can design your website or application independently, with no requirement for communication"
+                "You can design your website or application independently, with no requirement for communication",
               )}
             </h3>
 

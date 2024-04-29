@@ -1,13 +1,15 @@
 import React from "react";
-import LogoPattern from '../assets/LogoPattern.webp';
-import { useSelector } from "react-redux"
+import LogoPattern from "../assets/LogoPattern.webp";
+import { useSelector } from "react-redux";
 
 const HeaderSection = ({ title, details }) => {
-  const language = useSelector((state) => state.languageMode.languageMode)
+  const language = useSelector((state) => state.languageMode.languageMode);
 
   return (
     <section className=" max-[1250px]:mx-[20px]">
-      <div className={language === "en" ? "new-header" : "new-header header-ar"}>
+      <div
+        className={language === "en" ? "new-header" : "new-header header-ar"}
+      >
         <h2>{title}</h2>
         <p>{details}</p>
       </div>

@@ -2,15 +2,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const linkSlice = createSlice({
-    name: "link",
-    initialState: {
-        activeLink: "/",
+  name: "link",
+  initialState: {
+    activeLink: "/",
+  },
+  reducers: {
+    setActiveLink: (state, action) => {
+      state.activeLink = action.payload;
     },
-    reducers: {
-        setActiveLink: (state, action) => {
-            state.activeLink = action.payload;
-        },
-    },
+  },
 });
 
 export const { setActiveLink } = linkSlice.actions;
