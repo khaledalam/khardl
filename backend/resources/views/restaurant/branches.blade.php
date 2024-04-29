@@ -19,9 +19,13 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 @endpush
 @push('scripts')
     <script>
+        let currentBranch = null;
+        function changeBranch(branch){
+            currentBranch = branch;
+        }
         function submitPayment(e,branch){
             e.preventDefault();
-            document.getElementById('currenBranch').value = branch;
+            document.getElementById('currentBranch').value = currentBranch;
             goSell.submit();
         }
         goSell.goSellElements({
@@ -261,7 +265,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                     @if($branch->deleted_at)
 
                                                     <div class="d-flex justify-content-center mt-1">
-                                                        <a data-bs-toggle="modal" data-bs-target="#kt_modal_new_target_renew" class="btn btn-khardl text-center opacity-100 "> <span class=" text-white fw-bolder">{{__('Purchase')}} <i class="fas fa-money-bill-wave-alt text-white"></i></span></a>
+                                                        <a data-bs-toggle="modal" data-bs-target="#kt_modal_new_target_renew" onclick="changeBranch({{$branch->id}});" class="btn btn-khardl text-center opacity-100 "> <span class=" text-white fw-bolder">{{__('Purchase')}} <i class="fas fa-money-bill-wave-alt text-white"></i></span></a>
                                                     </div>
                                                     @elseif(!$branch->active)
 
@@ -273,44 +277,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                 </div>
                                                 <!--end::Title-->
                                             </div>
-                                            <div class="modal fade" id="kt_modal_new_target_renew" tabindex="-1" aria-hidden="true">
-                                                <!--begin::Modal dialog-->
-                                                <div class="modal-dialog modal-dialog-centered mw-650px">
-                                                    <!--begin::Modal content-->
-                                                    <div class="modal-content rounded p-15">
-                                                        <form action="{{route('tap.renewBranch')}}" id="renewBranch" method="POST">
-                                                            @csrf
-                                                            <input type="hidden" name="token_id" id="token_id" value="">
-                                                            <input type="hidden" id="currenBranch" value="" name="currenBranch">
-
-                                                            <div class="modal-header pb-0 border-0  d-flex justify-content-center">
-                                                                <h5 class="modal-title text-center">
-                                                                    {{__('Renewing the branch subscription period')}} ({{$branch_cost}}) {{__('SAR')}}
-                                                                </h5>
-                                                                <br>
-
-                                                            </div>
-                                                            <p class="text-center text-khardl">
-                                                                ({{$branch_left}})
-                                                            </p>
-                                                            <div id="root"></div>
-                                                            <p id="msg"></p>
-
-                                                            <button id="tap-btn" type="submit" onclick="submitPayment(event,{{$branch->id}})" class="btn btn-khardl text-white ">
-
-                                                                <span class="indicator-label"> {{__("purchase")}} ✔️</span>
-                                                                <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
-                                                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                            </button>
-                                                        </form>
-
-                                                    </div>
-
-                                                </div>
-
-
-
-                                            </div>
+                                         
                                             <!--end::Modal body-->
 
                                             <!--end::Heading-->
@@ -401,6 +368,44 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                         <!--end::Footer-->
                                     </div>
                                     <!--end::Wrapper-->
+                                </div>
+                                <div class="modal fade" id="kt_modal_new_target_renew" tabindex="-1" aria-hidden="true">
+                                    <!--begin::Modal dialog-->
+                                    <div class="modal-dialog modal-dialog-centered mw-650px">
+                                        <!--begin::Modal content-->
+                                        <div class="modal-content rounded p-15">
+                                            <form action="{{route('tap.renewBranch')}}" id="renewBranch" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="token_id" id="token_id" value="">
+                                                <input type="hidden" id="currentBranch" value="" name="currentBranch">
+
+                                                <div class="modal-header pb-0 border-0  d-flex justify-content-center">
+                                                    <h5 class="modal-title text-center">
+                                                        {{__('Renewing the branch subscription period')}} ({{$branch_cost}}) {{__('SAR')}}
+                                                    </h5>
+                                                    <br>
+
+                                                </div>
+                                                <p class="text-center text-khardl">
+                                                    ({{$branch_left}})
+                                                </p>
+                                                <div id="root"></div>
+                                                <p id="msg"></p>
+
+                                                <button id="tap-btn" type="submit" onclick="submitPayment(event)" class="btn btn-khardl text-white ">
+
+                                                    <span class="indicator-label"> {{__("purchase")}} ✔️</span>
+                                                    <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
+                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                </button>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+
+
                                 </div>
                                 <!--end::Col-->
                             </div>

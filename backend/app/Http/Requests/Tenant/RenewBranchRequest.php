@@ -18,7 +18,7 @@ class RenewBranchRequest extends FormRequest
 
         return [
             'token_id' => 'required|string',
-            'currenBranch'=> 'required|integer',
+            'currentBranch'=> 'required|integer',
     
     
 
