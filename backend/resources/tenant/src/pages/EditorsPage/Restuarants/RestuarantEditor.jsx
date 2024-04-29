@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import SidebarEditor from "./components/SidebarEditor";
 import MainBoardEditor from "./components/MainBoardEditor";
 import AxiosInstance from "../../../axios/axios";
 import { useDispatch, useSelector } from "react-redux";
