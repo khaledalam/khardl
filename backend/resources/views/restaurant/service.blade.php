@@ -631,7 +631,7 @@ function openModal(modalID) {
                                                                     <div class="mr-auto p-2">
                                                                         <div>
                                                                             <a href="{{$ROCustomerAppSub->android_url}}">
-                                                                                <img src="{{global_asset('images/logo_playstore.svg')}}" width="130"/>
+                                                                                <img src="{{global_asset('images/logo_playstore.svg')}}" width="100"/>
                                                                             </a>
                                                                         </div>
                                                                     </div>
@@ -640,7 +640,7 @@ function openModal(modalID) {
                                                                     <div class="p-2">
                                                                         <div>
                                                                             <a href="{{$ROCustomerAppSub->ios_url}}" >
-                                                                                <img src="{{global_asset('images/logo_appstore.svg')}}" width="130"/>
+                                                                                <img src="{{global_asset('images/logo_appstore.svg')}}" width="100"/>
                                                                             </a>
                                                                         </div>
                                                                     </div>
@@ -762,14 +762,14 @@ function openModal(modalID) {
                                                         <div class="mr-auto p-2">
                                                             <div>
                                                                 <a href="https://play.google.com/store/apps/details?id=com.khardl.orders" target="_blank">
-                                                                    <img src="{{global_asset('images/logo_playstore.svg')}}" width="130"/>
+                                                                    <img src="{{global_asset('images/logo_playstore.svg')}}" width="100"/>
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <div class="p-2">
                                                             <div>
                                                                 <a href="https://apps.apple.com/us/app/khardl-orders/id6478204383" target="_blank">
-                                                                    <img src="{{global_asset('images/logo_appstore.svg')}}" width="130"/>
+                                                                    <img src="{{global_asset('images/logo_appstore.svg')}}" width="100"/>
                                                                 </a>
                                                             </div>
                                                         </div>
