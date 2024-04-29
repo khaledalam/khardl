@@ -55,6 +55,10 @@ class Category extends Model
     {
         return $this->hasMany(Item::class); //->where('availability', true);
     }
+    public function available_items()
+    {
+        return $this->hasMany(Item::class)->where('availability', true);
+    }
     protected static function newFactory()
     {
       return CategoryFactory::new();
