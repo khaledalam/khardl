@@ -32,8 +32,6 @@ const EditorLink = ({ label }) => {
     (socialIcon) => socialIcon.id === selectedMediaId,
   );
 
-  console.log("selectedMedia", selectedMedia, selectedMediaId);
-
   const handleInputKeyDown = (e) => {
     if (e.key === "Enter") {
       handleMediaToSelected();
