@@ -15,12 +15,16 @@ export const LeftSideBar = ({
   setActiveDesignSection,
 }) => {
   const { t } = useTranslation();
-  // const [activeSection, setActiveSection] = useState(null);
-  // const [activeSubitem, setActiveSubitem] = useState(null);
 
-  const toggleSection = (e, sectionId) => {
-    setActiveSection(sectionId === activeSection ? null : sectionId);
-    setActiveSubitem(null);
+  const toggleSection = (e, sectionIndex) => {
+    if (activeSection === sectionIndex) {
+      setActiveSection(null);
+      setActiveSubitem(null);
+    } else {
+      setActiveSection(sectionIndex);
+      setActiveSubitem(0);
+    }
+
     setActiveDesignSection(null);
     setMouseClick(e.clientX);
   };
