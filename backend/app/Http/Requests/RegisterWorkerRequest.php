@@ -24,12 +24,11 @@ class RegisterWorkerRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules= [
             'first_name' => 'required|string|min:3|max:255',
             'last_name' => 'required|string|min:3|max:255',
-            'email' => 'required|string|email|min:10|max:255|unique:users',
             'password' => 'required|string|min:6|max:255',
-            'phone' => 'required|regex:/^(966)?\d{9}$/|unique:users',
+           
             'can_modify_and_see_other_workers' => 'boolean',
             'can_modify_working_time' => 'boolean',
             'can_edit_menu' => 'boolean',
@@ -38,6 +37,14 @@ class RegisterWorkerRequest extends FormRequest
             'can_edit_and_view_drivers' => 'boolean',
             'at_least_one_permission' => 'required_without_all:can_modify_and_see_other_workers,can_modify_working_time,can_edit_menu,can_control_payment,can_view_revenues,can_edit_and_view_drivers',
         ];
+        if($this->id){
+            $rules['email'] =  'required|string|email|min:10|max:255|unique:users,email,'.$this->id;
+            $rules['phone'] =  'required|regex:/^(966)?\d{9}$/|unique:users,phone,'.$this->id;
+        }else {
+            $rules['email'] =  'required|string|email|min:10|max:255|unique:users';
+            $rules['phone'] =  'required|regex:/^(966)?\d{9}$/|unique:users';
+        }
+        return $rules;
     }
     public function messages()
     {

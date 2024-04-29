@@ -1,10 +1,10 @@
 // development
 export const WEBSITE_URL =
-    window.location.href.indexOf("khardl.com") > -1
-        ? "https://khardl.com" // Live production
-        : window.location.href.indexOf("khardl4test.xyz") > -1
-          ? "https://khardl4test.xyz" // Live test
-          : "http://khardl:8000"; // Local
+  window.location.href.indexOf("khardl.com") > -1
+    ? "https://khardl.com" // Live production
+    : window.location.href.indexOf("khardl4test.xyz") > -1
+      ? "https://khardl4test.xyz" // Live test
+      : "http://khardl:8000"; // Local
 
 export const API_ENDPOINT = url_tenant;
 

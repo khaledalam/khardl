@@ -29,6 +29,7 @@ class OrderService
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $orders = Order::with('payment_method')
+        ->whenPermissions()
         ->recent()
         ->whenSearch($request['search']?? null)
         ->whenStatus($request['status']?? null)
@@ -71,7 +72,7 @@ class OrderService
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $deliveryTypes = DeliveryType::all();
-        $branches = Branch::all();
+        $branches = Branch::whenPermissions()->get();
         return view('restaurant.orders.add', compact('user', 'deliveryTypes', 'branches'));
     }
     public function addOrder($request)
@@ -116,7 +117,7 @@ class OrderService
                 $addItemToCartRequest = new AddItemToCartRequest([
                     'item_id' => $product,
                     'quantity' => $quantity,
-                    'branch_id' => $request->branch_id,
+                    'branch_id' => $request->branch_id ?? getAuth()->branch_id,
                     'selectedCheckbox' => $selectedCheckbox,
                     'selectedRadio' => $selectedRadio,
                     'selectedDropdown' => $selectedDropdown,

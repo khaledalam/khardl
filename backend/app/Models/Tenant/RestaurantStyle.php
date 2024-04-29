@@ -49,7 +49,7 @@ class RestaurantStyle extends Model
         $values = null; 
         foreach(json_decode($this->attributes['banner_images']) as $image) {
             if (strpos($image, "http://") === 0 || strpos($image, "https://") === 0) {
-     
+                $url = '';
             }else {
                 $url = tenant_route(tenant()->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'home').'/tenancy/assets/'.$image;
             }
@@ -72,7 +72,7 @@ class RestaurantStyle extends Model
     {
         $url = $this->attributes['banner_image'];
         if (strpos($url, "http://") === 0 || strpos($url, "https://") === 0) {
-     
+            $url = '';
         }else {
             $url = tenant_route(tenant()->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'home').'/tenancy/assets/'.$url;
         }

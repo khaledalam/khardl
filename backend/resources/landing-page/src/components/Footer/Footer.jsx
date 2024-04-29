@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import logo from "../../assets/Logo.webp";
 import Copyright from "./Copyright";
-import LogoPattern from '../../assets/LogoPattern.webp';
-import { FaFacebookF, FaInstagram, FaWhatsapp, FaYoutube } from 'react-icons/fa';
-import { BsBehance, BsTwitter, BsLinkedin } from 'react-icons/bs';
+import LogoPattern from "../../assets/LogoPattern.webp";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaWhatsapp,
+  FaYoutube,
+} from "react-icons/fa";
+import { BsBehance, BsTwitter, BsLinkedin } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
-import { HiOutlineMail } from 'react-icons/hi';
+import { HiOutlineMail } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -23,26 +28,30 @@ const Footer = () => {
     };
   }, []);
 
-
   return (
     <section className=" mx-[160px] max-[1250px]:mx-[20px]">
       <footer className="active text-center">
-        <div className="px-6 py-10 text-center md:text-right rounded-t-[30px]"
+        <div
+          className="px-6 py-10 text-center md:text-right rounded-t-[30px]"
           style={{
             backgroundImage: `url(${LogoPattern})`,
             backgroundSize: "cover",
-          }}>
+          }}
+        >
           <div className="flex flex-col items-center justify-center gap-4">
-            <div >
+            <div>
               <div className="mb-4 uppercase transform transition-transform hover:-translate-y-2">
-                <Link to='/'>
-                  <img loading="lazy" className="w-[120px] max-[500px]:w-[90px]" src={logo} alt="logo2" />
+                <Link to="/">
+                  <img
+                    loading="lazy"
+                    className="w-[120px] max-[500px]:w-[90px]"
+                    src={logo}
+                    alt="logo2"
+                  />
                 </Link>
               </div>
             </div>
-            <h2 className="max-w-[500px] text-center">
-              {t("Footer-text")}
-            </h2>
+            <h2 className="max-w-[500px] text-center">{t("Footer-text")}</h2>
             <div className="flex justify-center items-center flex-wrap  mt-[20px] gap-[15px]">
               <div className="bg-black hover:bg-[#1D9BF0]  hover:text-white text-[var(--primary)] p-2 rounded-full transform transition-transform hover:-translate-y-2">
                 <a href="#">

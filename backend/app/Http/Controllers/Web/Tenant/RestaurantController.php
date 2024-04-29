@@ -260,7 +260,6 @@ class RestaurantController extends BaseController
         }else{
             $data['delivery_companies_option'] = 0;
             $data['drivers_option'] = 0;
-            $delivery_types = null;
         }
         $branch->update($data);
         $branch->delivery_types()->sync($delivery_types);
@@ -300,10 +299,9 @@ class RestaurantController extends BaseController
 
     public function branchOrders(Order $order)
     {
-
         $user = Auth::user();
+        if($user->isWorker() && $order->branch_id != $user->branch_id)return abort(403);
         $order->load('user', 'items');
-
         $orderStatusLogs = OrderStatusLogs::orderBy("created_at",'desc')->where('order_id',$order->id)->get();
         $locale = app()->getLocale();
         return view(
@@ -1092,7 +1090,8 @@ class RestaurantController extends BaseController
             'can_edit_menu',
             'can_control_payment',
             'can_view_revenues',
-            'can_edit_and_view_drivers'
+            'can_edit_and_view_drivers',
+            'can_mange_orders'
         ];
         $insertData = [];
 
@@ -1135,7 +1134,7 @@ class RestaurantController extends BaseController
         }
     }
 
-    public function updateWorker(Request $request, $id)
+    public function updateWorker(RegisterWorkerRequest $request, $id)
     {
         $selectedWorker = RestaurantUser::find($id);
 
@@ -1160,7 +1159,8 @@ class RestaurantController extends BaseController
             'can_edit_menu',
             'can_control_payment',
             'can_view_revenues',
-            'can_edit_and_view_drivers'
+            'can_edit_and_view_drivers',
+            'can_mange_orders'
         ];
 
         $updateData = [];

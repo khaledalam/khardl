@@ -15,6 +15,7 @@
     ":name is not available":":name غير متاح",
     ":branch is closed":":branch مغلق",
     ":option is required":":option مطلوب",
+    "Cannot login as a driver":"لا يمكن تسجيل الدخول كسائق",
     "files re-uploaded":"تم رفع الملفات مرة اخري",
     ":option is required for :item":":option مطلوب للمنتج :item",
     "Maximum :option options for :item is ":"اقصي عدد خيارات للخبار :option للمنتح :item هو",
@@ -77,7 +78,6 @@
     "Added successfully" :"تم الاضافة بنجاح",
     "Add a coupon code":"إضافة قسيمة خصم",
     "Updated successfully" :"تم التحديث بنجاح",
-    "Branch updated successfully": "تم تحديث بيانات المطعم بنجاح",
     "Apply":"تطبيق",
     "Time from should be before to": "التوقيت من يجب ان يسبق التوقيت الي",
     "Renewing the branch subscription period":"تجديد فترة الاشتراك للفرع",
@@ -194,6 +194,7 @@
     "Your request has been sent to the admin and the applications will be activated soon":"لقد تم ارسال طلبك الي المشرف وسيتم تفعيل التطبيقات قريبا",
     "Brand" :"العلامة التجارية",
     "Brand address" :"عنوان العلامة التجارية",
+    "Only worker can access this restaurant":"يمكن للعمال فقط الوصول إلى هذا المطعم",
     "Apps requested":"التطبيقات المطلوبة",
     "requested":"تم الطلب",
     "Brand name":"اسم العلامة التجارية",
@@ -339,7 +340,7 @@
     "restaurants-found" : "المطاعم التي تم العثور عليها",
     "points" : "النقاط",
     "earnings" : "أرباح",
-    "orders" : "طلبات",
+    "orders" : "الطلبات",
     "actions" : "أجراءات",
     "view" : "التفاصيل",
     "delete" : "حذف",
@@ -1204,7 +1205,7 @@
     "View driver":"عرض السائق",
     "The old password is incorrect.":"كلمة المرور القديمة غير صحيحة.",
     "Edit item : ":" تعديل المنتج : ",
-    "Can control drivers":"يمكن التحكم في السائقين",
+    "Can access drivers":"يمكن التحكم في السائقين",
     "Profile image updated successfully":"تم تحديث صورة الملف الشخصي بنجاح",
     "On purchase the app":"عند شراء التطبيق",
     "On purchase branch":"عند شراء فرع",
@@ -1257,6 +1258,9 @@
     "Orders count":"عدد الطلبات",
     "each additional 1KM":"كل 1 كيلومتر",
     "First 8KM for":"أول 8 كيلومترات ل",
-    "Max coverage":"اقصي تغطية"
+    "Max coverage":"اقصي تغطية",
+    "Are you sure you want to deactivate this branch ?":"هل أنت متأكد من أنك تريد إلغاء تنشيط هذا الفرع؟",
+    "Are you sure you want to activate this branch ?":"هل أنت متأكد أنك تريد تفعيل هذا الفرع؟",
+    "Can access orders":"يمكن إدارة الطلبات"
 
 }

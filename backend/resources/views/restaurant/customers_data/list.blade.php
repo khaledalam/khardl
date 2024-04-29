@@ -53,10 +53,10 @@
                     </div>
                 </form>
                 <!--begin::Tab content-->
-                <div id="kt_referred_users_tab_content" class="tab-content">
+                <div id="kt_referred_users_tab_content mb-5" class="tab-content">
                     <!--begin::Tab panel-->
                     <div id="kt_referrals_1" class="card-body p-0 tab-pane fade show active" role="tabpanel">
-                        <div class="table-responsive">
+                        <div class="table-responsive p-4">
                             <!--begin::Table-->
                             <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
                                 <!--begin::Table head-->

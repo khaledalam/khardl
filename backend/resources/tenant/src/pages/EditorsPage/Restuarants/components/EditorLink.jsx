@@ -1,136 +1,119 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    mediaIconsToSelected,
-    moveSelectedIconsToMedia,
-    setSelectedSocialMediaId,
-    updateSelectedIconInput,
+  mediaIconsToSelected,
+  updateSelectedIconInput,
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
-import { useTranslation } from "react-i18next";
-import { use } from "i18next";
+import { cn } from "../../../../utils/styles";
 
-const EditorLink = ({ defaultValue, options, handleChange, label }) => {
-    const [currentValue, setCurrentValue] = useState(null);
-    const dispatch = useDispatch();
-    const { t } = useTranslation();
+const EditorLink = ({ label }) => {
+  const dispatch = useDispatch();
+  const { mediaCollection, selectedSocialIcons } = useSelector(
+    (state) => state.restuarantEditorStyle,
+  );
 
-    const Language = useSelector((state) => state.languageMode.languageMode);
+  console.log({ selectedSocialIcons });
 
-    const mediaCollection = useSelector(
-        (state) => state.restuarantEditorStyle.mediaCollection
+  const usedMediaIds = selectedSocialIcons.map((socialIcon) =>
+    parseInt(socialIcon.id),
+  );
+
+  const availableMedias = mediaCollection.filter(
+    (media) => !usedMediaIds.includes(media.id),
+  );
+
+  const [currentValue, setCurrentValue] = useState("");
+  const [selectedMediaId, setSelectedMediaId] = useState(
+    availableMedias[0]?.id,
+  );
+
+  const hasNoSelected = !setSelectedMediaId;
+  const selectedMedia = mediaCollection?.find(
+    (socialIcon) => socialIcon.id === selectedMediaId,
+  );
+
+  const handleInputKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleMediaToSelected();
+    }
+  };
+
+  const handleMediaToSelected = () => {
+    dispatch(mediaIconsToSelected(selectedMediaId));
+    dispatch(
+      updateSelectedIconInput({ id: selectedMediaId, link: currentValue }),
     );
-    const selectedMediaId = useSelector(
-        (state) => state.restuarantEditorStyle.selectedMediaId
-    );
 
-    const selectedSocialIcons = useSelector(
-        (state) => state.restuarantEditorStyle.selectedSocialIcons
-    );
+    setCurrentValue("");
+    setSelectedMediaId(availableMedias[1]?.id);
+  };
 
-    const handleMediaToSelected = (iconId) => {
-        dispatch(mediaIconsToSelected(iconId));
-    };
-    const handleSocialMediaSelect = (id) => {
-        dispatch(setSelectedSocialMediaId(id));
-    };
-    const handleRemoveMediaSelect = (id) => {
-        dispatch(moveSelectedIconsToMedia(id));
-    };
-    useEffect(() => {
-        selectedSocialIcons.map((socialIcon) => {
-            handleMediaToSelected(socialIcon.id);
-        });
-    }, []);
-    return (
-        <div className="flex flex-col">
-            <div
-                className={`flex flex-row items-center w-[208px] xl:w-full justify-between`}
-            >
-                {label && (
-                    <label className="text-[12px] xl:text-[16px] text-[rgba(17,24,39,0.54)] leading-[16px] font-medium ">
-                        {label}
-                    </label>
-                )}
-                <div className={`dropdown`}>
-                    <div
-                        className={`flex items-center h-[32px] w-[154px] rounded-[50px] bg-[#F3F3F3] ${
-                            selectedSocialIcons.length == 0 && "pl-[16px]"
-                        } relative`}
-                    >
-                        <div
-                            className={`h-[32px] w-[32px] rounded-full border flex justify-center items-center ${
-                                selectedSocialIcons.length == 0 && "hidden"
-                            }`}
-                        >
-                            {mediaCollection?.find(
-                            (socialIcon) =>
-                            socialIcon.id === selectedMediaId
-                            )?.imgUrl != null && <img
-                                src={
-                                    mediaCollection?.find(
-                                        (socialIcon) =>
-                                            socialIcon.id === selectedMediaId
-                                    )?.imgUrl
-                                }
-                                alt="social media"
-                                className="w-[20px] h-[20px] object-cover"
-                            />}
-                        </div>
-                        <input
-                            type="text"
-                            value={
-                                selectedSocialIcons?.find(
-                                    (socialIcon) =>
-                                        socialIcon.id === selectedMediaId
-                                )?.link
-                            }
-                            onChange={(e) => {
-                                dispatch(
-                                    updateSelectedIconInput({
-                                        id: selectedMediaId,
-                                        link: e.target.value,
-                                    })
-                                );
-                            }}
-                            placeholder="URL..."
-                            className="bg-[#F3F3F3] w-full focus:outline-none text-[12px] xl:text-[16px] leading-[16px] font-light text-[rgba(17,24,39,0.77)]"
-                        />
-                        <div
-                            onClick={() =>
-                                handleMediaToSelected(selectedMediaId)
-                            }
-                            className="h-[32px] w-[32px] rounded-full border flex justify-center items-center bg-white"
-                        >
-                            ✓
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="flex flex-row items-center flex-wrap gap-3 w-full p-3 h-full ">
-                {mediaCollection
-                    .filter((media) => {
-                        return selectedSocialIcons.some(
-                            (socialIcon) => socialIcon.id != media.id
-                        );
-                    })
-                    .map((media) => (
-                        <div
-                            className="w-[35px] h-[35px] rounded-full bg-[#F3F3F3] p-1 flex items-center justify-center"
-                            key={media.id}
-                        >
-                            <img
-                                src={media.imgUrl}
-                                alt={media?.name ?? "social media"}
-                                className="cursor-pointer w-[20px] h-[20px] object-cover"
-                                onClick={() =>
-                                    dispatch(setSelectedSocialMediaId(media.id))
-                                }
-                            />
-                        </div>
-                    ))}
-            </div>
+  return (
+    <div className="flex flex-col">
+      <div className="flex items-center max-w-full gap-4">
+        {label && (
+          <label className="text-xs xl:text-base text-[rgba(17,24,39,0.54)] font-medium shrink-0">
+            {label}
+          </label>
+        )}
+
+        {/* Link Input */}
+        <div
+          className={cn(
+            `flex flex-auto items-center h-8 rounded-full bg-[#F3F3F3] relative`,
+            { "pl-4": hasNoSelected },
+          )}
+        >
+          <div
+            className={cn(
+              "h-8 w-8 rounded-full border inline-flex justify-center items-center shrink-0",
+              { hidden: hasNoSelected },
+            )}
+          >
+            {selectedMedia?.imgUrl && (
+              <img
+                src={selectedMedia.imgUrl}
+                alt="social media"
+                className="w-5 h-5 object-cover"
+              />
+            )}
+          </div>
+          <input
+            className="bg-transparent outline-none text-xs flex-grow pl-1 xl:text-base font-light text-[rgba(17,24,39,0.77)]"
+            type="url"
+            size={10}
+            placeholder="URL..."
+            value={currentValue}
+            onKeyDown={handleInputKeyDown}
+            onChange={(e) => setCurrentValue(e.target.value)}
+          />
+          <button
+            onClick={() => handleMediaToSelected()}
+            className="h-8 w-8 rounded-full border inline-flex justify-center items-center bg-white shrink-0"
+          >
+            ✓
+          </button>
         </div>
-    );
+      </div>
+
+      {/* Social Media Icons List */}
+      <div className="flex flex-row items-center flex-wrap gap-3 w-full p-3 h-full ">
+        {availableMedias.map((media) => (
+          <div
+            className="w-9 h-9 rounded-full bg-[#F3F3F3] p-1 flex items-center justify-center"
+            key={media.id}
+          >
+            <img
+              src={media.imgUrl}
+              alt={media?.name ?? "social media"}
+              className="cursor-pointer w-5 h-5 object-cover"
+              onClick={() => setSelectedMediaId(media.id)}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default EditorLink;
