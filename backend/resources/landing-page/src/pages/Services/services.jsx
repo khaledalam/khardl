@@ -15,6 +15,7 @@ import Group13 from "../../assets/Group13.png";
 import Rectangle from "../../assets/Rectangle.png";
 import ServicesButton from "./ServicesButton";
 import { Link } from "react-router-dom";
+
 function Services() {
   const { t } = useTranslation();
   const Features = [
@@ -70,8 +71,8 @@ function Services() {
                   marginRight: direction == "rtl" ? "auto" : "",
                 }}
               >
-               <div className="services-content justify-center items-end md:items-center mt-3">
-                {/* <div className="services-content justify-center md:items-end items-end"> */}
+                <div className="services-content justify-center items-end md:items-center mt-3">
+                  {/* <div className="services-content justify-center md:items-end items-end"> */}
                   <p className="text-[#000000] md:mt-[18%] mt-0 md:text-center text-left">
                     {t("Receive Requests")} <br />
                     {/* <ServicesButton text={t("Free")}  /> */}

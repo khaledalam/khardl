@@ -5,25 +5,26 @@ import translationEN from "../../../lang/front-end/en.json";
 import translationAR from "../../../lang/front-end/ar.json";
 
 const resources = {
-    en: {
-        translation: translationEN,
-    },
-    ar: {
-        translation: translationAR,
-    },
+  en: {
+    translation: translationEN,
+  },
+  ar: {
+    translation: translationAR,
+  },
 };
 
-i18n.use(LanguageDetector)
-    .use(initReactI18next)
-    .init({
-        resources,
-        lng: localStorage.getItem("i18nextLng") || "ar",
-        interpolation: {
-            escapeValue: false,
-        },
-        react: {
-            useSuspend: false,
-        },
-    });
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: localStorage.getItem("i18nextLng") || "ar",
+    interpolation: {
+      escapeValue: false,
+    },
+    react: {
+      useSuspend: false,
+    },
+  });
 
 export default i18n;
