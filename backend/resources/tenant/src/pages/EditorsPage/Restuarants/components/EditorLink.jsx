@@ -30,6 +30,12 @@ const EditorLink = ({ label }) => {
     (socialIcon) => socialIcon.id === selectedMediaId,
   );
 
+  const handleInputKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleMediaToSelected();
+    }
+  };
+
   const handleMediaToSelected = () => {
     dispatch(mediaIconsToSelected(selectedMediaId));
     dispatch(
@@ -76,6 +82,7 @@ const EditorLink = ({ label }) => {
             size={10}
             placeholder="URL..."
             value={currentValue}
+            onKeyDown={handleInputKeyDown}
             onChange={(e) => setCurrentValue(e.target.value)}
           />
           <button
