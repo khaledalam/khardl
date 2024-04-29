@@ -39,9 +39,7 @@ const Privacy = ({ onClose }) => {
                         <MdOutlineKeyboardArrowRight size={26} />
                       </span>
                     )}
-                    <span
-                      className="max-md:!font-normal max-md:text-[18px]"
-                    >
+                    <span className="max-md:!font-normal max-md:text-[18px]">
                       {Language === "en" ? "Back" : "الرجوع"}
                     </span>
                   </button>
@@ -120,7 +118,7 @@ const Privacy = ({ onClose }) => {
                 non-assignable, non-sub licensable and irrevocable license to
                 acquire and use our Services.
               </p>
-              <p> </p>
+              <p></p>
               <p>
                 • Not to make the Services available or to rent, rent, assign,
                 resell, distribute or sublicense the Services to any third
@@ -193,7 +191,7 @@ const Privacy = ({ onClose }) => {
                 Services, nor will it transfer or commercially exploit the
                 Service, except as permitted under this contract.
               </p>
-              <p> </p>
+              <p></p>
               <p>
                 • It will not use the information, content or any data it
                 accesses or obtains through the Khardl Services for any other
@@ -271,7 +269,7 @@ const Privacy = ({ onClose }) => {
                 you agree to be fully liable for damages arising out of or in
                 connection with:
               </p>
-              <p> </p>
+              <p></p>
               <p>
                 1. Your violation or breach of any provision of these Terms of
                 User or any applicable law or regulation, whether or not
@@ -347,7 +345,7 @@ const Privacy = ({ onClose }) => {
               </p>
               <p></p>
               <p>Dealings with third parties</p>
-              <p> </p>
+              <p></p>
               <p>
                 While using the Website, Application and Service, links to
                 websites owned and controlled by third parties may be provided
@@ -426,7 +424,7 @@ const Privacy = ({ onClose }) => {
                 that extent, it shall operate in its place between the parties
                 by a provision that is acceptable in
               </p>
-              <p> </p>
+              <p></p>
               <p>
                 all circumstances and complies with the provisions of the void
                 condition as far as possible, taking into account the content

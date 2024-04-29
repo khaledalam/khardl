@@ -8,6 +8,7 @@ import PricesDropdown from "./pricesDropdown";
 import checkboxImg from "../../../assets/checkboxImg.png";
 import Ellipse from "../../../assets/Ellipse.png";
 import { Link } from "react-router-dom";
+
 function PricesTable() {
   const { t } = useTranslation();
 
@@ -24,12 +25,18 @@ function PricesTable() {
             <h2 className="text-[16px] text-[#8B8B8B]">{t("Includes VAT")}</h2> */}
           </div>
           <Footer FooterText={t("Includes VAT")} />
-          <div style={{ display: "flex", justifyContent: "center" , marginTop:"85px"}}>
-          <Link to='/register'>
-             <button className="p-[10px] flex px-[30px] bg-[#C0D123] text-[#000000] rounded-lg">
-              {t("Get Started")}
-            </button>
-           </Link>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "85px",
+            }}
+          >
+            <Link to="/register">
+              <button className="p-[10px] flex px-[30px] bg-[#C0D123] text-[#000000] rounded-lg">
+                {t("Get Started")}
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -51,9 +58,9 @@ function PricesTable() {
                     <span className="small">{t("SAR")}</span>
                     <span className="price">{1399}</span>
                   </p>
-                    <span className="text-[#C0D123] ms-2 hover:text-[#C0D123]">
-                      {t("* Yearly")}
-                    </span>
+                  <span className="text-[#C0D123] ms-2 hover:text-[#C0D123]">
+                    {t("* Yearly")}
+                  </span>
                   {/*<PricesDropdown />*/}
                 </div>
               </div>
@@ -90,11 +97,11 @@ function PricesTable() {
 
           <Footer FooterText={t("Includes VAT")} />
           <div style={{ display: "flex", justifyContent: "center" }}>
-           <Link to='/register'>
-             <button className="p-[10px] flex px-[30px] bg-[#C0D123] hover:shadow text-[#000000] rounded-lg">
-              {t("Get Started")}
-            </button>
-           </Link>
+            <Link to="/register">
+              <button className="p-[10px] flex px-[30px] bg-[#C0D123] hover:shadow text-[#000000] rounded-lg">
+                {t("Get Started")}
+              </button>
+            </Link>
           </div>
         </div>
       </div>

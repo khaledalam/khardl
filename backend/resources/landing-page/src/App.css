@@ -1,728 +1,748 @@
 :root {
-    --primary: #c0d123;
-    --secondary: #b8cb0a20;
-    --danger: #d21d1d;
-    --third: #f9f9f9;
+  --primary: #c0d123;
+  --secondary: #b8cb0a20;
+  --danger: #d21d1d;
+  --third: #f9f9f9;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Linden+Hill:ital@0;1&display=swap");
 
 @font-face {
-    font-family: "gess";
-    src: url("./assets/fonts/ArbFONTS-GE_SS_TEXT_LIGHT.otf");
-    font-display: swap;
+  font-family: "gess";
+  src: url("./assets/fonts/ArbFONTS-GE_SS_TEXT_LIGHT.otf");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: "gessBold";
-    src: url("./assets/fonts/GE\ SS\ Two\ Bold/GE SS Two Bold.otf");
-    font-display: swap;
+  font-family: "gessBold";
+  src: url("./assets/fonts/GE\ SS\ Two\ Bold/GE SS Two Bold.otf");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: "Almarai";
-    src: url("./assets/fonts/Almarai-ttf/Almarai-Regular.ttf");
-    font-display: swap;
+  font-family: "Almarai";
+  src: url("./assets/fonts/Almarai-ttf/Almarai-Regular.ttf");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: "AlmaraiBold";
-    src: url("./assets/fonts/Almarai-ttf/Almarai-Bold.ttf");
-    font-display: swap;
+  font-family: "AlmaraiBold";
+  src: url("./assets/fonts/Almarai-ttf/Almarai-Bold.ttf");
+  font-display: swap;
 }
 
 @keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 button,
 p {
-    font-family: "Almarai", sans-serif;
+  font-family: "Almarai", sans-serif;
 }
 
 ::selection {
-    background-color: #000000;
-    color: var(--primary);
+  background-color: #000000;
+  color: var(--primary);
 }
 
 .hamburger {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .hamburger input {
-    display: none;
+  display: none;
 }
 
 .hamburger svg {
-    height: 3em;
-    -o-transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
-    -webkit-transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
-    -moz-transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
-    -ms-transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
-    transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  height: 3em;
+  -o-transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  -moz-transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  -ms-transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .line {
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 3;
-    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
-        stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+  stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .line-top-bottom {
-    stroke-dasharray: 12 63;
+  stroke-dasharray: 12 63;
 }
 
 .hamburger input:checked + svg {
-    transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 
 .hamburger input:checked + svg .line-top-bottom {
-    stroke-dasharray: 20 300;
-    stroke-dashoffset: -32.42;
+  stroke-dasharray: 20 300;
+  stroke-dashoffset: -32.42;
 }
 
 .custom-header ul li a {
-    color: #000;
-    font-family: "Almarai", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  color: #000;
+  font-family: "Almarai", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .custom-header ul li a.active {
-    color: #c0d123;
-    font-weight: 900;
+  color: #c0d123;
+  font-weight: 900;
 }
 
 .new-translate-button a {
-    color: rgba(0, 0, 0, 0.77);
-    font-family: "Almarai", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    cursor: pointer;
+  color: rgba(0, 0, 0, 0.77);
+  font-family: "Almarai", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
 }
 
 .green-theme-button:hover {
-    border-radius: 10px;
-    background-color: #c0d123;
-    box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.16);
-    padding: 10px 38px;
-    line-height: 1;
-    color: #fff;
+  border-radius: 10px;
+  background-color: #c0d123;
+  box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.16);
+  padding: 10px 38px;
+  line-height: 1;
+  color: #fff;
 }
+
 .green-theme-button {
-    border-radius: 10px;
-    border: 1px solid #c0d123;
-    box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.16);
-    padding: 10px 38px;
-    line-height: 1;
-    cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid #c0d123;
+  box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.16);
+  padding: 10px 38px;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .red-theme-button:hover {
-    border-radius: 10px;
-    background-color: #f00;
-    box-shadow: 0px 4px 4px 0px rgba(255, 0, 0, 0.15);
-    padding: 10px 38px;
-    line-height: 1;
-    color: #fff;
+  border-radius: 10px;
+  background-color: #f00;
+  box-shadow: 0px 4px 4px 0px rgba(255, 0, 0, 0.15);
+  padding: 10px 38px;
+  line-height: 1;
+  color: #fff;
 }
+
 .red-theme-button {
-    border-radius: 10px;
-    border: 1px solid #f00;
-    box-shadow: 0px 4px 4px 0px rgba(255, 0, 0, 0.15);
-    padding: 10px 38px;
-    line-height: 1;
-    cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid #f00;
+  box-shadow: 0px 4px 4px 0px rgba(255, 0, 0, 0.15);
+  padding: 10px 38px;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .green-theme-button a,
 .red-theme-button a {
-    font-family: "Almarai", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    cursor: pointer;
+  font-family: "Almarai", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
 }
 
 .custom-round-bg {
-    background: url("../src/assets/Ellipse5.png");
-    background-repeat: no-repeat;
-    padding-left: 30px;
-    padding-top: 30px;
+  background: url("../src/assets/Ellipse5.png");
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  padding-top: 30px;
 }
 
 .curly-arrow {
-    transform: translate(150px, 0px);
-    width: 10%;
-    max-width: 10%;
+  transform: translate(150px, 0px);
+  width: 10%;
+  max-width: 10%;
 }
 
 .feature-heading {
-    color: #000;
+  color: #000;
 
-    font-family: "AlmaraiBold";
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 40px;
-    /* 133.333% */
+  font-family: "AlmaraiBold";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px;
+  /* 133.333% */
 }
 
 .feature-heading span {
-    font-size: 38px;
+  font-size: 38px;
 }
 
 .feature-description {
-    color: rgba(52, 40, 40, 0.77);
+  color: rgba(52, 40, 40, 0.77);
 
-    font-family: "Almarai", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 2;
-    /* 187.5% */
+  font-family: "Almarai", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2;
+  /* 187.5% */
 }
 
 .feature-list-box {
-    border-radius: 5px;
-    border: 1px solid;
-    background: #fff;
-    box-shadow: none;
-    border-color: #fff;
-    transition: all ease-in-out 300ms;
-    position: relative;
+  border-radius: 5px;
+  border: 1px solid;
+  background: #fff;
+  box-shadow: none;
+  border-color: #fff;
+  transition: all ease-in-out 300ms;
+  position: relative;
 }
 
 .feature-list-box:hover {
-    border-color: #2bd123;
-    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.09);
+  border-color: #2bd123;
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.09);
 }
 
 .feature-list-box:hover::after {
-    position: absolute;
-    content: "";
-    height: 100%;
-    width: 3px;
-    border-radius: 10px;
-    background: linear-gradient(188deg, #ff3d00 4.42%, #c0d123 87.96%);
-    right: -30px;
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 3px;
+  border-radius: 10px;
+  background: linear-gradient(188deg, #ff3d00 4.42%, #c0d123 87.96%);
+  right: -30px;
 }
 
 .cta-btn,
 .cta-btn-more button {
-    color: #c0d123;
+  color: #c0d123;
 
-    font-family: "AlmaraiBold";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    border-radius: 10px;
-    background: #000;
-    cursor: pointer;
+  font-family: "AlmaraiBold";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 10px;
+  background: #000;
+  cursor: pointer;
 
-    box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
+  box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
 }
 
 .register-btn button {
-    color: #000;
+  color: #000;
 
-    font-family: "Almarai", sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    border-radius: 10px;
-    background: #c0d123;
-    padding: 20px 30px;
-    box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
-    z-index: 999999;
-    cursor: pointer;
+  font-family: "Almarai", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 10px;
+  background: #c0d123;
+  padding: 20px 30px;
+  box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
+  z-index: 999999;
+  cursor: pointer;
 }
 
 .cta-btn-more button {
-    padding: 20px 30px;
+  padding: 20px 30px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .feature-section-green h3 {
-    color: #000;
+  color: #000;
 
-    text-align: center;
-    font-family: "Almarai", sans-serif;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.5;
-    /* 136.364% */
-    padding: 15px 25px;
+  text-align: center;
+  font-family: "Almarai", sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+  /* 136.364% */
+  padding: 15px 25px;
 }
 
 .contact-footer-section {
-    background: url("../src/assets/Group5.png");
-    background-repeat: no-repeat;
-    padding: 30px;
-    min-height: 400px;
-    background-size: contain;
-    /* min-width: 400px;
-  max-width: 500px; */
+  background: url("../src/assets/Group5.png");
+  background-repeat: no-repeat;
+  padding: 30px;
+  min-height: 400px;
+  background-size: contain;
+  /* min-width: 400px;
+max-width: 500px; */
 }
+
 .contact-footer-section .contact-text {
-    max-width: 400px;
+  max-width: 400px;
 }
 
 .contact-details {
-    display: flex;
-    margin-top: 20px;
-    color: #fff;
-    text-align: justify;
-    font-family: "Almarai", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    gap: 10px;
+  display: flex;
+  margin-top: 20px;
+  color: #fff;
+  text-align: justify;
+  font-family: "Almarai", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  gap: 10px;
 }
 
 .invert {
-    filter: invert(1);
+  filter: invert(1);
 }
 
 .custom-form-design label {
-    color: #c0d123;
+  color: #c0d123;
 
-    text-align: justify;
-    font-family: "Almarai", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px;
-    /* 242.857% */
+  text-align: justify;
+  font-family: "Almarai", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 242.857% */
 }
 
 .custom-form-design input {
-    border-radius: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 
-    font-family: "Almarai", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    background: transparent;
-    padding: 5px 0;
+  font-family: "Almarai", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  background: transparent;
+  padding: 5px 0;
 }
 
 .custom-form-design input:hover,
 .custom-form-design input:focus {
-    border-bottom: 1px solid #c0d123;
-    outline: none;
+  border-bottom: 1px solid #c0d123;
+  outline: none;
 }
 
 .new-header {
-    background: url("../src/assets/circle.png");
-    background-repeat: no-repeat;
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    background-size: contain;
+  background: url("../src/assets/circle.png");
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-size: contain;
 }
+
 .header-ar {
-    background-position: right;
-    /* float: right; */
+  background-position: right;
+  /* float: right; */
 }
 
 .new-header h2 {
-    color: #000;
+  color: #000;
 
-    font-variant-numeric: lining-nums proportional-nums;
-    font-family: "AlmaraiBold";
-    font-size: 46px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 44px;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: "AlmaraiBold";
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 44px;
 
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .new-header p {
-    color: rgba(52, 40, 40, 0.77);
+  color: rgba(52, 40, 40, 0.77);
 
-    font-family: "Almarai", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px;
-    /* 212.5% */
-    margin-left: 90px;
+  font-family: "Almarai", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 212.5% */
+  margin-left: 90px;
 }
 
 .main-page-text h2 {
-    color: rgba(52, 40, 40, 0.77);
-    text-align: center;
-    font-family: "Almarai", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px;
-    /* 212.5% */
+  color: rgba(52, 40, 40, 0.77);
+  text-align: center;
+  font-family: "Almarai", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 212.5% */
 }
 
 .new-advantage-card {
-    border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.32);
-    background-color: transparent;
-    box-shadow: none;
-    transition: all ease-in-out 300ms;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.32);
+  background-color: transparent;
+  box-shadow: none;
+  transition: all ease-in-out 300ms;
 }
 
 .new-advantage-card:hover {
-    border-radius: 10px;
-    background: #d5e7bc;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    border: 0;
+  border-radius: 10px;
+  background: #d5e7bc;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 0;
 }
 
 .new-advantage-card:hover .absolute {
-    background-color: #000;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    color: #fff;
+  background-color: #000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #fff;
 }
 
 .new-advantage-card .absolute {
-    background-color: #fff;
-    color: #000;
-    transition: all ease-in-out 300ms;
-    font-family: "Almarai", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px;
-    /* 212.5% */
+  background-color: #fff;
+  color: #000;
+  transition: all ease-in-out 300ms;
+  font-family: "Almarai", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 212.5% */
 }
 
 .new-advantage-card h2 {
-    color: rgba(52, 40, 40, 0.77);
+  color: rgba(52, 40, 40, 0.77);
 
-    text-align: center;
-    font-family: "Almarai", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 14px;
-    /* 100% */
+  text-align: center;
+  font-family: "Almarai", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+  /* 100% */
 }
 
 .new-delivery-card {
-    color: rgba(52, 40, 40, 0.77);
+  color: rgba(52, 40, 40, 0.77);
 
-    text-align: center;
-    font-family: "Almarai", sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 21px;
+  text-align: center;
+  font-family: "Almarai", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
 
-    /* 150% */
+  /* 150% */
 }
 
 .register-hr {
-    height: 3px;
-    border: 1px solid;
-    background: #000;
-    border-radius: 10px;
-    margin: auto;
-    transform: translate(0, -135px);
-    z-index: -999;
-    position: relative;
+  height: 3px;
+  border: 1px solid;
+  background: #000;
+  border-radius: 10px;
+  margin: auto;
+  transform: translate(0, -135px);
+  z-index: -999;
+  position: relative;
 }
 
 .section-ask {
-    border-radius: 10px;
-    background: #c0d123;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  background: #c0d123;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .section-ask .item {
-    border-bottom: 1px solid rgba(139, 139, 139, 0.77);
-    color: #000;
+  border-bottom: 1px solid rgba(139, 139, 139, 0.77);
+  color: #000;
 
-    font-family: "Almarai", sans-serif;
-    /* font-size: 21px; */
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px;
+  font-family: "Almarai", sans-serif;
+  /* font-size: 21px; */
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
 }
 
 .faq-header {
-    color: #000;
+  color: #000;
 
-    font-variant-numeric: lining-nums proportional-nums;
-    font-family: "Almarai", sans-serif;
-    font-size: 46px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 44px;
-    text-align: center;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: "Almarai", sans-serif;
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 44px;
+  text-align: center;
 }
 
 .faq-header span {
-    color: #c0d123;
-    font-variant-numeric: lining-nums proportional-nums;
-    font-family: "Almarai", sans-serif;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 44px;
+  color: #c0d123;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: "Almarai", sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 44px;
 }
 
 .mini-footer {
-    color: rgba(0, 0, 0, 0.77);
-    font-family: "Almarai", sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 8px;
-    background: #c0d123;
-    padding: 10px;
-    width: 100%;
-    text-align: center;
+  color: rgba(0, 0, 0, 0.77);
+  font-family: "Almarai", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 8px;
+  background: #c0d123;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
 }
 
 .new-register-bg {
-    background-image: url("../src/assets/register.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-    background-color: #fff;
+  background-image: url("../src/assets/register.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  background-color: #fff;
 }
 
 .new-login-bg {
-    background-image: url("../src/assets/login.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-    background-color: #fff;
+  background-image: url("../src/assets/login.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  background-color: #fff;
 }
 
 .new-form-ui h4 {
-    color: rgba(0, 0, 0, 0.47);
+  color: rgba(0, 0, 0, 0.47);
 
-    font-family: "Almarai", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  font-family: "Almarai", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .new-form-ui input {
-    border-radius: 20px;
-    border: 1px solid #c0d123;
+  border-radius: 20px;
+  border: 1px solid #c0d123;
 
-    background: #f6f9ee;
-    color: #000;
+  background: #f6f9ee;
+  color: #000;
 
-    font-family: "Almarai", sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-bottom: 20px;
+  font-family: "Almarai", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 20px;
 }
 
 .new-form-ui .submit-btn {
-    color: #000;
+  color: #000;
 
-    font-family: "AlmaraiBold";
-    font-size: 14px;
-    font-style: normal;
-    border-radius: 20px;
-    width: 100%;
-    font-weight: 400;
-    line-height: normal;
-    background: #c0d123;
-    box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
+  font-family: "AlmaraiBold";
+  font-size: 14px;
+  font-style: normal;
+  border-radius: 20px;
+  width: 100%;
+  font-weight: 400;
+  line-height: normal;
+  background: #c0d123;
+  box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
 }
 
 .new-form-ui .submit-btn:hover {
-    background: #000;
-    color: #c0d123;
+  background: #000;
+  color: #c0d123;
 }
 
 .font-new {
-    font-family: "Almarai", sans-serif;
+  font-family: "Almarai", sans-serif;
 }
 
 .price-box {
-    border-radius: 6px;
-    border: 1px solid #c0d123;
-    background: #fff;
-    box-shadow: 3px 3px 10px 0px rgba(192, 209, 35, 0.81);
-    padding: 30px;
-    width: 80%;
-    transition: all ease-in-out 300ms;
-    font-family: "Almarai", sans-serif;
+  border-radius: 6px;
+  border: 1px solid #c0d123;
+  background: #fff;
+  box-shadow: 3px 3px 10px 0px rgba(192, 209, 35, 0.81);
+  padding: 30px;
+  width: 80%;
+  transition: all ease-in-out 300ms;
+  font-family: "Almarai", sans-serif;
 }
 
 .price-box .header {
-    color: #000;
+  color: #000;
 
-    font-family: "Almarai", sans-serif;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px;
-    /* 113.333% */
-    background-color: transparent;
-    border: 0;
-    border-bottom: 1px dashed #8b8b8b;
+  font-family: "Almarai", sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 113.333% */
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px dashed #8b8b8b;
 }
 
 .price-box .content {
-    color: rgba(0, 0, 0);
-    font-family: "Almarai", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px;
-    /* 212.5% */
+  color: rgba(0, 0, 0);
+  font-family: "Almarai", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 212.5% */
 }
 
 .price-box .small {
-    color: #8b8b8b;
-    font-family: "Almarai", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px;
-    /* 340% */
+  color: #8b8b8b;
+  font-family: "Almarai", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 340% */
 }
 
 .price-box:hover p,
 .price-box:hover h1,
 .price-box:hover h2,
 .price-box:hover .price {
-    color: #fff;
-    /* filter: invert(1); */
+  color: #fff;
+  /* filter: invert(1); */
 }
+
 .price-box:hover .dropdown-custom {
-    background-color: #000;
+  background-color: #000;
 }
+
 .price-box .price {
-    color: #000;
-    font-family: "Almarai", sans-serif;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px;
+  color: #000;
+  font-family: "Almarai", sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
 }
+
 .login-background {
-    min-height: calc(100vh - 53px);
+  min-height: calc(100vh - 53px);
 }
 
 .header-link:hover {
-    color: #c0d123;
-    border-bottom-width: 2px;
-    border-bottom-color: #c0d123;
+  color: #c0d123;
+  border-bottom-width: 2px;
+  border-bottom-color: #c0d123;
 }
-.services-heading {
-    color: #000;
-    font-variant-numeric: lining-nums proportional-nums;
-    font-family: "AlmaraiBold";
-    font-size: 46px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 44px; /* 95.652% */
-}
-.services-img {
-    position: relative;
 
-    background-repeat: no-repeat;
-    height: 250px;
-    color: #fff;
-    background-size: contain;
-    width: 50%;
+.services-heading {
+  color: #000;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: "AlmaraiBold";
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 44px; /* 95.652% */
 }
+
+.services-img {
+  position: relative;
+
+  background-repeat: no-repeat;
+  height: 250px;
+  color: #fff;
+  background-size: contain;
+  width: 50%;
+}
+
 .services-content {
-    display: flex;
-    /* align-items: center; */
-    height: 100%;
+  display: flex;
+  /* align-items: center; */
+  height: 100%;
 }
+
 .curly-arrow.rtl {
-    transform: none;
+  transform: none;
 }
+
 .hide-on-mobile {
-    display: block;
+  display: block;
 }
+
 .new-login-bg.rtl,
 .new-register-bg.rtl {
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
+
 .new-login-bg.rtl .mt-8,
 .new-register-bg.rtl .mt-11 {
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 @media screen and (max-width: 768px) {
-    .new-login-bg,
-    .new-register-bg {
-        border-radius: 20px;
-        background-position: center;
-        background: #c0d123;
-    }
-    .home-heading,
-    .feature-heading span {
-        font-size: 26px !important;
-    }
-    .price-box .dropdown-custom {
-        left: -122px !important;
-    }
-    .services-img {
-        width: 100%;
-    }
-    .hide-on-mobile {
-        display: none;
-    }
-}
-.joined-input-group span {
+  .new-login-bg,
+  .new-register-bg {
     border-radius: 20px;
-    border: 1px solid #c0d123;
-    background: #f6f9ee;
-    color: #000;
-    font-family: "Almarai", sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    /* margin-bottom: 20px; */
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-    height: 100%;
-    padding: 10px;
+    background-position: center;
+    background: #c0d123;
+  }
+
+  .home-heading,
+  .feature-heading span {
+    font-size: 26px !important;
+  }
+
+  .price-box .dropdown-custom {
+    left: -122px !important;
+  }
+
+  .services-img {
+    width: 100%;
+  }
+
+  .hide-on-mobile {
+    display: none;
+  }
 }
+
+.joined-input-group span {
+  border-radius: 20px;
+  border: 1px solid #c0d123;
+  background: #f6f9ee;
+  color: #000;
+  font-family: "Almarai", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  /* margin-bottom: 20px; */
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  height: 100%;
+  padding: 10px;
+}
+
 .joined-input-group input {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
 }

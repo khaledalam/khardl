@@ -7,6 +7,7 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
+
 const Privacy = ({ onClose }) => {
   const Language = useSelector((state) => state.languageMode.languageMode);
   const navigate = useNavigate();
@@ -38,9 +39,7 @@ const Privacy = ({ onClose }) => {
                         <MdOutlineKeyboardArrowRight size={26} />
                       </span>
                     )}
-                    <span
-                      className="max-md:!font-normal max-md:text-[18px]"
-                    >
+                    <span className="max-md:!font-normal max-md:text-[18px]">
                       {Language === "en" ? "Back" : "الرجوع"}
                     </span>
                   </button>
@@ -477,7 +476,12 @@ const Privacy = ({ onClose }) => {
                 If you have any questions about this Privacy Policy, You can
                 contact us:
               </p>
-              <p>• By email: <a href={"mailto:contact-us@khardl.com"}>contact-us@khardl.com</a></p>
+              <p>
+                • By email:{" "}
+                <a href={"mailto:contact-us@khardl.com"}>
+                  contact-us@khardl.com
+                </a>
+              </p>
             </div>
           ) : (
             <div className="container">
@@ -897,7 +901,12 @@ const Privacy = ({ onClose }) => {
                 إذا كانت لديك أي أسئلة حول سياسة الخصوصية هذه، يمكنك الاتصال
                 بنا:
               </p>
-              <p>• عبر البريد الإلكتروني: <a href={"mailto:contact-us@khardl.com"}>contact-us@khardl.com</a></p>
+              <p>
+                • عبر البريد الإلكتروني:{" "}
+                <a href={"mailto:contact-us@khardl.com"}>
+                  contact-us@khardl.com
+                </a>
+              </p>
               <p></p>
             </div>
           )}

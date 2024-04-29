@@ -40,7 +40,7 @@ const Hero = () => {
               <br />
               {t("start selling right away,")}{" "}
             </h3>
-            <Link to='/register'>
+            <Link to="/register">
               <button
                 type="button"
                 className="flex cta-btn mt-11 items-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow-2xl shadow-[#C0D123] mt-4 hover:bg-[#C0D123] hover:text-black"
@@ -53,7 +53,7 @@ const Hero = () => {
             </Link>
             <div className="md:ml-0 md:mt-2">
               <img
-                className={`h-auto  curly-arrow ${direction == 'rtl' ? 'rtl' : ''}`}
+                className={`h-auto  curly-arrow ${direction == "rtl" ? "rtl" : ""}`}
                 src={image62}
                 alt="background"
               />
