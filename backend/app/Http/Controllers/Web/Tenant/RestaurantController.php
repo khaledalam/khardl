@@ -1135,7 +1135,7 @@ class RestaurantController extends BaseController
         }
     }
 
-    public function updateWorker(Request $request, $id)
+    public function updateWorker(RegisterWorkerRequest $request, $id)
     {
         $selectedWorker = RestaurantUser::find($id);
 
