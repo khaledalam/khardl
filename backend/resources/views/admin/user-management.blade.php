@@ -19,6 +19,7 @@
        <span class="card-label fw-bolder fs-3 mb-1">{{ __('admin-staff')}}</span>
        <span class="text-muted mt-1 fw-bold fs-7">{{ count($admins) }} {{ __('admins')}}</span>
      </h3>
+     @if($user?->hasPermission("can_add_admins"))
      <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{ __('Add') }}">
        <a href="{{ route('admin.add-user') }}" class="btn btn-sm btn-light btn-active-primary">
        <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
@@ -30,6 +31,7 @@
        </span>
        <!--end::Svg Icon-->{{ __('new-admin')}}</a>
      </div>
+     @endif
    </div>
    <!--end::Header-->
    <!--begin::Body-->
@@ -93,7 +95,7 @@
                         </div>
                     </span>
                 </a>
-
+                @if($user?->hasPermission("can_edit_admins"))
                   <a href="{{ route('admin.user-management-edit', ['id' => $admin->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                     <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                     <span class="svg-icon svg-icon-3">
@@ -104,7 +106,7 @@
                     </span>
                     <!--end::Svg Icon-->
                   </a>
-
+                
                   <form class="delete-form" action="{{ route('admin.delete-user', ['id' => $admin->id]) }}" method="POST">
                     @method('DELETE')
                     @csrf
@@ -120,7 +122,7 @@
                       <!--end::Svg Icon-->
                     </button>
                   </form>
-
+                  @endif
                 </div>
               </td>
             </tr>
