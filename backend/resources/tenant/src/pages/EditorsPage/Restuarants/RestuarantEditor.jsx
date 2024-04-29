@@ -538,7 +538,7 @@ export const RestuarantEditor = () => {
         {isPreview ? (
           <div className="md:flex-0 md:max-w-[240px]"></div>
         ) : (
-          <div className="transition-all flex-[40px] md:flex-[25%] overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-[646px] border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
+          <div className="transition-all flex-[40px] md:flex-[25%] overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-full border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
             {/* <SidebarEditor /> */}
             <LeftSideBar
               activeSubitem={activeSubitem}
@@ -591,7 +591,7 @@ export const RestuarantEditor = () => {
           <div className="md:flex-0 md:max-w-[240px]"></div>
         ) : (
           <div
-            className={`transition-all flex-[140px] max-h-[140px] md:max-h-full md:flex-[25%] overflow-x-hidden h-[646px] bg-white border-t md:border-t-0 md:border-l border-[rgba(0,0,0,0.3)]`}
+            className={`transition-all flex-[140px] max-h-[140px] md:max-h-full md:flex-[25%] overflow-x-hidden h-full bg-white border-t md:border-t-0 md:border-l border-[rgba(0,0,0,0.3)]`}
           >
             {/* <SidebarEditor /> */}
             {width < 768 ? (
