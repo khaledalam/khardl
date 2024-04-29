@@ -598,7 +598,7 @@ const MainBoardEditor = ({
                             backgroundColor: menu_section_background_color,
                             borderRadius: `${menu_section_radius}px`,
                         }}
-                        className={`h-full  ${
+                        className={`overflow-hidden h-full  ${
                             menu_category_position === "left"
                                 ? "order-2 w-[75%]"
                                 : menu_category_position === "right"
@@ -617,7 +617,7 @@ const MainBoardEditor = ({
                             className={`w-full h-full flex flex-col max-h-[610px] items-start justify-center `}
                         >
                             <div
-                                className={`flex flex-col gap-[30px] h-fit p-3 md:p-4 overflow-y-scroll hide-scroll`}
+                                className={`flex flex-col gap-[30px] h-fit overflow-hidden rounded-lg p-3 md:p-4 overflow-y-auto hide-scroll`}
                             >
                                 {categories &&
                                     categories.map(
