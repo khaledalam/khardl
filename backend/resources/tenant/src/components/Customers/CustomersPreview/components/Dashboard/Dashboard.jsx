@@ -12,129 +12,116 @@ import { setOrderShow } from "../../../../../redux/editor/orderShowSlice";
 import { Helmet } from "react-helmet";
 
 const CustomerDashboard = () => {
-    const activeTab = useSelector((state) => state.tab.activeTab);
-    const GlobalColor = useSelector((state) => state.button.GlobalColor);
-    const GlobalShape = useSelector((state) => state.button.GlobalShape);
+  const activeTab = useSelector((state) => state.tab.activeTab);
+  const GlobalColor = useSelector((state) => state.button.GlobalColor);
+  const GlobalShape = useSelector((state) => state.button.GlobalShape);
 
-    const dispatch = useDispatch();
-    const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
 
-    const handleOrderClick = (stutes) => {
-        dispatch(setOrderShow(stutes));
-    };
+  const handleOrderClick = (stutes) => {
+    dispatch(setOrderShow(stutes));
+  };
 
-    const handleTabClick = (tabName) => {
-        dispatch(setActiveTab(tabName));
-    };
+  const handleTabClick = (tabName) => {
+    dispatch(setActiveTab(tabName));
+  };
 
-    // const orderId = new URLSearchParams(window.location.search).get('OrderId');
+  // const orderId = new URLSearchParams(window.location.search).get('OrderId');
 
-    if (window.location.href.indexOf("#Profile") > -1) {
-        handleTabClick("Profile");
-    } else if (window.location.href.indexOf("#Dashboard") > -1) {
-        handleTabClick("Dashboard");
-    } else if (window.location.href.indexOf("#Orders") > -1) {
-        handleTabClick("Orders");
-    }
-    // else if (orderId) {
-    //     handleTabClick("Orders");
-    //
-    //     setTimeout(() => {
-    //         dispatch(setOrderShow(true));
-    //         dispatch(setIdOrder(orderId));
-    //     }, 3000);
-    //
-    //     // handleOrderClick(true);
-    // }
+  if (window.location.href.indexOf("#Profile") > -1) {
+    handleTabClick("Profile");
+  } else if (window.location.href.indexOf("#Dashboard") > -1) {
+    handleTabClick("Dashboard");
+  } else if (window.location.href.indexOf("#Orders") > -1) {
+    handleTabClick("Orders");
+  }
+  // else if (orderId) {
+  //     handleTabClick("Orders");
+  //
+  //     setTimeout(() => {
+  //         dispatch(setOrderShow(true));
+  //         dispatch(setIdOrder(orderId));
+  //     }, 3000);
+  //
+  //     // handleOrderClick(true);
+  // }
 
-    return (
-        <Fragment>
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>Customer Dashboard</title>
-            </Helmet>{" "}
-            <div className="flex justify-between items-start bg-white shadow-lg">
-                <aside
-                    id="logo-sidebar"
-                    className="w-[250px] "
-                    aria-label="Sidebar"
-                >
-                    <div className="h-full p-4 overflow-y-auto">
-                        <ul className="space-y-3 font-medium py-6">
-                            <li
-                                className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
+  return (
+    <Fragment>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Customer Dashboard</title>
+      </Helmet>{" "}
+      <div className="flex justify-between items-start bg-white shadow-lg">
+        <aside id="logo-sidebar" className="w-[250px] " aria-label="Sidebar">
+          <div className="h-full p-4 overflow-y-auto">
+            <ul className="space-y-3 font-medium py-6">
+              <li
+                className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
               ${activeTab === "Dashboard" ? "!bg-[var(--secondary)]" : ""}`}
-                                onClick={() => {
-                                    handleTabClick("Dashboard");
-                                    handleOrderClick(false);
-                                }}
-                                style={
-                                    activeTab === "Dashboard"
-                                        ? {
-                                              color: `${GlobalColor}`,
-                                              borderRadius: GlobalShape,
-                                          }
-                                        : { borderRadius: GlobalShape }
-                                }
-                            >
-                                <TapPage
-                                    icon={<BsFillGridFill />}
-                                    title={t("Dashboard")}
-                                />
-                            </li>
-                            <li
-                                className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
+                onClick={() => {
+                  handleTabClick("Dashboard");
+                  handleOrderClick(false);
+                }}
+                style={
+                  activeTab === "Dashboard"
+                    ? {
+                        color: `${GlobalColor}`,
+                        borderRadius: GlobalShape,
+                      }
+                    : { borderRadius: GlobalShape }
+                }
+              >
+                <TapPage icon={<BsFillGridFill />} title={t("Dashboard")} />
+              </li>
+              <li
+                className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
               ${activeTab === "Orders" ? "!bg-[var(--secondary)]" : ""}`}
-                                onClick={() => {
-                                    handleTabClick("Orders");
-                                    handleOrderClick(false);
-                                }}
-                                style={
-                                    activeTab === "Orders"
-                                        ? {
-                                              color: `${GlobalColor}`,
-                                              borderRadius: GlobalShape,
-                                          }
-                                        : { borderRadius: GlobalShape }
-                                }
-                            >
-                                <TapPage
-                                    icon={<BsFillFileTextFill />}
-                                    title={t("Orders")}
-                                />
-                            </li>
-                            <li
-                                className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
+                onClick={() => {
+                  handleTabClick("Orders");
+                  handleOrderClick(false);
+                }}
+                style={
+                  activeTab === "Orders"
+                    ? {
+                        color: `${GlobalColor}`,
+                        borderRadius: GlobalShape,
+                      }
+                    : { borderRadius: GlobalShape }
+                }
+              >
+                <TapPage icon={<BsFillFileTextFill />} title={t("Orders")} />
+              </li>
+              <li
+                className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
               ${activeTab === "Profile" ? "!bg-[var(--secondary)]" : ""}`}
-                                onClick={() => {
-                                    handleTabClick("Profile");
-                                    handleOrderClick(false);
-                                }}
-                                style={
-                                    activeTab === "Profile"
-                                        ? {
-                                              color: `${GlobalColor}`,
-                                              borderRadius: GlobalShape,
-                                          }
-                                        : { borderRadius: GlobalShape }
-                                }
-                            >
-                                <TapPage
-                                    icon={<BiSolidUser />}
-                                    title={t("Profile")}
-                                />
-                            </li>
-                        </ul>
-                    </div>
-                </aside>
-                <div className="flex-1">
-                    {activeTab === "Dashboard" && <Dashboard />}
-                    {activeTab === "Orders" && <Orders />}
-                    {activeTab === "Profile" && <Profile />}
-                </div>
-            </div>
-        </Fragment>
-    );
+                onClick={() => {
+                  handleTabClick("Profile");
+                  handleOrderClick(false);
+                }}
+                style={
+                  activeTab === "Profile"
+                    ? {
+                        color: `${GlobalColor}`,
+                        borderRadius: GlobalShape,
+                      }
+                    : { borderRadius: GlobalShape }
+                }
+              >
+                <TapPage icon={<BiSolidUser />} title={t("Profile")} />
+              </li>
+            </ul>
+          </div>
+        </aside>
+        <div className="flex-1">
+          {activeTab === "Dashboard" && <Dashboard />}
+          {activeTab === "Orders" && <Orders />}
+          {activeTab === "Profile" && <Profile />}
+        </div>
+      </div>
+    </Fragment>
+  );
 };
 
 export default CustomerDashboard;

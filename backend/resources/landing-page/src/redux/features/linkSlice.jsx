@@ -1,10 +1,10 @@
 // linkSlice.js
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const linkSlice = createSlice({
-  name: 'link',
+  name: "link",
   initialState: {
-    activeLink: '/',
+    activeLink: "/",
   },
   reducers: {
     setActiveLink: (state, action) => {

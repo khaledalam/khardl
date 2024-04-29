@@ -29,7 +29,7 @@ import Logout from "./components/Logout/Logout";
 import { useAuthContext } from "./components/context/AuthContext";
 
 import * as Sentry from "@sentry/react";
-import {t} from "i18next";
+import { t } from "i18next";
 // import { initializeApp } from "firebase/app";
 // const firebaseConfig = {
 //     apiKey: "AIzaSyD7xao9Wm2JTWWJwS5IvgNYWJWiSh48mwM",
@@ -43,15 +43,14 @@ import {t} from "i18next";
 // // Initialize Firebase
 // const firstbaseApp = initializeApp(firebaseConfig);
 
-if (sentry_on == '1') {
-    Sentry.init({
-        dsn:
-            "https://860125ea20f9254e5c411ffbdeb02c39@o4506502637420544.ingest.sentry.io/4506563222896640",
-        integrations: [new Sentry.Replay()],
-        // Session Replay
-        replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
-        replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
-    });
+if (sentry_on == "1") {
+  Sentry.init({
+    dsn: "https://860125ea20f9254e5c411ffbdeb02c39@o4506502637420544.ingest.sentry.io/4506563222896640",
+    integrations: [new Sentry.Replay()],
+    // Session Replay
+    replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
+    replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
+  });
 }
 
 const App = () => {
@@ -61,8 +60,9 @@ const App = () => {
   const fontFamily = "cairo, sans-serif";
   const location = useLocation();
   const { loading } = useAuthContext();
-  const showHeader = !["/complete-register",
-  "/verification-email",].includes(location.pathname);
+  const showHeader = !["/complete-register", "/verification-email"].includes(
+    location.pathname,
+  );
   const showFooter = ![
     "/login",
     "/register",
@@ -138,7 +138,9 @@ const App = () => {
         {/*    /!* <Footer /> *!/*/}
         {/*  </div>*/}
       </div>{" "}
-        {showFooter && !loading && (<div className="mini-footer">{t("All rights reserved")}</div>)}
+      {showFooter && !loading && (
+        <div className="mini-footer">{t("All rights reserved")}</div>
+      )}
     </div>
   );
 };

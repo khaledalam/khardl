@@ -1,43 +1,44 @@
 .home-heading {
-    font-variant-numeric: lining-nums proportional-nums;
-    font-family: "AlmaraiBold";
-    font-size: 46px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 54px;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: "AlmaraiBold";
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 54px;
 }
 
 .text-medium {
-    font-family: "Almarai";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.5;
+  font-family: "Almarai";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .card-heading {
-    /* text-align: center; */
-    font-family: "AlmaraiBold";
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px;
+  /* text-align: center; */
+  font-family: "AlmaraiBold";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
 }
+
 .contact-heading {
-    color: #fff;
-    /* text-align: center; */
-    font-family: "Almarai";
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 34px; /* 113.333% */
+  color: #fff;
+  /* text-align: center; */
+  font-family: "Almarai";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px; /* 113.333% */
 }
 
 .contact-text {
-    color: #fff;
-    font-family: "Almarai";
-    font-size: 11px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 21px; /* 190.909% */
+  color: #fff;
+  font-family: "Almarai";
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px; /* 190.909% */
 }
