@@ -84,7 +84,7 @@ Route::group([
 
     Route::get('/impersonate/{token}', static function ($token) {
        UserImpersonation::makeResponse($token);
-       if(Auth::user()?->isRestaurantOwner())return redirect()->route('restaurant.summary');
+       if(Auth::user()?->isRestaurantOwner() || Auth::user()?->hasPermissionWorker('can_access_summary'))return redirect()->route('restaurant.summary');
        return redirect()->route('restaurant.branches');
     })->name("impersonate");
 
