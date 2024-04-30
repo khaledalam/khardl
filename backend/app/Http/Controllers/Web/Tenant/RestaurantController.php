@@ -46,15 +46,6 @@ use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 
 class RestaurantController extends BaseController
 {
-    public function __construct(
-        private RestaurantService $restaurantService
-    ) {
-    }
-    public function index()
-    {
-        return $this->restaurantService->index();
-    }
-
     public function services()
     {
         /** @var RestaurantUser $user */
