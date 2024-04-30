@@ -8,6 +8,7 @@ const PrimaryOrderSelect = ({
   background,
   label,
   widthStyle,
+  value,
 }) => {
   const [isOpen, setisOpen] = useState(false);
 
@@ -30,18 +31,19 @@ const PrimaryOrderSelect = ({
           tabIndex={0}
           role="button"
           onClick={() => handleDropdown()}
-          className={`btn min-h-[40px] w-full min-w-full flex items-center hover:border-[var(--customer)] h-10 rounded-2xl outline-none hover:outline-none focus:outline-none focus-within:outline-none justify-between px-2 border-[var(--customer)] ${
+          className={`btn min-h-[40px] w-full min-w-full flex items-center hover:border-neutral-700 h-10 rounded-2xl outline-none hover:outline-none focus:outline-none focus-within:outline-none justify-between px-2 border-neutral-700 ${
             background
-              ? "bg-[var(--customer)] active:bg-[var(--customer)] hover:bg-[var(--customer)]"
+              ? "bg-neutral-700 active:bg--neutral-700 hover:bg-neutral-700"
               : "bg-transparent active:bg-transparent hover:bg-transparent"
           } `}
         >
           <span
-            className={`text-sm md:text-[0.8rem] ${
-              background ? "text-white" : "text-neutral-500"
-            }`}
+            // className={`text-sm md:text-[0.8rem] ${
+            // background ? "text-white" : "text-neutral-500"
+            // }`}
+            className={value ? "text-neutral-900 px-2" : "text-neutral-500 px-2"}
           >
-            {defaultValue}
+            {value || defaultValue}
           </span>
           <span className="">
             <BiChevronDown size={22} />
@@ -50,19 +52,19 @@ const PrimaryOrderSelect = ({
         {isOpen && (
           <div
             tabIndex={0}
-            className="dropdown-content z-[1] menu flex flex-col gap-4 !px-0 shadow bg-base-100 rounded-box w-full max-h-[150px] overflow-x-hidden overflow-y-scroll !flex-nowrap hide-scroll"
+            className="dropdown-content z-[1] menu flex flex-col gap-2 !px-0 shadow bg-base-100 rounded-box w-full max-h-fit overflow-x-hidden overflow-y-scroll !flex-nowrap hide-scroll"
           >
             {options &&
               options?.map((item, i) => (
                 <div
-                  className="flex w-full gap-3 items-center p-2 hover:bg-[var(--customer)] cursor-pointer"
+                  className="transition-all p-2 flex w-full items-center hover:bg-neutral-700 cursor-pointer text-neutral-500 text-sm hover:text-neutral-50 px-4"
                   key={i}
                   onClick={() => {
-                    handleChange(item.value);
+                    handleChange(item);
                     handleDropdown();
                   }}
                 >
-                  <h3 className="text-[12px] text-neutral-500">{item.text}</h3>
+                  {item.text}
                 </div>
               ))}
           </div>

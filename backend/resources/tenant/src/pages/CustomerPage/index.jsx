@@ -3,12 +3,12 @@ import SideNavbar from "./components/SideNavbar";
 import NavbarCustomer from "./components/NavbarCustomer";
 import { useSelector, useDispatch } from "react-redux";
 import CustomerDashboard from "./components/CustomerDashboard";
-import CustomerOrder from "./components/CustomerOrder";
+import CustomerOrder from "./components/NewCustomerOrder";
 import CustomerProfile from "./components/CustomerProfile";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import CustomerOrderDetail from "./components/CustomerOrderDetail";
+import CustomerOrderDetail from "./components/NewCustomerOrderDetail";
 import { RiMenuFoldFill } from "react-icons/ri";
-import CustomerPayment from "./components/CustomerPayment";
+import CustomerPayment from "./components/NewCustomerPayment";
 import {
   updateCardsList,
   updateOrderList,
@@ -16,6 +16,7 @@ import {
 import AxiosInstance from "../../axios/axios";
 import { useTranslation } from "react-i18next";
 import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
+import CustomerAddresses from "./components/CustomerAddresses";
 
 export const CustomerPage = () => {
   const dispatch = useDispatch();
@@ -28,12 +29,12 @@ export const CustomerPage = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
 
-  const TABS = {
-    dashboard: t("Dashboard"),
-    orders: t("Orders"),
-    profile: t("Profile"),
-    // payment: t("Payment"), // @TODO: Add it again once payment cards logic finished
-  };
+  const pages = {};
+  // pages[t("Dashboard")] = <CustomerDashboard />;
+  pages[t("Orders")] = <CustomerOrder />;
+  pages[t("Profile")] = <CustomerProfile />;
+  pages[t("Addresses")] = <CustomerAddresses />;
+  pages[t("Wallet")] = <CustomerPayment />;
 
   let orderId = searchParam.get("orderId");
 
@@ -58,7 +59,7 @@ export const CustomerPage = () => {
   const fetchResStyleData = async () => {
     try {
       AxiosInstance.get(`restaurant-style`).then((response) =>
-        dispatch(changeRestuarantEditorStyle(response.data?.data)),
+        dispatch(changeRestuarantEditorStyle(response.data?.data))
       );
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
@@ -122,21 +123,12 @@ export const CustomerPage = () => {
         <div
           className={` transition-all ${
             isMobile ? "flex-[100%] w-full" : "flex-[80%]"
-          } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll`}
+          } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll rounded-xl m-3`}
         >
-          {t(activeNavItem) === TABS.dashboard && !showOrderDetail ? (
-            <CustomerDashboard />
-          ) : t(activeNavItem) === TABS.orders && !showOrderDetail ? (
-            <CustomerOrder />
-          ) : t(activeNavItem) === TABS.profile && !showOrderDetail ? (
-            <CustomerProfile />
-          ) : t(activeNavItem) === TABS.payment && !showOrderDetail ? (
-            <CustomerPayment cardsList={cardsList} />
-          ) : (
-            <></>
-          )}
-          {showOrderDetail && orderId && (
+          {showOrderDetail ? (
             <CustomerOrderDetail orderId={orderId} />
+          ) : (
+            pages[t(activeNavItem)]
           )}
         </div>
       </div>
