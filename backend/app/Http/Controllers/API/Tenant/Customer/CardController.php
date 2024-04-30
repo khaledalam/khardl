@@ -19,7 +19,7 @@ class CardController
         if(session()->get($session)){
             return session()->get($session);
         }else {
-            $cards = TapCustomer::retrieve($user->tap_customer_id);
+            $cards = TapCustomer::retrieve($user->tap_customer_id ?? '');
             if($cards['http_code'] == ResponseHelper::HTTP_OK){
                 if(isset($cards['message']['cards'])){
                     $response = $this->sendResponse($cards['message']['cards'],true);
