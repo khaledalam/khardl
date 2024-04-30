@@ -8,6 +8,7 @@ use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 
 use App\Http\Controllers\API\Tenant\Notification\NotificationController;
 use App\Http\Controllers\Notification\PushNotificationController;
+use App\Http\Controllers\Web\Tenant\DeliveryCompanies\DeliveryCompaniesController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\QR\QRController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
@@ -154,6 +155,14 @@ Route::group([
                 Route::post('/update-settings', 'updateSettings')->name('update.settings');
             });
             /* Setting page */
+            /* Delivery companies page */
+            Route::middleware('permission:can_access_delivery_companies')
+            ->name('restaurant.')
+            ->controller(DeliveryCompaniesController::class)->group(function () {
+                Route::get('/delivery', 'delivery')->name('delivery');
+                Route::post('/delivery/{module}/activate','toggleActivation')->name('delivery.activate');
+            });
+            /* Delivery companies page */
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
@@ -240,8 +249,7 @@ Route::group([
                 Route::get('/service/{coupon}/{type}/check/{number_of_branches?}', [RestaurantController::class, 'serviceCoupon'])->name('restaurant.service.coupon.check');
 
 
-                Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
-                Route::post('/delivery/{module}/activate', [RestaurantController::class, 'deliveryActivate'])->name('restaurant.delivery.activate');
+
                 /* Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions'); */
                 Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings');
 
