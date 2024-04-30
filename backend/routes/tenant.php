@@ -10,6 +10,7 @@ use App\Http\Controllers\API\Tenant\Notification\NotificationController;
 use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\DeliveryCompanies\DeliveryCompaniesController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
+use App\Http\Controllers\Web\Tenant\OurServices\OurServicesController;
 use App\Http\Controllers\Web\Tenant\QR\QRController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Http\Controllers\Web\Tenant\Summary\SummaryController;
@@ -163,6 +164,19 @@ Route::group([
                 Route::post('/delivery/{module}/activate','toggleActivation')->name('delivery.activate');
             });
             /* Delivery companies page */
+            /* Our services page */
+            Route::middleware('permission:can_access_service_page')
+            ->name('restaurant.')
+            ->controller(OurServicesController::class)->group(function () {
+                Route::get('/service', 'services')->name('service');
+                Route::patch('/service/deactivate', 'deactivate')->name('service.deactivate');
+                Route::patch('/service/app/deactivate', 'appDeactivate')->name('service.app.deactivate');
+                Route::patch('/service/activate', 'activate')->name('service.activate');
+                Route::patch('/service/app/activate', 'appActivate')->name('service.app.activate');
+                Route::get('/service/{type}/{number_of_branches}/calculate/{subscription_id}', 'calculate')->name('service.calculate');
+                Route::get('/service/{coupon}/{type}/check/{number_of_branches?}', 'coupon')->name('service.coupon.check');
+            });
+            /* Our services page */
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
@@ -237,17 +251,6 @@ Route::group([
 
                 Route::get('/payments/tap-card-details-redirect', [TapController::class, 'payments_redirect'])->name('tap.payments_redirect');
                 Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
-
-
-
-                Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
-                Route::patch('/service/deactivate', [RestaurantController::class, 'serviceDeactivate'])->name('restaurant.service.deactivate');
-                Route::patch('/service/app/deactivate', [RestaurantController::class, 'serviceAppDeactivate'])->name('restaurant.service.app.deactivate');
-                Route::patch('/service/activate', [RestaurantController::class, 'serviceActivate'])->name('restaurant.service.activate');
-                Route::patch('/service/app/activate', [RestaurantController::class, 'serviceAppActivate'])->name('restaurant.service.app.activate');
-                Route::get('/service/{type}/{number_of_branches}/calculate/{subscription_id}', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');
-                Route::get('/service/{coupon}/{type}/check/{number_of_branches?}', [RestaurantController::class, 'serviceCoupon'])->name('restaurant.service.coupon.check');
-
 
 
                 /* Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions'); */

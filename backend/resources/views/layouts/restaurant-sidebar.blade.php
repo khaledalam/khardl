@@ -46,12 +46,12 @@
     @yield('css')
 
     @if(app()->getLocale() === 'ar')
-                                <style>
-                                .menu-item.menu-accordion.show:not(.hiding):not(.menu-dropdown) > .menu-link .menu-arrow:after, .menu-item.menu-accordion.showing:not(.menu-dropdown) > .menu-link .menu-arrow:after {
-                                    transform: rotateZ(270deg);
-                                    transition: transform 0.3s ease;
-                                }
-                                </style>
+        <style>
+        .menu-item.menu-accordion.show:not(.hiding):not(.menu-dropdown) > .menu-link .menu-arrow:after, .menu-item.menu-accordion.showing:not(.menu-dropdown) > .menu-link .menu-arrow:after {
+            transform: rotateZ(270deg);
+            transition: transform 0.3s ease;
+        }
+        </style>
     @endif
 
 <!--end::Global Stylesheets Bundle-->

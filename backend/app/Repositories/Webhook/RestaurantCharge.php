@@ -20,18 +20,18 @@ use App\Models\Subscription as CentralSubscription;
 
 class RestaurantCharge
 {
-    
+
     public static function updateOrCreate($data){
         DB::beginTransaction();
         try {
-            if($data['metadata']['subscription'] == ROSubscription::NEW){ 
+            if($data['metadata']['subscription'] == ROSubscription::NEW){
                 self::CreateNewSubscription($data);
             }
             // buy new branches
             else if ($data['metadata']['subscription'] == ROSubscription::RENEW_FROM_CURRENT_END_DATE || $data['metadata']['subscription'] == ROSubscription::RENEW_TO_CURRENT_END_DATE ){
                 self::BuyNewBranches($data);
             }
-            // activate sub to 1 year 
+            // activate sub to 1 year
             else if ($data['metadata']['subscription'] == ROSubscription::RENEW_AFTER_ONE_YEAR){
                 self::RenewSubscription($data);
             }
@@ -45,22 +45,22 @@ class RestaurantCharge
             logger($e->getMessage());
             throw $e;
         }
-        
+
     }
     public static function updateOrCreateApp($data){
         DB::beginTransaction();
         try {
             $user = RestaurantUser::first();
             $subscription = ROCustomerAppSub::first();
-            
+
             if ($data['status'] == 'CAPTURED') { // if payment successful
                 $db = [
                     'start_at' => now(),
-                    'end_at' => $endAt ?? now()->addDays(365),
+                    'end_at' => now()->addDays(365),
                     'amount' => $data['amount'],
                     'user_id' => $user->id,
                     'type' => $data['metadata']['subscription'],
-                    'status' => ROCustomerAppSub::REQUESTED, // until activate it in the admin dashboard 
+                    'status' => ROCustomerAppSub::REQUESTED, // until activate it in the admin dashboard
                     'chg_id' => $data['id'],
                     'reminder_email_sent'=>false,
                     'reminder_suspend_email_sent'=>false,
@@ -78,9 +78,9 @@ class RestaurantCharge
                         $db['created_at'] = $now;
                         $db['updated_at'] = $now;
                     }
-                    
+
                     $subscription->update($db);
-                 
+
 
                 }else {
                     if(isset($data['metadata']['coupon_code'])){
@@ -107,14 +107,14 @@ class RestaurantCharge
                 $invoice['amount'] =$data['metadata']['sub_amount'];
             }
             ROCustomerAppSubInvoice::create($invoice);
-            
+
             DB::commit();
-      
+
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
-        
+
 
     }
     public static function createNewSubscription($data)
@@ -127,7 +127,7 @@ class RestaurantCharge
                 $db['amount'] =$data['metadata']['sub_amount'];
             }
             ROSubscription::create($db);
-          
+
         });
     }
     public static function renewSubscription($data)
@@ -158,7 +158,7 @@ class RestaurantCharge
             //     $end_at = $subscription->end_at->addDays(365);
             //     $amount = $data['amount'];
             //     $data['metadata']['n-branches'] += $subscription->number_of_branches;
-            // } 
+            // }
             if($data['metadata']['subscription'] == ROSubscription::RENEW_TO_CURRENT_END_DATE) {
                 $amount += $data['amount'];
                 $data['metadata']['n-branches'] += $subscription->number_of_branches;
@@ -168,7 +168,7 @@ class RestaurantCharge
         });
     }
 
-  
+
 
     private static function getSubscriptionAttributes($user, $data, $subscription = null,$endAt = null, $amount = null)
     {
@@ -189,13 +189,13 @@ class RestaurantCharge
 
     private static function processSubscription($data, Closure $callback)
     {
-       
+
         $user = RestaurantUser::first();
         $subscription = ROSubscription::first();
-        
+
         if ($data['status'] == 'CAPTURED') { // if payment successful
             $callback($user, $data, $subscription);
-            if( $data['metadata']['subscription'] == ROSubscription::RENEW_AFTER_ONE_YEAR)   // soft delete branches 
+            if( $data['metadata']['subscription'] == ROSubscription::RENEW_AFTER_ONE_YEAR)   // soft delete branches
                 Branch::where('active',false)->delete();
         }
         $invoice = [
@@ -215,8 +215,8 @@ class RestaurantCharge
             $invoice['amount'] =$data['metadata']['sub_amount'];
         }
         ROSubscriptionInvoice::create($invoice);
-       
-       
+
+
     }
     public static function NotifyUsers($data){
         SendNotifyForNewSub::dispatch(
@@ -224,7 +224,7 @@ class RestaurantCharge
             tenant()->id,
             $data['amount'],
             isset($data['metadata']['customer_app'])?NotificationReceipt::is_application_purchase: NotificationReceipt::is_branch_purchase,
-            now()->format('Y-m-d H:i'), 
+            now()->format('Y-m-d H:i'),
         );
     }
     public static function updateCoupon($data){
