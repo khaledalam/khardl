@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import AddCard from "./AddCard";
-import CardItem from "./CardItem";
 import imgPayment from "../../../assets/cardProfileIcon.svg";
 import CardPayment from "./NewCardPayment";
 import imgMasterCard from "../../../assets/mastercard.svg";
