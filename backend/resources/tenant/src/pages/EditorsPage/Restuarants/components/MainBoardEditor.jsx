@@ -131,6 +131,7 @@ const MainBoardEditor = ({
   } = restuarantEditorStyle;
 
   const [listofBannerImages, setListofBannerImages] = useState([]);
+  const visibleCategories = categories.filter((c) => c.items.length > 0);
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -567,7 +568,7 @@ const MainBoardEditor = ({
           } `}
         >
           <EditorSlider
-            items={categories}
+            items={visibleCategories}
             scrollToSection={scrollToSection}
             isHighlighted={navItems[activeSection]?.title === "Menu Category"}
             currentSubItem={
