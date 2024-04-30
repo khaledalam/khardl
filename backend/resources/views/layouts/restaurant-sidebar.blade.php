@@ -190,7 +190,6 @@
                                         <span class="menu-title ">{{__('summary')}} </span>
                                 </span>
                             </a>
-
                         </div>
                         <!-- Site Editor -->
 

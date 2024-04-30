@@ -107,6 +107,11 @@ Route::group([
         Route::get('/customer-style', [CustomerStyleController::class, 'fetch'])->name('restaurant.customer.style.fetch');
 
         Route::middleware(['restaurantOrWorker','ActiveRestaurantAndBranch'])->group(function () {
+            /* Summary page */
+            Route::get('/summary', [RestaurantController::class, 'index'])
+            ->middleware('permission:can_access_summary')
+            ->name('restaurant.summary');
+            /* Summary page */
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
@@ -125,7 +130,7 @@ Route::group([
             Route::get('/menu/{id}/{branchId}', [RestaurantController::class, 'getCategory'])->middleware('permission:can_edit_menu')->name('restaurant.get-category');
             Route::post('/category/add/{branchId}', [RestaurantController::class, 'addCategory'])->middleware('permission:can_edit_menu')->name('restaurant.add-category');
             Route::post('/category/edit/{categoryId}/{branchId}', [RestaurantController::class, 'editCategory'])->middleware('permission:can_edit_menu')->name('restaurant.edit-category');
-            Route::name('restaurant.')->controller(AdminItemController::class)->group(function () {
+            Route::middleware('permission:can_edit_menu')->name('restaurant.')->controller(AdminItemController::class)->group(function () {
                 Route::post('/category/{id}/{branchId}/add-item', 'store')->middleware('permission:can_edit_menu')->name('add-item');
                 Route::post('/update-item/{item}', 'update')->middleware('permission:can_edit_menu')->name('update-item');
                 Route::delete('/category/{id}/delete-item', 'delete')->middleware('permission:can_edit_menu')->name('delete-item');
@@ -184,7 +189,6 @@ Route::group([
 
 
 
-                Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
                 Route::patch('/service/deactivate', [RestaurantController::class, 'serviceDeactivate'])->name('restaurant.service.deactivate');
                 Route::patch('/service/app/deactivate', [RestaurantController::class, 'serviceAppDeactivate'])->name('restaurant.service.app.deactivate');
