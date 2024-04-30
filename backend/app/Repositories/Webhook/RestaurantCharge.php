@@ -4,17 +4,18 @@ namespace App\Repositories\Webhook;
 
 use Closure;
 use Exception;
+use Throwable;
 use App\Models\Tenant\Branch;
 use App\Models\ROSubscription;
 use App\Models\Tenant\Setting;
 use App\Models\ROCustomerAppSub;
 use App\Jobs\SendNotifyForNewSub;
-use App\Models\NotificationReceipt;
 use Illuminate\Support\Facades\DB;
+use App\Models\NotificationReceipt;
+use App\Models\ROSubscriptionCoupon;
 use App\Models\ROSubscriptionInvoice;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\ROCustomerAppSubInvoice;
-use App\Models\ROSubscriptionCoupon;
 use Spatie\WebhookClient\Models\WebhookCall;
 use App\Models\Subscription as CentralSubscription;
 
@@ -40,12 +41,18 @@ class RestaurantCharge
             }
 
             DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
+        }  catch (\Exception $e) {
             logger($e->getMessage());
-            throw $e;
+            DB::rollBack();
+            throw new Exception('Error in restaurant sub charge webhook '.json_encode($e->getMessage()));
+
+        }catch (Throwable $t){
+            logger($t->getMessage());
+            DB::rollBack();
+            throw new Exception('Error in restaurant sub charge webhook '.json_encode($t->getMessage()));
         }
         
+    
     }
     public static function updateOrCreateApp($data){
         DB::beginTransaction();

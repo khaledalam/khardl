@@ -7,6 +7,7 @@ use App\Models\ROSubscription;
 use App\Models\Tenant\Setting;
 use App\Jobs\SendNotifyForNewSub;
 use App\Repositories\Webhook\CustomerCharge;
+use App\Repositories\Customer\OrderRepository;
 use App\Repositories\Webhook\RestaurantCharge;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 use App\Models\Subscription as CentralSubscription;
@@ -42,8 +43,20 @@ class TapWebhookHandler extends ProcessWebhookJob
            
           
         }
-        if(isset($data['metadata']['order_id'])){ // order for customer
-            CustomerCharge::createOrder($data);
+        if(isset($data['metadata']['order_data'])){ // order for customer
+            $order = CustomerCharge::createOrder($data);
+            try{
+                if ($data['status'] == 'CAPTURED') { 
+                    $order->user->cart()->delete();
+                    OrderRepository::sendNotifications($order->user, $order);
+                }
+               
+            }catch(Exception $e){
+                logger($e->getMessage());
+                \Sentry\captureException($e);
+            }
+
+          
         }
 
 
