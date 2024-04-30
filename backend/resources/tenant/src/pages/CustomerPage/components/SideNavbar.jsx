@@ -30,17 +30,17 @@ const SideNavbar = () => {
   const [status, setStatus] = useState(true);
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem);
   const saveProfileChange = useSelector(
-    (state) => state.customerAPI.saveProfileChanges,
+    (state) => state.customerAPI.saveProfileChanges
   );
 
   const navItems = [
-    {
-      id: 1,
-      imgUrl: DashboardBlack,
-      activeImgUrl: Dashboard,
-      title: t("Dashboard"),
-      link: "/profile-summary#Dashboard",
-    },
+    // {
+    //   id: 1,
+    //   imgUrl: DashboardBlack,
+    //   activeImgUrl: Dashboard,
+    //   title: t("Dashboard"),
+    //   link: "/profile-summary#Dashboard",
+    // },
     {
       id: 2,
       imgUrl: OrderBlack,
@@ -50,27 +50,34 @@ const SideNavbar = () => {
     },
     {
       id: 3,
+      imgUrl: OrderBlack,
+      activeImgUrl: OrderWhite,
+      title: t("Addresses"),
+      link: "/profile-summary#Addresses",
+    },
+    {
+      id: 4,
+      imgUrl: CardIcon,
+      activeImgUrl: CardWhiteIcon,
+      title: t("Wallet"),
+      link: "/profile-summary#Wallet",
+    },
+    {
+      id: 5,
       imgUrl: ProfileIcon,
       activeImgUrl: ProfileWhiteIcon,
       title: t("Profile"),
       link: "/profile-summary#Profile",
     },
-    // {
-    //     id: 4,
-    //     imgUrl: CardIcon,
-    //     activeImgUrl: CardWhiteIcon,
-    //     title: t("Payment"),
-    //     link: "/dashboard#Payment",
-    // },
   ];
 
-  const pages = ["Profile", "Orders", "Dashboard"]; // @TODO: add Payment
+  const pages = ["Profile", "Wallet", "Addresses", "Orders", "Dashboard"]; // @TODO: add Payment
   pages.forEach(function (page) {
     if (
       window.location.href.indexOf(`#${page.toLowerCase()}`) > -1 ||
       window.location.href.indexOf(`#${page.toUpperCase()}`) > -1 ||
       window.location.href.indexOf(
-        `#${page.charAt(0).toUpperCase() + page.slice(1)}`,
+        `#${page.charAt(0).toUpperCase() + page.slice(1)}`
       ) > -1
     ) {
       dispatch(setActiveNavItem(t(page)));
