@@ -146,6 +146,14 @@ Route::group([
                 Route::put('/change-status/{restaurantUser}', 'update_status')->name('change-status');
             });
             /* Customer data page */
+            /* Setting page */
+            Route::middleware('permission:can_access_settings')
+            ->name('restaurant.')
+            ->controller(SettingController::class)->group(function () {
+                Route::get('/settings', 'settings')->name('settings');
+                Route::post('/update-settings', 'updateSettings')->name('update.settings');
+            });
+            /* Setting page */
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
@@ -236,12 +244,6 @@ Route::group([
                 Route::post('/delivery/{module}/activate', [RestaurantController::class, 'deliveryActivate'])->name('restaurant.delivery.activate');
                 /* Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions'); */
                 Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings');
-
-
-                Route::name('restaurant.')->controller(SettingController::class)->group(function () {
-                    Route::get('/settings', 'settings')->name('settings');
-                    Route::post('/update-settings', 'updateSettings')->name('update.settings');
-                });
 
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
