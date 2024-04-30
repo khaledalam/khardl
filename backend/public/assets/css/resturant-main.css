@@ -7,43 +7,6 @@
     padding: 0px 40px;
     color: #35af05;
 }
-
-/* Badges */
-.badge.active,
-.badge.accepted,
-.badge.completed,
-.badge.paid {
-    color: #fff;
-    background-color: #50cd89;
-}
-
-.badge.suspended {
-    color: #fff;
-    background-color: darkviolet;
-}
-
-.badge.rejected,
-.badge.cancelled {
-    color: #fff;
-    background-color: #f1416c;
-}
-
-.badge.inactive,
-.badge.ready,
-.badge.pending {
-    color: #fff;
-    background-color: #009ef7;
-}
-
-.badge.received_by_restaurant {
-    color: #fff;
-    background-color: #f7bd00;
-}
-.badge-khardl {
-    color: #101010 !important;
-    background-color: #c2da08;
-    border: none !important;
-}
 /* Menu page */
 .card-body .menu-column {
     max-height: 500px;
