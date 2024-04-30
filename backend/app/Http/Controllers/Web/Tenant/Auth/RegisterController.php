@@ -96,8 +96,7 @@ class RegisterController extends BaseController
         // $input['password'] = Hash::make($input['password']);
         $input['status'] = RestaurantUser::INACTIVE;
         $user = RestaurantUser::create($input);
-        // TODO @todo add tap customer to queue
-        CustomerTap::createWithModel($user);
+
         $success['name'] =  "$user->first_name $user->last_name";
         $user->generateVerificationSMSCode();
         Auth::login($user,true);
