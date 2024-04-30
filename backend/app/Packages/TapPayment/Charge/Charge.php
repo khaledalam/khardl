@@ -19,7 +19,7 @@ class Charge extends Tap implements ChargeInterface
                 'sms'=>true
             ],
             'customer'=>[
-                'id'=> Auth::user()->tap_customer_id,
+                'id'=> Auth::user()->getTapCustomerId(),
             ],
             'merchant'=>[
                 'id'=>$merchant_id
