@@ -47,7 +47,7 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
                 id={id}
                 type="checkbox"
                 name={name}
-                className={`w-[16px] h-[16px] accent-[#FFECD6] border-[1px] border-[#e5e7eb] checked:border-[#7D0A0A] rounded-[4px] checked:accent-[#FFECD6] focus:accent-[#FFECD6]`}
+                className={`w-[16px] h-[16px] accent-[#FFECD6] border-[1px] border-[#e5e7eb] checked:border-[#7D0A0A] rounded-[4px] checked:accent-[#FFECD6] focus:accent-[#FFECD6] checked:ring-1 checked:ring-[#7D0A0A]`}
                 onChange={onChange}
               />
               <p className="text-[10px] font-normal">{label}</p>
