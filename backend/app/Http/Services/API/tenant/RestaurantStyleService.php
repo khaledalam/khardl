@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\API\tenant;
 
+use App\Http\Resources\RestaurantStyleAppResource;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\Setting;
 use App\Models\User;
@@ -53,7 +54,6 @@ class RestaurantStyleService
             'product_background_color' => $request->product_background_color,
             'selectedSocialIcons' => $request->selectedSocialIcons,
             'user_id' => Auth::user()?->id,
-
             'menu_card_background_color' => $request->menu_card_background_color,
             'menu_card_text_font' => $request->menu_card_text_font,
             'menu_card_text_weight' => $request->menu_card_text_weight,
@@ -182,5 +182,9 @@ class RestaurantStyleService
         }
 
         return $this->sendResponse($data, __('Restaurant style fetched successfully.'));
+    }
+    public function fetchToApp($request)
+    {
+        return new RestaurantStyleAppResource(RestaurantStyle::first());
     }
 }
