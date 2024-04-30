@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Database\Factories\tenant\OrderFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 
 class Order extends Model
 {
@@ -277,6 +278,14 @@ class Order extends Model
         return $query->when($status != null, function ($q) use ($status) {
             return $q->where('payment_status', $status);
         });
+    }
+    public function scopeWhenPermissions($query)
+    {
+        $user = Auth::user();
+        if($user->isRestaurantOwner())return $query;
+        else{
+            return $query->where('branch_id',$user->branch_id);
+        }
     }
     public function scopeShouldLimitDrivers($query)
     {

@@ -133,6 +133,17 @@ Route::group([
                 Route::get('/item/{item}/edit', 'edit')->middleware('permission:can_edit_menu')->name('edit-item');
 
             });
+            /* Start order routes */
+            Route::middleware('permission:can_mange_orders')->controller(TenantOrderController::class)->group(function () {
+//              Route::get('/order-inquiry', 'inquiry')->name('restaurant.order-inquiry');
+                Route::get('orders-all', 'index')->name('restaurant.orders_all');
+                Route::get('orders-add', 'create')->name('restaurant.orders_add');
+                Route::post('orders-add', 'store')->name('restaurant.order.store');
+                Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
+                Route::get('get-product-by-id/{item}', 'getProduct')->name('restaurant.getProduct');
+                Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
+            });
+            /* End order routes */
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
             Route::get('/payments', [TapController::class, 'payments'])->middleware(['permission:can_control_payment'])->name('tap.payments');
             Route::get('/download/pdf', [DownloadController::class, 'downloadPDF'])
@@ -203,15 +214,6 @@ Route::group([
 
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
-                Route::controller(TenantOrderController::class)->group(function () {
-//                    Route::get('/order-inquiry', 'inquiry')->name('restaurant.order-inquiry');
-                    Route::get('orders-all', 'index')->name('restaurant.orders_all');
-                    Route::get('orders-add', 'create')->name('restaurant.orders_add');
-                    Route::post('orders-add', 'store')->name('restaurant.order.store');
-                    Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
-                    Route::get('get-product-by-id/{item}', 'getProduct')->name('restaurant.getProduct');
-                    Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
-                });
                 Route::resource('coupons',CouponController::class)->withTrashed(['show','restore','edit','update']);
                 Route::delete('coupons/delete/{coupon}',[CouponController::class,'delete'])->name('coupons.delete')->withTrashed();
                 Route::post('coupons/restore/{coupon}',[CouponController::class,'restore'])->name('coupons.restore')->withTrashed();

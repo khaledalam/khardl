@@ -93,7 +93,7 @@
                                                 <label class="required form-label">{{ __('Shipping address') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="address" type="text" name="shipping_address" placeholder="{{ __('Address') }}" class="form-control mb-2" value="{{ old('shipping_address') }}" required />
+                                                <input id="address" type="text" name="shipping_address" placeholder="{{ __('Address') }}" class="form-control mb-2" value="{{ old('shipping_address') }}" />
                                                 <!--end::Editor-->
                                             </div>
                                             <!--end::Input group-->
@@ -158,6 +158,7 @@
                                                 <!--end::Total price-->
                                             </div>
                                             <!--end::Input group-->
+                                            @if (getAuth()->isRestaurantOwner())
                                             <!--begin::Separator-->
                                             <label class="required form-label">{{ __('Select branch first') }}</label>
                                             <select id="branchSelect" name="branch_id" required class="form-select" style="width: 300px;">
@@ -171,6 +172,8 @@
                                             </select>
                                             <div class="separator"></div>
                                             <!--end::Separator-->
+                                            @endif
+
                                             <!--begin::Search products-->
                                             <label class="required form-label">{{ __('Select products') }}</label>
 
@@ -255,7 +258,8 @@
         var productTotals = {};
         var productQuantity = {};
         var OptionsPrice = {};
-        var oldProductSelectOptions = {};
+        var oldDropDownProductOptions = {};
+        var oldRadioProductOptions = {};
         var QtyWhenChange = {};
         let cuurent_product = null;
         var productSelect = null;
@@ -382,7 +386,7 @@
 
         function TableRow(selectedProduct,qty = 1) {
             return `
-           <tr>
+            <tr>
             <td>
                 <div class="d-flex align-items-center" data-kt-ecommerce-edit-order-filter="product" data-kt-ecommerce-edit-order-id="product_${selectedProduct.id}">
                     <a href="./demo1/dist/apps/ecommerce/catalog/edit-product.html" class="symbol symbol-50px">
@@ -390,7 +394,10 @@
                     </a>
                     <div class="ms-5">
                         <a href="./demo1/dist/apps/ecommerce/catalog/edit-product.html" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">${selectedProduct.name}</a>
-                        <div>Price: SAR <span data-kt-ecommerce-edit-order-filter="price">${selectedProduct.price}</span></div>
+                        <div>{{ __('Price') }}:
+                            <span data-kt-ecommerce-edit-order-filter="price">${selectedProduct.price}</span>
+                            {{ __('SAR') }}
+                        </div>
                     </div>
                 </div>
             </td>
@@ -410,8 +417,8 @@
                 data-product="${selectedProduct.id}"
                 data-copy="${product_copies[selectedProduct.id]}"></i>
             </td>
-           </tr>
-        `;
+            </tr>
+            `;
         }
 
         function getLangName($name) {
@@ -437,11 +444,13 @@
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
                     innerOptions.forEach((option, innerIndex) => {
                         let price = selectedProduct.checkbox_input_prices[index][innerIndex];
-                        optionsHTML += `<div class="form-check mb-2">`;
+                        optionsHTML += `<div class="form-check mb-2 d-flex align-items-center justify-content-between">`;
                         optionsHTML += `
-                            <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-copy="${product_copies[selectedProduct.id]}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][checkbox_input][${index}][]" >
-                            <span class="product_option_price">{{ __('SAR') }} ${price}</span>
+                            <div class="d-flex align-items-center">
+                                <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-copy="${product_copies[selectedProduct.id]}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][checkbox_input][${index}][]" >
+                                <label class="form-check-label mx-2">${getLangName(option)}</label>
+                            </div>
+                            <span class="product_option_price text-success">({{ __('SAR') }} ${price})</span>
                             `;
                         optionsHTML += `</div>`;
                     });
@@ -452,17 +461,21 @@
             if (selectedProduct.selection_input_titles) {
                 selectedProduct.selection_input_titles.forEach((option, index) => {
                     let innerOptions = selectedProduct.selection_input_names[index];
-                    let isRequired = selectedProduct.selection_required[index] == "true";
+                    /* let isRequired = selectedProduct.selection_required[index] == "true"; */
+                    //Changes (Radio always true)
+                    let isRequired = true;
                     if (isRequired) haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
                     innerOptions.forEach((option, innerIndex) => {
                         let price = selectedProduct.selection_input_prices[index][innerIndex];
-                        optionsHTML += `<div class="form-check mb-2">`;
+                        optionsHTML += `<div class="form-check mb-2 d-flex align-items-center justify-content-between">`;
                         optionsHTML += `
-                            <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-inner-index="${innerIndex}" data-copy="${product_copies[selectedProduct.id]}"  data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][selection_input][${index}]">
-                            <span class="product_option_price">{{ __('SAR') }} ${price}</span>
+                            <div class="d-flex align-items-center">
+                                <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-inner-index="${innerIndex}" data-copy="${product_copies[selectedProduct.id]}"  data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][selection_input][${index}]">
+                                <label class="form-check-label mx-2">${getLangName(option)}</label>
+                            </div>
+                            <span class="product_option_price text-success">({{ __('SAR') }} ${price})</span>
                             `;
                         optionsHTML += `</div>`;
                     });
@@ -473,16 +486,23 @@
             if (selectedProduct.dropdown_input_titles) {
                 selectedProduct.dropdown_input_titles.forEach((option, index) => {
                     let innerOptions = selectedProduct.dropdown_input_names[index];
-                    let isRequired = selectedProduct.dropdown_required[index] == "true";
+                    /* let isRequired = selectedProduct.dropdown_required[index] == "true"; */
+                    //Changes (Dropdown always true)
+                    let isRequired = true;
                     if (isRequired) haveRequiredFiled = true;
-                    console.log(selectedProduct.dropdown_required[index],isRequired,innerOptions);
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
                     optionsHTML += `
-                    <select class="form-select" name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][dropdown_input][${index}]">
+                    <select class="form-select" data-index="${index}" data-copy="${product_copies[selectedProduct.id]}"  data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][dropdown_input][${index}]">
                         <option value="">{{ __('Select option') }}</option>`;
                     innerOptions.forEach((option, innerIndex) => {
-                        optionsHTML += `<option value="${innerIndex}">${getLangName(option)}</option>`;
+                        let price = 0;
+                        try {
+                            price = selectedProduct.dropdown_input_prices[index][innerIndex];
+                        } catch (error) {
+                        }
+
+                        optionsHTML += `<option value="${innerIndex}" data-price="${price}">${getLangName(option)} ({{ __('SAR') }} ${price})</option>`;
                     });
                     optionsHTML += `</select>`;
                     optionsHTML += `</div>`;
@@ -494,29 +514,29 @@
                 addRequired.classList.add('required');
             }
             return `
-        <div class="modal fade" id="kt_modal_select_options_${selectedProduct.id}_${product_copies[selectedProduct.id]}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered mw-650px">
-                <div class="modal-content rounded">
-                    <div class="modal-header pb-0 border-0 justify-content-end">
-                        <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
-                            <span class="svg-icon svg-icon-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
-                                </svg>
-                            </span>
+            <div class="modal fade" id="kt_modal_select_options_${selectedProduct.id}_${product_copies[selectedProduct.id]}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <div class="modal-content rounded">
+                        <div class="modal-header pb-0 border-0 justify-content-end">
+                            <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
+                                <span class="svg-icon svg-icon-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                    </svg>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                        <span>{{ __('Select options for' ) }} :
-                            <h6 class="d-inline">${selectedProduct.name}</h6>
-                        </span>
-                        ${optionsHTML}
+                        <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                            <span>{{ __('Select options for' ) }} :
+                                <h6 class="d-inline">${selectedProduct.name}</h6>
+                            </span>
+                            ${optionsHTML}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    `;
+            `;
         }
         function onChangeQty(selectedProduct){
             $('#product_table').on('input', `input[name="products[${selectedProduct.id}][${product_copies[selectedProduct.id]}]"]`, function() {
@@ -574,20 +594,20 @@
                 var Innerindex = $(this).data('inner-index');
                 console.log(price);
                 let subtotal = parseFloat(price * productQuantity[product][copy]);
-                if (typeof oldProductSelectOptions[product] === 'undefined') {
-                    oldProductSelectOptions[product] = {};
+                if (typeof oldRadioProductOptions[product] === 'undefined') {
+                    oldRadioProductOptions[product] = {};
                     QtyWhenChange[product] = {};
                 }
 
-                if (typeof oldProductSelectOptions[product][copy] === 'undefined') {
-                    oldProductSelectOptions[product][copy] = [];
+                if (typeof oldRadioProductOptions[product][copy] === 'undefined') {
+                    oldRadioProductOptions[product][copy] = [];
                     QtyWhenChange[product][copy] = {};
                 }
 
 
 
-                if (typeof oldProductSelectOptions[product][copy][index] === 'undefined' ||oldProductSelectOptions[product][copy][index] === null) {
-                    oldProductSelectOptions[product][copy][index] = [];
+                if (typeof oldRadioProductOptions[product][copy][index] === 'undefined' ||oldRadioProductOptions[product][copy][index] === null) {
+                    oldRadioProductOptions[product][copy][index] = [];
                     QtyWhenChange[product][copy][index] = {};
                     OptionsPrice[product][copy] += parseFloat(price);
                 } else {
@@ -595,17 +615,60 @@
                     /*
                     We need to get price of last change and the quantity of last change multiply of current qty
                      */
-                    subtotal -= (oldProductSelectOptions[product][copy][index] / QtyWhenChange[product][copy][index] ) * productQuantity[product][copy];
-                    OptionsPrice[product][copy] += parseFloat(price) - (oldProductSelectOptions[product][copy][index] / QtyWhenChange[product][copy][index] );
+                    subtotal -= (oldRadioProductOptions[product][copy][index] / QtyWhenChange[product][copy][index] ) * productQuantity[product][copy];
+                    OptionsPrice[product][copy] += parseFloat(price) - (oldRadioProductOptions[product][copy][index] / QtyWhenChange[product][copy][index] );
                 }
-                if (Array.isArray(oldProductSelectOptions[product][copy])) {
+                if (Array.isArray(oldRadioProductOptions[product][copy])) {
                     totalCost += subtotal;
                     productTotals[product][copy] +=subtotal;
-                    oldProductSelectOptions[product][copy][index] = parseFloat(price * productQuantity[product][copy]);
+                    oldRadioProductOptions[product][copy][index] = parseFloat(price * productQuantity[product][copy]);
                     QtyWhenChange[product][copy][index] = productQuantity[product][copy];
                     updateTotalCost();
                 } else {
-                    console.error('oldProductSelectOptions[product] is not an array');
+                    console.error('oldRadioProductOptions[product] is not an array');
+                }
+            });
+        }
+        function onChangeDropDown(){
+            $('#modal_here').on('change', 'select[name^="product_options"]', function() {
+                var price = $(this).find('option:selected').data('price');
+                var product = $(this).data('product-id');
+                var index = $(this).data('index');
+                var copy = $(this).data('copy');
+                var Innerindex = $(this).val();
+                let subtotal = parseFloat(price * productQuantity[product][copy]);
+                if (typeof oldDropDownProductOptions[product] === 'undefined') {
+                    oldDropDownProductOptions[product] = {};
+                    QtyWhenChange[product] = {};
+                }
+
+                if (typeof oldDropDownProductOptions[product][copy] === 'undefined') {
+                    oldDropDownProductOptions[product][copy] = [];
+                    QtyWhenChange[product][copy] = {};
+                }
+
+
+
+                if (typeof oldDropDownProductOptions[product][copy][index] === 'undefined' ||oldDropDownProductOptions[product][copy][index] === null) {
+                    oldDropDownProductOptions[product][copy][index] = [];
+                    QtyWhenChange[product][copy][index] = {};
+                    OptionsPrice[product][copy] += parseFloat(price);
+                } else {
+                    console.log('Inneer : '+Innerindex);
+                    /*
+                    We need to get price of last change and the quantity of last change multiply of current qty
+                     */
+                    subtotal -= (oldDropDownProductOptions[product][copy][index] / QtyWhenChange[product][copy][index] ) * productQuantity[product][copy];
+                    OptionsPrice[product][copy] += parseFloat(price) - (oldDropDownProductOptions[product][copy][index] / QtyWhenChange[product][copy][index] );
+                }
+                if (Array.isArray(oldDropDownProductOptions[product][copy])) {
+                    totalCost += subtotal;
+                    productTotals[product][copy] +=subtotal;
+                    oldDropDownProductOptions[product][copy][index] = parseFloat(price * productQuantity[product][copy]);
+                    QtyWhenChange[product][copy][index] = productQuantity[product][copy];
+                    updateTotalCost();
+                } else {
+                    console.error('oldDropDownProductOptions[product] is not an array');
                 }
             });
         }
@@ -695,6 +758,12 @@
         onChangeCheckBox();
         //Track on change Radio
         onChangeRadio();
+        //Track on change Dropdown
+        onChangeDropDown();
+        //Auto select branch if auth is not super admin
+        @if(!getAuth()->isRestaurantOwner())
+        initializeProductSelect({{ getAuth()->branch_id }});
+        @endif
     });
 
 </script>

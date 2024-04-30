@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const alignTextSlice = createSlice({
-    name: "alignText",
-    initialState: {
-        selectedAlignText: "Center",
+  name: "alignText",
+  initialState: {
+    selectedAlignText: "Center",
+  },
+  reducers: {
+    selectAlignText: (state, action) => {
+      state.selectedAlignText = action.payload;
     },
-    reducers: {
-        selectAlignText: (state, action) => {
-            state.selectedAlignText = action.payload;
-        },
-    },
+  },
 });
 
 export const { selectAlignText } = alignTextSlice.actions;
