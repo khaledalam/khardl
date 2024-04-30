@@ -560,14 +560,9 @@ class AdminController extends Controller
             'type'  => LogTypes::UpdateUserPermissions
         ]);
 
-        if(app()->getLocale() === 'en')
-            return redirect()->route('admin.user-management')->with([
-                'success' => 'User updated successfully',
-            ])->with(compact('user'));
-        else
-            return redirect()->route('admin.user-management')->with([
-                'success' => 'User updated successfully',
-            ])->with(compact('user'));
+        return redirect()->route('admin.user-management')->with([
+            'success' => __('User updated successfully')
+        ])->with(compact('user'));
     }
 
     public function giveUnapprovedUsers(){
