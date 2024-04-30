@@ -105,11 +105,12 @@ class OrderController
         try {
             $merchant_id = Setting::first()->merchant_id;
             $order = $this->order->create($request,$this->cart);
+
             $charge = TapCharge::create(
                 data : [
                     'amount'=> $order->total,
                     'metadata'=>[
-                        'order_id'=> $order->id,
+                        'order_data'=> json_encode($order),
                         'branch_id'=> $order->branch->id,
                         'customer_id'=>Auth::id()
                     ],

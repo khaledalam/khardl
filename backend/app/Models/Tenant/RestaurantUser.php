@@ -209,6 +209,9 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
             Carbon::now()->endOfMonth()
         ]);
     }
+    public function cart(){
+        return $this->hasOne(Cart::class,'user_id');
+    }
     public function recent_orders()
     {
         return $this->orders()->orderBy('id', 'DESC');

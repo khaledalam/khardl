@@ -297,6 +297,7 @@ Route::group([
         }
 
         Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
+        Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
         Route::get('/cart', static function () {
             $logo = RestaurantStyle::first()?->logo;
             $restaurant_name = Setting::first()->restaurant_name;
