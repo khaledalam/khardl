@@ -20,6 +20,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Packages\TapPayment\Customer\Customer as CustomerTap;
 
 class RestaurantUser extends Authenticatable implements MustVerifyEmail
 {
@@ -112,6 +113,11 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+    public function getTapCustomerId()
+    {
+        if($this->tap_customer_id ?? null) return $this->tap_customer_id;
+        return CustomerTap::createWithModel($this);  
     }
     public function getImageAttribute()
     {

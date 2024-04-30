@@ -67,7 +67,6 @@ class RestaurantController extends BaseController
             ];
         });
         $RO_subscription = ROSubscription::first();
-        $customer_tap_id = Auth::user()->tap_customer_id;
         $setting  = Setting::first();
         $ROCustomerAppSub = ROCustomerAppSub::first();
         $active_branches = Branch::where('active',true)->count();
@@ -78,7 +77,7 @@ class RestaurantController extends BaseController
             $amount =  $subscription->amount;
             $total_branches = 1;
         }
-        return view('restaurant.service', compact('user','customer_app_sub','ROCustomerAppSub','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
+        return view('restaurant.service', compact('user','customer_app_sub','ROCustomerAppSub','active_branches','RO_subscription','non_active_branches','subscription','setting','amount','total_branches'));
     }
 
     public function serviceDeactivate()
