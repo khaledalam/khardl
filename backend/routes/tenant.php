@@ -112,6 +112,18 @@ Route::group([
             ->middleware('permission:can_access_summary')
             ->name('restaurant.summary');
             /* Summary page */
+            /* Coupon page */
+            Route::middleware('permission:can_access_coupons')
+            ->resource('coupons',CouponController::class)
+            ->withTrashed(['show','restore','edit','update']);
+            Route::middleware('permission:can_access_coupons')
+            ->name('coupons.')
+            ->controller(CouponController::class)->group(function () {
+                Route::delete('coupons/delete/{coupon}','delete')->withTrashed()->name('delete');
+                Route::post('coupons/restore/{coupon}','restore')->withTrashed()->name('restore');
+                Route::post('coupons/change-status/{coupon}','changeStatus')->withTrashed()->name('change-status');
+            });
+            /* Coupon page */
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
@@ -218,10 +230,7 @@ Route::group([
 
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
-                Route::resource('coupons',CouponController::class)->withTrashed(['show','restore','edit','update']);
-                Route::delete('coupons/delete/{coupon}',[CouponController::class,'delete'])->name('coupons.delete')->withTrashed();
-                Route::post('coupons/restore/{coupon}',[CouponController::class,'restore'])->name('coupons.restore')->withTrashed();
-                Route::post('coupons/change-status/{coupon}',[CouponController::class,'changeStatus'])->name('coupons.change-status')->withTrashed();
+
 
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
                 Route::post('/qr-create', [RestaurantController::class, 'qrCreate'])->name('restaurant.qr-create');

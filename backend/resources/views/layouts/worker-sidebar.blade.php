@@ -146,7 +146,28 @@
                     <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
                         <!--begin::Menu-->
                         <div class="menu menu-column menu-title-gray-800 menu-state-title-khardl menu-state-icon-khardl menu-state-bullet-khardl menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
-
+                            <!-- Summary -->
+                            @if(Auth::user()?->hasPermissionWorker('can_access_summary'))
+                            <div class="menu-item menu-accordion">
+                                <a href="{{ route('restaurant.summary') }}">
+                                    <span class="{{ ($link == 'summary' ) ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
+                                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
+                                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
+                                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <span class="menu-title ">{{__('summary')}} </span>
+                                    </span>
+                                </a>
+                            </div>
+                            @endif
                             <!-- Braches -->
                             <div class="menu-item menu-accordion">
                                 <span class="{{ ($link == 'branches') ? 'menu-link active' : 'menu-link ' }}">
@@ -166,34 +187,6 @@
                                     </a>
                                 </span>
                             </div>
-
-
-                            <!-- Summary -->
-                            @if(Auth::user()?->hasPermissionWorker('can_access_summary'))
-                            <div class="menu-item menu-accordion">
-                                <a href="{{ route('restaurant.summary') }}">
-                                    <span class="{{ ($link == 'summary' ) ? 'menu-link active' : 'menu-link ' }}">
-                                        <span class="menu-icon">
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                                            <span class="svg-icon svg-icon-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                     viewBox="0 0 24 24" fill="none">
-                                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
-                                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2"
-                                                          fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
-                                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2"
-                                                          fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
-                                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2"
-                                                          fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </span>
-                                            <span class="menu-title ">{{__('summary')}} </span>
-                                    </span>
-                                </a>
-                            </div>
-                            @endif
                             <!-- menu -->
                             @if(Auth::user()?->hasPermissionWorker('can_edit_menu'))
                             <div class="menu-item menu-accordion">
@@ -253,6 +246,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             {{-- Orders --}}
                             @if(Auth::user()?->hasPermissionWorker('can_mange_orders') && \App\Models\Tenant\Branch::first())
                             <div class="menu-item menu-accordion">
@@ -286,6 +280,22 @@
                                 </a>
                             </div>
                             @endif
+                            <!-- Coupons -->
+                            @if(Auth::user()?->hasPermissionWorker('can_access_coupons'))
+                            <div class="menu-item menu-accordion">
+                                <a href="{{route('coupons.index')}}">
+                                    <span class="{{ ($link == 'coupons' ) ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon -->
+                                                <span class="svg-icon svg-icon-2">
+                                                    <i class="bi bi-cash-stack"></i>
+                                                </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                            <span class="menu-title">{{__('Coupons')}}</span>
+                                    </span>
+                                </a>
+                            </div>
                             @endif
                             @if(Auth::user()?->hasPermissionWorker('can_control_payment')&&App\Models\Tenant\Setting::first()->lead_id)
                             <!-- Payments -->
