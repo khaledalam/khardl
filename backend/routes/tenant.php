@@ -11,6 +11,7 @@ use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\QR\QRController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
+use App\Http\Controllers\Web\Tenant\Summary\SummaryController;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantStyle;
 use App\Models\Tenant\RestaurantUser;
@@ -109,7 +110,7 @@ Route::group([
 
         Route::middleware(['restaurantOrWorker','ActiveRestaurantAndBranch'])->group(function () {
             /* Summary page */
-            Route::get('/summary', [RestaurantController::class, 'index'])
+            Route::get('/summary', [SummaryController::class, 'index'])
             ->middleware('permission:can_access_summary')
             ->name('restaurant.summary');
             /* Summary page */
@@ -134,6 +135,17 @@ Route::group([
                 Route::get('/qr-download/{id}', 'download')->name('qr-download');
             });
             /* QR page */
+            /* Customer data page */
+            Route::middleware('permission:can_access_customers_data')
+            ->name('customers_data.')
+            ->controller(CustomerDataController::class)->group(function () {
+                Route::get('/customers-data', 'index')->name('list');
+                Route::get('/customers-data/{restaurantUser}/edit', 'edit')->name('edit');
+                Route::put('/customers-data/{restaurantUser}/edit', 'update')->name('update');
+                Route::get('/customers-data/{restaurantUser}', 'show')->name('show');
+                Route::put('/change-status/{restaurantUser}', 'update_status')->name('change-status');
+            });
+            /* Customer data page */
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
@@ -226,13 +238,6 @@ Route::group([
                 Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings');
 
 
-                Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {
-                    Route::get('/customers-data', 'index')->name('list');
-                    Route::get('/customers-data/{restaurantUser}/edit', 'edit')->name('edit');
-                    Route::put('/customers-data/{restaurantUser}/edit', 'update')->name('update');
-                    Route::get('/customers-data/{restaurantUser}', 'show')->name('show');
-                    Route::put('/change-status/{restaurantUser}', 'update_status')->name('change-status');
-                });
                 Route::name('restaurant.')->controller(SettingController::class)->group(function () {
                     Route::get('/settings', 'settings')->name('settings');
                     Route::post('/update-settings', 'updateSettings')->name('update.settings');

@@ -20,9 +20,11 @@
                         </li>
                         <!--end:::Tab item-->
                         <!--begin:::Tab item-->
+                        @if (Auth::user()?->hasPermissionWorker('can_mange_orders'))
                         <li class="nav-item">
                             <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" id="order_history" href="#kt_ecommerce_sales_order_history">{{ __('Order History') }}</a>
                         </li>
+                        @endif
                         <!--end:::Tab item-->
                     </ul>
                     <!--end:::Tabs-->
@@ -215,6 +217,7 @@
                     </div>
                     <!--end::Tab pane-->
                     <!--begin::Tab pane-->
+                    @if (Auth::user()?->hasPermissionWorker('can_mange_orders'))
                     <div class="tab-pane fade" id="kt_ecommerce_sales_order_history" role="tab-panel">
                         <!--begin::Orders-->
                         <div class="d-flex flex-column gap-7 gap-lg-10">
@@ -349,6 +352,7 @@
                         </div>
                         <!--end::Orders-->
                     </div>
+                    @endif
                     <!--end::Tab pane-->
                 </div>
                 <!--end::Tab content-->
