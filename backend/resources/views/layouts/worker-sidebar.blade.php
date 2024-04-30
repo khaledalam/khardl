@@ -297,6 +297,25 @@
                                 </a>
                             </div>
                             @endif
+                            @if(
+                            \App\Models\Tenant\Setting::first()?->is_live &&
+                            \App\Models\ROSubscription::first()?->status == \App\Models\ROSubscription::ACTIVE &&
+                            Auth::user()?->hasPermissionWorker('can_access_qr'))
+                            <div class="menu-item menu-accordion">
+                                <a href="{{route('restaurant.qr')}}">
+                                    <span class="{{ ($link == 'qr' ) ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon -->
+                                                <span class="svg-icon svg-icon-2">
+                                                <i class="bi bi-camera"></i>
+                                                </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                            <span class="menu-title">{{__('QR Maker')}}</span>
+                                    </span>
+                                </a>
+                            </div>
+                            @endif
                             @if(Auth::user()?->hasPermissionWorker('can_control_payment')&&App\Models\Tenant\Setting::first()->lead_id)
                             <!-- Payments -->
                             <div class="menu-item menu-accordion">

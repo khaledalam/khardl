@@ -9,6 +9,7 @@ use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 use App\Http\Controllers\API\Tenant\Notification\NotificationController;
 use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
+use App\Http\Controllers\Web\Tenant\QR\QRController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantStyle;
@@ -124,6 +125,15 @@ Route::group([
                 Route::post('coupons/change-status/{coupon}','changeStatus')->withTrashed()->name('change-status');
             });
             /* Coupon page */
+            /* QR page */
+            Route::middleware('permission:can_access_qr')
+            ->name('restaurant.')
+            ->controller(QRController::class)->group(function () {
+                Route::get('/qr', 'index')->name('qr');
+                Route::post('/qr-create', 'create')->name('qr-create');
+                Route::get('/qr-download/{id}', 'download')->name('qr-download');
+            });
+            /* QR page */
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
@@ -232,9 +242,6 @@ Route::group([
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
 
 
-                Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
-                Route::post('/qr-create', [RestaurantController::class, 'qrCreate'])->name('restaurant.qr-create');
-                Route::get('/qr-download/{id}', [RestaurantController::class, 'downloadQrCode'])->name('restaurant.qr-download');
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::any('/callback', [TapController::class, 'callback'])->name('tap.callback');
