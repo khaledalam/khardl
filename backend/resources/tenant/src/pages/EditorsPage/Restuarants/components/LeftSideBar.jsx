@@ -49,6 +49,7 @@ export const LeftSideBar = ({
             active={activeSection === index}
             activeSubitem={activeSubitem}
             subItems={item.subItems}
+            setActiveSubitem={setActiveSubitem}
             onClick={(e) => toggleSection(e, index)}
           />
         ))}
@@ -57,7 +58,14 @@ export const LeftSideBar = ({
   );
 };
 
-const Section = ({ title, subItems, active, activeSubitem, onClick }) => {
+const Section = ({
+  title,
+  subItems,
+  active,
+  activeSubitem,
+  setActiveSubitem,
+  onClick,
+}) => {
   const [mouseClick, setMouseClick] = useState(0);
   const { width } = useWindowSize();
   const isMobile = width < 768;
