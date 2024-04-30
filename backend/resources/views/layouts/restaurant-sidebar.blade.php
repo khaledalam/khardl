@@ -192,7 +192,6 @@
                             </a>
                         </div>
                         <!-- Site Editor -->
-
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurants.site_editor')}}" target="_blank">
                                 <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
@@ -207,10 +206,7 @@
                                         <span class="menu-title">{{__('site-editor')}} </span>
                                 </span>
                             </a>
-
                         </div>
-
-
                        <!-- Branches -->
                        <div class="menu-item menu-accordion">
                            <a href="{{route('restaurant.branches')}}">

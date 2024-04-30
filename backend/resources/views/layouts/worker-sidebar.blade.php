@@ -169,6 +169,24 @@
                                 </a>
                             </div>
                             @endif
+                            @if(Auth::user()?->hasPermissionWorker('can_access_site_editor'))
+                             <!-- Site Editor -->
+                            <div class="menu-item menu-accordion">
+                                <a href="{{route('restaurants.site_editor')}}" target="_blank">
+                                    <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="{{ ($link == 'site-editor' ) ? '#c2da08' : '#000000' }}"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} .st1{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;} .st2{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5.2066,0;} </style> <line class="st0" x1="3" y1="11" x2="29" y2="11"></line> <line class="st0" x1="7" y1="8" x2="7" y2="8"></line> <line class="st0" x1="10" y1="8" x2="10" y2="8"></line> <line class="st0" x1="13" y1="8" x2="13" y2="8"></line> <path class="st0" d="M8.8,27H3V5h26v22l-5.8,0c0.3-0.1,0.6-0.1,0.9-0.1c0.1-0.6,0.2-1.3,0.2-1.9c0-0.7-0.1-1.3-0.2-1.9 c-1,0.1-2-0.3-2.5-1.3c-0.5-0.9-0.4-2,0.2-2.8c-0.9-0.9-2.1-1.6-3.4-2c-0.4,0.9-1.3,1.6-2.4,1.6s-2-0.7-2.4-1.6 c-1.3,0.4-2.4,1.1-3.4,2c0.6,0.8,0.7,1.9,0.2,2.8c-0.5,0.9-1.6,1.4-2.5,1.3c-0.1,0.6-0.2,1.3-0.2,1.9c0,0.7,0.1,1.3,0.2,1.9 C8.2,26.9,8.5,26.9,8.8,27L8.8,27z"></path> <circle class="st0" cx="16" cy="25" r="3"></circle> </g></svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+
+                                            <span class="menu-title">{{__('site-editor')}} </span>
+                                    </span>
+                                </a>
+                            </div>
+                            @endif
                             <!-- Braches -->
                             <div class="menu-item menu-accordion">
                                 <span class="{{ ($link == 'branches') ? 'menu-link active' : 'menu-link ' }}">

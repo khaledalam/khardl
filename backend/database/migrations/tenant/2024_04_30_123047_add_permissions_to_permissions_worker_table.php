@@ -19,7 +19,6 @@ return new class extends Migration
             $table->boolean('can_access_service_page')->default(0);
             $table->boolean('can_access_delivery_companies')->default(0);
             $table->boolean('can_access_customers_data')->default(0);
-            $table->boolean('can_access_payment')->default(0);
             $table->boolean('can_access_settings')->default(0);
 
         });
@@ -39,7 +38,6 @@ return new class extends Migration
                 'can_access_service_page',
                 'can_access_delivery_companies',
                 'can_access_customers_data',
-                'can_access_payment',
                 'can_access_settings'
             ]);
         });
