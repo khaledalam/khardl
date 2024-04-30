@@ -79,6 +79,35 @@ const CartPage = () => {
     fetchProfileData().then(() => null);
   }, []);
 
+  const validateCoupon = async () => {
+    if (coupon === "") {
+      return;
+    }
+
+    try {
+      await AxiosInstance.post(`/validate/coupon`, {
+        code: coupon,
+      });
+      await fetchCartData();
+      toast.success(`${t("Coupon Applied successfully")}`);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const removeCoupon = async () => {
+    try {
+      await AxiosInstance.post(`/remove/coupon`);
+      await fetchCartData();
+      toast.success(`${t("Coupon Removed successfully")}`);
+      setCoupon("");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   const fetchResStyleData = async () => {
     try {
       AxiosInstance.get(`restaurant-style`).then((response) =>
@@ -428,7 +457,7 @@ const CartPage = () => {
                     <div className="flex justify-between">
                       <div>{t("Subtotal")}</div>
                       <div>
-                        {Number(cart?.total).toFixed(2) + ` ${t("SAR")}`}
+                        {Number(cart?.sub_total).toFixed(2) + ` ${t("SAR")}`}
                       </div>
                     </div>
                     {deliveryType === "Delivery" && (
@@ -438,13 +467,31 @@ const CartPage = () => {
                       </div>
                     )}
                     <div className="flex justify-between mt-4">
-                      <div>{t("Coupon Discount")}</div>
+                      <div className="flex flex-col">
+                        <span>{t("Coupon Discount")}</span>
+                      </div>
                       <div>
-                        <InputText
-                          value={coupon}
-                          onChange={(e) => setCoupon(e.target.value)}
-                          className="w-32"
-                        />
+                        {cart.coupon ? (
+                          <>
+                            <div className="text-right">
+                              -{Number(cart.discount).toFixed(2)} {t("SAR")}
+                              <br />
+                              <button
+                                className="text-sm font-bold text-red-700 hover:underline"
+                                onClick={removeCoupon}
+                              >
+                                Remove coupon
+                              </button>
+                            </div>
+                          </>
+                        ) : (
+                          <InputText
+                            value={coupon}
+                            onChange={(e) => setCoupon(e.target.value)}
+                            onBlur={() => validateCoupon(coupon)}
+                            className="w-32 px-2"
+                          />
+                        )}
                       </div>
                     </div>
                     <Divider />
