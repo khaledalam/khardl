@@ -16,7 +16,7 @@ const parseOptionItems = (cartitem, returnArray = false) => {
       let $optionKey = Object.keys($optionPair)[0];
       let $optionValue = $optionPair[$optionKey];
 
-      let $prices = cartitem?.item?.dropdown_input_prices[$masterIdx];
+      let $prices = cartitem?.item?.dropdown_input_prices?.[$masterIdx] ?? [];
       let $optionPrice = "";
 
       // Get price of item option
