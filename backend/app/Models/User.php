@@ -13,6 +13,7 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
+use App\Packages\TapPayment\Customer\Customer as CustomerTap;
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
