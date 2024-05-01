@@ -570,7 +570,10 @@ const ProductItem = ({
           }`}
         />
       </div>
-      <dialog id={id} className="modal flex flex-row mx-auto">
+      <dialog
+        id={id}
+        className="modal mx-auto overflow-y-auto font-jakarta pt-10 pb-5"
+      >
         <div ref={modalRef} className="relative mx-auto">
           <button
             className="btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-[-10px] top-[-30px]"
@@ -578,15 +581,15 @@ const ProductItem = ({
           >
             ✕
           </button>
-          <div className="flex flex-row mx-auto">
+          <div className="flex flex-row mx-auto bg-white rounded-[6px]">
             <div
-              className={`modal-box bg-white !p-0 rounded-[6px] w-[340px] ${
+              className={`!p-0 w-[340px] ${
                 checkboxItems[0]?.length > 0 ||
                 radioItems[0]?.length > 0 ||
                 dropdownItems[0]?.length > 0
-                  ? "h-[700px]"
-                  : "h-[550px]"
-              } flex flex-col justify-end items-center z-[100] mr-[-10px]`}
+                  ? "sm:h-[700px]"
+                  : "sm:h-[550px]"
+              } flex flex-col justify-end items-center z-[100]`}
             >
               <Fragment>
                 {spinner && (
@@ -618,16 +621,16 @@ const ProductItem = ({
                 )}
 
                 <div
-                  className={`bg-white w-full rounded-t-[80px] relative flex flex-col justify-between ${
+                  className={`w-full rounded-t-[80px] relative flex flex-col justify-between ${
                     checkboxItems[0]?.length > 0 ||
                     radioItems[0]?.length > 0 ||
                     dropdownItems[0]?.length > 0
-                      ? "h-[550px]"
-                      : "h-[430px]"
+                      ? "sm:h-[550px]"
+                      : "sm:h-[430px]"
                   } `}
                 >
                   <div className="">
-                    <div className="w-[100px] h-[100px] mt-[-5.8rem] mx-auto">
+                    <div className="w-[100px] h-[100px] mt-5 sm:mt-[-5.8rem] mx-auto">
                       <img
                         src={imgSrc}
                         alt="product"
@@ -635,10 +638,10 @@ const ProductItem = ({
                       />
                     </div>
                     <div className="flex flex-col items-center justify-center">
-                      <h3 className="text-[20px] text-[#111827C4]/[0.77] font-semibold mt-[16px]">
+                      <h3 className="text-[18px] text-[#111827C4]/[0.77] font-semibold mt-[16px]">
                         {name}
                       </h3>
-                      <h3 className="text-[14px] text-[#111827C4]/[0.77] font-light mt-[9px] max-w-[205px] text-center">
+                      <h3 className="text-[10px] text-[#111827C4]/[0.77] font-light mt-[9px] max-w-[205px] text-center">
                         {description}
                       </h3>
 
@@ -648,12 +651,14 @@ const ProductItem = ({
                           alt="hot"
                           className="w-[20px] h-[20px]"
                         />
-                        <span className="text-[16px] font-normal">
-                          {caloryInfo}
-                        </span>
-                        <span className="text-[14px] font-normal ml-[2px]">
-                          {t("Kcal")}
-                        </span>
+                        <p className="inline-flex items-baseline ml-1.5">
+                          <span className="text-[12px] font-normal">
+                            {caloryInfo}
+                          </span>
+                          <span className="text-[8px] font-normal ml-[2px]">
+                            {t("Kcal")}
+                          </span>
+                        </p>
                       </div>
 
                       <div className="w-[275px] h-[88px] mt-[18px] relative">
@@ -669,11 +674,11 @@ const ProductItem = ({
                             style={{
                               resize: "none",
                             }}
-                            className="outline-none w-[243px] h-[52px] left-[16px] top-[14px] absolute text-black text-[12px] font-light"
+                            className="outline-none w-[243px] h-[52px] left-[16px] top-[14px] pt-2 absolute text-black text-[12px] font-light placeholder-black/30"
                           />
                         </div>
                         <div className="w-[89px] h-6 left-[92px] top-0 absolute">
-                          <div className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px] text-white text-[12px] font-normal flex justify-center items-center">
+                          <div className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px] text-white text-[8px] font-normal flex justify-center items-center">
                             {t("Order Notes")}
                           </div>
                         </div>
@@ -688,15 +693,15 @@ const ProductItem = ({
                           : "mt-5"
                       } `}
                     >
-                      <div>
-                        <span className="text-orange-600 text-[13px] font-light font-['Inter']">
+                      <div className="font-inter text-[#ff3d00]">
+                        <span className="text-[13px] font-light">
                           {t("SAR")}
                         </span>{" "}
-                        <span className="text-orange-600 text-base font-medium font-['Inter']">
+                        <span className="text-base font-medium">
                           {totalPrice && finalPrice.toFixed(3)}
                         </span>
                       </div>
-                      <div className="flex shadow-sm items-center justify-between cursor-pointer w-[120px] h-8 bg-orange-100 bg-opacity-20 rounded-lg px-[7.89px]">
+                      <div className="flex items-center justify-between cursor-pointer w-[120px] h-8 bg-orange-100 bg-opacity-20 rounded-lg px-[7.89px]">
                         <div
                           onClick={decrementQty}
                           className="w-[22.11px] h-[22.40px] bg-orange-100 bg-opacity-30 rounded-md flex justify-center items-center"
@@ -717,7 +722,8 @@ const ProductItem = ({
                           <img
                             src={PlusIcon}
                             alt="plus icon"
-                            className="w-[6.36px] h-[6.36px]"
+                            width="8.9"
+                            height="9.1"
                           />
                         </div>
                       </div>
@@ -727,7 +733,7 @@ const ProductItem = ({
                         {(checkboxItems[0]?.length > 0 ||
                           radioItems[0]?.length > 0 ||
                           dropdownItems[0]?.length > 0) && (
-                          <div className="px-6 my-4 h-[550]">
+                          <div className="px-6 my-4 sm:h-[550px]">
                             <div className="flex flex-col gap-5 py-4">
                               {/* checkbox */}
                               {checkbox_input_titles &&
@@ -946,12 +952,7 @@ const ProductItem = ({
                         }
                       }}
                     >
-                      <div
-                        style={{
-                          boxShadow: "0px -3px 10px 0px rgba(0, 0, 0, 0.3)",
-                        }}
-                        className="w-[308px] h-10 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center hover:cursor-pointer"
-                      >
+                      <div className="w-[308px] h-10 bg-[#7d0a0a] rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center hover:cursor-pointer">
                         <div className="text-center text-white text-[14px] font-medium">
                           {t("Add to cart")}
                         </div>
@@ -963,19 +964,19 @@ const ProductItem = ({
             </div>
             {width > 768 && (
               <div
-                className={`modal-box bg-white !p-0 rounded-[6px] w-[340px] ${
+                className={`border-l border-solid border-black/55 !p-0 w-[340px] ${
                   checkboxItems[0]?.length > 0 ||
                   radioItems[0]?.length > 0 ||
                   dropdownItems[0]?.length > 0
-                    ? "h-[700px]"
+                    ? "sm:h-[700px]"
                     : "hidden"
-                } flex flex-col justify-start items-center mr-[-10px] hide-scroll`}
+                } flex flex-col justify-start items-center hide-scroll`}
               >
                 {(checkboxItems[0]?.length > 0 ||
                   radioItems[0]?.length > 0 ||
                   dropdownItems[0]?.length > 0) && (
-                  <div className="px-6 my-4 h-[550] w-full">
-                    <div className="flex flex-col gap-5 py-4">
+                  <div className="px-6 sm:pl-[30px] sm:pr-10 my-4 sm:h-[550px] w-full">
+                    <div className="flex flex-col gap-5 py-4 divide-y">
                       {/* checkbox */}
                       {checkbox_input_titles &&
                         checkbox_input_titles.length > 0 &&
@@ -983,14 +984,14 @@ const ProductItem = ({
                           <div id={"checkbox"} className="" key={checkbox_idx}>
                             {title[0] && (
                               <>
-                                <h3 className="text-[16px] font-medium mb-1 mt-[16px]">
+                                <h3 className="text-[12px] font-medium mt-[16px]">
                                   {language === "en" ? title[0] : title[1]}
                                   {checkbox_required[checkbox_idx] ===
                                     "true" && (
                                     <span className="text-red-500">*</span>
                                   )}
                                 </h3>
-                                <span className="text-[12px] mb-[8px]">
+                                <span className="text-[10px] mb-2 inline-block">
                                   {t("Maximum number of choises: ")}
                                   {checkbox_input_maximum_choices}
                                 </span>
@@ -1039,7 +1040,7 @@ const ProductItem = ({
                         selection_input_titles.map((title, selection_idx) => (
                           <div id={"radio"} className="" key={selection_idx}>
                             {title[0] && (
-                              <h3 className="text-[16px] font-medium mb-1 mt-[16px]">
+                              <h3 className="text-[12px] font-medium mb-1 mt-[16px]">
                                 {language === "en" ? title[0] : title[1]}
                                 {selection_required[selection_idx] ===
                                   "true" && (
@@ -1082,7 +1083,7 @@ const ProductItem = ({
                         dropdown_input_titles.map((title, dropdown_idx) => (
                           <div id={"dropdown"} className="" key={dropdown_idx}>
                             {title[0] && (
-                              <h3 className="text-[16px] font-medium mb-[8px] mt-[16px]">
+                              <h3 className="text-[12px] font-medium mb-[8px] mt-[16px]">
                                 {language === "en" ? title[0] : title[1]}
                                 {dropdown_required[dropdown_idx] === "true" && (
                                   <span className="text-red-500">*</span>
