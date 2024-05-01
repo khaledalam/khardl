@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Tenant\RestaurantStyle;
 use App\Models\Tenant\Setting;
 use Closure;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class RestaurantLive
      */
     public function handle($request, Closure $next)
     {
+
         if(env('APP_ENV') != 'local'){
             $is_live = Setting::first()->is_live;
             if (!$is_live) {
@@ -31,6 +33,18 @@ class RestaurantLive
                 return redirect()->route('restaurant-not-live');
             }
         }
-        return $next($request);
+        $next = $next($request);
+
+
+        // Adding R- version to invalidate and trigger fetching new style
+        // on mobile side
+        try {
+            $restaurant_style_version = RestaurantStyle::first()?->version;
+            $next->header("Restaurant-Style-Version", $restaurant_style_version);
+        } catch (\Throwable $exception) {
+
+        }
+
+        return $next;
     }
 }
