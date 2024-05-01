@@ -86,7 +86,7 @@ function ContactUs() {
                 {t("Contact Information")}
               </h3>
 
-              <h3 className="contact-text">{t("Footer")}</h3>
+              <h3 className="contact-text">{t("Footer-text")}</h3>
               {/* <div className="contact-details"><span><img src={call}/>
               </span>(+966)121-212-121</div> */}
               <div className="contact-details">
