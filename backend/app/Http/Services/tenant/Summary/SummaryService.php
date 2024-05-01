@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\tenant\Restaurant;
+namespace App\Http\Services\tenant\Summary;
 
 use App\Models\Tenant\OrderItem;
 use App\Models\User;
@@ -12,7 +12,7 @@ use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Facades\DB;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
-class RestaurantService
+class SummaryService
 {
     public function index()
     {

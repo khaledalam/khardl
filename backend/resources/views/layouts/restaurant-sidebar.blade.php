@@ -46,12 +46,12 @@
     @yield('css')
 
     @if(app()->getLocale() === 'ar')
-                                <style>
-                                .menu-item.menu-accordion.show:not(.hiding):not(.menu-dropdown) > .menu-link .menu-arrow:after, .menu-item.menu-accordion.showing:not(.menu-dropdown) > .menu-link .menu-arrow:after {
-                                    transform: rotateZ(270deg);
-                                    transition: transform 0.3s ease;
-                                }
-                                </style>
+        <style>
+        .menu-item.menu-accordion.show:not(.hiding):not(.menu-dropdown) > .menu-link .menu-arrow:after, .menu-item.menu-accordion.showing:not(.menu-dropdown) > .menu-link .menu-arrow:after {
+            transform: rotateZ(270deg);
+            transition: transform 0.3s ease;
+        }
+        </style>
     @endif
 
 <!--end::Global Stylesheets Bundle-->
@@ -190,10 +190,8 @@
                                         <span class="menu-title ">{{__('summary')}} </span>
                                 </span>
                             </a>
-
                         </div>
                         <!-- Site Editor -->
-
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurants.site_editor')}}" target="_blank">
                                 <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
@@ -208,10 +206,7 @@
                                         <span class="menu-title">{{__('site-editor')}} </span>
                                 </span>
                             </a>
-
                         </div>
-
-
                        <!-- Branches -->
                        <div class="menu-item menu-accordion">
                            <a href="{{route('restaurant.branches')}}">

@@ -50,9 +50,9 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
                 className={`w-[16px] h-[16px] accent-[#FFECD6] border-[1px] border-[#e5e7eb] checked:border-[#7D0A0A] rounded-[4px] checked:accent-[#FFECD6] focus:accent-[#FFECD6] checked:ring-1 checked:ring-[#7D0A0A]`}
                 onChange={onChange}
               />
-              <p className="text-[14px] font-normal">{label}</p>
+              <p className="text-[10px] font-normal">{label}</p>
             </div>
-            <span className="label-text text-[14px] font-semibold">
+            <span className="label-text text-[10px] font-semibold">
               {/* + {t("SAR")} */}
               {price}
             </span>
@@ -72,9 +72,9 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
                 } w-[14px] h-[14px] border-[1px] checked:border-[3px] checked:bg-[#7D0A0A]`}
                 onChange={onChange}
               />
-              <p className="text-[14px] font-normal">{label}</p>
+              <p className="text-[10px] font-normal">{label}</p>
             </div>
-            <span className="label-text text-[14px] font-semibold">
+            <span className="label-text text-[10px] font-semibold">
               {/* + {t("SAR")}&nbsp; */}
               {price}
             </span>
@@ -84,7 +84,7 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
       {isDropDown && (
         <select
           ref={ref}
-          className="select w-full select-bordered cursor-pointer"
+          className="select w-full select-bordered cursor-pointer text-[10px] h-8"
           onChange={handleDropdownChange}
           value={selectValue}
         >

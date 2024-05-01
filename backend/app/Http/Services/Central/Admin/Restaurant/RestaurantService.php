@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Central\Admin\Restaurant;
 
+use App\Http\Services\tenant\Summary\SummaryService;
 use App\Models\Tenant;
 use App\Models\Tenant\DeliveryCompany;
 use App\Models\Tenant\Setting;
@@ -12,7 +13,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Http\Services\tenant\Restaurant\RestaurantService as TenantRestaurantService;
 use App\Models\ROCustomerAppSub;
 use App\Models\ROSubscription;
 use App\Models\Tenant\RestaurantUser;
@@ -161,8 +161,8 @@ class RestaurantService
     protected function getRestaurantData(Tenant $restaurant)
     {
         $data = $restaurant->run(function ($restaurant) {
-         
-            $tenantRestaurantService = new TenantRestaurantService();
+
+            $tenantRestaurantService = new SummaryService();
             $info = $restaurant->info(false);
             $orders = $restaurant->orders(false);
             $dailyEarning = $this->getDailyEarning(clone $orders);
@@ -188,7 +188,7 @@ class RestaurantService
             $RO =  RestaurantUser::first();
             $restaurant_name = $setting->restaurant_name;
             $customer_app = ROCustomerAppSub::first();
-       
+
             return [
                 $info['logo'],
                 $info['is_live'],
