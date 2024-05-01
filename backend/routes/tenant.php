@@ -14,6 +14,7 @@ use App\Http\Controllers\Web\Tenant\OurServices\OurServicesController;
 use App\Http\Controllers\Web\Tenant\QR\QRController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Http\Controllers\Web\Tenant\Summary\SummaryController;
+use App\Http\Controllers\Web\Tenant\Worker\WorkerController;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantStyle;
 use App\Models\Tenant\RestaurantUser;
@@ -177,13 +178,20 @@ Route::group([
                 Route::get('/service/{coupon}/{type}/check/{number_of_branches?}', 'coupon')->name('service.coupon.check');
             });
             /* Our services page */
+            /* Workers page */
+            Route::middleware('permission:can_modify_and_see_other_workers')
+            ->name('restaurant.')
+            ->controller(WorkerController::class)->group(function () {
+                Route::get('/workers/{branchId}', 'workers')->middleware('permission:can_modify_and_see_other_workers')->name('workers');
+                Route::get('/workers/add/{branchId}', 'addWorker')->middleware('permission:can_modify_and_see_other_workers')->name('get-workers');
+                Route::post('/workers/add/{branchId}', 'generateWorker')->middleware('permission:can_modify_and_see_other_workers')->name('generate-worker');
+                Route::put('/workers/update/{id}', 'updateWorker')->middleware('permission:can_modify_and_see_other_workers')->name('update-worker');
+                Route::get('/workers/edit/{id}', 'editWorker')->middleware('permission:can_modify_and_see_other_workers')->name('edit-worker');
+            });
+            /* Workers page */
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
-            Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
-            Route::get('/workers/add/{branchId}', [RestaurantController::class, 'addWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.get-workers');
-            Route::post('/workers/add/{branchId}', [RestaurantController::class, 'generateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.generate-worker');
-            Route::put('/workers/update/{id}', [RestaurantController::class, 'updateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-worker');
-            Route::get('/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.edit-worker');
+
             Route::resource('drivers', DriverController::class)->middleware('permission:can_edit_and_view_drivers');
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
@@ -263,7 +271,7 @@ Route::group([
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::any('/callback', [TapController::class, 'callback'])->name('tap.callback');
-                Route::delete('/workers/delete/{id}', [RestaurantController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
+                Route::delete('/workers/delete/{id}', [WorkerController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
 
                 Route::post('/restaurant-style', [RestaurantStyleController::class, 'save'])->name('restaurant.restaurant.style.save');
                 Route::post('/customer-style', [CustomerStyleController::class, 'save'])->name('restaurant.customer.style.save');

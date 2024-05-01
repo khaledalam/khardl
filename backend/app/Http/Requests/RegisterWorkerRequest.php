@@ -28,7 +28,7 @@ class RegisterWorkerRequest extends FormRequest
             'first_name' => 'required|string|min:3|max:255',
             'last_name' => 'required|string|min:3|max:255',
             'password' => 'required|string|min:6|max:255',
-           
+
             'can_modify_and_see_other_workers' => 'boolean',
             'can_modify_working_time' => 'boolean',
             'can_edit_menu' => 'boolean',
@@ -40,9 +40,11 @@ class RegisterWorkerRequest extends FormRequest
         if($this->id){
             $rules['email'] =  'required|string|email|min:10|max:255|unique:users,email,'.$this->id;
             $rules['phone'] =  'required|regex:/^(966)?\d{9}$/|unique:users,phone,'.$this->id;
+            $rules['password'] =  'nullable|string|min:6|max:255';
         }else {
             $rules['email'] =  'required|string|email|min:10|max:255|unique:users';
             $rules['phone'] =  'required|regex:/^(966)?\d{9}$/|unique:users';
+            $rules['password'] =  'required|string|min:6|max:255';
         }
         return $rules;
     }

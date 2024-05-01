@@ -122,8 +122,9 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                          <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_menu" value="1" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_edit_menu') == 1) checked  @endif name="can_edit_menu">
-                                                            <label class="form-check-label" for="can_edit_menu">{{ __('can-edit-the-menu') }}</label>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_menu" value="1" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_edit_menu') == 1) checked @endif name="can_edit_menu">
+                                                            <label class="form-check-label" for="can_edit_menu">{{ __('Can access menu')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add and edit category, add and edit products') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -131,7 +132,8 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_and_see_other_workers" value="1" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_modify_and_see_other_workers') == 1) checked @endif name="can_modify_and_see_other_workers">
-                                                            <label class="form-check-label" for="can_modify_and_see_other_workers">{{ __('can-modify-and-see-other-workers') }}</label>
+                                                            <label class="form-check-label" for="can_modify_and_see_other_workers">{{ __('Can access workers')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can view and update the workers') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -139,7 +141,8 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_working_time" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_modify_working_time') == 1) checked @endif value="1" name="can_modify_working_time">
-                                                            <label class="form-check-label" for="can_modify_working_time">{{ __('can-modify-working-time') }}</label>
+                                                            <label class="form-check-label" for="can_modify_working_time">{{ __('Can access working time')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can update the working time of the branch') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -147,7 +150,8 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_view_revenues" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_view_revenues') == 1) checked @endif value="1" name="can_view_revenues">
-                                                            <label class="form-check-label" for="can_view_revenues">{{ __('Can view revenues')}}</label>
+                                                            <label class="form-check-label" for="can_view_revenues">{{ __('Can acccess revenuses')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can see the revenuses for every branch') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -155,7 +159,8 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_control_payment" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_control_payment') == 1) checked @endif value="1" name="can_control_payment">
-                                                            <label class="form-check-label" for="can_control_payment">{{ __('can-control-payment')}}</label>
+                                                            <label class="form-check-label" for="can_control_payment">{{ __('Can access payment')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can see the subscription of the restaurant the details of bank information') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -164,6 +169,7 @@
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_and_view_drivers" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_edit_and_view_drivers') == 1) checked @endif value="1" name="can_edit_and_view_drivers">
                                                             <label class="form-check-label" for="can_edit_and_view_drivers">{{ __('Can access drivers')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add and edit drivers') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -172,66 +178,115 @@
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_mange_orders" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_mange_orders') == 1) checked @endif value="1" name="can_mange_orders">
                                                             <label class="form-check-label" for="can_mange_orders">{{ __('Can access orders')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can view details of orders and update order status') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
-                                                    <!--end::Input group-->
-                                                    <!--end::Input group-->
-
-                                                    <!--begin::Input group-->
-                                                    {{-- <div class="row mb-0 mt-5">
-                                                                        <!--begin::Label-->
-                                                                        <div class="form-check form-check-solid form-switch fv-row">
-                                                                        <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_advertisements" value="1" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_modify_advertisements') == 1) checked  @endif name="can_modify_advertisements">
-                                                                            <label class="form-check-label" for="can_modify_advertisements">{{ __('can-modify-advertisements') }}</label>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_summary" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_access_summary') == 1) checked @endif value="1" name="can_access_summary">
+                                                            <label class="form-check-label" for="can_access_summary">{{ __('Can access summary page')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can see the daily and monthly sales, can see best selling items') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_site_editor" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_access_site_editor') == 1) checked @endif value="1" name="can_access_site_editor">
+                                                            <label class="form-check-label" for="can_access_site_editor">{{ __('Can access site editor')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can update the design and the style of the website') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_coupons" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_access_coupons') == 1) checked @endif value="1" name="can_access_coupons">
+                                                            <label class="form-check-label" for="can_access_coupons">{{ __('Can access coupons')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add, edit and delete coupons') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_qr" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_access_qr') == 1) checked @endif value="1" name="can_access_qr">
+                                                            <label class="form-check-label" for="can_access_qr">{{ __('Can access QR codes')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add, download QR codes') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_service_page" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_access_service_page') == 1) checked @endif value="1" name="can_access_service_page">
+                                                            <label class="form-check-label" for="can_access_service_page">{{ __('Can access services page')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add branch, deactivate branches, pay for branches and application') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_delivery_companies" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_access_delivery_companies') == 1) checked @endif value="1" name="can_access_delivery_companies">
+                                                            <label class="form-check-label" for="can_access_delivery_companies">{{ __('Can access delivery companies')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can contract with delivery companies and deactivate the contraction with them') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_customers_data" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_access_customers_data') == 1) checked @endif value="1" name="can_access_customers_data">
+                                                            <label class="form-check-label" for="can_access_customers_data">{{ __('Can access customers data')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __("Can edit and see customer's orders") }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_settings" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_access_settings') == 1) checked @endif value="1" name="can_access_settings">
+                                                            <label class="form-check-label" for="can_access_settings">{{ __('Can access settings')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __("Can update delivery fees and delivery options") }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
                                                 </div>
-                                                <!--end::Label-->
-                                            </div> --}}
-                                            <!--end::Input group-->
-
-                                            <!--begin::Input group-->
-                                            {{-- //TODO: uncomment when driver app is ready --}}
-                                            {{-- <div class="row mb-0 mt-5">
-                                                                        <!--begin::Label-->
-                                                                        <div class="form-check form-check-solid form-switch fv-row">
-                                                                          <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_and_view_drivers" value="1" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_edit_and_view_drivers') == 1) checked  @endif name="can_edit_and_view_drivers">
-                                                                            <label class="form-check-label" for="can_edit_and_view_drivers">{{ __('View and edit drivers') }}</label>
+                                                <!--end::Card body-->
+                                            </div>
+                                            <!--end::Content-->
                                         </div>
-                                        <!--end::Label-->
-                                    </div> --}}
+                                        <!--end::Permission-->
+
+
+                                    </div>
+                                    <!--end::Card header-->
                                 </div>
-                                <!--end::Card body-->
+                                <!--end::General options-->
                             </div>
-                            <!--end::Content-->
                         </div>
-                        <!--end::Permission-->
-
-
+                        <!--end::Tab pane-->
+                        <div class="d-flex justify-content-end mt-3">
+                            <!--begin::Button-->
+                            <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-khardl">
+                                <i class="bi bi-check2-square mx-1 text-black"></i>
+                                <span class="indicator-label">{{ __('edit')}}</span>
+                                <span class="indicator-progress">{{ __('please-wait')}}
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                            <!--end::Button-->
+                        </div>
                     </div>
-                    <!--end::Card header-->
-                </div>
-                <!--end::General options-->
+                    <!--end::Main column-->
+            </form>
+            <!--end::Form-->
         </div>
+        <!--end::Container-->
     </div>
-    <!--end::Tab pane-->
-    <div class="d-flex justify-content-end mt-3">
-        <!--begin::Button-->
-        <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-khardl">
-            <i class="bi bi-check2-square mx-1 text-black"></i>
-            <span class="indicator-label">{{ __('edit')}}</span>
-            <span class="indicator-progress">{{ __('please-wait')}}
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-        </button>
-        <!--end::Button-->
-    </div>
-</div>
-<!--end::Main column-->
-</form>
-<!--end::Form-->
-</div>
-<!--end::Container-->
-</div>
-<!--end::Post-->
+    <!--end::Post-->
 </div>
 <!--end::Content-->
 @endsection
