@@ -124,30 +124,19 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_menu" value="1" name="can_edit_menu" {{old('can_edit_menu') ? 'checked' : ''}}>
-                                                            <label class="form-check-label" for="can_edit_menu">{{ __('can-edit-the-menu')}}</label>
+                                                            <label class="form-check-label" for="can_edit_menu">{{ __('Can access menu')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add and edit category, add and edit products') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Input group-->
-
-
-                                                    {{-- <!--begin::Input group-->--}}
-                                                    {{-- <div class="row mb-0 mt-5">--}}
-                                                    {{-- <!--begin::Label-->--}}
-                                                    {{-- <div class="form-check form-check-solid form-switch fv-row">--}}
-                                                    {{-- <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_advertisements" value="1" name="can_modify_advertisements">--}}
-                                                    {{-- <label class="form-check-label" for="can_modify_advertisements">{{ __('can-modify-advertisements')}}</label>--}}
-                                                    {{-- </div>--}}
-                                                    {{-- <!--end::Label-->--}}
-                                                    {{-- </div>--}}
-                                                    {{-- <!--end::Input group-->--}}
-
                                                     <!--begin::Input group-->
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_and_see_other_workers" value="1" name="can_modify_and_see_other_workers" {{old('can_modify_and_see_other_workers') ? 'checked' : ''}}>
-                                                            <label class="form-check-label" for="can_modify_and_see_other_workers">{{ __('can-modify-and-see-other-workers')}}</label>
+                                                            <label class="form-check-label" for="can_modify_and_see_other_workers">{{ __('Can access workers')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can view and update the workers') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -158,7 +147,8 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_working_time" value="1" name="can_modify_working_time" {{old('can_modify_working_time') ? 'checked' : ''}}>
-                                                            <label class="form-check-label" for="can_modify_working_time">{{ __('can-modify-working-time')}}</label>
+                                                            <label class="form-check-label" for="can_modify_working_time">{{ __('Can access working time')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can update the working time of the branch') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -167,7 +157,8 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_view_revenues" value="1" name="can_view_revenues" {{old('can_view_revenues') ? 'checked' : ''}}>
-                                                            <label class="form-check-label" for="can_view_revenues">{{ __('Can view revenues')}}</label>
+                                                            <label class="form-check-label" for="can_view_revenues">{{ __('Can acccess revenuses')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can see the revenuses for every branch') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -177,7 +168,8 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_control_payment" value="1" name="can_control_payment" {{old('can_control_payment') ? 'checked' : ''}}>
-                                                            <label class="form-check-label" for="can_control_payment">{{ __('can-control-payment')}}</label>
+                                                            <label class="form-check-label" for="can_control_payment">{{ __('Can access payment')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can see the subscription of the restaurant the details of bank information') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -188,6 +180,7 @@
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_and_view_drivers" value="1" name="can_edit_and_view_drivers" {{old('can_edit_and_view_drivers') ? 'checked' : ''}}>
                                                             <label class="form-check-label" for="can_edit_and_view_drivers">{{ __('Can access drivers')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add and edit drivers') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -198,6 +191,95 @@
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_mange_orders" value="1" name="can_mange_orders" {{old('can_mange_orders') ? 'checked' : ''}}>
                                                             <label class="form-check-label" for="can_mange_orders">{{ __('Can access orders')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can view details of orders and update order status') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_summary" value="1" name="can_access_summary" {{old('can_access_summary') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_summary">{{ __('Can access summary page')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can see the daily and monthly sales, can see best selling items') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_site_editor" value="1" name="can_access_site_editor" {{old('can_access_site_editor') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_site_editor">{{ __('Can access site editor')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can update the design and the style of the website') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_coupons" value="1" name="can_access_coupons" {{old('can_access_coupons') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_coupons">{{ __('Can access coupons')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add, edit and delete coupons') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_qr" value="1" name="can_access_qr" {{old('can_access_qr') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_qr">{{ __('Can access QR codes')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add, download QR codes') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_service_page" value="1" name="can_access_service_page" {{old('can_access_service_page') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_service_page">{{ __('Can access services page')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add branch, deactivate branches, pay for branches and application') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_delivery_companies" value="1" name="can_access_delivery_companies" {{old('can_access_delivery_companies') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_delivery_companies">{{ __('Can access delivery companies')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can contract with delivery companies and deactivate the contraction with them') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_customers_data" value="1" name="can_access_customers_data" {{old('can_access_customers_data') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_customers_data">{{ __('Can access customers data')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __("Can edit and see customer's orders") }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_settings" value="1" name="can_access_settings" {{old('can_access_settings') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_settings">{{ __('Can access settings')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __("Can update delivery fees and delivery options") }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
