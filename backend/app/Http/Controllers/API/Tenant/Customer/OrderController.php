@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\API\Tenant\Customer;
 
-use App\Models\Tenant\RestaurantUser;
+use Exception;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
 use App\Models\Tenant\Setting;
+use App\Packages\Msegat\Msegat;
 use App\Traits\APIResponseTrait;
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Tenant\RestaurantUser;
+use App\Http\Requests\Tenant\OTPRequest;
 use App\Repositories\Customer\CartRepository;
 use App\Repositories\Customer\OrderRepository;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
-use App\Models\Tenant\PaymentMethod;
+use App\Http\Requests\UpdateCustomerInfoAppRequest;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
-use Exception;
+use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
 
 class OrderController
 {
@@ -97,6 +101,53 @@ class OrderController
             'should_logout' => $shouldLogout
         ], __('Please re-login again'));
     }
+    public function updateCustomerApp(UpdateCustomerInfoAppRequest $request){
+        $user = Auth::user();
+
+        if($request->first_name){
+            $user->first_name = $request->first_name;
+        }
+        if($request->last_name){
+            $user->last_name = $request->last_name;
+        }
+        $user->save();
+        if ($request->phone && $user->phone != $request->phone) {
+            $send_sms = (new RegisterController())->sendVerificationSMSCode($request);
+            $content = $send_sms->getOriginalContent();
+            if($content['success']){
+                $user->verified_phone = $request->phone;
+                $user->save();
+            }
+            return $send_sms;
+            
+        }else {
+            $user->save();
+            return $this->sendResponse([
+                'ok' => true,
+            ], __('User updated successfully'));
+        }
+ 
+        
+    }
+    public function VerifyCustomerPhone(OTPRequest $request){
+        $user = Auth::user();
+        $register = (new RegisterController());
+        if(!$register->checkAttempt($user)){
+            return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
+        }
+        if (!$user->checkVerificationSMSCode($request->otp)){
+            return $this->sendError('Fail', __('The verification code is incorrect.'));
+        }
+         
+        $temp = $user->verified_phone;
+        $user->verified_phone = $user->phone;
+        $user->phone = $temp;
+        $user->save();
+
+        return $this->sendResponse(null, __('Phone verified successfully!'));
+
+    }   
+
     public function paymentRedirect(OrderRequest $request,CartRepository $cart){
         $request->validate([
             'token_id'=>"string|required" // token id for tap payment
