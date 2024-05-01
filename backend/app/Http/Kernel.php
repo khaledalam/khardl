@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CORS;
 use App\Http\Middleware\Driver;
+use App\Http\Middleware\Visitors;
 use App\Http\Middleware\Worker;
 use App\Http\Middleware\Restaurant;
 use App\Http\Middleware\ForceLogOut;
@@ -152,7 +153,8 @@ class Kernel extends HttpKernel
         // 'isLeadNotSubmitted'=>isLeadNotSubmitted::class,
         'isBusinessSubmitted'=>IsBusinessSubmitted::class,
         "trans_api"=>LocalizationApi::class,
-        'ActiveRestaurantAndBranch'=>ActiveRestaurantAndBranch::class
+        'ActiveRestaurantAndBranch'=>ActiveRestaurantAndBranch::class,
+        'visitors'=> Visitors::class,
     ];
 
 }

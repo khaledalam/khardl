@@ -9,5 +9,6 @@ return [
   'experienceRange' => [0, 30],
   'perPage' => 10,
   'limitResults' => 10,
-  'limit_delivery_company'  => 5
+  'limit_delivery_company'  => 5,
+  'limit_visitor_time'  => 8 * 60 * 60, //8 hours
 ];
