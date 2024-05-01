@@ -112,7 +112,7 @@ class RegisterController extends BaseController
         if(!$id= $user->generateVerificationSMSCode()) return $this->sendError('Fail', 'Request failed .');
         $user->msegat_id_verification = $id;
         $user->save();
-        return $this->sendResponse(null, 'Verification code sent to phone.');
+        return $this->sendResponse(null, __('Verification code sent to phone.'));
     }
     public function verify(OTPRequest $request): JsonResponse
     {

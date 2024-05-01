@@ -83,7 +83,7 @@ Route::get('/send-notification', [PushNotificationController::class, 'sendPushNo
 
 
 Route::group([
-    'middleware' => ['tenant', 'web'],
+    'middleware' => ['tenant', 'web','trans_api'],
 ], static function () {
 
     Route::get('/impersonate/{token}', static function ($token) {
