@@ -150,8 +150,8 @@
                                             showCancelButton: true,
                                             inputOptions: statusOptions,
                                             inputPlaceholder: 'Select an option',
-                                            confirmButtonText: '{{ __('yes') }}',
-                                            cancelButtonText: '{{ __('no') }}'
+                                            confirmButtonText: `{{ __('yes') }}`,
+                                            cancelButtonText: `{{ __('no') }}`
                                         }).then((result) => {
                                             if (result.isConfirmed) {
                                                 const selectedStatus = result.value;
