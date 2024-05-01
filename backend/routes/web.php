@@ -66,7 +66,13 @@ Route::get('/health', static function (){
         'mobile_app_orders_android_latest_versionName' => '1.3',
         'mobile_app_orders_android_force_update' => false,
         'mobile_app_orders_ios_latest_CURRENT_PROJECT_VERSION' => '1.6',
-        'mobile_app_orders_ios_force_update' => false
+        'mobile_app_orders_ios_force_update' => false,
+
+        'mobile_app_customer_android_latest_versionCode' => 1,
+        'mobile_app_customer_android_latest_versionName' => '1.0',
+        'mobile_app_customer_android_force_update' => false,
+        'mobile_app_customer_ios_latest_CURRENT_PROJECT_VERSION' => '1.0',
+        'mobile_app_customer_ios_force_update' => false
 
     ]);
 })->name('health');
