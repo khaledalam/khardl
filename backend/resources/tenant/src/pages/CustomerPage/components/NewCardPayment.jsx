@@ -2,13 +2,16 @@ import React from "react";
 import imgCardSim from "../../../assets/cardSim.svg";
 import imgThumbUp from "../../../assets/thumbup.svg";
 import { MdMoreVert } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 const CardPayment = ({
   poweredByImgURl,
   CardNumber,
   cardType,
   ValidThruNo,
+  onDelete,
 }) => {
+  const { t } = useTranslation();
   return (
     <div className="relative p-4 h-[270px] w-[430px] flex items-center justify-center border border-[var(--customer)] rounded-xl">
       <div className="dropdown absolute top-2 right-2">
@@ -20,10 +23,13 @@ const CardPayment = ({
           className="dropdown-content z-[2] menu shadow bg-base-100 rounded-lg w-52 h-[54px]"
         >
           <li
-            onClick={() => document.getElementById("my_modal_3").showModal()}
+            onClick={() => {
+              onDelete();
+              // document.getElementById("my_modal_3").showModal();
+            }}
             className="bg-[var(--customer)] text-white font-bold text-center w-full p-2 cursor-pointer"
           >
-            Delete
+            {t("Delete")}
           </li>
         </ul>
       </div>
@@ -39,7 +45,7 @@ const CardPayment = ({
           <div className="w-full h-full flex items-center justify-center gap-3 flex-col">
             <img src={imgThumbUp} alt="ThumbUp" className="" />
             <h3 className="text-[1rem] font-bold text-white">
-              Card have been deleted
+              {t("Card have been deleted")}
             </h3>
           </div>
         </div>
@@ -62,10 +68,10 @@ const CardPayment = ({
           <div className=" h-full p-4 flex flex-col gap-5 text-white">
             <div className="w-full flex items-start justify-between">
               <div className="flex flex-col gap-1">
-                <h3 className="">Fincard</h3>
+                <h3 className="">{t("Fincard")}</h3>
                 <img src={imgCardSim} alt="" className="w-[40px] h-[30px] " />
               </div>
-              <h3 className="font-bold text-sm">{cardType}</h3>
+              <h3 className="font-bold text-sm">{t(cardType)}</h3>
             </div>
             <div className="w-full">
               <h3 className="font-bold text-xl">{CardNumber}</h3>

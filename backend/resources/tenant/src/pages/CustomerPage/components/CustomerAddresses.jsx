@@ -3,80 +3,28 @@ import { useTranslation } from "react-i18next";
 import orderIcon from "../../../assets/orderBlack.svg";
 import AddAddress from "./AddAddress";
 import AddressItem from "./AddressItem";
+import { useDispatch, useSelector } from "react-redux";
+import { updateAddressesList } from "../../../redux/NewEditor/customerSlice";
 
 const CustomerAddresses = () => {
   const { t } = useTranslation();
-
-  const [addresses, setAddresses] = useState([
-    {
-      addressType: 0,
-      address:
-        "Street 123, no.100 A, Villa Breeze, Khobbar,loremipsumloremipsumlore 12345, Saudi Arabia",
-      phoneNumber: "+966 - 123 - 456 - 789",
-      name: "Chaterine Angella",
-    },
-    {
-      addressType: 0,
-      address:
-        "Street 123, no.100 A, Villa Breeze, Khobbar,loremipsumloremipsumlore 12345, Saudi Arabia",
-      phoneNumber: "+966 - 123 - 456 - 789",
-      name: "Chaterine Angella",
-    },
-    {
-      addressType: 0,
-      address:
-        "Street 123, no.100 A, Villa Breeze, Khobbar,loremipsumloremipsumlore 12345, Saudi Arabia",
-      phoneNumber: "+966 - 123 - 456 - 789",
-      name: "Chaterine Angella",
-    },
-    {
-      addressType: 0,
-      address:
-        "Street 123, no.100 A, Villa Breeze, Khobbar,loremipsumloremipsumlore 12345, Saudi Arabia",
-      phoneNumber: "+966 - 123 - 456 - 789",
-      name: "Chaterine Angella",
-    },
-    {
-      addressType: 0,
-      address:
-        "Street 123, no.100 A, Villa Breeze, Khobbar,loremipsumloremipsumlore 12345, Saudi Arabia",
-      phoneNumber: "+966 - 123 - 456 - 789",
-      name: "Chaterine Angella",
-    },
-    {
-      addressType: 0,
-      address:
-        "Street 123, no.100 A, Villa Breeze, Khobbar,loremipsumloremipsumlore 12345, Saudi Arabia",
-      phoneNumber: "+966 - 123 - 456 - 789",
-      name: "Chaterine Angella",
-    },
-    {
-      addressType: 0,
-      address:
-        "Street 123, no.100 A, Villa Breeze, Khobbar,loremipsumloremipsumlore 12345, Saudi Arabia",
-      phoneNumber: "+966 - 123 - 456 - 789",
-      name: "Chaterine Angella",
-    },
-    {
-      addressType: 0,
-      address:
-        "Street 123, no.100 A, Villa Breeze, Khobbar,loremipsumloremipsumlore 12345, Saudi Arabia",
-      phoneNumber: "+966 - 123 - 456 - 789",
-      name: "Chaterine Angella",
-    },
-    {
-      addressType: 0,
-      address:
-        "Street 123, no.100 A, Villa Breeze, Khobbar,loremipsumloremipsumlore 12345, Saudi Arabia",
-      phoneNumber: "+966 - 123 - 456 - 789",
-      name: "Chaterine Angella",
-    },
-  ]);
+  const dispatch = useDispatch();
+  const addresses = useSelector((state) => state.customerAPI.addressesList);
   const [addMode, setAddMode] = useState(false);
+  const [editMode, setEditMode] = useState(-1);
+  const [address, setAddress] = useState({
+    addressType: "Home",
+    name: "",
+    phoneNumber: "",
+    address: "",
+  });
 
+  const setAddresses = (addresses) => {
+    dispatch(updateAddressesList(addresses));
+  };
   return (
     <>
-      {!addMode ? (
+      {!(addMode || editMode !== -1) ? (
         <div className="m-12 mb-5 h-full">
           <div className="flex flex-row justify-between mb-5">
             <div className="flex items-center gap-3">
@@ -98,6 +46,13 @@ const CustomerAddresses = () => {
                 key={index}
                 address={address}
                 setViewOnMap={() => {}}
+                onDelete={() =>
+                  setAddresses(addresses.filter((_, i) => i !== index))
+                }
+                onEdit={() => {
+                  setAddress(address);
+                  setEditMode(index);
+                }}
               />
             ))}
             {addresses?.length === 0 && (
@@ -118,13 +73,25 @@ const CustomerAddresses = () => {
         </div>
       ) : (
         <AddAddress
-          onAdd={(address) => {
-            setAddMode(false);
-            setAddresses([...addresses, address]);
+          address={address}
+          onSave={(address) => {
+            if (addMode) {
+              setAddMode(false);
+              setAddresses([...addresses, address]);
+            } else if (editMode !== -1) {
+              setEditMode(-1);
+              setAddresses(
+                addresses.map((item, index) =>
+                  editMode === index ? address : item
+                )
+              );
+            }
           }}
           onCancel={() => {
             setAddMode(false);
+            setEditMode(-1);
           }}
+          setAddress={setAddress}
         />
       )}
     </>

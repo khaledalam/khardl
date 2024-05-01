@@ -5,27 +5,19 @@ import imgPayment from "../../../assets/cardProfileIcon.svg";
 import imgMasterCard from "../../../assets/mastercard.svg";
 import imgVisa from "../../../assets/visa.svg";
 
+export const CardTypeIcons = { VISA: imgVisa, MASTERCARD: imgMasterCard };
+   
 const AddCard = ({ onAdd, onCancel }) => {
   const { t } = useTranslation();
   const [card, setCard] = useState({
-    cardType: 0,
+    cardType: "VISA",
     name: "",
     cardNumber: "",
     expiry: "",
     CVC: "",
-    brand: "VISA"
+    funding: "CREDIT",
   });
 
-  const cardTypes = [
-    {
-      text: "VISA",
-      icon: imgVisa,
-    },
-    {
-      text: "MASTERCARD",
-      icon: imgMasterCard,
-    },
-  ];
 
   return (
     <div className="m-12 mb-5">
@@ -40,10 +32,10 @@ const AddCard = ({ onAdd, onCancel }) => {
               {t("Select card type")}
             </div>
             <div className="justify-center items-start gap-2 flex">
-              {cardTypes.map((cardType, index) => (
+              {Object.getOwnPropertyNames(CardTypeIcons).map((cardType, index) => (
                 <div
                   className={`transition-all px-[9px] py-2 rounded-sm border justify-start items-center gap-2 flex font-light cursor-pointer text-xs bg-white ${
-                    index === card.cardType
+                    cardType === card.cardType
                       ? "border-neutral-900 text-black"
                       : "border-gray-200 text-zinc-600"
                   }`}
@@ -51,12 +43,15 @@ const AddCard = ({ onAdd, onCancel }) => {
                   onClick={() =>
                     setCard((prevCard) => ({
                       ...prevCard,
-                      cardType: index,
-                      brand: cardTypes[index].text
+                      cardType,
                     }))
                   }
                 >
-                  <img className="w-[46px] h-8 rounded-md border border-gray-100 bg-gray-400" src={cardType.icon} alt={cardType.text} />
+                  <img
+                    className="w-[46px] h-8 rounded-md border border-gray-100 bg-gray-400"
+                    src={CardTypeIcons[cardType]}
+                    alt={cardType}
+                  />
                 </div>
               ))}
             </div>
@@ -124,10 +119,12 @@ const AddCard = ({ onAdd, onCancel }) => {
               className="w-full cursor-pointer text-white bg-gray-900 rounded-lg px-4 py-2.5 border  leading-[18px] hover:bg-white hover:border-gray-900 hover:text-gray-900 transition-all shadow-md"
               onClick={() => {
                 setCard({
-                  cardType: 0,
+                  cardType: "VISA",
                   name: "",
                   phoneNumber: "",
                   card: "",
+                  CVC: "",
+                  funding: "CREDIT",
                 });
                 onCancel();
               }}

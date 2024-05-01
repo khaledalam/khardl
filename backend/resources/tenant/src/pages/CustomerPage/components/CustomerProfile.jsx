@@ -19,9 +19,6 @@ const CustomerProfile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
-  const address = useSelector(
-    (state) => state.customerAPI.address?.addressValue
-  );
   const customerAddress = useSelector((state) => state.customerAPI.address);
 
   const [isDisabled, setIsDisabled] = useState(true);
@@ -181,7 +178,7 @@ const CustomerProfile = () => {
           />
         </div>
       </div>
-      {/* <h3 className="text-lg my-5 ">{t("Location")}</h3>
+      <h3 className="text-lg my-5 ">{t("Location")}</h3>
       <div className="w-full bg-white shadow-md  min-h-[400px] h-full p-4 flex">
         <div className="w-full flex flex-col gap-4">
           <Places
@@ -190,7 +187,7 @@ const CustomerProfile = () => {
             }
           />
         </div>
-      </div> */}
+      </div>
       <div className="flex w-full items-center justify-end mt-6 mb-4">
         <div className="flex items-center gap-5">
           <button

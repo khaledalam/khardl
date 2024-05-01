@@ -10,7 +10,7 @@ const PrimaryOrderSearch = ({ value, onChange }) => {
         <BsSearch />
       </div>
       <input
-        placeholder={t("Search")}
+        placeholder={t("Search by shipping address")}
         id="search-input"
         name="search-input"
         value={value}

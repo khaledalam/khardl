@@ -7,7 +7,7 @@ const OrderItem = ({ order, onClick }) => {
   const { t } = useTranslation();
   return (
     <div
-      className="flex-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 min-w-[320px] p-4 bg-white rounded-[15px] border border-gray-200 flex-col justify-start items-end hover:border-slate-300 hover:shadow-md transition-all cursor-pointer font-medium font-['Plus Jakarta Sans']"
+      className="flex-1 h-fit w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 min-w-[320px] p-4 bg-white rounded-[15px] border border-gray-200 flex-col justify-start items-end hover:border-slate-300 hover:shadow-md transition-all cursor-pointer font-medium font-['Plus Jakarta Sans']"
       onClick={onClick}
     >
       <Badge value={order?.status} />
@@ -45,7 +45,7 @@ const OrderItem = ({ order, onClick }) => {
             <span className="text-zinc-500 text-[12px] font-light">
               &nbsp;~{" "}
               {order?.created_at &&
-                new Date(order.created_at).toLocaleString("en-US", {
+                new Date(order?.created_at).toLocaleString("en-US", {
                   hour: "numeric",
                   minute: "numeric",
                   hour12: true,

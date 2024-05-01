@@ -1,16 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import AddCard from "./AddCard";
+import AddCard, { CardTypeIcons } from "./AddCard";
 import imgPayment from "../../../assets/cardProfileIcon.svg";
 import CardPayment from "./NewCardPayment";
 import imgMasterCard from "../../../assets/mastercard.svg";
 import imgVisa from "../../../assets/visa.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCardsList } from "../../../redux/NewEditor/customerSlice";
 
 const CustomerPayment = () => {
   const { t } = useTranslation();
+  const cards = useSelector((state) => state.customerAPI.cardsList);
+  const dispatch = useDispatch();
 
-  const [cards, setCards] = useState([]);
   const [addMode, setAddMode] = useState(false);
+
+  const setCards = (cards) => {
+    dispatch(updateCardsList(cards));
+  };
+
+  const fetchCardsData = async () => {
+    try {
+      const cardsResponse = await AxiosInstance.get(`cards`);
+
+      if (cardsResponse.data && Array.isArray(cardsResponse?.data?.data)) {
+        dispatch(updateCardsList(Object.values(cardsResponse?.data?.data)));
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    fetchCardsData().then(() => {});
+  }, []);
 
   return (
     <>
@@ -35,20 +59,24 @@ const CustomerPayment = () => {
               <>
                 <div className="w-max" key={index}>
                   <CardPayment
-                    poweredByImgURl={
-                      card?.brand === "VISA"
-                        ? imgVisa
-                        : card?.brand === "MASTERCARD"
-                        ? imgMasterCard
-                        : ""
-                    }
+                    poweredByImgURl={CardTypeIcons[card.cardType]}
                     cardType={
                       card?.funding === "CREDIT"
                         ? "Platinum Credit"
                         : "Platinum Debit"
                     }
-                    CardNumber={`${card?.first_six}**  ****  ${card?.last_four}`}
-                    ValidThruNo={`${card?.expiry?.month}/${card?.expiry?.year}`}
+                    CardNumber={`${card?.cardNumber.slice(
+                      0,
+                      6
+                    )}**  ****  ${card?.cardNumber.slice(
+                      card?.cardNumber.length - 6
+                    )}`}
+                    ValidThruNo={card?.expiry}
+                    onDelete={() =>
+                      dispatch(
+                        updateCardsList(cards.filter((_, i) => i !== index))
+                      )
+                    }
                   />
                 </div>
                 {/* <CardItem key={index} card={card} setViewOnMap={() => {}} /> */}

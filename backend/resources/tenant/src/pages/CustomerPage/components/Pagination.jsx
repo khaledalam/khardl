@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { setCurrentPage } from "../../../redux/NewEditor/customerSlice";
 import { useTranslation } from "react-i18next";
 const Pagination = ({ page, setPage, totalCount }) => {
   const language = useSelector((state) => state.languageMode.languageMode);
   const dispatch = useDispatch();
-  const [pageCount, setPageCount] = useState(4);
+  const [pageCount, setPageCount] = useState(0);
   const { t } = useTranslation();
 
   const changeCurrentPage = (page) => {
     setPage(page);
-    dispatch(setCurrentPage(page));
   };
   useEffect(() => {
     setPageCount(Math.ceil(totalCount / 10));
