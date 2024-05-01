@@ -202,6 +202,61 @@
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_summary" value="1" name="can_access_summary" {{old('can_access_summary') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_summary">{{ __('Can access summary page')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can see the daily and monthly sales, can see best selling items') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_site_editor" value="1" name="can_access_site_editor" {{old('can_access_site_editor') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_site_editor">{{ __('Can access site editor')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can update the design and the style of the website') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_coupons" value="1" name="can_access_coupons" {{old('can_access_coupons') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_coupons">{{ __('Can access coupons')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add, edit and delete coupons') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_qr" value="1" name="can_access_qr" {{old('can_access_qr') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_qr">{{ __('Can access QR codes')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add, download QR codes') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_service_page" value="1" name="can_access_service_page" {{old('can_access_service_page') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_service_page">{{ __('Can access services page')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add branch, deactivate branches, pay for branches and application') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
 
                                                 </div>
                                                 <!--end::Card body-->

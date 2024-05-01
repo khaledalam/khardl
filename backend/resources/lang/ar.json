@@ -1263,6 +1263,15 @@
     "Max coverage":"اقصي تغطية",
     "Are you sure you want to deactivate this branch ?":"هل أنت متأكد من أنك تريد إلغاء تنشيط هذا الفرع؟",
     "Are you sure you want to activate this branch ?":"هل أنت متأكد أنك تريد تفعيل هذا الفرع؟",
-    "Can access orders":"يمكن إدارة الطلبات"
-
+    "Can access orders":"يمكن إدارة الطلبات",
+    "Can access summary page":"يمكن الوصول إلى صفحة الملخص",
+    "Can see the daily and monthly sales, can see best selling items":"يمكن أن يري المبيعات اليومية والشهرية ، يمكن أن يري أفضل المنتجات مبيعا",
+    "Can access site editor":"يمكن الوصول إلى محرر الموقع",
+    "Can update the design and the style of the website":"يمكن تحديث تصميم الموقع",
+    "Can access coupons":"يمكن الوصول إلى قسائم الخصومات",
+    "Can add, edit and delete coupons":"يمكن إضافة كوبونات وتحريرها وحذفها",
+    "Can add, download QR codes":"يمكن إضافة وتنزيل رموز الماسح الرقمي",
+    "Can access QR codes":"يمكن الوصول إلى رموز الماسح الرقمي",
+    "Can add branch, deactivate branches, pay for branches and application":"يمكن أن يضيف فروعًا ، إلغاء تنشيط الفروع  ، دفع ثمن الفروع والتطبيق",
+    "Can access services page":"يمكن الوصول إلى صفحة الخدمات"
 }
