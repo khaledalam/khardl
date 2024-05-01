@@ -289,33 +289,33 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
             setIsModelOpen(true);
           }}
         />
-        <PrimaryDropDown
-          // handleChange={handleChange}
-          innerClassName="border-none shadow-none"
-          defaultValue={
-            restuarantStyle.template === "template-1"
-              ? t("Template 1")
-              : restuarantStyle.template === "template-2"
-                ? t("Template 2")
-                : restuarantStyle.template === "template-3"
-                  ? t("Template 3")
-                  : " "
-          }
-          dropdownList={[
-            {
-              value: "template-1",
-              text: t("Template 1"),
-            },
-            {
-              value: "template-2",
-              text: t("Template 2"),
-            },
-            {
-              value: "template-3",
-              text: t("Template 3"),
-            },
-          ]}
-        />
+        {/*<PrimaryDropDown*/}
+        {/*  // handleChange={handleChange}*/}
+        {/*  innerClassName="border-none shadow-none"*/}
+        {/*  defaultValue={*/}
+        {/*    restuarantStyle.template === "template-1"*/}
+        {/*      ? t("Template 1")*/}
+        {/*      : restuarantStyle.template === "template-2"*/}
+        {/*        ? t("Template 2")*/}
+        {/*        : restuarantStyle.template === "template-3"*/}
+        {/*          ? t("Template 3")*/}
+        {/*          : " "*/}
+        {/*  }*/}
+        {/*  dropdownList={[*/}
+        {/*    {*/}
+        {/*      value: "template-1",*/}
+        {/*      text: t("Template 1"),*/}
+        {/*    },*/}
+        {/*    {*/}
+        {/*      value: "template-2",*/}
+        {/*      text: t("Template 2"),*/}
+        {/*    },*/}
+        {/*    {*/}
+        {/*      value: "template-3",*/}
+        {/*      text: t("Template 3"),*/}
+        {/*    },*/}
+        {/*  ]}*/}
+        {/*/>*/}
         <div className="flex items-center gap-[8px] cursor-pointer">
           <button
             onClick={() => setIsPreview((prev) => !prev)}
