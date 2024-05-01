@@ -9,7 +9,7 @@ const MobileMenu = () => {
   return (
     <Fragment>
       <div
-        className={`drawer lg:hidden ${language !== "en" ? "drawer-end" : ""}`}
+        className={`drawer block md:hidden ${language !== "en" ? "drawer-end" : ""}`}
       >
         <input id="mobile_en" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">

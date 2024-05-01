@@ -50,17 +50,13 @@ const NavbarCustomer = ({
   // }, []);
 
   return (
-    <div className="h-[70px] w-full bg-white flex items-center justify-between px-4 xl:px-8">
+    <div className="h-[70px] w-full bg-white flex items-center justify-between px-4 xl:px-8 mt-3">
       {customerDashboard && <MobileMenu />}
-
-      {window.innerWidth > 700 && (
-        <IoMenuOutline
-          size={42}
-          className="text-neutral-400 cursor-pointer xl:ml-16"
-          onClick={() => setShowMenu(!showMenu)}
-        />
-      )}
-
+      <IoMenuOutline
+        size={42}
+        className="text-neutral-400 cursor-pointer hidden md:block"
+        onClick={() => setShowMenu(!showMenu)}
+      />
       <div
         onClick={() => navigate("/")}
         className="w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center cursor-pointer"
