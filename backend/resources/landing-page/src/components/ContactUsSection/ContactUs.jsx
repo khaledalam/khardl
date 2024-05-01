@@ -8,6 +8,7 @@ import Axios from "../../axios/axios";
 import mail from "../../assets/mail.png";
 import { HiChevronRight } from "react-icons/hi2";
 import { useSelector } from "react-redux";
+import {HiChevronLeft} from "react-icons/hi";
 
 function ContactUs() {
   const { t } = useTranslation();
@@ -202,15 +203,7 @@ function ContactUs() {
                     !isMobile ? "w-[100%]" : "w-fit"
                   } justify-center cta-btn font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px] hover:bg-[#d6eb16] hover:text-black`}
                 >
-                  {language === "en" ? (
-                    <>
-                      {t("Send")} <HiChevronRight />
-                    </>
-                  ) : (
-                    <>
-                      <HiChevronRight /> {t("Send")}
-                    </>
-                  )}
+                  {t("Send")} {language == 'en' ? <HiChevronRight /> : <HiChevronLeft />}
                   {/* {t("Send")}
                   <HiChevronRight /> */}
                 </button>
