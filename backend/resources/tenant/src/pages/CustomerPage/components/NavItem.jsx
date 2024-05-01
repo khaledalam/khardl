@@ -1,6 +1,8 @@
 import React from "react";
+import {useTranslation} from "react-i18next";
 
 const NavItem = ({ active, imgUrl, activeImgUrl, title, onClick }) => {
+  const { t } = useTranslation();
   return (
     <div
       onClick={onClick}
@@ -15,7 +17,7 @@ const NavItem = ({ active, imgUrl, activeImgUrl, title, onClick }) => {
             active ? "text-white" : "text-black"
           } font-medium `}
         >
-          {title}
+          {t(title)}
         </h3>
       </div>
     </div>
