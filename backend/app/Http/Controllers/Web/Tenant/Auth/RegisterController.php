@@ -126,11 +126,11 @@ class RegisterController extends BaseController
         }
         // Check the verification code
         if (!$user->checkVerificationSMSCode($request->otp))
-            return $this->sendError('Fail', 'The verification code is incorrect.');
+            return $this->sendError('Fail', __('The verification code is incorrect.'));
 
         // If we've reached here, the verification code is incorrect
         // Note: You may want to track the number of incorrect attempts and handle them accordingly.
-        return $this->sendResponse(null, 'Phone verified successfully!');
+        return $this->sendResponse(null, __('Phone verified successfully!'));
 
     }
     public function checkAttempt($user){
@@ -138,7 +138,7 @@ class RegisterController extends BaseController
         $tokens = DB::table('phone_verification_tokens')
         ->where('user_id', $user->id)
         ->whereDate('created_at', $today)->get()->first();
-        if (isset($tokens) && $tokens->attempts >= 3 && !in_array($user->phone,Msegat::ALLOWED_NUMBERS)) {
+        if (isset($tokens) && $tokens->attempts >= 5 && !in_array($user->phone,Msegat::ALLOWED_NUMBERS)) {
             return false;
         }
         return true;

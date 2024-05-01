@@ -5,7 +5,7 @@ namespace App\Http\Requests\Tenant;
 use Illuminate\Foundation\Http\FormRequest;
 
 
-class OTPRequest extends FormRequest
+class   OTPRequest extends FormRequest
 {
    
 
