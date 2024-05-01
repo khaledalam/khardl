@@ -34,11 +34,14 @@ class Customer extends Tap implements CustomerInterface
             if($customer['http_code'] == ResponseHelper::HTTP_OK){
                 $user->tap_customer_id = $customer['message']['id'];
                 $user->save();
+                return $customer['message']['id'];
             }
         }else {
-            // TODO @todo Testing only , remove after set production
             $user->tap_customer_id = self::DEFAULT_CUSTOMER_ID;
             $user->save();
+
+            return  self::DEFAULT_CUSTOMER_ID;
         }
+        return null;
     }
 }

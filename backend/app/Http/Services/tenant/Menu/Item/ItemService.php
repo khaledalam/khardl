@@ -107,7 +107,7 @@ class ItemService
     {
         $user = Auth::user();
 
-     
+
 
         $selectedItem = DB::table('items')->where('id', $id)->first();
 

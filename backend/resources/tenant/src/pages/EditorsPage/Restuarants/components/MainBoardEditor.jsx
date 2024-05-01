@@ -131,6 +131,7 @@ const MainBoardEditor = ({
   } = restuarantEditorStyle;
 
   const [listofBannerImages, setListofBannerImages] = useState([]);
+  const visibleCategories = categories.filter((c) => c.items.length > 0);
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -567,7 +568,7 @@ const MainBoardEditor = ({
           } `}
         >
           <EditorSlider
-            items={categories}
+            items={visibleCategories}
             scrollToSection={scrollToSection}
             isHighlighted={navItems[activeSection]?.title === "Menu Category"}
             currentSubItem={
@@ -602,7 +603,7 @@ const MainBoardEditor = ({
               className={`w-full h-full flex flex-col max-h-[610px] items-start justify-center `}
             >
               <div
-                className={`flex flex-col gap-[30px] h-fit p-3 md:p-4 overflow-y-scroll hide-scroll`}
+                className={`flex flex-col gap-[30px] h-fit p-3 md:p-4 overflow-y-scroll hide-scroll w-full`}
               >
                 {categories &&
                   categories.map(
@@ -616,7 +617,7 @@ const MainBoardEditor = ({
                           <div className="text-black text-opacity-75 text-lg font-medium mb-[16px]">
                             {category.name}
                           </div>
-                          <div className="flex flex-row flex-wrap gap-[25px] justify-center">
+                          <div className="flex flex-row flex-wrap gap-[25px] justify-center w-full">
                             {category.items.map((product, idx) => (
                               <ProductItem
                                 key={idx + "prdt"}

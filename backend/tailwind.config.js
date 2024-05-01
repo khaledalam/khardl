@@ -9,6 +9,10 @@ module.exports = {
     "./resources/**/*.{blade.php,js,jsx,ts,tsx,css,vue}",
   ],
   theme: {
+    fontFamily: {
+      jakarta: ["Plus Jakarta Sans", "sans-serif"],
+      inter: ["Inter", "sans-serif"],
+    },
     extend: {
       screens: {
         laptopL: "1440px",
@@ -18,7 +22,7 @@ module.exports = {
   },
   daisyui: {
     themes: ["light"],
-      logs: false
+    logs: false,
   },
   plugins: [require("daisyui")],
-}
+};

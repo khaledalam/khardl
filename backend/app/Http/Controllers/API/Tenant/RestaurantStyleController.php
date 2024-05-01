@@ -20,5 +20,10 @@ class RestaurantStyleController extends Controller
     {
        return $this->restaurantStyleService->fetch($request);
     }
+    public function fetchToApp(Request $request)
+    {
+       return $this->restaurantStyleService->fetchToApp($request);
+    }
+    
 
 }

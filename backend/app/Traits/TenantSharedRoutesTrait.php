@@ -55,7 +55,7 @@ trait TenantSharedRoutesTrait
                 '/site-editor'=>'site_editor',
             ],
             'middleware'=>[
-                'auth', 'restaurant',
+                'auth','restaurantOrWorker','permission:can_access_site_editor'
             ]
         ];
 

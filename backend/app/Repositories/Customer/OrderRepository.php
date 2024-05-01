@@ -63,13 +63,13 @@ class OrderRepository
             $statusLog->status = Order::PENDING;
             $statusLog->notes = $request->order_notes;
             $statusLog->saveOrFail();
-            $this->sendNotifications($user, $order);
+      
             if($cart->hasPaymentCashOnDelivery($request->payment_method)){
 
                 // @TODO: fetch transaction fee percentage that need to be deduce from
                 // each TAP transaction from super admin dashboard settings
 
-
+                self::sendNotifications($user, $order);
                 // @TODO: Create TAP charge
 
                 $cart->trash();
@@ -79,8 +79,7 @@ class OrderRepository
 
             }else if ($cart->hasPaymentCreditCard($request->payment_method)){
                 // Do not commit any change , it should be saved into session
-
-                DB::commit();
+                DB::rollBack();
                 return $order;
             }
 
@@ -116,7 +115,7 @@ class OrderRepository
             'notes' => $notes
         ]);
     }
-    public function sendNotifications($user, $order)
+    public static function sendNotifications($user, $order)
     {
 
         //Internal notification
@@ -136,10 +135,10 @@ class OrderRepository
         if ($workers->count()) {
             Notification::send($workers, new NotificationAction($type, $message, $order->toArray()));
             $data = $order->only(['id', 'user_id', 'branch_id', 'delivery_type_id', 'total']);
-            $this->handleSingleNotification($workers, $data, $title, $message, $type->value);
+            self::handleSingleNotification($workers, $data, $title, $message, $type->value);
         }
     }
-    public function handleSingleNotification($workers, $data, $title, $body, $type)
+    public static function handleSingleNotification($workers, $data, $title, $body, $type)
     {
         foreach ($workers as $worker) {
             $lang = $worker->default_lang == 'ar' ? 'ar' : 'en';

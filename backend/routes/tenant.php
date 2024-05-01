@@ -8,8 +8,12 @@ use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 
 use App\Http\Controllers\API\Tenant\Notification\NotificationController;
 use App\Http\Controllers\Notification\PushNotificationController;
+use App\Http\Controllers\Web\Tenant\DeliveryCompanies\DeliveryCompaniesController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
+use App\Http\Controllers\Web\Tenant\OurServices\OurServicesController;
+use App\Http\Controllers\Web\Tenant\QR\QRController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
+use App\Http\Controllers\Web\Tenant\Summary\SummaryController;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantStyle;
 use App\Models\Tenant\RestaurantUser;
@@ -84,7 +88,7 @@ Route::group([
 
     Route::get('/impersonate/{token}', static function ($token) {
        UserImpersonation::makeResponse($token);
-       if(Auth::user()?->isRestaurantOwner())return redirect()->route('restaurant.summary');
+       if(Auth::user()?->isRestaurantOwner() || Auth::user()?->hasPermissionWorker('can_access_summary'))return redirect()->route('restaurant.summary');
        return redirect()->route('restaurant.branches');
     })->name("impersonate");
 
@@ -107,6 +111,72 @@ Route::group([
         Route::get('/customer-style', [CustomerStyleController::class, 'fetch'])->name('restaurant.customer.style.fetch');
 
         Route::middleware(['restaurantOrWorker','ActiveRestaurantAndBranch'])->group(function () {
+            /* Summary page */
+            Route::get('/summary', [SummaryController::class, 'index'])
+            ->middleware('permission:can_access_summary')
+            ->name('restaurant.summary');
+            /* Summary page */
+            /* Coupon page */
+            Route::middleware('permission:can_access_coupons')
+            ->resource('coupons',CouponController::class)
+            ->withTrashed(['show','restore','edit','update']);
+            Route::middleware('permission:can_access_coupons')
+            ->name('coupons.')
+            ->controller(CouponController::class)->group(function () {
+                Route::delete('coupons/delete/{coupon}','delete')->withTrashed()->name('delete');
+                Route::post('coupons/restore/{coupon}','restore')->withTrashed()->name('restore');
+                Route::post('coupons/change-status/{coupon}','changeStatus')->withTrashed()->name('change-status');
+            });
+            /* Coupon page */
+            /* QR page */
+            Route::middleware('permission:can_access_qr')
+            ->name('restaurant.')
+            ->controller(QRController::class)->group(function () {
+                Route::get('/qr', 'index')->name('qr');
+                Route::post('/qr-create', 'create')->name('qr-create');
+                Route::get('/qr-download/{id}', 'download')->name('qr-download');
+            });
+            /* QR page */
+            /* Customer data page */
+            Route::middleware('permission:can_access_customers_data')
+            ->name('customers_data.')
+            ->controller(CustomerDataController::class)->group(function () {
+                Route::get('/customers-data', 'index')->name('list');
+                Route::get('/customers-data/{restaurantUser}/edit', 'edit')->name('edit');
+                Route::put('/customers-data/{restaurantUser}/edit', 'update')->name('update');
+                Route::get('/customers-data/{restaurantUser}', 'show')->name('show');
+                Route::put('/change-status/{restaurantUser}', 'update_status')->name('change-status');
+            });
+            /* Customer data page */
+            /* Setting page */
+            Route::middleware('permission:can_access_settings')
+            ->name('restaurant.')
+            ->controller(SettingController::class)->group(function () {
+                Route::get('/settings', 'settings')->name('settings');
+                Route::post('/update-settings', 'updateSettings')->name('update.settings');
+            });
+            /* Setting page */
+            /* Delivery companies page */
+            Route::middleware('permission:can_access_delivery_companies')
+            ->name('restaurant.')
+            ->controller(DeliveryCompaniesController::class)->group(function () {
+                Route::get('/delivery', 'delivery')->name('delivery');
+                Route::post('/delivery/{module}/activate','toggleActivation')->name('delivery.activate');
+            });
+            /* Delivery companies page */
+            /* Our services page */
+            Route::middleware('permission:can_access_service_page')
+            ->name('restaurant.')
+            ->controller(OurServicesController::class)->group(function () {
+                Route::get('/service', 'services')->name('service');
+                Route::patch('/service/deactivate', 'deactivate')->name('service.deactivate');
+                Route::patch('/service/app/deactivate', 'appDeactivate')->name('service.app.deactivate');
+                Route::patch('/service/activate', 'activate')->name('service.activate');
+                Route::patch('/service/app/activate', 'appActivate')->name('service.app.activate');
+                Route::get('/service/{type}/{number_of_branches}/calculate/{subscription_id}', 'calculate')->name('service.calculate');
+                Route::get('/service/{coupon}/{type}/check/{number_of_branches?}', 'coupon')->name('service.coupon.check');
+            });
+            /* Our services page */
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
@@ -125,7 +195,7 @@ Route::group([
             Route::get('/menu/{id}/{branchId}', [RestaurantController::class, 'getCategory'])->middleware('permission:can_edit_menu')->name('restaurant.get-category');
             Route::post('/category/add/{branchId}', [RestaurantController::class, 'addCategory'])->middleware('permission:can_edit_menu')->name('restaurant.add-category');
             Route::post('/category/edit/{categoryId}/{branchId}', [RestaurantController::class, 'editCategory'])->middleware('permission:can_edit_menu')->name('restaurant.edit-category');
-            Route::name('restaurant.')->controller(AdminItemController::class)->group(function () {
+            Route::middleware('permission:can_edit_menu')->name('restaurant.')->controller(AdminItemController::class)->group(function () {
                 Route::post('/category/{id}/{branchId}/add-item', 'store')->middleware('permission:can_edit_menu')->name('add-item');
                 Route::post('/update-item/{item}', 'update')->middleware('permission:can_edit_menu')->name('update-item');
                 Route::delete('/category/{id}/delete-item', 'delete')->middleware('permission:can_edit_menu')->name('delete-item');
@@ -183,45 +253,13 @@ Route::group([
                 Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
 
 
-
-                Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
-                Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
-                Route::patch('/service/deactivate', [RestaurantController::class, 'serviceDeactivate'])->name('restaurant.service.deactivate');
-                Route::patch('/service/app/deactivate', [RestaurantController::class, 'serviceAppDeactivate'])->name('restaurant.service.app.deactivate');
-                Route::patch('/service/activate', [RestaurantController::class, 'serviceActivate'])->name('restaurant.service.activate');
-                Route::patch('/service/app/activate', [RestaurantController::class, 'serviceAppActivate'])->name('restaurant.service.app.activate');
-                Route::get('/service/{type}/{number_of_branches}/calculate/{subscription_id}', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');
-                Route::get('/service/{coupon}/{type}/check/{number_of_branches?}', [RestaurantController::class, 'serviceCoupon'])->name('restaurant.service.coupon.check');
-
-
-                Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
-                Route::post('/delivery/{module}/activate', [RestaurantController::class, 'deliveryActivate'])->name('restaurant.delivery.activate');
                 /* Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions'); */
                 Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings');
 
-
-                Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {
-                    Route::get('/customers-data', 'index')->name('list');
-                    Route::get('/customers-data/{restaurantUser}/edit', 'edit')->name('edit');
-                    Route::put('/customers-data/{restaurantUser}/edit', 'update')->name('update');
-                    Route::get('/customers-data/{restaurantUser}', 'show')->name('show');
-                    Route::put('/change-status/{restaurantUser}', 'update_status')->name('change-status');
-                });
-                Route::name('restaurant.')->controller(SettingController::class)->group(function () {
-                    Route::get('/settings', 'settings')->name('settings');
-                    Route::post('/update-settings', 'updateSettings')->name('update.settings');
-                });
-
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
-                Route::resource('coupons',CouponController::class)->withTrashed(['show','restore','edit','update']);
-                Route::delete('coupons/delete/{coupon}',[CouponController::class,'delete'])->name('coupons.delete')->withTrashed();
-                Route::post('coupons/restore/{coupon}',[CouponController::class,'restore'])->name('coupons.restore')->withTrashed();
-                Route::post('coupons/change-status/{coupon}',[CouponController::class,'changeStatus'])->name('coupons.change-status')->withTrashed();
 
-                Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
-                Route::post('/qr-create', [RestaurantController::class, 'qrCreate'])->name('restaurant.qr-create');
-                Route::get('/qr-download/{id}', [RestaurantController::class, 'downloadQrCode'])->name('restaurant.qr-download');
+
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::any('/callback', [TapController::class, 'callback'])->name('tap.callback');
@@ -259,6 +297,7 @@ Route::group([
         }
 
         Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
+        Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
         Route::get('/cart', static function () {
             $logo = RestaurantStyle::first()?->logo;
             $restaurant_name = Setting::first()->restaurant_name;

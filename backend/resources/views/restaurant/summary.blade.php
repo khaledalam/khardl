@@ -326,16 +326,26 @@
                                 <!--end::Bullet-->
                                 <!--begin::Checkbox-->
                                 <div class="form-check form-check-custom form-check-solid mx-5">
+                                    @if(Auth::user()->hasPermissionWorker('can_edit_menu'))
                                     <a href="{{ route('restaurant.view-item',['item' => $orderItem->item_id]) }}" class="symbol symbol-50px">
                                         <span class="symbol-label" style="background-image:url({{$orderItem->item?->photo}});"></span>
                                     </a>
+                                    @else
+                                    <a href="#" class="symbol symbol-50px">
+                                        <span class="symbol-label" style="background-image:url({{$orderItem->item?->photo}});"></span>
+                                    </a>
+                                    @endif
                                 </div>
                                 <!--end::Checkbox-->
                                 <!--begin::Description-->
                                 <div class="flex-grow-1">
-                                    <a href="{{ route('restaurant.view-item',['item' => $orderItem->item_id]) }}" class="text-gray-800 text-hover-primary fw-bolder fs-6">
-                                        {{ $orderItem->item?->name }}
-                                    </a>
+                                    @if(Auth::user()->hasPermissionWorker('can_edit_menu'))
+                                        <a href="{{ route('restaurant.view-item',['item' => $orderItem->item_id]) }}" class="text-gray-800 text-hover-primary fw-bolder fs-6">
+                                            {{ $orderItem->item?->name }}
+                                        </a>
+                                    @else
+                                        <span>{{ $orderItem->item?->name }}</span>
+                                    @endif
                                     <span class="text-muted fw-bold d-block">{{ $orderItem->item?->price }} {{ __('SAR') }}</span>
                                 </div>
                                 <!--end::Description-->
