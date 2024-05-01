@@ -17,14 +17,14 @@ const CustomerOrder = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [pageNumber, setpageNumber] = useState(1);
-  const [orderPerPage, setOrderPerPage] = useState(5);
+  const [orderPerPage, setOrderPerPage] = useState("");
   const [dateAdded, setDateAdded] = useState("");
   const [search, setsearch] = useState("");
   const [orderStatus, setOrderStatus] = useState("");
   const ordersList = useSelector((state) => state.customerAPI.ordersList);
   const pagelinks = useSelector((state) => state.customerAPI.pagelinks);
   const ordersMetadata = useSelector(
-    (state) => state.customerAPI.ordersMetadata,
+    (state) => state.customerAPI.ordersMetadata
   );
   const Language = useSelector((state) => state.languageMode.languageMode);
 
@@ -34,8 +34,15 @@ const CustomerOrder = () => {
 
   const fetchOrderPerpage = async () => {
     try {
+      console.log(
+        `orders?items&item&per_page=${
+          orderPerPage.value || ""
+        }&page=${pageNumber}&search=${search}&status=${orderStatus.value || ""}`
+      );
       const ordersResponse = await AxiosInstance.get(
-        `orders?items&item&per_page=${orderPerPage}&page=${pageNumber}&search=${search}&status=${orderStatus}`,
+        `orders?items&item&per_page=${
+          orderPerPage.value || ""
+        }&page=${pageNumber}&search=${search}&status=${orderStatus.value || ""}`
       );
 
       console.log("orders per page >>>", ordersResponse?.data?.data);
@@ -67,10 +74,10 @@ const CustomerOrder = () => {
   console.log("pageliks", pagelinks);
 
   return (
-    <div className="p-6">
+    <div className="m-12 mb-5">
       <div className="flex items-center gap-3">
-        <img src={orderIcon} alt="dashboard" className="" />
-        <h3 className="text-lg font-medium">{t("Orders")}</h3>
+        <img src={orderIcon} alt="orders" className="w-8" />
+        <h3 className="text-3xl font-medium">{t("Orders")}</h3>
       </div>
       <div
         className="my-5 flex flex-col md:flex-row w-full items-center gap-4"
@@ -85,8 +92,9 @@ const CustomerOrder = () => {
         <div className="w-full gap-4 flex items-center">
           <div className="w-1/2">
             <PrimaryOrderSelect
-              defaultValue={orderStatus ? orderStatus : t("Status")}
-              handleChange={(value) => setOrderStatus(value)}
+              defaultValue={t("Status")}
+              value={orderStatus.text}
+              handleChange={(item) => setOrderStatus(item)}
               options={[
                 { value: "", text: t("All") },
                 {
@@ -104,8 +112,9 @@ const CustomerOrder = () => {
           </div>
           <div className="w-1/2">
             <PrimaryOrderSelect
-              defaultValue={dateAdded ? dateAdded : t("Date Added")}
-              handleChange={(value) => setDateAdded(value)}
+              defaultValue={t("Date Added")}
+              value={dateAdded.text}
+              handleChange={(item) => setDateAdded(item)}
               options={[
                 {
                   value: "today",
@@ -128,26 +137,27 @@ const CustomerOrder = () => {
           <div className="w-[200px]">
             <PrimaryOrderSelect
               background
-              defaultValue={`${t("show")} ${orderPerPage}`}
-              handleChange={(value) => setOrderPerPage(value)}
+              defaultValue={t("show") + " 5"}
+              handleChange={(item) => setOrderPerPage(item)}
               options={[
                 {
                   value: 5,
-                  text: 5,
+                  text: t("show") + " 5",
                 },
                 {
                   value: 10,
-                  text: 10,
+                  text: t("show") + " 10",
                 },
                 {
                   value: 15,
-                  text: 15,
+                  text: t("show") + " 15",
                 },
                 {
                   value: 20,
-                  text: 20,
+                  text: t("show") + " 20",
                 },
               ]}
+              value={orderPerPage.text}
             />
           </div>
           <h3 className="">
