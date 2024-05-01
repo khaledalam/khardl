@@ -11,9 +11,14 @@ const customerAPISlice = createSlice({
     },
     ordersList: null,
     cardsList: [],
-    currentPage: 0,
-    totalCount: 30,
+    pagelinks: {
+      first: null,
+      last: null,
+      prev: null,
+      next: null,
+    },
     ordersMetadata: null,
+
     saveProfileChanges: true,
   },
   reducers: {
@@ -32,11 +37,8 @@ const customerAPISlice = createSlice({
     updateProfileSaveStatus: (state, action) => {
       state.saveProfileChanges = action.payload;
     },
-    setCurrentPage: (state, action) => {
-      state.currentPage = action.payload;
-    },
-    setTotalCount: (state, action) => {
-      state.totalCount = action.payload;
+    updatePageLinks: (state, action) => {
+      state.pagelinks = action.payload;
     },
     updateOrdersMeta: (state, action) => {
       state.ordersMetadata = action.payload;
@@ -45,8 +47,6 @@ const customerAPISlice = createSlice({
 });
 
 export const {
-  setCurrentPage,
-  setTotalCount,
   setActiveNavItem,
   updateCustomerAddress,
   updateOrderList,
