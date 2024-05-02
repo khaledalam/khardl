@@ -60,6 +60,13 @@ class SendContactUsEmailJob implements ShouldQueue
             Log::create([
                 'user_id' => Auth::id(),
                 'action' => $actions,
+                'metadata' => [
+                    'toggle_from' => 'on send  email job action',
+                    'contact_email' => $this->email,
+                    'phone_number' => $this->phone_number,
+                    'business_name' => $this->business_name,
+                    'responsible_person_name' => $this->responsible_person_name
+                ],
                 'type' => LogTypes::ContactUsForm,
             ]);
 

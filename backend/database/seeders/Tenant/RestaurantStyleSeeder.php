@@ -29,6 +29,7 @@ class RestaurantStyleSeeder extends Seeder
 
 
         RestaurantStyle::create([
+            'version' => generateToken(7),
             'id' => self::RESTAURANT_STYLE_ID,
             'logo' => $logo,
             'logo_alignment' => 'center',

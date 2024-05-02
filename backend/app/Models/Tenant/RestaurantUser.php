@@ -277,6 +277,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
 
     public function newAttempt()
     {
+        // TODO need to refactor + test it's right or not
         $attempt = DB::table('phone_verification_tokens')
             ->where([
                 ['user_id', '=', $this->id],

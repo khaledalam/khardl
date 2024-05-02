@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { HiChevronRight } from "react-icons/hi2";
 import image60 from "../../../assets/image60.png";
 import image62 from "../../../assets/image62.svg";
+import {HiChevronLeft} from "react-icons/hi";
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -47,7 +48,7 @@ const Hero = () => {
               >
                 {t("Start Now")}
                 <span className="ml-2">
-                  <HiChevronRight />
+                  {Language == 'en' ? <HiChevronRight /> : <HiChevronLeft />}
                 </span>
               </button>
             </Link>

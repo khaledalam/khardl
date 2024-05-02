@@ -85,7 +85,7 @@ Route::get('/send-notification', [PushNotificationController::class, 'sendPushNo
 
 
 Route::group([
-    'middleware' => ['tenant', 'web'],
+    'middleware' => ['tenant', 'web','trans_api'],
 ], static function () {
 
     Route::get('/impersonate/{token}', static function ($token) {
@@ -343,6 +343,9 @@ Route::group([
 
             Route::get('/user', [CustomerOrderController::class, 'user'])->name('customer.user');
             Route::post('/user', [CustomerOrderController::class, 'updateUser'])->name('customer.save.user');
+            // Update user in customer app
+            Route::post('/customer/update', [CustomerOrderController::class, 'updateCustomerApp']);
+            Route::post('/customer/verify/phone', [CustomerOrderController::class, 'VerifyCustomerPhone']);
 
 
             Route::middleware('verifiedPhone')->group(function () {

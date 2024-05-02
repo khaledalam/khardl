@@ -130,7 +130,7 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
 
           {isLoggedIn && (
             <div
-              onClick={() => navigate("profile-summary")}
+              onClick={() => navigate("/profile-summary")}
               className="w-56 h-8 hover:cursor-pointer px-[10px] items-center bg-white hover:bg-orange-100 bg-opacity-30 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100 text-gray-900 text-xs font-light flex justify-between"
             >
               <div className="">{t("Customer Dashboard")}</div>

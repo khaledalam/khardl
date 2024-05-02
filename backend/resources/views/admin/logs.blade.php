@@ -120,7 +120,7 @@
                                                         @endif
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="modal-body">
+                                                    <div class="modal-body height-auto">
                                                         <p>
                                                             {!! $log->action !!}
                                                         </p>
@@ -149,7 +149,15 @@
                                                         </p>
                                                         @endif
                                                         @else
-                                                        {{ implode(',',(array)$log->metadata)}}
+                                                            <ul style="direction: @if(app()->getLocale() === 'ar') rtl @else ltr @endif">
+                                                            @foreach((array)$log->metadata as $key => $item)
+                                                                    @if(app()->getLocale() === 'ar')
+                                                                        <li>{{$item}} :<b>{{ucfirst(str_replace('_', ' ', $key))}}</b></li>
+                                                                    @else
+                                                                        <li><b>{{ucfirst(str_replace('_', ' ', $key))}}</b>: {{$item}}</li>
+                                                                    @endif
+                                                            @endforeach
+                                                            </ul>
                                                         @endif
                                                     </div>
                                                 </div>

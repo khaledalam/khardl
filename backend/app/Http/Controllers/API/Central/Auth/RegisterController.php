@@ -274,7 +274,7 @@ class RegisterController extends BaseController
 
         // If we've reached here, the verification code is incorrect
         // Note: You may want to track the number of incorrect attempts and handle them accordingly.
-        return $this->sendError('Fail', 'The verification code is incorrect.');
+        return $this->sendError('Fail', __('The verification code is incorrect.'));
     }
 
 }

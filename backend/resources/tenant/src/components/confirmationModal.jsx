@@ -19,15 +19,21 @@ const ConfirmationModal = ({ isOpen, message, onClose, onConfirm }) => {
           />
           <span className="p-2 text-[20px]">{message}</span>
         </p>
-        <div className="text-end">
+        <div className="text-end flex gap-3 justify-end">
           {onConfirm && (
-            <button className="btn mr-2 bg-[#b8cb0aa4]" onClick={onConfirm}>
+            <button
+              className="w-32 cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border  leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 transition-all shadow-md"
+              onClick={onConfirm}
+            >
               {t("Confirm")}
             </button>
           )}
           {onClose && (
-            <button className="btn mr-2 bg-[var(--customer)]" onClick={onClose}>
-              {onConfirm ? t("Cancel") : t("ok")}
+            <button
+              className="w-32 cursor-pointer text-white bg-gray-900 rounded-lg px-4 py-2.5 border  leading-[18px] hover:bg-white hover:border-gray-900 hover:text-gray-900 transition-all shadow-md"
+              onClick={onClose}
+            >
+              {onConfirm ? t("Cancel") : t("Ok")}
             </button>
           )}
         </div>

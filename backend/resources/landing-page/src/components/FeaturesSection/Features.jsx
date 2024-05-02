@@ -7,14 +7,17 @@ import KhardlDelivery from "../../assets/image9.svg";
 import ElectronicPayments from "../../assets/image11.svg";
 import WebsiteAndApplication from "../../assets/image7.svg";
 import Card from "./Card";
-import { HiChevronRight } from "react-icons/hi";
+import {HiChevronLeft, HiChevronRight} from "react-icons/hi";
 import Group9 from "../../assets/Group9.png";
 import Group7 from "../../assets/Group7.png";
 import Line1 from "../../assets/Line1.png";
 import { Link } from "react-router-dom";
+import {useSelector} from "react-redux";
 
 function FeaturesSection() {
   const { t } = useTranslation();
+  const Language = useSelector((state) => state.languageMode.languageMode);
+
   const Features = [
     {
       image: WebsiteAndApplication,
@@ -114,7 +117,7 @@ function FeaturesSection() {
             >
               {t("From Here")}
               <span className="ml-2">
-                <HiChevronRight />
+                 {Language == 'en' ? <HiChevronRight /> : <HiChevronLeft />}
               </span>
             </Link>
           </div>

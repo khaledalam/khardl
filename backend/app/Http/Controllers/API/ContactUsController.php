@@ -34,6 +34,13 @@ class ContactUsController extends BaseController
         Log::create([
             'user_id' => Auth::id(),
             'action' => $actions,
+            'metadata' => [
+                'toggle_from' => 'on click form request',
+                'contact_email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'business_name' => $request->business_name,
+                'responsible_person_name' => $request->responsible_person_name
+            ],
             'type' => LogTypes::ContactUsForm,
         ]);
 

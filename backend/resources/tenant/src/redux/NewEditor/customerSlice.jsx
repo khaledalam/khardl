@@ -9,8 +9,9 @@ const customerAPISlice = createSlice({
       lng: 49.98436,
       addressValue: "",
     },
-    ordersList: null,
+    ordersList: [],
     cardsList: [],
+    addressesList: [],
     pagelinks: {
       first: null,
       last: null,
@@ -34,6 +35,9 @@ const customerAPISlice = createSlice({
     updateCardsList: (state, action) => {
       state.cardsList = action.payload;
     },
+    updateAddressesList: (state, action) => {
+      state.addressesList = action.payload;
+    },
     updateProfileSaveStatus: (state, action) => {
       state.saveProfileChanges = action.payload;
     },
@@ -54,5 +58,6 @@ export const {
   updateProfileSaveStatus,
   updatePageLinks,
   updateOrdersMeta,
+  updateAddressesList,
 } = customerAPISlice.actions;
 export default customerAPISlice.reducer;
