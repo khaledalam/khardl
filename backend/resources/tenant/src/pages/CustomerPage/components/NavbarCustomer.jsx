@@ -17,7 +17,10 @@ const NavbarCustomer = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
+  const restuarantEditorStyle = useSelector(
+    (state) => state.restuarantEditorStyle
+  );
+  const { logo, logo_border_radius } = restuarantEditorStyle;
   const { t } = useTranslation();
   // const [cartItemsCount, setCartItemsCount] = useState(0);
   // const cartItems = useSelector((state) => state.cart.items);
@@ -57,15 +60,15 @@ const NavbarCustomer = ({
         className="text-neutral-400 cursor-pointer hidden md:block"
         onClick={() => setShowMenu(!showMenu)}
       />
-      <div
+      <img
         onClick={() => navigate("/")}
-        className="w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center cursor-pointer"
         style={{
-          borderColor: restaurantStyle?.categoryDetail_cart_color,
+          borderRadius: logo_border_radius + "px",
         }}
-      >
-        <img src={homeIcon} alt="home" />
-      </div>
+        className="w-[50px] h-[50px] bg-neutral-200 relative flex items-center justify-center cursor-pointer"
+        src={logo || homeIcon}
+        alt="home"
+      />
     </div>
   );
 };

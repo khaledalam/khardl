@@ -25,7 +25,7 @@ const CustomerOrderDetail = ({ orderId }) => {
       : null;
 
   return (
-    <div className="m-12 mb-5">
+    <div className="m-4 mt-8 md:m-12 mb-5">
       <div
         onClick={() => navigate(-1)}
         className="flex items-center gap-2 mb-5 cursor-pointer"

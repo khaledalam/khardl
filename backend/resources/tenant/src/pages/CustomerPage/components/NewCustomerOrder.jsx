@@ -50,7 +50,7 @@ const CustomerOrder = () => {
   }, [pageNumber, search, orderStatus]);
 
   return (
-    <div className="m-12 mb-5">
+    <div className="m-4 mt-8 md:m-12 mb-5">
       <div className="flex flex-wrap flex-row justify-between mb-5 gap-4">
         <div className="flex items-center gap-3">
           <img src={orderIcon} alt="orders" className="w-8" />
@@ -63,8 +63,8 @@ const CustomerOrder = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <div className="w-full gap-4 flex items-center">
-            <div className="w-1/2">
+          <div className="w-full gap-4 flex items-center flex-wrap md:flex-nowrap">
+            <div className="w-full md:w-1/2">
               <PrimaryOrderSelect
                 defaultValue={t("Status")}
                 value={orderStatus.text}
@@ -84,7 +84,7 @@ const CustomerOrder = () => {
                 ]}
               />
             </div>
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <PrimaryOrderSelect
                 defaultValue={t("Date Added")}
                 value={dateAdded.text}
@@ -105,7 +105,7 @@ const CustomerOrder = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4 mb-5 mx-3 min-h-96">
+      <div className="flex flex-wrap gap-4 mb-5 mx-0 sm:mx-3 min-h-96">
         {ordersList?.map((order, index) => (
           <OrderItem
             key={index}

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 
 import Header from "./Header";
-import Logo from "./Logo";
+// import Logo from "./Logo";
 import Banner from "./Banner";
 import Category from "./Category";
 import SocialMedia from "./SocialMedia";
@@ -60,7 +60,7 @@ const FullPage = ({ categories }) => {
         className="w-full h-full p-4 flex flex-col gap-[16px] relative mx-auto max-w-[1200px]"
       >
         <Header restaurantStyle={restaurantStyle} categories={categories} />
-        <Logo restaurantStyle={restaurantStyle} />
+        {/* <Logo restaurantStyle={restaurantStyle} /> */}
         <Banner restaurantStyle={restaurantStyle} />
         <Category restaurantStyle={restaurantStyle} categories={categories} />
         <SocialMedia restaurantStyle={restaurantStyle} />
@@ -101,9 +101,9 @@ const FullPage = ({ categories }) => {
             open={isModelOpen}
             onClose={() => setIsModelOpen(false)}
             className={`fixed ${
-              currentLanguage == "en" ? "left-[16px]" : "right-[16px]"
-            } top-[88px] md:top-[104px] ${
-              currentLanguage == "en" ? "md:left-[80px]" : "md:right-[80px]"
+              currentLanguage == "en" ? "left-auto" : "right-auto"
+            } top-auto md:top-auto ${
+              currentLanguage == "en" ? "md:left-auto" : "md:right-auto"
             }`}
           >
             <NewSideBar

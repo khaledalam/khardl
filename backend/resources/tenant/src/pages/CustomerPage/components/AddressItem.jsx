@@ -34,10 +34,16 @@ const AddressItem = ({ address, setViewOnMap, onEdit, onDelete }) => {
             className="w-[30px] h-[30px] rounded-[32px] gap-2.5 flex p-[6px] border border-gray-400 cursor-pointer hover:bg-gray-200"
             onClick={() => setSettingModalVisible(true)}
           />
+          {settingModalVisible && (
+            <div
+              className="w-screen h-screen fixed z-10 bg-opacity-0 top-0 left-0"
+              onClick={() => setSettingModalVisible(false)}
+            ></div>
+          )}
           <div
             className={`${
               settingModalVisible ? "visible" : "hidden"
-            } rounded-md border border-gray-900 flex flex-col absolute transition gap-2 bg-white shadow-md right-0`}
+            } z-11 rounded-md border border-gray-900 flex flex-col absolute transition gap-2 bg-white shadow-md right-0`}
           >
             <div
               className="cursor-pointer hover:bg-neutral-900 hover:text-white p-2"
