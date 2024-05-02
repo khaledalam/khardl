@@ -151,9 +151,9 @@ const Login = ({ closingFunc }) => {
     startTimer();
   };
 
-  if (!user_phone) {
-    window.location.href = "/logout";
-  }
+  // if (!user_phone) {
+  //   window.location.href = "/logout";
+  // }
 
   // API POST REQUEST
   const ResendCode = async (data) => {

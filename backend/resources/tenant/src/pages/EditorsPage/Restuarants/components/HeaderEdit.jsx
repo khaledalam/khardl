@@ -50,7 +50,7 @@ const HeaderEdit = ({
         borderRadius: `${restaurantStyle?.header_radius}px`,
       }}
       className={`w-full h-[56px] z-10 grid grid-cols-3 px-[16px] md:mt-[8px] ${
-        isHighlighted && "shadow-inner border-[#C0D123] border-[2px]"
+        isHighlighted ? "shadow-inner border-[#C0D123] border-[2px]" : ""
       }`}
     >
       <div
@@ -141,7 +141,7 @@ const HeaderEdit = ({
             type="file"
             name="logo"
             id="logo"
-            className="opacity-0 absolute top-0 object-cover"
+            className="opacity-0 absolute top-0 object-cover cursor-pointer"
             ref={fileInputRef}
             accept="image/*"
             onChange={(event) => handleLogoUpload(event, fileInputRef)}
