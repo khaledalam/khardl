@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer/Footer";
 import { Helmet } from "react-helmet";
-import { toast } from "react-toastify";
 import RestaurantNotLive from "./components/RestaurantNotLive";
 import RestaurantNotSubscribed from "./components/RestaurantNotSubscribed";
 import "aos/dist/aos.css";
@@ -37,7 +36,7 @@ import SuccessPayment from "./pages/SuccessPayment";
 import FailedPayment from "./pages/FailedPayment";
 import * as Sentry from "@sentry/react";
 import { t } from "i18next";
-import { useSearchParams } from "react-router-dom";
+
 // import { initializeApp } from "firebase/app";
 // const firebaseConfig = {
 //     apiKey: "AIzaSyD7xao9Wm2JTWWJwS5IvgNYWJWiSh48mwM",
@@ -72,20 +71,6 @@ const App = () => {
   const isMobile = window.innerWidth < 600;
   const isTablet = window.innerWidth > 601 && window.innerWidth < 1024;
   const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
-  let [searchParams, setSearchParams] = useSearchParams();
-  const logSearchParams = () => {
-    if (searchParams.has("message")) {
-      if (searchParams.get("status") == 1) {
-        toast.success(searchParams.get("message"));
-      } else {
-        toast.error(searchParams.get("message"));
-      }
-      searchParams.delete("message");
-      searchParams.delete("status");
-      setSearchParams(searchParams);
-    }
-  };
-  logSearchParams();
   useEffect(() => {
     // const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     // setIsMobile(isMobile);
