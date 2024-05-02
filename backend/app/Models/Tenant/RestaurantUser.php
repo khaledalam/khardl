@@ -105,6 +105,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasRole("Driver");
     }
+    public function isCustomer()
+    {
+        return $this->roles->Empty();
+    }
     public function isWorker()
     {
         return $this->hasRole("Worker");

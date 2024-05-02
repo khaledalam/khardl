@@ -305,7 +305,6 @@ Route::group([
         }
 
         Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
-        Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
         Route::get('/cart', static function () {
             $logo = RestaurantStyle::first()?->logo;
             $restaurant_name = Setting::first()->restaurant_name;
@@ -342,10 +341,7 @@ Route::group([
 
             Route::get('/user', [CustomerOrderController::class, 'user'])->name('customer.user');
             Route::post('/user', [CustomerOrderController::class, 'updateUser'])->name('customer.save.user');
-            // Update user in customer app
-            Route::post('/customer/update', [CustomerOrderController::class, 'updateCustomerApp']);
-            Route::post('/customer/verify/phone', [CustomerOrderController::class, 'VerifyCustomerPhone']);
-
+           
 
             Route::middleware('verifiedPhone')->group(function () {
                 Route::delete("carts/trash", [CartController::class, 'trash'])->name('carts.trash');
@@ -462,6 +458,20 @@ Route::middleware([
                 });
             });
         });
+        // Update user in customer app
+        Route::prefix('customer')->group(function () {
+            Route::post('/login', [LoginCustomerController::class, 'loginCustomerOnly']);
+            Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
+            Route::middleware(['auth:sanctum','customer'])->group(function () {
+                Route::get('/', [CustomerOrderController::class, 'user']);
+                Route::post('/update', [CustomerOrderController::class, 'updateCustomerApp']);
+                Route::post('/verify/phone', [CustomerOrderController::class, 'VerifyCustomerPhone']);
+            });        
+            
+        });
+       
+
+
         Route::prefix('tap')->group(function () {
             Route::apiResource('businesses', BusinessController::class)->only([
                 'store',

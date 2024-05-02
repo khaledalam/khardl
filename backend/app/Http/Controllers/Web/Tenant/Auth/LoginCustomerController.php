@@ -73,15 +73,34 @@ class LoginCustomerController extends BaseController
 
         return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
     }
+    public function loginCustomerOnly(CustomerLoginRequest $request){
+        $user = RestaurantUser::where("phone",$request->phone)->first();
+        if(!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE){
+            return $this->sendError(__("Website doesn't have active subscription, Only restaurant owner can login"), []);
+        }
+        
+        if(!$user->isCustomer()){
+            return $this->sendError(__("Unauthorized"), []);
+        }
+        $user->status = RestaurantUser::INACTIVE;
+        $user->phone_verified_at = null;
+        $user->force_logout = 0;
+        $user->save();
+        Auth::loginUsingId($user->id);
+        if($this->sendVerificationSMSCode($request)){
+            return $this->sendResponse(null,  __('Verification code sent to phone.'));
+        }
 
+        return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
+    }
     public function sendVerificationSMSCode(Request $request)
     {
         $user = Auth::user();
-        if(!$this->checkAttempt($user)){
-            Auth::logout();
-            return false;
-        }
-        if(!$id= $user->generateVerificationSMSCode()) return $this->sendError('Fail', 'Request failed .');
+        // if(!$this->checkAttempt($user)){
+        //     Auth::logout();
+        //     return false;
+        // }
+        if(!$id= $user->generateVerificationSMSCode()) return $this->sendError('Fail', __('Request failed .'));
         $user->msegat_id_verification = $id;
         $user->save();
         return true;
