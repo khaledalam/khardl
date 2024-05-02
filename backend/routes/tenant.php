@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Http\Controllers\API\Tenant\Customer\Address\CustomerAddressController;
 use App\Http\Controllers\API\Tenant\LocationController;
 use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 
@@ -458,6 +459,8 @@ Route::middleware([
                     });
                 });
             });
+            /* Customer address */
+            Route::post('add-address',[CustomerAddressController::class,'create']);
         });
         Route::prefix('tap')->group(function () {
             Route::apiResource('businesses', BusinessController::class)->only([
