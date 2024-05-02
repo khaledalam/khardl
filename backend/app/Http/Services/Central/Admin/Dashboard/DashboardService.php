@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\Setting;
+use Illuminate\Support\Facades\Cache;
+use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class DashboardService
 {
@@ -67,7 +69,8 @@ class DashboardService
         $restaurantsAll = count($restaurantsAll);
 
 
-
+        $dailyVisitors = $this->dailyVisitors();
+        $monthVisitors = $this->monthlyVisitors();
         return view(
             'admin.dashboard',
             compact(
@@ -82,12 +85,58 @@ class DashboardService
                 'cancelledOrders',
                 'readyOrders',
                 'receivedByResOrders',
-                'rejectedOrders'
+                'rejectedOrders',
+                'monthVisitors',
+                'dailyVisitors'
             )
         );
     }
     private function getOrderStatusCount($orders, $scope)
     {
         return $orders->$scope()->count();
+    }
+    public function dailyVisitors()
+    {
+        $cacheKey = 'daily_visitors';
+        return Cache::remember($cacheKey, config('application.cache_daily_visitors', 4 * 60 * 60), function () {
+            return $this->getDaily();
+        });
+    }
+    public function getDaily()
+    {
+        $chart_options = [
+            'chart_title' => __('Daily visitors'),
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Visitor',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'day',
+            'chart_type' => 'line',
+            'filter_field' => 'created_at',
+            'filter_days' => 15,
+            'chart_color' => '194, 218, 8',
+        ];
+        return new LaravelChart($chart_options);
+    }
+    public function monthlyVisitors()
+    {
+        $cacheKey = 'monthly_visitors';
+        return Cache::remember($cacheKey, config('application.cache_monthly_visitors', 24 * 60 * 60), function () {
+            return $this->getMonthly();
+        });
+    }
+    public function getMonthly()
+    {
+        $chart_options = [
+            'chart_title' => __('Monthly visitors'),
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Visitor',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'filter_field' => 'created_at',
+            'filter_days' => 6 * 30,
+            'chart_color' => '0, 158, 247',
+        ];
+        return new LaravelChart($chart_options);
     }
 }
