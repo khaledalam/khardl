@@ -129,6 +129,7 @@ const Login = ({ closingFunc }) => {
         `${
           error?.response?.data?.data ||
           error?.response?.data?.message ||
+          error?.response?.data?.error ||
           t("Login failed")
         }`,
       );
