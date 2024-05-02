@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import HeaderSidebar from "../../../assets/headerSidebar.svg";
 import HeaderHomeIcon from "../../../assets/headerHomeIcon.svg";
 import HedaerIconCart from "../../../assets/headerIconCart.svg";
-
+import EmptyBackground60 from "../../../assets/emptyBackground60.png";
+import UploadIcon from "../../../assets/uploadIcon.png";
+import { useTranslation } from "react-i18next";
 import { SetSideBar } from "../../../redux/NewEditor/restuarantEditorSlice";
 
 const Header = ({ restaurantStyle, categories }) => {
@@ -12,8 +14,9 @@ const Header = ({ restaurantStyle, categories }) => {
   const dispatch = useDispatch();
 
   const cartItemsCount = useSelector(
-    (state) => state.categoryAPI.cartItemsCount,
+    (state) => state.categoryAPI.cartItemsCount
   );
+  const { t } = useTranslation();
 
   const handleGotoCart = () => {
     navigate("/cart");
@@ -24,10 +27,13 @@ const Header = ({ restaurantStyle, categories }) => {
     order_cart_position,
     order_cart_color,
     order_cart_radius,
-    home_position,
-    home_color,
-    home_radius,
     isSideBarOpen,
+    logo_alignment,
+    logo_border_radius,
+    logo_border_color,
+    logo,
+    logo_url,
+    logo_shape,
   } = restaurantStyle;
 
   return (
@@ -43,8 +49,8 @@ const Header = ({ restaurantStyle, categories }) => {
           side_menu_position == "left"
             ? "justify-self-start"
             : side_menu_position == "right"
-              ? "justify-self-end"
-              : "justify-self-center"
+            ? "justify-self-end"
+            : "justify-self-center"
         }`}
         onClick={() => dispatch(SetSideBar(!isSideBarOpen))}
       >
@@ -68,8 +74,8 @@ const Header = ({ restaurantStyle, categories }) => {
           order_cart_position == "left"
             ? "justify-self-start"
             : order_cart_position == "right"
-              ? "justify-self-end"
-              : "justify-self-center"
+            ? "justify-self-end"
+            : "justify-self-center"
         }`}
       >
         <img src={HedaerIconCart} alt={"cart"} className="" />
@@ -81,22 +87,26 @@ const Header = ({ restaurantStyle, categories }) => {
       </div>
 
       <div
-        style={{
-          backgroundColor: home_color ? home_color : "#F3F3F3",
-          borderRadius: home_radius ? `${home_radius}px` : "50px",
-        }}
-        onClick={() => {
-          navigate("/");
-        }}
-        className={`pt-[6px] pb-[9px] pr-[7px] pl-[8px] bg-[#F3F3F3] rounded-full relative self-center shadow-md ${
-          home_position == "left"
+        className={`w-[30px] h-[30px]relative rounded-full flex items-center justify-center cursor-pointer self-center shadow-md ${
+          logo_alignment == "left"
             ? "justify-self-start"
-            : home_position == "right"
-              ? "justify-self-end"
-              : "justify-self-center"
+            : logo_alignment == "right"
+            ? "justify-self-end"
+            : "justify-self-center"
         }`}
+        style={{
+          borderRadius: logo_border_radius ? `${logo_border_radius}px` : "50px",
+        }}
       >
-        <img src={HeaderHomeIcon} alt={"home icon"} className="" />
+        <img
+          src={logo}
+          className={`w-[30px] h-[30px] rounded-full shadow-md `}
+          style={{
+            borderRadius: logo_border_radius
+              ? `${logo_border_radius}px`
+              : "50px",
+          }}
+        />
       </div>
     </div>
   );

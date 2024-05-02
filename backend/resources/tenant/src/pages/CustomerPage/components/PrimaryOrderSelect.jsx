@@ -31,7 +31,7 @@ const PrimaryOrderSelect = ({
           tabIndex={0}
           role="button"
           onClick={() => handleDropdown()}
-          className={`btn min-h-[40px] w-full min-w-full flex items-center hover:border-neutral-700 h-10 rounded-2xl outline-none hover:outline-none focus:outline-none focus-within:outline-none justify-between px-2 border-neutral-700 ${
+          className={`min-w-max btn min-h-[40px] w-full flex items-center hover:border-neutral-700 h-10 rounded-2xl outline-none hover:outline-none focus:outline-none focus-within:outline-none justify-between px-2 border-neutral-700 ${
             background
               ? "bg-neutral-700 active:bg--neutral-700 hover:bg-neutral-700"
               : "bg-transparent active:bg-transparent hover:bg-transparent"

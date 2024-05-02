@@ -19,7 +19,7 @@ const restuarantEditorSlice = createSlice({
     bannerUpload: null,
     bannersUpload: [],
     headerPosition: "relative",
-    logo_alignment: "center",
+    logo_alignment: "right",
     logo_shape: "rounded",
     banner_type: "one-photo",
     banner_shape: "rounded",

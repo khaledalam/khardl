@@ -698,7 +698,7 @@ const ProductItem = ({
                           {t("SAR")}
                         </span>{" "}
                         <span className="text-base font-medium">
-                          {totalPrice && finalPrice.toFixed(3)}
+                          {totalPrice && finalPrice.toFixed(2)}
                         </span>
                       </div>
                       <div className="flex items-center justify-between cursor-pointer w-[120px] h-8 bg-orange-100 bg-opacity-20 rounded-lg px-[7.89px]">

@@ -6,7 +6,7 @@ import imgMasterCard from "../../../assets/mastercard.svg";
 import imgVisa from "../../../assets/visa.svg";
 
 export const CardTypeIcons = { VISA: imgVisa, MASTERCARD: imgMasterCard };
-   
+
 const AddCard = ({ onAdd, onCancel }) => {
   const { t } = useTranslation();
   const [card, setCard] = useState({
@@ -18,45 +18,46 @@ const AddCard = ({ onAdd, onCancel }) => {
     funding: "CREDIT",
   });
 
-
   return (
-    <div className="m-12 mb-5">
+    <div className="m-4 mt-8 md:m-12 mb-5">
       <div className="flex items-center gap-3">
         <img src={imgPayment} alt="cards" className="w-8" />
         <h3 className="text-3xl font-medium">{t("Add new card")}</h3>
       </div>
-      <div className="flex flex-wrap flex-row gap-4 mb-5 mx-3 min-h-96 font-['Plus Jakarta Sans'] items-center w-full h-full justify-center mt-8">
-        <div className="flex-col justify-start items-start gap-4 inline-flex h-full w-[450px]">
+      <div className="flex flex-wrap flex-row gap-4 mb-5 mx-3 min-h-96 font-['Plus Jakarta Sans'] items-center h-full justify-center mt-8">
+        <div className="flex-col justify-center items-start gap-4 inline-flex h-full w-[450px]">
           <div className="self-stretch justify-between items-center inline-flex">
-            <div className="text-black text-opacity-75 font-medium ">
+            <div className="text-black text-opacity-75 font-medium text-sm ">
               {t("Select card type")}
             </div>
             <div className="justify-center items-start gap-2 flex">
-              {Object.getOwnPropertyNames(CardTypeIcons).map((cardType, index) => (
-                <div
-                  className={`transition-all px-[9px] py-2 rounded-sm border justify-start items-center gap-2 flex font-light cursor-pointer text-xs bg-white ${
-                    cardType === card.cardType
-                      ? "border-neutral-900 text-black"
-                      : "border-gray-200 text-zinc-600"
-                  }`}
-                  key={index}
-                  onClick={() =>
-                    setCard((prevCard) => ({
-                      ...prevCard,
-                      cardType,
-                    }))
-                  }
-                >
-                  <img
-                    className="w-[46px] h-8 rounded-md border border-gray-100 bg-gray-400"
-                    src={CardTypeIcons[cardType]}
-                    alt={cardType}
-                  />
-                </div>
-              ))}
+              {Object.getOwnPropertyNames(CardTypeIcons).map(
+                (cardType, index) => (
+                  <div
+                    className={`transition-all px-[9px] py-2 rounded-sm border justify-start items-center gap-2 flex font-light cursor-pointer text-xs bg-white ${
+                      cardType === card.cardType
+                        ? "border-neutral-900 text-black"
+                        : "border-gray-200 text-zinc-600"
+                    }`}
+                    key={index}
+                    onClick={() =>
+                      setCard((prevCard) => ({
+                        ...prevCard,
+                        cardType,
+                      }))
+                    }
+                  >
+                    <img
+                      className="w-[46px] h-8 rounded-md border border-gray-100 bg-gray-400"
+                      src={CardTypeIcons[cardType]}
+                      alt={cardType}
+                    />
+                  </div>
+                )
+              )}
             </div>
           </div>
-          <div className="self-stretch h-fit flex-col justify-start items-center gap-4 flex">
+          <div className="self-stretch h-fit flex-col justify-start items-center gap-4 flex flex-wrap">
             <PrimaryTextInput
               placeholder={t("Write the name shown on the card...")}
               value={card.name}
@@ -81,31 +82,35 @@ const AddCard = ({ onAdd, onCancel }) => {
               id="cardNumber"
               label={t("Card number")}
             />
-            <div className="flex flex-row gap-4">
-              <PrimaryTextInput
-                placeholder={t("mm / yy")}
-                value={card.card}
-                onChange={(value) =>
-                  setCard((prevCard) => ({
-                    ...prevCard,
-                    expiry: value,
-                  }))
-                }
-                id="expiryDate"
-                label={t("Expiry date")}
-              />
-              <PrimaryTextInput
-                placeholder={t("Write your CVC code here...")}
-                value={card.card}
-                onChange={(value) =>
-                  setCard((prevCard) => ({
-                    ...prevCard,
-                    CVC: value,
-                  }))
-                }
-                id="CVC"
-                label={t("CVC")}
-              />
+            <div className="flex flex-row gap-4 flex-wrap md:flex-nowrap">
+              <div className="w-full md:w-1/2">
+                <PrimaryTextInput
+                  placeholder={t("mm / yy")}
+                  value={card.card}
+                  onChange={(value) =>
+                    setCard((prevCard) => ({
+                      ...prevCard,
+                      expiry: value,
+                    }))
+                  }
+                  id="expiryDate"
+                  label={t("Expiry date")}
+                />
+              </div>
+              <div className="w-full md:w-1/2">
+                <PrimaryTextInput
+                  placeholder={t("Write your CVC code here...")}
+                  value={card.card}
+                  onChange={(value) =>
+                    setCard((prevCard) => ({
+                      ...prevCard,
+                      CVC: value,
+                    }))
+                  }
+                  id="CVC"
+                  label={t("CVC")}
+                />
+              </div>
             </div>
           </div>
           <div className="self-stretch h-fit flex-col justify-start items-center gap-4 flex text-center">

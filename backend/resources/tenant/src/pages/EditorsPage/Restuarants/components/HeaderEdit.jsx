@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import cartHeaderImg from "../../../../assets/cartBoldIcon.svg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,85 +25,23 @@ const HeaderEdit = ({
   toggleSidebarCollapse,
   isHighlighted,
   currentSubItem,
+  handleLogoUpload,
 }) => {
-  const [isCropModalOpened, setIsCropModalOpened] = useState(false);
-  const [uncroppedImage, setUncroppedImage] = useState(null);
-  const [imgType, setImgType] = useState("");
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const cartItemsCount = useSelector(
-    (state) => state.categoryAPI.cartItemsCount,
+    (state) => state.categoryAPI.cartItemsCount
   );
-  const categories = useSelector((state) => state.categoryAPI.categories);
-  const restuarantEditorStyle = useSelector(
-    (state) => state.restuarantEditorStyle,
-  );
-  const handleGotoCart = () => {
-    navigate("/cart");
-  };
 
-  const uploadLogo = useSelector(
-    (state) => state.restuarantEditorStyle.logoUpload,
-  );
-  const clearLogo = () => {
-    dispatch(logoUpload(null));
-  };
+  const fileInputRef = useRef();
   const {
-    page_color,
-    page_category_color,
-    product_background_color,
-    category_hover_color,
-    category_alignment,
-    category_shape,
-
-    categoryDetail_cart_color,
-    categoryDetail_type,
-    categoryDetail_alignment,
-    categoryDetail_shape,
-
-    price_color,
     logo,
-    banner_image,
-    banner_images,
-    header_color,
-    banner_background_color,
-    footer_color,
-    headerPosition,
     logo_alignment,
-    logo_shape,
-    banner_type,
-    banner_shape,
-    text_fontFamily,
-    text_fontWeight,
-    text_fontSize,
-    text_alignment,
-    phoneNumber,
-    phoneNumber_alignment,
-    socialMediaIcons_alignment,
-    selectedSocialIcons,
-    text_color,
     side_menu_position,
     order_cart_position,
     order_cart_color,
     order_cart_radius,
-    home_position,
-    home_color,
-    home_radius,
-    isSideBarOpen,
-  } = restuarantEditorStyle;
-  const handleLogoUpload = (event) => {
-    event.preventDefault();
-
-    const selectedLogo = event.target.files[0];
-    if (selectedLogo) {
-      setUncroppedImage(URL.createObjectURL(selectedLogo));
-      setIsCropModalOpened(true);
-      setImgType("logoUpload");
-      dispatch(logoUpload(URL.createObjectURL(selectedLogo)));
-    }
-  };
+    logo_border_radius,
+    logoUpload,
+  } = restaurantStyle;
 
   return (
     <div
@@ -114,8 +58,8 @@ const HeaderEdit = ({
           side_menu_position == "left"
             ? "justify-self-start"
             : side_menu_position == "right"
-              ? "justify-self-end"
-              : "justify-self-center"
+            ? "justify-self-end"
+            : "justify-self-center"
         }`}
       >
         <div
@@ -150,8 +94,8 @@ const HeaderEdit = ({
           order_cart_position == "left"
             ? "justify-self-start"
             : order_cart_position == "right"
-              ? "justify-self-end"
-              : "justify-self-center"
+            ? "justify-self-end"
+            : "justify-self-center"
         }`}
       >
         <img src={HedaerIconCart} alt={"cart"} className="" />
@@ -170,27 +114,44 @@ const HeaderEdit = ({
           }`}
         />
       </div>
-
       <div
         style={{
-          backgroundColor: home_color ? home_color : "#F3F3F3",
-          borderRadius: home_radius ? `${home_radius}px` : "50px",
+          borderRadius: logo_border_radius ? `${logo_border_radius}px` : "50px",
         }}
-        // onClick={() => navigate("/")}
-        className={`pt-[6px] pb-[9px] pr-[7px] pl-[8px] rounded-full relative self-center hover:cursor-pointer shadow-md ${
-          home_position == "left"
+        className={`w-[30px] h-[30px] rounded-full relative self-center cursor-pointer shadow-md ${
+          logo_alignment == "left"
             ? "justify-self-start"
-            : home_position == "right"
-              ? "justify-self-end"
-              : "justify-self-center"
+            : logo_alignment == "right"
+            ? "justify-self-end"
+            : "justify-self-center"
         }`}
       >
-        <img src={HeaderHomeIcon} alt={"home icon"} className="" />
+        <div className="overflow-hidden relative">
+          <img
+            src={logoUpload || logo}
+            alt={"logo icon"}
+            className="w-[30px] h-[30px] shadow-md"
+            style={{
+              borderRadius: logo_border_radius
+                ? `${logo_border_radius}px`
+                : "50px",
+            }}
+          />
+          <input
+            type="file"
+            name="logo"
+            id="logo"
+            className="opacity-0 absolute top-0 object-cover"
+            ref={fileInputRef}
+            accept="image/*"
+            onChange={(event) => handleLogoUpload(event, fileInputRef)}
+          />
+        </div>
         <img
           src={GreenDot}
           alt="green dot"
           className={`${
-            currentSubItem == "Home"
+            currentSubItem == "Logo"
               ? "absolute w-[5px] h-[5px] right-[-1px] top-[-3px]"
               : "hidden"
           }`}
