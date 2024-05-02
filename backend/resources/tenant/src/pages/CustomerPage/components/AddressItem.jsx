@@ -9,23 +9,27 @@ import {
 } from "react-icons/md";
 
 export const AddressTypeIcons = {
-  Home: <MdOutlineHome />,
-  Office: <MdOutlineWorkOutline />,
-  "Other Address": <MdOutlineMyLocation />,
+  home: <MdOutlineHome />,
+  office: <MdOutlineWorkOutline />,
+  other: <MdOutlineMyLocation />,
 };
 
-const AddressItem = ({ address, setViewOnMap, onEdit, onDelete }) => {
+const AddressItem = ({ address, onEdit, onDelete, onSetAsDefault }) => {
   const { t } = useTranslation();
   const [settingModalVisible, setSettingModalVisible] = useState(false);
 
   return (
-    <div className="flex-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 h-fit p-4 bg-white rounded-[15px] border border-gray-200 flex-col justify-start items-start gap-4 inline-flex max-w-96 min-w-72">
+    <div
+      className={`flex-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 h-fit p-4 bg-white rounded-[15px] flex-col justify-start items-start gap-4 inline-flex max-w-96 min-w-72 border-2 ${
+        address.default === 1 ? "border-green-900" : "border-gray-200"
+      }`}
+    >
       <div className="self-stretch justify-start items-center gap-2 inline-flex">
         <div className="grow shrink basis-0 h-10 justify-start items-center gap-2 flex">
           <div className="px-[9px] py-1 bg-white rounded-[50px] border border-gray-200 justify-start items-center text-center gap-2 flex">
-            {AddressTypeIcons[address?.addressType]}
+            {AddressTypeIcons[address?.type]}
             <div className="text-zinc-600 font-light font-['Plus Jakarta Sans']">
-              {t(address.addressType)}
+              {t(address.type)}
             </div>
           </div>
         </div>
@@ -43,8 +47,19 @@ const AddressItem = ({ address, setViewOnMap, onEdit, onDelete }) => {
           <div
             className={`${
               settingModalVisible ? "visible" : "hidden"
-            } z-11 rounded-md border border-gray-900 flex flex-col absolute transition gap-2 bg-white shadow-md right-0`}
+            } z-20 rounded-md border border-gray-900 flex flex-col absolute transition gap-2 bg-white shadow-md right-0 min-w-max`}
           >
+            {address.default !== 1 && (
+              <div
+                className="cursor-pointer hover:bg-green-900 hover:text-white p-2"
+                onClick={() => {
+                  onSetAsDefault();
+                  setSettingModalVisible(false);
+                }}
+              >
+                Set as default
+              </div>
+            )}
             <div
               className="cursor-pointer hover:bg-neutral-900 hover:text-white p-2"
               onClick={onEdit}
@@ -53,7 +68,10 @@ const AddressItem = ({ address, setViewOnMap, onEdit, onDelete }) => {
             </div>
             <div
               className="cursor-pointer hover:bg-red-900 hover:text-white p-2"
-              onClick={onDelete}
+              onClick={() => {
+                onDelete();
+                setSettingModalVisible(false);
+              }}
             >
               Delete
             </div>
@@ -63,7 +81,7 @@ const AddressItem = ({ address, setViewOnMap, onEdit, onDelete }) => {
       <div className="self-stretch text-neutral-700 font-light font-['Plus Jakarta Sans']">
         {t(address?.address)}
       </div>
-      <div className="self-stretch justify-between items-center inline-flex">
+      {/* <div className="self-stretch justify-between items-center inline-flex">
         <div className="grow shrink basis-0 flex-col justify-start items-start gap-1 inline-flex">
           <div className="text-neutral-700 font-light font-['Plus Jakarta Sans']">
             {t(address?.name)}
@@ -77,9 +95,8 @@ const AddressItem = ({ address, setViewOnMap, onEdit, onDelete }) => {
           onClick={() => setViewOnMap(true)}
         >
           {t("View on map")}
-          {/* <MdArrowForward /> */}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
