@@ -32,7 +32,7 @@ const FullPage = ({ categories }) => {
   let setIsModelOpen = (value) => dispatch(SetSideBar(value));
 
   const currentLanguage = useSelector(
-    (state) => state.languageMode.languageMode,
+    (state) => state.languageMode.languageMode
   );
 
   const [isBranchModelOpen, setIsBranchModelOpen] = useState(false);
@@ -65,6 +65,7 @@ const FullPage = ({ categories }) => {
         <Category restaurantStyle={restaurantStyle} categories={categories} />
         <SocialMedia restaurantStyle={restaurantStyle} />
         <Footer restaurantStyle={restaurantStyle} />
+      </div>
         {isBranchModelOpen ? (
           <Modal
             open={isBranchModelOpen}
@@ -97,23 +98,38 @@ const FullPage = ({ categories }) => {
             <Register closingFunc={() => dispatch(SetRegisterModal(false))} />
           </Modal>
         ) : (
-          <Modal
-            open={isModelOpen}
-            onClose={() => setIsModelOpen(false)}
-            className={`fixed ${
-              currentLanguage == "en" ? "left-auto" : "right-auto"
-            } top-auto md:top-auto ${
-              currentLanguage == "en" ? "md:left-auto" : "md:right-auto"
-            }`}
-          >
-            <NewSideBar
-              onClose={() => setIsModelOpen(false)}
-              isBranchModelOpen={isBranchModelOpen}
-              setIsBranchModelOpen={setIsBranchModelOpen}
+          <>
+            <div
+              className={`fixed top-0 left-0 w-screen h-screen z-[999] bg-black bg-opacity-50 ${
+                isModelOpen ? "" : "hidden"
+              }`}
+              onClick={() => setIsModelOpen(false)}
             />
-          </Modal>
+            {/* <div className="relative"> */}
+              <div
+                className={`absolute z-[1000] top-[60px] ${
+                  isModelOpen ? "" : "hidden"
+                } ${currentLanguage === "en" ? "left-auto ml-[4%]" : "right-auto mr-[4%]"}`}
+              >
+                <NewSideBar
+                  onClose={() => setIsModelOpen(false)}
+                  isBranchModelOpen={isBranchModelOpen}
+                  setIsBranchModelOpen={setIsBranchModelOpen}
+                />
+
+                {/* <Modal
+              open={isModelOpen}
+              onClose={() => setIsModelOpen(false)}
+              className={`fixed ${
+                currentLanguage == "en" ? "left-auto" : "right-auto"
+              } top-[60px] md:top-[60px] ${
+                currentLanguage == "en" ? "md:left-auto" : "md:right-auto"
+              }`}
+            ></Modal> */}
+              </div>
+            {/* </div> */}
+          </>
         )}
-      </div>
     </div>
   );
 };

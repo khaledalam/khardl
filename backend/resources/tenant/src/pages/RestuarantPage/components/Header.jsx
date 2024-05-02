@@ -76,7 +76,7 @@ const Header = ({ restaurantStyle, categories }) => {
             : order_cart_position == "right"
             ? "justify-self-end"
             : "justify-self-center"
-        }`}
+        } ${cartItemsCount ? "" : "opacity-0"}`}
       >
         <img src={HedaerIconCart} alt={"cart"} className="" />
         {cartItemsCount > 0 && (
