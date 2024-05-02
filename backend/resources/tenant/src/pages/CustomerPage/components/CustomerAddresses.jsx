@@ -25,7 +25,7 @@ const CustomerAddresses = () => {
   return (
     <>
       {!(addMode || editMode !== -1) ? (
-        <div className="m-12 mb-5 h-full">
+        <div className="m-4 mt-8 md:m-12 mb-5 h-full">
           <div className="flex flex-row justify-between mb-5">
             <div className="flex items-center gap-3">
               <img src={orderIcon} alt="addresses" className="w-8" />

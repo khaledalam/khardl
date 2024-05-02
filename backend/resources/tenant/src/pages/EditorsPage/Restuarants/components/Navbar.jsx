@@ -261,9 +261,9 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
           open={isModelOpen}
           onClose={() => setIsModelOpen(false)}
           className={`fixed ${
-            currentLanguage == "en" ? "left-[16px]" : "right-[16px]"
-          } top-[88px] md:top-[104px] ${
-            currentLanguage == "en" ? "md:left-[80px]" : "md:right-[80px]"
+            currentLanguage == "en" ? "left-auto" : "right-auto"
+          } top-auto md:top-auto ${
+            currentLanguage == "en" ? "md:left-auto" : "md:right-auto"
           }`}
         >
           <NewSideBar

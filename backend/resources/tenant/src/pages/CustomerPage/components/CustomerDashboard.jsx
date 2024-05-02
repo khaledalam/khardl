@@ -77,7 +77,7 @@ const CustomerDashboard = () => {
   let slicedOrderData = ordersList ? ordersList.slice(0, orderLength) : [];
 
   return (
-    <div className="m-12 mb-5">
+    <div className="m-4 mt-8 md:m-12 mb-5">
       <div className="flex items-center gap-3">
         <img src={DashboardIcon} alt="dashboard" className="w-8" />
         <h3 className="text-3xl font-medium">{t("Dashboard")}</h3>

@@ -143,7 +143,7 @@ const CustomerProfile = () => {
 
   console.log("isDisabled", isDisabled);
   return (
-    <div className="m-12 mb-5">
+    <div className="m-4 mt-8 md:m-12 mb-5">
       <div className="flex items-center gap-3 mb-8">
         <img src={profileIcon} alt="dashboard" className="w-8" />
         <h3 className="text-3xl font-medium">{t("Profile")}</h3>
@@ -183,12 +183,12 @@ const CustomerProfile = () => {
         <div className="w-full flex flex-col gap-4">
           <Places
             inputStyle={
-              "input border-[var(--customer)] !w-full lg:!w-1/3 hover:border-[var(--customer)] focus-visible:border-[var(--customer)] outline-0 outline-none focus-visible:outline-none w-full"
+              "input bg-white w-full outline-none focus-visible:outline-none p-2 text-sm placeholder:text-neutral-500 h-fit text-neutral-900  rounded-2xl border border-neutral-700 hover:border-black focus-visible:border-black disabled:border-neutral-700"
             }
           />
         </div>
       </div>
-      <div className="flex w-full items-center justify-end mt-6 mb-4">
+      <div className="flex w-full items-center justify-center md:justify-end mt-6 mb-4 flex-wrap">
         <div className="flex items-center gap-5">
           <button
             onClick={fetchProfileData}

@@ -79,7 +79,7 @@ export const RestuarantEditor = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { width } = useWindowSize();
   const restuarantEditorStyle = useSelector(
-    (state) => state.restuarantEditorStyle,
+    (state) => state.restuarantEditorStyle
   );
   const dispatch = useDispatch();
 
@@ -138,7 +138,7 @@ export const RestuarantEditor = () => {
   const categories = useSelector((state) => state.categoryAPI.categories);
 
   const isSidebarCollapse = useSelector(
-    (state) => state.restuarantEditorStyle.collapse_sidebar,
+    (state) => state.restuarantEditorStyle.collapse_sidebar
   );
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
   const template = useSelector((state) => state.restuarantEditorStyle.template);
@@ -153,13 +153,14 @@ export const RestuarantEditor = () => {
 
   const fetchResStyleData = async () => {
     try {
-      const restaurantStyleResponse =
-        await AxiosInstance.get(`restaurant-style`);
+      const restaurantStyleResponse = await AxiosInstance.get(
+        `restaurant-style`
+      );
 
       if (restaurantStyleResponse.data) {
         dispatch(changeStyleDataRestaurant(restaurantStyleResponse.data?.data));
         dispatch(
-          changeRestuarantEditorStyle(restaurantStyleResponse.data?.data),
+          changeRestuarantEditorStyle(restaurantStyleResponse.data?.data)
         );
       }
       setIsLoading(false);
@@ -176,12 +177,12 @@ export const RestuarantEditor = () => {
       const restaurantCategoriesResponse = await AxiosInstance.get(
         `categories?items&user&branch${
           branch_id ? `&selected_branch_id=${branch_id}` : ""
-        }`,
+        }`
       );
 
       console.log(
         "editor rest restaurantCategoriesResponse RestuarantEditor",
-        restaurantCategoriesResponse.data,
+        restaurantCategoriesResponse.data
       );
       if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data));
@@ -261,32 +262,8 @@ export const RestuarantEditor = () => {
           link: [],
         },
         {
-          title: t("Home"),
-          layout: [],
-          contentPosition: ["positionContent", "color", "radius"],
-          contentPositionInitialValues: [
-            home_position,
-            home_color,
-            home_radius,
-          ],
-          contentPositionOnChange: [
-            (value) => dispatch(HomePosition(value)),
-            (color) => dispatch(HomeColor(color)),
-            (radius) => dispatch(HomeRadius(radius)),
-          ],
-          text: [],
-          link: [],
-        },
-      ],
-    },
-    {
-      title: t("Logo"),
-      subItems: [
-        {
           title: t("Logo"),
-          layout: ["color"],
-          layoutInitialValues: [logo_border_color],
-          layoutOnChange: [(color) => dispatch(logoBorderColor(color))],
+          layout: [],
           contentPosition: ["positionContent", "radius"],
           contentPositionInitialValues: [logo_alignment, logo_border_radius],
           contentPositionOnChange: [
@@ -298,6 +275,25 @@ export const RestuarantEditor = () => {
         },
       ],
     },
+    // {
+    //   title: t("Logo"),
+    //   subItems: [
+    //     {
+    //       title: t("Logo"),
+    //       layout: ["color"],
+    //       layoutInitialValues: [logo_border_color],
+    //       layoutOnChange: [(color) => dispatch(logoBorderColor(color))],
+    //       contentPosition: ["positionContent", "radius"],
+    //       contentPositionInitialValues: [logo_alignment, logo_border_radius],
+    //       contentPositionOnChange: [
+    //         (value) => dispatch(logoAlignment(value)),
+    //         (borderRadius) => dispatch(logoBorderRadius(borderRadius)),
+    //       ],
+    //       text: [],
+    //       link: [],
+    //     },
+    //   ],
+    // },
     {
       title: t("Banner"),
       subItems: [
@@ -567,6 +563,7 @@ export const RestuarantEditor = () => {
                     isHighlighted={
                       navItems[activeSection]?.title === t("Header")
                     }
+                    handleLogoUpload={() => {}}
                   />
                 </div>
               )}
