@@ -46,6 +46,7 @@ return [
     'exists'               => 'القيمة المحددة :attribute غير موجودة.',
     'file'                 => ' :attribute يجب أن يكون ملفا.',
     'filled'               => ' :attribute إجباري.',
+    'enum'                  => 'القيمة :attribute المختارة غير صحيحة.',
     'gt'                   => [
         'array'   => 'يجب أن يحتوي  :attribute على أكثر من :value عناصر/عنصر.',
         'file'    => 'يجب أن يكون حجم ملف  :attribute أكبر من :value كيلوبايت.',
@@ -233,7 +234,10 @@ return [
         'branch_id' => 'الفرع',
         "shipping_address" => "عنوان الشحن",
         "delivery_type_id" => "طريقة التوصيل",
-        "at_least_one_permission"=>"علي الاقل صلاحية واحدة"
+        "at_least_one_permission"=>"علي الاقل صلاحية واحدة",
+        "type" => "النوع",
+        "lat" => "قيم مكان الخريطة",
+        "lng" => "قيم مكان الخريطة",
 
     ],
     'values' => [
