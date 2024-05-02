@@ -251,9 +251,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 position-relative">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-2 filter_by_visitors">
+                            <div class="mb-4">
+                                <select class="form-select" id="visitorFilter">
+                                    <option value="daily" selected>{{ __('Daily') }}</option>
+                                    <option value="monthly">{{ __('Monthly') }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12" id="dailyVisitorsSection">
                             <div class="card card-flush h-md-100 mb-5 mb-xl-10">
                                 <!--begin::Card body-->
                                 <div class="card-body pt-2 pb-4 d-flex align-items-center">
@@ -269,7 +277,7 @@
                                 <!--end::Card body-->
                             </div>
                         </div>
-                        <div class="col-md-12 mt-4">
+                        <div class="col-md-12" id="monthlyVisitorsSection" style="display: none;">
                             <div class="card card-flush h-md-100 mb-5 mb-xl-10">
                                 <!--begin::Card body-->
                                 <div class="card-body pt-2 pb-4 d-flex align-items-center">
@@ -314,4 +322,21 @@
 {!! $monthVisitors->renderChartJsLibrary() !!}
 {!! $monthVisitors->renderJs() !!}
 @endif
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const visitorFilter = document.getElementById('visitorFilter');
+        const dailyVisitorsSection = document.getElementById('dailyVisitorsSection');
+        const monthlyVisitorsSection = document.getElementById('monthlyVisitorsSection');
+
+        visitorFilter.addEventListener('change', function() {
+            if (visitorFilter.value === 'daily') {
+                dailyVisitorsSection.style.display = 'block';
+                monthlyVisitorsSection.style.display = 'none';
+            } else if (visitorFilter.value === 'monthly') {
+                dailyVisitorsSection.style.display = 'none';
+                monthlyVisitorsSection.style.display = 'block';
+            }
+        });
+    });
+</script>
 @endsection
