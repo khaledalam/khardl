@@ -18,7 +18,7 @@ const SocialMedia = ({ restaurantStyle }) => {
               ? "items-center justify-end"
               : ""
       }
-        ${selectedSocialIcons?.length == 0 ? "hidden" : ""}`}
+        ${(!selectedSocialIcons || selectedSocialIcons.length) ? "hidden" : ""}`}
     >
       <div className="flex items-center gap-5">
         {selectedSocialIcons?.map((socialMedia) => (
