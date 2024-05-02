@@ -33,10 +33,12 @@ return new class extends Migration
         if($customers->count()){
             foreach ($customers as $customer) {
                 if($customer->address && $customer->address !=null){
-                    $customer?->addresses()->create([
-                        'address' => $customer->address,
-                        'default' => true
-                    ]);
+                    if(!$customer?->addresses()->count()){
+                        $customer?->addresses()->create([
+                            'address' => $customer->address,
+                            'default' => true
+                        ]);
+                    }
                 }
             }
         }

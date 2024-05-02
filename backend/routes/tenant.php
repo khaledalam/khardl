@@ -460,7 +460,14 @@ Route::middleware([
                 });
             });
             /* Customer address */
-            Route::post('add-address',[CustomerAddressController::class,'create']);
+            Route::controller(CustomerAddressController::class)->group(function () {
+                Route::post('add-address','create');
+                Route::post('update-address/{address}','update');
+                Route::post('make-as-default/{address}','makeDefault');
+                Route::post('delete-address/{address}','delete');
+                Route::post('get-addresses','index');
+            });
+            /* Customer address */
         });
         Route::prefix('tap')->group(function () {
             Route::apiResource('businesses', BusinessController::class)->only([
