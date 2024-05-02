@@ -9,18 +9,13 @@ import UploadIcon from "../../../assets/uploadIcon.png";
 import { useTranslation } from "react-i18next";
 import { SetSideBar } from "../../../redux/NewEditor/restuarantEditorSlice";
 
-const Header = ({ restaurantStyle, categories }) => {
-  const navigate = useNavigate();
+const Header = ({ restaurantStyle, categories, handleGotoCart }) => {
   const dispatch = useDispatch();
 
   const cartItemsCount = useSelector(
     (state) => state.categoryAPI.cartItemsCount
   );
   const { t } = useTranslation();
-
-  const handleGotoCart = () => {
-    navigate("/cart");
-  };
 
   const {
     side_menu_position,
@@ -76,7 +71,7 @@ const Header = ({ restaurantStyle, categories }) => {
             : order_cart_position == "right"
             ? "justify-self-end"
             : "justify-self-center"
-        } ${cartItemsCount ? "" : "opacity-0"}`}
+        }`}
       >
         <img src={HedaerIconCart} alt={"cart"} className="" />
         {cartItemsCount > 0 && (

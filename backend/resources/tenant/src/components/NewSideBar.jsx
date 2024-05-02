@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
-import { logout } from "../redux/auth/authSlice";
+import { changeLogState, logout } from "../redux/auth/authSlice";
 import { HTTP_NOT_AUTHENTICATED } from "../config";
 import AxiosInstance from "../axios/axios";
 import { changeLanguage } from "../redux/languageSlice";
@@ -37,6 +37,7 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const handleLogout = async (e) => {
+    dispatch(changeLogState(false));
     e.preventDefault();
 
     try {
@@ -56,7 +57,7 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
   };
 
   const currentLanguage = useSelector(
-    (state) => state.languageMode.languageMode,
+    (state) => state.languageMode.languageMode
   );
 
   const newLanguage = currentLanguage === "en" ? "ar" : "en";
@@ -65,12 +66,12 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
   const fetchCategoriesData = async (id) => {
     try {
       const restaurantCategoriesResponse = await AxiosInstance.get(
-        `categories?items&user&branch${id ? `&selected_branch_id=${id}` : ""}`,
+        `categories?items&user&branch${id ? `&selected_branch_id=${id}` : ""}`
       );
 
       console.log(
         "editor rest restaurantCategoriesResponse OuterSidebarNav",
-        restaurantCategoriesResponse.data,
+        restaurantCategoriesResponse.data
       );
       if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data));
@@ -78,7 +79,7 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
           selectedCategoryAPI({
             name: restaurantCategoriesResponse.data?.data[0].name,
             id: restaurantCategoriesResponse.data?.data[0].id,
-          }),
+          })
         );
 
         if (!branch_id) {
