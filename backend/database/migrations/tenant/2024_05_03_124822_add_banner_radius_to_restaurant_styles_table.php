@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('restaurant_styles', function (Blueprint $table) {
-            $table->string('banner_radius')->default(20);
+            $table->integer('banner_radius')->default(20);
         });
     }
 
