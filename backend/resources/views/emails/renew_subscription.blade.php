@@ -137,7 +137,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 2px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><strong>Subscription Expired</strong></span></h1>
+    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><strong>{{ __('emails.subscription_expired.title') }}</strong></span></h1>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -171,7 +171,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-family: 'Cabin',sans-serif; font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Dear {{ $user->first_name }},</strong></p>
+    <p style="line-height: 140%;"><strong>{{ __('emails.subscription_expired.message_intro', ['first_name' => $user->first_name]) }}</strong></p>
   </div>
 
       </td>
@@ -185,15 +185,15 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">We hope this message finds you well.</p>
-<p><span style="color: #000000; text-align: center; white-space: normal; background-color: #ffffff; float: none; display: inline;">@if($type == 'website')</span></p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has expired. To ensure the uninterrupted activity of your restaurant and to continue providing excellent service to your customers, we're offering you a grace period of {{$period}} days to renew your subscription.</p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">To proceed with the renewal, please follow this link: <a href="{{ $url }}" style="box-sizing: border-box; color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1)); text-decoration-line: underline;">Renew Subscription</a>. Our team is ready to assist you throughout the process and answer any questions you may have.</p>
+    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;">
+@if($type == 'website')
+<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">{{ __('emails.subscription_expired.message_body', ['restaurant_name' => $restaurant_name, 'period_time' => $period]) }}</p>
+<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">{{ __('emails.subscription_expired.website_renewal') }} <a href="{{ $url }}" style="box-sizing: border-box; color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1)); text-decoration-line: underline;">{{ __('emails.subscription_suspended.renew_link') }}. </a>{{ __('emails.subscription_suspended.message3') }}</p>
 <p><span style="color: #000000; text-align: center; white-space: normal; background-color: #ffffff; float: none; display: inline;">@elseif($type == 'app')</span></p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has expired. To ensure the uninterrupted activity of your restaurant and to continue providing excellent service to your customers, we're offering you a grace period of {{$period}} days to renew your subscription.</p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">Unfortunately, your customers cannot place orders through the app during this grace period. To proceed with the renewal, please follow this link: <a href="{{ $url }}" style="box-sizing: border-box; color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1)); text-decoration-line: underline;">Renew Subscription</a>. Our team is ready to assist you throughout the process and answer any questions you may have.</p>
+<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">{{ __('emails.subscription_expired.message_body', ['restaurant_name' => $restaurant_name, 'period_time' => $period]) }}</p>
+<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">{{ _('emails.subscription_expired.app_renewal')}}<a href="{{ $url }}" style="box-sizing: border-box; color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1)); text-decoration-line: underline;">{{ __('emails.subscription_expired.website_renewal') }} </a>{{ __('emails.subscription_suspended.renew_link') }}.</p>
 <p><span style="color: #000000; text-align: center; white-space: normal; background-color: #ffffff; float: none; display: inline;">@endif</span></p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">Thank you for choosing our services. We value your partnership and look forward to continuing our collaboration.</p></h4>
+<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">{{ __('emails.subscription_expired.thank_you') }}.</p></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -227,7 +227,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 16px 16px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-size: 13px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><em>This email was sent from an email address that can't receive emails. Please don't reply to this email.</em></p>
+    <p style="line-height: 140%;"><em>{{ __('emails.subscription_suspended.email_note') }}</em></p>
   </div>
 
       </td>

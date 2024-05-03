@@ -636,8 +636,8 @@ class AdminController extends Controller
             return redirect()->back()->with('error', __('You have to select one option at least!'));
         }
 
-        if ($user?->email == env('SUPER_MASTER_ADMIN_EMAIL')) {
-            return redirect()->back()->with('error', __('Super master admin can not blocked'));
+        if ($user->email == env('SUPER_MASTER_ADMIN_EMAIL')) {
+            return redirect()->back()->with('error', __('Super master admin can not be blocked'));
         }
 
         if ($user) {
@@ -647,18 +647,22 @@ class AdminController extends Controller
 
             // set user status in tenant table too
             $tenant->run(function () use($user, $selectedOption){
-                $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
+                $rUser = RestaurantUser::where('email', '=', $user->email)->first();
                 $rUser->status = RestaurantUser::REJECTED;
                 $rUser->reject_reasons = json_encode($selectedOption);
                 $rUser->save();
             });
         }
 
+        // Dispatch the job to send the denied email
         SendDeniedEmailJob::dispatch($user, $selectedOption);
+
         $actions = [
             'en' => 'Has denied an restaurant with an ID of: '."<a href=".route('admin.view-restaurants',['tenant'=>$tenant->id])."> $tenant->id </a>",
             'ar' => 'رفض مطعم بمعرف: '."<a href=".route('admin.view-restaurants',['tenant'=>$tenant->id])."> $tenant->id </a>",
         ];
+
+        // Create a log entry
         Log::create([
             'user_id' => Auth::id(),
             'action' => $actions,
@@ -671,6 +675,7 @@ class AdminController extends Controller
             'user' => Auth::user()
         ]);
     }
+
 
     public function downloadCommercialRegistration($filename){
         $filePath = 'private/commercial_registration/' . $filename;

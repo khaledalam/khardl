@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Contact Form</title>
+    <title>{{ __('emails.contact_us.message')}}</title>
 </head>
 <body style="background-color:#f9f9f9">
 <!-- © 2018 Shift Technologies. All rights reserved. -->
@@ -48,15 +48,15 @@
                                 <td style="padding-left:20px;padding-right:20px" align="center" valign="top" class="containtTable ui-sortable">
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tableDescription" style="">
                                         <tbody>
-                                            <p class="text" style="color:#666;font-family:'Open Sans',Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;font-style:normal;letter-spacing:normal;line-height:22px;text-transform:none;text-align:center;padding:0;margin:0">New form request.</p>
+                                            <p class="text" style="color:#666;font-family:'Open Sans',Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;font-style:normal;letter-spacing:normal;line-height:22px;text-transform:none;text-align:center;padding:0;margin:0">{{ __('emails.contact_us.message')}}</p>
                                         <tr>
                                             <td style="padding-bottom: 20px;" align="center" valign="top" class="description">
-                                                <h1>Form Details</h1>
-                                                <p>Contact ID : # <strong>{{$contact_id}}</strong></p>
-                                                <p>Email : <strong> {{$email}}</strong></p>
-                                                <p>Phone Number :  <strong>{{$phone_number}}</strong></p>
-                                                <p>Business Name : <strong>{{$business_name}}</strong></p>
-                                                <p>Person Name :  <strong>{{$responsible_person_name}}</strong></p>
+                                                <h1>{{ __('emails.contact_us.form_details')}}</h1>
+                                                <p>{{ __('emails.contact_us.contact_id')}} <strong>{{$contact_id}}</strong></p>
+                                                <p>{{ __('emails.contact_us.email')}}<strong> {{$email}}</strong></p>
+                                                <p>{{ __('emails.contact_us.phone_number')}}<strong>{{$phone_number}}</strong></p>
+                                                <p>{{ __('emails.contact_us.business_name')}}<strong>{{$business_name}}</strong></p>
+                                                <p>{{ __('emails.contact_us.person_name')}} <strong>{{$responsible_person_name}}</strong></p>
 
                                             </td>
                                         </tr>
@@ -79,7 +79,7 @@
                         </table>
                     </td>
                 </tr>
-                <br><br><small><i>This email was sent from an email address that can't receive emails. Please don't reply to this email.</i></small>
+                <br><br><small><i>{{ __('emails.contact_us.email_disclaimer')}}</i></small>
                 </tbody>
             </table>
         </td>

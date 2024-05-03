@@ -137,7 +137,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 2px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><strong>Dear {{ $user->first_name }}</strong></span></h1>
+    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><strong>{{ __('emails.approved_business.greeting', ['first_name', $user->first_name]) }}</strong></span></h1>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -171,7 +171,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p style="line-height: 140%;">We are delighted to inform you that your business request with reference {{$business->business_id}} has been successfully approved! We appreciate your partnership and look forward to continuing our collaboration.</p></h4>
+    <h4 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p style="line-height: 140%;">{{ __('emails.approved_business.message1') }}</p></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -185,7 +185,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><span><span><span><span><span><span><span><span><span><span>To proceed with the next steps, we invite you to purchase your new subscription by following this url <a rel="noopener" href="{{$subscription_url}}" target="_blank">here</a>. Our team is ready to assist you throughout the process and answer any questions you may have.</span></span></span></span></span></span></span></span></span></span></h4>
+    <h4 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><span><span><span><span><span><span><span><span><span><span>T{{ __('emails.approved_business.message2') }} <a rel="noopener" href="{{$subscription_url}}" target="_blank">( --- )</a>. {{ __('emails.approved_business.message3') }}</span></span></span></span></span></span></span></span></span></span></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -199,7 +199,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><span><span><span><span>Thank you for choosing our services. We value your business and are committed to providing you with the best experience.</span></span></span></span></h4>
+    <h4 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><span><span><span><span>{{ __('emails.approved_business.message4') }}</span></span></span></span></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -233,7 +233,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 16px 16px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-size: 13px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><em>This email was sent from an email address that can't receive emails. Please don't reply to this email.</em></p>
+    <p style="line-height: 140%;"><em>{{ __('emails.approved_business.email_disclaimer') }}</em></p>
   </div>
 
       </td>
