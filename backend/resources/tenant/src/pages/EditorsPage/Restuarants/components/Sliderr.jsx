@@ -1,18 +1,25 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import RightIcon from "../../../../assets/rightIcon.png";
-import LeftIcon from "../../../../assets/leftIcon.png";
+import { useSelector } from "react-redux";
 
 const Sliderr = ({ banner_images, setIsBannerModalOpened }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
+  const language = useSelector((state) => state.languageMode.languageMode);
   const imageChange = () => {
     console.log("SLIDER", imageIndex);
-    setImageIndex(prevIndex => (prevIndex + 1) % banner_images.length);
+    setImageIndex((prevIndex) => (prevIndex + 1) % banner_images.length);
   };
   useEffect(() => {
     const intervalId = setInterval(imageChange, 3000);
-    
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (language === "en") {
+      setImageIndex(0);
+    } else {
+      setImageIndex(banner_images.length - 1);
+    }
+  }, [language]);
 
   return (
     <div className="h-full rounded-[10px] relative flex flex-col justify-center">
@@ -23,7 +30,11 @@ const Sliderr = ({ banner_images, setIsBannerModalOpened }) => {
             src={image.croppedImage}
             alt="banner"
             className="flex aspect-[2/1] w-full rounded-[10px] object-cover shrink-0 grow-0 transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${imageIndex * 100}%)` }}
+            style={{
+              transform: `translateX(${language === "en" ? "-" : ""}${
+                imageIndex * 100
+              }%)`,
+            }}
             onClick={() => setIsBannerModalOpened(true)}
           />
         ))}
