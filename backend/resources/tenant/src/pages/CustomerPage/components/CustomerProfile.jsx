@@ -25,6 +25,9 @@ const CustomerProfile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
+  const deleteProfile = () => {
+  }
+
   const userProfile =
     JSON.parse(localStorage.getItem("userProfileInfo")) || null;
 
@@ -144,9 +147,18 @@ const CustomerProfile = () => {
   console.log("isDisabled", isDisabled);
   return (
     <div className="m-4 mt-8 md:m-12 mb-5">
-      <div className="flex items-center gap-3 mb-8">
-        <img src={profileIcon} alt="dashboard" className="w-8" />
-        <h3 className="text-3xl font-medium">{t("Profile")}</h3>
+      <div className="flex flex-row justify-between gap-3 mb-8">
+        <div className="flex flex-row gap-3 items-center">
+          <img src={profileIcon} alt="dashboard" className="w-8" />
+          <h3 className="text-3xl font-medium">{t("Profile")}</h3>
+        </div>
+        <button
+          onClick={deleteProfile}
+          disabled={isDisabled || isLoading}
+          className="cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border font-['Plus Jakarta Sans'] leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 w-32 transition-all shadow-md"
+        >
+          {t("Delete")}
+        </button>
       </div>
       {/* <h3 className="text-lg my-5 ">{t("Profile Details")}</h3> */}
       <div className="w-full bg-white shadow-md rounded-md  min-h-[300px] h-full p-4">

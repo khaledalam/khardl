@@ -75,9 +75,8 @@ const Login = ({ closingFunc }) => {
   const onSubmit = async (data) => {
     try {
       setSpinner(true);
-      const response = await AxiosInstance.post(`/login`, {
+      const response = await AxiosInstance.post(`/api/login`, {
         phone: data.phone,
-
         // remember_me: data.remember_me, // used only in API token-based
       });
 
@@ -86,16 +85,12 @@ const Login = ({ closingFunc }) => {
         console.log("login-response", responseData);
         localStorage.setItem(
           "user-info",
-          JSON.stringify(responseData?.data?.user),
+          JSON.stringify(responseData?.data?.user)
         );
-        // localStorage.setItem(
-        //     "i18nextLng",
-        //     response?.data?.user?.default_lang ?? "ar"
-        // );
         if (responseData.data.user.status === "inactive") {
           sessionStorage.setItem(
             PREFIX_KEY + "phone",
-            responseData?.data?.user?.phone,
+            responseData?.data?.user?.phone
           );
 
           const userRole = responseData.data.user.roles[0]?.name || "Customer";
@@ -125,14 +120,11 @@ const Login = ({ closingFunc }) => {
       dispatch(changeLogState(false));
       dispatch(changeUserState(null));
       setStatusCode(HTTP_NOT_AUTHENTICATED);
-      toast.error(
-        `${
-          error?.response?.data?.data ||
-          error?.response?.data?.message ||
-          error?.response?.data?.error ||
-          t("Login failed")
-        }`,
-      );
+      if (error?.response?.data?.message === "Validation Error.") {
+        toast.error(t("Please register yourself first."));
+      } else {
+        toast.error(error?.response?.data?.message);
+      }
     }
   };
 
@@ -161,7 +153,7 @@ const Login = ({ closingFunc }) => {
     try {
       setSpinner(true);
       resetTimer();
-      const response = await AxiosInstance.post(`/phone/send-verify`, {});
+      const response = await AxiosInstance.post(`/api/phone/send-verify`, {});
       if (response.data) {
         toast.success(`${t("The code has been re-sent successfully")}`);
       } else {
@@ -176,7 +168,7 @@ const Login = ({ closingFunc }) => {
   // API POST REQUEST
   const onSubmitOTP = async (data) => {
     try {
-      const response = await AxiosInstance.post(`/phone/verify`, {
+      const response = await AxiosInstance.post(`/api/phone/verify`, {
         otp: otp,
       });
 
@@ -291,12 +283,24 @@ const Login = ({ closingFunc }) => {
               {...register("phone", {
                 required: true,
               })}
-              onChange={(data) => {
-                setLengthOfPhone(data.target.value.length);
+              onChange={(event) => {
+                setLengthOfPhone(event.target.value.length);
                 // console.log(data.target.value.length);
               }}
               minLength={9}
               maxLength={13}
+              onKeyDown={(event) => {
+                if (
+                  (event.which < 48 || event.which > 57) &&
+                  (event.which < 96 || event.which > 105) &&
+                  event.which !== 8 &&
+                  event.which !== 46 &&
+                  event.which !== 37 &&
+                  event.which !== 39
+                ) {
+                  event.preventDefault();
+                }
+              }}
             />
             {errors.phone && (
               <span className="text-red-500 text-xs mt-1 ms-2">

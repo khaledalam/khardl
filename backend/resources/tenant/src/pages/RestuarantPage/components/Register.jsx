@@ -61,17 +61,16 @@ const Register = ({ closingFunc }) => {
   const onSubmit = async (data) => {
     try {
       setSpinner(true);
-      const response = await AxiosInstance.post(`/phone/verify`, {
+      const response = await AxiosInstance.post(`/api/phone/verify`, {
         otp: otp,
       });
 
       if (response.data || response.is_loggedin) {
         setStatusCode(HTTP_OK);
         // navigate("/");
-        const res = await AxiosInstance.post(`/register`, {
+        const res = await AxiosInstance.post(`/api/register`, {
           first_name: data.first_name,
           last_name: data.last_name,
-          email: data.email,
           phone: data.phone,
           // terms_and_policies: data.terms_and_policies,
         });
@@ -142,7 +141,7 @@ const Register = ({ closingFunc }) => {
     try {
       setSpinner(true);
       resetTimer();
-      const response = await AxiosInstance.post(`/phone/send-verify`, {});
+      const response = await AxiosInstance.post(`/api/phone/send-verify`, {});
       if (response.data) {
         toast.success(`${t("The code has been re-sent successfully")}`);
       } else {
@@ -155,30 +154,27 @@ const Register = ({ closingFunc }) => {
   };
 
   // API POST REQUEST
-  // const onSubmitOTP = async (data) => {
-  //     try {
-  //         const response = await AxiosInstance.post(`/phone/verify`, {
-  //             otp: otp,
-  //         });
+  const onSubmitOTP = async (data) => {
+    try {
+      const response = await AxiosInstance.post(`/api/phone/verify`, {
+        otp: otp,
+      });
 
-  //         console.log("otp, response: ", response.data);
+      // console.log(response.data);
 
-  //         if (response.data) {
-  //             setStatusCode(HTTP_OK);
-  //             // navigate("/");
-  //             toast.success(
-  //                 `${t("The code has been verified successfully")}`
-  //             );
-  //             toast.success(`${t("Account successfully created")}`);
-  //             closingFunc();
-  //         } else {
-  //             throw new Error(`${t("Code verification failed")}`);
-  //         }
-  //     } catch (error) {
-  //         // TODO @todo print error message
-  //         toast.error(`${t("Code verification failed")}`);
-  //     }
-  // };
+      if (response.data) {
+        setStatusCode(HTTP_OK);
+        navigate("/");
+        toast.success(`${t("The code has been verified successfully")}`);
+        closingFunc();
+      } else {
+        throw new Error(`${t("Code verification failed")}`);
+      }
+    } catch (error) {
+      // TODO @todo print error message
+      toast.error(`${t("Code verification failed")}`);
+    }
+  };
   // TODO @todo startTimer is still working after verification , look at console after verification
   const startTimer = () => {
     const timer = setInterval(() => {
@@ -310,6 +306,18 @@ const Register = ({ closingFunc }) => {
               }}
               minLength={9}
               maxLength={13}
+              onKeyDown={(event) => {
+                if (
+                  (event.which < 48 || event.which > 57) &&
+                  (event.which < 96 || event.which > 105) &&
+                  event.which !== 8 &&
+                  event.which !== 46 &&
+                  event.which !== 37 &&
+                  event.which !== 39
+                ) {
+                  event.preventDefault();
+                }
+              }}
             />
             {errors.phone && (
               <span className="text-red-500 text-xs mt-1 ms-2">
@@ -318,7 +326,7 @@ const Register = ({ closingFunc }) => {
             )}
           </div>
         </div>
-        <div className="flex mb-[20px] w-full relative">
+        {/* <div className="flex mb-[20px] w-full relative">
           <input
             type="email"
             className="w-full h-8 px-4 py-[7px] bg-white rounded-[50px] border border-gray-200 justify-start items-center gap-1.5 inline-flex text-zinc-500 text-xs font-normal leading-[18px] outline-none"
@@ -331,7 +339,7 @@ const Register = ({ closingFunc }) => {
               <span className="text-red-500">*</span>
             </div>
           </div>
-        </div>
+        </div> */}
         {showOTP && (
           <>
             <div className="px-8 mb-3 flex flex-col items-center text-center">
@@ -362,6 +370,18 @@ const Register = ({ closingFunc }) => {
                     type="text"
                     className="bg-white w-full h-full outline-none ml-[15px]"
                     placeholder={t("")}
+                    onKeyDown={(event) => {
+                      if (
+                        (event.which < 48 || event.which > 57) &&
+                        (event.which < 96 || event.which > 105) &&
+                        event.which !== 8 &&
+                        event.which !== 46 &&
+                        event.which !== 37 &&
+                        event.which !== 39
+                      ) {
+                        event.preventDefault();
+                      }
+                    }}
                     // {...register2("otp", {
                     //     required: true,
                     // })}
