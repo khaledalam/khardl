@@ -71,7 +71,6 @@ const Register = ({ closingFunc }) => {
         const res = await AxiosInstance.post(`/api/register`, {
           first_name: data.first_name,
           last_name: data.last_name,
-          email: data.email,
           phone: data.phone,
           // terms_and_policies: data.terms_and_policies,
         });
@@ -327,7 +326,7 @@ const Register = ({ closingFunc }) => {
             )}
           </div>
         </div>
-        <div className="flex mb-[20px] w-full relative">
+        {/* <div className="flex mb-[20px] w-full relative">
           <input
             type="email"
             className="w-full h-8 px-4 py-[7px] bg-white rounded-[50px] border border-gray-200 justify-start items-center gap-1.5 inline-flex text-zinc-500 text-xs font-normal leading-[18px] outline-none"
@@ -340,7 +339,7 @@ const Register = ({ closingFunc }) => {
               <span className="text-red-500">*</span>
             </div>
           </div>
-        </div>
+        </div> */}
         {showOTP && (
           <>
             <div className="px-8 mb-3 flex flex-col items-center text-center">

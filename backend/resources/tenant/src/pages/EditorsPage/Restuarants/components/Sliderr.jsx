@@ -6,7 +6,6 @@ const Sliderr = ({ banner_images, setIsBannerModalOpened }) => {
 
   const language = useSelector((state) => state.languageMode.languageMode);
   const imageChange = () => {
-    console.log("SLIDER", imageIndex);
     setImageIndex((prevIndex) => (prevIndex + 1) % banner_images.length);
   };
   useEffect(() => {
