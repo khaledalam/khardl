@@ -128,6 +128,7 @@ const MainBoardEditor = ({
     menu_category_radius,
     menu_section_background_color,
     menu_section_radius,
+    banner_radius,
   } = restuarantEditorStyle;
 
   const [listofBannerImages, setListofBannerImages] = useState([]);
@@ -136,6 +137,16 @@ const MainBoardEditor = ({
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
+
+  useEffect(() => {
+    setListofBannerImages(
+      banner_images.map((image) => {
+        return {
+          croppedImage: `${image.url}`,
+        };
+      })
+    );
+  }, [banner_images]);
   const showCroppedImage = async () => {
     try {
       const croppedImage = await getCroppedImg(
@@ -203,7 +214,7 @@ const MainBoardEditor = ({
       setIsCropModalOpened(true);
       setImgType("logoUpload");
       if (fileInputRef.current) {
-        fileInputRef.current.value = "";  // Clear the file input
+        fileInputRef.current.value = ""; // Clear the file input
       }
     }
   };
@@ -299,7 +310,7 @@ const MainBoardEditor = ({
     console.log("index", index);
     if (index >= 0 && index < listofBannerImages.length) {
       // console.log("log list", listofBannerImages.splice(index, 1));
-      setListofBannerImages(listofBannerImages.splice(index, 1));
+      setListofBannerImages(listofBannerImages.filter((_, id) => id !== index));
       console.log("list of uploaded images - after", listofBannerImages);
       if (listofBannerImages.length < 2) {
         dispatch(bannerType("one-photo"));
@@ -503,6 +514,7 @@ const MainBoardEditor = ({
                 navItems[activeSection]?.title === "Banner" &&
                 "shadow-inner border-[#C0D123] border-[2px] rounded-[10px]"
               }`}
+              style={{ borderRadius: banner_radius + "px" }}
             >
               {/* <Slider banner_images={banner_images} /> */}
               <Sliderr
@@ -863,7 +875,7 @@ const MainBoardEditor = ({
                   </svg>
                 </div>
               </div>
-              <div className={"cropper-container"}>
+              <div className={"cropper-container bg-transparent"}>
                 <Cropper
                   image={uncroppedImage}
                   crop={crop}
@@ -919,7 +931,7 @@ const MainBoardEditor = ({
                   </div>
                 </div>
               ) : (
-                <div className={"cropper-container"}>
+                <div className={"cropper-container bg-transparent"}>
                   <Cropper
                     image={uncroppedImage}
                     crop={crop}

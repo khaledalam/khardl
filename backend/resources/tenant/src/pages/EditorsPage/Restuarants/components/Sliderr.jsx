@@ -5,12 +5,16 @@ const Sliderr = ({ banner_images, setIsBannerModalOpened }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
   const language = useSelector((state) => state.languageMode.languageMode);
+  const banner_radius = useSelector(
+    (state) => state.restuarantEditorStyle.banner_radius
+  );
   const imageChange = () => {
     setImageIndex((prevIndex) => (prevIndex + 1) % banner_images.length);
   };
   useEffect(() => {
     const intervalId = setInterval(imageChange, 3000);
-  }, []);
+    return () => clearInterval(intervalId);
+  }, [banner_images]);
 
   useEffect(() => {
     if (language === "en") {
@@ -21,8 +25,14 @@ const Sliderr = ({ banner_images, setIsBannerModalOpened }) => {
   }, [language]);
 
   return (
-    <div className="h-full rounded-[10px] relative flex flex-col justify-center">
-      <div className="flex w-full h-full rounded-[10px] overflow-x-hidden">
+    <div
+      className="h-full rounded-[10px] relative flex flex-col justify-center"
+      style={{ borderRadius: banner_radius + "px" }}
+    >
+      <div
+        style={{ borderRadius: banner_radius + "px" }}
+        className="flex w-full h-full rounded-[10px] overflow-x-hidden"
+      >
         {banner_images.map((image, index) => (
           <img
             key={index}
@@ -33,6 +43,7 @@ const Sliderr = ({ banner_images, setIsBannerModalOpened }) => {
               transform: `translateX(${language === "en" ? "-" : ""}${
                 imageIndex * 100
               }%)`,
+              borderRadius: banner_radius + "px",
             }}
             onClick={() => setIsBannerModalOpened(true)}
           />
