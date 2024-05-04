@@ -79,6 +79,7 @@ class SendNotifyForNewSub implements ShouldQueue
                         'type' => $log_success,
                         'metadata' => [
                             'email' => $user->email ?? null,
+                            'name' => $user->full_name ?? null,
                         ]
                     ]);
                 }
