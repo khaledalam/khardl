@@ -29,3 +29,8 @@ input[type="email"]::-webkit-input-placeholder {
 [type="text"],[type="email"], [type="number"], [type="tel"], [type="url"]{
     direction: rtl!important;
 }
+/* Summary page */
+.filtration div{
+  left: 25px;
+  right: auto!important;
+}

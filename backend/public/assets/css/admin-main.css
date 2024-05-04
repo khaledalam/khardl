@@ -49,16 +49,3 @@
     background-color: #c2da08;
     border: none !important;
 }
-/* Summary page */
-.filter_by_visitors div{
-  position: absolute;
-  z-index: 1;
-  right: 18px;
-  left: auto;
-  top: 16px;
-}
-@media (max-width: 425px) {
-  #dailyVisitorsSection .card-body,#monthlyVisitorsSection .card-body{
-    padding: 0;
-  }
-}

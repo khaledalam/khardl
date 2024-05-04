@@ -33,8 +33,8 @@ class SummaryService
         $total = $allOrders->count();
         $dailySales = $this->getDailySales(clone $completedOrders);
         $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
-        $profitLast7Days = $this->profitDays(7);
-        $profitLast4Months = $this->profitMonths(4);
+        $profitLast7Days = $this->profitDays(14);
+        $profitLast4Months = $this->profitMonths(6);
         $percentageChange = ($averageLast7DaysSales > 0)
             ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
             : (($dailySales > 0) ? 100 : 0);

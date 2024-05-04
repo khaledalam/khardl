@@ -253,7 +253,7 @@
                 </div>
                 <div class="col-md-8 position-relative">
                     <div class="row">
-                        <div class="col-md-2 filter_by_visitors">
+                        <div class="col-md-2 filtration">
                             <div class="mb-4">
                                 <select class="form-select" id="visitorFilter">
                                     <option value="daily" selected>{{ __('Daily') }}</option>
