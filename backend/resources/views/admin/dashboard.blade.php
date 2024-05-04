@@ -232,7 +232,7 @@
                         <div class="col-md-12">
                             <!--end::Card widget 6-->
                             <!--begin::Card widget 7-->
-                            <div class="card card-flush mt-4">
+                            <div class="card card-flush my-4">
                                 <!--begin::Header-->
                                 <div class="card-header">
                                     <!--begin::Title-->
