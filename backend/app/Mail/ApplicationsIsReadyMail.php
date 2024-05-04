@@ -33,7 +33,7 @@ class ApplicationsIsReadyMail extends Mailable
      */
     public function build()
     {
-        return $this->subject("Your app is published and ready now.")->view('emails.customer_app_is_ready', [
+        return $this->subject(__('Your app is published and ready now.'))->view('emails.customer_app_is_ready', [
             'app' => $this->rOCustomerAppSub,
         ]);
     }

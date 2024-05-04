@@ -85,7 +85,7 @@ class RestaurantController extends Controller
                 $customer_app->icon = store_image($request->file('icon'), RestaurantStyle::STORAGE, 'customer_app');
             }
 
-            /* $customer_app->save(); */
+            $customer_app->save();
         });
         return redirect()->back()->with('success',__('Customer app has been updated successfully'));
 
