@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Central\Admin\Restaurant;
 
+use App\Jobs\SendWhenAppReady;
 use App\Models\Log;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
@@ -73,6 +74,7 @@ class RestaurantController extends Controller
                 $customer_app->android_url = $request->android_url;
                 $customer_app->ios_url = $request->ios_url;
                 $customer_app->status = ROSubscription::ACTIVE;
+                $this->SendMailWhenAppIsPublished($customer_app->user,$customer_app);
             }else {
                 $customer_app->android_url = null;
                 $customer_app->ios_url = null;
@@ -87,6 +89,12 @@ class RestaurantController extends Controller
         });
         return redirect()->back()->with('success',__('Customer app has been updated successfully'));
 
+    }
+    public static function SendMailWhenAppIsPublished($customer,$data){
+        SendWhenAppReady::dispatch(
+            $customer,
+            $data
+        );
     }
     public function updateConfig(Tenant $tenant,Request $request){
 
