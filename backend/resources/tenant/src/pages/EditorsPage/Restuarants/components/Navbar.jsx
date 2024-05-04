@@ -125,6 +125,7 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
     inputs.footer_text_fontSize = restuarantStyle.footer_text_fontSize;
     inputs.footer_text_color = restuarantStyle.footer_text_color;
     inputs.header_position = restuarantStyle.header_position;
+    inputs.banner_radius = restuarantStyle.banner_radius;
     inputs.category_background_color =
       restuarantStyle.category_background_color;
     inputs.banner_image = restuarantStyle?.bannerUpload
@@ -261,9 +262,9 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
           open={isModelOpen}
           onClose={() => setIsModelOpen(false)}
           className={`fixed ${
-            currentLanguage == "en" ? "left-[16px]" : "right-[16px]"
-          } top-[88px] md:top-[104px] ${
-            currentLanguage == "en" ? "md:left-[80px]" : "md:right-[80px]"
+            currentLanguage == "en" ? "left-auto" : "right-auto"
+          } top-auto md:top-auto ${
+            currentLanguage == "en" ? "md:left-auto" : "md:right-auto"
           }`}
         >
           <NewSideBar
@@ -289,33 +290,33 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
             setIsModelOpen(true);
           }}
         />
-        <PrimaryDropDown
-          // handleChange={handleChange}
-          innerClassName="border-none shadow-none"
-          defaultValue={
-            restuarantStyle.template === "template-1"
-              ? t("Template 1")
-              : restuarantStyle.template === "template-2"
-                ? t("Template 2")
-                : restuarantStyle.template === "template-3"
-                  ? t("Template 3")
-                  : " "
-          }
-          dropdownList={[
-            {
-              value: "template-1",
-              text: t("Template 1"),
-            },
-            {
-              value: "template-2",
-              text: t("Template 2"),
-            },
-            {
-              value: "template-3",
-              text: t("Template 3"),
-            },
-          ]}
-        />
+        {/*<PrimaryDropDown*/}
+        {/*  // handleChange={handleChange}*/}
+        {/*  innerClassName="border-none shadow-none"*/}
+        {/*  defaultValue={*/}
+        {/*    restuarantStyle.template === "template-1"*/}
+        {/*      ? t("Template 1")*/}
+        {/*      : restuarantStyle.template === "template-2"*/}
+        {/*        ? t("Template 2")*/}
+        {/*        : restuarantStyle.template === "template-3"*/}
+        {/*          ? t("Template 3")*/}
+        {/*          : " "*/}
+        {/*  }*/}
+        {/*  dropdownList={[*/}
+        {/*    {*/}
+        {/*      value: "template-1",*/}
+        {/*      text: t("Template 1"),*/}
+        {/*    },*/}
+        {/*    {*/}
+        {/*      value: "template-2",*/}
+        {/*      text: t("Template 2"),*/}
+        {/*    },*/}
+        {/*    {*/}
+        {/*      value: "template-3",*/}
+        {/*      text: t("Template 3"),*/}
+        {/*    },*/}
+        {/*  ]}*/}
+        {/*/>*/}
         <div className="flex items-center gap-[8px] cursor-pointer">
           <button
             onClick={() => setIsPreview((prev) => !prev)}

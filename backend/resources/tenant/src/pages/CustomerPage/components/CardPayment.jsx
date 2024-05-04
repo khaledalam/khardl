@@ -23,7 +23,7 @@ const CardPayment = ({
             onClick={() => document.getElementById("my_modal_3").showModal()}
             className="bg-[var(--customer)] text-white font-bold text-center w-full p-2 cursor-pointer"
           >
-            Delete
+            {t("Delete")}
           </li>
         </ul>
       </div>
@@ -39,7 +39,7 @@ const CardPayment = ({
           <div className="w-full h-full flex items-center justify-center gap-3 flex-col">
             <img src={imgThumbUp} alt="ThumbUp" className="" />
             <h3 className="text-[1rem] font-bold text-white">
-              Card have been deleted
+              {t("Card have been deleted")}
             </h3>
           </div>
         </div>

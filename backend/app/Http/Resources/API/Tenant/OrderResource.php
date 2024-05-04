@@ -42,18 +42,19 @@ class OrderResource extends JsonResource
             'own_driver_can_accept' => $this->driver_can_accept,
             'assigned_to_me' => $this->assigned_to_me,
             'time_remain_for_reject' => $this->time_remain_for_reject,
-            'branch' => $this->whenLoaded('branch'),
-            'customer' => $this->whenLoaded('user'),
-            'driver_id' => new DriverResource($this->whenLoaded('driver')),
-            'items' => OrderItemResource::collection($this->whenLoaded('items')),
+        
 
         ];
         if ($request->has('branch')) {
             $data['branch'] = $this->branch;
         }
-        if ($request->has('user')) {
-            $data['user'] = $this->user;
+        if ($request->has('customer')) {
+            $data['customer'] = $this->user;
         }
+        if ($request->has('driver')) {
+            $data['driver_id'] =new DriverResource($this->driver);
+        }
+       
         if ($request->has('items')) {
             $data['items'] = OrderItemResource::collection($this->items);
         }

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Http\Controllers\API\Tenant\Customer\Address\CustomerAddressController;
 use App\Http\Controllers\API\Tenant\LocationController;
 use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 
@@ -14,6 +15,7 @@ use App\Http\Controllers\Web\Tenant\OurServices\OurServicesController;
 use App\Http\Controllers\Web\Tenant\QR\QRController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Http\Controllers\Web\Tenant\Summary\SummaryController;
+use App\Http\Controllers\Web\Tenant\Worker\WorkerController;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantStyle;
 use App\Models\Tenant\RestaurantUser;
@@ -21,6 +23,7 @@ use App\Models\Tenant\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TapController;
@@ -61,6 +64,9 @@ use App\Http\Controllers\API\Tenant\Customer\CardController as CustomerCardContr
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
 use App\Http\Controllers\Web\Tenant\Menu\Item\ItemController as AdminItemController;
+
+use App\Http\Controllers\API\Tenant\V2\Auth\V2_LoginController;
+
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -83,7 +89,7 @@ Route::get('/send-notification', [PushNotificationController::class, 'sendPushNo
 
 
 Route::group([
-    'middleware' => ['tenant', 'web'],
+    'middleware' => ['tenant', 'web','trans_api'],
 ], static function () {
 
     Route::get('/impersonate/{token}', static function ($token) {
@@ -177,13 +183,20 @@ Route::group([
                 Route::get('/service/{coupon}/{type}/check/{number_of_branches?}', 'coupon')->name('service.coupon.check');
             });
             /* Our services page */
+            /* Workers page */
+            Route::middleware('permission:can_modify_and_see_other_workers')
+            ->name('restaurant.')
+            ->controller(WorkerController::class)->group(function () {
+                Route::get('/workers/{branchId}', 'workers')->middleware('permission:can_modify_and_see_other_workers')->name('workers');
+                Route::get('/workers/add/{branchId}', 'addWorker')->middleware('permission:can_modify_and_see_other_workers')->name('get-workers');
+                Route::post('/workers/add/{branchId}', 'generateWorker')->middleware('permission:can_modify_and_see_other_workers')->name('generate-worker');
+                Route::put('/workers/update/{id}', 'updateWorker')->middleware('permission:can_modify_and_see_other_workers')->name('update-worker');
+                Route::get('/workers/edit/{id}', 'editWorker')->middleware('permission:can_modify_and_see_other_workers')->name('edit-worker');
+            });
+            /* Workers page */
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
-            Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
-            Route::get('/workers/add/{branchId}', [RestaurantController::class, 'addWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.get-workers');
-            Route::post('/workers/add/{branchId}', [RestaurantController::class, 'generateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.generate-worker');
-            Route::put('/workers/update/{id}', [RestaurantController::class, 'updateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-worker');
-            Route::get('/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.edit-worker');
+
             Route::resource('drivers', DriverController::class)->middleware('permission:can_edit_and_view_drivers');
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
@@ -263,7 +276,7 @@ Route::group([
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::any('/callback', [TapController::class, 'callback'])->name('tap.callback');
-                Route::delete('/workers/delete/{id}', [RestaurantController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
+                Route::delete('/workers/delete/{id}', [WorkerController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
 
                 Route::post('/restaurant-style', [RestaurantStyleController::class, 'save'])->name('restaurant.restaurant.style.save');
                 Route::post('/customer-style', [CustomerStyleController::class, 'save'])->name('restaurant.customer.style.save');
@@ -297,7 +310,6 @@ Route::group([
         }
 
         Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
-        Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
         Route::get('/cart', static function () {
             $logo = RestaurantStyle::first()?->logo;
             $restaurant_name = Setting::first()->restaurant_name;
@@ -311,6 +323,8 @@ Route::group([
         Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
 
+        Route::post('phone/send-verify', [LoginCustomerController::class, 'sendSMS']);
+        // Route::post('phone/verify', [RegisterController::class, 'verify']);
 
         Route::middleware('auth')->group(function () {
 
@@ -320,16 +334,6 @@ Route::group([
 
 
 
-            Route::middleware('notVerifiedPhone')->group(function () {
-//                Route::get('verification-phone', static function () {
-//                    $setting = Setting::first();
-//                    $restaurant_name = $setting->restaurant_name;
-//                    return view("tenant", compact('restaurant_name'));
-//                })->name("verification-phone");
-//
-                Route::post('phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
-                Route::post('phone/verify', [RegisterController::class, 'verify']);
-            });
 
 
             Route::get('/user', [CustomerOrderController::class, 'user'])->name('customer.user');
@@ -400,6 +404,17 @@ Route::middleware([
 
     // API
     Route::prefix('api')->group(function () {
+
+        // New API endpoints to be placed here
+        Route::prefix('v2')->group(static function () {
+
+            // example:
+            Route::post('logout', [V2_LoginController::class, 'logout']);
+
+
+        });
+
+
         Route::post('login', [APILoginController::class, 'login']);
 
         Route::middleware(['auth:sanctum','ActiveRestaurantAndBranch'])->group(function () {
@@ -450,21 +465,33 @@ Route::middleware([
                     });
                 });
             });
+            /* Customer address */
+            Route::controller(CustomerAddressController::class)->group(function () {
+                Route::post('add-address','create');
+                Route::post('update-address/{address}','update');
+                Route::post('make-as-default/{address}','makeDefault');
+                Route::post('delete-address/{address}','delete');
+                Route::post('get-addresses','index');
+            });
+            /* Customer address */
         });
-        // Route::prefix('tap')->group(function () {
-        //     Route::apiResource('businesses', BusinessController::class)->only([
-        //         'store',
-        //         'show'
-        //     ]);
-        //     Route::apiResource('subscriptions', SubscriptionController::class)->only([
-        //         'store',
-        //         'show'
-        //     ]);
-        //     Route::apiResource('files', FileController::class)->only([
-        //         'store',
-        //         'show'
-        //     ]);
-        // });
+        // Update user in customer app
+        Route::prefix('customer')->group(function () {
+            Route::post('/login', [LoginCustomerController::class, 'loginCustomerOnly']);
+            Route::post('/register', [LoginCustomerController::class, 'registerCustomerOnly']);
+            Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
+            Route::post('/send/sms', [LoginCustomerController::class, 'sendSMS']);
+
+            Route::middleware(['auth:sanctum','customer'])->group(function () {
+                Route::get('/', [CustomerOrderController::class, 'user']);
+                Route::post('/update', [LoginCustomerController::class, 'updateCustomerApp']);
+                Route::post('/verify/phone', [LoginCustomerController::class, 'VerifyCustomerPhone']);
+                Route::get('/orders', [CustomerDataController::class, 'orders']);
+            });
+
+        });
+
+
     });
 });
 

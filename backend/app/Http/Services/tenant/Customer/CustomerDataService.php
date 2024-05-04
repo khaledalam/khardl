@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\tenant\Customer;
 
+use App\Http\Resources\API\Tenant\OrderResource;
 use App\Models\User;
 use App\Traits\APIResponseTrait;
 use Illuminate\Http\Request;
@@ -61,5 +62,9 @@ class CustomerDataService
             'phone',
             'status',
         ]);
+    }
+    public function orders(){
+        $user = getAuth();
+        return OrderResource::collection($user->orders);
     }
 }

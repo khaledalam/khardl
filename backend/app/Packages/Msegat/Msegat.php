@@ -11,7 +11,8 @@ class Msegat
 {
     // TODO @todo remove it and make it dynamic in DB list of allowed number + add it in admin dashboard
     const ALLOWED_NUMBERS = [
-        '966504446721'
+        '966504446721',
+        '966111111111'
     ];
     private static function credentials()
     {

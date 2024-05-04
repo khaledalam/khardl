@@ -198,7 +198,9 @@ return [
         "wallet.bank.documents.0.images.0" => "Bank statement file",
         "wallet.bank.documents.0.issuing_date" => "Bank Issuing date",
         "brand.logo" => "Restaurant Logo",
-        'dob'=>"Date of birth"
+        'dob'=>"Date of birth",
+        "lat" => "Wrong map coordinates",
+        "lng" => "Wrong map coordinates",
     ],
 
 ];

@@ -25,6 +25,8 @@ trait TenantSharedRoutesTrait
                 'policies'=>'policies',
                 'prices'=>'prices',
                 'fqa'=>'fqa',
+                'failed'=>"payment.failed",
+                'success'=>'payment.success'
 
             ],
             'middleware'=>[

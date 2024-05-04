@@ -9,6 +9,7 @@ use App\Models\Tenant\Order;
 use App\Models\Tenant\Branch;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
@@ -33,8 +34,8 @@ class SummaryService
         $total = $allOrders->count();
         $dailySales = $this->getDailySales(clone $completedOrders);
         $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
-        $profitLast7Days = $this->profitDays(7);
-        $profitLast4Months = $this->profitMonths(4);
+        $dailyRevenues = $this->dailyRevenues();
+        $monthlyRevenues = $this->monthlyRevenues();
         $percentageChange = ($averageLast7DaysSales > 0)
             ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
             : (($dailySales > 0) ? 100 : 0);
@@ -55,10 +56,10 @@ class SummaryService
             'dailySales',
             'percentageChange',
             'noOfUsersThisMonth',
-            'profitLast7Days',
             'totalPriceThisMonth',
-            'profitLast4Months',
-            'bestSellingItems'
+            'bestSellingItems',
+            'dailyRevenues',
+            'monthlyRevenues'
         ));
     }
     private function bestSellingItems()
@@ -108,6 +109,20 @@ class SummaryService
             'where_raw' => 'status = "completed"'
         ];
         return new LaravelChart($chart_options);
+    }
+    public function dailyRevenues()
+    {
+        $cacheKey = 'RO_daily_revenues';
+        return Cache::remember($cacheKey, config('application.cache_daily_visitors', 4 * 60 * 60), function () {
+            return $this->profitDays(14);
+        });
+    }
+    public function monthlyRevenues()
+    {
+        $cacheKey = 'RO_monthly_revenues';
+        return Cache::remember($cacheKey, config('application.cache_monthly_visitors', 24 * 60 * 60), function () {
+            return $this->profitMonths(6);
+        });
     }
     private function getCurrentMonthAndYear()
     {

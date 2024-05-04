@@ -61,7 +61,7 @@ const App = () => {
   const location = useLocation();
   const { loading } = useAuthContext();
   const showHeader = !["/complete-register", "/verification-email"].includes(
-    location.pathname,
+    location.pathname
   );
   const showFooter = ![
     "/login",
@@ -93,7 +93,11 @@ const App = () => {
       }}
     >
       <div>
-        <ToastContainer theme="colored" />{" "}
+        <ToastContainer
+          theme="colored"
+          autoClose={1500}
+          hideProgressBar={true}
+        />{" "}
         {showHeader && !loading && <Header />} {/*<Supports />*/} <ScrollUp />
         <div>
           <Routes>

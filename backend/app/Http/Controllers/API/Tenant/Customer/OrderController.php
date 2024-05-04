@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\API\Tenant\Customer;
 
-use App\Models\Tenant\RestaurantUser;
+use Exception;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
 use App\Models\Tenant\Setting;
+use App\Packages\Msegat\Msegat;
 use App\Traits\APIResponseTrait;
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Tenant\RestaurantUser;
+use App\Http\Requests\Tenant\OTPRequest;
 use App\Repositories\Customer\CartRepository;
 use App\Repositories\Customer\OrderRepository;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
-use App\Models\Tenant\PaymentMethod;
+use App\Http\Requests\UpdateCustomerInfoAppRequest;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
-use Exception;
+use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
 
 class OrderController
 {
@@ -97,6 +101,9 @@ class OrderController
             'should_logout' => $shouldLogout
         ], __('Please re-login again'));
     }
+   
+
+
     public function paymentRedirect(OrderRequest $request,CartRepository $cart){
         $request->validate([
             'token_id'=>"string|required" // token id for tap payment
@@ -123,8 +130,7 @@ class OrderController
 
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
                 if(isset($charge['message']['source']['payment_method']) && $charge['message']['source']['payment_method'] == 'APPLE_PAY'){
-                    $message = __('Payment failed, please try again');
-                    $status = false;
+            
 
                     if($charge['message']['status'] == 'CAPTURED'){
                         try {
@@ -132,14 +138,10 @@ class OrderController
                         }catch(Exception $e){
 
                         }
-                        $status = true;
-                        $message = __("The payment was successful, your order is pending");
+                        return route("payment.success");
                     }
 
-                    return route("home",[
-                        'status'=>$status,
-                        'message'=>$message,
-                    ]);
+                    return route("payment.failed");
                 }
                 return $charge['message']['transaction']['url'];
             }
@@ -149,30 +151,22 @@ class OrderController
             \Sentry\captureMessage('failed charge '.$e->getMessage());
         }
   
-        return route("home",[
-            'status'=>false,
-            'message'=>__('Payment failed, please try again')
-        ]);
+        return route("payment.failed");
     }
     public function paymentResponse(Request $request,CartRepository $cart){
         if ($request->tap_id) {
-            $message = __('Payment failed, please try again');
-            $status = false;
+            
             $charge = TapCharge::retrieve($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
                     $cart->trash();
-                    $status = true;
-                    $message = __("The payment was successful, your order is pending");
+                    return redirect()->route("payment.success");
                 }
 
             }
-            return redirect()->route("home",[
-                'status'=>$status,
-                'message'=>$message
-            ]);
+            
         }
-        return redirect()->route("home");
+        return redirect()->route("payment.failed");
 
     }
 

@@ -3,49 +3,37 @@ import SideNavbar from "./components/SideNavbar";
 import NavbarCustomer from "./components/NavbarCustomer";
 import { useSelector, useDispatch } from "react-redux";
 import CustomerDashboard from "./components/CustomerDashboard";
-import CustomerOrder from "./components/CustomerOrder";
+import CustomerOrder from "./components/NewCustomerOrder";
 import CustomerProfile from "./components/CustomerProfile";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import CustomerOrderDetail from "./components/CustomerOrderDetail";
+import CustomerOrderDetail from "./components/NewCustomerOrderDetail";
 import { RiMenuFoldFill } from "react-icons/ri";
-import CustomerPayment from "./components/CustomerPayment";
-import {
-  updateCardsList,
-  updateOrderList,
-} from "../../redux/NewEditor/customerSlice";
+import CustomerPayment from "./components/NewCustomerPayment";
 import AxiosInstance from "../../axios/axios";
 import { useTranslation } from "react-i18next";
 import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
+import { changeStyleDataRestaurant } from "../../redux/editor/styleDataRestaurantSlice";
+import CustomerAddresses from "./components/CustomerAddresses";
 
 export const CustomerPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem);
-  const cardsList = useSelector((state) => state.customerAPI.cardsList);
   const [searchParam] = useSearchParams();
   const [showOrderDetail, setShowOrderDetail] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
 
-  const TABS = {
-    dashboard: t("Dashboard"),
-    orders: t("Orders"),
-    profile: t("Profile"),
-    // payment: t("Payment"), // @TODO: Add it again once payment cards logic finished
-  };
+  const pages = {};
+  pages[t("Dashboard")] = <CustomerDashboard />;
+  pages[t("Orders")] = <CustomerOrder />;
+  pages[t("Profile")] = <CustomerProfile />;
+  pages[t("Addresses")] = <CustomerAddresses />;
+  pages[t("Wallet")] = <CustomerPayment />;
 
   let orderId = searchParam.get("orderId");
 
   console.log("chParam.get(orde >>", orderId);
-
-  useEffect(() => {
-    const isMobile =
-      /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
-      window.innerWidth < 800;
-    setIsMobile(isMobile);
-    fetchResStyleData();
-  }, []);
 
   useEffect(() => {
     if (orderId) {
@@ -57,52 +45,25 @@ export const CustomerPage = () => {
 
   const fetchResStyleData = async () => {
     try {
-      AxiosInstance.get(`restaurant-style`).then((response) =>
-        dispatch(changeRestuarantEditorStyle(response.data?.data)),
+      const restaurantStyleResponse = await AxiosInstance.get(
+        `restaurant-style`
       );
+
+      if (restaurantStyleResponse.data) {
+        dispatch(changeStyleDataRestaurant(restaurantStyleResponse.data?.data));
+        dispatch(
+          changeRestuarantEditorStyle(restaurantStyleResponse.data?.data)
+        );
+      }
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
       console.log(error);
     }
   };
 
-  const fetchOrdersData = async () => {
-    try {
-      const ordersResponse = await AxiosInstance.get(`orders?items&item`);
-
-      console.log("ordersResponse >>>", ordersResponse.data);
-      if (ordersResponse.data) {
-        dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)));
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-    }
-  };
-
-  // useEffect(() => {
-  //   navigate("/dashboard#Dashboard")
-  // }, [])
-
-  const fetchCardsData = async () => {
-    try {
-      const cardsResponse = await AxiosInstance.get(`cards`);
-
-      console.log("cardsResponse >>>", cardsResponse.data);
-      if (cardsResponse.data) {
-        dispatch(updateCardsList(Object.values(cardsResponse?.data?.data)));
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-    }
-  };
   useEffect(() => {
-    fetchOrdersData().then(() => {});
-    fetchCardsData().then(() => {});
+    fetchResStyleData();
   }, []);
-
-  console.log("showOrderDetail :> ", showOrderDetail);
 
   return (
     <div>
@@ -111,32 +72,21 @@ export const CustomerPage = () => {
         setShowMenu={setShowMenu}
         showMenu={showMenu}
       />
-      <div className="flex bg-white h-[calc(100vh-75px)] w-full transition-all">
+      <div className="flex bg-white h-[calc(100vh-85px)] w-full transition-all text-xs sm:text-sm">
         <div
-          className={`transition-all ${
-            isMobile || !showMenu ? "flex-[0] hidden w-0" : "flex-[20%]"
-          } xl:flex-[20%] laptopXL:flex-[17%] overflow-hidden bg-white h-full `}
+          className={`transition-opacity transition-width duration-300 ease-in-out overflow-hidden bg-white h-full hidden ${
+            !showMenu
+              ? "w-0 opacity-0 hidden"
+              : "w-fit xl:w-1/5 laptopXL:w-1/6 opacity-100 md:block"
+          }`}
         >
           <SideNavbar />
         </div>
-        <div
-          className={` transition-all ${
-            isMobile ? "flex-[100%] w-full" : "flex-[80%]"
-          } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll`}
-        >
-          {t(activeNavItem) === TABS.dashboard && !showOrderDetail ? (
-            <CustomerDashboard />
-          ) : t(activeNavItem) === TABS.orders && !showOrderDetail ? (
-            <CustomerOrder />
-          ) : t(activeNavItem) === TABS.profile && !showOrderDetail ? (
-            <CustomerProfile />
-          ) : t(activeNavItem) === TABS.payment && !showOrderDetail ? (
-            <CustomerPayment cardsList={cardsList} />
-          ) : (
-            <></>
-          )}
-          {showOrderDetail && orderId && (
+        <div className="transition-all flex-[100%] w-full md:flex-[80%] xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll rounded-xl m-3">
+          {showOrderDetail ? (
             <CustomerOrderDetail orderId={orderId} />
+          ) : (
+            pages[t(activeNavItem)]
           )}
         </div>
       </div>

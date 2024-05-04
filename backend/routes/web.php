@@ -3,6 +3,8 @@
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use App\Http\Controllers\Web\Central\Admin\NotificationReceipt\NotificationReceiptController;
 use App\Http\Controllers\Web\Central\GlobalPromoterController;
+use App\Models\ROCustomerAppSub;
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -66,15 +68,32 @@ Route::get('/health', static function (){
         'mobile_app_orders_android_latest_versionName' => '1.3',
         'mobile_app_orders_android_force_update' => false,
         'mobile_app_orders_ios_latest_CURRENT_PROJECT_VERSION' => '1.6',
-        'mobile_app_orders_ios_force_update' => false
+        'mobile_app_orders_ios_force_update' => false,
+
+        'mobile_app_customer_android_latest_versionCode' => 1,
+        'mobile_app_customer_android_latest_versionName' => '1.0',
+        'mobile_app_customer_android_force_update' => false,
+        'mobile_app_customer_ios_latest_CURRENT_PROJECT_VERSION' => '1.0',
+        'mobile_app_customer_ios_force_update' => false,
+
+        'mobile_app_driver_android_latest_versionCode' => 1,
+        'mobile_app_driver_android_latest_versionName' => '1.0',
+        'mobile_app_driver_android_force_update' => false,
+        'mobile_app_driver_ios_latest_CURRENT_PROJECT_VERSION' => '1.0',
+        'mobile_app_driver_ios_force_update' => false
 
     ]);
 })->name('health');
 
 Route::get('/test', function (){
-     return response()->json([
-         'status' => 'test'
-     ]);
+    $tenant = '93a1d87b-ca97-40bc-879b-ee6ea6c1ef6b';
+    $tenant = Tenant::find($tenant);
+    $app = null;
+    $tenant->run(function() use(&$app){
+        $app = ROCustomerAppSub::first();
+        $app->load(['user']);
+    });
+    return view('emails.customer_app_is_ready',compact('app'));
 })->name('test');
 
 

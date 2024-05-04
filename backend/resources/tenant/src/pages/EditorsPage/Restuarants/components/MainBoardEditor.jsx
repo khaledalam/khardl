@@ -46,7 +46,7 @@ const MainBoardEditor = ({
   setActiveDesignSection,
 }) => {
   const restuarantEditorStyle = useSelector(
-    (state) => state.restuarantEditorStyle,
+    (state) => state.restuarantEditorStyle
   );
   const [isVideo, setIsVideo] = useState(false);
   const { t } = useTranslation();
@@ -128,6 +128,7 @@ const MainBoardEditor = ({
     menu_category_radius,
     menu_section_background_color,
     menu_section_radius,
+    banner_radius,
   } = restuarantEditorStyle;
 
   const [listofBannerImages, setListofBannerImages] = useState([]);
@@ -136,12 +137,22 @@ const MainBoardEditor = ({
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
+
+  useEffect(() => {
+    setListofBannerImages(
+      banner_images.map((image) => {
+        return {
+          croppedImage: `${image.url}`,
+        };
+      })
+    );
+  }, [banner_images]);
   const showCroppedImage = async () => {
     try {
       const croppedImage = await getCroppedImg(
         uncroppedImage,
         croppedAreaPixels,
-        rotation,
+        rotation
       );
       console.log("donee", { croppedImage });
 
@@ -163,7 +174,7 @@ const MainBoardEditor = ({
       const croppedImage = await getCroppedImg(
         uncroppedImage,
         croppedAreaPixels,
-        rotation,
+        rotation
       );
       setListofBannerImages([...listofBannerImages, { croppedImage }]);
       console.log("donee", { croppedImage });
@@ -178,23 +189,23 @@ const MainBoardEditor = ({
     }
   };
   const selectedCategory = useSelector(
-    (state) => state.categoryAPI.selected_category,
+    (state) => state.categoryAPI.selected_category
   );
   const cartItemsCount = useSelector(
-    (state) => state.categoryAPI.cartItemsCount,
+    (state) => state.categoryAPI.cartItemsCount
   );
   const uploadLogo = useSelector(
-    (state) => state.restuarantEditorStyle.logoUpload,
+    (state) => state.restuarantEditorStyle.logoUpload
   );
 
   const selectedMediaId = useSelector(
-    (state) => state.restuarantEditorStyle.selectedMediaId,
+    (state) => state.restuarantEditorStyle.selectedMediaId
   );
 
   const [uploadSingleBanner, setUploadSingleBanner] = useState(null);
   const [uploadedSingleBanner, setUploadedSingleBanner] = useState(null);
 
-  const handleLogoUpload = (event) => {
+  const handleLogoUpload = (event, fileInputRef) => {
     event.preventDefault();
 
     const selectedLogo = event.target.files[0];
@@ -202,7 +213,9 @@ const MainBoardEditor = ({
       setUncroppedImage(URL.createObjectURL(selectedLogo));
       setIsCropModalOpened(true);
       setImgType("logoUpload");
-      dispatch(logoUpload(URL.createObjectURL(selectedLogo)));
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""; // Clear the file input
+      }
     }
   };
 
@@ -240,7 +253,7 @@ const MainBoardEditor = ({
           selectedCategoryAPI({
             name: categories[0]?.name,
             id: categories && categories[0]?.id,
-          }),
+          })
         );
       }
     } else {
@@ -248,7 +261,7 @@ const MainBoardEditor = ({
         selectedCategoryAPI({
           name: categories[0]?.name,
           id: categories && categories[0]?.id,
-        }),
+        })
       );
     }
     if (banner_type == "slider" && banner_images.length > 0) {
@@ -257,7 +270,7 @@ const MainBoardEditor = ({
           return {
             croppedImage: `${image.url}`,
           };
-        }),
+        })
       );
     }
     if (banner_type == "one-photo" && banner_image) {
@@ -270,7 +283,7 @@ const MainBoardEditor = ({
     activeSubitem != null &&
       console.log(
         "now 2 : ",
-        navItems[activeSection].subItems[activeSubitem].title,
+        navItems[activeSection].subItems[activeSubitem].title
       );
   }, [
     language,
@@ -296,8 +309,8 @@ const MainBoardEditor = ({
   const removeUploadedImage = (index) => {
     console.log("index", index);
     if (index >= 0 && index < listofBannerImages.length) {
-      console.log("log list", listofBannerImages.splice(index, 1));
-      setListofBannerImages(listofBannerImages.splice(index, 1));
+      // console.log("log list", listofBannerImages.splice(index, 1));
+      setListofBannerImages(listofBannerImages.filter((_, id) => id !== index));
       console.log("list of uploaded images - after", listofBannerImages);
       if (listofBannerImages.length < 2) {
         dispatch(bannerType("one-photo"));
@@ -407,10 +420,11 @@ const MainBoardEditor = ({
               ? navItems[activeSection].subItems[activeSubitem].title
               : null
           }
+          handleLogoUpload={handleLogoUpload}
         />
       )}
       {/* logo */}
-      <div
+      {/* <div
         className={`w-full h-[80px] bg-white rounded-xl flex ${
           logo_alignment === "center"
             ? "items-center justify-center"
@@ -490,7 +504,7 @@ const MainBoardEditor = ({
             </div>
           )}
         </div>
-      </div>
+      </div> */}
       {/* banner */}
       {!isLoading ? (
         listofBannerImages?.length > 1 ? (
@@ -500,6 +514,7 @@ const MainBoardEditor = ({
                 navItems[activeSection]?.title === "Banner" &&
                 "shadow-inner border-[#C0D123] border-[2px] rounded-[10px]"
               }`}
+              style={{ borderRadius: banner_radius + "px" }}
             >
               {/* <Slider banner_images={banner_images} /> */}
               <Sliderr
@@ -561,10 +576,10 @@ const MainBoardEditor = ({
             menu_category_position === "left"
               ? "order-1 w-[33%]"
               : menu_category_position === "right"
-                ? "order-2 w-[33%]"
-                : menu_category_position === "center"
-                  ? "w-full"
-                  : "w-[33%]"
+              ? "order-2 w-[33%]"
+              : menu_category_position === "center"
+              ? "w-full"
+              : "w-[33%]"
           } `}
         >
           <EditorSlider
@@ -588,10 +603,10 @@ const MainBoardEditor = ({
               menu_category_position === "left"
                 ? "order-2 w-[75%]"
                 : menu_category_position === "right"
-                  ? "order-1 w-[75%]"
-                  : menu_category_position === "center"
-                    ? "w-full max-w-[710px]"
-                    : "w-[75%]"
+                ? "order-1 w-[75%]"
+                : menu_category_position === "center"
+                ? "w-full max-w-[710px]"
+                : "w-[75%]"
             } py-[32]
                         ${
                           navItems[activeSection]?.title ===
@@ -695,7 +710,7 @@ const MainBoardEditor = ({
                             ))}
                           </div>
                         </div>
-                      ),
+                      )
                   )}
               </div>
             </div>
@@ -709,10 +724,10 @@ const MainBoardEditor = ({
           socialMediaIcons_alignment === "center"
             ? "items-center justify-center"
             : socialMediaIcons_alignment === "left"
-              ? "items-center justify-start"
-              : socialMediaIcons_alignment === "right"
-                ? "items-center justify-end"
-                : ""
+            ? "items-center justify-start"
+            : socialMediaIcons_alignment === "right"
+            ? "items-center justify-end"
+            : ""
         }
 
                 ${
@@ -784,10 +799,10 @@ const MainBoardEditor = ({
           footer_alignment === "center"
             ? "items-center justify-center"
             : footer_alignment === "left"
-              ? "items-center justify-start"
-              : footer_alignment === "right"
-                ? "items-center justify-end"
-                : ""
+            ? "items-center justify-start"
+            : footer_alignment === "right"
+            ? "items-center justify-end"
+            : ""
         }
                 ${
                   navItems[activeSection]?.title === "Footer Editor" &&
@@ -838,13 +853,17 @@ const MainBoardEditor = ({
         <div
           class="modal  fixed w-full h-full top-0 left-0 flex items-center justify-center"
           style={{ opacity: 1, pointerEvents: "all" }}
+          onClick={() => setIsCropModalOpened(false)}
         >
           <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
           <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
             <div class="modal-content py-4 text-left px-6">
               <div class="flex justify-between items-center pb-3">
                 <p class="text-2xl font-bold">Crop Image!!!</p>
-                <div class="modal-close cursor-pointer z-50">
+                <div
+                  class="modal-close cursor-pointer z-50"
+                  onClick={() => setIsCropModalOpened(false)}
+                >
                   <svg
                     class="fill-current text-black"
                     xmlns="http://www.w3.org/2000/svg"
@@ -856,7 +875,7 @@ const MainBoardEditor = ({
                   </svg>
                 </div>
               </div>
-              <div className={"cropper-container"}>
+              <div className={"cropper-container bg-transparent"}>
                 <Cropper
                   image={uncroppedImage}
                   crop={crop}
@@ -912,7 +931,7 @@ const MainBoardEditor = ({
                   </div>
                 </div>
               ) : (
-                <div className={"cropper-container"}>
+                <div className={"cropper-container bg-transparent"}>
                   <Cropper
                     image={uncroppedImage}
                     crop={crop}
@@ -989,7 +1008,7 @@ const MainBoardEditor = ({
                   onClick={() => {
                     listofBannerImages.length == 1 &&
                       setUploadedSingleBanner(
-                        listofBannerImages[0].croppedImage,
+                        listofBannerImages[0].croppedImage
                       );
                     setIsBannerModalOpened(false);
                     listofBannerImages.length == 0 &&
@@ -1004,8 +1023,8 @@ const MainBoardEditor = ({
                             return {
                               url: image.croppedImage,
                             };
-                          }),
-                        ),
+                          })
+                        )
                       );
                       dispatch(bannerType("slider"));
                     }

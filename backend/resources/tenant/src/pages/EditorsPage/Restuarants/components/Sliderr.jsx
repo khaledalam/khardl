@@ -1,50 +1,56 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import RightIcon from "../../../../assets/rightIcon.png";
-import LeftIcon from "../../../../assets/leftIcon.png";
+import { useSelector } from "react-redux";
 
 const Sliderr = ({ banner_images, setIsBannerModalOpened }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
-  const showNextImage = () => {
-    setImageIndex((index) => {
-      if (index === banner_images.length - 1) {
-        return 0;
-      }
-      return index + 1;
-    });
+  const language = useSelector((state) => state.languageMode.languageMode);
+  const banner_radius = useSelector(
+    (state) => state.restuarantEditorStyle.banner_radius
+  );
+  const imageChange = () => {
+    setImageIndex((prevIndex) => (prevIndex + 1) % banner_images.length);
   };
+  useEffect(() => {
+    const intervalId = setInterval(imageChange, 3000);
+    return () => clearInterval(intervalId);
+  }, [banner_images]);
 
-  const showPreviousImage = () => {
-    setImageIndex((index) => {
-      if (index === 0) {
-        return banner_images.length - 1;
-      }
-      return index - 1;
-    });
-  };
+  useEffect(() => {
+    if (language === "en") {
+      setImageIndex(0);
+    } else {
+      setImageIndex(banner_images.length - 1);
+    }
+  }, [language]);
+
   return (
-    <div className="h-full rounded-[10px] relative flex flex-col justify-center">
-      <div className="flex w-full h-full rounded-[10px] overflow-x-hidden">
+    <div
+      className="h-full rounded-[10px] relative flex flex-col justify-center"
+      style={{ borderRadius: banner_radius + "px" }}
+    >
+      <div
+        style={{ borderRadius: banner_radius + "px" }}
+        className="flex w-full h-full rounded-[10px] overflow-x-hidden"
+      >
         {banner_images.map((image, index) => (
           <img
             key={index}
             src={image.croppedImage}
             alt="banner"
-            className=" aspect-[2/1] w-full rounded-[10px] object-cover block shrink-0 grow-0 ease-in-out duration-300"
-            style={{ translate: `${-100 * imageIndex}%` }}
+            className="flex aspect-[2/1] w-full rounded-[10px] object-cover shrink-0 grow-0 transition-transform duration-500 ease-in-out"
+            style={{
+              transform: `translateX(${language === "en" ? "-" : ""}${
+                imageIndex * 100
+              }%)`,
+              borderRadius: banner_radius + "px",
+            }}
             onClick={() => setIsBannerModalOpened(true)}
           />
         ))}
       </div>
-      {/*
-            <button className="w-[25px] h-[25px] bg-white rounded-full flex justify-center items-center absolute left-[16px] hover:cursor-pointer">
-                <img src={LeftIcon} alt="left" onClick={showPreviousImage} />
-            </button>
-            <button className="w-[25px] h-[25px] bg-white rounded-full flex justify-center items-center absolute right-[16px] hover:cursor-pointer">
-                <img src={RightIcon} alt="right" onClick={showNextImage} />
-            </button> */}
-      <div className="absolute bottom-[8px] left-[50%] translate-x-[-50%] flex gap-[3px] bg-black/[0.1] rounded-[50px] px-[35px] py-[6px]">
-        {banner_images.map((image, index) => (
+      <div className="absolute bottom-[8px] left-[50%] translate-x-[-50%] flex gap-[3px] bg-opacity-0 rounded-[50px] px-[35px] py-[6px] scale-150 hover:bg-opacity-50 transition-all">
+        {banner_images.map((_, index) => (
           <button onClick={() => setImageIndex(index)} key={index}>
             {index == imageIndex ? (
               <div className="w-[5px] h-[5px] bg-black/[0.3] rounded-full" />

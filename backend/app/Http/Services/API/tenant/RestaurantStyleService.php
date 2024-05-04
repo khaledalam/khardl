@@ -20,11 +20,14 @@ class RestaurantStyleService
         RestaurantStyle::updateOrCreate([
             'id' => 1
         ], $this->data($request));
+
+
         return $this->sendResponse(null, __('Restaurant style saved successfully.'));
     }
     private function data($request)
     {
         $data = [
+            'version' => generateToken(7),
             'id' => 1,
             'logo_alignment' => $request->logo_alignment,
             'logo_shape' => $request->logo_shape,
@@ -44,6 +47,7 @@ class RestaurantStyleService
             'page_category_color' => $request->page_category_color,
             'header_color' => $request->header_color,
             'headerPosition' => $request->headerPosition,
+            'banner_radius' => $request->banner_radius,
             'footer_color' => $request->footer_color,
             'price_color' => $request->price_color,
             'text_fontFamily' => $request->text_fontFamily,

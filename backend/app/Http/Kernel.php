@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CORS;
 use App\Http\Middleware\Driver;
+use App\Http\Middleware\Visitors;
 use App\Http\Middleware\Worker;
 use App\Http\Middleware\Restaurant;
 use App\Http\Middleware\ForceLogOut;
@@ -39,6 +40,7 @@ use App\Http\Middleware\EnsureEmailIsNotVerified;
 use App\Http\Middleware\IsBusinessFilesSubmitted;
 use Spatie\Permission\Middlewares\RoleMiddleware;
 use App\Http\Middleware\ActiveRestaurantAndBranch;
+use App\Http\Middleware\Customer;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -125,6 +127,7 @@ class Kernel extends HttpKernel
         'restaurant' => Restaurant::class,
         'worker' => Worker::class,
         'driver' => Driver::class,
+        'customer' => Customer::class,
         'restaurantOrWorker' => RestaurantOrWorker::class,
         'restaurantLive' => RestaurantLive::class,
         'restaurantSubLive' => RestaurantSubLive::class,
@@ -152,7 +155,8 @@ class Kernel extends HttpKernel
         // 'isLeadNotSubmitted'=>isLeadNotSubmitted::class,
         'isBusinessSubmitted'=>IsBusinessSubmitted::class,
         "trans_api"=>LocalizationApi::class,
-        'ActiveRestaurantAndBranch'=>ActiveRestaurantAndBranch::class
+        'ActiveRestaurantAndBranch'=>ActiveRestaurantAndBranch::class,
+        'visitors'=> Visitors::class,
     ];
 
 }

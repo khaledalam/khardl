@@ -19,14 +19,12 @@ const CustomerProfile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
-  const address = useSelector(
-    (state) => state.customerAPI.address?.addressValue,
-  );
   const customerAddress = useSelector((state) => state.customerAPI.address);
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const userProfile =
     JSON.parse(localStorage.getItem("userProfileInfo")) || null;
@@ -54,13 +52,13 @@ const CustomerProfile = () => {
             lng: profileResponse.data?.data?.address?.lng,
             addressValue:
               profileResponse.data?.data?.address?.addressValue ?? t("N/A"),
-          }),
+          })
         );
         userProfileInfo["address"] = profileResponse.data?.data?.address;
 
         localStorage.setItem(
           "userProfileInfo",
-          JSON.stringify(userProfileInfo),
+          JSON.stringify(userProfileInfo)
         );
       }
     } catch (error) {
@@ -102,10 +100,6 @@ const CustomerProfile = () => {
     fetchProfileData().then((r) => null);
   }, []);
 
-  const saveProfile = async () => {
-    setModalOpen(true);
-  };
-
   const handleSaveProfile = async () => {
     setModalOpen(false);
     if (isLoading) return;
@@ -146,13 +140,13 @@ const CustomerProfile = () => {
 
   console.log("isDisabled", isDisabled);
   return (
-    <div className="p-6">
-      <div className="flex items-center gap-3">
-        <img src={profileIcon} alt="dashboard" className="" />
-        <h3 className="text-lg font-medium">{t("Profile")}</h3>
+    <div className="m-4 mt-8 md:m-12 mb-5">
+      <div className="flex flex-row items-center gap-3 mb-8">
+        <img src={profileIcon} alt="dashboard" className="w-8" />
+        <h3 className="text-3xl font-medium">{t("Profile")}</h3>
       </div>
-      <h3 className="text-lg my-5 ">{t("Profile Details")}</h3>
-      <div className="w-full bg-white shadow-md  min-h-[300px] h-full p-4">
+      {/* <h3 className="text-lg my-5 ">{t("Profile Details")}</h3> */}
+      <div className="w-full bg-white shadow-md rounded-md  min-h-[300px] h-full p-4">
         <div className="w-full lg:w-1/3 flex flex-col gap-4">
           <PrimaryTextInput
             id={"first-name"}
@@ -160,7 +154,7 @@ const CustomerProfile = () => {
             label={t("First name")}
             value={firstName}
             placeholder={t("First name")}
-            onChange={(e) => setFirstName(e.target.value)}
+            onChange={(value) => setFirstName(value)}
           />
           <PrimaryTextInput
             id={"last-name"}
@@ -168,7 +162,7 @@ const CustomerProfile = () => {
             label={t("Last name")}
             placeholder={t("Last name")}
             value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={(value) => setLastName(value)}
           />
           <PrimaryTextInput
             id={"phone-number"}
@@ -177,7 +171,7 @@ const CustomerProfile = () => {
             label={t("Phone")}
             placeholder={t("Phone")}
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(value) => setPhone(value)}
           />
         </div>
       </div>
@@ -186,25 +180,32 @@ const CustomerProfile = () => {
         <div className="w-full flex flex-col gap-4">
           <Places
             inputStyle={
-              "input border-[var(--customer)] !w-full lg:!w-1/3 hover:border-[var(--customer)] focus-visible:border-[var(--customer)] outline-0 outline-none focus-visible:outline-none w-full"
+              "input bg-white w-full outline-none focus-visible:outline-none p-2 text-sm placeholder:text-neutral-500 h-fit text-neutral-900  rounded-2xl border border-neutral-700 hover:border-black focus-visible:border-black disabled:border-neutral-700"
             }
           />
         </div>
       </div>
-      <div className="flex w-full items-center justify-end mt-10 mb-4">
+      <div className="flex w-full items-center justify-between mt-6 mb-4 flex-wrap">
+        <button
+          onClick={() => setDeleteModalOpen(true)}
+          disabled={isDisabled || isLoading}
+          className="cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border font-['Plus Jakarta Sans'] leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 w-fit transition-all shadow-md"
+        >
+          {t("Delete my account")}
+        </button>
         <div className="flex items-center gap-5">
           <button
-            onClick={fetchProfileData}
-            className="w-[85px] p-2 !border border-solid border-[var(--customer)] bg-white outline-none rounded-lg"
-          >
-            {t("Cancel")}
-          </button>
-          <button
-            onClick={saveProfile}
+            onClick={() => setModalOpen(true)}
             disabled={isDisabled || isLoading}
-            className="w-[85px] p-2 bg-[var(--customer)] disabled:cursor-not-allowed disabled:bg-neutral-400 outline-none text-white rounded-lg"
+            className="cursor-pointer text-white bg-green-900 rounded-lg px-4 py-2.5 border font-['Plus Jakarta Sans'] leading-[18px] hover:bg-white hover:border-green-900 hover:text-green-900 w-32 transition-all shadow-md"
           >
             {t("Save")}
+          </button>
+          <button
+            onClick={fetchProfileData}
+            className="w-32 cursor-pointer text-white bg-gray-900 rounded-lg px-4 py-2.5 border  leading-[18px] hover:bg-white hover:border-gray-900 hover:text-gray-900 transition-all shadow-md"
+          >
+            {t("Cancel")}
           </button>
         </div>
       </div>
@@ -213,6 +214,15 @@ const CustomerProfile = () => {
         message={t("Are You sure you want to save profile changes?")}
         onClose={() => setModalOpen(false)}
         onConfirm={handleSaveProfile}
+      />
+      <ConfirmationModal
+        isOpen={deleteModalOpen}
+        message={t("Are You sure you want to delete your profile?")}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={() => {
+          toast.success(t("The request sent successfully."));
+          setDeleteModalOpen(false);
+        }}
       />
     </div>
   );

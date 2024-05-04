@@ -100,7 +100,7 @@ const ProductItem = ({
   const { width } = useWindowSize();
 
   const restuarantEditorStyle = useSelector(
-    (state) => state.restuarantEditorStyle,
+    (state) => state.restuarantEditorStyle
   );
 
   const {
@@ -249,6 +249,15 @@ const ProductItem = ({
   }, [selectedRadio, selectedDropdown]);
 
   const handleCheckboxChange = (checkbox_index, index, event) => {
+    if (
+      selectedCheckbox[checkbox_index]?.length >=
+        parseInt(checkbox_input_maximum_choices[checkbox_index]) &&
+      event.target.checked
+    ) {
+      event.target.checked = false;
+      return;
+    }
+
     let isChecked = event.target.checked;
     let updatedCheckbox = [];
     if (selectedCheckbox.length > 0) {
@@ -413,7 +422,7 @@ const ProductItem = ({
           console.log(responseData);
           localStorage.setItem(
             "user-info",
-            JSON.stringify(responseData?.data?.user),
+            JSON.stringify(responseData?.data?.user)
           );
 
           console.log(">>> herer ", responseData?.data?.user?.status);
@@ -421,14 +430,14 @@ const ProductItem = ({
           if (responseData.data.user.status === "inactive") {
             sessionStorage.setItem(
               PREFIX_KEY + "phone",
-              responseData?.data?.user?.phone,
+              responseData?.data?.user?.phone
             );
             setStatusCode(HTTP_NOT_VERIFIED);
             navigate("/verification-phone");
           } else if (responseData.data.user.status === "active") {
             sessionStorage.setItem(
               PREFIX_KEY + "phone",
-              responseData?.data?.user?.phone,
+              responseData?.data?.user?.phone
             );
             setStatusCode(HTTP_OK);
             navigate("/verification-phone");
@@ -667,7 +676,7 @@ const ProductItem = ({
                           <textarea
                             type="text"
                             placeholder={t(
-                              "e.g. Please make the meat super tender.",
+                              "e.g. Please make the meat super tender."
                             )}
                             value={feedback}
                             onChange={(e) => setFeedback(e.target.value)}
@@ -698,7 +707,7 @@ const ProductItem = ({
                           {t("SAR")}
                         </span>{" "}
                         <span className="text-base font-medium">
-                          {totalPrice && finalPrice.toFixed(3)}
+                          {totalPrice && finalPrice.toFixed(2)}
                         </span>
                       </div>
                       <div className="flex items-center justify-between cursor-pointer w-[120px] h-8 bg-orange-100 bg-opacity-20 rounded-lg px-[7.89px]">
@@ -760,7 +769,11 @@ const ProductItem = ({
                                           </h3>
                                           <span className="text-[12px] mb-[8px]">
                                             {t("Maximum number of choises: ")}
-                                            {checkbox_input_maximum_choices}
+                                            {
+                                              checkbox_input_maximum_choices[
+                                                checkbox_idx
+                                              ]
+                                            }
                                           </span>
                                         </>
                                       )}
@@ -785,7 +798,7 @@ const ProductItem = ({
                                                   item.price === 0
                                                     ? t("Free")
                                                     : `${Number(
-                                                        item?.price,
+                                                        item?.price
                                                       )} ${t("SAR")}`
                                                 }
                                                 isCheckbox
@@ -793,15 +806,15 @@ const ProductItem = ({
                                                   handleCheckboxChange(
                                                     checkbox_idx,
                                                     idx,
-                                                    e,
+                                                    e
                                                   )
                                                 }
                                               />
-                                            ),
+                                            )
                                           )}
                                       </div>
                                     </div>
-                                  ),
+                                  )
                                 )}
 
                               {/* selection  */}
@@ -844,7 +857,7 @@ const ProductItem = ({
                                                   item.price === 0
                                                     ? t("Free")
                                                     : `${Number(
-                                                        item?.price,
+                                                        item?.price
                                                       )} ${t("SAR")}`
                                                 }
                                                 isRadio
@@ -852,15 +865,15 @@ const ProductItem = ({
                                                   handleRadioChange(
                                                     selection_idx,
                                                     idx,
-                                                    e,
+                                                    e
                                                   )
                                                 }
                                               />
-                                            ),
+                                            )
                                           )}
                                       </div>
                                     </div>
-                                  ),
+                                  )
                                 )}
 
                               {/* dropdown */}
@@ -921,17 +934,17 @@ const ProductItem = ({
                                                     onChange={(e) =>
                                                       handleDropdownChange(
                                                         dropdown_idx,
-                                                        Number(e.target.value),
+                                                        Number(e.target.value)
                                                       )
                                                     }
                                                   />
                                                 );
                                               }
-                                            },
+                                            }
                                           )}
                                       </div>
                                     </div>
-                                  ),
+                                  )
                                 )}
                             </div>
                           </div>
@@ -975,7 +988,7 @@ const ProductItem = ({
                 {(checkboxItems[0]?.length > 0 ||
                   radioItems[0]?.length > 0 ||
                   dropdownItems[0]?.length > 0) && (
-                  <div className="px-6 sm:pl-[30px] sm:pr-10 my-4 sm:h-[550px] w-full">
+                  <div className="px-6 sm:pl-[30px] sm:pr-10 my-4 sm:h-[550px] w-full overflow-auto">
                     <div className="flex flex-col gap-5 py-4 divide-y">
                       {/* checkbox */}
                       {checkbox_input_titles &&
@@ -993,7 +1006,7 @@ const ProductItem = ({
                                 </h3>
                                 <span className="text-[10px] mb-2 inline-block">
                                   {t("Maximum number of choises: ")}
-                                  {checkbox_input_maximum_choices}
+                                  {checkbox_input_maximum_choices[checkbox_idx]}
                                 </span>
                               </>
                             )}
@@ -1024,11 +1037,11 @@ const ProductItem = ({
                                         handleCheckboxChange(
                                           checkbox_idx,
                                           idx,
-                                          e,
+                                          e
                                         )
                                       }
                                     />
-                                  ),
+                                  )
                                 )}
                             </div>
                           </div>
@@ -1114,13 +1127,13 @@ const ProductItem = ({
                                           onChange={(e) =>
                                             handleDropdownChange(
                                               dropdown_idx,
-                                              Number(e.target.value),
+                                              Number(e.target.value)
                                             )
                                           }
                                         />
                                       );
                                     }
-                                  },
+                                  }
                                 )}
                             </div>
                           </div>

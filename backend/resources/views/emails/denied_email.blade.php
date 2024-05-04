@@ -14,7 +14,6 @@
   <meta name="x-apple-disable-message-reformatting">
   <!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
   <title></title>
-  
     <style type="text/css">
       @media only screen and (min-width: 520px) {
   .u-row {
@@ -137,7 +136,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 2px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><span><strong>Rejected</strong></span></span></span></h1>
+    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><span><strong>{{ __('emails.denied_message.title') }}</strong></span></span></span></h1>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -171,8 +170,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-family: 'Cabin',sans-serif; font-size: 9px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <h1><strong>Dear {{ $user->first_name }},</strong></h1>
-  </div>
+     <h1><strong>{{ __('emails.denied_message.content.intro', ['firstName' => $user->first_name]) }}</strong></h1>
 
       </td>
     </tr>
@@ -185,7 +183,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p style="color: #000000; text-align: -webkit-center; white-space: normal; background-color: #ffffff; line-height: 160%;">We regret to inform you that your account request has been rejected. Our team has reviewed your information and determined that it does not meet our criteria for approval at this time. Reason for Denial: Upon careful consideration, we have found that certain information provided does not align with our requirements or guidelines</p></h4>
+    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p style="color: #000000; text-align: -webkit-center; white-space: normal; background-color: #ffffff; line-height: 160%;">{{ __('emails.denied_message.content.denied_reason') }}</p></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -199,7 +197,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Reasons: </strong></p>
+  <p style="line-height: 140%;"><strong>{{ __('emails.denied_message.content.reasons') }}</strong></p>
   </div>
 
       </td>
@@ -213,9 +211,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <ul style="box-sizing: border-box; padding-left: 2rem; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">@foreach($reasons as $reason)</ul>
-<ul style="box-sizing: border-box; padding-left: 2rem; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">{{$reason}}</ul>
-<ul style="box-sizing: border-box; padding-left: 2rem; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">@endforeach</ul>
+    <ul style="box-sizing: border-box; padding-left: 2rem; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">@foreach($reasons as $reason) {{$reason}} @endforeach</ul>
   </div>
 
       </td>
@@ -229,8 +225,8 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p style="color: #000000; text-align: -webkit-center; white-space: normal; background-color: #ffffff; line-height: 160%;"><strong>Next Steps:</strong><br />We understand that you may need to update or modify certain details in order to meet our criteria. To proceed further, please click on the button below to access your account and make the necessary changes If you have any questions or need assistance, please don't hesitate to reach out to our support team. We appreciate your understanding and cooperation</p>
-<div> </div></h4>
+  <p style="color: #000000; text-align: -webkit-center; white-space: normal; background-color: #ffffff; line-height: 160%;"><strong>{{ __('emails.denied_message.content.next_steps') }}</strong><br />{{ __('emails.denied_message.content.next_steps_description') }}</p>
+<div> &nbsp;</div></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -247,7 +243,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 <div align="center">
   <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ url('/') }}" style="height:40px; v-text-anchor:middle; width:182px;" arcsize="27.5%"  stroke="f" fillcolor="#c2da0a"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
     <a href="{{ url('/') }}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #c2da0a; border-radius: 11px;-webkit-border-radius: 11px; -moz-border-radius: 11px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 17px;">
-      <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 20.4px;">Proceed to Update</span></span>
+    <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 20.4px;">{{ __('emails.denied_message.buttons.proceed_button') }}</span></span>
     </a>
     <!--[if mso]></center></v:roundrect><![endif]-->
 </div>
@@ -283,7 +279,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 16px 16px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-size: 13px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><em>This email was sent from an email address that can't receive emails. Please don't reply to this email.</em></p>
+  <p style="line-height: 140%;"><em>{{ __('emails.denied_message.content.email_note') }}</em></p>
   </div>
 
       </td>
