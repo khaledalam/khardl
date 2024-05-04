@@ -180,42 +180,54 @@
                     </div>
                     <!--end::Card widget 5-->
                 </div>
-                <div class="col-md-9">
-                    <!--begin::Card widget 4-->
-                    <div class="card card-flush h-md-100 mb-5 mb-xl-10">
-                        <!--begin::Card body-->
-                        <div class="card-body pt-2 pb-4 d-flex align-items-center">
-                            <div class="container">
-                                <div class="card">
-                                    <div class="card-body p-1">
-                                        <h1>{{ $profitMonths->options['chart_title'] }}</h1>
-                                        {!! $profitMonths->renderHtml() !!}
-                                    </div>
-                                </div>
+                <div class="col-md-9 position-relative">
+                    <div class="row">
+                        <div class="col-md-2 filtration">
+                            <div class="mb-4">
+                                <select class="form-select" id="filter_range">
+                                    <option value="daily" selected>{{ __('Daily') }}</option>
+                                    <option value="monthly">{{ __('Monthly') }}</option>
+                                </select>
                             </div>
                         </div>
-                        <!--end::Card body-->
-                    </div>
-                    <!--end::Card widget 4-->
-                </div>
-                <div class="col-md-12">
-                    <!--begin::Card widget 4-->
-                    <div class="card card-flush h-md-100 mb-5 mb-xl-10">
-                        <!--end::Header-->
-                        <!--begin::Card body-->
-                        <div class="card-body pt-2 pb-4 d-flex align-items-center">
-                            <div class="container">
-                                <div class="card">
-                                    <div class="card-body p-1">
-                                        <h1>{{ $profitDays->options['chart_title'] }}</h1>
-                                        {!! $profitDays->renderHtml() !!}
+                        <div class="col-md-12" id="monthly_statistics" style="display: none;">
+                            <!--begin::Card widget 4-->
+                            <div class="card card-flush h-md-100 mb-5 mb-xl-10">
+                                <!--begin::Card body-->
+                                <div class="card-body pt-2 pb-4 d-flex align-items-center">
+                                    <div class="container">
+                                        <div class="card">
+                                            <div class="card-body p-1">
+                                                <h1>{{ $profitMonths->options['chart_title'] }}</h1>
+                                                {!! $profitMonths->renderHtml() !!}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <!--end::Card body-->
                             </div>
+                            <!--end::Card widget 4-->
                         </div>
-                        <!--end::Card body-->
+                        <div class="col-md-12" id="daily_statistics">
+                            <!--begin::Card widget 4-->
+                            <div class="card card-flush h-md-100 mb-5 mb-xl-10">
+                                <!--end::Header-->
+                                <!--begin::Card body-->
+                                <div class="card-body pt-2 pb-4 d-flex align-items-center">
+                                    <div class="container">
+                                        <div class="card">
+                                            <div class="card-body p-1">
+                                                <h1>{{ $profitDays->options['chart_title'] }}</h1>
+                                                {!! $profitDays->renderHtml() !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                            <!--end::Card widget 4-->
+                        </div>
                     </div>
-                    <!--end::Card widget 4-->
                 </div>
             </div>
             @endif
@@ -562,4 +574,22 @@
     {!! $profitMonths->renderChartJsLibrary() !!}
     {!! $profitMonths->renderJs() !!}
     @endif
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filter_range = document.getElementById('filter_range');
+            const daily_statistics = document.getElementById('daily_statistics');
+            const monthly_statistics = document.getElementById('monthly_statistics');
+
+            filter_range.addEventListener('change', function() {
+                if (filter_range.value === 'daily') {
+                    daily_statistics.style.display = 'block';
+                    monthly_statistics.style.display = 'none';
+                } else if (filter_range.value === 'monthly') {
+                    daily_statistics.style.display = 'none';
+                    monthly_statistics.style.display = 'block';
+                }
+            });
+        });
+    </script>
+
 @endsection

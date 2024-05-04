@@ -207,13 +207,13 @@
                     <div class="row">
                         <div class="col-md-2 filtration">
                             <div class="mb-4">
-                                <select class="form-select" id="visitorFilter">
+                                <select class="form-select" id="filter_range">
                                     <option value="daily" selected>{{ __('Daily') }}</option>
                                     <option value="monthly">{{ __('Monthly') }}</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12" id="dailyVisitorsSection">
+                        <div class="col-md-12" id="daily_statistics">
                             <!--begin::Card widget 6-->
                             <div class="card card-flush">
                                 <!--begin::Header-->
@@ -257,8 +257,8 @@
                                         <div class="col-md-12">
                                             <div class="card">
                                                 <div class="card-body p-1">
-                                                    <h1>{{ $profitLast7Days->options['chart_title'] }}</h1>
-                                                    {!! $profitLast7Days->renderHtml() !!}
+                                                    <h1>{{ $dailyRevenues->options['chart_title'] }}</h1>
+                                                    {!! $dailyRevenues->renderHtml() !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -270,7 +270,7 @@
                             <!--begin::Card widget 7-->
                         </div>
                         <!--begin::Col-->
-                        <div class="col-md-12" id="monthlyVisitorsSection" style="display: none;">
+                        <div class="col-md-12" id="monthly_statistics" style="display: none;">
                             <!--begin::Chart widget 3-->
                             <div class="card card-flush overflow-hidden">
                                 <!--begin::Header-->
@@ -300,8 +300,8 @@
                                             <div class="col-md-12">
                                                 <div class="card">
                                                     <div class="card-body p-1">
-                                                        <h1>{{ $profitLast4Months->options['chart_title'] }}</h1>
-                                                        {!! $profitLast4Months->renderHtml() !!}
+                                                        <h1>{{ $monthlyRevenues->options['chart_title'] }}</h1>
+                                                        {!! $monthlyRevenues->renderHtml() !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -379,23 +379,24 @@
     <!--end::Post-->
 </div>
 <!--end::Content-->
-{!! $profitLast7Days->renderChartJsLibrary() !!}
-{!! $profitLast7Days->renderJs() !!}
-{!! $profitLast4Months->renderJs() !!}
+{!! $dailyRevenues->renderChartJsLibrary() !!}
+{!! $monthlyRevenues->renderChartJsLibrary() !!}
+{!! $dailyRevenues->renderJs() !!}
+{!! $monthlyRevenues->renderJs() !!}
 @section('js')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const visitorFilter = document.getElementById('visitorFilter');
-        const dailyVisitorsSection = document.getElementById('dailyVisitorsSection');
-        const monthlyVisitorsSection = document.getElementById('monthlyVisitorsSection');
+        const filter_range = document.getElementById('filter_range');
+        const daily_statistics = document.getElementById('daily_statistics');
+        const monthly_statistics = document.getElementById('monthly_statistics');
 
-        visitorFilter.addEventListener('change', function() {
-            if (visitorFilter.value === 'daily') {
-                dailyVisitorsSection.style.display = 'block';
-                monthlyVisitorsSection.style.display = 'none';
-            } else if (visitorFilter.value === 'monthly') {
-                dailyVisitorsSection.style.display = 'none';
-                monthlyVisitorsSection.style.display = 'block';
+        filter_range.addEventListener('change', function() {
+            if (filter_range.value === 'daily') {
+                daily_statistics.style.display = 'block';
+                monthly_statistics.style.display = 'none';
+            } else if (filter_range.value === 'monthly') {
+                daily_statistics.style.display = 'none';
+                monthly_statistics.style.display = 'block';
             }
         });
     });

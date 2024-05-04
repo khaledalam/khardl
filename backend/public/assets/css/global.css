@@ -9,7 +9,7 @@
   top: 16px;
 }
 @media (max-width: 425px) {
-  #dailyVisitorsSection .card-body,#monthlyVisitorsSection .card-body{
+  #daily_statistics .card-body,#monthly_statistics .card-body{
     padding: 0;
   }
 }
