@@ -119,7 +119,14 @@ function openModal(modalID) {
                                                 <h1 class="fs-2hx fw-bolder mb-5">{{__('Enjoy benefiting from our services')}}</h1>
                                             </div>
                                             <!--end::Heading-->
-
+                                            <div>
+                                                <div class="alert alert-info text-center " role="alert" >
+                                                    <i class="bi bi-info-circle-fill "></i> 
+                                                    <br>
+                                                    {{__('Login code is a code for your restaurant to login into the application.')}}
+                                                    <h2>{{tenant()->mapper_hash}}</h2>
+                                                  </div>
+                                            </div>
                                             <!--begin::Row-->
                                             <div class="row g-10">
 
