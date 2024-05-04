@@ -43,7 +43,7 @@ class SendWhenAppReady implements ShouldQueue
                 'en' => "[success] Send mail to customer when app is published",
                 'ar' => "[تم] ارسال بريد للعميل عند نشر التطبيق"
             ];
-            tenancy()->central(function () {
+            tenancy()->central(function () use($actions) {
                 Log::create([
                     'user_id' => $this->customer?->id,
                     'action' => $actions,
@@ -59,10 +59,10 @@ class SendWhenAppReady implements ShouldQueue
                 'en' => "[fail] failed to send mail to customer when app is published",
                 'ar' => "[فشل] فشل إرسال البريد إلى العميل عند نشر التطبيق"
             ];
-            tenancy()->central(function () {
+            tenancy()->central(function () use($actions){
                 Log::create([
-                    'action' => $this->customer?->id,
-                    'user_id' => null,
+                    'action' => $actions,
+                    'user_id' => $this->customer?->id,,
                     'type' => LogTypes::AppIsPublishedNotifyFail,
                     $this->rOCustomerAppSub
                 ]);
