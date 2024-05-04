@@ -1314,5 +1314,7 @@
     "Andriod app":"تطبيق الاندرويد",
     "IOS app":"تطبيق الايفون",
     "Dear :user":"عزيزي :user",
-    "Your app is published and ready now.":"تم نشر تطبيقك وجاهز الآن."
+    "Your app is published and ready now.":"تم نشر تطبيقك وجاهز الآن.",
+    "Notify customer when app is published sent":"تم تنبيه العميل بنشر التطبيق",
+    "Notify customer when app is published fail":"فشل تنبيه العميل بنشر التطبيق"
 }
