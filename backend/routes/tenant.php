@@ -23,6 +23,7 @@ use App\Models\Tenant\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TapController;
@@ -342,7 +343,7 @@ Route::group([
 
             Route::get('/user', [CustomerOrderController::class, 'user'])->name('customer.user');
             Route::post('/user', [CustomerOrderController::class, 'updateUser'])->name('customer.save.user');
-           
+
 
             Route::middleware('verifiedPhone')->group(function () {
                 Route::delete("carts/trash", [CartController::class, 'trash'])->name('carts.trash');
@@ -408,6 +409,14 @@ Route::middleware([
 
     // API
     Route::prefix('api')->group(function () {
+
+        // New API endpoints to be placed here
+        Route::prefix('v2')->group(static function () {
+
+
+        });
+
+
         Route::post('login', [APILoginController::class, 'login']);
 
         Route::middleware(['auth:sanctum','ActiveRestaurantAndBranch'])->group(function () {
@@ -474,16 +483,16 @@ Route::middleware([
             Route::post('/register', [LoginCustomerController::class, 'registerCustomerOnly']);
             Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
             Route::post('/send/sms', [LoginCustomerController::class, 'sendSMS']);
-    
+
             Route::middleware(['auth:sanctum','customer'])->group(function () {
                 Route::get('/', [CustomerOrderController::class, 'user']);
                 Route::post('/update', [LoginCustomerController::class, 'updateCustomerApp']);
                 Route::post('/verify/phone', [LoginCustomerController::class, 'VerifyCustomerPhone']);
                 Route::get('/orders', [CustomerDataController::class, 'orders']);
-            });        
-            
+            });
+
         });
-       
+
 
 
         Route::prefix('tap')->group(function () {
