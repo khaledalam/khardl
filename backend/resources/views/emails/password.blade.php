@@ -137,7 +137,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 2px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><strong>Subscription Expired</strong></span></h1>
+    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><strong>{{ __('emails.password.password_recovery')}}</strong></h1>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -171,7 +171,8 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-family: 'Cabin',sans-serif; font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Dear {{ $user->first_name }},</strong></p>
+    <p style="line-height: 140%;">{{ __('emails.password.dear_user', ['name' => $user->first_name])}}</p>
+<p style="line-height: 140%;">{{ __('emails.password.reset_password')}}</p>
   </div>
 
       </td>
@@ -185,16 +186,27 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">We hope this message finds you well.</p>
-<p><span style="color: #000000; text-align: center; white-space: normal; background-color: #ffffff; float: none; display: inline;">@if($type == 'website')</span></p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has expired. To ensure the uninterrupted activity of your restaurant and to continue providing excellent service to your customers, we're offering you a grace period of {{$period}} days to renew your subscription.</p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">To proceed with the renewal, please follow this link: <a href="{{ $url }}" style="box-sizing: border-box; color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1)); text-decoration-line: underline;">Renew Subscription</a>. Our team is ready to assist you throughout the process and answer any questions you may have.</p>
-<p><span style="color: #000000; text-align: center; white-space: normal; background-color: #ffffff; float: none; display: inline;">@elseif($type == 'app')</span></p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has expired. To ensure the uninterrupted activity of your restaurant and to continue providing excellent service to your customers, we're offering you a grace period of {{$period}} days to renew your subscription.</p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">Unfortunately, your customers cannot place orders through the app during this grace period. To proceed with the renewal, please follow this link: <a href="{{ $url }}" style="box-sizing: border-box; color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1)); text-decoration-line: underline;">Renew Subscription</a>. Our team is ready to assist you throughout the process and answer any questions you may have.</p>
-<p><span style="color: #000000; text-align: center; white-space: normal; background-color: #ffffff; float: none; display: inline;">@endif</span></p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">Thank you for choosing our services. We value your partnership and look forward to continuing our collaboration.</p></h4>
+    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p>Y{{ __('emails.password.recovery_code')}}</p></h4>
   <!--[if mso]></td></tr></table><![endif]-->
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+  <tbody>
+    <tr>
+      <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
+        
+  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
+<div align="center">
+  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="" style="height:37px; v-text-anchor:middle; width:101px;" arcsize="11%"  stroke="f" fillcolor="#3AAEE0"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
+    <a href="" target="_self" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #3AAEE0; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+      <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 16.8px;">{{$token}}</span></span>
+    </a>
+    <!--[if mso]></center></v:roundrect><![endif]-->
+</div>
 
       </td>
     </tr>
@@ -227,7 +239,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 16px 16px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-size: 13px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><em>This email was sent from an email address that can't receive emails. Please don't reply to this email.</em></p>
+    <p style="line-height: 140%;"><em>{{ __('emails.verify.email_disclaimer')}}</em></p>
   </div>
 
       </td>

@@ -55,7 +55,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'verified_phone'
     ];
     const STATUS = [
-        self::ACTIVE,   
+        self::ACTIVE,
         self::INACTIVE,
         self::SUSPENDED,
         self::REJECTED,
@@ -64,7 +64,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     const INACTIVE = 'inactive';
     const SUSPENDED = 'suspended';
     const REJECTED = 'rejected';
- 
+
     protected $dateFormat = 'Y-m-d H:i:s';
     /**
      * The attributes that should be hidden for serialization.
@@ -122,7 +122,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function getTapCustomerId()
     {
         if($this->tap_customer_id ?? null) return $this->tap_customer_id;
-        return CustomerTap::createWithModel($this);  
+        return CustomerTap::createWithModel($this);
     }
     public function getImageAttribute()
     {
@@ -205,6 +205,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function completed_orders(): HasMany
     {
         return $this->hasMany(Order::class, 'driver_id', 'id')->where('status',Order::COMPLETED);
+    }
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(UserAddress::class, 'user_id', 'id');
     }
     public function monthly_orders()
     {

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Http\Controllers\API\Tenant\Customer\Address\CustomerAddressController;
 use App\Http\Controllers\API\Tenant\LocationController;
 use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 
@@ -457,6 +458,15 @@ Route::middleware([
                     });
                 });
             });
+            /* Customer address */
+            Route::controller(CustomerAddressController::class)->group(function () {
+                Route::post('add-address','create');
+                Route::post('update-address/{address}','update');
+                Route::post('make-as-default/{address}','makeDefault');
+                Route::post('delete-address/{address}','delete');
+                Route::post('get-addresses','index');
+            });
+            /* Customer address */
         });
         // Update user in customer app
         Route::prefix('customer')->group(function () {

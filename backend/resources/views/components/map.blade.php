@@ -22,10 +22,12 @@
             autocomplete.bindTo("bounds", map);
 
             const marker = new google.maps.Marker({
-                position: latLng,
-                map: map,
-                draggable: true,
-            });
+    position: latLng,
+    map: map,
+    draggable: true,
+});
+
+
 
             markers[branchId] = marker; // Store the marker for this branch
             maps[branchId] = map; // Store the map for this branch

@@ -26,7 +26,7 @@ trait CentralSharedRoutesTrait
                 'create-new-password'=> 'create-new-password',
             ],
             'middleware'=>[
-
+                'visitors'
             ]
 
         ];

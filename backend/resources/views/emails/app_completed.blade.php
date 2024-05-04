@@ -136,7 +136,7 @@ table, td { color: #000000; } </style>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 2px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><span><span><span><strong>Mobile App Completed</strong></span></span></span></span></span></h1>
+    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><span><span><span><strong>{{ __('emails.app_completed.title') }}</strong></span></span></span></span></span></h1>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -170,7 +170,7 @@ table, td { color: #000000; } </style>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-family: 'Cabin',sans-serif; font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Dear {{ $name }},</strong></p>
+    <p style="line-height: 140%;"><strong>{{ __('emails.app_completed.greeting'), ['name'] => $name }}</strong></p>
   </div>
 
       </td>
@@ -184,7 +184,7 @@ table, td { color: #000000; } </style>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><span><span><span>Your new mobile app has been successfully added to your restaurant, you can access it by going to the services page. </span></span></span></h4>
+    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><span><span><span>{{ __('emails.app_completed.message') }}</span></span></span></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -218,7 +218,7 @@ table, td { color: #000000; } </style>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 16px 16px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="font-size: 13px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><em>This email was sent from an email address that can't receive emails. Please don't reply to this email.</em></p>
+    <p style="line-height: 140%;"><em>{{ __('emails.subscription_suspended.email_note') }}</em></p>
   </div>
 
       </td>

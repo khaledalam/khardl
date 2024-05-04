@@ -1,27 +1,133 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import orderIcon from "../../../assets/orderBlack.svg";
 import AddAddress from "./AddAddress";
 import AddressItem from "./AddressItem";
 import { useDispatch, useSelector } from "react-redux";
-import { updateAddressesList } from "../../../redux/NewEditor/customerSlice";
+import {
+  updateAddressesList,
+  updateCustomerAddress,
+} from "../../../redux/NewEditor/customerSlice";
+import AxiosInstance from "../../../axios/axios";
+import { toast } from "react-toastify";
+// import ConfirmationModal from "../../../components/confirmationModal";
 
 const CustomerAddresses = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const addresses = useSelector((state) => state.customerAPI.addressesList);
   const [addMode, setAddMode] = useState(false);
+  // const [openDeleteConfirmModal, setOpenDeleteConfirmModal] = useState(-1);
   const [editMode, setEditMode] = useState(-1);
   const [address, setAddress] = useState({
-    addressType: "Home",
-    name: "",
-    phoneNumber: "",
-    address: "",
+    type: "home",
   });
 
   const setAddresses = (addresses) => {
     dispatch(updateAddressesList(addresses));
   };
+
+  const fetchAddresses = async () => {
+    try {
+      const addressesResponse = await AxiosInstance.post("/api/get-addresses");
+      if (addressesResponse?.data?.data) {
+        setAddresses(addressesResponse?.data?.data);
+      }
+    } catch (err) {
+      toast.error(err?.message);
+      console.error(err);
+    }
+  };
+
+  const addAddress = async () => {
+    try {
+      const addressResponse = await AxiosInstance.post("/api/add-address", address);
+      if (addressResponse?.data?.success === true) {
+        toast.success(addressResponse?.data?.message);
+      } else {
+        return toast.error(addressResponse?.data?.message);
+      }
+      if (addressResponse?.data?.data) {
+        setAddresses(addressResponse?.data?.data);
+      }
+    } catch (err) {
+      toast.error(err?.message);
+      console.error(err);
+    }
+  };
+
+  const updateAddress = async () => {
+    try {
+      const addressResponse = await AxiosInstance.post(
+        `/api/update-address/${addresses[editMode].id}`,
+        address
+      );
+      if (addressResponse?.data?.success === true) {
+        toast.success(addressResponse?.data?.message);
+      } else {
+        return toast.error(addressResponse?.data?.message);
+      }
+      if (addressResponse?.data?.data) {
+        setAddresses(addressResponse?.data?.data);
+      }
+    } catch (err) {
+      toast.error(err?.message);
+      console.error(err);
+    }
+  };
+
+  const deleteAddress = async (index) => {
+    try {
+      const addressResponse = await AxiosInstance.post(
+        `/api/delete-address/${addresses[index].id}`
+      );
+      if (addressResponse?.data?.success === true) {
+        toast.success(addressResponse?.data?.message);
+      } else {
+        return toast.error(addressResponse?.data?.message);
+      }
+      if (addressResponse?.data?.data) {
+        setAddresses(addressResponse?.data?.data);
+      }
+    } catch (err) {
+      toast.error(err?.message);
+      console.error(err);
+    }
+  };
+
+  const setAsDefault = async (index) => {
+    try {
+      const addressResponse = await AxiosInstance.post(
+        `/api/make-as-default/${addresses[index].id}`
+      );
+      if (addressResponse?.data?.success === true) {
+        toast.success(addressResponse?.data?.message);
+      } else {
+        return toast.error(addressResponse?.data?.message);
+      }
+      if (addressResponse?.data?.data) {
+        setAddresses(addressResponse?.data?.data);
+      }
+    } catch (err) {
+      toast.error(err?.message);
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    fetchAddresses();
+  }, []);
+
+  const customerAddress = useSelector((state) => state.customerAPI.address);
+
+  useEffect(() => {
+    setAddress((prevAddress) => ({
+      ...prevAddress,
+      address: customerAddress.addressValue,
+      lat: customerAddress.lat,
+      lng: customerAddress.lng,
+    }));
+  }, [customerAddress]);
+
   return (
     <>
       {!(addMode || editMode !== -1) ? (
@@ -40,17 +146,25 @@ const CustomerAddresses = () => {
               </div>
             )}
           </div>
-          <div className="flex flex-wrap gap-4 mb-5 mx-3 min-h-96">
+          <div
+            className={`flex flex-wrap gap-4 mb-5 mx-3 ${
+              addresses.length ? "" : "min-h-96"
+            }`}
+          >
             {addresses?.map((address, index) => (
               <AddressItem
                 key={index}
                 address={address}
-                setViewOnMap={() => {}}
-                onDelete={() =>
-                  setAddresses(addresses.filter((_, i) => i !== index))
-                }
+                onDelete={() => {
+                  deleteAddress(index);
+                  // setOpenDeleteConfirmModal(index);
+                }}
+                onSetAsDefault={() => {
+                  setAsDefault(index);
+                }}
                 onEdit={() => {
-                  setAddress(address);
+                  updateCustomerAddress(addresses[index]);
+                  setAddress(addresses[index]);
                   setEditMode(index);
                 }}
               />
@@ -77,14 +191,10 @@ const CustomerAddresses = () => {
           onSave={(address) => {
             if (addMode) {
               setAddMode(false);
-              setAddresses([...addresses, address]);
+              addAddress();
             } else if (editMode !== -1) {
+              updateAddress(editMode);
               setEditMode(-1);
-              setAddresses(
-                addresses.map((item, index) =>
-                  editMode === index ? address : item
-                )
-              );
             }
           }}
           onCancel={() => {
@@ -94,6 +204,17 @@ const CustomerAddresses = () => {
           setAddress={setAddress}
         />
       )}
+      {/* <ConfirmationModal
+        isOpen={openDeleteConfirmModal !== -1}
+        message={t("Are You sure you want to delete this address?")}
+        onClose={() => {
+          setOpenDeleteConfirmModal(-1);
+        }}
+        onConfirm={() => {
+          deleteAddress(openDeleteConfirmModal);
+          setOpenDeleteConfirmModal(-1);
+        }}
+      /> */}
     </>
   );
 };

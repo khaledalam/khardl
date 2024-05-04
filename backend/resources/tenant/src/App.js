@@ -151,7 +151,7 @@ const App = () => {
           }}
         >
           <div>
-            <ToastContainer theme="colored" autoClose={1500} />{" "}
+            <ToastContainer theme="colored" autoClose={1500} hideProgressBar={true} />{" "}
             {/* {showHeader && <NavbarRestuarant />} <Supports />{" "} */}
             <ScrollUp />
             <div>
