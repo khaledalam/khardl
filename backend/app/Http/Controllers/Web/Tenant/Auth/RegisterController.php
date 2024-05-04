@@ -109,7 +109,7 @@ class RegisterController extends BaseController
         if(!$this->checkAttempt($user)){
             return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
         }
-        if(!$id= $user->generateVerificationSMSCode()) return $this->sendError('Fail', 'Request failed .');
+        if(!$id= $user->generateVerificationSMSCode()) return $this->sendError('Fail', __('Request failed .'));
         $user->msegat_id_verification = $id;
         $user->save();
         return $this->sendResponse(null, __('Verification code sent to phone.'));

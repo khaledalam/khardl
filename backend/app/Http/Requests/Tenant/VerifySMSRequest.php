@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PhoneValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCustomerInfoAppRequest extends FormRequest
+class VerifySMSRequest extends FormRequest
 {
     use PhoneValidation;
     /**
@@ -24,16 +23,21 @@ class UpdateCustomerInfoAppRequest extends FormRequest
      */
     public function rules(): array
     {
-        $user = Auth::user();
-        return [
-            'first_name' => 'nullable|string|max:255',
-            'last_name' => 'nullable|string|max:255',
-            'phone' => "nullable|regex:/^(966)?\d{9}$/|unique:users,phone,$user->id",
-            'email' => 'nullable|string|email|min:10|max:255|unique:users',
+        $user= getAuth();
+        $rules= [
+            'phone' => 'required|regex:/^(966)?\d{9}$/',
+            'otp' => 'required|string',
+            'id_sms'=>"required"
         ];
+     
+        if($user){
+            $rules['phone'] .= '|unique:users,phone';
+        }
+        return $rules;
     }
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->validatePhone();
     }
+  
 }

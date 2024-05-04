@@ -51,7 +51,8 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'default_lang',
         'device_token',
         'vehicle_number',
-        'image'
+        'image',
+        'verified_phone'
     ];
     const STATUS = [
         self::ACTIVE,
@@ -104,6 +105,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function isDriver()
     {
         return $this->hasRole("Driver");
+    }
+    public function isCustomer()
+    {
+        return $this->roles->Empty();
     }
     public function isWorker()
     {

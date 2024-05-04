@@ -101,52 +101,8 @@ class OrderController
             'should_logout' => $shouldLogout
         ], __('Please re-login again'));
     }
-    public function updateCustomerApp(UpdateCustomerInfoAppRequest $request){
-        $user = Auth::user();
+   
 
-        if($request->first_name){
-            $user->first_name = $request->first_name;
-        }
-        if($request->last_name){
-            $user->last_name = $request->last_name;
-        }
-        $user->save();
-        if ($request->phone && $user->phone != $request->phone) {
-            $send_sms = (new RegisterController())->sendVerificationSMSCode($request);
-            $content = $send_sms->getOriginalContent();
-            if($content['success']){
-                $user->verified_phone = $request->phone;
-                $user->save();
-            }
-            return $send_sms;
-            
-        }else {
-            $user->save();
-            return $this->sendResponse([
-                'ok' => true,
-            ], __('User updated successfully'));
-        }
- 
-        
-    }
-    public function VerifyCustomerPhone(OTPRequest $request){
-        $user = Auth::user();
-        $register = (new RegisterController());
-        if(!$register->checkAttempt($user)){
-            return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
-        }
-        if (!$user->checkVerificationSMSCode($request->otp)){
-            return $this->sendError('Fail', __('The verification code is incorrect.'));
-        }
-         
-        $temp = $user->verified_phone;
-        $user->verified_phone = $user->phone;
-        $user->phone = $temp;
-        $user->save();
-
-        return $this->sendResponse(null, __('Phone verified successfully!'));
-
-    }   
 
     public function paymentRedirect(OrderRequest $request,CartRepository $cart){
         $request->validate([

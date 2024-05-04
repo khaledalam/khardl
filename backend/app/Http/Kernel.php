@@ -40,6 +40,7 @@ use App\Http\Middleware\EnsureEmailIsNotVerified;
 use App\Http\Middleware\IsBusinessFilesSubmitted;
 use Spatie\Permission\Middlewares\RoleMiddleware;
 use App\Http\Middleware\ActiveRestaurantAndBranch;
+use App\Http\Middleware\Customer;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -126,6 +127,7 @@ class Kernel extends HttpKernel
         'restaurant' => Restaurant::class,
         'worker' => Worker::class,
         'driver' => Driver::class,
+        'customer' => Customer::class,
         'restaurantOrWorker' => RestaurantOrWorker::class,
         'restaurantLive' => RestaurantLive::class,
         'restaurantSubLive' => RestaurantSubLive::class,
