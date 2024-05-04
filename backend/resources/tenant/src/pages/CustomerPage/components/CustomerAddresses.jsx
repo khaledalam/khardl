@@ -10,12 +10,14 @@ import {
 } from "../../../redux/NewEditor/customerSlice";
 import AxiosInstance from "../../../axios/axios";
 import { toast } from "react-toastify";
+// import ConfirmationModal from "../../../components/confirmationModal";
 
 const CustomerAddresses = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const addresses = useSelector((state) => state.customerAPI.addressesList);
   const [addMode, setAddMode] = useState(false);
+  // const [openDeleteConfirmModal, setOpenDeleteConfirmModal] = useState(-1);
   const [editMode, setEditMode] = useState(-1);
   const [address, setAddress] = useState({
     type: "home",
@@ -27,7 +29,7 @@ const CustomerAddresses = () => {
 
   const fetchAddresses = async () => {
     try {
-      const addressesResponse = await AxiosInstance.post("get-addresses");
+      const addressesResponse = await AxiosInstance.post("/api/get-addresses");
       if (addressesResponse?.data?.data) {
         setAddresses(addressesResponse?.data?.data);
       }
@@ -39,7 +41,7 @@ const CustomerAddresses = () => {
 
   const addAddress = async () => {
     try {
-      const addressResponse = await AxiosInstance.post("add-address", address);
+      const addressResponse = await AxiosInstance.post("/api/add-address", address);
       if (addressResponse?.data?.success === true) {
         toast.success(addressResponse?.data?.message);
       } else {
@@ -57,7 +59,7 @@ const CustomerAddresses = () => {
   const updateAddress = async () => {
     try {
       const addressResponse = await AxiosInstance.post(
-        `update-address/${addresses[editMode].id}`,
+        `/api/update-address/${addresses[editMode].id}`,
         address
       );
       if (addressResponse?.data?.success === true) {
@@ -77,7 +79,7 @@ const CustomerAddresses = () => {
   const deleteAddress = async (index) => {
     try {
       const addressResponse = await AxiosInstance.post(
-        `delete-address/${addresses[index].id}`
+        `/api/delete-address/${addresses[index].id}`
       );
       if (addressResponse?.data?.success === true) {
         toast.success(addressResponse?.data?.message);
@@ -96,7 +98,7 @@ const CustomerAddresses = () => {
   const setAsDefault = async (index) => {
     try {
       const addressResponse = await AxiosInstance.post(
-        `make-as-default/${addresses[index].id}`
+        `/api/make-as-default/${addresses[index].id}`
       );
       if (addressResponse?.data?.success === true) {
         toast.success(addressResponse?.data?.message);
@@ -155,6 +157,7 @@ const CustomerAddresses = () => {
                 address={address}
                 onDelete={() => {
                   deleteAddress(index);
+                  // setOpenDeleteConfirmModal(index);
                 }}
                 onSetAsDefault={() => {
                   setAsDefault(index);
@@ -201,6 +204,17 @@ const CustomerAddresses = () => {
           setAddress={setAddress}
         />
       )}
+      {/* <ConfirmationModal
+        isOpen={openDeleteConfirmModal !== -1}
+        message={t("Are You sure you want to delete this address?")}
+        onClose={() => {
+          setOpenDeleteConfirmModal(-1);
+        }}
+        onConfirm={() => {
+          deleteAddress(openDeleteConfirmModal);
+          setOpenDeleteConfirmModal(-1);
+        }}
+      /> */}
     </>
   );
 };
