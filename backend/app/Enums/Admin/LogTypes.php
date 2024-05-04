@@ -42,6 +42,8 @@ enum LogTypes: string
   case ContactUsForm ="Contact US Form";
   case UserSubscriptionNotifySent ="Notify for new/renew website restaurant subscription sent";
   case UserSubscriptionNotifyFail ="Notify for new/renew website restaurant subscription fail";
+  case AppIsPublishedNotifySent ="Notify customer when app is published sent";
+  case AppIsPublishedNotifyFail ="Notify customer when app is published fail";
   case UserAppSubscriptionNotifySent ="Notify for new/renew customer application subscription sent";
   case UserAppSubscriptionNotifyFail ="Notify for new/renew customer application subscription fail";
 }

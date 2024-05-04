@@ -3,6 +3,8 @@
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use App\Http\Controllers\Web\Central\Admin\NotificationReceipt\NotificationReceiptController;
 use App\Http\Controllers\Web\Central\GlobalPromoterController;
+use App\Models\ROCustomerAppSub;
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -84,9 +86,14 @@ Route::get('/health', static function (){
 })->name('health');
 
 Route::get('/test', function (){
-     return response()->json([
-         'status' => 'test'
-     ]);
+    $tenant = '93a1d87b-ca97-40bc-879b-ee6ea6c1ef6b';
+    $tenant = Tenant::find($tenant);
+    $app = null;
+    $tenant->run(function() use(&$app){
+        $app = ROCustomerAppSub::first();
+        $app->load(['user']);
+    });
+    return view('emails.customer_app_is_ready',compact('app'));
 })->name('test');
 
 

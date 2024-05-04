@@ -1307,5 +1307,11 @@
     "Daily visitors":"الزوار اليومي",
     "Monthly visitors":"الزوار في كل شهر",
     "Daily":"يومي",
-    "Monthly":"شهري"
+    "Monthly":"شهري",
+    "You app has been published and ready for download":"تم نشر التطبيق بنجاح وجاهز للتحميل",
+    "You can access now you apps from these links:":"يمكنك الان الوصل الي تطبيقاتك من خلال الروابط التالية",
+    "Andriod app":"تطبيق الاندرويد",
+    "IOS app":"تطبيق الايفون",
+    "Dear :user":"عزيزي :user",
+    "Your app is published and ready now.":"تم نشر تطبيقك وجاهز الآن."
 }

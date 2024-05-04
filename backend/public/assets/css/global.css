@@ -1,4 +1,18 @@
 /* ALL */
+/* Summary page */
+/* Summary page */
+.filtration div{
+  position: absolute;
+  z-index: 1;
+  right: 18px;
+  left: auto;
+  top: 16px;
+}
+@media (max-width: 425px) {
+  #daily_statistics .card-body,#monthly_statistics .card-body{
+    padding: 0;
+  }
+}
 
 /* Badges */
 .badge.active,
