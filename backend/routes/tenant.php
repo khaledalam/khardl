@@ -492,21 +492,6 @@ Route::middleware([
         });
 
 
-
-        Route::prefix('tap')->group(function () {
-            Route::apiResource('businesses', BusinessController::class)->only([
-                'store',
-                'show'
-            ]);
-            Route::apiResource('subscriptions', SubscriptionController::class)->only([
-                'store',
-                'show'
-            ]);
-            Route::apiResource('files', FileController::class)->only([
-                'store',
-                'show'
-            ]);
-        });
     });
 });
 
