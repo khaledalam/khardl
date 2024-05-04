@@ -64,6 +64,9 @@ use App\Http\Controllers\API\Tenant\Customer\CardController as CustomerCardContr
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
 use App\Http\Controllers\Web\Tenant\Menu\Item\ItemController as AdminItemController;
+
+use App\Http\Controllers\API\Tenant\V2\Auth\V2_LoginController;
+
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -412,6 +415,9 @@ Route::middleware([
 
         // New API endpoints to be placed here
         Route::prefix('v2')->group(static function () {
+
+            // example:
+            Route::post('logout', [V2_LoginController::class, 'logout']);
 
 
         });
