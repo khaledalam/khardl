@@ -461,11 +461,14 @@ Route::middleware([
         // Update user in customer app
         Route::prefix('customer')->group(function () {
             Route::post('/login', [LoginCustomerController::class, 'loginCustomerOnly']);
+            Route::post('/register', [LoginCustomerController::class, 'registerCustomerOnly']);
             Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
+            Route::post('/send/sms', [LoginCustomerController::class, 'sendSMS']);
+    
             Route::middleware(['auth:sanctum','customer'])->group(function () {
                 Route::get('/', [CustomerOrderController::class, 'user']);
-                Route::post('/update', [CustomerOrderController::class, 'updateCustomerApp']);
-                Route::post('/verify/phone', [CustomerOrderController::class, 'VerifyCustomerPhone']);
+                Route::post('/update', [LoginCustomerController::class, 'updateCustomerApp']);
+                Route::post('/verify/phone', [LoginCustomerController::class, 'VerifyCustomerPhone']);
             });        
             
         });

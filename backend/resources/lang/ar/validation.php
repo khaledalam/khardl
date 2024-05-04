@@ -233,7 +233,9 @@ return [
         'branch_id' => 'الفرع',
         "shipping_address" => "عنوان الشحن",
         "delivery_type_id" => "طريقة التوصيل",
-        "at_least_one_permission"=>"علي الاقل صلاحية واحدة"
+        "at_least_one_permission"=>"علي الاقل صلاحية واحدة",
+        'otp'=>"الرمز",
+        "id_sms"=>"معرف الرسالة"
 
     ],
     'values' => [
