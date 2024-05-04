@@ -125,6 +125,7 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
     inputs.footer_text_fontSize = restuarantStyle.footer_text_fontSize;
     inputs.footer_text_color = restuarantStyle.footer_text_color;
     inputs.header_position = restuarantStyle.header_position;
+    inputs.banner_radius = restuarantStyle.banner_radius;
     inputs.category_background_color =
       restuarantStyle.category_background_color;
     inputs.banner_image = restuarantStyle?.bannerUpload

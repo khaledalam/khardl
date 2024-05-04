@@ -57,6 +57,7 @@ class RestaurantStyleSeeder extends Seeder
             'logo_border_radius' => 25,
             'logo_border_color' => '#fff',
             'headerPosition' => 'relative',
+            'banner_radius' => 20,
             'header_color' => '#ffffff',
             'footer_color' => '#ffffff',
             'price_color' => 'red',

@@ -62,6 +62,7 @@ import {
   MenuSectionBackgroundColor,
   MenuSectionRadius,
   MenuCardRadius,
+  BannerRadius,
 } from "../../../redux/NewEditor/restuarantEditorSlice";
 import {
   getCartItemsCount,
@@ -133,6 +134,7 @@ export const RestuarantEditor = () => {
     menu_section_background_color,
     menu_section_radius,
     menu_card_radius,
+    banner_radius,
   } = restuarantEditorStyle;
 
   const categories = useSelector((state) => state.categoryAPI.categories);
@@ -299,7 +301,9 @@ export const RestuarantEditor = () => {
       subItems: [
         {
           title: t("Banner"),
-          layout: [],
+          layout: ["radius"],
+          layoutInitialValues: [banner_radius],
+          layoutOnChange: [(radius) => dispatch(BannerRadius(radius))],
           contentPosition: [],
           text: [],
           link: [],
