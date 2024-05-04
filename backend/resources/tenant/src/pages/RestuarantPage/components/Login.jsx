@@ -75,10 +75,13 @@ const Login = ({ closingFunc }) => {
   const onSubmit = async (data) => {
     try {
       setSpinner(true);
-      const response = await AxiosInstance.post(`/api/login`, {
+      const response = await AxiosInstance.post(`/login-tenant`, {
         phone: data.phone,
         // remember_me: data.remember_me, // used only in API token-based
       });
+
+      console.log("login >> ", response);
+
 
       if (response?.data?.success) {
         const responseData = response?.data;
@@ -115,6 +118,13 @@ const Login = ({ closingFunc }) => {
         throw new Error(`${t("Login failed")}`);
       }
     } catch (error) {
+
+
+      if (error?.response.status == 400) {
+        setShowOTP(true);
+        toast.success(error?.response?.data?.message || `${t("The code has been sent successfully")}`);
+        return;
+      }
       console.log("error response > ", error?.response);
       setSpinner(false);
       dispatch(changeLogState(false));
@@ -249,32 +259,6 @@ const Login = ({ closingFunc }) => {
         className="w-[100%] flex flex-col items-center mt-[40px]"
       >
         <div className="flex mb-[20px] w-full">
-          <div className="w-[84px] h-[38px] p-1 rounded-[50px] border border-gray-200 justify-start items-center gap-1 inline-flex relative">
-            <div className="w-6 h-6 relative bg-[#6DA544] rounded-full">
-              <div className="w-[13.83px] h-[10.43px] left-[5.09px] top-[6.78px] absolute">
-                <img
-                  src={SA}
-                  alt="SA flag"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="text-zinc-500 text-xs font-normal font-['Plus Jakarta Sans'] leading-[18px]">
-              +966
-            </div>
-            <div className="w-[15px] h-[15px] py-0.5 flex-col justify-center items-center gap-2.5 inline-flex">
-              {/* <img
-                                src={Down}
-                                alt="down"
-                                className="w-[8.17px] h-[4.67px] object-cover"
-                            /> */}
-            </div>
-            <div className="w-9 h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
-              <div className="text-zinc-500 text-[9px] font-normal font-['Plus Jakarta Sans']">
-                {t("Phone number")}
-              </div>
-            </div>
-          </div>
           <div className="ml-[8px] w-full">
             <input
               type="tel"
@@ -288,7 +272,7 @@ const Login = ({ closingFunc }) => {
                 // console.log(data.target.value.length);
               }}
               minLength={9}
-              maxLength={13}
+              maxLength={9}
               onKeyDown={(event) => {
                 if (
                   (event.which < 48 || event.which > 57) &&
@@ -307,6 +291,30 @@ const Login = ({ closingFunc }) => {
                 {t("Phone Error")}
               </span>
             )}
+          </div>
+          <div className="w-[84px] h-[38px] p-1 rounded-[50px] border border-gray-200 justify-start items-center gap-1 inline-flex relative">
+            <div className="w-[15px] h-[15px] py-0.5 flex-col justify-center items-center gap-2.5 inline-flex" />
+
+            <div dir={"ltr"} className="text-zinc-500 text-xs font-normal font-['Plus Jakarta Sans'] leading-[18px]">
+              +966
+            </div>
+
+            <div className="w-6 h-6 relative bg-[#6DA544] rounded-full">
+              <div className="w-[13.83px] h-[10.43px] left-[5.09px] top-[6.78px] absolute">
+                <img
+                  src={SA}
+                  alt="SA flag"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+
+            <div className="w-9 h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
+              <div className="text-zinc-500 text-[9px] font-normal font-['Plus Jakarta Sans']">
+                {t("Phone number")}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -340,6 +348,8 @@ const Login = ({ closingFunc }) => {
                     onChange={(e) => {
                       setOtp(e.target.value);
                     }}
+                    minLength={4}
+                    maxLength={4}
                     type="text"
                     className="bg-white w-full h-full outline-none pl-[15px]"
                     placeholder={t("")}

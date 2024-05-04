@@ -53,6 +53,8 @@
     "and": " و ",
     "Privacy": "سياسة الخصوصية",
     "Account successfully created": "تم إنشاء الحساب بنجاح",
+    "Please register yourself first.": "من فضلك سجل اولا",
+    "The code has been sent successfully": "تم ارسال الكود بنجاح",
     "Account creation failed": "فشلت عملية انشاء الحساب",
     "You have been logged in successfully": "تم تسجيل الدخول بنجاح",
     "Account requirements rejected، please resubmit from main domain": "تم رفض بعض البيانات المطلوبه، يرجي تحديث البيانات من الموقع الرئيسي",

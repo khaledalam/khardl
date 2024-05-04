@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Logo from "../../../assets/Logo.webp";
 import ContactUsCover from "../../../assets/ContactUsCover.webp";
 import { useTranslation } from "react-i18next";
@@ -40,10 +40,11 @@ const Register = ({ closingFunc }) => {
   } = useForm();
   const { handleSubmit: handleSubmit2 } = useForm();
 
+  const registerFormRef = useRef();
+
   const { setStatusCode } = useAuthContext();
 
   const [openEyePassword, setOpenEyePassword] = useState(false);
-  const [openEyeRePassword, setOpenEyeRePassword] = useState(false);
   const [isLoading, setisLoading] = useState(true);
   const Language = useSelector((state) => state.languageMode.languageMode);
   const [spinner, setSpinner] = useState(false);
@@ -52,43 +53,78 @@ const Register = ({ closingFunc }) => {
   const EyePassword = () => {
     setOpenEyePassword(!openEyePassword);
   };
-  const EyeRePassword = () => {
-    setOpenEyeRePassword(!openEyeRePassword);
-  };
+
+  const onRegisterSendOTP = async (data) => {
+    setSpinner(true);
+
+    console.log("herererere 1");
+
+    try {
+      const res = await AxiosInstance.post(`/register-tenant`, {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        phone: data.phone,
+        id_sms: localStorage.getItem('phone_sms_otp_id'),
+        otp: otp
+      });
+
+
+    console.log("herererere 2");
+
+
+    console.log(">>> res: ", res);
+
+      if (res.data) {
+        sessionStorage.setItem(PREFIX_KEY + "phone", data.phone);
+        toast.success(`${t("Account successfully created")}`);
+        setSpinner(false);
+        setTimeout(() => window.location.reload(), 2000);
+        closingFunc();
+      } else if (res.data?.message) {
+        toast.info(`${res.data?.message}`);
+      } else {
+        setSpinner(false);
+
+        toast.error(`${t("Account creation failed")}`);
+      }
+    } catch(e) {
+      toast.error(`${e.response?.data?.message || t("Account creation failed")}`);
+    }
+  }
 
   /////////////////////////////////////////////////////////////////////////////////////
   // API POST REQUEST
   const onSubmit = async (data) => {
+
+    console.log("data:", data);
+
+    if (otp && localStorage.getItem('phone_sms_otp_id')) {
+      await onRegisterSendOTP(data);
+      return;
+    }
+
     try {
       setSpinner(true);
-      const response = await AxiosInstance.post(`/api/phone/verify`, {
-        otp: otp,
+      const response = await AxiosInstance.post(`/phone/send-verify`, {
+        phone: data.phone,
       });
 
-      if (response.data || response.is_loggedin) {
-        setStatusCode(HTTP_OK);
-        // navigate("/");
-        const res = await AxiosInstance.post(`/api/register`, {
-          first_name: data.first_name,
-          last_name: data.last_name,
-          phone: data.phone,
-          // terms_and_policies: data.terms_and_policies,
-        });
-        sessionStorage.setItem(PREFIX_KEY + "phone", data.phone);
-        toast.success(`${t("The code has been verified successfully")}`);
-        toast.success(`${t("Account successfully created")}`);
-        setSpinner(false);
-        closingFunc();
-      } else {
-        throw new Error(`${t("Code verification failed")}`);
+      console.log("res", response.data);
+
+      if (response.data?.data?.id) {
+        toast.success(response?.data?.message || `${t("The code has been sent successfully")}`);
+        localStorage.setItem('phone_sms_otp_id', response.data?.data?.id);
+      } else if (response.data?.message) {
+        toast.info(`${response.data?.message}`);
       }
+
       // setSpinner(false);
       // toast.success(`${t("Account successfully created")}`);
       // sessionStorage.setItem(PREFIX_KEY + "phone", data.phone);
       // window.location.href = "/verification-phone";
       // setShowOTP(true);
     } catch (error) {
-      setSpinner(false);
       console.log(error);
 
       // if (error.response.data.errors?.length > 0) {
@@ -99,6 +135,8 @@ const Register = ({ closingFunc }) => {
       //    setError(field, {'message':error.response.data.errors[field][0]});
       // });
       toast.error(`${t(error.response.data.message)}`);
+    } finally {
+      setSpinner(false);
     }
   };
   /////////////////////////////////////////////////////////////////////////////////////
@@ -137,11 +175,14 @@ const Register = ({ closingFunc }) => {
   // }
 
   // API POST REQUEST
-  const ResendCode = async (data) => {
+  const ResendCode = async (event) => {
+
     try {
       setSpinner(true);
       resetTimer();
-      const response = await AxiosInstance.post(`/api/phone/send-verify`, {});
+      const response = await AxiosInstance.post(`/phone/send-verify`, {
+        phone: registerFormRef.current.phone.value
+      });
       if (response.data) {
         toast.success(`${t("The code has been re-sent successfully")}`);
       } else {
@@ -204,10 +245,6 @@ const Register = ({ closingFunc }) => {
     // fetchResStyleData();
   }, [showOTP]);
 
-  /////////////////////////////////////////////////////////////////////////////////////
-  useEffect(() => {
-    fetchResStyleData();
-  }, []);
 
   const [lengthOfPhone, setLengthOfPhone] = useState(0);
 
@@ -234,6 +271,7 @@ const Register = ({ closingFunc }) => {
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
+        ref={registerFormRef}
         className="w-[100%] flex flex-col items-center mt-[40px]"
       >
         <div className="flex mb-[20px] w-full relative">
@@ -264,34 +302,24 @@ const Register = ({ closingFunc }) => {
             </div>
           </div>
         </div>
-        <div className="flex mb-[20px] w-full">
-          <div className="w-[84px] h-8 p-1 rounded-[50px] border border-gray-200 justify-start items-center gap-1 inline-flex relative">
-            <div className="w-6 h-6 relative bg-[#6DA544] rounded-full">
-              <div className="w-[13.83px] h-[10.43px] left-[5.09px] top-[6.78px] absolute">
-                <img
-                  src={SA}
-                  alt="SA flag"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="text-zinc-500 text-xs font-normal font-['Plus Jakarta Sans'] leading-[18px]">
-              +966
-            </div>
-            <div className="w-[15px] h-[15px] py-0.5 flex-col justify-center items-center gap-2.5 inline-flex">
-              {/* <img
-                                src={Down}
-                                alt="down"
-                                className="w-[8.17px] h-[4.67px] object-cover"
-                            /> */}
-            </div>
-            <div className="w-9 h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
-              <div className="text-zinc-500 text-[9px] font-normal font-['Plus Jakarta Sans']">
-                {t("Phone number")}
-                <span className="text-red-500">*</span>
-              </div>
+
+        <div className="flex mb-[20px] w-full relative">
+          <input
+            type="email"
+            className="w-full h-8 px-4 py-[7px] bg-white rounded-[50px] border border-gray-200 justify-start items-center gap-1.5 inline-flex text-zinc-500 text-xs font-normal leading-[18px] outline-none"
+            placeholder={t(
+              "Write your email address here..."
+            )}
+            {...register("email", { required: false })}
+          />
+          <div className="h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
+            <div className="text-zinc-500 text-[9px] font-normal">
+              {t("Email")}
             </div>
           </div>
+        </div>
+
+        <div className="flex mb-[20px] w-full">
           <div className="ml-[8px] w-full">
             <input
               type="tel"
@@ -305,7 +333,7 @@ const Register = ({ closingFunc }) => {
                 // console.log(data.target.value.length);
               }}
               minLength={9}
-              maxLength={13}
+              maxLength={9}
               onKeyDown={(event) => {
                 if (
                   (event.which < 48 || event.which > 57) &&
@@ -325,6 +353,29 @@ const Register = ({ closingFunc }) => {
               </span>
             )}
           </div>
+          <div className="w-[84px] h-8 p-1 rounded-[50px] border border-gray-200 justify-start items-center gap-1 inline-flex relative">
+            <div className="w-[15px] h-[15px] py-0.5 flex-col justify-center items-center gap-2.5 inline-flex" />
+
+            <div dir={"ltr"} className="text-zinc-500 text-xs font-normal font-['Plus Jakarta Sans'] leading-[18px]">
+              +966
+            </div>
+            <div className="w-6 h-6 relative bg-[#6DA544] rounded-full">
+              <div className="w-[13.83px] h-[10.43px] right-[5.09px] top-[6.78px] absolute">
+                <img
+                  src={SA}
+                  alt="SA flag"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="w-9 h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
+              <div className="text-zinc-500 text-[9px] font-normal font-['Plus Jakarta Sans']">
+                {t("Phone number")}
+                <span className="text-red-500">*</span>
+              </div>
+            </div>
+          </div>
+
         </div>
         {/* <div className="flex mb-[20px] w-full relative">
           <input
@@ -370,6 +421,8 @@ const Register = ({ closingFunc }) => {
                     type="text"
                     className="bg-white w-full h-full outline-none ml-[15px]"
                     placeholder={t("")}
+                    minLength={4}
+                    maxLength={4}
                     onKeyDown={(event) => {
                       if (
                         (event.which < 48 || event.which > 57) &&
@@ -427,6 +480,9 @@ const Register = ({ closingFunc }) => {
           ) : (
             <button
               onClick={() => {
+                if (lengthOfPhone != 9) {
+                  return;
+                }
                 setShowOTP(true);
               }}
               className={`w-full h-8 px-4 pt-1.5 pb-2 ${

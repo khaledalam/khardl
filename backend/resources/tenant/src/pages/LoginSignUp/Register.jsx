@@ -157,6 +157,24 @@ const Register = () => {
                 </div>
               </div>
             </div>
+
+            <div className="flex mb-[20px] w-full relative">
+              <input
+                type="email"
+                className="w-full h-8 px-4 py-[7px] bg-white rounded-[50px] border border-gray-200 justify-start items-center gap-1.5 inline-flex text-zinc-500 text-xs font-normal leading-[18px] outline-none"
+                placeholder={t(
+                  "Write your email address here..."
+                )}
+                {...register("email", { required: true })}
+              />
+              <div className="h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
+                <div className="text-zinc-500 text-[9px] font-normal">
+                  {t("Email")}
+                  <span className="text-red-500">*</span>
+                </div>
+              </div>
+            </div>
+
             <div className="flex mb-[20px] w-full">
               <div className="w-[84px] h-8 p-1 rounded-[50px] border border-gray-200 justify-start items-center gap-1 inline-flex relative">
                 <div className="w-6 h-6 relative bg-[#6DA544] rounded-full">
