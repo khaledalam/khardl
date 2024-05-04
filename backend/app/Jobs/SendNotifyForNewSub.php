@@ -28,11 +28,11 @@ class SendNotifyForNewSub implements ShouldQueue
        public $restaurant_id,
        public $cost,
        public $type,
-       public $date, 
+       public $date,
 
     )
     {
-       
+
     }
 
     /**
@@ -55,7 +55,7 @@ class SendNotifyForNewSub implements ShouldQueue
 
             }else {
                 \Sentry\captureMessage("undefined type of subscription for notify users $this->type");
-                return ; 
+                return ;
             }
             tenancy()->central(function()use($type_ar,$type_en,$log_success){
                 $users = NotificationReceipt::where('active',true)->where($this->type,true)->get();
@@ -66,7 +66,7 @@ class SendNotifyForNewSub implements ShouldQueue
                         $this->restaurant_id,
                         $this->cost,
                         $this->type,
-                        $this->date, 
+                        $this->date,
                     ));
                     $actions = [
                         'en' => "[ok] An email was sent to alert the users for new or renew $type_en ",
@@ -82,11 +82,11 @@ class SendNotifyForNewSub implements ShouldQueue
                         ]
                     ]);
                 }
-                
+
             });
-           
-           
-        
+
+
+
         } catch (\Exception $e) {
             \Sentry\captureException($e);
             $actions = [
