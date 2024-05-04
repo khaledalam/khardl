@@ -15,6 +15,7 @@ class CustomerSendSMSRequest extends FormRequest
     public function rules()
     {
         $user= getAuth();
+
         $rules= [
             'phone' => 'required|regex:/^(966)?\d{9}$/',
         ];
