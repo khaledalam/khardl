@@ -49,7 +49,8 @@ class SendWhenAppReady implements ShouldQueue
                     'action' => $actions,
                     'type' => LogTypes::AppIsPublishedNotifySent,
                     'metadata' => [
-                        'email' => $this->customer->email
+                        'email' => $this->customer?->email,
+                        'name' => $this->customer?->full_name,
                     ]
                 ]);
             });
@@ -65,7 +66,8 @@ class SendWhenAppReady implements ShouldQueue
                     'user_id' => $this->customer?->id,
                     'type' => LogTypes::AppIsPublishedNotifyFail,
                     'metadata' => [
-                        'email' => $this->customer->email
+                        'email' => $this->customer?->email,
+                        'name' => $this->customer?->full_name,
                     ]
                 ]);
             });
