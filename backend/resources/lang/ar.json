@@ -1310,9 +1310,21 @@
     "Daily":"يومي",
     "Monthly":"شهري",
     "You app has been published and ready for download":"تم نشر التطبيق بنجاح وجاهز للتحميل",
-    "You can access now you apps from these links:":"يمكنك الان الوصل الي تطبيقاتك من خلال الروابط التالية",
+    "You can access now you apps from these links:":"يمكنك الان الوصول الي تطبيقاتك من خلال الروابط التالية",
     "Andriod app":"تطبيق الاندرويد",
     "IOS app":"تطبيق الايفون",
     "Dear :user":"عزيزي :user",
-    "Your app is published and ready now.":"تم نشر تطبيقك وجاهز الآن."
+    "Your app is published and ready now.":"تم نشر تطبيقك وجاهز الآن.",
+    "Notify customer when app is published sent":"تم تنبيه العميل بنشر التطبيق",
+    "Notify customer when app is published fail":"فشل تنبيه العميل بنشر التطبيق",
+    "Notify for new/renew website restaurant subscription sent":"تم ارسال تنبيه بتجديد او شراء اشتراك مطعم",
+    "Notify for new/renew website restaurant subscription fail":"فشل تنبيه بتجديد او شراء اشتراك مطعم",
+    "Notify for new/renew customer application subscription sent":"تم ارسال تنبيه بالاشتراك في التطبيقات للعميل",
+    "Notify for new/renew customer application subscription fail":"فشل ارسال تنبيه بالاشتراك في التطبيقات للعميل",
+    "New application purchased":"شراء تطبيق جديد",
+    "New Customer application subscription":"اشتراك جديد في تطبيق العميل",
+    "New Restaurant subscription":"اشتراك مطعم جديد",
+    "Dear: :user_name":"عزيزي :user_name",
+    "We wanted to inform you that a new :sub has been booked from (:restaurant_name) on :date. The cost of this subscription is :cost SAR.":"أردنا أن نعلمك أنه قد تم حجز :sub من (:restaurant_name)  بتاريخ :date تكلفة هذا الاشتراك هي :cost ريال",
+    "This email was sent from an email address that can't receive emails. Please don't reply to this email.":"تم إرسال هذا البريد الإلكتروني من عنوان بريد إلكتروني لا يمكنه تلقي رسائل البريد الإلكتروني. الرجاء عدم الرد على هذا البريد الإلكتروني"
 }

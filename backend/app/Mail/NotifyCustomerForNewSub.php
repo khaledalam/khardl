@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NotifyUsersForNewSub extends Mailable
+class NotifyCustomerForNewSub extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -39,13 +39,18 @@ class NotifyUsersForNewSub extends Mailable
     public function build()
     {
         if($this->type == NotificationReceipt::is_application_purchase){
-            $sub = __("New Customer application subscription");
+            $sub = __("New application purchased");
         }else {
             $sub = __("New Restaurant subscription");
         }
 
-        return $this->subject("$sub")->view('emails.notify_users_for_new_sub', [
+        return $this->subject($sub)->view('emails.notify_users_for_new_sub', [
             'sub' => $sub,
+            'user_name' => $this->user_name,
+            'restaurant_name' => $this->restaurant_name,
+            'restaurant_id' => $this->restaurant_id,
+            'date' => $this->date,
+            'cost' => $this->cost,
         ]);
     }
 }
