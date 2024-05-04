@@ -52,8 +52,12 @@ class LoginCustomerController extends BaseController
 //        $this->middleware('guest')->except('logout');
     }
 
-    public function login(CustomerLoginRequest $request)
-    {
+    public function login(CustomerSendSMSRequest $request)
+    {   
+        if(!$request->otp || !$request->id_sms){
+            $response =  $this->sendSMS($request);
+            return $response->setStatusCode(ResponseHelper::HTTP_BAD_REQUEST);
+        }
         $user = RestaurantUser::where("phone",$request->phone)->first();
         if(!$user?->isRestaurantOwner() && (!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE)){
             Auth::logout();
@@ -63,22 +67,24 @@ class LoginCustomerController extends BaseController
             Auth::logout();
             return $this->sendError(__('Cannot login, Branch is not active'), []);
         }
-        $user->status = RestaurantUser::INACTIVE;
-        $user->phone_verified_at = null;
+        if(!$this->checkAttempt($user)){
+            return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
+        }
+        if(!$this->checkVerificationSMSCodeOnly($request->otp,$request->id_sms)){
+            return $this->sendError(__('Invalid code'));
+        }
+        $user->status = RestaurantUser::ACTIVE;
+        $user->phone_verified_at = now();
         $user->force_logout = 0;
         $user->save();
        
         Auth::loginUsingId($user->id,true);
-        if($this->sendVerificationSMSCode($request)){
-            $user = Auth::user();
-            $user->load(['roles']);
-            $data = [
-                'user'=>$user
-            ];
-            return $this->sendResponse($data, __('User logged in successfully.'));
-        }
-
-        return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
+        $user = Auth::user();
+        $user->load(['roles']);
+        $data = [
+            'user'=>$user
+        ];
+        return $this->sendResponse($data, __('User logged in successfully.'));
     }
     public function loginCustomerOnly(CustomerAppLoginRequest $request){
         if(!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE){
