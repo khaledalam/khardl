@@ -469,6 +469,7 @@ Route::middleware([
                 Route::get('/', [CustomerOrderController::class, 'user']);
                 Route::post('/update', [LoginCustomerController::class, 'updateCustomerApp']);
                 Route::post('/verify/phone', [LoginCustomerController::class, 'VerifyCustomerPhone']);
+                Route::get('/orders', [CustomerDataController::class, 'orders']);
             });        
             
         });

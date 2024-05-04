@@ -38,4 +38,7 @@ class CustomerDataController extends BaseController
         $restaurantUser->changeStatus($request->status);
         return redirect()->back()->with('success',__('Status changed successfully'));
     }
+    public function orders(){
+      return $this->customerDataService->orders();
+    }
 }
