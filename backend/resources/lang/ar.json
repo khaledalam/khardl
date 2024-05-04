@@ -1310,11 +1310,15 @@
     "Daily":"يومي",
     "Monthly":"شهري",
     "You app has been published and ready for download":"تم نشر التطبيق بنجاح وجاهز للتحميل",
-    "You can access now you apps from these links:":"يمكنك الان الوصل الي تطبيقاتك من خلال الروابط التالية",
+    "You can access now you apps from these links:":"يمكنك الان الوصول الي تطبيقاتك من خلال الروابط التالية",
     "Andriod app":"تطبيق الاندرويد",
     "IOS app":"تطبيق الايفون",
     "Dear :user":"عزيزي :user",
     "Your app is published and ready now.":"تم نشر تطبيقك وجاهز الآن.",
     "Notify customer when app is published sent":"تم تنبيه العميل بنشر التطبيق",
-    "Notify customer when app is published fail":"فشل تنبيه العميل بنشر التطبيق"
+    "Notify customer when app is published fail":"فشل تنبيه العميل بنشر التطبيق",
+    "Notify for new/renew website restaurant subscription sent":"تم ارسال تنبيه بتجديد او شراء اشتراك مطعم",
+    "Notify for new/renew website restaurant subscription fail":"فشل تنبيه بتجديد او شراء اشتراك مطعم",
+    "Notify for new/renew customer application subscription sent":"تم ارسال تنبيه بالاشتراك في التطبيقات للعميل",
+    "Notify for new/renew customer application subscription fail":"فشل ارسال تنبيه بالاشتراك في التطبيقات للعميل"
 }
