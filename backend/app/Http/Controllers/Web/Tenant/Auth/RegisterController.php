@@ -18,6 +18,7 @@ use App\Http\Requests\Tenant\OTPRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Requests\Tenant\CustomerSendSMSRequest;
 use App\Http\Requests\Tenant\CustomerRegisterRequest;
 use App\Packages\TapPayment\Customer\Customer as CustomerTap;
 use App\Http\Controllers\API\Central\Auth\RegisterController as RegisterControllerCentral;
@@ -92,27 +93,39 @@ class RegisterController extends BaseController
 
     public function register(CustomerRegisterRequest $request)
     {
-        $input = $request->validated();
-        // $input['password'] = Hash::make($input['password']);
-        $input['status'] = RestaurantUser::INACTIVE;
-        $user = RestaurantUser::create($input);
-
-        $success['name'] =  "$user->first_name $user->last_name";
-        $user->generateVerificationSMSCode();
+        $this->validate($request,[
+            'otp' => 'required|string' ,
+            'id_sms' => 'required|string' ,
+        ]);
+        if(!(new LoginCustomerController)->checkVerificationSMSCodeOnly($request->otp,$request->id_sms)){
+            return $this->sendError(__('Invalid code'));
+        }
+        if(!$user = RestaurantUser::create($request->validated(),true)){
+            \Sentry\captureMessage("register Customer app : " . json_encode($request->all()));
+            return   $this->sendError(__('Something wrong happen'));
+        }
+        $user->update([
+            'msegat_id_verification'=>$request->id_sms,
+            'phone_verified_at' => now(),
+            'status'=> RestaurantUser::ACTIVE
+        ]);
         Auth::login($user,true);
-        return $this->sendResponse($success, 'Customer registered successfully.');
+        return $this->sendResponse($user, 'Customer registered successfully.');
     }
 
-    public function sendVerificationSMSCode(Request $request):JsonResponse
+    public function sendVerificationSMSCode(CustomerSendSMSRequest $request):JsonResponse
     {
-        $user = Auth::user();
-        if(!$this->checkAttempt($user)){
-            return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
+        $sms = $this->generateVerificationSMSCodeOnly($request->phone);
+        if(is_null($sms)){
+            return $this->sendError(__('The maximum number of text messages has been used today. Please try again later'));
+        }else if(!$sms) {
+            \Sentry\captureMessage("SMS NOT BEING DELIVERED");
+            return $this->sendError(__('An error has occurred, please try again later'));
         }
-        if(!$id= $user->generateVerificationSMSCode()) return $this->sendError('Fail', __('Request failed .'));
-        $user->msegat_id_verification = $id;
-        $user->save();
-        return $this->sendResponse(null, __('Verification code sent to phone.'));
+
+        return $this->sendResponse([
+            'id'=> $sms
+        ],__('A SMS has been sent successfully'));
     }
     public function verify(OTPRequest $request): JsonResponse
     {

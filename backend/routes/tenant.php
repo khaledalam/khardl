@@ -323,6 +323,8 @@ Route::group([
         Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
 
+        Route::post('phone/send-verify', [LoginCustomerController::class, 'sendSMS']);
+        // Route::post('phone/verify', [RegisterController::class, 'verify']);
 
         Route::middleware('auth')->group(function () {
 
@@ -332,16 +334,6 @@ Route::group([
 
 
 
-            Route::middleware('notVerifiedPhone')->group(function () {
-//                Route::get('verification-phone', static function () {
-//                    $setting = Setting::first();
-//                    $restaurant_name = $setting->restaurant_name;
-//                    return view("tenant", compact('restaurant_name'));
-//                })->name("verification-phone");
-//
-                Route::post('phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
-                Route::post('phone/verify', [RegisterController::class, 'verify']);
-            });
 
 
             Route::get('/user', [CustomerOrderController::class, 'user'])->name('customer.user');
