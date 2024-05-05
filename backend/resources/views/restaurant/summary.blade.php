@@ -372,13 +372,13 @@
                     <div class="row">
                         <div class="col-md-2 filtration">
                             <div class="mb-4">
-                                <select class="form-select" id="filter_range">
+                                <select class="form-select" id="filter_range_visitors">
                                     <option value="daily" selected>{{ __('Daily') }}</option>
                                     <option value="monthly">{{ __('Monthly') }}</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12" id="daily_statistics">
+                        <div class="col-md-12" id="daily_visitors">
                             <div class="card card-flush h-md-100 mb-5 mb-xl-10">
                                 <!--begin::Card body-->
                                 <div class="card-body pt-2 pb-4 d-flex align-items-center">
@@ -394,7 +394,7 @@
                                 <!--end::Card body-->
                             </div>
                         </div>
-                        <div class="col-md-12" id="monthly_statistics" style="display: none;">
+                        <div class="col-md-12" id="monthly_visitors" style="display: none;">
                             <div class="card card-flush h-md-100 mb-5 mb-xl-10">
                                 <!--begin::Card body-->
                                 <div class="card-body pt-2 pb-4 d-flex align-items-center">
@@ -434,6 +434,9 @@
         const filter_range = document.getElementById('filter_range');
         const daily_statistics = document.getElementById('daily_statistics');
         const monthly_statistics = document.getElementById('monthly_statistics');
+        const filter_range_visitors = document.getElementById('filter_range_visitors');
+        const daily_visitors = document.getElementById('daily_visitors');
+        const monthly_visitors = document.getElementById('monthly_visitors');
 
         if (filter_range?.length) {
             filter_range.addEventListener('change', function () {
@@ -443,6 +446,17 @@
                 } else if (filter_range.value === 'monthly') {
                     daily_statistics.style.display = 'none';
                     monthly_statistics.style.display = 'block';
+                }
+            });
+        }
+        if (filter_range_visitors?.length) {
+            filter_range_visitors.addEventListener('change', function () {
+                if (filter_range_visitors.value === 'daily') {
+                    daily_visitors.style.display = 'block';
+                    monthly_visitors.style.display = 'none';
+                } else if (filter_range_visitors.value === 'monthly') {
+                    daily_visitors.style.display = 'none';
+                    monthly_visitors.style.display = 'block';
                 }
             });
         }
