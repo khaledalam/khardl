@@ -54,13 +54,14 @@ class SendApprovedBusinessEmailJob implements ShouldQueue
                 'en' => '[fail] Email approve business sent successfully',
                 'ar' => '[فشل] تم ارسال بريد للموافقة علي الاعمال',
             ];
-            tenancy()->central(function() use ($actions) {
+            tenancy()->central(function() use ($actions,$e) {
                 Log::create([
                     'action' => $actions,
                     'user_id' => $this?->user?->id,
                     'type' => LogTypes::ApproveBusinessFail,
                     'metadata' => [
                         'email' => $this->user->email ?? null,
+                        'e_message' => $e->getMessage(),
                     ]
                 ]);
             });

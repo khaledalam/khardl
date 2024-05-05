@@ -85,13 +85,14 @@ class SendCustomerNotifyForNewSub implements ShouldQueue
 
         } catch (\Exception $e) {
             \Sentry\captureException($e);
-            tenancy()->central(function () use ($actions, $log_failed) {
+            tenancy()->central(function () use ($actions, $log_failed,$e) {
                 Log::create([
                     'action' => $actions,
                     'user_id' => null,
                     'type' => $log_failed,
                     'metadata' => [
                         'email' => $this->customer?->email ?? null,
+                        'e_message' => $e->getMessage(),
                     ]
                 ]);
             });

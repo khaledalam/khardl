@@ -56,13 +56,14 @@ class SendApprovedRestaurantEmailJob implements ShouldQueue
                 'en' => '[fail] Email approve restaurant',
                 'ar' => '[فشل] ارسال بريد بالموافقة علي المطعم',
             ];
-            tenancy()->central(function() use ($action) {
+            tenancy()->central(function() use ($action,$e) {
                 Log::create([
                     'user_id' => $this?->restaurant?->user?->id,
                     'action' => $action,
                     'type' => LogTypes::ActivateRestaurantNotifyFail,
                     'metadata' => [
                         'email' => $this->restaurant->email ?? null,
+                        'e_message' => $e->getMessage(),
                     ]
                 ]);
             });
