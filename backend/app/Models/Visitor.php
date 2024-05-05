@@ -9,7 +9,11 @@ class Visitor extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'ip_address',
-        'user_agent'
+        'count',
     ];
+    public function increaseCount()
+    {
+        $this->count++;
+        $this->save();
+    }
 }

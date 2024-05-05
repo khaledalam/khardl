@@ -42,6 +42,8 @@ class SummaryService
 
         $noOfUsersThisMonth = $this->getNumberOfUsersThisMonth();
         $bestSellingItems = $this->bestSellingItems();
+        $dailyVisitors = $this->dailyVisitors();
+        $monthVisitors = $this->monthlyVisitors();
         return view('restaurant.summary', compact(
             'user',
             'branches',
@@ -59,7 +61,9 @@ class SummaryService
             'totalPriceThisMonth',
             'bestSellingItems',
             'dailyRevenues',
-            'monthlyRevenues'
+            'monthlyRevenues',
+            'dailyVisitors',
+            'monthVisitors',
         ));
     }
     private function bestSellingItems()
@@ -71,7 +75,7 @@ class SummaryService
             ->select('item_id', DB::raw('SUM(quantity) as total_quantity'))
             ->groupBy('item_id')
             ->orderByDesc('total_quantity')
-            ->take(10)
+            ->take(6)
             ->get();
     }
     public function profitDays($count)
@@ -123,6 +127,54 @@ class SummaryService
         return Cache::remember($cacheKey, config('application.cache_monthly_visitors', 24 * 60 * 60), function () {
             return $this->profitMonths(6);
         });
+    }
+    public function dailyVisitors()
+    {
+        $cacheKey = 'RO_daily_visitors';
+        return Cache::remember($cacheKey, config('application.cache_daily_visitors', 4 * 60 * 60), function () {
+            return $this->getDaily();
+        });
+    }
+    public function getDaily()
+    {
+        $chart_options = [
+            'chart_title' => __('Daily visitors'),
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Visitor',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'day',
+            'chart_type' => 'line',
+            'aggregate_field' => 'count',
+            'aggregate_function' => 'sum',
+            'filter_field' => 'created_at',
+            'filter_days' => 14,
+            'chart_color' => '194, 218, 8',
+        ];
+        return new LaravelChart($chart_options);
+    }
+    public function monthlyVisitors()
+    {
+        $cacheKey = 'RO_monthly_visitors';
+        return Cache::remember($cacheKey, config('application.cache_monthly_visitors', 24 * 60 * 60), function () {
+            return $this->getMonthly();
+        });
+    }
+    public function getMonthly()
+    {
+        $chart_options = [
+            'chart_title' => __('Monthly visitors'),
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Visitor',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'aggregate_field' => 'count',
+            'aggregate_function' => 'sum',
+            'filter_field' => 'created_at',
+            'filter_days' => 6 * 30,
+            'chart_color' => '0, 158, 247',
+        ];
+        return new LaravelChart($chart_options);
     }
     private function getCurrentMonthAndYear()
     {
