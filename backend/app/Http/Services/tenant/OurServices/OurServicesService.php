@@ -22,10 +22,11 @@ class OurServicesService
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
-        [$subscription,$customer_app_sub]= tenancy()->central(function () {
+        [$subscription,$customer_app_sub,$lifetime_customer_app_sub]= tenancy()->central(function () {
             return [
                 CentralSubscription::first(),
-                CentralSubscription::skip(1)->first()
+                CentralSubscription::skip(1)->first(),
+                CentralSubscription::skip(2)->first()
             ];
         });
         $RO_subscription = ROSubscription::first();
@@ -39,7 +40,8 @@ class OurServicesService
             $amount =  $subscription->amount;
             $total_branches = 1;
         }
-        return view('restaurant.service', compact('user','customer_app_sub','ROCustomerAppSub','active_branches','RO_subscription','non_active_branches','subscription','setting','amount','total_branches'));
+
+        return view('restaurant.service', compact('user','lifetime_customer_app_sub','customer_app_sub','ROCustomerAppSub','active_branches','RO_subscription','non_active_branches','subscription','setting','amount','total_branches'));
     }
 
     public function deactivate()
