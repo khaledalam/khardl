@@ -29,7 +29,7 @@ class SendRenewSuspendSubscriptionEmailJob implements ShouldQueue
        public $type
     )
     {
-       
+
     }
 
     /**
@@ -57,22 +57,23 @@ class SendRenewSuspendSubscriptionEmailJob implements ShouldQueue
                         'email' => $this->user->email ?? null,
                     ]
                 ]);
-    
+
             });
-        
+
         } catch (\Exception $e) {
             logger($e->getMessage());
             $actions = [
                 'en' => '[fail] An email was sent to alert the restaurant owner to renew the subscription',
                 'ar' => '[فشل] تم ارسال بريد لتنبيه صاحب المطعم بتجديد الاشتراك'
             ];
-            tenancy()->central(function()use($actions){
+            tenancy()->central(function()use($actions,$e){
                 Log::create([
                     'action' => $actions,
                     'user_id' => $this?->user?->id,
                     'type' => LogTypes::RenewSubscriptionNotifyFail,
                     'metadata' => [
                         'email' => $this->user->email ?? null,
+                        'e_message' => $e->getMessage(),
                     ]
                 ]);
             });

@@ -465,15 +465,6 @@ Route::middleware([
                     });
                 });
             });
-            /* Customer address */
-            Route::controller(CustomerAddressController::class)->group(function () {
-                Route::post('add-address','create');
-                Route::post('update-address/{address}','update');
-                Route::post('make-as-default/{address}','makeDefault');
-                Route::post('delete-address/{address}','delete');
-                Route::post('get-addresses','index');
-            });
-            /* Customer address */
         });
         // Update user in customer app
         Route::prefix('customer')->group(function () {
@@ -488,7 +479,16 @@ Route::middleware([
                 Route::post('/verify/phone', [LoginCustomerController::class, 'VerifyCustomerPhone']);
                 Route::get('/orders', [CustomerDataController::class, 'orders']);
             });
-
+            /* Customer address */
+            Route::controller(CustomerAddressController::class)->group(function () {
+                Route::post('add-address','create');
+                Route::post('update-address/{address}','update');
+                Route::post('make-as-default/{address}','makeDefault');
+                Route::post('delete-address/{address}','delete');
+                Route::get('get-addresses','index');
+                Route::get('get-default','getDefault');
+            });
+            /* Customer address */
         });
 
 
