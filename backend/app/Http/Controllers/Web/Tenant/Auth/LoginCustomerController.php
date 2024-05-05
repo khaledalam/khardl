@@ -53,19 +53,13 @@ class LoginCustomerController extends BaseController
     }
 
     public function login(CustomerSendSMSRequest $request)
-    {
+    {   
         // @TODO: Improve the way that we fetch user (add throttle, and IP limitations)
+        $request->validate([
+            'phone' => 'exists:users',
+        ]);
+
         $user = RestaurantUser::where("phone", $request->phone)->first();
-
-        if (!$user && !$request->otp) {
-            return $this->sendError(__("If phone number is registered with us, an OTP SMS will be sent"), [])
-                ->setStatusCode(ResponseHelper::HTTP_BAD_REQUEST);
-        }
-
-        if (!$user && $request->otp) {
-            return $this->sendError(__("Maybe phone number is not registered or OTP code is wrong"), [])
-                ->setStatusCode(ResponseHelper::HTTP_FORBIDDEN);
-        }
 
         if(strlen($request->otp) != 4){
             $response =  $this->sendSMS($request);
