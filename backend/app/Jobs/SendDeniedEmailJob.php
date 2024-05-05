@@ -59,13 +59,14 @@ class SendDeniedEmailJob implements ShouldQueue
                 'en' => '[fail] Sent denied email notification',
                 'ar' => '[فشل] ارسال بريد بالرفض',
             ];
-            tenancy()->central(function() use ($action) {
+            tenancy()->central(function() use ($action,$e) {
                 Log::create([
                     'action' => $action,
                     'user_id' => $this?->user?->id,
                     'type' => LogTypes::DenyUserFail,
                     'metadata' => [
                         'email' => $this->user->email ?? null,
+                        'e_message' => $e->getMessage(),
                     ]
                 ]);
             });

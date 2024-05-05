@@ -58,13 +58,14 @@ class SendTAPLeadIDMerchantIDRequestEmailJob implements ShouldQueue
                 'en' => '[fail] Sent TAP lead id to merchant id email',
                 'ar' => '[فشل] ارسال بريد لتحويل lead الي merchant',
             ];
-            tenancy()->central(function() use ($action) {
+            tenancy()->central(function() use ($action,$e) {
                 Log::create([
                     'user_id' => $this?->user?->id,
                     'action' => $action,
                     'type' => LogTypes::TAPLeadIDMerchantIDFail,
                     'metadata' => [
                         'email' => $this?->user?->email ?? null,
+                        'e_message' => $e->getMessage(),
                     ]
                 ]);
             });

@@ -55,13 +55,14 @@ class SendApprovedEmailJob implements ShouldQueue
                 'en' => '[fail] Sent approved email notification',
                 'ar' => '[فشل] ارسال بريد للموافقة',
             ];
-            tenancy()->central(function() use ($action) {
+            tenancy()->central(function() use ($action,$e) {
                 Log::create([
                     'user_id' => $this?->user?->id,
                     'action' => $action,
                     'type' => LogTypes::ApproveUserFail,
                     'metadata' => [
                         'email' => $this->user->email ?? null,
+                        'e_message' => $e->getMessage(),
                     ]
                 ]);
             });

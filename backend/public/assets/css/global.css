@@ -9,8 +9,15 @@
   top: 16px;
 }
 @media (max-width: 425px) {
-  #daily_statistics .card-body,#monthly_statistics .card-body{
+  #daily_statistics .card-body,#monthly_statistics .card-body,
+  #daily_visitors .card-body,#monthly_visitors .card-body{
     padding: 0;
+  }
+  .filtration .form-select{
+    font-size: 9px;
+  }
+  #daily_visitors .card-body,#monthly_visitors .card-body{
+    margin-top: 20px;
   }
 }
 

@@ -79,6 +79,10 @@ class SendContactUsEmailJob implements ShouldQueue
                 'user_id' => Auth::id(),
                 'action' => $actions,
                 'type' => LogTypes::ContactUsForm,
+                'metadata' => [
+                    'email' => $this->email ?? null,
+                    'e_message' => $e->getMessage(),
+                ]
             ]);
         }
     }
