@@ -2,7 +2,8 @@
 
 @section('title', $item->name)
 
-@section('content')<div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
+@section('content')
+    <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
     <!--begin::Post-->
     <div class="post" id="kt_post">
         <!--begin::Container-->
@@ -65,7 +66,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="table-responsive">
-                        <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
+                        <table class="table align-middle table-row-dashed fs-6 gy-3">
                             <!--begin::Table head-->
                             <thead>
                                 <!--begin::Table row-->

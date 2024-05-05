@@ -176,7 +176,7 @@
                                             {{__("Customer app Subscription is currently suspended")}}
 
                                             <span class="badge badge-success p-2 fs-6">
-                                        
+
                                                 {{ $customer_app->end_at?->format('Y-m-d') }}
                                             </span>
                                         @else
@@ -187,11 +187,11 @@
                                         @endif
                                     </div>
                                 </div>
-                    
-                            
+
+
                                 <!--end::Wrapper-->
                                 <!--begin::Progress-->
-                                
+
                                 @elseif (!$is_live && !$restaurant?->user?->isBlocked())
                                 <div class="d-flex justify-content-between align-items-center">
                                     @if($user?->hasPermission('can_approve_restaurants'))
@@ -267,7 +267,7 @@
                         </ul>
                         <!--begin::Navs-->
                     </div>
-                    
+
                     <div class="tab-content">
                         <div class="tab-pane fade  {{!request()->has('config')?'active show':""}}" id="overview" role="tab-panel">
                             @include('admin.Restaurants.Overview.view',['sub'=>$subscription])
@@ -310,8 +310,11 @@ new DataTree({
     json:true
 });
 </script>
+@endsection
+
+@section('javascript')
 <script>
-    function ActiveRestuarant() {
+    function ActiveRestuarant(event) {
         event.preventDefault();
         if (document.getElementById('approve-form').dataset.loading === "true") {
             Swal.fire('Action is already in progress!', '', 'danger')
@@ -331,8 +334,10 @@ new DataTree({
             }
         })
     }
-    $("#active_restuarant").click(ActiveRestuarant);
     document.addEventListener('DOMContentLoaded', function() {
+
+        $("#active_restuarant").on('click', ActiveRestuarant);
+
         var confirmButtons = document.querySelectorAll('.btn-confirm');
         confirmButtons.forEach(function(button) {
             button.addEventListener('click', function(event) {
@@ -363,7 +368,7 @@ new DataTree({
                             <input type="checkbox" class="form-check-input" id="bank_certificate" name="options[]" value="bank_certificate">
                             <label class="form-check-label" for="bank_certificate">{{ __('bank-certificate') }}</label>
                         </div>
-                     
+
                         <div class="form-check my-2">
                             <input type="checkbox" class="form-check-input" id="IBAN" name="options[]" value="IBAN">
                             <label class="form-check-label" for="IBAN">{{ __('IBAN') }}</label>

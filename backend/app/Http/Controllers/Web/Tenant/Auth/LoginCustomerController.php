@@ -53,12 +53,33 @@ class LoginCustomerController extends BaseController
     }
 
     public function login(CustomerSendSMSRequest $request)
-    {   
-        if(!$request->otp || !$request->id_sms){
+    {
+        // @TODO: Improve the way that we fetch user (add throttle, and IP limitations)
+        $user = RestaurantUser::where("phone", $request->phone)->first();
+
+        if (!$user && !$request->otp) {
+            return $this->sendError(__("If phone number is registered with us, an OTP SMS will be sent"), [])
+                ->setStatusCode(ResponseHelper::HTTP_BAD_REQUEST);
+        }
+
+        if (!$user && $request->otp) {
+            return $this->sendError(__("Maybe phone number is not registered or OTP code is wrong"), [])
+                ->setStatusCode(ResponseHelper::HTTP_FORBIDDEN);
+        }
+
+        if(strlen($request->otp) != 4){
             $response =  $this->sendSMS($request);
             return $response->setStatusCode(ResponseHelper::HTTP_BAD_REQUEST);
         }
-        $user = RestaurantUser::where("phone",$request->phone)->first();
+
+        if ($request->otp && $request->id_sms) {
+            if (!$this->checkVerificationSMSCodeOnly($request->otp, $request->id_sms)) {
+                return $this->sendError(__('Invalid code'));
+            }
+        } else {
+            return $this->sendError(__("Missing inputs"), []);
+        }
+
         if(!$user?->isRestaurantOwner() && (!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE)){
             Auth::logout();
             return $this->sendError(__("Website doesn't have active subscription, Only restaurant owner can login"), []);
@@ -77,7 +98,7 @@ class LoginCustomerController extends BaseController
         $user->phone_verified_at = now();
         $user->force_logout = 0;
         $user->save();
-       
+
         Auth::loginUsingId($user->id,true);
         $user = Auth::user();
         $user->load(['roles']);
@@ -100,7 +121,7 @@ class LoginCustomerController extends BaseController
         if(!$user->isCustomer()){
             return $this->sendError(__("Unauthorized"), []);
         }
-    
+
         $user->force_logout = 0;
         $user->save();
         $data = [
@@ -194,7 +215,7 @@ class LoginCustomerController extends BaseController
         }
 
 
-    }   
+    }
     public function updateCustomerApp(UpdateCustomerInfoAppRequest $request){
         $user = Auth::user();
 
@@ -216,15 +237,15 @@ class LoginCustomerController extends BaseController
                 $user->save();
             }
             return $send_sms;
-            
+
         }else {
             $user->save();
             return $this->sendResponse([
                 'ok' => true,
             ], __('User updated successfully'));
         }
- 
-        
+
+
     }
      public function checkVerificationSMSCodeOnly(string $otp,$id)
     {

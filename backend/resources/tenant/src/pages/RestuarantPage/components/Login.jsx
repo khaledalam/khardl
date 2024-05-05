@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Logo from "../../../assets/Logo.webp";
 import ContactUsCover from "../../../assets/ContactUsCover.webp";
 import { useTranslation } from "react-i18next";
@@ -40,6 +40,8 @@ const Login = ({ closingFunc }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const loginFormRef = useRef();
+
   const {
     register: register,
     handleSubmit: handleSubmit,
@@ -75,8 +77,15 @@ const Login = ({ closingFunc }) => {
   const onSubmit = async (data) => {
     try {
       setSpinner(true);
-      const response = await AxiosInstance.post(`/api/login`, {
+
+      let sms_id = {};
+      if (localStorage.getItem('phone_sms_otp_id')?.length > 0) {
+        sms_id['id_sms'] = localStorage.getItem('phone_sms_otp_id');
+      }
+      const response = await AxiosInstance.post(`/login-tenant`, {
         phone: data.phone,
+        otp: otp,
+        ...sms_id
         // remember_me: data.remember_me, // used only in API token-based
       });
 
@@ -109,13 +118,24 @@ const Login = ({ closingFunc }) => {
         } else {
           navigate("/error");
         }
-      } else {
-        console.log("response?.data?.success false");
-        setSpinner(false);
-        throw new Error(`${t("Login failed")}`);
       }
     } catch (error) {
-      console.log("error response > ", error?.response);
+      if (localStorage.getItem('phone_sms_otp_id')?.length > 0) {
+        localStorage.setItem('phone_sms_otp_id', "");
+      }
+
+      if (error?.response?.status == 400) {
+        setShowOTP(true);
+        if (error?.response?.data?.data?.id) {
+          localStorage.setItem('phone_sms_otp_id', error?.response?.data?.data?.id)
+        }
+        toast.info(error?.response?.data?.message || `${t("The code has been sent successfully")}`);
+        return;
+      } else if (error?.response?.status == 403) {
+        toast.error(error?.response?.data?.message || `${t("The code has been sent successfully")}`);
+        return;
+      }
+      console.log("error response > ", error);
       setSpinner(false);
       dispatch(changeLogState(false));
       dispatch(changeUserState(null));
@@ -133,13 +153,13 @@ const Login = ({ closingFunc }) => {
   let user_phone = sessionStorage.getItem(PREFIX_KEY + "phone") || "";
 
   const [showForm, setShowForm] = useState(false);
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(90);
   const [canResend, setCanResend] = useState(false);
   const [showCountdownText, setShowCountdownText] = useState(true);
   const [otp, setOtp] = useState("");
 
   const resetTimer = () => {
-    setCountdown(30);
+    setCountdown(90);
     setCanResend(false);
     startTimer();
   };
@@ -153,7 +173,9 @@ const Login = ({ closingFunc }) => {
     try {
       setSpinner(true);
       resetTimer();
-      const response = await AxiosInstance.post(`/api/phone/send-verify`, {});
+      const response = await AxiosInstance.post(`/phone/send-verify`, {
+        phone: loginFormRef.current?.phone?.value,
+      });
       if (response.data) {
         toast.success(`${t("The code has been re-sent successfully")}`);
       } else {
@@ -166,31 +188,9 @@ const Login = ({ closingFunc }) => {
   };
 
   // API POST REQUEST
-  const onSubmitOTP = async (data) => {
-    try {
-      const response = await AxiosInstance.post(`/api/phone/verify`, {
-        otp: otp,
-      });
-
-      // console.log(response.data);
-
-      if (response.data) {
-        setStatusCode(HTTP_OK);
-        navigate("/");
-        toast.success(`${t("The code has been verified successfully")}`);
-        closingFunc();
-      } else {
-        throw new Error(`${t("Code verification failed")}`);
-      }
-    } catch (error) {
-      // TODO @todo print error message
-      toast.error(`${t("Code verification failed")}`);
-    }
-  };
   // TODO @todo startTimer is still working after verification , look at console after verification
   const startTimer = () => {
     const timer = setInterval(() => {
-      // console.log(3);
       setCountdown((prevCountdown) => {
         if (prevCountdown === 1) {
           clearInterval(timer);
@@ -211,15 +211,11 @@ const Login = ({ closingFunc }) => {
   };
 
   useEffect(() => {
-    resetTimer();
-    let timer = startTimer();
-    fetchResStyleData();
+    if (showOTP) {
+      resetTimer();
+    }
   }, [showOTP]);
 
-  /////////////////////////////////////////////////////////////////////////////////////
-  useEffect(() => {
-    fetchResStyleData();
-  }, []);
 
   const [lengthOfPhone, setLengthOfPhone] = useState(0);
 
@@ -245,36 +241,11 @@ const Login = ({ closingFunc }) => {
         {t("Login")}
       </div>
       <form
+        ref={loginFormRef}
         onSubmit={handleSubmit(onSubmit)}
         className="w-[100%] flex flex-col items-center mt-[40px]"
       >
-        <div className="flex mb-[20px] w-full">
-          <div className="w-[84px] h-[38px] p-1 rounded-[50px] border border-gray-200 justify-start items-center gap-1 inline-flex relative">
-            <div className="w-6 h-6 relative bg-[#6DA544] rounded-full">
-              <div className="w-[13.83px] h-[10.43px] left-[5.09px] top-[6.78px] absolute">
-                <img
-                  src={SA}
-                  alt="SA flag"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="text-zinc-500 text-xs font-normal font-['Plus Jakarta Sans'] leading-[18px]">
-              +966
-            </div>
-            <div className="w-[15px] h-[15px] py-0.5 flex-col justify-center items-center gap-2.5 inline-flex">
-              {/* <img
-                                src={Down}
-                                alt="down"
-                                className="w-[8.17px] h-[4.67px] object-cover"
-                            /> */}
-            </div>
-            <div className="w-9 h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
-              <div className="text-zinc-500 text-[9px] font-normal font-['Plus Jakarta Sans']">
-                {t("Phone number")}
-              </div>
-            </div>
-          </div>
+        <div className="flex mb-[20px] w-full" dir={"rtl"}>
           <div className="ml-[8px] w-full">
             <input
               type="tel"
@@ -288,7 +259,7 @@ const Login = ({ closingFunc }) => {
                 // console.log(data.target.value.length);
               }}
               minLength={9}
-              maxLength={13}
+              maxLength={9}
               onKeyDown={(event) => {
                 if (
                   (event.which < 48 || event.which > 57) &&
@@ -307,6 +278,30 @@ const Login = ({ closingFunc }) => {
                 {t("Phone Error")}
               </span>
             )}
+          </div>
+          <div className="w-[84px] h-[38px] p-1 rounded-[50px] border border-gray-200 justify-start items-center gap-1 inline-flex relative">
+            <div className="w-[15px] h-[15px] py-0.5 flex-col justify-center items-center gap-2.5 inline-flex" />
+
+            <div dir={"ltr"} className="text-zinc-500 text-xs font-normal font-['Plus Jakarta Sans'] leading-[18px]">
+              +966
+            </div>
+
+            <div className="w-6 h-6 relative bg-[#6DA544] rounded-full">
+              <div className="w-[13.83px] h-[10.43px] left-[5.09px] top-[6.78px] absolute">
+                <img
+                  src={SA}
+                  alt="SA flag"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+
+            <div className="w-9 h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
+              <div className="text-zinc-500 text-[9px] font-normal font-['Plus Jakarta Sans']">
+                {t("Phone number")}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -340,9 +335,23 @@ const Login = ({ closingFunc }) => {
                     onChange={(e) => {
                       setOtp(e.target.value);
                     }}
+                    minLength={4}
+                    maxLength={4}
                     type="text"
-                    className="bg-white w-full h-full outline-none pl-[15px]"
-                    placeholder={t("")}
+                    className="bg-white w-full h-full outline-none px-[15px]"
+                    placeholder={t("OTP")}
+                    onKeyDown={(event) => {
+                      if (
+                        (event.which < 48 || event.which > 57) &&
+                        (event.which < 96 || event.which > 105) &&
+                        event.which !== 8 &&
+                        event.which !== 46 &&
+                        event.which !== 37 &&
+                        event.which !== 39
+                      ) {
+                        event.preventDefault();
+                      }
+                    }}
                     // {...register2("otp", {
                     //     required: true,
                     // })}
@@ -383,31 +392,20 @@ const Login = ({ closingFunc }) => {
         )}
 
         <div className="flex flex-col justify-center items-center mt-4 mb-10 w-full">
-          {showOTP ? (
-            <button
-              onClick={onSubmitOTP}
-              className={`w-full h-8 px-4 pt-1.5 pb-2 ${
-                lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
-              } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
-            >
-              {t("Login")}
-            </button>
-          ) : (
-            <button
-              type="submit"
-              className={`w-full h-8 px-4 pt-1.5 pb-2 ${
-                lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
-              } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
-            >
-              {t("Login")}
-            </button>
-          )}
+          <button
+            type="submit"
+            className={`w-full h-8 px-4 pt-1.5 pb-2 ${
+              lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
+            } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
+          >
+            {t("Login")}
+          </button>
           <p className="text-[12px] font-normal leading-[18px] mt-1">
             {t("Don't have an account?")}
             <input
               type="button"
               className="text-[#7D0A0A] cursor-pointer hover:text-blue-300 py-2 px-2 text-md "
-              value={t("Register here!")}
+              value={t("Register here")}
               onClick={() => {
                 dispatch(SetLoginModal(false));
                 dispatch(SetRegisterModal(true));

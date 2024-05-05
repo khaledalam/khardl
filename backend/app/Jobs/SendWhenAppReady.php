@@ -49,8 +49,9 @@ class SendWhenAppReady implements ShouldQueue
                     'action' => $actions,
                     'type' => LogTypes::AppIsPublishedNotifySent,
                     'metadata' => [
-                            $this->rOCustomerAppSub
-                        ]
+                        'email' => $this->customer?->email,
+                        'name' => $this->customer?->full_name,
+                    ]
                 ]);
             });
         } catch (\Exception $e) {
@@ -62,9 +63,12 @@ class SendWhenAppReady implements ShouldQueue
             tenancy()->central(function () use($actions){
                 Log::create([
                     'action' => $actions,
-                    'user_id' => $this->customer?->id,,
+                    'user_id' => $this->customer?->id,
                     'type' => LogTypes::AppIsPublishedNotifyFail,
-                    $this->rOCustomerAppSub
+                    'metadata' => [
+                        'email' => $this->customer?->email,
+                        'name' => $this->customer?->full_name,
+                    ]
                 ]);
             });
         }

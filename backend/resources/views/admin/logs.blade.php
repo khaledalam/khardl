@@ -126,7 +126,7 @@
                                                         </p>
                                                         <hr>
                                                         @if (isset($log->metadata['email']))
-                                                        {{ $log->metadata['email'] }}
+                                                        {{ __('Email') }} : {{ $log->metadata['email'] }}
                                                         @elseif(isset($log->metadata['reason']))
                                                         <ul>
                                                             @foreach ($log->metadata['reason'] as $reason)
@@ -158,6 +158,10 @@
                                                                     @endif
                                                             @endforeach
                                                             </ul>
+                                                        @endif
+                                                        @if (isset($log->metadata['name']))
+                                                            <br>
+                                                            {{ __('Name') }} :  {{ $log->metadata['name'] }}
                                                         @endif
                                                     </div>
                                                 </div>

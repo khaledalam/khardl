@@ -324,7 +324,7 @@ Route::group([
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
 
         Route::post('phone/send-verify', [LoginCustomerController::class, 'sendSMS']);
-        // Route::post('phone/verify', [RegisterController::class, 'verify']);
+//         Route::post('phone/verify', [RegisterController::class, 'verify']);
 
         Route::middleware('auth')->group(function () {
 

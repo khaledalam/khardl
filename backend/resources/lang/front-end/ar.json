@@ -53,6 +53,8 @@
     "and": " و ",
     "Privacy": "سياسة الخصوصية",
     "Account successfully created": "تم إنشاء الحساب بنجاح",
+    "Please register yourself first.": "من فضلك سجل اولا",
+    "The code has been sent successfully": "تم ارسال الكود بنجاح",
     "Account creation failed": "فشلت عملية انشاء الحساب",
     "You have been logged in successfully": "تم تسجيل الدخول بنجاح",
     "Account requirements rejected، please resubmit from main domain": "تم رفض بعض البيانات المطلوبه، يرجي تحديث البيانات من الموقع الرئيسي",
@@ -570,7 +572,7 @@
     "e.g. Please make the meat super tender.": "مثال: يرجى جعل اللحم لينًا جدًا",
     "Login Code": "رمز الدخول",
     "Login Code Error": "رمز دخول خاطئ",
-    "Register here!": "سجل هنا!",
+    "Register here": "سجل هنا",
     "Phone number": "رقم",
     "Still didn't get it? ": "لم تصلك؟ ",
     "Resend now.": "إعادة الإرسال الآن.",
@@ -581,6 +583,6 @@
     "Write your last name here....": "اكتب اسمك الأخير هنا...",
     "Write your email address here...": "اكتب عنوان بريدك الإلكتروني هنا...",
     "Have an account?": "هل لديك حساب؟",
-    "Login here.": "تسجيل الدخول هنا.",
+    "Login here": "تسجيل الدخول هنا",
     "Register": "تسجيل"
 }

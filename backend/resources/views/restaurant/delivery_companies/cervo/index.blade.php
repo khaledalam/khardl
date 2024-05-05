@@ -1,6 +1,6 @@
 <div class="col-xl-6">
     <!--begin::Contacts-->
-    <div class="card card-flush h-lg-100" id="kt_contacts_main">
+    <div class="card card-flush h-lg-100">
         <!--begin::Card body-->
         <div>
             @if($cervo?->status)
@@ -150,7 +150,7 @@
                         <div class="card-body pt-0">
                             <div class="hover-scroll-overlay-y">
                                 <!--begin::Table-->
-                                <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
+                                <table class="table align-middle table-row-dashed fs-6 gy-3">
                                     <!--begin::Table head-->
                                     <thead>
                                         <!--begin::Table row-->
