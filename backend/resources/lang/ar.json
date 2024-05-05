@@ -1329,5 +1329,6 @@
     "New Restaurant subscription":"اشتراك مطعم جديد",
     "Dear: :user_name":"عزيزي :user_name",
     "We wanted to inform you that a new :sub has been booked from (:restaurant_name) on :date. The cost of this subscription is :cost SAR.":"أردنا أن نعلمك أنه قد تم حجز :sub من (:restaurant_name)  بتاريخ :date تكلفة هذا الاشتراك هي :cost ريال",
-    "This email was sent from an email address that can't receive emails. Please don't reply to this email.":"تم إرسال هذا البريد الإلكتروني من عنوان بريد إلكتروني لا يمكنه تلقي رسائل البريد الإلكتروني. الرجاء عدم الرد على هذا البريد الإلكتروني"
+    "This email was sent from an email address that can't receive emails. Please don't reply to this email.":"تم إرسال هذا البريد الإلكتروني من عنوان بريد إلكتروني لا يمكنه تلقي رسائل البريد الإلكتروني. الرجاء عدم الرد على هذا البريد الإلكتروني",
+    "Restaurant Approved":"تم قبول المطعم"
 }
