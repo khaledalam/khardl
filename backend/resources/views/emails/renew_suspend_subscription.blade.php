@@ -138,7 +138,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 2px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><strong>{{ __('emails.subscription_suspended.title') }}</strong></span></span></h1>
+    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><strong>{{ __('Subscription Suspended') }}</strong></span></span></h1>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -172,7 +172,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <div style="font-family: 'Cabin',sans-serif; font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>{{__('emails.subscription_suspended.content.intro', ['firstName' => $user->first_name]) }}</strong></p>
+    <p style="line-height: 140%;"><strong>{{__('Dear :user', ['user' => $user->first_name]) }}</strong></p>
   </div>
 
       </td>
@@ -186,13 +186,13 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p>{{ __('emails.subscription_suspended.content.suspended_message', ['restaurantName' => $restaurant_name]) }}</p>
+    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p>{{ __("We hope this message finds you well. We regret to inform you that your current subscription for the restaurant ':restaurantName' has been suspended.", ['restaurantName' => $restaurant_name]) }}</p>
 @if($type == 'website')
-<p>{{ __('emails.subscription_suspended.renewal_instructions') }} <a href="{{ $url }}">{{ __('emails.subscription_suspended.renew_link') }}. </a>{{ __('emails.subscription_suspended.message3') }}</p>
+<p>{{ __('To proceed with the renewal and start receiving orders again, please follow this link:') }} <a href="{{ $url }}">{{ __('Renew Subscription') }}. </a>{{ __('Our team is ready to assist you throughout the process and answer any questions you may have.') }}</p>
 @elseif($type == 'app')
-<p>{{ __('emails.subscription_suspended.message1') }}<a href="{{ $url }}">{{ __('emails.subscription_suspended.renew_link') }}. </a>{{ __('emails.subscription_suspended.message3') }}</p>
+<p>{{ __('Unfortunately, your customers cannot place orders through the app until your subscription is renewed. To proceed with the renewal and start receiving orders again, please follow this link:') }}<a href="{{ $url }}">{{ __('Renew Subscription') }}. </a>{{ __('Our team is ready to assist you throughout the process and answer any questions you may have.') }}</p>
 <p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">@endif</p>
-<p>{{ __('emails.subscription_suspended.thank_you_message') }}</p></h4>
+<p>{{ __('Unfortunately, your customers cannot place orders through the app until your subscription is renewed. To proceed with the renewal and start receiving orders again, please follow this link:') }}</p></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -226,7 +226,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 16px 16px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <div style="font-size: 13px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><em>{{ __('emails.subscription_suspended.email_note') }}</em></p>
+    <p style="line-height: 140%;"><em>{{ __("This email was sent from an email address that can't receive emails. Please don't reply to this email.") }}</em></p>
   </div>
 
       </td>
