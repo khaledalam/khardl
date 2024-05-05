@@ -40,6 +40,8 @@
     "The maximum number of text messages has been used today. Please try again later":"لقد تم استخدام الحد الاقصي من ارسال الرسائل النصية اليوم الرجاء المحاولة في وقت اخر",
     "An error has occurred, please try again later":"لقد حدث خطأ ما, الرجاء المحاولة لاحقا",
     "A SMS has been sent successfully":"لقد تم ارسال رسالة نصية بنجاح ",
+    "If phone number is registered with us, an OTP SMS will be sent":  "إذا كان رقم الهاتف مسجل لدينا، سيتم إرسال رسالة نصية قصيرة (OTP).",
+    "Maybe phone number is not registered or OTP code is wrong": "ربما لم يتم تسجيل رقم الهاتف أو أن رمز OTP خاطئ",
     "Order has been updated successfully.":"تم تحديث بيانات الطلب",
     "Order status logs fetched":"تم جمع حالات الطلب المتاحة",
     ":delivery_company is not activated yet":":delivery_company ليست مفعلة",

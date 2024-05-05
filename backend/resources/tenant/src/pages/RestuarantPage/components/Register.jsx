@@ -79,7 +79,7 @@ const Register = ({ closingFunc }) => {
         sessionStorage.setItem(PREFIX_KEY + "phone", data.phone);
         toast.success(`${t("Account successfully created")}`);
         setSpinner(false);
-        setTimeout(() => window.location.reload(), 2000);
+        setTimeout(() => window.location.reload(), 1500);
         closingFunc();
       } else if (res.data?.message) {
         toast.info(`${res.data?.message}`);
@@ -184,6 +184,8 @@ const Register = ({ closingFunc }) => {
         phone: registerFormRef.current.phone.value
       });
       if (response.data) {
+        console.log("ResendCode", response?.data);
+
         toast.success(`${t("The code has been re-sent successfully")}`);
       } else {
         throw new Error(`${t("Code resend failed")}`);
@@ -197,7 +199,8 @@ const Register = ({ closingFunc }) => {
   // API POST REQUEST
   const onSubmitOTP = async (data) => {
     try {
-      const response = await AxiosInstance.post(`/api/phone/verify`, {
+      const response = await AxiosInstance.post(`/login-tenant`, {
+        phone: registerFormRef.current.phone.value,
         otp: otp,
       });
 
@@ -319,7 +322,7 @@ const Register = ({ closingFunc }) => {
           </div>
         </div>
 
-        <div className="flex mb-[20px] w-full">
+        <div className="flex mb-[20px] w-full" dir={"rtl"}>
           <div className="ml-[8px] w-full">
             <input
               type="tel"
@@ -359,6 +362,7 @@ const Register = ({ closingFunc }) => {
             <div dir={"ltr"} className="text-zinc-500 text-xs font-normal font-['Plus Jakarta Sans'] leading-[18px]">
               +966
             </div>
+
             <div className="w-6 h-6 relative bg-[#6DA544] rounded-full">
               <div className="w-[13.83px] h-[10.43px] right-[5.09px] top-[6.78px] absolute">
                 <img
@@ -419,7 +423,7 @@ const Register = ({ closingFunc }) => {
                       setOtp(e.target.value);
                     }}
                     type="text"
-                    className="bg-white w-full h-full outline-none ml-[15px]"
+                    className="bg-white w-full h-full outline-none mx-[15px]"
                     placeholder={t("")}
                     minLength={4}
                     maxLength={4}
@@ -497,7 +501,7 @@ const Register = ({ closingFunc }) => {
             <input
               type="button"
               className="text-[#7D0A0A] cursor-pointer hover:text-blue-300 py-2 px-2 text-md "
-              value={t("Login here.")}
+              value={t("Login here")}
               onClick={() => {
                 dispatch(SetRegisterModal(false));
                 dispatch(SetLoginModal(true));

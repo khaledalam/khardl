@@ -254,7 +254,7 @@ const Register = () => {
                   <input
                     type="button"
                     className="text-[#7D0A0A] cursor-pointer hover:text-blue-300 py-2 px-2 text-md "
-                    value={t("Login here.")}
+                    value={t("Login here")}
                   />
                 </Link>
               </p>
