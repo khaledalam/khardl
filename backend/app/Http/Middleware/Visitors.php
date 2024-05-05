@@ -16,13 +16,12 @@ class Visitors
      */
     public function handle($request, Closure $next)
     {
-        $ipAddress = $request->ip();
-        $cacheKey = 'visitor_' . $ipAddress . '_' . Carbon::today()->format('Ymd');
-        Cache::remember($cacheKey, config('application.limit_visitor_time', 24 * 60 * 60), function () use ($ipAddress, $request, $cacheKey) {
+        $cacheKey = $this->getCacheKey($request->ip());
+        Cache::remember($cacheKey, config('application.limit_visitor_time', 24 * 60 * 60), function () {
             $todayVisitor = Visitor::whereDate('created_at', Carbon::today())->first();
             if ($todayVisitor) {
                 $todayVisitor->increaseCount();
-            }else{
+            } else {
                 Visitor::create([
                     'count' => 1,
                 ]);
@@ -30,5 +29,13 @@ class Visitors
             return true;
         });
         return $next($request);
+    }
+    public function getCacheKey($ipAddress)
+    {
+        if (tenancy()->tenant) {
+            return tenancy()->tenant?->id . '_visitor_' . $ipAddress . '_' . Carbon::today()->format('Ymd');
+        } else {
+            return 'visitor_' . $ipAddress . '_' . Carbon::today()->format('Ymd');
+        }
     }
 }
