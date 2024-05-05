@@ -328,7 +328,7 @@
         const daily_statistics = document.getElementById('daily_statistics');
         const monthly_statistics = document.getElementById('monthly_statistics');
 
-        if (filter_range.length) {
+        if (filter_range?.length) {
             filter_range.addEventListener('change', function () {
                 if (filter_range.value === 'daily') {
                     daily_statistics.style.display = 'block';

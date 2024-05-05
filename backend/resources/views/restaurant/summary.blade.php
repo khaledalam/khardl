@@ -390,15 +390,17 @@
         const daily_statistics = document.getElementById('daily_statistics');
         const monthly_statistics = document.getElementById('monthly_statistics');
 
-        filter_range.addEventListener('change', function() {
-            if (filter_range.value === 'daily') {
-                daily_statistics.style.display = 'block';
-                monthly_statistics.style.display = 'none';
-            } else if (filter_range.value === 'monthly') {
-                daily_statistics.style.display = 'none';
-                monthly_statistics.style.display = 'block';
-            }
-        });
+        if (filter_range?.length) {
+            filter_range.addEventListener('change', function () {
+                if (filter_range.value === 'daily') {
+                    daily_statistics.style.display = 'block';
+                    monthly_statistics.style.display = 'none';
+                } else if (filter_range.value === 'monthly') {
+                    daily_statistics.style.display = 'none';
+                    monthly_statistics.style.display = 'block';
+                }
+            });
+        }
     });
 </script>
 @endsection
