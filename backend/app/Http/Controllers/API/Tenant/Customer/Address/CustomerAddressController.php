@@ -14,6 +14,10 @@ class CustomerAddressController
     {
         return $this->addressService->index($request);
     }
+    public function getDefault(Request $request)
+    {
+        return $this->addressService->getDefault();
+    }
     public function create(CustomerAddressRequest $request)
     {
         return $this->addressService->create($request);

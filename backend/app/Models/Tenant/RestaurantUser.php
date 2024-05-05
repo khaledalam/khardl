@@ -208,6 +208,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(UserAddress::class, 'user_id', 'id');
     }
+    public function default_address()
+    {
+        return $this->hasMany(UserAddress::class, 'user_id', 'id')->where('default',true)->first();
+    }
     public function monthly_orders()
     {
         return $this->completed_orders->whereBetween('created_at',
