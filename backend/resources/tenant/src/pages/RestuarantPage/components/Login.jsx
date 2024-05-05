@@ -174,7 +174,9 @@ const Login = ({ closingFunc }) => {
     try {
       setSpinner(true);
       resetTimer();
-      const response = await AxiosInstance.post(`/api/phone/send-verify`, {});
+      const response = await AxiosInstance.post(`/phone/send-verify`, {
+        phone: loginFormRef.current?.phone?.value,
+      });
       if (response.data) {
         toast.success(`${t("The code has been re-sent successfully")}`);
       } else {

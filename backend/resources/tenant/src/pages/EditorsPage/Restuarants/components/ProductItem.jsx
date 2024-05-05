@@ -349,7 +349,9 @@ const ProductItem = ({
       }
     });
 
-    document.getElementById(id).close();
+    if (document.getElementById(id)?.length) {
+      document.getElementById(id).close();
+    }
   }
 
   const handleAddToCart = async () => {
