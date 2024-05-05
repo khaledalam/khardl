@@ -18,18 +18,16 @@ class Visitors
     {
         $ipAddress = $request->ip();
         $cacheKey = 'visitor_' . $ipAddress . '_' . Carbon::today()->format('Ymd');
-        Cache::remember($cacheKey, config('application.limit_visitor_time', 8 * 60 * 60), function () use ($ipAddress, $request, $cacheKey) {
-            $todayVisitor = Visitor::where('ip_address', $ipAddress)
-                ->whereDate('created_at', Carbon::today())
-                ->first();
-            if (!$todayVisitor) {
-                // Create a new visitor record
-                $todayVisitor = Visitor::create([
-                    'ip_address' => $ipAddress,
-                    'user_agent' => $request->header('User-Agent'),
+        Cache::remember($cacheKey, config('application.limit_visitor_time', 24 * 60 * 60), function () use ($ipAddress, $request, $cacheKey) {
+            $todayVisitor = Visitor::whereDate('created_at', Carbon::today())->first();
+            if ($todayVisitor) {
+                $todayVisitor->increaseCount();
+            }else{
+                Visitor::create([
+                    'count' => 1,
                 ]);
             }
-            return $todayVisitor;
+            return true;
         });
         return $next($request);
     }
