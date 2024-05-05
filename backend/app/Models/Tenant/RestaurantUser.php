@@ -93,8 +93,6 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
             return true;
         if($this->isWorker()){
             return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
-        }else if($this->isDriver()){
-            return DB::table('permissions_driver')->where('user_id', $this->id)->value($permission) === 1;
         }
         return false;
     }
