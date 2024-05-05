@@ -70,11 +70,6 @@ const Register = ({ closingFunc }) => {
       });
 
 
-    console.log("herererere 2");
-
-
-    console.log(">>> res: ", res);
-
       if (res.data) {
         sessionStorage.setItem(PREFIX_KEY + "phone", data.phone);
         toast.success(`${t("Account successfully created")}`);
@@ -158,14 +153,14 @@ const Register = ({ closingFunc }) => {
   let user_phone = sessionStorage.getItem(PREFIX_KEY + "phone") || "";
 
   const [showForm, setShowForm] = useState(false);
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(90);
   const [canResend, setCanResend] = useState(false);
   const [showCountdownText, setShowCountdownText] = useState(true);
   const [showOTP, setShowOTP] = useState(false);
   const [otp, setOtp] = useState("");
 
   const resetTimer = () => {
-    setCountdown(30);
+    setCountdown(90);
     setCanResend(false);
     startTimer();
   };
@@ -222,7 +217,6 @@ const Register = ({ closingFunc }) => {
   // TODO @todo startTimer is still working after verification , look at console after verification
   const startTimer = () => {
     const timer = setInterval(() => {
-      // console.log(3);
       setCountdown((prevCountdown) => {
         if (prevCountdown === 1) {
           clearInterval(timer);
@@ -243,9 +237,9 @@ const Register = ({ closingFunc }) => {
   };
 
   useEffect(() => {
-    resetTimer();
-    let timer = startTimer();
-    // fetchResStyleData();
+    if (showOTP) {
+      resetTimer();
+    }
   }, [showOTP]);
 
 

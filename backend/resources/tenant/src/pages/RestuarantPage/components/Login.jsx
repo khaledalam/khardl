@@ -126,7 +126,6 @@ const Login = ({ closingFunc }) => {
 
       if (error?.response?.status == 400) {
         setShowOTP(true);
-        console.log(">>> ", error?.response)
         if (error?.response?.data?.data?.id) {
           localStorage.setItem('phone_sms_otp_id', error?.response?.data?.data?.id)
         }
@@ -154,13 +153,13 @@ const Login = ({ closingFunc }) => {
   let user_phone = sessionStorage.getItem(PREFIX_KEY + "phone") || "";
 
   const [showForm, setShowForm] = useState(false);
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(90);
   const [canResend, setCanResend] = useState(false);
   const [showCountdownText, setShowCountdownText] = useState(true);
   const [otp, setOtp] = useState("");
 
   const resetTimer = () => {
-    setCountdown(30);
+    setCountdown(90);
     setCanResend(false);
     startTimer();
   };
@@ -192,7 +191,6 @@ const Login = ({ closingFunc }) => {
   // TODO @todo startTimer is still working after verification , look at console after verification
   const startTimer = () => {
     const timer = setInterval(() => {
-      // console.log(3);
       setCountdown((prevCountdown) => {
         if (prevCountdown === 1) {
           clearInterval(timer);
@@ -213,9 +211,9 @@ const Login = ({ closingFunc }) => {
   };
 
   useEffect(() => {
-    resetTimer();
-    let timer = startTimer();
-    fetchResStyleData();
+    if (showOTP) {
+      resetTimer();
+    }
   }, [showOTP]);
 
 
@@ -341,7 +339,19 @@ const Login = ({ closingFunc }) => {
                     maxLength={4}
                     type="text"
                     className="bg-white w-full h-full outline-none px-[15px]"
-                    placeholder={t("")}
+                    placeholder={t("OTP")}
+                    onKeyDown={(event) => {
+                      if (
+                        (event.which < 48 || event.which > 57) &&
+                        (event.which < 96 || event.which > 105) &&
+                        event.which !== 8 &&
+                        event.which !== 46 &&
+                        event.which !== 37 &&
+                        event.which !== 39
+                      ) {
+                        event.preventDefault();
+                      }
+                    }}
                     // {...register2("otp", {
                     //     required: true,
                     // })}
