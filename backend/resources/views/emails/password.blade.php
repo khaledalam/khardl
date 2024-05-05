@@ -138,7 +138,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 2px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><strong>{{ __('emails.password.password_recovery')}}</strong></h1>
+    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><strong>{{ __('Password Recovery')}}</strong></h1>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -172,8 +172,8 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <div style="font-family: 'Cabin',sans-serif; font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;">{{ __('emails.password.dear_user', ['name' => $user->first_name])}}</p>
-<p style="line-height: 140%;">{{ __('emails.password.reset_password')}}</p>
+    <p style="line-height: 140%;">{{ __('Dear :user', ['user' => $user->first_name])}}</p>
+<p style="line-height: 140%;">{{ __('Reset your password')}}</p>
   </div>
 
       </td>
@@ -187,7 +187,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p>Y{{ __('emails.password.recovery_code')}}</p></h4>
+    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p>{{ __('Your recovery code is:')}}</p></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>

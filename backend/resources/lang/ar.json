@@ -1355,6 +1355,15 @@
     "Next Steps:":"الخطوات التالية:",
     "We understand that you may need to update or modify certain details in order to meet our criteria. To proceed further, please click on the button below to access your account and make the necessary changes. If you have any questions or need assistance, please don't hesitate to reach out to our support team. We appreciate your understanding and cooperation.":"نحن ندرك أنك قد تحتاج إلى تحديث أو تعديل تفاصيل معينة من أجل تلبية معاييرنا. للمضي قدمًا، يرجى النقر على الزر أدناه للوصول إلى حسابك وإجراء التغييرات اللازمة. إذا كانت لديك أي أسئلة أو كنت بحاجة إلى المساعدة، فلا تتردد في التواصل مع فريق الدعم لدينا. نحن نقدر تفهمك وتعاونك",
     "Proceed to Update":"متابعة الى التحديث",
-    "Account Rejected | Requirements":"تم الرفض | بسبب المتطلبات"
+    "Account Rejected | Requirements":"تم الرفض | بسبب المتطلبات",
+    "Password Recovery":"استعادة كلمة السر",
+    "Reset your password":"اعد ضبط كلمه السر",
+    "Your recovery code is:":"رمز الاسترداد الخاص بك هو:",
+    "Your subscription has been expired":"انتهت صلاحية اشتراكك",
+    "We hope this message finds you well. We regret to inform you that your current subscription for the restaurant :restaurant_name has expired. To ensure the uninterrupted activity of your restaurant and to continue providing excellent service to your customers, we're offering you a grace period of :period_time days to renew your subscription.":"نأمل أن تجدك هذه الرسالة بخير. يؤسفنا إبلاغك بأن اشتراكك الحالي في المطعم :restaurant_name قد انتهى. لضمان استمرار نشاط مطعمك دون انقطاع والاستمرار في تقديم خدمة ممتازة لعملائك، نقدم لك فترة سماح مدتها :period_time يوم لتجديد اشتراكك.",
+    "To proceed with the renewal, please follow this link:":"لمتابعة التجديد يرجى اتباع هذا الرابط:",
+    "Unfortunately, your customers cannot place orders through the app after this grace period. To proceed with the renewal, please follow this link:":"لسوء الحظ ، لا يمكن لعملائك تقديم الطلبات من خلال التطبيق بعد فترة السماح هذه.للمضي قدما في التجديد ، يرجى اتباع هذا الرابط:",
+    "Thank you for choosing our services. We value your partnership and look forward to continuing our collaboration.":"شكرًا لك على اختيار خدماتنا. نحن نقدر شراكتكم ونتطلع إلى مواصلة تعاوننا."
+
 
 }
