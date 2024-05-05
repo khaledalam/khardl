@@ -102,6 +102,7 @@
     "You will not be able to activate this branch or receive orders until after purchase":"لن تتمكن من تنشيط هذا الفرع أو تلقي الطلبات إلا بعد الشراء",
     "This branch has been previously archived":"تم أرشفة هذا الفرع سابقًا",
     "Number of current active branches":"عدد الفروع النشطة الحالية",
+    "Missing inputs": "مدخلات غير مكتمله",
     "Website doesn't have active subscription, Only restaurant owner can login":"الموقع ليس به اشتراك نشط، يمكن لصاحب المطعم فقط تسجيل الدخول",
     "Account requirements rejected، please resubmit from main domain": "تم رفض بعض البيانات المطلوبه، يرجي تحديث البيانات من الموقع الرئيسي",
     "Restaurant is in a live mode":"المطعم بالفعل فعال",

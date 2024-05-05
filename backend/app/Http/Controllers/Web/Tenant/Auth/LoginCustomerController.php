@@ -67,13 +67,17 @@ class LoginCustomerController extends BaseController
                 ->setStatusCode(ResponseHelper::HTTP_FORBIDDEN);
         }
 
-        if(!strlen($request->otp) != 4){
+        if(strlen($request->otp) != 4){
             $response =  $this->sendSMS($request);
             return $response->setStatusCode(ResponseHelper::HTTP_BAD_REQUEST);
         }
 
-        if(!$this->checkVerificationSMSCodeOnly($request->otp, $request->id_sms)){
-            return $this->sendError(__('Invalid code'));
+        if ($request->otp && $request->id_sms) {
+            if (!$this->checkVerificationSMSCodeOnly($request->otp, $request->id_sms)) {
+                return $this->sendError(__('Invalid code'));
+            }
+        } else {
+            return $this->sendError(__("Missing inputs"), []);
         }
 
         if(!$user?->isRestaurantOwner() && (!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE)){
