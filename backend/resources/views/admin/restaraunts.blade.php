@@ -203,12 +203,6 @@
     </div>
 @endif
 
-<script>
-    $(document).ready(function() {
-        // Initialize tooltips
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
 
 
 
@@ -221,7 +215,7 @@
                                     <div class="fw-bold text-gray-400 mb-6">{{ $restaurant->first_name }} {{ $restaurant->last_name }}</div>
                                     <!--end::Position-->
 
-                                    
+
 
                                     <div class="d-flex flex-center flex-wrap">
                                         <!--begin::Stats-->
@@ -500,4 +494,14 @@
 </div>
 <!--end::Post-->
 </div>
+@endsection
+
+
+@section('javascript')
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>
 @endsection

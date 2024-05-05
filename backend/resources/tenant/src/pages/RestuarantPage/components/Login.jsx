@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Logo from "../../../assets/Logo.webp";
 import ContactUsCover from "../../../assets/ContactUsCover.webp";
 import { useTranslation } from "react-i18next";
@@ -40,6 +40,8 @@ const Login = ({ closingFunc }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const loginFormRef = useRef();
+
   const {
     register: register,
     handleSubmit: handleSubmit,
@@ -75,13 +77,17 @@ const Login = ({ closingFunc }) => {
   const onSubmit = async (data) => {
     try {
       setSpinner(true);
+
+      let sms_id = {};
+      if (localStorage.getItem('phone_sms_otp_id')?.length == 4) {
+        sms_id['id_sms'] = localStorage.getItem('phone_sms_otp_id');
+      }
       const response = await AxiosInstance.post(`/login-tenant`, {
         phone: data.phone,
+        otp: otp,
+        ...sms_id
         // remember_me: data.remember_me, // used only in API token-based
       });
-
-      console.log("login >> ", response);
-
 
       if (response?.data?.success) {
         const responseData = response?.data;
@@ -112,20 +118,25 @@ const Login = ({ closingFunc }) => {
         } else {
           navigate("/error");
         }
-      } else {
-        console.log("response?.data?.success false");
-        setSpinner(false);
-        throw new Error(`${t("Login failed")}`);
       }
     } catch (error) {
+      if (localStorage.getItem('phone_sms_otp_id')) {
+        localStorage.setItem('phone_sms_otp_id', "");
+      }
 
-
-      if (error?.response.status == 400) {
+      if (error?.response?.status == 400) {
         setShowOTP(true);
-        toast.success(error?.response?.data?.message || `${t("The code has been sent successfully")}`);
+        console.log(">>> ", error?.response)
+        if (error?.response?.data?.data?.id) {
+          localStorage.setItem('phone_sms_otp_id', error?.response?.data?.data?.id)
+        }
+        toast.info(error?.response?.data?.message || `${t("The code has been sent successfully")}`);
+        return;
+      } else if (error?.response?.status == 403) {
+        toast.error(error?.response?.data?.message || `${t("The code has been sent successfully")}`);
         return;
       }
-      console.log("error response > ", error?.response);
+      console.log("error response > ", error);
       setSpinner(false);
       dispatch(changeLogState(false));
       dispatch(changeUserState(null));
@@ -176,27 +187,6 @@ const Login = ({ closingFunc }) => {
   };
 
   // API POST REQUEST
-  const onSubmitOTP = async (data) => {
-    try {
-      const response = await AxiosInstance.post(`/api/phone/verify`, {
-        otp: otp,
-      });
-
-      // console.log(response.data);
-
-      if (response.data) {
-        setStatusCode(HTTP_OK);
-        navigate("/");
-        toast.success(`${t("The code has been verified successfully")}`);
-        closingFunc();
-      } else {
-        throw new Error(`${t("Code verification failed")}`);
-      }
-    } catch (error) {
-      // TODO @todo print error message
-      toast.error(`${t("Code verification failed")}`);
-    }
-  };
   // TODO @todo startTimer is still working after verification , look at console after verification
   const startTimer = () => {
     const timer = setInterval(() => {
@@ -226,10 +216,6 @@ const Login = ({ closingFunc }) => {
     fetchResStyleData();
   }, [showOTP]);
 
-  /////////////////////////////////////////////////////////////////////////////////////
-  useEffect(() => {
-    fetchResStyleData();
-  }, []);
 
   const [lengthOfPhone, setLengthOfPhone] = useState(0);
 
@@ -255,10 +241,11 @@ const Login = ({ closingFunc }) => {
         {t("Login")}
       </div>
       <form
+        ref={loginFormRef}
         onSubmit={handleSubmit(onSubmit)}
         className="w-[100%] flex flex-col items-center mt-[40px]"
       >
-        <div className="flex mb-[20px] w-full">
+        <div className="flex mb-[20px] w-full" dir={"rtl"}>
           <div className="ml-[8px] w-full">
             <input
               type="tel"
@@ -351,7 +338,7 @@ const Login = ({ closingFunc }) => {
                     minLength={4}
                     maxLength={4}
                     type="text"
-                    className="bg-white w-full h-full outline-none pl-[15px]"
+                    className="bg-white w-full h-full outline-none px-[15px]"
                     placeholder={t("")}
                     // {...register2("otp", {
                     //     required: true,
@@ -393,31 +380,20 @@ const Login = ({ closingFunc }) => {
         )}
 
         <div className="flex flex-col justify-center items-center mt-4 mb-10 w-full">
-          {showOTP ? (
-            <button
-              onClick={onSubmitOTP}
-              className={`w-full h-8 px-4 pt-1.5 pb-2 ${
-                lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
-              } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
-            >
-              {t("Login")}
-            </button>
-          ) : (
-            <button
-              type="submit"
-              className={`w-full h-8 px-4 pt-1.5 pb-2 ${
-                lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
-              } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
-            >
-              {t("Login")}
-            </button>
-          )}
+          <button
+            type="submit"
+            className={`w-full h-8 px-4 pt-1.5 pb-2 ${
+              lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
+            } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
+          >
+            {t("Login")}
+          </button>
           <p className="text-[12px] font-normal leading-[18px] mt-1">
             {t("Don't have an account?")}
             <input
               type="button"
               className="text-[#7D0A0A] cursor-pointer hover:text-blue-300 py-2 px-2 text-md "
-              value={t("Register here!")}
+              value={t("Register here")}
               onClick={() => {
                 dispatch(SetLoginModal(false));
                 dispatch(SetRegisterModal(true));

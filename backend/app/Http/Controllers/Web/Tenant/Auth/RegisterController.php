@@ -125,7 +125,7 @@ class RegisterController extends BaseController
 
         return $this->sendResponse([
             'id'=> $sms
-        ],__('A SMS has been sent successfully'));
+        ],__('If phone number is registered with us, an OTP SMS will be sent'));
     }
     public function verify(OTPRequest $request): JsonResponse
     {
