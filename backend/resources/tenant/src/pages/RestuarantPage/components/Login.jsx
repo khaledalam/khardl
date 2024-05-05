@@ -79,7 +79,7 @@ const Login = ({ closingFunc }) => {
       setSpinner(true);
 
       let sms_id = {};
-      if (localStorage.getItem('phone_sms_otp_id')?.length == 4) {
+      if (localStorage.getItem('phone_sms_otp_id')?.length > 0) {
         sms_id['id_sms'] = localStorage.getItem('phone_sms_otp_id');
       }
       const response = await AxiosInstance.post(`/login-tenant`, {
@@ -120,7 +120,7 @@ const Login = ({ closingFunc }) => {
         }
       }
     } catch (error) {
-      if (localStorage.getItem('phone_sms_otp_id')) {
+      if (localStorage.getItem('phone_sms_otp_id')?.length > 0) {
         localStorage.setItem('phone_sms_otp_id', "");
       }
 
