@@ -14,7 +14,7 @@
   <meta name="x-apple-disable-message-reformatting">
   <!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
   <title></title>
-  
+
     <style type="text/css">
       @media only screen and (min-width: 520px) {
   .u-row {
@@ -82,8 +82,8 @@ a[x-apple-data-detectors='true'] {
 }
 
 table, td { color: #000000; } </style>
-  
-  
+
+
 
 <!--[if !mso]><!--><link href="https://fonts.googleapis.com/css?family=Cabin:400,700&display=swap" rel="stylesheet" type="text/css"><!--<![endif]-->
 
@@ -97,30 +97,30 @@ table, td { color: #000000; } </style>
   <tr style="vertical-align: top">
     <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
     <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: #F7F8F9;"><![endif]-->
-    
-  
-  
+
+
+
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 500px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
       <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:500px;"><tr style="background-color: transparent;"><![endif]-->
-      
+
 <!--[if (mso)|(IE)]><td align="center" width="500" style="background-color: #ffffff;width: 500px;padding: 0px;border-top: 5px solid #c2da0a;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
 <div class="u-col u-col-100" style="max-width: 320px;min-width: 500px;display: table-cell;vertical-align: top;">
   <div style="background-color: #ffffff;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 5px solid #c2da0a;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
+
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td style="padding-right: 0px;padding-left: 0px;" align="center">
-      
+
       <img align="center" border="0" src="images/image-1.jpeg" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 27%;max-width: 129.6px;" width="129.6"/>
-      
+
     </td>
   </tr>
 </table>
@@ -134,7 +134,7 @@ table, td { color: #000000; } </style>
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 2px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
     <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><span><span><strong>New Branch Added</strong></span></span></span></span></h1>
   <!--[if mso]></td></tr></table><![endif]-->
@@ -148,7 +148,7 @@ table, td { color: #000000; } </style>
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:18px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px dashed #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
       <tr style="vertical-align: top">
@@ -168,9 +168,9 @@ table, td { color: #000000; } </style>
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <div style="font-family: 'Cabin',sans-serif; font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>Dear {{ $name }},</strong></p>
+    <p style="line-height: 140%;"><strong>{{ __('Dear :user_name',['user_name' => $name]) }}</strong></p>
   </div>
 
       </td>
@@ -182,7 +182,7 @@ table, td { color: #000000; } </style>
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
     <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><span><span>A new branch has been added successfully to your restaurant upon your request.</span></span></h4>
   <!--[if mso]></td></tr></table><![endif]-->
@@ -196,7 +196,7 @@ table, td { color: #000000; } </style>
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:16px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px dashed #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
       <tr style="vertical-align: top">
@@ -216,7 +216,7 @@ table, td { color: #000000; } </style>
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 16px 16px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <div style="font-size: 13px; line-height: 140%; text-align: center; word-wrap: break-word;">
     <p style="line-height: 140%;"><em>This email was sent from an email address that can't receive emails. Please don't reply to this email.</em></p>
   </div>
@@ -234,7 +234,7 @@ table, td { color: #000000; } </style>
     </div>
   </div>
   </div>
-  
+
 
 
     <!--[if (mso)|(IE)]></td></tr></table><![endif]-->

@@ -158,7 +158,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 0px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <div style="font-family: 'Cabin',sans-serif; font-size: 17px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><strong>{{ __('Dear :user', ['user' => $user->full_name]) }}</strong></p>
+    <p style="line-height: 140%;"><strong>{{ __('Dear :user_name', ['user_name' => $user->full_name]) }}</strong></p>
   </div>
 
       </td>

@@ -1330,5 +1330,7 @@
     "Dear: :user_name":"عزيزي :user_name",
     "We wanted to inform you that a new :sub has been booked from (:restaurant_name) on :date. The cost of this subscription is :cost SAR.":"أردنا أن نعلمك أنه قد تم حجز :sub من (:restaurant_name)  بتاريخ :date تكلفة هذا الاشتراك هي :cost ريال",
     "This email was sent from an email address that can't receive emails. Please don't reply to this email.":"تم إرسال هذا البريد الإلكتروني من عنوان بريد إلكتروني لا يمكنه تلقي رسائل البريد الإلكتروني. الرجاء عدم الرد على هذا البريد الإلكتروني",
-    "Restaurant Approved":"تم قبول المطعم"
+    "Restaurant Approved":"تم قبول المطعم",
+    "Your new mobile app has been successfully added to your restaurant, you can access it by going to the services page.":"لقد تمت إضافة تطبيق الهاتف المحمول الجديد الخاص بك بنجاح إلى مطعمك، يمكنك الوصول إليه عن طريق الذهاب إلى صفحة الخدمات.",
+    "Mobile App Completed":"تم الانتهاء من تطبيقك"
 }
