@@ -33,6 +33,9 @@
       background-color: #525a4d !important;
       color: #fff;
     }
+    .bg-khardl-grey {
+        background-color: #525a4d !important;
+    }
 </style>
 <link
 href="https://goSellJSLib.b-cdn.net/v2.0.0/css/gosell.css"
@@ -126,6 +129,7 @@ function openModal(modalID) {
         $(this).addClass('selected-card');
         
         var selectedValue = $(this).data('value');
+        console.log(selectedValue);
         $('input[name="customer_app_sub_option"][value="' + selectedValue + '"]').prop('checked', true).trigger('change');
 
     });
@@ -537,44 +541,9 @@ function openModal(modalID) {
                                                                                 </div>
                                                                               
                                                                                   <div class="row">
+             
                                                                                     <div class="col-md-6">
-                                                                                      <div class="card mb-3 customer-app-card" data-value="yearly-sub">
-                                                                                        <div class="card-body">
-                                                                                            <div class="form-group">
-                                                                                                <label for="factor">{{__('Total Price')}}</label>
-                                                                                                <input type="text" class="form-control bg-secondary" name="price" value="{{ $customer_app_sub->amount }}" readonly>
-                                                                                            </div>
-                                                                                            <div class="form-group">
-                                                                                                <label  class="">{{__('Add a coupon code')}}</label>
-                                                                                                <div class="d-flex flex-row bd-highlight" style="height: 55px">
-                                                                                                    
-                                                                                                    <div class="p-2 bd-highlight">
-                                                                                                        <input type="text" style="width: 115px" name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed bg-white  p-3 d-flex align-items-center mb-10"  >
-                    
-                                                                                                    </div>
-                                                                                                    <div></div>
-                                                                                                    <div class="p-2 " id="apply_copoun_app_div" >
-                                                                                                        <a href="#" id="apply_copoun_app"   class="btn btn-primary">{{__('Apply')}}</a>
-                                                                                                
-                                                                                                       
-                                                                                                    </div>
-                                                                                                    <div class="p-2 bd-highlight">
-                                                                                                        <span class="indicator-progress " id="apply_copoun_app_spinner" style="margin-top: 10px">
-                                                                                                            <span class="spinner-border spinner-border-sm align-middle ms-2" style="width: 20px;height:20px"></span>
-                                                                                                        </span>
-                                                                                                    </div>
-                                                                                                    
-                                                                                                  </div>
-                                                                                                  <h5 id="coupon_message_app" class="text-danger " style="margin-right: 15px"></h5>
-                    
-                    
-                                                                                            </div>
-                                                                                            <div id="discount_app"></div>
-                                                                                        </div>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="col-md-6">
-                                                                                      <div class="card mb-3 customer-app-card"  data-value="lifetime-sub">
+                                                                                      <div class="card mb-3 customer-app-card"  data-value="yearly-sub">
                                                                                         <div class="card-body">
                                                                                           
                                                                                             <div class="form-group">
@@ -585,6 +554,42 @@ function openModal(modalID) {
                                                                                         </div>
                                                                                       </div>
                                                                                     </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="card mb-3 customer-app-card" data-value="lifetime-sub">
+                                                                                          <div class="card-body">
+                                                                                              <div class="form-group">
+                                                                                                  <label for="factor">{{__('Total Price')}}</label>
+                                                                                                  <input type="text" class="form-control bg-secondary" name="price" value="{{ $lifetime_customer_app_sub->amount }}" readonly>
+                                                                                              </div>
+                                                                                              <div class="form-group">
+                                                                                                  <label  class="">{{__('Add a coupon code')}}</label>
+                                                                                                  <div class="d-flex flex-row bd-highlight" style="height: 55px">
+                                                                                                      
+                                                                                                      <div class="p-2 bd-highlight">
+                                                                                                          <input type="text" style="width: 115px" name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed bg-white  p-3 d-flex align-items-center bg-khardl-grey mb-10"  >
+                      
+                                                                                                      </div>
+                                                                                                      <div></div>
+                                                                                                      <div class="p-2 " id="apply_copoun_app_div" >
+                                                                                                          <a href="#" id="apply_copoun_app"   class="btn btn-primary ">{{__('Apply')}}</a>
+                                                                                                  
+                                                                                                         
+                                                                                                      </div>
+                                                                                                      <div class="p-2 bd-highlight">
+                                                                                                          <span class="indicator-progress " id="apply_copoun_app_spinner" style="margin-top: 10px">
+                                                                                                              <span class="spinner-border spinner-border-sm align-middle ms-2" style="width: 20px;height:20px"></span>
+                                                                                                          </span>
+                                                                                                      </div>
+                                                                                                      
+                                                                                                    </div>
+                                                                                                    <h5 id="coupon_message_app" class="text-danger " style="margin-right: 15px"></h5>
+                      
+                      
+                                                                                              </div>
+                                                                                              <div id="discount_app"></div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
                                                                                   </div>
 
                                                                                 
@@ -622,10 +627,74 @@ function openModal(modalID) {
 
 
                                                                             <div class="form-group">
-                                                                                <label for="factor">{{__('Total Price')}}</label>
-                                                                                <input type="text" class="form-control bg-secondary" name="price" value="{{ $customer_app_sub->amount }}" readonly>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6 text-center">
+                                                                                        <div class="radio-container">
+                                                                                            <input class="form-check-input" type="radio" name="customer_app_sub_option" id="first-sub" value="yearly-sub">
+                                                                                            <label class="form-check-label" for="first-sub">{{__('Annual subscription')}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6 text-center">
+                                                                                        <div class="radio-container">
+                                                                                            <input class="form-check-input" type="radio" name="customer_app_sub_option" id="second-sub" value="lifetime-sub">
+                                                                                            <label class="form-check-label" for="second-sub">{{__('Lifetime subscription')}}</label>
+                                                                                            </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
-                    
+                                                                          
+                                                                              <div class="row">
+         
+                                                                                <div class="col-md-6">
+                                                                                  <div class="card mb-3 customer-app-card"  data-value="yearly-sub">
+                                                                                    <div class="card-body">
+                                                                                      
+                                                                                        <div class="form-group">
+                                                                                            <label for="factor">{{__('Total Price')}}</label>
+                                                                                            <input type="text" class="form-control bg-secondary" name="price" value="{{ $customer_app_sub->amount }}" readonly>
+                                                                                        </div>
+                                                                                     
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="card mb-3 customer-app-card" data-value="lifetime-sub">
+                                                                                      <div class="card-body">
+                                                                                          <div class="form-group">
+                                                                                              <label for="factor">{{__('Total Price')}}</label>
+                                                                                              <input type="text" class="form-control bg-secondary" name="price" value="{{ $lifetime_customer_app_sub->amount }}" readonly>
+                                                                                          </div>
+                                                                                          <div class="form-group">
+                                                                                              <label  class="">{{__('Add a coupon code')}}</label>
+                                                                                              <div class="d-flex flex-row bd-highlight" style="height: 55px">
+                                                                                                  
+                                                                                                  <div class="p-2 bd-highlight">
+                                                                                                      <input type="text" style="width: 115px" name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed bg-white  p-3 d-flex align-items-center bg-khardl-grey mb-10"  >
+                  
+                                                                                                  </div>
+                                                                                                  <div></div>
+                                                                                                  <div class="p-2 " id="apply_copoun_app_div" >
+                                                                                                      <a href="#" id="apply_copoun_app"   class="btn btn-primary ">{{__('Apply')}}</a>
+                                                                                              
+                                                                                                     
+                                                                                                  </div>
+                                                                                                  <div class="p-2 bd-highlight">
+                                                                                                      <span class="indicator-progress " id="apply_copoun_app_spinner" style="margin-top: 10px">
+                                                                                                          <span class="spinner-border spinner-border-sm align-middle ms-2" style="width: 20px;height:20px"></span>
+                                                                                                      </span>
+                                                                                                  </div>
+                                                                                                  
+                                                                                                </div>
+                                                                                                <h5 id="coupon_message_app" class="text-danger " style="margin-right: 15px"></h5>
+                  
+                  
+                                                                                          </div>
+                                                                                          <div id="discount_app"></div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                              </div>
+
                                                                             <button id="tap-btn"   type="submit"   onclick="submitPayment(event,'root_customer_app')" class="btn btn-khardl text-white ">
 
                                                                                
@@ -663,8 +732,9 @@ function openModal(modalID) {
                                                                 <div class="text-gray-400 fw-bold my-5">
                                                                     <!--begin::image-->
                                                                     <div class="text-gray-400 fw-bold my-5">
-                                                                        @if($ROCustomerAppSub?->icon)
-                                                                        <img src="{{$ROCustomerAppSub?->icon}}" alt="" width="100">
+                                                                        
+                                                                        @if($ROCustomerAppSub->icon)
+                                                                        <img src="{{$ROCustomerAppSub->icon}}" alt="" width="100">
                                                                         @else
                                                                         <svg width="75" height="85" viewBox="0 0 75 85" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                             <rect x="1" width="74" height="74" rx="10" fill="url(#paint0_linear_57_2741)" />
@@ -691,7 +761,7 @@ function openModal(modalID) {
                                                                                 </linearGradient>
                                                                             </defs>
                                                                         </svg>
-                                                                        @endif`
+                                                                        @endif
                                                                        
                                                                     </div>
                                                                     <!--end::image-->
@@ -1020,7 +1090,7 @@ function openModal(modalID) {
                                     $('#coupon_message_app')
     
                                     .removeClass('text-danger')
-                                    .append('<div class="form-group mt-5 "><label for="factor">{{__("Total Price after discount")}}</label><input type="text" class="form-control bg-secondary" id="coupon_discount_input_web" value="' + response.cost + '" readonly ></div>');
+                                    .append('<div class="form-group mt-5 "><label for="factor">{{__("Total Price after discount")}}</label><input type="text" class="form-control bg-secondary" value="' + response.cost + '" readonly ></div>');
                                     $('#apply_copoun_app_div').html('<div class="p-2 bd-highlight mt-2"><a href="" class="text-white bg-danger mr-5 rounded-circle p-2 m-1" id="cancel_coupn_app">X</a></div>');
                                 }else {
                                     $('#coupon_code_app').css('background-color','crimson');
@@ -1056,7 +1126,7 @@ function openModal(modalID) {
                 $('#coupon_message_app').empty();
                 $('#coupon_code_app')
                 .val('');
-                $('#apply_copoun_app_div').html('<a href="#" id="apply_copoun_app"   class="btn btn-khardl">{{__('Apply')}}</a>');
+                $('#apply_copoun_app_div').html('<a href="#" id="apply_copoun_app"   class="btn btn-primary">{{__('Apply')}}</a>');
             });
             
             // Execute the AJAX request when the radio button changes

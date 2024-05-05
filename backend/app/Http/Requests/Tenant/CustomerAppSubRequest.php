@@ -18,6 +18,7 @@ class CustomerAppSubRequest extends FormRequest
 
         return [
             'token_id' => 'required|string',
+            'customer_app_sub_option'=>"required|in:lifetime-sub,yearly-sub"
         ];
     }
  

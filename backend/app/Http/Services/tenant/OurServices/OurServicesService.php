@@ -104,7 +104,7 @@ class OurServicesService
                 if($type == NotificationReceipt::is_branch_purchase ){
                     $cost = CentralSubscription::first()->amount;
                 }elseif ($type == NotificationReceipt::is_application_purchase ){
-                    $cost = CentralSubscription::skip(1)->first()->amount;
+                    $cost = CentralSubscription::skip(2)->first()->amount;
                 }
                 $after_discount = ($coupon->type == CouponTypes::FIXED_COUPON->value)? $cost * ($number_of_branches ?? 1) - $coupon->amount : (($cost * ($number_of_branches ?? 1)) - ((($cost * ($number_of_branches ?? 1)) * $coupon->amount) / 100));
                 return [
