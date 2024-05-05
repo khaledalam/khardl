@@ -67,7 +67,7 @@ class LoginCustomerController extends BaseController
                 ->setStatusCode(ResponseHelper::HTTP_FORBIDDEN);
         }
 
-        if(!$request->otp || !$request->id_sms){
+        if(!strlen($request->otp) != 4){
             $response =  $this->sendSMS($request);
             return $response->setStatusCode(ResponseHelper::HTTP_BAD_REQUEST);
         }
