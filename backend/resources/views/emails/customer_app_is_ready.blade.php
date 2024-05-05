@@ -247,7 +247,7 @@
                                                         <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 16px 16px;font-family:arial,helvetica,sans-serif;" align="left">
 
                                                             <div style="font-size: 13px; line-height: 140%; text-align: center; word-wrap: break-word;">
-                                                                <p style="line-height: 140%;"><em>{{ __('emails.notify_users_for_new_sub.email_disclaimer')}}</em></p>
+                                                                <p style="line-height: 140%;"><em>{{ __("This email was sent from an email address that can't receive emails. Please don't reply to this email.")}}</em></p>
                                                             </div>
 
                                                         </td>

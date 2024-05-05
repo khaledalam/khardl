@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"
+@if(app()->getLocale() === 'ar') dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">
 <head>
 <!--[if gte mso 9]>
 <xml>
@@ -238,7 +239,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 16px 16px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <div style="font-size: 13px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;"><em>{{ __('emails.verify.email_disclaimer')}}</em></p>
+    <p style="line-height: 140%;"><em>{{ __("This email was sent from an email address that can't receive emails. Please don't reply to this email.")}}</em></p>
   </div>
 
       </td>

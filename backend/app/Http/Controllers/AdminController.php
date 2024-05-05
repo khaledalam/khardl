@@ -653,9 +653,12 @@ class AdminController extends Controller
                 $rUser->save();
             });
         }
-
+        $reasons = [];
+        foreach ($selectedOption as $reason) {
+            $reasons[] = __($reason);
+        }
         // Dispatch the job to send the denied email
-        SendDeniedEmailJob::dispatch($user, $selectedOption);
+        SendDeniedEmailJob::dispatch($user, $reasons);
 
         $actions = [
             'en' => 'Has denied an restaurant with an ID of: '."<a href=".route('admin.view-restaurants',['tenant'=>$tenant->id])."> $tenant->id </a>",
