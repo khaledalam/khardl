@@ -29,7 +29,7 @@ const CustomerAddresses = () => {
 
   const fetchAddresses = async () => {
     try {
-      const addressesResponse = await AxiosInstance.get("/api/customer/get-addresses");
+      const addressesResponse = await AxiosInstance.get("/get-addresses");
       if (addressesResponse?.data?.data) {
         setAddresses(addressesResponse?.data?.data);
       }
@@ -41,7 +41,7 @@ const CustomerAddresses = () => {
 
   const addAddress = async () => {
     try {
-      const addressResponse = await AxiosInstance.post("/api/customer/add-address", address);
+      const addressResponse = await AxiosInstance.post("/add-address", address);
       if (addressResponse?.data?.success === true) {
         toast.success(addressResponse?.data?.message);
       } else {
@@ -59,7 +59,7 @@ const CustomerAddresses = () => {
   const updateAddress = async () => {
     try {
       const addressResponse = await AxiosInstance.post(
-        `/api/customer/update-address/${addresses[editMode].id}`,
+        `/update-address/${addresses[editMode].id}`,
         address
       );
       if (addressResponse?.data?.success === true) {
@@ -79,7 +79,7 @@ const CustomerAddresses = () => {
   const deleteAddress = async (index) => {
     try {
       const addressResponse = await AxiosInstance.post(
-        `/api/customer/delete-address/${addresses[index].id}`
+        `/delete-address/${addresses[index].id}`
       );
       if (addressResponse?.data?.success === true) {
         toast.success(addressResponse?.data?.message);
@@ -98,7 +98,7 @@ const CustomerAddresses = () => {
   const setAsDefault = async (index) => {
     try {
       const addressResponse = await AxiosInstance.post(
-        `/api/customer/make-as-default/${addresses[index].id}`
+        `/make-as-default/${addresses[index].id}`
       );
       if (addressResponse?.data?.success === true) {
         toast.success(addressResponse?.data?.message);
