@@ -32,6 +32,8 @@ import LeftIcon from "../../../../assets/leftIcon.png";
 import GreenDot from "../../../../assets/greenDot.png";
 import { AiOutlineClose } from "react-icons/ai";
 import { set } from "react-hook-form";
+import Footer from "./Footer";
+import FooterModal from "./FooterModal";
 
 const MainBoardEditor = ({
   categories,
@@ -88,6 +90,7 @@ const MainBoardEditor = ({
     footer_text_fontWeight,
     footer_text_fontSize,
     footer_text_color,
+
     headerPosition,
     logo_alignment,
     logo_shape,
@@ -133,6 +136,13 @@ const MainBoardEditor = ({
 
   const [listofBannerImages, setListofBannerImages] = useState([]);
   const visibleCategories = categories.filter((c) => c.items.length > 0);
+  const [isPrivacyPolicyModalOpened, setIsPrivacyPolicyModalOpened] =
+    useState(false);
+  const [isTermsAndConditionsModalOpened, setIsTermsAndConditionsModalOpened] =
+    useState(false);
+  const [privacyPolicyText, setPrivacyPolicyText] = useState("");
+  const [termsAndConditionsText, setTermsAndConditionsText] = useState("");
+  const [languageType, setLanguageType] = useState("en");
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -793,62 +803,15 @@ const MainBoardEditor = ({
         </div>
       </div>
       {/* footer */}
-      <div
-        style={{ backgroundColor: "white" }}
-        className={`w-full min-h-[30px]  rounded-xl flex  ${
-          footer_alignment === "center"
-            ? "items-center justify-center"
-            : footer_alignment === "left"
-            ? "items-center justify-start"
-            : footer_alignment === "right"
-            ? "items-center justify-end"
-            : ""
+      <Footer
+        navItems={navItems}
+        activeSubitem={activeSubitem}
+        activeSection={activeSection}
+        onPrivacyPolicyClick={() => setIsPrivacyPolicyModalOpened(true)}
+        onTermsAndConditionsClick={() =>
+          setIsTermsAndConditionsModalOpened(true)
         }
-                ${
-                  navItems[activeSection]?.title === "Footer Editor" &&
-                  "shadow-inner border-[#C0D123] border-[2px]"
-                }`}
-      >
-        <h3
-          style={{ color: footer_text_color }}
-          className={`${
-            footer_text_fontFamily
-              ? `font-['${footer_text_fontFamily}']`
-              : "font-['Plus Jakarta Sans']"
-          }
-                    ${
-                      footer_text_fontSize
-                        ? `text-[${footer_text_fontSize}px]`
-                        : "text-[10px]"
-                    }
-                    ${
-                      footer_text_fontWeight
-                        ? `font-${footer_text_fontWeight}`
-                        : "font-normal"
-                    }
-                     leading-3 tracking-tight relative`}
-        >
-          <span>{t("Powered by")}</span>
-          <a
-            href="https://khardl.com/"
-            className="text-[#7D0A0A] font-medium hover:cursor-pointer"
-          >
-            {" "}
-            {t("Khardl")}
-          </a>
-          <img
-            src={GreenDot}
-            alt="green dot"
-            className={`${
-              activeSubitem != null &&
-              navItems[activeSection].subItems[activeSubitem].title ==
-                t("Footer Editor")
-                ? "absolute w-[5px] h-[5px] right-[-7px] top-[-3px]"
-                : "hidden"
-            }`}
-          />
-        </h3>
-      </div>
+      />
       {isCropModalOpened && (
         <div
           class="modal  fixed w-full h-full top-0 left-0 flex items-center justify-center"
@@ -1045,6 +1008,26 @@ const MainBoardEditor = ({
             </div>
           </div>
         </div>
+      )}
+      {isPrivacyPolicyModalOpened && (
+        <FooterModal
+          type="privacyPolicy"
+          edit={
+            navItems[activeSection]?.subItems[activeSubitem]?.title ==
+            t("Privacy Policy")
+          }
+          setModalOpened={setIsPrivacyPolicyModalOpened}
+        />
+      )}
+      {isTermsAndConditionsModalOpened && (
+        <FooterModal
+          type="termsAndConditions"
+          edit={
+            navItems[activeSection]?.subItems[activeSubitem]?.title ==
+            t("Terms and Conditions")
+          }
+          setModalOpened={setIsTermsAndConditionsModalOpened}
+        />
       )}
     </div>
   );
