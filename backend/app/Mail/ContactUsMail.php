@@ -52,7 +52,7 @@ class ContactUsMail extends Mailable
                 'khaledalam.net@gmail.com',
                 'aldahman.ibrahim@gmail.com',
             ])
-            ->subject('Khardl | Contact Us request')
+            ->subject(__("Khardl | Contact Us request"))
             ->view('emails.contactus_email');
     }
 }
