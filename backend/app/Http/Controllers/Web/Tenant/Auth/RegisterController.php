@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web\Tenant\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Utils\ResponseHelper;
 use App\Packages\Msegat\Msegat;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -113,20 +114,8 @@ class RegisterController extends BaseController
         return $this->sendResponse($user, 'Customer registered successfully.');
     }
 
-    public function sendVerificationSMSCode(CustomerSendSMSRequest $request):JsonResponse
-    {
-        $sms = $this->generateVerificationSMSCodeOnly($request->phone);
-        if(is_null($sms)){
-            return $this->sendError(__('The maximum number of text messages has been used today. Please try again later'));
-        }else if(!$sms) {
-            \Sentry\captureMessage("SMS NOT BEING DELIVERED");
-            return $this->sendError(__('An error has occurred, please try again later'));
-        }
 
-        return $this->sendResponse([
-            'id'=> $sms
-        ],__('If phone number is registered with us, an OTP SMS will be sent'));
-    }
+
     public function verify(OTPRequest $request): JsonResponse
     {
         $user = Auth::user();

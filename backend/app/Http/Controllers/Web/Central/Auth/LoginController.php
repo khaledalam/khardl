@@ -60,7 +60,7 @@ class LoginController extends BaseController
 
         $credentials = request(['email', 'password']);
 
-        
+
         if (!Auth::attempt($credentials,true)) {
             if ($request->has('login_code') && $request->login_code){
                 $tenant = Tenant::whereJsonContains('data->mapper_hash', $request->login_code)->first();
@@ -79,7 +79,7 @@ class LoginController extends BaseController
                         return $this->sendError(__('Invalid email or password'), ['error' => __('Invalid email or password')]);
                     } else {
                         $user = Auth::user();
-                        
+
                         if(!$user->isWorker()){
                             Auth::logout();
                             return $this->sendError(__('Only worker can access this restaurant'));
@@ -94,7 +94,7 @@ class LoginController extends BaseController
                         return $this->sendResponse([
                             'url' => $url
                         ], __('OK User logged in successfully.'));
-    
+
                     }
                 });
             }

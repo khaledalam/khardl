@@ -8,6 +8,7 @@ use App\Http\Controllers\API\Tenant\LocationController;
 use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 
 use App\Http\Controllers\API\Tenant\Notification\NotificationController;
+use App\Http\Controllers\API\Tenant\PolicyAndTermsController;
 use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\DeliveryCompanies\DeliveryCompaniesController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
@@ -110,7 +111,10 @@ Route::group([
 
     TenantSharedRoutesTrait::run( TenantSharedRoutesTrait::successOrFail());
     TenantSharedRoutesTrait::run( TenantSharedRoutesTrait::NotLiveOrNotSubscribed());
-
+    Route::controller(PolicyAndTermsController::class)->group(function () {
+        Route::get('get-privacy-and-policy','get_privacy_and_policy')->name('get-privacy-and-policy');
+        Route::get('get-terms-and-conditions','get_terms_and_conditions')->name('get-terms-and-conditions');
+    });
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/profile-summary', [DashboardController::class, 'profile'])->name('profile-summary');
@@ -194,6 +198,13 @@ Route::group([
                 Route::get('/workers/edit/{id}', 'editWorker')->middleware('permission:can_modify_and_see_other_workers')->name('edit-worker');
             });
             /* Workers page */
+            /* Terms and Policies page */
+            Route::middleware('permission:can_access_site_editor')
+            ->controller(PolicyAndTermsController::class)->group(function () {
+                Route::post('update-privacy-and-policy','update_privacy_and_policy')->name('update-privacy-and-policy');
+                Route::post('update-terms-and-conditions','update_terms_and_conditions')->name('update-terms-and-conditions');
+            });
+            /* Terms and Policies page */
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
 
@@ -413,8 +424,6 @@ Route::middleware([
 
 
         });
-
-
         Route::post('login', [APILoginController::class, 'login']);
 
         Route::middleware(['auth:sanctum','ActiveRestaurantAndBranch'])->group(function () {

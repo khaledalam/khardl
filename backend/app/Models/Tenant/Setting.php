@@ -5,15 +5,17 @@ namespace App\Models\Tenant;
 use App\Models\CentralTenantSetting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 use Stancl\Tenancy\Contracts\Syncable;
 use Stancl\Tenancy\Database\Concerns\ResourceSyncing;
 
 class Setting extends Model implements Syncable
 {
-    use HasFactory, ResourceSyncing;
+    use HasFactory, ResourceSyncing,HasTranslations;
     protected $table= "settings";
     protected $guarded  =[];
     public $timestamps = false;
+    public $translatable = ['privacy_and_policy','terms_and_conditions'];
     protected $casts = [
         'lead_response' => 'array',
 

@@ -240,6 +240,10 @@ return [
         "type" => "النوع",
         "lat" => "قيم مكان الخريطة",
         "lng" => "قيم مكان الخريطة",
+        'privacy_and_policy.ar' => "الخصوصية والسياسة بالعربية",
+        'privacy_and_policy.en' => "الخصوصية والسياسة بالانجليزية",
+        'terms_and_conditions.ar' => "الأحكام والشروط بالعربية",
+        'terms_and_conditions.en' => "الأحكام والشروط بالانجليزية",
 
     ],
     'values' => [
