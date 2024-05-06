@@ -201,6 +201,10 @@ return [
         'dob'=>"Date of birth",
         "lat" => "Wrong map coordinates",
         "lng" => "Wrong map coordinates",
+        'privacy_and_policy.ar' => "Privacy and policy (Arabic)",
+        'privacy_and_policy.en' => "Privacy and policy (English)",
+        'terms_and_conditions.ar' => "Terms and conditions (Arabic)",
+        'terms_and_conditions.en' => "Terms and conditions (English)",
     ],
 
 ];
