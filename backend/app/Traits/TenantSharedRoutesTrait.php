@@ -30,6 +30,7 @@ trait TenantSharedRoutesTrait
 
             ],
             'middleware'=>[
+                'visitors'
             ]
 
         ];

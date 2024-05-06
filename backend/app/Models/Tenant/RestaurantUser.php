@@ -93,8 +93,6 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
             return true;
         if($this->isWorker()){
             return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
-        }else if($this->isDriver()){
-            return DB::table('permissions_driver')->where('user_id', $this->id)->value($permission) === 1;
         }
         return false;
     }
@@ -209,6 +207,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function addresses(): HasMany
     {
         return $this->hasMany(UserAddress::class, 'user_id', 'id');
+    }
+    public function default_address()
+    {
+        return $this->hasMany(UserAddress::class, 'user_id', 'id')->where('default',true)->first();
     }
     public function monthly_orders()
     {

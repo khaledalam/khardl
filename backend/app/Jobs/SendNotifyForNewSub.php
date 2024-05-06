@@ -94,12 +94,14 @@ class SendNotifyForNewSub implements ShouldQueue
                 'en' => "[ok] An email was sent to alert the users for new or renew $type_en ",
                 'ar' => "[تم] تم إرسال بريد إلكتروني لتنبيه المستخدمين بشراء او تجديد $type_ar "
             ];
-            tenancy()->central(function()use($actions,$log_failed){
+            tenancy()->central(function()use($actions,$log_failed,$e){
                 Log::create([
                     'action' => $actions,
                     'user_id' => null,
                     'type' => $log_failed,
-                    'metadata' => null
+                    'metadata' => [
+                        'e_message' => $e->getMessage(),
+                    ]
                 ]);
             });
         }

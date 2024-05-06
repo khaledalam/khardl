@@ -16,6 +16,10 @@ class AddressService
     {
         return $this->sendResponse($this->customer->addresses()->get(), '');
     }
+    public function getDefault()
+    {
+        return $this->sendResponse($this->customer->default_address(), '');
+    }
     public function create($request)
     {
         $data = $this->request_data($request);

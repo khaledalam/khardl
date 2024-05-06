@@ -203,7 +203,61 @@
                     </div>
                     <!--end::Card widget 5-->
                 </div>
-                <div class="col-md-9 position-relative">
+                <div class="col-md-9">
+                    <!--begin::List Widget 3-->
+                    <div class="card card-xl-stretch">
+                        <!--begin::Header-->
+                        <div class="card-header border-0">
+                            <h3 class="card-title fw-bolder text-dark">{{ __('Best selling products (Last 30 days)') }}</h3>
+                            <div class="card-toolbar">
+
+                            </div>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Body-->
+                        <div class="card-body pt-2">
+                            <!--begin::Item-->
+                            @foreach ($bestSellingItems as $orderItem)
+                            <div class="d-flex align-items-center mb-8">
+                                <!--begin::Bullet-->
+                                <span class="bullet bullet-vertical h-40px bg-success"></span>
+                                <!--end::Bullet-->
+                                <!--begin::Checkbox-->
+                                <div class="form-check form-check-custom form-check-solid mx-5">
+                                    @if(Auth::user()->hasPermissionWorker('can_edit_menu'))
+                                    <a href="{{ route('restaurant.view-item',['item' => $orderItem->item_id]) }}" class="symbol symbol-50px">
+                                        <span class="symbol-label" style="background-image:url({{$orderItem->item?->photo}});"></span>
+                                    </a>
+                                    @else
+                                    <a href="#" class="symbol symbol-50px">
+                                        <span class="symbol-label" style="background-image:url({{$orderItem->item?->photo}});"></span>
+                                    </a>
+                                    @endif
+                                </div>
+                                <!--end::Checkbox-->
+                                <!--begin::Description-->
+                                <div class="flex-grow-1">
+                                    @if(Auth::user()->hasPermissionWorker('can_edit_menu'))
+                                    <a href="{{ route('restaurant.view-item',['item' => $orderItem->item_id]) }}" class="text-gray-800 text-hover-primary fw-bolder fs-6">
+                                        {{ $orderItem->item?->name }}
+                                    </a>
+                                    @else
+                                    <span>{{ $orderItem->item?->name }}</span>
+                                    @endif
+                                    <span class="text-muted fw-bold d-block">{{ $orderItem->item?->price }} {{ __('SAR') }}</span>
+                                </div>
+                                <!--end::Description-->
+                                <span class="badge badge-light-success fs-8 fw-bolder">{{ $orderItem->total_quantity }}</span>
+                            </div>
+                            @endforeach
+
+                            <!--end:Item-->
+                        </div>
+                        <!--end::Body-->
+                    </div>
+                    <!--end:List Widget 3-->
+                </div>
+                <div class="col-md-12 position-relative">
                     <div class="row">
                         <div class="col-md-2 filtration">
                             <div class="mb-4">
@@ -314,62 +368,52 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12 position-relative">
+                    <div class="row">
+                        <div class="col-md-2 filtration">
+                            <div class="mb-4">
+                                <select class="form-select" id="filter_range_visitors">
+                                    <option value="daily" selected>{{ __('Daily') }}</option>
+                                    <option value="monthly">{{ __('Monthly') }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12" id="daily_visitors">
+                            <div class="card card-flush h-md-100 mb-5 mb-xl-10">
+                                <!--begin::Card body-->
+                                <div class="card-body pt-2 pb-4 d-flex align-items-center">
+                                    <div class="container">
+                                        <div class="card">
+                                            <div class="card-body p-1">
+                                                <h1>{{ $dailyVisitors->options['chart_title'] }}</h1>
+                                                {!! $dailyVisitors->renderHtml() !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                        </div>
+                        <div class="col-md-12" id="monthly_visitors" style="display: none;">
+                            <div class="card card-flush h-md-100 mb-5 mb-xl-10">
+                                <!--begin::Card body-->
+                                <div class="card-body pt-2 pb-4 d-flex align-items-center">
+                                    <div class="container">
+                                        <div class="card">
+                                            <div class="card-body p-1">
+                                                <h1>{{ $monthVisitors->options['chart_title'] }}</h1>
+                                                {!! $monthVisitors->renderHtml() !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--end::Col-->
                 <!--begin::Col-->
-                <div class="col-md-12">
-                    <!--begin::List Widget 3-->
-                    <div class="card card-xl-stretch">
-                        <!--begin::Header-->
-                        <div class="card-header border-0">
-                            <h3 class="card-title fw-bolder text-dark">{{ __('Best selling products (Last 30 days)') }}</h3>
-                            <div class="card-toolbar">
-
-                            </div>
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Body-->
-                        <div class="card-body pt-2">
-                            <!--begin::Item-->
-                            @foreach ($bestSellingItems as $orderItem)
-                            <div class="d-flex align-items-center mb-8">
-                                <!--begin::Bullet-->
-                                <span class="bullet bullet-vertical h-40px bg-success"></span>
-                                <!--end::Bullet-->
-                                <!--begin::Checkbox-->
-                                <div class="form-check form-check-custom form-check-solid mx-5">
-                                    @if(Auth::user()->hasPermissionWorker('can_edit_menu'))
-                                    <a href="{{ route('restaurant.view-item',['item' => $orderItem->item_id]) }}" class="symbol symbol-50px">
-                                        <span class="symbol-label" style="background-image:url({{$orderItem->item?->photo}});"></span>
-                                    </a>
-                                    @else
-                                    <a href="#" class="symbol symbol-50px">
-                                        <span class="symbol-label" style="background-image:url({{$orderItem->item?->photo}});"></span>
-                                    </a>
-                                    @endif
-                                </div>
-                                <!--end::Checkbox-->
-                                <!--begin::Description-->
-                                <div class="flex-grow-1">
-                                    @if(Auth::user()->hasPermissionWorker('can_edit_menu'))
-                                    <a href="{{ route('restaurant.view-item',['item' => $orderItem->item_id]) }}" class="text-gray-800 text-hover-primary fw-bolder fs-6">
-                                        {{ $orderItem->item?->name }}
-                                    </a>
-                                    @else
-                                    <span>{{ $orderItem->item?->name }}</span>
-                                    @endif
-                                    <span class="text-muted fw-bold d-block">{{ $orderItem->item?->price }} {{ __('SAR') }}</span>
-                                </div>
-                                <!--end::Description-->
-                                <span class="badge badge-light-success fs-8 fw-bolder">{{ $orderItem->total_quantity }}</span>
-                            </div>
-                            @endforeach
-
-                            <!--end:Item-->
-                        </div>
-                        <!--end::Body-->
-                    </div>
-                    <!--end:List Widget 3-->
-                </div>
 
             </div>
             <!--end::Modals-->
@@ -380,15 +424,19 @@
 </div>
 <!--end::Content-->
 {!! $dailyRevenues->renderChartJsLibrary() !!}
-{!! $monthlyRevenues->renderChartJsLibrary() !!}
 {!! $dailyRevenues->renderJs() !!}
 {!! $monthlyRevenues->renderJs() !!}
+{!! $dailyVisitors->renderJs() !!}
+{!! $monthVisitors->renderJs() !!}
 @section('js')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const filter_range = document.getElementById('filter_range');
         const daily_statistics = document.getElementById('daily_statistics');
         const monthly_statistics = document.getElementById('monthly_statistics');
+        const filter_range_visitors = document.getElementById('filter_range_visitors');
+        const daily_visitors = document.getElementById('daily_visitors');
+        const monthly_visitors = document.getElementById('monthly_visitors');
 
         if (filter_range?.length) {
             filter_range.addEventListener('change', function () {
@@ -398,6 +446,17 @@
                 } else if (filter_range.value === 'monthly') {
                     daily_statistics.style.display = 'none';
                     monthly_statistics.style.display = 'block';
+                }
+            });
+        }
+        if (filter_range_visitors?.length) {
+            filter_range_visitors.addEventListener('change', function () {
+                if (filter_range_visitors.value === 'daily') {
+                    daily_visitors.style.display = 'block';
+                    monthly_visitors.style.display = 'none';
+                } else if (filter_range_visitors.value === 'monthly') {
+                    daily_visitors.style.display = 'none';
+                    monthly_visitors.style.display = 'block';
                 }
             });
         }
