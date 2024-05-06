@@ -349,7 +349,7 @@ const ProductItem = ({
       }
     });
 
-    if (document.getElementById(id)?.length) {
+    if (document.getElementById(id) !== null) {
       document.getElementById(id).close();
     }
   }
@@ -588,7 +588,7 @@ const ProductItem = ({
         <div ref={modalRef} className="relative mx-auto">
           <button
             className="btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-[-10px] top-[-30px]"
-            onClick={closeModal}
+            onClick={() => closeModal()}
           >
             ✕
           </button>
@@ -606,9 +606,8 @@ const ProductItem = ({
                 {spinner && (
                   <div
                     role="status"
-                    className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full z-100"
+                    className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full z-[1000]"
                   >
-                    <div className="absolute inset-0 bg-white"></div>
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                       <svg
                         aria-hidden="true"

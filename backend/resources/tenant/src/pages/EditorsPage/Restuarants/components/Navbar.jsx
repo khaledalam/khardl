@@ -26,7 +26,7 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
   const dispatch = useDispatch();
 
   const currentLanguage = useSelector(
-    (state) => state.languageMode.languageMode,
+    (state) => state.languageMode.languageMode
   );
 
   const handleSubmitResStyle = async (e) => {
@@ -124,6 +124,34 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
     inputs.footer_text_fontWeight = restuarantStyle.footer_text_fontWeight;
     inputs.footer_text_fontSize = restuarantStyle.footer_text_fontSize;
     inputs.footer_text_color = restuarantStyle.footer_text_color;
+    inputs.terms_and_conditions_color =
+      restuarantStyle.terms_and_conditions_color;
+    inputs.terms_and_conditions_alignment =
+      restuarantStyle.terms_and_conditions_alignment;
+    inputs.terms_and_conditions_text_fontFamily =
+      restuarantStyle.terms_and_conditions_text_fontFamily;
+    inputs.terms_and_conditions_text_fontWeight =
+      restuarantStyle.terms_and_conditions_text_fontWeight;
+    inputs.terms_and_conditions_text_fontSize =
+      restuarantStyle.terms_and_conditions_text_fontSize;
+    inputs.terms_and_conditions_text_color =
+      restuarantStyle.terms_and_conditions_text_color;
+    inputs.privacy_policy_color = restuarantStyle.privacy_policy_color;
+    inputs.privacy_policy_alignment = restuarantStyle.privacy_policy_alignment;
+    inputs.privacy_policy_text_fontFamily =
+      restuarantStyle.privacy_policy_text_fontFamily;
+    inputs.privacy_policy_text_fontWeight =
+      restuarantStyle.privacy_policy_text_fontWeight;
+    inputs.privacy_policy_text_fontSize =
+      restuarantStyle.privacy_policy_text_fontSize;
+    inputs.privacy_policy_text_color =
+      restuarantStyle.privacy_policy_text_color;
+    inputs.terms_and_conditions_enText =
+      restuarantStyle.terms_and_conditions_enText;
+    inputs.terms_and_conditions_arText =
+      restuarantStyle.terms_and_conditions_arText;
+    inputs.privacy_policy_enText = restuarantStyle.privacy_policy_enText;
+    inputs.privacy_policy_arText = restuarantStyle.privacy_policy_arText;
     inputs.header_position = restuarantStyle.header_position;
     inputs.banner_radius = restuarantStyle.banner_radius;
     inputs.category_background_color =
