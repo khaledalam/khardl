@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('restaurant_styles', function (Blueprint $table) {
-            $table->string('terms_and_conditions_enText')->nullable();
-            $table->string('terms_and_conditions_arText')->nullable();
-            $table->string('privacy_policy_enText')->nullable();
-            $table->string('privacy_policy_arText')->nullable();
+            $table->text('terms_and_conditions_enText')->nullable();
+            $table->text('terms_and_conditions_arText')->nullable();
+            $table->text('privacy_policy_enText')->nullable();
+            $table->text('privacy_policy_arText')->nullable();
         });
     }
 
