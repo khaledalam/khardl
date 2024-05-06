@@ -41,6 +41,10 @@ class RestaurantStyleAppResource extends JsonResource
             'menu_category_color' => $this->menu_category_color,
             'footer_text_color' => $this->footer_text_color,
             'logo_border_color' => $this->logo_border_color,
+            'terms_and_conditions_enText' => $this->terms_and_conditions_enText,
+            'terms_and_conditions_arText' => $this->terms_and_conditions_arText,
+            'privacy_policy_enText' => $this->privacy_policy_enText,
+            'privacy_policy_arText' => $this->privacy_policy_arText,
         ];
     }
 }
