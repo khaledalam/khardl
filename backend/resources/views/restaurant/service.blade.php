@@ -733,7 +733,7 @@ function openModal(modalID) {
                                                                     <!--begin::image-->
                                                                     <div class="text-gray-400 fw-bold my-5">
                                                                         
-                                                                        @if($ROCustomerAppSub->icon)
+                                                                        @if($ROCustomerAppSub?->icon)
                                                                         <img src="{{$ROCustomerAppSub->icon}}" alt="" width="100">
                                                                         @else
                                                                         <svg width="75" height="85" viewBox="0 0 75 85" fill="none" xmlns="http://www.w3.org/2000/svg">
