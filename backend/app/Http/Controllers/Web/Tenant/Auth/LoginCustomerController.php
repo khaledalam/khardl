@@ -230,7 +230,9 @@ class LoginCustomerController extends BaseController
         }
         $user->save();
         if ($request->phone && $user->phone != $request->phone) {
-            $send_sms = (new RegisterController())->sendVerificationSMSCode($request);
+            $send_sms = $this->sendSMS(
+                new CustomerSendSMSRequest($request->all())
+            );
             $content = $send_sms->getOriginalContent();
             if($content['success']){
                 $user->verified_phone = $request->phone;

@@ -49,6 +49,7 @@ class OrderController
             'firstName' => $user?->first_name,
             'lastName' => $user?->last_name,
             'phone' => $user?->phone,
+            'email' => $user?->email,
             'address' => [
                 'addressValue' => $user?->address,
                 'lat' => $user->lat,
