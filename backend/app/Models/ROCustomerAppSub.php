@@ -43,6 +43,8 @@ class ROCustomerAppSub extends Model
     public const SUSPEND = 'suspend';
     public const REQUESTED ='requested';
 
+    public const LIFETIME_SUBSCRIPTION ="lifetime-sub";
+
     public function user(){
         return $this->belongsTo(RestaurantUser::class,'user_id');
     }
@@ -55,6 +57,7 @@ class ROCustomerAppSub extends Model
         return Carbon::parse($this->attributes['end_at']);
     }
     public static function changeIcon($value){
+        if(is_null($value)) return null;
         if (strpos($value, "http://") === 0 || strpos($value, "https://") === 0) {
             return $value;
         }else {

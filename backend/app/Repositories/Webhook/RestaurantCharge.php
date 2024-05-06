@@ -66,7 +66,7 @@ class RestaurantCharge
             if ($data['status'] == 'CAPTURED') { // if payment successful
                 $db = [
                     'start_at' => now(),
-                    'end_at' => now()->addDays(365),
+                    'end_at' =>($data['metadata']['subscription'] == ROCustomerAppSub::LIFETIME_SUBSCRIPTION)? now()->addYears(100):now()->addDays(365),
                     'amount' => $data['amount'],
                     'user_id' => $user->id,
                     'type' => $data['metadata']['subscription'],
