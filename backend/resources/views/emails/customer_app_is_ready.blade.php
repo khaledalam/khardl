@@ -187,7 +187,7 @@
                                                         <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
 
                                                             <div style="font-family: 'Cabin',sans-serif; font-size: 9px; line-height: 140%; text-align: center; word-wrap: break-word;">
-                                                                <h1><strong>{{ __('Dear :user', ['user' => $app->user?->full_name])}}</strong></h1>
+                                                                <h1><strong>{{ __('Dear :user_name', ['user_name' => $app->user?->full_name])}}</strong></h1>
                                                             </div>
 
                                                         </td>
@@ -247,7 +247,7 @@
                                                         <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 16px 16px;font-family:arial,helvetica,sans-serif;" align="left">
 
                                                             <div style="font-size: 13px; line-height: 140%; text-align: center; word-wrap: break-word;">
-                                                                <p style="line-height: 140%;"><em>{{ __('emails.notify_users_for_new_sub.email_disclaimer')}}</em></p>
+                                                                <p style="line-height: 140%;"><em>{{ __("This email was sent from an email address that can't receive emails. Please don't reply to this email.")}}</em></p>
                                                             </div>
 
                                                         </td>
