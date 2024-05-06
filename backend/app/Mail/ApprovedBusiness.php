@@ -44,7 +44,7 @@ class ApprovedBusiness extends Mailable
      */
     public function build()
     {
-        return $this->subject('Approval Business')->view('emails.approved_business',[
+        return $this->subject(__("Approval Business"))->view('emails.approved_business',[
             'business' => $this->business
         ]);
     }

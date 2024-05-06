@@ -35,7 +35,7 @@ class SendVerifyEmailJob implements ShouldQueue
             // Send the email with the verification code
             Mail::send('emails.verify', ['code' => $this->user?->verification_code, 'name' => "{$this?->user?->first_name} {$this?->user?->last_name}"], function ($message) {
                 $message->to($this?->user?->email);
-                $message->subject('Email Verification Code');
+                $message->subject(__("Email Verification Code"));
             });
             $action = [
                 'en' => '[ok] Sent verify restaurant user email',

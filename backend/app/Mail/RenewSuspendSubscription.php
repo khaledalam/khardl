@@ -11,7 +11,7 @@ class RenewSuspendSubscription extends Mailable
 {
     use Queueable, SerializesModels;
 
- 
+
     /**
      * Create a new message instance.
      *
@@ -36,7 +36,7 @@ class RenewSuspendSubscription extends Mailable
      */
     public function build()
     {
-        return $this->subject('Renew your restaurant subscription')
+        return $this->subject(__("Renew your restaurant subscription"))
         ->view('emails.renew_suspend_subscription');
     }
 }

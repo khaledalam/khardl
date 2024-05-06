@@ -88,9 +88,9 @@ class ResetPasswordController extends BaseController
         $user = User::where(['email' => $request->email])->select(['first_name', 'last_name'])->first();
 
         // Send the email with the token
-        Mail::send('emails.password', ['token' => $token,'name' => "$user->first_name $user->last_name" ], function($message) use ($request) {
+        Mail::send('emails.password', ['token' => $token,'name' => "$user->full_name" ], function($message) use ($request) {
             $message->to($request->email);
-            $message->subject('Password Reset Request');
+            $message->subject(__('Password Reset Request'));
         });
         return $this->sendResponse(true, 'Reset email sent.');
     }
