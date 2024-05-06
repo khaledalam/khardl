@@ -476,6 +476,7 @@ Route::middleware([
                 Route::post('/update', [LoginCustomerController::class, 'updateCustomerApp']);
                 Route::post('/verify/phone', [LoginCustomerController::class, 'VerifyCustomerPhone']);
                 Route::get('/orders', [CustomerDataController::class, 'orders']);
+                Route::get("/cards", [CustomerCardController::class, 'show'])->name('customer.cards');
             });
             /* Customer address */
             Route::controller(CustomerAddressController::class)->group(function () {
