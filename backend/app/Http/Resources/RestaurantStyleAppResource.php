@@ -20,6 +20,7 @@ class RestaurantStyleAppResource extends JsonResource
             'categoryDetail_cart_color' => $this->categoryDetail_cart_color,
             'page_color' => $this->page_color,
             'page_category_color' => $this->page_category_color,
+            'logo_border_radius' => $this->logo_border_radius,
             'header_color' => $this->header_color,
             'footer_color' => $this->footer_color,
             'price_color' => $this->price_color,
