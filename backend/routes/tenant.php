@@ -369,6 +369,7 @@ Route::group([
                     Route::get('get-default','getDefault');
                 });
                 /* Customer address */
+                Route::delete("cards/{card_id}/delete", [CustomerCardController::class, 'delete'])->name('customer.cards');
             });
 
 
@@ -495,6 +496,7 @@ Route::middleware([
                     Route::get('get-default','getDefault');
                 });
                 /* Customer address */
+                Route::get("/cards", [CustomerCardController::class, 'show'])->name('customer.cards');
             });
         });
 
