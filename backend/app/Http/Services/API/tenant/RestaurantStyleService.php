@@ -105,6 +105,10 @@ class RestaurantStyleService
             'footer_text_color' => $request->footer_text_color,
             'logo_border_radius' => $request->logo_border_radius,
             'logo_border_color' => $request->logo_border_color,
+            'terms_and_conditions_enText' => $request->terms_and_conditions_enText,
+            'terms_and_conditions_arText' => $request->terms_and_conditions_arText,
+            'privacy_policy_enText' => $request->privacy_policy_enText,
+            'privacy_policy_arText' => $request->privacy_policy_arText,
 
         ];
         if (isset($request->logo) && $request->logo) {
