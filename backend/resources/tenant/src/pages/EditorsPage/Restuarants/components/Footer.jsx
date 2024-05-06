@@ -1,9 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import FooterModal from "../../EditorsPage/Restuarants/components/FooterModal";
+import GreenDot from "../../../../assets/greenDot.png";
 
-const Footer = ({ restaurantStyle }) => {
+const Footer = ({
+  activeSubitem,
+  navItems,
+  activeSection,
+  onTermsAndConditionsClick,
+  onPrivacyPolicyClick,
+}) => {
+  const restuarantEditorStyle = useSelector(
+    (state) => state.restuarantEditorStyle
+  );
+
   const {
     footer_color,
     footer_alignment,
@@ -23,13 +33,21 @@ const Footer = ({ restaurantStyle }) => {
     privacy_policy_text_fontWeight,
     privacy_policy_text_fontSize,
     privacy_policy_text_color,
-  } = restaurantStyle;
+  } = restuarantEditorStyle;
 
   const { t } = useTranslation();
-  const [isTermsAndConditionsModalOpened, setIsTermsAndConditionsModalOpened] =
-    useState(false);
-  const [isPrivacyPolicyModalOpened, setIsPrivacyPolicyModalOpened] =
-    useState(false);
+
+  useEffect(() => {
+    console.log(
+      "ACTIVESECTION",
+      activeSection,
+      ", ACTIVESUBITEM",
+      activeSubitem,
+      ", NAVITEMS",
+      navItems
+    );
+  }, [activeSection, activeSubitem, navItems]);
+
   return (
     <div
       className={`w-full h-[56px] z-10 grid grid-cols-3 px-[16px] md:mt-[8px] rounded-xl items-center ${
@@ -46,7 +64,10 @@ const Footer = ({ restaurantStyle }) => {
             footer_text_fontWeight
               ? `font-${footer_text_fontWeight}`
               : "font-normal"
-          }
+          } ${
+        navItems[activeSection]?.title === t("Footer")
+          ? "shadow-inner border-[#C0D123] border-[2px]"
+          : ""
       }`}
       style={{
         backgroundColor: footer_color,
@@ -55,7 +76,7 @@ const Footer = ({ restaurantStyle }) => {
       }}
     >
       <div
-        className={`flex ${
+        className={`px-1 flex ${
           footer_alignment == "right"
             ? "justify-end"
             : footer_alignment == "left"
@@ -72,13 +93,24 @@ const Footer = ({ restaurantStyle }) => {
             {" "}
             {t("Khardl")}
           </a>
+          <img
+            src={GreenDot}
+            alt="green dot"
+            className={`${
+              activeSubitem != null &&
+              navItems[activeSection]?.subItems[activeSubitem]?.title ==
+                t("Footer")
+                ? "absolute w-[5px] h-[5px] right-[-7px] top-[-3px]"
+                : "hidden"
+            }`}
+          />
         </h3>
       </div>
       <div
         style={{
           color: terms_and_conditions_text_color,
         }}
-        className={`flex ${
+        className={`px-1 flex ${
           terms_and_conditions_alignment == "right"
             ? "justify-end"
             : terms_and_conditions_alignment == "left"
@@ -88,16 +120,27 @@ const Footer = ({ restaurantStyle }) => {
       >
         <span
           className="text-[#7D0A0A] font-medium cursor-pointer relative"
-          onClick={() => setIsTermsAndConditionsModalOpened(true)}
+          onClick={onTermsAndConditionsClick}
         >
           {t("Terms and Conditions")}
+          <img
+            src={GreenDot}
+            alt="green dot"
+            className={`${
+              activeSubitem != null &&
+              navItems[activeSection]?.subItems[activeSubitem]?.title ==
+                t("Terms and Conditions")
+                ? "absolute w-[5px] h-[5px] right-[-7px] top-[-3px]"
+                : "hidden"
+            }`}
+          />
         </span>
       </div>
       <div
         style={{
           color: privacy_policy_text_color,
         }}
-        className={`flex ${
+        className={`px-1 flex ${
           privacy_policy_alignment == "right"
             ? "justify-end"
             : privacy_policy_alignment == "left"
@@ -107,25 +150,22 @@ const Footer = ({ restaurantStyle }) => {
       >
         <span
           className="text-[#7D0A0A] font-medium cursor-pointer relative"
-          onClick={() => setIsPrivacyPolicyModalOpened(true)}
+          onClick={onPrivacyPolicyClick}
         >
           {t("Privacy Policy")}
+          <img
+            src={GreenDot}
+            alt="green dot"
+            className={`${
+              activeSubitem != null &&
+              navItems[activeSection]?.subItems[activeSubitem]?.title ==
+                t("Privacy Policy")
+                ? "absolute w-[5px] h-[5px] right-[-7px] top-[-3px]"
+                : "hidden"
+            }`}
+          />
         </span>
       </div>
-      {isPrivacyPolicyModalOpened && (
-        <FooterModal
-          edit={false}
-          type="privacyPolicy"
-          setModalOpened={setIsPrivacyPolicyModalOpened}
-        />
-      )}
-      {isTermsAndConditionsModalOpened && (
-        <FooterModal
-          edit={false}
-          type="termsAndConditions"
-          setModalOpened={setIsTermsAndConditionsModalOpened}
-        />
-      )}
     </div>
   );
 };

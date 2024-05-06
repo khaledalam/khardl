@@ -52,7 +52,7 @@ export const RightSideBarDesktop = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const restuarantEditorStyle = useSelector(
-    (state) => state.restuarantEditorStyle,
+    (state) => state.restuarantEditorStyle
   );
 
   useEffect(() => {
@@ -102,12 +102,14 @@ export const RightSideBarDesktop = ({
     setOpenItems((prev) =>
       prev.includes(index)
         ? prev.filter((item) => item !== index)
-        : [...prev, index],
+        : [...prev, index]
     );
   };
 
   return (
-    <div className="flex flex-col px-[16px] h-full">
+    <div
+      className="flex flex-col px-[16px] h-full"
+    >
       <div className="flex flex-row">
         <h2 className="font-medium text-[14px] xl:text-[18px] leading-[18px] mt-[24px] pr-[10px]">
           {t("Designs")}
@@ -129,7 +131,7 @@ export const RightSideBarDesktop = ({
                   item != "textInitialValues_2" &&
                   item != "textOnChange_2" &&
                   navItems[activeSection].subItems[activeSubitem][item].length >
-                    0,
+                    0
               )
               .map((item, index) => (
                 <li key={index}>
@@ -194,24 +196,24 @@ export const RightSideBarDesktop = ({
                                         ]?.layoutOnChange[subIndex](color);
                                       }
                                     : item === "contentPosition"
-                                      ? (color) => {
-                                          navItems[activeSection].subItems[
-                                            activeSubitem
-                                          ]?.contentPositionOnChange[subIndex](
-                                            color,
-                                          );
-                                        }
-                                      : item === "text"
-                                        ? (color) => {
-                                            navItems[activeSection].subItems[
-                                              activeSubitem
-                                            ]?.textOnChange[subIndex](color);
-                                          }
-                                        : (color) => {
-                                            navItems[activeSection].subItems[
-                                              activeSubitem
-                                            ]?.textOnChange_2[subIndex](color);
-                                          }
+                                    ? (color) => {
+                                        navItems[activeSection].subItems[
+                                          activeSubitem
+                                        ]?.contentPositionOnChange[subIndex](
+                                          color
+                                        );
+                                      }
+                                    : item === "text"
+                                    ? (color) => {
+                                        navItems[activeSection].subItems[
+                                          activeSubitem
+                                        ]?.textOnChange[subIndex](color);
+                                      }
+                                    : (color) => {
+                                        navItems[activeSection].subItems[
+                                          activeSubitem
+                                        ]?.textOnChange_2[subIndex](color);
+                                      }
                                 }
                                 color={
                                   item === "layout"
@@ -219,18 +221,16 @@ export const RightSideBarDesktop = ({
                                         activeSubitem
                                       ]?.layoutInitialValues[subIndex]
                                     : item === "contentPosition"
-                                      ? navItems[activeSection].subItems[
-                                          activeSubitem
-                                        ]?.contentPositionInitialValues[
-                                          subIndex
-                                        ]
-                                      : item === "text"
-                                        ? navItems[activeSection].subItems[
-                                            activeSubitem
-                                          ]?.textInitialValues[subIndex]
-                                        : navItems[activeSection].subItems[
-                                            activeSubitem
-                                          ]?.textInitialValues_2[subIndex]
+                                    ? navItems[activeSection].subItems[
+                                        activeSubitem
+                                      ]?.contentPositionInitialValues[subIndex]
+                                    : item === "text"
+                                    ? navItems[activeSection].subItems[
+                                        activeSubitem
+                                      ]?.textInitialValues[subIndex]
+                                    : navItems[activeSection].subItems[
+                                        activeSubitem
+                                      ]?.textInitialValues_2[subIndex]
                                 }
                               />
                             ) : subItem == "positionContent" ? (
@@ -427,7 +427,7 @@ export const RightSideBarDesktop = ({
                             ) : null}
                           </li>
                         );
-                      },
+                      }
                     )}
                   </ul>
                 </li>
