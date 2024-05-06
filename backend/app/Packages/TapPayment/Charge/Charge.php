@@ -13,7 +13,7 @@ class Charge extends Tap implements ChargeInterface
             'currency'=>"SAR",
             'customer_initiated'=> true,
             'threeDSecure'=>true,
-            'save_card'=>false,
+            'save_card'=>true,
             'receipt'=>[
                 'email'=>true,
                 'sms'=>true

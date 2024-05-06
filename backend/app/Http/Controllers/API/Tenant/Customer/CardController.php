@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Tenant\Customer;
 
+use App\Packages\TapPayment\Card\Card as TapCard;
 use App\Utils\ResponseHelper;
 use App\Traits\APIResponseTrait;
 use Illuminate\Support\Facades\Auth;
@@ -27,10 +28,23 @@ class CardController
                     return $response;
                 }
             }
-            $response = $this->sendResponse(__('No card found'), true);
+            $response =    $this->sendError(__('No card found'));
             session(["$session"=>$response]);
             return $response;
         }
+
+    }
+    public function delete($card_id){
+        $user = Auth::user();
+        $card = TapCard::delete($user->getTapCustomerId(),$card_id);
+        if($card['http_code'] == ResponseHelper::HTTP_OK){
+            if(isset($card['message']['deleted']) && $card['message']['deleted']){
+                $session = tenant()->id.'_card_customer_'.Auth::id();
+                session()->flush($session);
+                return $this->sendResponse(__('Card has been deleted successfully'), true);
+            }
+        }
+        return $this->sendError(__('No card found'));
 
     }
 

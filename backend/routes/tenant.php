@@ -371,6 +371,7 @@ Route::group([
                 Route::post("validate/coupon", [CustomerCouponController::class,'validateCoupon']);
                 Route::post("remove/coupon", [CustomerCouponController::class,'removeCoupon']);
                 Route::get("cards", [CustomerCardController::class, 'show'])->name('customer.cards');
+                Route::delete("cards/{card_id}/delete", [CustomerCardController::class, 'delete'])->name('customer.cards');
             });
 
 
