@@ -44,7 +44,7 @@ class NotifyUsersForNewSub extends Mailable
             $sub = __("New Restaurant subscription");
         }
 
-        return $this->subject("$sub")->view('emails.notify_users_for_new_sub', [
+        return $this->subject($sub)->view('emails.notify_users_for_new_sub', [
             'sub' => $sub,
         ]);
     }

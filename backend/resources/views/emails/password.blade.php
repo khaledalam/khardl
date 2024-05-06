@@ -172,7 +172,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <div style="font-family: 'Cabin',sans-serif; font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="line-height: 140%;">{{ __('Dear :user', ['user' => $user->first_name])}}</p>
+    <p style="line-height: 140%;">{{ __('Dear :user', ['user' => $name])}}</p>
 <p style="line-height: 140%;">{{ __('Reset your password')}}</p>
   </div>
 
