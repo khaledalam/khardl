@@ -50,7 +50,7 @@ export const CustomerPage = () => {
       );
       // const restaurantStyleResponse = await AxiosInstance.delete(
       //   `cards/card_id_here/delete`
-      // );
+      // );@
 
       if (restaurantStyleResponse.data) {
           console.log(restaurantStyleResponse.data);

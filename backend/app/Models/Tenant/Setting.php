@@ -11,11 +11,10 @@ use Stancl\Tenancy\Database\Concerns\ResourceSyncing;
 
 class Setting extends Model implements Syncable
 {
-    use HasFactory, ResourceSyncing,HasTranslations;
+    use HasFactory, ResourceSyncing;
     protected $table= "settings";
     protected $guarded  =[];
     public $timestamps = false;
-    public $translatable = ['privacy_and_policy','terms_and_conditions'];
     protected $casts = [
         'lead_response' => 'array',
 
