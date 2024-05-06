@@ -43,6 +43,20 @@ export const CustomerPage = () => {
     }
   }, [orderId]);
 
+  const fetchCustomerCards = async () => {
+    try {
+      const restaurantStyleResponse = await AxiosInstance.get(
+        `cards`
+      );
+
+      if (restaurantStyleResponse.data) {
+          console.log(restaurantStyleResponse.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchResStyleData = async () => {
     try {
       const restaurantStyleResponse = await AxiosInstance.get(
@@ -63,6 +77,7 @@ export const CustomerPage = () => {
 
   useEffect(() => {
     fetchResStyleData();
+    fetchCustomerCards();
   }, []);
 
   return (
