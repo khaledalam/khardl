@@ -359,6 +359,16 @@ Route::group([
                 Route::post("validate/coupon", [CustomerCouponController::class,'validateCoupon']);
                 Route::post("remove/coupon", [CustomerCouponController::class,'removeCoupon']);
                 Route::get("cards", [CustomerCardController::class, 'show'])->name('customer.cards');
+                /* Customer address */
+                Route::controller(CustomerAddressController::class)->group(function () {
+                    Route::post('add-address','create');
+                    Route::post('update-address/{address}','update');
+                    Route::post('make-as-default/{address}','makeDefault');
+                    Route::post('delete-address/{address}','delete');
+                    Route::get('get-addresses','index');
+                    Route::get('get-default','getDefault');
+                });
+                /* Customer address */
                 Route::delete("cards/{card_id}/delete", [CustomerCardController::class, 'delete'])->name('customer.cards');
             });
 
@@ -476,18 +486,18 @@ Route::middleware([
                 Route::post('/update', [LoginCustomerController::class, 'updateCustomerApp']);
                 Route::post('/verify/phone', [LoginCustomerController::class, 'VerifyCustomerPhone']);
                 Route::get('/orders', [CustomerDataController::class, 'orders']);
+                /* Customer address */
+                Route::controller(CustomerAddressController::class)->group(function () {
+                    Route::post('add-address','create');
+                    Route::post('update-address/{address}','update');
+                    Route::post('make-as-default/{address}','makeDefault');
+                    Route::post('delete-address/{address}','delete');
+                    Route::get('get-addresses','index');
+                    Route::get('get-default','getDefault');
+                });
+                /* Customer address */
                 Route::get("/cards", [CustomerCardController::class, 'show'])->name('customer.cards');
             });
-            /* Customer address */
-            Route::controller(CustomerAddressController::class)->group(function () {
-                Route::post('add-address','create');
-                Route::post('update-address/{address}','update');
-                Route::post('make-as-default/{address}','makeDefault');
-                Route::post('delete-address/{address}','delete');
-                Route::get('get-addresses','index');
-                Route::get('get-default','getDefault');
-            });
-            /* Customer address */
         });
 
 
