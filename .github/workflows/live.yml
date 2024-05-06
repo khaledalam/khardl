@@ -19,7 +19,11 @@ jobs:
       - name: ⚙️ DB backup and App apply changes
         run: |
           cd /home/khardl5/public_html/
+          echo "1"
+          ls
           git config --add safe.directory /home/khardl5/public_html
+          echo "2"
+          ls
           git pull https://${{secrets.TOK}}@github.com/${GITHUB_REPOSITORY}.git production
           echo "-----";
           ./deploy.sh
