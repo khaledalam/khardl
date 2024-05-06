@@ -35,7 +35,7 @@ class ApprovedRestaurant extends Mailable
      */
     public function build()
     {
-        return $this->subject('Restaurant Approved')->view('emails.approved_restaurant');
+        return $this->subject(__('Restaurant Approved'))->view('emails.approved_restaurant');
 
     }
 }

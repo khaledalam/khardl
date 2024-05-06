@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"
+@if(app()->getLocale() === 'ar') dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">
 <head>
 <!--[if gte mso 9]>
 <xml>
@@ -82,8 +83,8 @@ a[x-apple-data-detectors='true'] {
 
 table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: underline; }
     </style>
-  
-  
+
+
 
 <!--[if !mso]><!--><link href="https://fonts.googleapis.com/css?family=Cabin:400,700&display=swap" rel="stylesheet" type="text/css"><!--<![endif]-->
 
@@ -97,30 +98,30 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tr style="vertical-align: top">
     <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
     <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: #F7F8F9;"><![endif]-->
-    
-  
-  
+
+
+
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 500px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
       <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:500px;"><tr style="background-color: transparent;"><![endif]-->
-      
+
 <!--[if (mso)|(IE)]><td align="center" width="500" style="background-color: #ffffff;width: 500px;padding: 0px;border-top: 5px solid #c2da0a;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
 <div class="u-col u-col-100" style="max-width: 320px;min-width: 500px;display: table-cell;vertical-align: top;">
   <div style="background-color: #ffffff;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 5px solid #c2da0a;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
+
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td style="padding-right: 0px;padding-left: 0px;" align="center">
-      
+
       <img align="center" border="0" src="images/image-1.jpeg" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 27%;max-width: 129.6px;" width="129.6"/>
-      
+
     </td>
   </tr>
 </table>
@@ -134,9 +135,9 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 2px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><span><strong>{{ __('emails.denied_message.title') }}</strong></span></span></span></h1>
+    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><span><strong>{{ __('Denied') }}</strong></span></span></span></h1>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -148,7 +149,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:18px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px dashed #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
       <tr style="vertical-align: top">
@@ -168,9 +169,9 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <div style="font-family: 'Cabin',sans-serif; font-size: 9px; line-height: 140%; text-align: center; word-wrap: break-word;">
-     <h1><strong>{{ __('emails.denied_message.content.intro', ['firstName' => $user->first_name]) }}</strong></h1>
+     <h1><strong>{{ __('Dear :user', ['user' => $user->first_name]) }}</strong></h1>
 
       </td>
     </tr>
@@ -181,9 +182,9 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p style="color: #000000; text-align: -webkit-center; white-space: normal; background-color: #ffffff; line-height: 160%;">{{ __('emails.denied_message.content.denied_reason') }}</p></h4>
+    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p style="color: #000000; text-align: -webkit-center; white-space: normal; background-color: #ffffff; line-height: 160%;">{{ __('We regret to inform you that your account request has been denied. Our team has reviewed your information and determined that it does not meet our criteria for approval at this time.') }}</p></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -195,9 +196,9 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <div style="font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-  <p style="line-height: 140%;"><strong>{{ __('emails.denied_message.content.reasons') }}</strong></p>
+  <p style="line-height: 140%;"><strong>{{ __('Reason for Denial Upon careful consideration, we have found that certain information provided does not align with our requirements or guidelines.') }}</strong></p>
   </div>
 
       </td>
@@ -209,9 +210,13 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <div style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <ul style="box-sizing: border-box; padding-left: 2rem; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">@foreach($reasons as $reason) {{$reason}} @endforeach</ul>
+    <ul style="box-sizing: border-box; padding-left: 2rem; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">
+        @foreach($reasons as $reason)
+        <li>{{$reason}}</li>
+        @endforeach
+    </ul>
   </div>
 
       </td>
@@ -223,9 +228,9 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-  <p style="color: #000000; text-align: -webkit-center; white-space: normal; background-color: #ffffff; line-height: 160%;"><strong>{{ __('emails.denied_message.content.next_steps') }}</strong><br />{{ __('emails.denied_message.content.next_steps_description') }}</p>
+  <p style="color: #000000; text-align: -webkit-center; white-space: normal; background-color: #ffffff; line-height: 160%;"><strong>{{ __('Next Steps:') }}</strong><br />{{ __("We understand that you may need to update or modify certain details in order to meet our criteria. To proceed further, please click on the button below to access your account and make the necessary changes. If you have any questions or need assistance, please don't hesitate to reach out to our support team. We appreciate your understanding and cooperation.") }}</p>
 <div> &nbsp;</div></h4>
   <!--[if mso]></td></tr></table><![endif]-->
 
@@ -238,12 +243,12 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
 <div align="center">
   <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ url('/') }}" style="height:40px; v-text-anchor:middle; width:182px;" arcsize="27.5%"  stroke="f" fillcolor="#c2da0a"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
     <a href="{{ url('/') }}" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #c2da0a; border-radius: 11px;-webkit-border-radius: 11px; -moz-border-radius: 11px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 17px;">
-    <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 20.4px;">{{ __('emails.denied_message.buttons.proceed_button') }}</span></span>
+    <span style="display:block;padding:10px 20px;line-height:120%;"><span style="line-height: 20.4px;">{{ __('Proceed to Update') }}</span></span>
     </a>
     <!--[if mso]></center></v:roundrect><![endif]-->
 </div>
@@ -257,7 +262,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:16px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px dashed #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
       <tr style="vertical-align: top">
@@ -277,9 +282,9 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 16px 16px;font-family:arial,helvetica,sans-serif;" align="left">
-        
+
   <div style="font-size: 13px; line-height: 140%; text-align: center; word-wrap: break-word;">
-  <p style="line-height: 140%;"><em>{{ __('emails.denied_message.content.email_note') }}</em></p>
+  <p style="line-height: 140%;"><em>{{ __("This email was sent from an email address that can't receive emails. Please don't reply to this email.") }}</em></p>
   </div>
 
       </td>
@@ -295,7 +300,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
     </div>
   </div>
   </div>
-  
+
 
 
     <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
