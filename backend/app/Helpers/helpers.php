@@ -82,7 +82,7 @@ if (!function_exists('store_image')) {
                     $filename = Str::random(40) . '.' . $image->guessExtension();
                 }
             }
-     
+
             $image->storeAs($store_at, $filename, 'public');
             return $store_at . '/' . $filename;
         } catch (Exception $e) {
@@ -263,6 +263,12 @@ if (!function_exists('haversineDistance')) {
         $distance = $R * $c;
 
         return $distance;
+    }
+}
+if (!function_exists('getSumOfDataGraph')) {
+    function getSumOfDataGraph($dataGraph)
+    {
+        return isset($dataGraph?->getDatasets()[0]['data']) ? $dataGraph?->getDatasets()[0]['data']?->sum() : 0;
     }
 }
 
