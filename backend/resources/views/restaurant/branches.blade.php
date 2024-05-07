@@ -136,7 +136,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             <div class="row gx-9">
                                 <!--begin::Col-->
 
-                                <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}">
+                                <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}" id="map-autocomplete-card">
                                     @if(!$branch->deleted_at)
                                     <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}" style="display: none;" value="{{$branch->address}}">
                                     @endif
@@ -966,7 +966,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 @section('js')
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&v=weekly&libraries=marker&loading=async&v=weekly" ></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
@@ -1115,36 +1115,36 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             //     e.target.value = $(this).data('val');
             // });
 
-            {{--$('.time-24').on('change', function (e) {--}}
+            // {{--$('.time-24').on('change', function (e) {--}}
 
-            {{--    e.preventDefault();--}}
+            // {{--    e.preventDefault();--}}
 
-            {{--    let $isFromTime = [...e.target.classList].indexOf('from') > -1;--}}
+            // {{--    let $isFromTime = [...e.target.classList].indexOf('from') > -1;--}}
 
-            {{--    let $fromInput = e.target.parentNode.parentNode.getElementsByTagName('input')[0];--}}
-            {{--    let $toInput = e.target.parentNode.parentNode.getElementsByTagName('input')[1];--}}
+            // {{--    let $fromInput = e.target.parentNode.parentNode.getElementsByTagName('input')[0];--}}
+            // {{--    let $toInput = e.target.parentNode.parentNode.getElementsByTagName('input')[1];--}}
 
-            {{--    let $time1InMinutesForTimeFrom = getTimeAsNumberOfMinutes($fromInput.value);--}}
-            {{--    let $time1InMinutesForTimeTo = getTimeAsNumberOfMinutes($toInput.value);--}}
+            // {{--    let $time1InMinutesForTimeFrom = getTimeAsNumberOfMinutes($fromInput.value);--}}
+            // {{--    let $time1InMinutesForTimeTo = getTimeAsNumberOfMinutes($toInput.value);--}}
 
-            {{--    console.log("from: ", $fromInput.value, $time1InMinutesForTimeFrom)--}}
-            {{--    console.log("to: ", $toInput.value, $time1InMinutesForTimeTo)--}}
+            // {{--    console.log("from: ", $fromInput.value, $time1InMinutesForTimeFrom)--}}
+            // {{--    console.log("to: ", $toInput.value, $time1InMinutesForTimeTo)--}}
 
-            {{--    if (parseInt($time1InMinutesForTimeFrom) > parseInt($time1InMinutesForTimeTo)) {--}}
-            {{--        --}}{{--alert("{{__("Time from should be before to")}}");--}}
-            {{--            e.target.value = $(this).data('val')--}}
-            {{--    }--}}
-            {{--    else {--}}
-            {{--        $(this).data('val', $(this).val());--}}
-            {{--    }--}}
-            {{--})--}}
+            // {{--    if (parseInt($time1InMinutesForTimeFrom) > parseInt($time1InMinutesForTimeTo)) {--}}
+            // {{--        --}}{{--alert("{{__("Time from should be before to")}}");--}}
+            // {{--            e.target.value = $(this).data('val')--}}
+            // {{--    }--}}
+            // {{--    else {--}}
+            // {{--        $(this).data('val', $(this).val());--}}
+            // {{--    }--}}
+            // {{--})--}}
 
         });
 
 
     </script>
 
-    @include('components.map')
+
 
 
 

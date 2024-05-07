@@ -1,15 +1,20 @@
 <script>
 
-    document.addEventListener("DOMContentLoaded", (event) => {
+  
         let maps = {}; // Store maps in an object
         let markers = {}; // Store markers in an object
 
-        function initializeMapOnClick(branchId, lat, lng) {
+        async function initializeMapOnClick(branchId, lat, lng) {
+            const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
+                google.maps.importLibrary("marker"),
+                google.maps.importLibrary("places"),
+            ]);
             const latLng = new google.maps.LatLng(lat, lng);
 
             const map = new google.maps.Map(document.getElementById('map' + branchId), {
                 center: latLng,
                 zoom: 8,
+                mapId: "40a0db5160f058c"
             });
 
             const input = document.getElementById("pac-input" + branchId);
@@ -18,14 +23,19 @@
                 fields: ["formatted_address", "geometry", "name"],
                 strictBounds: false,
             };
-            const autocomplete = new google.maps.places.Autocomplete(input, options);
+            const autocomplete = new google.maps.places.PlaceAutocompleteElement();
+            autocomplete.id = input;
+            const card = document.getElementById("map-autocomplete-card");
+
+            card.appendChild(autocomplete);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
             autocomplete.bindTo("bounds", map);
 
-            const marker = new google.maps.Marker({
-    position: latLng,
-    map: map,
-    draggable: true,
-});
+            const marker = new google.maps.marker.AdvancedMarkerElement({
+                    position: latLng,
+                    map: map,
+                    draggable: true,
+                });
 
 
 
@@ -155,29 +165,29 @@
             document.getElementById('pac-input-new_branch').value = centerCoords.address;
 
 
-            google.maps.event.addListener(maps['-new_branch'], 'click', function (event) {
+            // google.maps.event.addListener(maps['-new_branch'], 'click', function (event) {
 
-                // If a marker exists, remove it
-                if (markers['-new_branch']) {
-                    markers['-new_branch'].setMap(null);
-                }
+            //     // If a marker exists, remove it
+            //     if (markers['-new_branch']) {
+            //         markers['-new_branch'].setMap(null);
+            //     }
 
-                // Create a new marker at the clicked location
-                markers['-new_branch'] = new google.maps.Marker({
-                    map: maps['-new_branch'],
-                    position: event.latLng,
-                    draggable: true,
-                });
+            //     // Create a new marker at the clicked location
+            //     markers['-new_branch'] = new google.maps.Marker({
+            //         map: maps['-new_branch'],
+            //         position: event.latLng,
+            //         draggable: true,
+            //     });
 
-                // document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
+            //     // document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
 
-                const latnew_branch = document.getElementById('lat-new_branch');
-                const lngnew_branch = document.getElementById('lng-new_branch');
+            //     const latnew_branch = document.getElementById('lat-new_branch');
+            //     const lngnew_branch = document.getElementById('lng-new_branch');
 
-                // Update the hidden input with the clicked location's latitude and longitude
-                latnew_branch.value = `${event.latLng.lat()}`;
-                lngnew_branch.value = `${event.latLng.lng()}`;
-            });
+            //     // Update the hidden input with the clicked location's latitude and longitude
+            //     latnew_branch.value = `${event.latLng.lat()}`;
+            //     lngnew_branch.value = `${event.latLng.lng()}`;
+            // });
         }
-    });
+
 </script>
