@@ -341,7 +341,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12" id="daily_visitors">
+                        <div class="col-md-12" id="daily_visitors_selector">
                             <!--begin::Card widget 6-->
                             <div class="card card-flush">
                                 <!--end::Header-->
@@ -371,7 +371,7 @@
                             <!--begin::Card widget 7-->
                         </div>
                         <!--begin::Col-->
-                        <div class="col-md-12" id="monthly_visitors" style="display: none;">
+                        <div class="col-md-12" id="monthly_visitors_selector" style="display: none;">
                             <!--begin::Chart widget 3-->
                             <div class="card card-flush">
                                 <!--begin::Card body-->
@@ -425,8 +425,8 @@
         const daily_statistics = document.getElementById('daily_statistics');
         const monthly_statistics = document.getElementById('monthly_statistics');
         const filter_range_visitors = document.getElementById('filter_range_visitors');
-        const daily_visitors = document.getElementById('daily_visitors');
-        const monthly_visitors = document.getElementById('monthly_visitors');
+        const daily_visitors_selector = document.getElementById('daily_visitors_selector');
+        const monthly_visitors_selector = document.getElementById('monthly_visitors_selector');
 
         if (filter_range?.length) {
             filter_range.addEventListener('change', function () {
@@ -442,11 +442,11 @@
         if (filter_range_visitors?.length) {
             filter_range_visitors.addEventListener('change', function () {
                 if (filter_range_visitors.value === 'daily') {
-                    daily_visitors.style.display = 'block';
-                    monthly_visitors.style.display = 'none';
+                    daily_visitors_selector.style.display = 'block';
+                    monthly_visitors_selector.style.display = 'none';
                 } else if (filter_range_visitors.value === 'monthly') {
-                    daily_visitors.style.display = 'none';
-                    monthly_visitors.style.display = 'block';
+                    daily_visitors_selector.style.display = 'none';
+                    monthly_visitors_selector.style.display = 'block';
                 }
             });
         }
