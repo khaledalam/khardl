@@ -11,7 +11,7 @@ const OrderTable = ({ data }) => {
 
   return (
     <Fragment>
-      {data && data.length > 0 ? (
+      {Array.isArray(data) && data?.length > 0 ? (
         <div className="w-full">
           <table
             className={`w-full table border-separate border-spacing-y-4 ${language == "ar" ? "text-right" : ""}`}

@@ -15,18 +15,21 @@ const OrderItem = ({ order, onClick }) => {
         <div className="w-[70px] h-[70px] flex bg-black bg-opacity-5 rounded-full justify-center items-center">
           <img
             className="w-[60px] h-[60px] p-[5px] rounded-full"
-            src={order?.items ? order?.items[0]?.item?.photo : ""}
-            alt={order?.items ? order?.items[0]?.item?.name : ""}
+            src={order?.items && Array.isArray(order?.items) ? order?.items[0]?.item?.photo : ""}
+            alt={order?.items && Array.isArray(order?.items) ? order?.items[0]?.item?.name : ""}
           />
         </div>
         <div className="pb-2.5 flex-col justify-start items-start gap-[3px] inline-flex">
           <div className="text-neutral-700 text-base">
-            {order?.items ? order?.items[0]?.item?.name : ""}
+            {order?.items && Array.isArray(order?.items) ? order?.items[0]?.item?.name : ""}
           </div>
-          {order?.items.length > 1 && (
+          {Array.isArray(order?.items) && order?.items?.length > 1 && (
             <div className="w-fit text-zinc-500 text-sm font-light">
               {t("and")} &nbsp;
-              {order?.items ? order?.items.length - 1 : 0}&nbsp;
+              {order?.items && Array.isArray(order?.items)
+                ? order?.items.length - 1
+                : 0}
+              &nbsp;
               {t("Others")}
             </div>
           )}

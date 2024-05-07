@@ -43,6 +43,7 @@ class RestaurantControllerRequest extends FormRequest
             'categoryDetail_cart_color' => 'nullable|string',
             'page_color' => 'nullable|string',
             'page_category_color' => 'nullable|string',
+            'logo_border_radius' => 'nullable|string',
             'headerPosition' => 'nullable|string|in:relative,fixed',
             'banner_radius' => 'nullable',
             'header_color' => 'nullable|string',
@@ -53,6 +54,10 @@ class RestaurantControllerRequest extends FormRequest
             'text_fontWeight' => 'nullable|string|in:200,300,400,500,600,700,800',
             'text_fontSize' => 'nullable',
             'text_color' => 'nullable|string',
+            'terms_and_conditions_enText' => 'nullable|string',
+            'terms_and_conditions_arText' => 'nullable|string',
+            'privacy_policy_enText' => 'nullable|string',
+            'privacy_policy_arText' => 'nullable|string',
             /* OLD */
             'logo' => [
                 Rule::when((!$restaurantStyles || !$restaurantStyles?->logo) && $this->logo == null, 'required|mimes:png,jpg,jpeg|max:2048')

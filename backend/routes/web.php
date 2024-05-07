@@ -58,7 +58,7 @@ Route::get('/health', static function (){
 
 
     return response()->json([
-        'status' => 'ok',
+        'status' => 'OK',
         'last_commit_hash' => trim(exec('git log --pretty="%h" -n1 HEAD')),
         'last_commit_hashfull' => $hash,
         'last_commit_message' => $git_message_first_lines,

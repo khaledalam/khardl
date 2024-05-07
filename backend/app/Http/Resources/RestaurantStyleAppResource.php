@@ -20,6 +20,7 @@ class RestaurantStyleAppResource extends JsonResource
             'categoryDetail_cart_color' => $this->categoryDetail_cart_color,
             'page_color' => $this->page_color,
             'page_category_color' => $this->page_category_color,
+            'logo_border_radius' => $this->logo_border_radius,
             'header_color' => $this->header_color,
             'footer_color' => $this->footer_color,
             'price_color' => $this->price_color,
@@ -41,6 +42,10 @@ class RestaurantStyleAppResource extends JsonResource
             'menu_category_color' => $this->menu_category_color,
             'footer_text_color' => $this->footer_text_color,
             'logo_border_color' => $this->logo_border_color,
+            'terms_and_conditions_enText' => $this->terms_and_conditions_enText,
+            'terms_and_conditions_arText' => $this->terms_and_conditions_arText,
+            'privacy_policy_enText' => $this->privacy_policy_enText,
+            'privacy_policy_arText' => $this->privacy_policy_arText,
         ];
     }
 }

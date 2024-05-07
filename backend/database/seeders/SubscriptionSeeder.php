@@ -29,5 +29,10 @@ class SubscriptionSeeder extends Seeder
             'description'=>trans_json('Customer application','تطبيق الزبون'),
             "amount"=>400
         ]);
+        Subscription::create([
+            'name'=>trans_json('Customer app (Lifetime subscription)','تطبيق الزبون (اشتراك مدي الحياة)'),
+            'description'=>trans_json('Customer app (Lifetime subscription)','تطبيق الزبون (اشتراك مدي الحياة)'),
+            "amount"=>400
+        ]);
     }
 }
