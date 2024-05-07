@@ -30,7 +30,8 @@ class SummaryService
         $receivedByRes = $this->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
         $allOrders = $orders->get();
         $completedOrders = $orders->completed();
-        $totalPriceThisMonth = $this->getTotalPriceThisMonth(clone $orders);
+        $thisMonthRevenues = $this->getTotalPriceThisMonth(clone $orders);
+        $lastMonthRevenues = $this->getLastMonthRevenue(clone $orders);
         $total = $allOrders->count();
         $dailySales = $this->getDailySales(clone $completedOrders);
         $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
@@ -39,7 +40,9 @@ class SummaryService
         $percentageChange = ($averageLast7DaysSales > 0)
             ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
             : (($dailySales > 0) ? 100 : 0);
-
+        $percentageChangeForMonth = ($lastMonthRevenues > 0)
+            ? (number_format((($thisMonthRevenues - $lastMonthRevenues) / $lastMonthRevenues) * 100, 2))
+            : (($thisMonthRevenues > 0) ? 100 : 0);
         $noOfUsersThisMonth = $this->getNumberOfUsersThisMonth();
         $bestSellingItems = $this->bestSellingItems();
         $dailyVisitors = $this->dailyVisitors();
@@ -58,7 +61,8 @@ class SummaryService
             'dailySales',
             'percentageChange',
             'noOfUsersThisMonth',
-            'totalPriceThisMonth',
+            'thisMonthRevenues',
+            'percentageChangeForMonth',
             'bestSellingItems',
             'dailyRevenues',
             'monthlyRevenues',
@@ -192,7 +196,17 @@ class SummaryService
             ->whereMonth('created_at', $currentDate['month'])
             ->count();
     }
+    public function getLastMonthRevenue($orders)
+    {
+        $currentDate = Carbon::now();
+        $lastMonthDate = $currentDate->subMonth();
 
+        return $orders
+            ->completed()
+            ->whereYear('created_at', $lastMonthDate->year)
+            ->whereMonth('created_at', $lastMonthDate->month)
+            ->sum('total');
+    }
     public function getTotalPriceThisMonth($orders)
     {
         $currentDate = $this->getCurrentMonthAndYear();

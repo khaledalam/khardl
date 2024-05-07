@@ -156,27 +156,6 @@
                             <!--end::Labels-->
                         </div>
                         <!--end::Card body-->
-
-                        <!--begin::Header-->
-                        <div class="card-footer pt-5">
-                            <!--begin::Title-->
-                            <div class="card-title d-flex flex-column">
-                                <!--begin::Info-->
-                                <div class="d-flex align-items-center">
-                                    <!--begin::Amount-->
-                                    <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">
-                                        {{ getAmount((float)$salesThisMonth) }} {{ __('SAR') }}
-                                    </span>
-                                    <!--end::Amount-->
-                                </div>
-                                <!--end::Info-->
-                                <!--begin::Subtitle-->
-                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('Sales This month')}}</span>
-                                <!--end::Subtitle-->
-                            </div>
-                            <!--end::Title-->
-                        </div>
-                        <!--end::Header-->
                     </div>
                     <!--end::Card widget 5-->
                 </div>

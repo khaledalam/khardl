@@ -97,7 +97,6 @@ class RestaurantService
             $rejectedOrders,
             $readyOrders,
             $receivedByResOrders,
-            $salesThisMonth,
             $profitDays,
             $profitMonths,
             $yeswa,
@@ -147,7 +146,6 @@ class RestaurantService
                 'rejectedOrders',
                 'readyOrders',
                 'receivedByResOrders',
-                'salesThisMonth',
                 'profitDays',
                 'profitMonths',
                 'yeswa',
@@ -182,7 +180,7 @@ class RestaurantService
             $rejectedOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'rejected');
             $readyOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'ready');
             $receivedByResOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
-            $salesThisMonth = $tenantRestaurantService->getTotalPriceThisMonth(clone $orders);
+            /* $salesThisMonth = $tenantRestaurantService->getTotalPriceThisMonth(clone $orders); */
             $profitDays = $tenantRestaurantService->profitDays(7);
             $profitMonths = $tenantRestaurantService->profitMonths(12);
             $yeswa = DeliveryCompany::where("module", class_basename(Yeswa::class))->first();
@@ -211,7 +209,6 @@ class RestaurantService
                 $rejectedOrders,
                 $readyOrders,
                 $receivedByResOrders,
-                $salesThisMonth,
                 $profitDays,
                 $profitMonths,
                 $yeswa,
