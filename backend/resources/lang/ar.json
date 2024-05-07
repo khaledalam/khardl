@@ -1312,7 +1312,7 @@
     "Can add and edit drivers":"يمكن إضافة وتحرير السائقين",
     "Can view details of orders and update order status":"يمكن عرض تفاصيل الطلبات وتعديل حالة الطلب",
     "Daily visitors":"الزوار يوميا",
-    "Monthly visitors":"الزوار في كل شهر",
+    "Monthly visitors":"الزوار شهريا",
     "Daily":"يومي",
     "Monthly":"شهري",
     "You app has been published and ready for download":"تم نشر التطبيق بنجاح وجاهز للتحميل",
@@ -1378,8 +1378,16 @@
     "Approval Business":"موافقة علي الاعمال",
     "Khardl | Contact Us request":"خردل |طلب تواصل",
     "Renew your restaurant subscription":"جدد اشتراك مطعمك",
-    "Khardl | TAP Lead ID to Merchant ID request":"Khardl |اضغط على معرف الرصاص إلى طلب معرف التاجر"
-
-
-
+    "Khardl | TAP Lead ID to Merchant ID request":"Khardl |اضغط على معرف الرصاص إلى طلب معرف التاجر",
+    "Visitors count":"عدد الزوار",
+    "7 Days":"٧ ايام",
+    "6 Months":"٦ اشهر",
+    "Within :count days":"خلال :count أيام",
+    "Within :count Months":"في خلال :count أشهر",
+    "Visitors":"زائرين",
+    "Visitors count within 7 days":"عدد الزوار في خلال 7 أيام",
+    "Visitor":"زائر",
+    "Visitors count within 6 months":"عدد الزوار في خلال 6 أشهر",
+    "Revenues count within 6 months":"عد الايرادات في خلال 6 أشهر",
+    "Revenues count within 7 days":"عد الإيرادات في خلال 7 أيام"
 }

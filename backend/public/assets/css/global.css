@@ -16,8 +16,9 @@
   .filtration .form-select{
     font-size: 9px;
   }
-  #daily_visitors .card-body,#monthly_visitors .card-body{
-    margin-top: 20px;
+  #daily_visitors .container .card .card-body,#monthly_visitors .container .card .card-body,
+  #daily_statistics .container .card .card-body,#monthly_statistics .container .card .card-body{
+    margin-top: 25px;
   }
 }
 

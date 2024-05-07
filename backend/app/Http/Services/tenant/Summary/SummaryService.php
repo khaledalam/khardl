@@ -30,23 +30,23 @@ class SummaryService
         $receivedByRes = $this->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
         $allOrders = $orders->get();
         $completedOrders = $orders->completed();
-        $thisMonthRevenues = $this->getTotalPriceThisMonth(clone $orders);
-        $lastMonthRevenues = $this->getLastMonthRevenue(clone $orders);
         $total = $allOrders->count();
-        $dailySales = $this->getDailySales(clone $completedOrders);
-        $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
         $dailyRevenues = $this->dailyRevenues();
         $monthlyRevenues = $this->monthlyRevenues();
+        $noOfUsersThisMonth = $this->getNumberOfUsersThisMonth();
+        $bestSellingItems = $this->bestSellingItems();
+        $monthVisitors = $this->monthlyVisitors();
+        $dailyVisitors = $this->dailyVisitors();
+        /* $thisMonthRevenues = $this->getTotalPriceThisMonth(clone $orders);
+        $lastMonthRevenues = $this->getLastMonthRevenue(clone $orders);
+        $dailySales = $this->getDailySales(clone $completedOrders);
+        $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
         $percentageChange = ($averageLast7DaysSales > 0)
             ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
             : (($dailySales > 0) ? 100 : 0);
         $percentageChangeForMonth = ($lastMonthRevenues > 0)
             ? (number_format((($thisMonthRevenues - $lastMonthRevenues) / $lastMonthRevenues) * 100, 2))
-            : (($thisMonthRevenues > 0) ? 100 : 0);
-        $noOfUsersThisMonth = $this->getNumberOfUsersThisMonth();
-        $bestSellingItems = $this->bestSellingItems();
-        $dailyVisitors = $this->dailyVisitors();
-        $monthVisitors = $this->monthlyVisitors();
+            : (($thisMonthRevenues > 0) ? 100 : 0); */
         return view('restaurant.summary', compact(
             'user',
             'branches',
@@ -58,11 +58,7 @@ class SummaryService
             'accepted',
             'ready',
             'receivedByRes',
-            'dailySales',
-            'percentageChange',
             'noOfUsersThisMonth',
-            'thisMonthRevenues',
-            'percentageChangeForMonth',
             'bestSellingItems',
             'dailyRevenues',
             'monthlyRevenues',
@@ -122,7 +118,7 @@ class SummaryService
     {
         $cacheKey = 'RO_daily_revenues';
         return Cache::remember($cacheKey, config('application.cache_daily_visitors', 4 * 60 * 60), function () {
-            return $this->profitDays(14);
+            return $this->profitDays(7);
         });
     }
     public function monthlyRevenues()
@@ -136,10 +132,17 @@ class SummaryService
     {
         $cacheKey = 'RO_daily_visitors';
         return Cache::remember($cacheKey, config('application.cache_daily_visitors', 4 * 60 * 60), function () {
-            return $this->getDaily();
+            return $this->getDaily(7);
         });
     }
-    public function getDaily()
+    public function monthlyVisitors()
+    {
+        $cacheKey = 'RO_monthly_visitors';
+        return Cache::remember($cacheKey, config('application.cache_monthly_visitors', 24 * 60 * 60), function () {
+            return $this->getMonthly(6);
+        });
+    }
+    public function getDaily($count)
     {
         $chart_options = [
             'chart_title' => __('Daily visitors'),
@@ -151,19 +154,12 @@ class SummaryService
             'aggregate_field' => 'count',
             'aggregate_function' => 'sum',
             'filter_field' => 'created_at',
-            'filter_days' => 14,
+            'filter_days' => 7,
             'chart_color' => '194, 218, 8',
         ];
         return new LaravelChart($chart_options);
     }
-    public function monthlyVisitors()
-    {
-        $cacheKey = 'RO_monthly_visitors';
-        return Cache::remember($cacheKey, config('application.cache_monthly_visitors', 24 * 60 * 60), function () {
-            return $this->getMonthly();
-        });
-    }
-    public function getMonthly()
+    public function getMonthly($count)
     {
         $chart_options = [
             'chart_title' => __('Monthly visitors'),
@@ -175,7 +171,7 @@ class SummaryService
             'aggregate_field' => 'count',
             'aggregate_function' => 'sum',
             'filter_field' => 'created_at',
-            'filter_days' => 6 * 30,
+            'filter_days' => $count * 30,
             'chart_color' => '0, 158, 247',
         ];
         return new LaravelChart($chart_options);
