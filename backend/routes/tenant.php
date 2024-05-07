@@ -481,7 +481,7 @@ Route::middleware([
             Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
             Route::post('/send/sms', [LoginCustomerController::class, 'sendSMS']);
             Route::get('/branches', [BranchController::class, 'index']);
-            Route::get('/branches/{branch_id}/items', [BranchController::class, 'items']);
+            Route::get('/branches/{branch_id}/categories', [BranchController::class, 'categories']);
 
             Route::middleware(['auth:sanctum','customer'])->group(function () {
                 Route::get('/', [CustomerOrderController::class, 'user']);
