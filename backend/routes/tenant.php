@@ -340,14 +340,20 @@ Route::group([
 
 
             Route::middleware('verifiedPhone')->group(function () {
-                Route::delete("carts/trash", [CartController::class, 'trash'])->name('carts.trash');
-                Route::get("carts/count", [CartController::class, 'count'])->name('carts.count');
+                /* Start Cart Route */
                 Route::resource("carts", CartController::class)->only([
                     'index',
                     'store',
                     'destroy',
                     'update'
                 ]);
+                Route::controller(CartController::class)
+                ->name('carts.')
+                ->group(function () {
+                    Route::delete("carts/trash", 'trash')->name('trash');
+                    Route::get("carts/count", 'count')->name('count');
+                });
+                /* End Cart Route */
                 Route::post("orders/validate", [CustomerOrderController::class, 'validateOrder'])->name('orders.validate');
                 Route::post("orders/payment/redirect", [CustomerOrderController::class, 'paymentRedirect'])->name('orders.payment.redirect');
                 Route::get("orders/payment/response", [CustomerOrderController::class, 'paymentResponse'])->name('orders.payment.response');
