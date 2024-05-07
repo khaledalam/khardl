@@ -369,7 +369,7 @@ Route::group([
                     Route::get('get-default','getDefault');
                 });
                 /* Customer address */
-                Route::delete("cards/{card_id}/delete", [CustomerCardController::class, 'delete'])->name('customer.cards');
+                Route::delete("cards/{card_id}/delete", [CustomerCardController::class, 'delete']);
             });
 
 
@@ -480,6 +480,8 @@ Route::middleware([
             Route::post('/register', [LoginCustomerController::class, 'registerCustomerOnly']);
             Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
             Route::post('/send/sms', [LoginCustomerController::class, 'sendSMS']);
+            Route::get('/branches', [BranchController::class, 'index']);
+            Route::get('/branches/{branch_id}/categories', [BranchController::class, 'categories']);
 
             Route::middleware(['auth:sanctum','customer'])->group(function () {
                 Route::get('/', [CustomerOrderController::class, 'user']);
@@ -496,7 +498,7 @@ Route::middleware([
                     Route::get('get-default','getDefault');
                 });
                 /* Customer address */
-                Route::get("/cards", [CustomerCardController::class, 'show'])->name('customer.cards');
+                Route::get("/cards", [CustomerCardController::class, 'show']);
             });
         });
 
