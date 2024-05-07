@@ -11,6 +11,7 @@ use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\ROCustomerAppSub;
@@ -23,7 +24,7 @@ class RestaurantService
     {
         $query = Tenant::query()->with('primary_domain')
             ->whenSearch($request['search'] ?? null);
-        $restaurants = $query->orderBy('created_at','DESC')->get();
+        $restaurants = $query->orderBy('created_at', 'DESC')->get();
         $totalRestaurantsCount = count($restaurants);
 
         // TODO @todo make sub active or not tag with search
@@ -36,32 +37,36 @@ class RestaurantService
             }
         }
         if (isset($request['order_by']) && $request['order_by'] == 'highest_orders') {
-            $restaurants = $query->paginate(config('application.perPage') ?? 20)->through(function ($tenant) {
+            $results = $query->get()->map(function ($tenant) {
                 $tenant->run(function ($res) {
                     $res->orders_count = $res->completed_orders()->count();
                 });
                 return $tenant;
-            })->sortByDesc('orders_count')->customPaginate(config('application.perPage') ?? 20); /* TODO: Paginate after sorting */
+            });
+
+            $restaurants = $results->sortByDescAndPaginate('orders_count', config('application.perPage'));
 
         } elseif (isset($request['order_by']) && $request['order_by'] == 'highest_customers') {
-            $restaurants = $query->paginate(config('application.perPage') ?? 20)->through(function ($tenant) {
+            $results = $query->get()->map(function ($tenant) {
                 $tenant->run(function ($res) {
                     $res->customers_count = $res->allCustomers()->count();
                 });
                 return $tenant;
-            })->sortByDesc('customers_count')->customPaginate(config('application.perPage') ?? 20); /* TODO: Paginate after sorting */
+            });
 
+            $restaurants = $results->sortByDescAndPaginate('customers_count', config('application.perPage'));
         } else {
-            $restaurants = $query->paginate(config('application.perPage') ?? 20);
+            $restaurants = $query->paginate(config('application.perPage'));
         }
         $user = Auth::user();
 
-        return view('admin.restaraunts', compact('restaurants', 'user', 'totalRestaurantsCount'));
+        return view('admin.restaurants', compact('restaurants', 'user', 'totalRestaurantsCount'));
     }
-    public function appRequested($request){
+    public function appRequested($request)
+    {
         $query = Tenant::query()->with('primary_domain')
-        ->whenSearch($request['search'] ?? null);
-        $restaurants = $query->orderBy('created_at','DESC')->get();
+            ->whenSearch($request['search'] ?? null);
+        $restaurants = $query->orderBy('created_at', 'DESC')->get();
         $totalRestaurantsCount = count($restaurants);
 
         // TODO @todo make sub active or not tag with search
@@ -185,7 +190,7 @@ class RestaurantService
             $streetline = DeliveryCompany::where("module", class_basename(StreetLine::class))->first();
             $subscription = ROSubscription::first();
             $setting = Setting::first();
-            $RO =  RestaurantUser::first();
+            $RO = RestaurantUser::first();
             $restaurant_name = $setting->restaurant_name;
             $customer_app = ROCustomerAppSub::first();
 

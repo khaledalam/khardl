@@ -256,7 +256,7 @@ class AdminController extends Controller
         $restaurants = $query->paginate();
         $user = Auth::user();
 
-        return view('admin.restaraunts', compact('restaurants', 'user'));
+        return view('admin.restaurants', compact('restaurants', 'user'));
     }
 
 
