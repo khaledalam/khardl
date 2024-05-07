@@ -281,7 +281,7 @@
                                             <div class="card">
                                                 <div class="card-body p-1">
                                                     <h3>
-                                                        {{ __("Revenues count within 7 days") }} :
+                                                        {{ __("Revenues within 7 days") }} :
                                                         <span class="btn-tooltip" data-bs-toggle="tooltip"
                                                         title="{{ $sum = getSumOfDataGraph($dailyRevenues) }} {{ __('SAR') }}" data-container="body"
                                                         data-animation="true" data-bs-toggle="tooltip">
@@ -311,7 +311,7 @@
                                                 <div class="card">
                                                     <div class="card-body p-1">
                                                         <h3>
-                                                            {{ __("Revenues count within 6 months") }} :
+                                                            {{ __("Revenues within 6 months") }} :
                                                             <span class="btn-tooltip" data-bs-toggle="tooltip"
                                                             title="{{ $sum = getSumOfDataGraph($monthlyRevenues) }} {{ __('SAR') }}" data-container="body"
                                                             data-animation="true" data-bs-toggle="tooltip">
@@ -341,7 +341,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12" id="daily_visitors">
+                        <div class="col-md-12" id="daily_visitors_selector">
                             <!--begin::Card widget 6-->
                             <div class="card card-flush">
                                 <!--end::Header-->
@@ -352,7 +352,7 @@
                                             <div class="card">
                                                 <div class="card-body p-1">
                                                     <h3>
-                                                        {{ __("Visitors count within 7 days") }} :
+                                                        {{ __("Visitors within 7 days") }} :
                                                         <span class="btn-tooltip" data-bs-toggle="tooltip"
                                                         title="{{ $sum = getSumOfDataGraph($dailyVisitors) }} {{ __('Visitor') }}" data-container="body"
                                                         data-animation="true" data-bs-toggle="tooltip">
@@ -371,7 +371,7 @@
                             <!--begin::Card widget 7-->
                         </div>
                         <!--begin::Col-->
-                        <div class="col-md-12" id="monthly_visitors" style="display: none;">
+                        <div class="col-md-12" id="monthly_visitors_selector" style="display: none;">
                             <!--begin::Chart widget 3-->
                             <div class="card card-flush">
                                 <!--begin::Card body-->
@@ -382,7 +382,7 @@
                                                 <div class="card">
                                                     <div class="card-body p-1">
                                                         <h3>
-                                                            {{ __("Visitors count within 6 months") }} :
+                                                            {{ __("Visitors within 6 months") }} :
                                                             <span class="btn-tooltip" data-bs-toggle="tooltip"
                                                             title="{{ $sum = getSumOfDataGraph($monthVisitors) }} {{ __('Visitor') }}" data-container="body"
                                                             data-animation="true" data-bs-toggle="tooltip">
@@ -425,8 +425,8 @@
         const daily_statistics = document.getElementById('daily_statistics');
         const monthly_statistics = document.getElementById('monthly_statistics');
         const filter_range_visitors = document.getElementById('filter_range_visitors');
-        const daily_visitors = document.getElementById('daily_visitors');
-        const monthly_visitors = document.getElementById('monthly_visitors');
+        const daily_visitors_selector = document.getElementById('daily_visitors_selector');
+        const monthly_visitors_selector = document.getElementById('monthly_visitors_selector');
 
         if (filter_range?.length) {
             filter_range.addEventListener('change', function () {
@@ -442,11 +442,11 @@
         if (filter_range_visitors?.length) {
             filter_range_visitors.addEventListener('change', function () {
                 if (filter_range_visitors.value === 'daily') {
-                    daily_visitors.style.display = 'block';
-                    monthly_visitors.style.display = 'none';
+                    daily_visitors_selector.style.display = 'block';
+                    monthly_visitors_selector.style.display = 'none';
                 } else if (filter_range_visitors.value === 'monthly') {
-                    daily_visitors.style.display = 'none';
-                    monthly_visitors.style.display = 'block';
+                    daily_visitors_selector.style.display = 'none';
+                    monthly_visitors_selector.style.display = 'block';
                 }
             });
         }
