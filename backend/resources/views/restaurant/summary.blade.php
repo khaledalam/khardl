@@ -326,29 +326,44 @@
                         <!--begin::Col-->
                         <div class="col-md-12" id="monthly_statistics" style="display: none;">
                             <!--begin::Chart widget 3-->
-                            <div class="card card-flush overflow-hidden">
+                            <div class="card card-flush">
                                 <!--begin::Header-->
-                                <div class="card-header">
-                                    <!--begin::Title-->
-                                    <h3 class="card-title align-items-start flex-column">
-                                        <span class="card-label fw-bolder text-dark">{{ __('Sales This Months') }}</span>
-                                    </h3>
-                                    <!--end::Title-->
+                                 <!--begin::Statistics-->
+                                 <div class="card-header pt-5">
+                                    <div class="card-title d-flex flex-column">
+                                        <!--begin::Info-->
+                                        <div class="d-flex align-items-center restaurant_daily_amount position-relative">
+                                            <!--begin::Currency-->
+                                            <span class="fs-4 fw-bold text-gray-400 me-1 align-self-start">{{ __('SAR') }}</span>
+                                            <!--end::Currency-->
+                                            <!--begin::Amount-->
+                                            <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{ getAmount((float)$thisMonthRevenues) }}</span>
+                                            <span class="restaurant_daily_earning fade">{{ number_format($thisMonthRevenues,2) }} {{ __('SAR') }}</span>
+                                            <!--end::Amount-->
+                                            <!--begin::Badge-->
+                                            <span class="{{ $percentageChangeForMonth >=0 ? 'badge fs-base badge-success':'badge fs-base badge-danger' }}">
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                <span class="svg-icon svg-icon-5 svg-icon-white ms-n1">
+                                                    @if ($percentageChangeForMonth >=0 )
+                                                    <i class="bi bi-arrow-up-short text-white fa-lg"></i>
+                                                    @else
+                                                    <i class="bi bi-arrow-down-short text-white fa-lg"></i>
+                                                    @endif
+                                                </span>
+                                                <!--end::Svg Icon-->{{ $percentageChangeForMonth }}%
+                                            </span>
+                                            <!--end::Badge-->
+                                        </div>
+                                        <!--end::Info-->
+                                        <!--begin::Subtitle-->
+                                        <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('Sales This Months') }}</span>
+                                        <!--end::Subtitle-->
+                                    </div>
                                 </div>
+                                <!--end::Statistics-->
                                 <!--end::Header-->
                                 <!--begin::Card body-->
-                                <div class="card-body d-flex pt-0 justify-content-between flex-column pb-1 px-0 restaurant_daily_amount position-relative">
-                                    <!--begin::Statistics-->
-                                    <div class="px-9 mb-5">
-                                        <!--begin::Statistics-->
-                                        <div class="d-flex mb-2">
-                                            <span class="fs-4 fw-bold text-gray-400 me-1">{{ __('SAR') }}</span>
-                                            <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{ getAmount((float)$totalPriceThisMonth) }}</span>
-                                            <span class="restaurant_daily_earning fade">{{ number_format($totalPriceThisMonth,2) }} {{ __('SAR') }}</span>
-                                        </div>
-                                        <!--end::Statistics-->
-                                    </div>
-                                    <!--end::Statistics-->
+                                <div class="card-body d-flex pt-0 justify-content-between flex-column pb-1 px-0">
                                     <div class="container">
                                         <div class="row justify-content-center">
                                             <div class="col-md-12">
