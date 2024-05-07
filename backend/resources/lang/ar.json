@@ -1385,9 +1385,9 @@
     "Within :count days":"خلال :count أيام",
     "Within :count Months":"في خلال :count أشهر",
     "Visitors":"زائرين",
-    "Visitors count within 7 days":"عدد الزوار في خلال 7 أيام",
+    "Visitors within 7 days":"الزوار في خلال 7 أيام",
     "Visitor":"زائر",
-    "Visitors count within 6 months":"عدد الزوار في خلال 6 أشهر",
-    "Revenues count within 6 months":"عد الايرادات في خلال 6 أشهر",
-    "Revenues count within 7 days":"عد الإيرادات في خلال 7 أيام"
+    "Visitors within 6 months":"الزوار في خلال 6 أشهر",
+    "Revenues within 6 months":"الايرادات في خلال 6 أشهر",
+    "Revenues within 7 days":"الإيرادات في خلال 7 أيام"
 }

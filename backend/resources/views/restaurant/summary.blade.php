@@ -281,7 +281,7 @@
                                             <div class="card">
                                                 <div class="card-body p-1">
                                                     <h3>
-                                                        {{ __("Revenues count within 7 days") }} :
+                                                        {{ __("Revenues within 7 days") }} :
                                                         <span class="btn-tooltip" data-bs-toggle="tooltip"
                                                         title="{{ $sum = getSumOfDataGraph($dailyRevenues) }} {{ __('SAR') }}" data-container="body"
                                                         data-animation="true" data-bs-toggle="tooltip">
@@ -311,7 +311,7 @@
                                                 <div class="card">
                                                     <div class="card-body p-1">
                                                         <h3>
-                                                            {{ __("Revenues count within 6 months") }} :
+                                                            {{ __("Revenues within 6 months") }} :
                                                             <span class="btn-tooltip" data-bs-toggle="tooltip"
                                                             title="{{ $sum = getSumOfDataGraph($monthlyRevenues) }} {{ __('SAR') }}" data-container="body"
                                                             data-animation="true" data-bs-toggle="tooltip">
@@ -352,7 +352,7 @@
                                             <div class="card">
                                                 <div class="card-body p-1">
                                                     <h3>
-                                                        {{ __("Visitors count within 7 days") }} :
+                                                        {{ __("Visitors within 7 days") }} :
                                                         <span class="btn-tooltip" data-bs-toggle="tooltip"
                                                         title="{{ $sum = getSumOfDataGraph($dailyVisitors) }} {{ __('Visitor') }}" data-container="body"
                                                         data-animation="true" data-bs-toggle="tooltip">
@@ -382,7 +382,7 @@
                                                 <div class="card">
                                                     <div class="card-body p-1">
                                                         <h3>
-                                                            {{ __("Visitors count within 6 months") }} :
+                                                            {{ __("Visitors within 6 months") }} :
                                                             <span class="btn-tooltip" data-bs-toggle="tooltip"
                                                             title="{{ $sum = getSumOfDataGraph($monthVisitors) }} {{ __('Visitor') }}" data-container="body"
                                                             data-animation="true" data-bs-toggle="tooltip">
