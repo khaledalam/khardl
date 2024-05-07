@@ -79,7 +79,9 @@ class Branch extends Model
     public function payment_methods(){
         return $this->belongsToMany(PaymentMethod::class,'branches_payment_methods');
     }
-
+    public function items(){
+        return $this->hasMany(Item::class);
+    }
     public function orders(){
         return $this->hasMany(Order::class);
     }

@@ -41,13 +41,17 @@ class AppServiceProvider extends ServiceProvider
                 default =>  throw new ModelNotFoundException('')
             };
         });
-        Collection::macro('customPaginate', function ($perPage, $total = null, $page = null, $pageName = 'page') {
-            $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
-
-            return new LengthAwarePaginator($this->forPage($page, $perPage), $total ?: $this->count(), $perPage, $page, [
-                'path' => LengthAwarePaginator::resolveCurrentPath(),
-                'pageName' => $pageName,
-            ]);
+        Collection::macro('sortByDescAndPaginate', function ($key, $perPage = 1) {
+            $sorted = $this->sortByDesc($key);
+            $page = LengthAwarePaginator::resolveCurrentPage();
+            $paginator = new LengthAwarePaginator(
+                $sorted->forPage($page, $perPage),
+                $sorted->count(),
+                $perPage,
+                $page,
+                ['path' => LengthAwarePaginator::resolveCurrentPath()]
+            );
+            return $paginator;
         });
     }
 
