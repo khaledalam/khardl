@@ -43,6 +43,9 @@ const FooterModal = ({ type, setModalOpened }) => {
     }
   }, [type, languageType]);
 
+  const handleChange = (content, delta, source, editor) => {
+    setText(editor.getHTML());
+  };
   const formats = [
     "font",
     "size",
@@ -87,9 +90,7 @@ const FooterModal = ({ type, setModalOpened }) => {
       if (languageType === "en") {
         dispatch(privacyPolicyEnText(text));
         privacy_policy_arText == ""
-          ? toast.warn(
-              t("You didn't define the privacy and policy in Arabic.")
-            )
+          ? toast.warn(t("You didn't define the privacy and policy in Arabic."))
           : setModalOpened(false);
       } else {
         dispatch(privacyPolicyArText(text));
@@ -149,8 +150,10 @@ const FooterModal = ({ type, setModalOpened }) => {
           <ReactQuill
             // theme="snow"
             value={text}
-            onChange={setText}
-            className="w-full px-2"
+            // bounds={".custom-quill-container"}
+            theme="snow"
+            onChange={handleChange}
+            className="h-[300px] w-full px-2 max-h-[700px] overflow-y-scroll hide-scroll"
             formats={formats}
           />
           {/* <textarea

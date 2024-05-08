@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import 'react-quill/dist/quill.snow.css';
+import "react-quill/dist/quill.snow.css";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
@@ -24,8 +24,8 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Layout from "./components/Layout/Layout";
 import Logout from "./components/Logout/Logout";
 import { useAuthContext } from "./components/context/AuthContext";
-import TermsPolicies from "./pages/TermsPoliciesPrivacy/TermsPolicies";
-import Privacy from "./pages/TermsPoliciesPrivacy/Privacy";
+// import TermsPolicies from "./pages/TermsPoliciesPrivacy/TermsPolicies";
+// import Privacy from "./pages/TermsPoliciesPrivacy/Privacy";
 import MenuProvider from "react-flexible-sliding-menu";
 import { RestuarantEditor } from "./pages/EditorsPage";
 import { RestuarantHomePage } from "./pages/RestuarantPage";
@@ -36,8 +36,8 @@ import { CustomerPage } from "./pages/CustomerPage";
 import SuccessPayment from "./pages/SuccessPayment";
 import FailedPayment from "./pages/FailedPayment";
 import * as Sentry from "@sentry/react";
-import RestaurantTermsAndConditions from "./pages/TermsAndConditionsPage";
-import RestaurantPrivacyPolicy from "./pages/PrivacyPolicyPage";
+import TermsPolicies from "./pages/TermsAndConditionsPage";
+import Privacy from "./pages/PrivacyPolicyPage";
 import { t } from "i18next";
 
 // import { initializeApp } from "firebase/app";
@@ -114,8 +114,8 @@ const App = () => {
     "/success",
     "/failed",
     "/summary",
-    "/restaurant/terms-and-conditions",
-    "/restaurant/privacy-policy"
+    "/terms-and-conditions",
+    "/privacy-policy",
   ].includes(location.pathname);
 
   Aos.init({
@@ -189,6 +189,7 @@ const App = () => {
                 <Route path="/failed" element={<FailedPayment />} />
                 <Route path="/policies" element={<TermsPolicies />} />{" "}
                 <Route path="/privacy" element={<Privacy />} />{" "}
+                
                 {/*<Route path='/advantages' element={<Advantages />} />*/}{" "}
                 {/*<Route path='/services' element={<Services />} />*/}{" "}
                 {/*<Route path='/prices' element={<Prices />} />*/}{" "}
@@ -221,14 +222,6 @@ const App = () => {
                   <Route path="/profile-summary" element={<CustomerPage />} />{" "}
                   <Route path="/customers" element={<CustomerPage />} />{" "}
                   {/* <Route path='/customers' element={<CustomerPage />} />{" "} */}{" "}
-                  <Route
-                    path="/restaurant/terms-and-conditions"
-                    element={<RestaurantTermsAndConditions />}
-                  />
-                  <Route
-                    path="/restaurant/privacy-policy"
-                    element={<RestaurantPrivacyPolicy />}
-                  />
                 </Route>{" "}
               </Routes>{" "}
             </div>{" "}
