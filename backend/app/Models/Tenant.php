@@ -16,7 +16,7 @@ use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains;
-  
+
 
     public static function getCustomColumns(): array
     {
@@ -119,7 +119,21 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     public function completed_orders($run_on_tenant = true)
     {
         $orderQuery = function () {
-            return Order::with(['payment_method:id,name', 'branch:id,name'])->completed();
+            return Order::completed();
+        };
+        return $run_on_tenant ? $this->run($orderQuery) : $orderQuery();
+    }
+    public function revenues($run_on_tenant = true)
+    {
+        $orderQuery = function () {
+            return Order::completed()->sum('total');
+        };
+        return $run_on_tenant ? $this->run($orderQuery) : $orderQuery();
+    }
+    public function visitors($run_on_tenant = true)
+    {
+        $orderQuery = function () {
+            return Visitor::all();
         };
         return $run_on_tenant ? $this->run($orderQuery) : $orderQuery();
     }
