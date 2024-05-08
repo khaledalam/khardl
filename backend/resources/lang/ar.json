@@ -1243,7 +1243,7 @@
     "Update item":"تحديث المنتج",
     "Manage purchase notifications":"إدارة إشعارات الشراء",
     "Ability to Manage purchase notifications":"القدرة على إدارة إشعارات الشراء",
-    "Prices is required for Checkbox":"Prices is required for Checkbox",
+    "Prices is required for Checkbox":"الأسعار مطلوبة للخيارات(اختيار متعدد)",
     "Options[:num] name[AR] of checkbox can not be empty":"الاسم العربي للخيار[:num] مطلوب للخيارات(اختيار متعدد) ",
     "Options[:num] name[EN] of checkbox can not be empty":"الاسم الانجليزي للخيار[:num] مطلوب للخيارات(اختيار متعدد) ",
     "Price[:num] of checkbox can not be empty":"السعر[:num] للخيارات(اختيار متعدد) مطلوب",
