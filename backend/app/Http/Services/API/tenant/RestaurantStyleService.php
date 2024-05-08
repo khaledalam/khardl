@@ -138,6 +138,10 @@ class RestaurantStyleService
             $data['banner_images'] = $banner_images;
         }
 
+        if (!isset($request->selectedSocialIcons)) {
+            $data['selectedSocialIcons'] = [];
+        }
+
         return $data;
     }
     public function appendIfExists($key, $data)
