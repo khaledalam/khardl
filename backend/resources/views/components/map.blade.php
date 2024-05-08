@@ -15,7 +15,7 @@
             const map = new google.maps.Map(document.getElementById('map' + branchId), {
                 center: latLng,
                 zoom: 8,
-                mapId: "40a0db5160f058c",
+                mapId: "{{env('GOOGLE_MAP_ID')}}",
                 mapTypeControl: false,
             });
             infoWindow = new google.maps.InfoWindow({});
