@@ -796,7 +796,7 @@ const ProductItem = ({
                                                     : item?.value[1]
                                                 }
                                                 price={
-                                                  item.price === 0
+                                                  item?.price === 0
                                                     ? t("Free")
                                                     : `${Number(
                                                         item?.price

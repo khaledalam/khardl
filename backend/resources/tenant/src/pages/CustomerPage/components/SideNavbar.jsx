@@ -34,13 +34,13 @@ const SideNavbar = () => {
   );
 
   const navItems = [
-    {
-      id: 1,
-      imgUrl: DashboardBlack,
-      activeImgUrl: Dashboard,
-      title: t("Dashboard"),
-      link: "/profile-summary#Dashboard",
-    },
+    // {
+    //   id: 1,
+    //   imgUrl: DashboardBlack,
+    //   activeImgUrl: Dashboard,
+    //   title: t("Dashboard"),
+    //   link: "/profile-summary#Dashboard",
+    // },
     {
       id: 2,
       imgUrl: OrderBlack,

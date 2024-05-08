@@ -41,7 +41,7 @@ const Footer = ({ restaurantStyle }) => {
       <div className={`flex justify-end`}>
         <span
           className="text-[#7D0A0A] font-medium cursor-pointer relative"
-          onClick={() => navigate("/restaurant/privacy-policy")}
+          onClick={() => navigate("/privacy")}
         >
           {t("Privacy Policy")}
         </span>
@@ -69,7 +69,7 @@ const Footer = ({ restaurantStyle }) => {
       <div className={`flex justify-start`}>
         <span
           className="text-[#7D0A0A] font-medium cursor-pointer relative"
-          onClick={() => navigate("/restaurant/terms-and-conditions")}
+          onClick={() => navigate("/policies")}
         >
           {t("Terms and Conditions")}
         </span>
