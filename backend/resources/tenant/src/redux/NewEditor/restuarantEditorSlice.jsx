@@ -170,22 +170,10 @@ const restuarantEditorSlice = createSlice({
     footer_text_fontWeight: "light",
     footer_text_fontSize: 10,
     footer_text_color: "#000000",
-    terms_and_conditions_color: "#ffffff",
-    terms_and_conditions_alignment: "center",
     terms_and_conditions_enText: "",
     terms_and_conditions_arText: "",
-    terms_and_conditions_text_fontFamily: "Inter",
-    terms_and_conditions_text_fontWeight: "light",
-    terms_and_conditions_text_fontSize: 10,
-    terms_and_conditions_text_color: "#000000",
-    privacy_policy_color: "#ffffff",
-    privacy_policy_alignment: "center",
     privacy_policy_enText: "",
     privacy_policy_arText: "",
-    privacy_policy_text_fontFamily: "Inter",
-    privacy_policy_text_fontWeight: "light",
-    privacy_policy_text_fontSize: 10,
-    privacy_policy_text_color: "#000000",
     price_color: "red",
 
     text_fontFamily: "Jakarta",
@@ -316,53 +304,17 @@ const restuarantEditorSlice = createSlice({
     footerTextColor: (state, action) => {
       state.footer_text_color = action.payload;
     },
-    termsAndConditionsColor: (state, action) => {
-      state.terms_and_conditions_color = action.payload;
-    },
-    termsAndConditionsAlignment: (state, action) => {
-      state.terms_and_conditions_alignment = action.payload;
-    },
     termsAndConditionsArText: (state, action) => {
       state.terms_and_conditions_arText = action.payload;
     },
     termsAndConditionsEnText: (state, action) => {
       state.terms_and_conditions_enText = action.payload;
     },
-    termsAndConditionsTextFont: (state, action) => {
-      state.terms_and_conditions_text_fontFamily = action.payload;
-    },
-    termsAndConditionsTextWeight: (state, action) => {
-      state.terms_and_conditions_text_fontWeight = action.payload;
-    },
-    termsAndConditionsTextSize: (state, action) => {
-      state.terms_and_conditions_text_fontSize = action.payload;
-    },
-    termsAndConditionsTextColor: (state, action) => {
-      state.terms_and_conditions_text_color = action.payload;
-    },
-    privacyPolicyColor: (state, action) => {
-      state.privacy_policy_color = action.payload;
-    },
-    privacyPolicyAlignment: (state, action) => {
-      state.privacy_policy_alignment = action.payload;
-    },
     privacyPolicyArText: (state, action) => {
       state.privacy_policy_arText = action.payload;
     },
     privacyPolicyEnText: (state, action) => {
       state.privacy_policy_enText = action.payload;
-    },
-    privacyPolicyTextFont: (state, action) => {
-      state.privacy_policy_text_fontFamily = action.payload;
-    },
-    privacyPolicyTextWeight: (state, action) => {
-      state.privacy_policy_text_fontWeight = action.payload;
-    },
-    privacyPolicyTextSize: (state, action) => {
-      state.privacy_policy_text_fontSize = action.payload;
-    },
-    privacyPolicyTextColor: (state, action) => {
-      state.privacy_policy_text_color = action.payload;
     },
     textColor: (state, action) => {
       state.text_color = action.payload;
@@ -637,22 +589,10 @@ export const {
   footerTextWeight,
   footerTextSize,
   footerTextColor,
-  termsAndConditionsColor,
-  termsAndConditionsAlignment,
   termsAndConditionsArText,
   termsAndConditionsEnText,
-  termsAndConditionsTextFont,
-  termsAndConditionsTextWeight,
-  termsAndConditionsTextSize,
-  termsAndConditionsTextColor,
-  privacyPolicyColor,
-  privacyPolicyAlignment,
-  privacyPolicyTextFont,
   privacyPolicyArText,
   privacyPolicyEnText,
-  privacyPolicyTextWeight,
-  privacyPolicyTextSize,
-  privacyPolicyTextColor,
   textFontFamily,
   textFontWeight,
   textFontSize,
