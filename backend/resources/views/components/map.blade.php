@@ -30,7 +30,6 @@
             // autocomplete.id = input;
           
             const card = document.getElementById('map-autocomplete-card' + branchId);
-            console.log(autocomplete);
             card.appendChild(autocomplete);
             map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
           
@@ -110,17 +109,17 @@
             container.addEventListener('click', function handleClick() {
                 console.log('Container clicked');
                 const branchIdElement = this.getAttribute('data-branch-id');
-                console.log('Branch ID:', branchIdElement);
+                // console.log('Branch ID:', branchIdElement);
                 if (branchIdElement) {
                     const latElement = document.getElementById('lat' + branchIdElement);
                     const lngElement = document.getElementById('lng' + branchIdElement);
-                    console.log('Latitude element:', latElement);
-                    console.log('Longitude element:', lngElement);
+                    // console.log('Latitude element:', latElement);
+                    // console.log('Longitude element:', lngElement);
                     if (latElement && lngElement) {
                         const lat = parseFloat(latElement.value);
                         const lng = parseFloat(lngElement.value);
-                        console.log('Latitude:', lat);
-                        console.log('Longitude:', lng);
+                        // console.log('Latitude:', lat);
+                        // console.log('Longitude:', lng);
                         initializeMapOnClick(branchIdElement, lat, lng);
                         document.getElementById('save-location' + branchIdElement).style.display = 'block';
                         // document.getElementById('pac-input' + branchIdElement).style.display = 'block';
