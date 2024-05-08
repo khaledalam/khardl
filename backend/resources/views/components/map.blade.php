@@ -3,7 +3,7 @@
   
         let maps = {}; // Store maps in an object
         let markers = {}; // Store markers in an object
-
+        let infoWindow;
         async function initializeMapOnClick(branchId, lat, lng) {
            
             const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
@@ -18,8 +18,8 @@
                 mapId: "40a0db5160f058c",
                 mapTypeControl: false,
             });
-
-            const input = document.getElementById("pac-input" + branchId);
+            infoWindow = new google.maps.InfoWindow({});
+            // const input = document.getElementById("pac-input" + branchId);
             
             const options = {
                 fields: ["formatted_address", "geometry", "name"],
@@ -27,12 +27,13 @@
             };
             
             const autocomplete = new google.maps.places.PlaceAutocompleteElement();
-            autocomplete.id = input;
-            // const card = document.getElementById('map-autocomplete-card' + branchId);
-    
-            // card.appendChild(autocomplete);
-            // map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
-         
+            // autocomplete.id = input;
+          
+            const card = document.getElementById('map-autocomplete-card' + branchId);
+            console.log(autocomplete);
+            card.appendChild(autocomplete);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
+          
 
             const marker = new google.maps.marker.AdvancedMarkerElement({
                 position: latLng,
@@ -45,13 +46,14 @@
             markers[branchId] = marker; // Store the marker for this branch
             maps[branchId] = map; // Store the map for this branch
 
-            // map.addListener( 'bounds_changed', function () {
-            //     console.log('bounds_changed');
-            //     updateLocationInput(marker.position, branchId);
-            // });
+            map.addListener( 'bounds_changed', function () {
+                console.log('bounds_changed');
+                updateLocationInput(marker.position, branchId);
+            });
         
             // Add a click event listener to the map
             map.addListener( 'click', function (event) {
+          
                 marker.position  = event.latLng;
                 updateLocationInput(marker.position, branchId);
             });
@@ -59,31 +61,31 @@
             autocomplete.addEventListener("gmp-placeselect", async ({ place }) => {
                 console.log("gmp-placeselect");
                 await place.fetchFields({ fields: ['displayName', 'formattedAddress', 'location'] });
-                if (place.viewport) {
-                    map.fitBounds(place.viewport);
+                if (place.location.viewport) {
+                    map.fitBounds(place.location.viewport);
                 } else {
                     map.setCenter(place.location);
                     map.setZoom(17);
                 }
-                marker.setVisible(false);
+                // marker.setVisible(false);
 
             
 
-                if (!place.geometry || !place.geometry.location) {
-                    // User entered the name of a Place that was not suggested and
-                    // pressed the Enter key, or the Place Details request failed.
-                    window.alert("No details available for input: '" + place.name + "'");
-                    return;
-                }
-                const lat = place.geometry.location.lat();
-                const lng = place.geometry.location.lng();
+                // if (!place.geometry || !place.geometry.location) {
+                //     // User entered the name of a Place that was not suggested and
+                //     // pressed the Enter key, or the Place Details request failed.
+                //     window.alert("No details available for input: '" + place.name + "'");
+                //     return;
+                // }
+                const lat = place.location.lat();
+                const lng = place.location.lng();
                 selectedPlacePosition = new google.maps.LatLng(lat, lng);
                 updateLocationInput(selectedPlacePosition, branchId);
                 // If the place has a geometry, then present it on a map.
-                if (place.geometry.viewport) {
-                    map.fitBounds(place.geometry.viewport);
+                if (place.location.viewport) {
+                    map.fitBounds(place.location.viewport);
                 } else {
-                    map.setCenter(place.geometry.location);
+                    map.setCenter(place.location);
                     map.setZoom(17);
                 }
                 let content =
@@ -95,11 +97,12 @@
                 place.formattedAddress +
                 "</span>" +
                 "</div>";
-                updateInfoWindow(content, place.location);
+                updateInfoWindow(content, place.location,marker,map);
                 marker.position =place.location;
-                marker.setVisible(true);
+                // marker.setVisible(true);
                 // infowindow.open(map, marker);
             });
+         
         }
 
         const mapContainers = document.querySelectorAll('.map-container');
@@ -120,7 +123,7 @@
                         console.log('Longitude:', lng);
                         initializeMapOnClick(branchIdElement, lat, lng);
                         document.getElementById('save-location' + branchIdElement).style.display = 'block';
-                        document.getElementById('pac-input' + branchIdElement).style.display = 'block';
+                        // document.getElementById('pac-input' + branchIdElement).style.display = 'block';
                         container.removeEventListener('click', handleClick);
                     } else {
                         console.log('Latitude or longitude element not found');
@@ -134,7 +137,7 @@
 
 
 
-        function updateInfoWindow(content, center) {
+        function updateInfoWindow(content, center,marker,map) {
             infoWindow.setContent(content);
             infoWindow.setPosition(center);
             infoWindow.open({
@@ -156,7 +159,7 @@
         }
 
         async function updateLocationInput(latLng, branchId) {
-          
+            
             const latInput = document.getElementById('lat' + branchId);
             const lngInput = document.getElementById('lng' + branchId);
             latInput.value = latLng.lat;
@@ -179,7 +182,7 @@
         }
 
 
-        if (document.getElementById('pac-input-new_branch')) {
+        if (document.getElementById('map-new_branch')) {
 
             // New branch popup
             const centerCoords = {
@@ -187,36 +190,36 @@
                 lng: 46.6753,
                 address: '8779 Street Number 74, Al Olaya, 2593, Riyadh 12214, Saudi Arabia'
             }; // Default center coordinates
-            initializeMapOnClick('-new_branch', centerCoords?.lat, centerCoords?.lng);
+            
 
             document.getElementById('lat-new_branch').value = centerCoords.lat;
             document.getElementById('lng-new_branch').value = centerCoords.lat;
-            document.getElementById('pac-input-new_branch').value = centerCoords.address;
+            // document.getElementById('pac-input-new_branch').value = centerCoords.address;
+            initializeMapOnClick('-new_branch', centerCoords?.lat, centerCoords?.lng);
+         
+        //    new_branch.addListener( 'click', function (event) {
 
+        //         // If a marker exists, remove it
+        //         if (markers['-new_branch']) {
+        //             markers['-new_branch'].setMap(null);
+        //         }
 
-            // google.maps.event.addListener(maps['-new_branch'], 'click', function (event) {
+        //         // Create a new marker at the clicked location
+        //         markers['-new_branch'] = new google.maps.Marker({
+        //             map: maps['-new_branch'],
+        //             position: event.latLng,
+        //             draggable: true,
+        //         });
 
-            //     // If a marker exists, remove it
-            //     if (markers['-new_branch']) {
-            //         markers['-new_branch'].setMap(null);
-            //     }
+        //         // document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
 
-            //     // Create a new marker at the clicked location
-            //     markers['-new_branch'] = new google.maps.Marker({
-            //         map: maps['-new_branch'],
-            //         position: event.latLng,
-            //         draggable: true,
-            //     });
+        //         const latnew_branch = document.getElementById('lat-new_branch');
+        //         const lngnew_branch = document.getElementById('lng-new_branch');
 
-            //     // document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
-
-            //     const latnew_branch = document.getElementById('lat-new_branch');
-            //     const lngnew_branch = document.getElementById('lng-new_branch');
-
-            //     // Update the hidden input with the clicked location's latitude and longitude
-            //     latnew_branch.value = `${event.latLng.lat()}`;
-            //     lngnew_branch.value = `${event.latLng.lng()}`;
-            // });
+        //         // Update the hidden input with the clicked location's latitude and longitude
+        //         latnew_branch.value = `${event.latLng.lat()}`;
+        //         lngnew_branch.value = `${event.latLng.lng()}`;
+        //     });
         }
 
 </script>
