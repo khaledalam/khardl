@@ -135,13 +135,14 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             <!--begin::Row-->
                             <div class="row gx-9">
                                 <!--begin::Col-->
-
-                                <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}" id="map-autocomplete-card">
+                                <div id="map-autocomplete-card{{ $branch->id }}"></div>
+                              
+                                <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}" >
                                     @if(!$branch->deleted_at)
-                                    <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}" style="display: none;" value="{{$branch->address}}">
+                                    <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}"  style="display: none;" value="{{$branch->address}}">
                                     @endif
                                     <div class="map-container" data-branch-id="{{ $branch->id }}">
-                                        <div id="map{{ $branch->id }}" class="google_map">
+                                        <div id="map{{ $branch->id }}" class="google_map" >
                                             <div class="map-overlay">
                                                 <div class="overlay-text">
                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.19 512.19" style="enable-background:new 0 0 512.19 512.19;" xml:space="preserve" width="48" height="48">
@@ -156,11 +157,19 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                         </div>
 
                                         <style>
-                                            .google_map {
-                                                position: relative;
+                                            
+                                            /* .google_map {
+                                                position: static !important;
                                                 width: 100%;
                                                 height: auto;
-                                            }
+                                            } */
+                                            /* .google_map div {
+                                   
+                                                width: 500px !important;
+                                                height: 70% !important;
+                                                position: absolute !important;
+                                            } */
+
 
                                             .map-overlay {
                                                 position: relative;
@@ -770,7 +779,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
-                            <div class="col-md-12 fv-row">
+                            <div class="col-md-12 fv-row" id="map-autocomplete-card-new_branch">
                                 <label class="required fs-6 fw-bold mb-2">{{ __('location-branch') }}</label>
                                 <input id="pac-input-new_branch" class="form-control" type="text" required placeholder="{{ __('search-for-place')}}" name="address">
                                 <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
@@ -966,7 +975,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 @section('js')
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&v=weekly&libraries=marker&loading=async&v=weekly" ></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&v=weekly&libraries=places&loading=async&v=beta" ></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
