@@ -482,7 +482,7 @@ class RestaurantController extends BaseController
                 'address' => $address
             ]);
 
-        return redirect()->back()->with('success', 'Location successfully changed.');
+        return redirect()->back()->with('success', __('Location successfully changed.'));
 
     }
 
