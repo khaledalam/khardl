@@ -28,7 +28,7 @@ const Category = ({ restaurantStyle, categories = [] }) => {
       className={`w-full h-full flex ${
         menu_category_position === "center"
           ? "flex-col justify-center items-center"
-          : "flex-row items-start"
+          : "flex-row items-start "
       }  gap-[16px]`}
     >
       <div
@@ -60,8 +60,8 @@ const Category = ({ restaurantStyle, categories = [] }) => {
             : menu_category_position === "right"
               ? "order-1 w-[75%]"
               : menu_category_position === "center"
-                ? "w-full max-w-[710px]"
-                : "w-[75%]"
+                ? "w-full"
+                : "w-auto"
         } py-[32]
                 `}
       >

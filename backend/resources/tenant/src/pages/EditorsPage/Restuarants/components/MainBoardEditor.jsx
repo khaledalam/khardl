@@ -615,8 +615,8 @@ const MainBoardEditor = ({
                 : menu_category_position === "right"
                 ? "order-1 w-[75%]"
                 : menu_category_position === "center"
-                ? "w-full max-w-[710px]"
-                : "w-[75%]"
+                ? "w-full"
+                : "w-auto"
             } py-[32]
                         ${
                           navItems[activeSection]?.title ===
@@ -1012,20 +1012,12 @@ const MainBoardEditor = ({
       {isPrivacyPolicyModalOpened && (
         <FooterModal
           type="privacyPolicy"
-          edit={
-            navItems[activeSection]?.subItems[activeSubitem]?.title ==
-            t("Privacy Policy")
-          }
           setModalOpened={setIsPrivacyPolicyModalOpened}
         />
       )}
       {isTermsAndConditionsModalOpened && (
         <FooterModal
           type="termsAndConditions"
-          edit={
-            navItems[activeSection]?.subItems[activeSubitem]?.title ==
-            t("Terms and Conditions")
-          }
           setModalOpened={setIsTermsAndConditionsModalOpened}
         />
       )}
