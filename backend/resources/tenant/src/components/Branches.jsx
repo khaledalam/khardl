@@ -117,30 +117,35 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
   };
 
   const handleSelectBranch = () => {
-    if (selectedBranch !== null && cartItemsCount > 0) {
-      setOpenEmptyCartsConfirmModal(true);
-    } else {
-      fetchCategoriesData(branches[selectedBranch].id);
-      localStorage.setItem("selected_branch_id", branches[selectedBranch].id);
-      console.log("ide: ", branches[selectedBranch].id);
-      console.log("closingFunc: ", closingFunc);
-      closingFunc();
-      closingFuncSideMenu();
+    if (selectedBranch !== null) {
+      if (cartItemsCount > 0) {
+        setOpenEmptyCartsConfirmModal(true);
+      } else {
+        fetchCategoriesData(branches[selectedBranch].id);
+        localStorage.setItem("selected_branch_id", branches[selectedBranch].id);
+        console.log("ide: ", branches[selectedBranch].id);
+        console.log("closingFunc: ", closingFunc);
+        closingFunc();
+        closingFuncSideMenu();
+      }
     }
   };
 
   const emptyCarts = async () => {
     try {
-      await AxiosInstance.delete(`/carts/trash`, {}).finally(async () => {
-        await fetchCartData().then((r) => null);
-      });
+      await AxiosInstance.delete(`/carts/trash`, {})
+        .then(() => {
+          dispatch(setCartItemsData([]));
+          dispatch(getCartItemsCount(0));
+        })
+        .finally(async () => {
+          await fetchCartData().then((r) => null);
+        });
     } catch (error) {}
   };
 
   const handleEmptyCarts = () => {
     setOpenEmptyCartsConfirmModal(false);
-    dispatch(setCartItemsData([]));
-    dispatch(getCartItemsCount(0));
     emptyCarts();
     fetchCategoriesData(branches[selectedBranch].id);
     localStorage.setItem("selected_branch_id", branches[selectedBranch].id);
