@@ -43,9 +43,23 @@ class RestaurantService
                 });
                 return $tenant;
             });
-
             $restaurants = $results->sortByDescAndPaginate('orders_count', config('application.perPage'));
-
+        } elseif (isset($request['order_by']) && $request['order_by'] == 'highest_revenues') {
+            $results = $query->get()->map(function ($tenant) {
+                $tenant->run(function ($res) {
+                    $res->total_revenues = $res->revenues();
+                });
+                return $tenant;
+            });
+            $restaurants = $results->sortByDescAndPaginate('total_revenues', config('application.perPage'));
+        } elseif (isset($request['order_by']) && $request['order_by'] == 'highest_visitors') {
+            $results = $query->get()->map(function ($tenant) {
+                $tenant->run(function ($res) {
+                    $res->total_visitors = $res->visitors()->sum('count');
+                });
+                return $tenant;
+            });
+            $restaurants = $results->sortByDescAndPaginate('total_visitors', config('application.perPage'));
         } elseif (isset($request['order_by']) && $request['order_by'] == 'highest_customers') {
             $results = $query->get()->map(function ($tenant) {
                 $tenant->run(function ($res) {
@@ -53,13 +67,11 @@ class RestaurantService
                 });
                 return $tenant;
             });
-
             $restaurants = $results->sortByDescAndPaginate('customers_count', config('application.perPage'));
         } else {
             $restaurants = $query->paginate(config('application.perPage'));
         }
         $user = Auth::user();
-
         return view('admin.restaurants', compact('restaurants', 'user', 'totalRestaurantsCount'));
     }
     public function appRequested($request)

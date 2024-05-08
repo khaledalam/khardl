@@ -42,7 +42,9 @@
                                 <select class="form-select form-select-solid" name="order_by">
                                     <option>{{ __('Order by')}}</option>
                                     <option value="highest_orders" {{ request('order_by') === 'highest_orders' ? 'selected' : '' }}>{{ __('Highest orders')}}</option>
+                                    <option value="highest_revenues" {{ request('order_by') === 'highest_revenues' ? 'selected' : '' }}>{{ __('Highest Revenues')}}</option>
                                     <option value="highest_customers" {{ request('order_by') === 'highest_customers' ? 'selected' : '' }}>{{ __('Highest customers')}}</option>
+                                    <option value="highest_visitors" {{ request('order_by') === 'highest_visitors' ? 'selected' : '' }}>{{ __('Highest visitors')}}</option>
                                 </select>
                                 </select>
                             </div>
