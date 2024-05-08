@@ -45,18 +45,19 @@
             markers[branchId] = marker; // Store the marker for this branch
             maps[branchId] = map; // Store the map for this branch
 
-            map.addListener( 'bounds_changed', function () {
-                console.log('bounds_changed');
-                updateLocationInput(marker.position, branchId);
-            });
+            // map.addListener( 'bounds_changed', function () {
+            //     console.log('bounds_changed');
+            //     updateLocationInput(marker.position, branchId);
+            // });
         
             // Add a click event listener to the map
-            map.addListener( 'click', function () {
-                console.log('clicked');
+            map.addListener( 'click', function (event) {
+                marker.position  = event.latLng;
                 updateLocationInput(marker.position, branchId);
             });
 
             autocomplete.addEventListener("gmp-placeselect", async ({ place }) => {
+                console.log("gmp-placeselect");
                 await place.fetchFields({ fields: ['displayName', 'formattedAddress', 'location'] });
                 if (place.viewport) {
                     map.fitBounds(place.viewport);
@@ -85,8 +86,17 @@
                     map.setCenter(place.geometry.location);
                     map.setZoom(17);
                 }
-
-                marker.position =place.geometry.location;
+                let content =
+                '<div id="infowindow-content">' +
+                '<span id="place-displayname" class="title">' +
+                place.displayName +
+                "</span><br />" +
+                '<span id="place-address">' +
+                place.formattedAddress +
+                "</span>" +
+                "</div>";
+                updateInfoWindow(content, place.location);
+                marker.position =place.location;
                 marker.setVisible(true);
                 // infowindow.open(map, marker);
             });
@@ -124,7 +134,15 @@
 
 
 
-
+        function updateInfoWindow(content, center) {
+            infoWindow.setContent(content);
+            infoWindow.setPosition(center);
+            infoWindow.open({
+                map,
+                anchor: marker,
+                shouldFocus: false,
+            });
+            }
 
         async function convertToAddress(lat, lng) {
 
@@ -138,7 +156,7 @@
         }
 
         async function updateLocationInput(latLng, branchId) {
-            console.log(latLng);
+          
             const latInput = document.getElementById('lat' + branchId);
             const lngInput = document.getElementById('lng' + branchId);
             latInput.value = latLng.lat;

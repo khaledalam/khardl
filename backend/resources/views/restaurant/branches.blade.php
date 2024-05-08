@@ -158,16 +158,19 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
                                         <style>
                                             
-                                            /* .google_map {
+                                            .google_map {
                                                 position: static !important;
                                                 width: 100%;
                                                 height: auto;
-                                            } */
+                                            }
                                             /* .google_map div {
                                    
-                                                width: 500px !important;
-                                                height: 70% !important;
-                                                position: absolute !important;
+                                                height: 70%;
+                                                width: 43%;
+                                                position: absolute;
+                                                top: 0px;
+                                                left: 0px;
+                                                background-color: rgb(229, 227, 223);
                                             } */
 
 
