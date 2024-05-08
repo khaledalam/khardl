@@ -901,8 +901,8 @@
     "Back to step 1" : "⬅ العودة إلى الخطوة 1",
     "Ready" : "جاهزة",
     "Order by" : "الترتيب ب",
-    "Highest orders" : "الاعلي في الطلبات",
-    "Highest customers" : "الاعلي في العملاء",
+    "Highest orders" : "أعلي طبات",
+    "Highest customers" : "أعلي عملاء",
     "Swift code" : "سويفت كود",
     "SWIFT code e.g. SWFT12345678909836435647" : "سويفت كود مثال : SWFT12345678909836435647",
     "IBAN e.g. INBNK00045545555555555555":"IBAN e.g. INBNK00045545555555555555",
@@ -1390,5 +1390,7 @@
     "Visitor":"زائر",
     "Visitors within 6 months":"الزوار في خلال 6 أشهر",
     "Revenues within 6 months":"الايرادات في خلال 6 أشهر",
-    "Revenues within 7 days":"الإيرادات في خلال 7 أيام"
+    "Revenues within 7 days":"الإيرادات في خلال 7 أيام",
+    "Highest Revenues":"أعلى الإيرادات",
+    "Highest visitors":"أعلى الزوار"
 }
