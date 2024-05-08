@@ -84,7 +84,7 @@ function EditorSlider({
           : "50px",
       }}
       className={`${
-        menu_category_position == "center" ? "h-30 md:h-40" : "h-full"
+        menu_category_position == "center" ? "h-30 md:h-fit" : "h-full"
       } w-full  py-3 flex items-center justify-between ${
         isHighlighted && "shadow-inner border-[#C0D123] border-[2px]"
       } relative`}

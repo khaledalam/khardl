@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import 'react-quill/dist/quill.snow.css';
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
@@ -35,6 +36,8 @@ import { CustomerPage } from "./pages/CustomerPage";
 import SuccessPayment from "./pages/SuccessPayment";
 import FailedPayment from "./pages/FailedPayment";
 import * as Sentry from "@sentry/react";
+import RestaurantTermsAndConditions from "./pages/TermsAndConditionsPage";
+import RestaurantPrivacyPolicy from "./pages/PrivacyPolicyPage";
 import { t } from "i18next";
 
 // import { initializeApp } from "firebase/app";
@@ -88,6 +91,8 @@ const App = () => {
     "/verification-phone",
     "/login-admins",
     "/summary",
+    "/terms-and-conditions",
+    "/privacy-policy",
   ].includes(location.pathname);
   const showFooter = ![
     "/",
@@ -109,6 +114,8 @@ const App = () => {
     "/success",
     "/failed",
     "/summary",
+    "/restaurant/terms-and-conditions",
+    "/restaurant/privacy-policy"
   ].includes(location.pathname);
 
   Aos.init({
@@ -151,7 +158,11 @@ const App = () => {
           }}
         >
           <div>
-            <ToastContainer theme="colored" autoClose={1500} hideProgressBar={true} />{" "}
+            <ToastContainer
+              theme="colored"
+              autoClose={1500}
+              hideProgressBar={true}
+            />{" "}
             {/* {showHeader && <NavbarRestuarant />} <Supports />{" "} */}
             <ScrollUp />
             <div>
@@ -210,6 +221,14 @@ const App = () => {
                   <Route path="/profile-summary" element={<CustomerPage />} />{" "}
                   <Route path="/customers" element={<CustomerPage />} />{" "}
                   {/* <Route path='/customers' element={<CustomerPage />} />{" "} */}{" "}
+                  <Route
+                    path="/restaurant/terms-and-conditions"
+                    element={<RestaurantTermsAndConditions />}
+                  />
+                  <Route
+                    path="/restaurant/privacy-policy"
+                    element={<RestaurantPrivacyPolicy />}
+                  />
                 </Route>{" "}
               </Routes>{" "}
             </div>{" "}

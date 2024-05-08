@@ -48,6 +48,25 @@ const FullPage = ({ categories }) => {
     setIsModelOpen(false);
   }, [isBranchModelOpen, isLoginModalOpen]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 27) {
+        if (isLoginModalOpen) {
+          dispatch(SetLoginModal(false));
+        }
+        if (isRegisterModalOpen) {
+          dispatch(SetRegisterModal(false));
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isLoginModalOpen, isRegisterModalOpen, dispatch]);
+
   return (
     <div
       style={{
