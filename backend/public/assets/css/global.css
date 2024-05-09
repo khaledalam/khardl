@@ -7,7 +7,10 @@
 body{
   font-family: "Almarai", sans-serif!important;
 }
-/* Summary page */
+.aside-dark .menu .menu-item .menu-link.active,
+.aside-dark .menu .menu-item .menu-link:hover{
+  border-radius: 8px;
+}
 /* Summary page */
 .filtration div{
   position: absolute;
