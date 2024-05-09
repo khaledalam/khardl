@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Traits\APIResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantStyle;
+use Illuminate\Support\Facades\Cache;
 
 class RestaurantStyleService
 {
@@ -20,6 +21,9 @@ class RestaurantStyleService
         RestaurantStyle::updateOrCreate([
             'id' => 1
         ], $this->data($request));
+
+        $cache_key = 'R_style_' . tenant()->id;
+        Cache::delete($cache_key);
 
 
         return $this->sendResponse(null, __('Restaurant style saved successfully.'));
@@ -155,60 +159,66 @@ class RestaurantStyleService
     {
         $data = RestaurantStyle::first() ?? [];
 
-        if ($data instanceof RestaurantStyle) {
-            $data['buttons'] = [
-                $data->left_side_button,
-                $data->center_side_button,
-                $data->right_side_button,
-            ];
+        $cache_key = 'R_style_' . tenant()->id;
 
-            $data->logo_url = $data->logo_url ?: $data->logo;
+        $data = Cache::rememberForever($cache_key, static function() use (&$data) {
 
-            $restaurant_name = '';
-            tenancy()->central(function ($tenant) use (&$restaurant_name) {
-                $restaurant_name = app()->getLocale() == 'en' ? $tenant->restaurant_name : $tenant->restaurant_name_ar;
-            });
+            if ($data instanceof RestaurantStyle) {
+                $data['buttons'] = [
+                    $data->left_side_button,
+                    $data->center_side_button,
+                    $data->right_side_button,
+                ];
 
-            $data->restaurant_name = $restaurant_name;
+                $data->logo_url = $data->logo_url ?: $data->logo;
 
-            // get branches of restaurant
-            $data['branches'] = Branch::where('active', true)->get([
-                'name',
-                'phone',
-                'city',
-                'neighborhood',
-                'id',
-                'lat',
-                'lng',
-                'preparation_time_delivery',
-                'pickup_availability',
-                'drivers_option',
-                'delivery_companies_option',
-                'monday_open',
-                'monday_close',
-                'monday_closed',
-                'tuesday_open',
-                'tuesday_close',
-                'tuesday_closed',
-                'wednesday_open',
-                'wednesday_close',
-                'wednesday_closed',
-                'thursday_open',
-                'thursday_close',
-                'thursday_closed',
-                'friday_open',
-                'friday_close',
-                'friday_closed',
-                'saturday_open',
-                'saturday_close',
-                'saturday_closed',
-                'sunday_open',
-                'sunday_close',
-                'sunday_closed',
-                'is_primary',
-                'display_category_icon'
-            ]);
-        }
+                $restaurant_name = '';
+                tenancy()->central(function ($tenant) use (&$restaurant_name) {
+                    $restaurant_name = app()->getLocale() == 'en' ? $tenant->restaurant_name : $tenant->restaurant_name_ar;
+                });
+
+                $data->restaurant_name = $restaurant_name;
+
+                // get branches of restaurant
+                $data['branches'] = Branch::where('active', true)->get([
+                    'name',
+                    'phone',
+                    'city',
+                    'neighborhood',
+                    'id',
+                    'lat',
+                    'lng',
+                    'preparation_time_delivery',
+                    'pickup_availability',
+                    'drivers_option',
+                    'delivery_companies_option',
+                    'monday_open',
+                    'monday_close',
+                    'monday_closed',
+                    'tuesday_open',
+                    'tuesday_close',
+                    'tuesday_closed',
+                    'wednesday_open',
+                    'wednesday_close',
+                    'wednesday_closed',
+                    'thursday_open',
+                    'thursday_close',
+                    'thursday_closed',
+                    'friday_open',
+                    'friday_close',
+                    'friday_closed',
+                    'saturday_open',
+                    'saturday_close',
+                    'saturday_closed',
+                    'sunday_open',
+                    'sunday_close',
+                    'sunday_closed',
+                    'is_primary',
+                    'display_category_icon'
+                ]);
+            }
+            return $data;
+        });
 
         return $this->sendResponse($data, __('Restaurant style fetched successfully.'));
     }
