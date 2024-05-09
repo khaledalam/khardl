@@ -28,10 +28,10 @@
                                             <h2>{{ __('edit-support')}}</h2>
                                         </div>
                                         <a href="{{ route('admin.user-management') }}">
-                                            <button type="button" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-arrow-left"></i>
-                                                {{ __('Back to list') }}
-                                            </button>
+                                            <button type="button" class="btn btn-khardl btn-sm">
+                                <i class="fa fa-arrow-left"></i>
+                                {{ __('Back to list') }}
+                            </button>
                                         </a>
                                     </div>
                                     <!--end::Card header-->
@@ -277,7 +277,7 @@
                         <!--end::Tab pane-->
                         <div class="d-flex justify-content-end mt-3">
                             <!--begin::Button-->
-                            <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                            <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-khardl">
                                 <span class="indicator-label">{{ __('edit')}}</span>
                                 <i class="bi bi-check2-square mx-1"></i>
                                 <span class="indicator-progress">{{ __('please-wait')}}

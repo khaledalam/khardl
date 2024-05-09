@@ -1,5 +1,20 @@
 /* ALL */
-/* Summary page */
+@font-face {
+  font-family: "Almarai";
+  src: url("../../fonts/Almarai-Regular.ttf") ;
+  font-display: swap;
+}
+body{
+  font-family: "Almarai", sans-serif!important;
+  background-color: #f3f3f3!important;
+}
+a {
+  color: #9fb305 !important;
+}
+.aside-dark .menu .menu-item .menu-link.active,
+.aside-dark .menu .menu-item .menu-link:hover{
+  border-radius: 8px;
+}
 /* Summary page */
 .filtration div{
   position: absolute;

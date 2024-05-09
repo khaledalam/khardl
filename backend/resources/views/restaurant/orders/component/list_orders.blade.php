@@ -72,7 +72,7 @@
                         </select>
                         <!--end::Select2-->
                     </div>
-                    <button class="btn btn-primary" type="submit">{{ __('Search') }}</button>
+                    <button class="btn btn-khardl" type="submit">{{ __('Search') }}</button>
                 </div>
                 <!--end::Card toolbar-->
             </div>
@@ -107,7 +107,7 @@
                             <th class="text-end min-w-100px">{{ __('Date') }}</th>
                             <th class="text-end min-w-100px">
                                 <a href="{{ route('restaurant.orders_add') }}">
-                                    <button class="btn btn-success btn-sm" type="button">
+                                    <button class="btn btn-khardl btn-sm" type="button">
                                         {{ __('Add new') }}
                                     </button>
                                 </a>

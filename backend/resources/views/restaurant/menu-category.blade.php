@@ -428,8 +428,8 @@
                             @foreach ($branches as $branchLoop)
                             <div class="col-md-3">
                                 <a href="{{ route('restaurant.get-category',['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1, 'branchId' => $branchLoop->id]) }}">
-                                    <button type="button" class="btn btn-sm @if($branchLoop->id == $branchId) btn-warning text-black @else btn-primary @endif">
-                                        @if($branchLoop->id == $branchId)<i class="fa fa-arrow-down text-black mx-1"></i>@endif {{ $branchLoop->name }}
+                                    <button type="button" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl text-black @else btn-primary @endif">
+                                        @if($branchLoop->id == $branchId)<i class="fa fa-arrow-down text-white mx-1"></i>@endif {{ $branchLoop->name }}
                                     </button>
                                 </a>
                             </div>
