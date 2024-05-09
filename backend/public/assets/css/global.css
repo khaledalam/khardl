@@ -1,4 +1,12 @@
 /* ALL */
+@font-face {
+  font-family: "Almarai";
+  src: url("../../fonts/Almarai-Regular.ttf") ;
+  font-display: swap;
+}
+body{
+  font-family: "Almarai", sans-serif!important;
+}
 /* Summary page */
 /* Summary page */
 .filtration div{

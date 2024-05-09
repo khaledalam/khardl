@@ -67,7 +67,7 @@ const App = () => {
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle);
   const Language = useSelector((state) => state.languageMode.languageMode);
   const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
-  const fontFamily = "cairo, sans-serif";
+  const fontFamily = "Almarai, sans-serif";
   const location = useLocation();
   const { loading } = useAuthContext();
   // const [isMobile, setIsMobile] = useState(false);
