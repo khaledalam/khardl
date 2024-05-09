@@ -23,7 +23,7 @@ class AddSubDiscountFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'promoter_id' => ['required','unique:ro_subscription_coupons,promoter_id'],
+            'promoter_id' => ['required'],
             'code' => ['required', 'string', 'max:100','unique:ro_subscription_coupons,code'],
             'type' => ['required', 'in:fixed,percentage'],
             'fixed' => [new RequiredIf($this->type == 'fixed'), 'min:1', 'nullable', 'numeric'],
