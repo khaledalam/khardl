@@ -44,7 +44,7 @@
                                             <i class="fa fa-play text-white m-2"></i>
                                         </a>
                                         @else
-                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to activate this branch ?') }}`)" class="btn btn-success text-center">
+                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to activate this branch ?') }}`)" class="btn btn-khardl text-center">
                                             <label for="Activate">{{ __('Activate') }}</label>
                                             <i class="fa fa-play text-white m-2"></i>
                                         </a>

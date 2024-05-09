@@ -263,7 +263,7 @@ function openModal(modalID) {
                                                                         </div>
 
                                                                         <div>
-                                                                            <a href="#" class="btn btn-sm btn-primary"  onclick="openModal('kt_modal_renew_sub')"><i class="fas fa-plus"></i>{{__("Add more branches")}}</a>
+                                                                            <a href="#" class="btn btn-sm btn-khardl"  onclick="openModal('kt_modal_renew_sub')"><i class="fas fa-plus"></i>{{__("Add more branches")}}</a>
                                                                         </div>
 
                                                                     </div>

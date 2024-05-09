@@ -18,7 +18,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
 
 <style>
-                                            
+
     .google_map {
         position: static !important;
         width: 100%;
@@ -169,7 +169,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     <div class="alert alert-warning text-center mx-2">
                         <p>{{ __('You can add new branches from services') }}</p>
                         <a href="{{ route('restaurant.service') }}">
-                            <button type="button" class="btn btn-success btn-sm">{{ __('View services') }}</button>
+                            <button type="button" class="btn btn-khardl btn-sm">{{ __('View services') }}</button>
                         </a>
                     </div>
                     @endif
@@ -193,7 +193,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             <div class="row gx-9">
                                 <!--begin::Col-->
                                 <div id="map-autocomplete-card{{ $branch->id }}"></div>
-                              
+
                                 <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}" >
                                     {{-- @if(!$branch->deleted_at)
                                     <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}"  style="display: none;" value="{{$branch->address}}">
@@ -265,14 +265,14 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                     <span class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
                                                     <p>
                                                         @if(!$branch->deleted_at)
-                                                        <a data-bs-toggle="modal" data-bs-target="#modalTime{{ $branch->id }}" class="text-light bg-dark p-1 rounded cursor-pointer">{{$branch->phone ?? ''}} 
+                                                        <a data-bs-toggle="modal" data-bs-target="#modalTime{{ $branch->id }}" class="text-light bg-dark p-1 rounded cursor-pointer">{{$branch->phone ?? ''}}
                                                             <svg class="feather feather-edit" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                                                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                                                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg></a>
                                                         @else
                                                         <span class="text-light bg-dark p-1 rounded cursor-pointer">{{$branch->phone ?? ''}}</span>
                                                         @endif
-                                                       
+
                                                     </p>
                                                     <style>
                                                         .cursor-pointer:hover {
@@ -292,14 +292,14 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                     @elseif(!$branch->active)
 
                                                     <div class="d-flex justify-content-center mt-1">
-                                                        <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}" class="btn btn-success text-center">{{__('Activate')}} <i class="fa  fa-play text-white m-2"></i></a>
+                                                        <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}" class="btn btn-khardl text-center">{{__('Activate')}} <i class="fa  fa-play text-white m-2"></i></a>
                                                     </div>
 
                                                     @endif
                                                 </div>
                                                 <!--end::Title-->
                                             </div>
-                                         
+
                                             <!--end::Modal body-->
 
                                             <!--end::Heading-->
@@ -708,7 +708,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                         <h4>{{ __('You do not the availability to add new branch') }}</h4>
                                         <p>{{ __('You have to purchase new service') }}</p>
                                         <a href="{{ route('restaurant.service') }}">
-                                            <button type="button" class="btn btn-success btn-sm">{{ __('View services') }}</button>
+                                            <button type="button" class="btn btn-khardl btn-sm">{{ __('View services') }}</button>
                                         </a>
                                     </div>
                                 </div>

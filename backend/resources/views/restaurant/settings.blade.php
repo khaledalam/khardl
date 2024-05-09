@@ -111,7 +111,7 @@
                 <!--end::Tab pane-->
                 <div class="d-flex justify-content-end mt-3">
                     <!--begin::Button-->
-                    <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                    <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-khardl">
                         <span class="indicator-label">{{ __('save') }}</span>
                         <i class="bi bi-check2-square mx-1"></i>
                         <span class="indicator-progress">{{ __('please-wait')}}

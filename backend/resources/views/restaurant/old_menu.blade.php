@@ -366,7 +366,7 @@
                                 <input type="text" class="form-control form-control-solid mx-3" name="input2[]" placeholder="Name Dropdown">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-sm btn-primary" id="addInput3">+</button>
+                        <button type="button" class="btn btn-sm btn-khardl" id="addInput3">+</button>
                     </div>
                     <!--end::Input group-->
 
