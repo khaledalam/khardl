@@ -20,7 +20,7 @@
                              <span class="text-muted mt-1 fw-bold fs-7">{{ count($workers) }} {{ __('workers') }}</span>
                          </h3>
                          <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{ __('Add') }}">
-                             <a href="{{ route('restaurant.get-workers', ['branchId' => $branchId]) }}" class="btn btn-sm btn-light btn-active-khardl">
+                             <a href="{{ route('restaurant.get-workers', ['branchId' => $branchId]) }}" class="btn btn-sm btn-khardl">
                              <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                              <span class="svg-icon svg-icon-3">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

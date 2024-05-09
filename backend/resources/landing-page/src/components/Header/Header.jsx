@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Logo from "../../assets/Logo.webp";
+import Logo from "../../assets/Logo_White.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../ButtonComponent";
 import Li from "./Li";

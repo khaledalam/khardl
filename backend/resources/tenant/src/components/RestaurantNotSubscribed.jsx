@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LogoPattern from "../assets/LogoPattern.webp";
-import logo from "../assets/Logo.webp";
+import logo from "../assets/Logo_White.svg";
 import successBg from "../assets/successBg.png";
 import failedbanner from "../assets/restaurant-not-live.png";
 import arrowright from "../assets/arrowRight.svg";

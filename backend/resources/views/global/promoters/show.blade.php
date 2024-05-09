@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
-    <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}" />
-    <link rel="icon" href="{{ global_asset('images/Logo.webp')}}" />
+    <link rel="canonical" href="{{ global_asset('images/Logo_White.svg')}}" />
+    <link rel="shortcut png" href="{{ global_asset('images/Logo_White.svg')}}" />
+    <link rel="icon" href="{{ global_asset('images/Logo_White.svg')}}" />
     <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
     <title>{{ __('Promoters') }}</title>
     <style>
@@ -48,7 +48,7 @@
 <body>
 
     <div class="container">
-        <img style="max-height: 80px" src="{{ asset('images/Logo.webp') }}" alt="">
+        <img style="max-height: 80px" src="{{ asset('images/Logo_White.svg') }}" alt="">
         <h1>{{ __('Information') }}</h1>
         <hr>
         <table class="table table-responsive">
@@ -79,7 +79,7 @@
                                     </svg>
                             </a>
                         </h4>
-                        
+
                         <script>
                             function copyToClipboard(text, element) {
                                 var dummy = document.createElement("textarea");
@@ -88,18 +88,18 @@
                                 dummy.select();
                                 document.execCommand("copy");
                                 document.body.removeChild(dummy);
-                                
+
                                 element.classList.remove('text-primary');
                                 element.classList.add('text-khardl');
-                                
+
                                 setTimeout(function() {
                                     element.classList.add('text-primary');
                                     element.classList.remove('text-khardl');
-                                }, 1000); 
+                                }, 1000);
                             }
                         </script>
-                        
-                        
+
+
                     </td>
                     <td>
                         <strong class="text-success">{{ $promoter->entered }}</strong>

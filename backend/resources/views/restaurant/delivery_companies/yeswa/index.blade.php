@@ -222,7 +222,7 @@
                                                         @endif
                                                         <div class="d-flex justify-content-center">
                                                             @if(!$yeswa?->status)
-                                                            <button type="submit"  class="btn btn-success text-white text-hover-white" >{{__("Activate")}}</a>
+                                                            <button type="submit"  class="btn btn-khardl text-white text-hover-white" >{{__("Activate")}}</a>
                                                             @else
                                                                 <button type="submit" class="btn btn-danger  text-white text-hover-white" >{{__("Deactivate")}}</a>
                                                             @endif
@@ -239,7 +239,7 @@
                                                         @if (!$isadmin)
                                                         <div class="d-flex justify-content-center">
                                                             @if(!$yeswa?->status)
-                                                            <button type="submit" class="btn btn-success text-white text-hover-white">{{__("Activate")}}</a>
+                                                            <button type="submit" class="btn btn-khardl text-white text-hover-white">{{__("Activate")}}</a>
                                                             @else
                                                             <button type="submit" class="btn btn-danger  text-white text-hover-white">{{__("Deactivate")}}</a>
                                                             @endif

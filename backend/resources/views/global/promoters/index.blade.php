@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
-  <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}" />
-  <link rel="icon" href="{{ global_asset('images/Logo.webp')}}" />
+  <link rel="canonical" href="{{ global_asset('images/Logo_White.svg')}}" />
+  <link rel="shortcut png" href="{{ global_asset('images/Logo_White.svg')}}" />
+  <link rel="icon" href="{{ global_asset('images/Logo_White.svg')}}" />
   <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
   <title>{{ __('Promoter') }}</title>
   <style>
@@ -47,7 +47,7 @@
 <body>
 
   <div class="container">
-    <img style="max-height: 80px" src="{{ asset('images/Logo.webp') }}" alt="">
+    <img style="max-height: 80px" src="{{ asset('images/Logo_White.svg') }}" alt="">
     <h1>{{ __('Promoter page') }}</h1>
 
     <form action="">

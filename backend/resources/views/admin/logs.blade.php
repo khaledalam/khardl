@@ -48,7 +48,7 @@
 
                             </select>
                             <!--end::Select-->
-                            <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                            <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-khardl">
                                 <span class="indicator-label">{{ __('search') }}</span>
                                 <span class="indicator-progress">{{ __('please-wait')}}
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -60,7 +60,7 @@
                         @csrf
                         <div class="d-flex my-0">
                             <input type="hidden" name="download" value="csv">
-                            <button type="submit" id="download_logs" class="btn btn-success mx-2">
+                            <button type="submit" id="download_logs" class="btn btn-khardl mx-2">
                                 <span class="indicator-label">{{ __('Download') }}</span>
                                 <span class="indicator-progress">{{ __('please-wait')}}
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
