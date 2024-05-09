@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Logo from "../../assets/Logo.webp";
+import Logo from "../../assets/Logo_White.svg";
 import ContactUsCover from "../../assets/ContactUsCover.webp";
 import { useTranslation } from "react-i18next";
 import MainText from "../../components/MainText";
@@ -14,7 +14,7 @@ import { useAuthContext } from "../../components/context/AuthContext";
 import { HTTP_NOT_AUTHENTICATED, HTTP_OK, WEBSITE_URL } from "../../config";
 import AxiosInstance from "../../axios/axios";
 import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
-import imgLogo from "../../assets/khardl_Logo.png";
+import imgLogo from "../../assets/Logo_White.svg";
 
 const Login = () => {
   const dispatch = useDispatch();

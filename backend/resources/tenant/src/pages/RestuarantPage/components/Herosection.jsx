@@ -5,7 +5,7 @@ import { selectedCategoryAPI } from "../../../redux/NewEditor/categoryAPISlice";
 import imgBanner from "../../../assets/bannerRestuarant.png";
 import { useTranslation } from "react-i18next";
 import ReactSlider from "react-slick";
-import imgLogo from "../../../assets/khardl_Logo.png";
+import imgLogo from "../../../assets/Logo_White.svg";
 
 const Herosection = ({ isMobile, categories, isCatLoading }) => {
   const dispatch = useDispatch();

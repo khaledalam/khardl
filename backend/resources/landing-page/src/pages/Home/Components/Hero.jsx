@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../../assets/Logo.webp";
+import logo from "../../../assets/Logo_White.svg";
 import HeroImg from "../../../assets/Hero.webp";
 import HeroPitcureAr from "../../../assets/HeroPitcureAr.webp";
 import HeroPitcureEn from "../../../assets/HeroPitcureEn.webp";

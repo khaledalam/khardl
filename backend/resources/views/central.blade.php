@@ -8,14 +8,14 @@
     <meta name="author" content="Khardl">
     <meta property="og:title" content="Khardl - Digital Ecosystem Solution For Restaurants" />
     <meta property="og:description" content="Khardl, Digital Ecosystem Solution For Restaurants, Create your website and app with Khardl in minutes, start selling right away, and pay based on your orders only" />
-    <meta property="og:image" content="{{ global_asset('images/Logo.webp')}}" />
+    <meta property="og:image" content="{{ global_asset('images/Logo_White.svg')}}" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Khardl - Digital Ecosystem Solution For Restaurants</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
-    <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}"/>
-    <link rel="icon" href="{{ global_asset('images/Logo.webp')}}"/>
+    <link rel="canonical" href="{{ global_asset('images/Logo_White.svg')}}" />
+    <link rel="shortcut png" href="{{ global_asset('images/Logo_White.svg')}}"/>
+    <link rel="icon" href="{{ global_asset('images/Logo_White.svg')}}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 {{--        <link--}}
 {{--            href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600&display=swap"--}}
