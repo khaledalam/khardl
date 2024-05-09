@@ -57,14 +57,14 @@ const AddressItem = ({ address, onEdit, onDelete, onSetAsDefault }) => {
                   setSettingModalVisible(false);
                 }}
               >
-                Set as default
+                {t('Set as default')}
               </div>
             )}
             <div
               className="cursor-pointer hover:bg-neutral-900 hover:text-white p-2"
               onClick={onEdit}
             >
-              Edit
+              {t('Edit')}
             </div>
             <div
               className="cursor-pointer hover:bg-red-900 hover:text-white p-2"
@@ -73,7 +73,7 @@ const AddressItem = ({ address, onEdit, onDelete, onSetAsDefault }) => {
                 setSettingModalVisible(false);
               }}
             >
-              Delete
+              {t('Delete')}
             </div>
           </div>
         </div>
