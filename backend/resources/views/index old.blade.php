@@ -36,7 +36,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
           <li class="nav-item">
-            <a href="index.html"><img class="logo" href="{{url('/')}}" src="{{asset('images/Logo.webp')}}" alt="logo"></a>
+            <a href="index.html"><img class="logo" href="{{url('/')}}" src="{{asset('images/Logo_White.svg')}}" alt="logo"></a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" style="color:white;" aria-current="page" href="#Home">Home</a>

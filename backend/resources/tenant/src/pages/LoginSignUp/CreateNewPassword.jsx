@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "../../assets/Logo.webp";
+import Logo from "../../assets/Logo_White.svg";
 import ContactUsCover from "../../assets/ContactUsCover.webp";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
