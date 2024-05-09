@@ -49,7 +49,7 @@
 </head>
 <body>
   <div class="error-container">
-    <img style="max-height: 80px" src="{{ global_asset('images/Logo.webp') }}" alt="">
+    <img style="max-height: 80px" src="{{ global_asset('images/Logo_White.svg') }}" alt="">
     <h1 class="error-heading">403 - {{ __('Unauthorized') }}</h1>
     <p class="error-message">{{ __('You are not authorized to access this page.') }}</p>
     <a href="{{ route('home') }}" class="back-btn">{{ __('Go to Homepage') }}</a>

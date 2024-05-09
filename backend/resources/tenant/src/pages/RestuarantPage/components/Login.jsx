@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import Logo from "../../../assets/Logo.webp";
+import Logo from "../../../assets/Logo_White.svg";
 import ContactUsCover from "../../../assets/ContactUsCover.webp";
 import { useTranslation } from "react-i18next";
 import MainText from "../../../components/MainText";
@@ -23,7 +23,7 @@ import {
   SetRegisterModal,
   SetLoginModal,
 } from "../../../redux/NewEditor/restuarantEditorSlice";
-import imgLogo from "../../../assets/khardl_Logo.png";
+import imgLogo from "../../../assets/Logo_White.svg";
 import SA from "../../../assets/SA.png";
 import Down from "../../../assets/down.svg";
 import { getCartItemsCount } from "../../../redux/NewEditor/categoryAPISlice";

@@ -7,7 +7,7 @@ import arrowright from "../assets/arrowRight.svg";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LogoPattern from "../assets/LogoPattern.webp";
-import logo from "../assets/Logo.webp";
+import logo from "../assets/Logo_White.svg";
 import { WEBSITE_URL } from "../config";
 
 const RestaurantNotLive = () => {

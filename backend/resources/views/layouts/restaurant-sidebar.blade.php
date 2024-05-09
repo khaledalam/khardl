@@ -15,9 +15,9 @@
     <meta property="og:title" content="__('khardl')}}" />
     <meta property="og:url" content="khardl.com" />
     <meta property="og:site_name" content="__('khardl')}}" />
-    <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
-    <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}"/>
-    <link rel="icon" href="{{ global_asset('images/Logo.webp')}}"/>
+    <link rel="canonical" href="{{ global_asset('images/Logo_White.svg')}}" />
+    <link rel="shortcut png" href="{{ global_asset('images/Logo_White.svg')}}"/>
+    <link rel="icon" href="{{ global_asset('images/Logo_White.svg')}}"/>
     <!--begin::Fonts-->
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
@@ -133,7 +133,7 @@
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <!--begin::Logo-->
                 <a href="/">
-                    <img alt="Logo" src="{{ global_asset('/images/Logo.webp') }}" class="h-30px" />
+                    <img alt="Logo" src="{{ global_asset('/images/Logo_White.svg') }}" class="h-30px" />
                 </a>
                 <!--end::Logo-->
                 <!--begin::Aside toggler-->
@@ -531,7 +531,7 @@
                     <!--begin::Mobile logo-->
                     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                         <a href="/" class="d-lg-none">
-                            <img alt="Logo" src="{{ global_asset('images/Logo.webp') }}" class="h-30px" />
+                            <img alt="Logo" src="{{ global_asset('images/Logo_White.svg') }}" class="h-30px" />
                         </a>
                     </div>
                     <!--end::Mobile logo-->
