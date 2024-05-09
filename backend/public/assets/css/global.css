@@ -6,6 +6,7 @@
 }
 body{
   font-family: "Almarai", sans-serif!important;
+  background-color: #f3f3f3!important;
 }
 .aside-dark .menu .menu-item .menu-link.active,
 .aside-dark .menu .menu-item .menu-link:hover{
