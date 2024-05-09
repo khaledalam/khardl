@@ -56,7 +56,7 @@
                             <!--end::Title-->
                         </div>
                         <a href="{{ route('restaurant.get-category',['id' => $item->category->id,'branchId' => $item->branch->id]) }}">
-                            <button type="button" class="btn btn-primary btn-sm">
+                            <button type="button" class="btn btn-khardl btn-sm">
                                 <i class="fa fa-arrow-left"></i>
                                 {{ __('Back to list') }}
                             </button>

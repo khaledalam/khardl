@@ -47,7 +47,7 @@
                                 </select>
                                 <!--end::Select2-->
                             </div>
-                            <button class="btn btn-primary" type="submit">{{ __('Search') }}</button>
+                            <button class="btn btn-khardl" type="submit">{{ __('Search') }}</button>
                         </div>
                         <!--end::Card toolbar-->
                     </div>

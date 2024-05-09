@@ -137,7 +137,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 2px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><span><strong>{{ __('Denied') }}</strong></span></span></span></h1>
+    <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 22px; font-weight: 400;"><span><span><span><strong>{{ __('Reupload following documents') }}</strong></span></span></span></h1>
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
@@ -198,7 +198,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
 
   <div style="font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
-  <p style="line-height: 140%;"><strong>{{ __('Reason for Denial Upon careful consideration, we have found that certain information provided does not align with our requirements or guidelines.') }}</strong></p>
+  <p style="line-height: 140%;"><strong>{{ __('Dear partner, please reupload the following documents to complete the registration process and start establishing your own application') }}</strong></p>
   </div>
 
       </td>
@@ -224,20 +224,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   </tbody>
 </table>
 
-<table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-
-  <!--[if mso]><table width="100%"><tr><td><![endif]-->
-  <p style="color: #000000; text-align: -webkit-center; white-space: normal; background-color: #ffffff; line-height: 160%;"><strong>{{ __('Next Steps:') }}</strong><br />{{ __("We understand that you may need to update or modify certain details in order to meet our criteria. To proceed further, please click on the button below to access your account and make the necessary changes. If you have any questions or need assistance, please don't hesitate to reach out to our support team. We appreciate your understanding and cooperation.") }}</p>
-<div> &nbsp;</div></h4>
-  <!--[if mso]></td></tr></table><![endif]-->
-
-      </td>
-    </tr>
-  </tbody>
-</table>
 
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
