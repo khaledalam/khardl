@@ -428,34 +428,15 @@ class TapController extends Controller
         [$AppSubscription,$AppLifetimeSubscription] = tenancy()->central(function(){
             return [
                 CentralSubscription::skip(1)->first(),
-                CentralSubscription::skip(2)->first()
+                CentralSubscription::skip(2)->first(),
+                
             ];
         });
         if($request->customer_app_sub_option == ROCustomerAppSub::LIFETIME_SUBSCRIPTION){
             $type = ROCustomerAppSub::LIFETIME_SUBSCRIPTION;
             $amount = $AppLifetimeSubscription->amount;
             $AppSubscription_id = $AppLifetimeSubscription->id;
-            if($request->coupon_code){
-                $chargeData = tenancy()->central(function()use($data,$request,$AppLifetimeSubscription){
-                    $coupon = ROSubscriptionCoupon::
-                    where('code',$request->coupon_code)
-                    ->where(NotificationReceipt::is_application_purchase,true)
-                    ->where(function ($query) {
-                        $query->whereColumn('max_use', '>', 'n_of_usage')
-                              ->orWhereNull('max_use');
-                    })->first();
-                    if(!$coupon) return $coupon;
-                    return [
-                        'cost'=> ($coupon->type == CouponTypes::FIXED_COUPON->value)? $AppLifetimeSubscription->amount  - $coupon->amount : ( $AppLifetimeSubscription->amount  - (($AppLifetimeSubscription->amount  * $coupon->amount) / 100)),
-                        'coupon_code'=>$request->coupon_code,
-                        'sub_amount'=>$AppLifetimeSubscription->amount
-                    ]; 
-                });
-                if(!$chargeData){
-                    return redirect()->route('restaurant.service')->with('error', __('Invalid coupon'));
-                }
-               
-            }
+            
         }else {
             $amount = $AppSubscription->amount;
             $AppSubscription_id = $AppSubscription->id;
@@ -465,7 +446,27 @@ class TapController extends Controller
                $type = ROSubscription::NEW;
             }
         }
-       
+        if($request->coupon_code && !$sub){
+            $chargeData = tenancy()->central(function()use($request,$AppLifetimeSubscription){
+                $coupon = ROSubscriptionCoupon::
+                where('code',$request->coupon_code)
+                ->where($request->customer_app_sub_option,true)
+                ->where(function ($query) {
+                    $query->whereColumn('max_use', '>', 'n_of_usage')
+                          ->orWhereNull('max_use');
+                })->first();
+                if(!$coupon) return $coupon;
+                return [
+                    'cost'=> ($coupon->type == CouponTypes::FIXED_COUPON->value)? $AppLifetimeSubscription->amount  - $coupon->amount : ( $AppLifetimeSubscription->amount  - (($AppLifetimeSubscription->amount  * $coupon->amount) / 100)),
+                    'coupon_code'=>$request->coupon_code,
+                    'sub_amount'=>$AppLifetimeSubscription->amount
+                ]; 
+            });
+            if(!$chargeData){
+                return redirect()->route('restaurant.service')->with('error', __('Invalid coupon'));
+            }
+           
+        }
        
         $payload = [
             'amount'=> $amount,
