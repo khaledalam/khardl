@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import SideNavbar from "./components/SideNavbar";
 import NavbarCustomer from "./components/NavbarCustomer";
 import { useSelector, useDispatch } from "react-redux";
-import CustomerDashboard from "./components/CustomerDashboard";
+// import CustomerDashboard from "./components/CustomerDashboard";
 import CustomerOrder from "./components/NewCustomerOrder";
 import CustomerProfile from "./components/CustomerProfile";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -25,7 +25,7 @@ export const CustomerPage = () => {
   const [showMenu, setShowMenu] = useState(true);
 
   const pages = {};
-  pages[t("Dashboard")] = <CustomerDashboard />;
+  // pages[t("Dashboard")] = <CustomerDashboard />;
   pages[t("Orders")] = <CustomerOrder />;
   pages[t("Profile")] = <CustomerProfile />;
   pages[t("Addresses")] = <CustomerAddresses />;

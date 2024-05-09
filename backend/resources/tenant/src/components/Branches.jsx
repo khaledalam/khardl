@@ -11,6 +11,8 @@ import AxiosInstance from "../axios/axios";
 import {
   selectedCategoryAPI,
   setCategoriesAPI,
+  setCartItemsData,
+  getCartItemsCount,
 } from "../redux/NewEditor/categoryAPISlice";
 
 import { useState, useEffect } from "react";
@@ -20,10 +22,13 @@ import Modal from "./Modal";
 import DoubleRightArrows from "../assets/doubleRightArrows.png";
 import XIcon from "../assets/xIcon.png";
 import { set } from "react-hook-form";
+import ConfirmationModal from "./confirmationModal";
 
 const Branches = ({ closingFunc, closingFuncSideMenu }) => {
   console.log("Closing: ", closingFunc);
   const { t } = useTranslation();
+  const [openEmptyCartsConfirmModal, setOpenEmptyCartsConfirmModal] =
+    useState(false);
   const dispatch = useDispatch();
 
   const moment = extendMoment(Moment);
@@ -31,10 +36,13 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
   const restuarantStyle = useSelector((state) => {
     return state.restuarantEditorStyle;
   });
+  const cartItemsCount = useSelector(
+    (state) => state.categoryAPI.cartItemsCount
+  );
 
   console.log(
     "currently branches :",
-    localStorage.getItem("selected_branch_id"),
+    localStorage.getItem("selected_branch_id")
   );
 
   useEffect(() => {
@@ -54,11 +62,11 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
         if (!isClosed) {
           let branchStart = moment(
             eval("branch." + currentDay + "_open"),
-            "HH:mm:ss",
+            "HH:mm:ss"
           );
           let branchEnd = moment(
             eval("branch." + currentDay + "_close"),
-            "HH:mm:ss",
+            "HH:mm:ss"
           );
           let branchRage = moment.range(branchStart, branchEnd);
           isClosed = !branchRage.contains(currentHour);
@@ -81,12 +89,12 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
   const fetchCategoriesData = async (id) => {
     try {
       const restaurantCategoriesResponse = await AxiosInstance.get(
-        `categories?items&user&branch${id ? `&selected_branch_id=${id}` : ""}`,
+        `categories?items&user&branch${id ? `&selected_branch_id=${id}` : ""}`
       );
 
       console.log(
         "editor rest restaurantCategoriesResponse OuterSidebarNav",
-        restaurantCategoriesResponse.data,
+        restaurantCategoriesResponse.data
       );
       if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data));
@@ -94,7 +102,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
           selectedCategoryAPI({
             name: restaurantCategoriesResponse.data?.data[0].name,
             id: restaurantCategoriesResponse.data?.data[0].id,
-          }),
+          })
         );
 
         if (!branch_id) {
@@ -110,15 +118,42 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
 
   const handleSelectBranch = () => {
     if (selectedBranch !== null) {
-      fetchCategoriesData(branches[selectedBranch].id);
-      localStorage.setItem("selected_branch_id", branches[selectedBranch].id);
-      console.log("ide: ", branches[selectedBranch].id);
-      console.log("closingFunc: ", closingFunc);
-      closingFunc();
-      closingFuncSideMenu();
+      if (cartItemsCount > 0) {
+        setOpenEmptyCartsConfirmModal(true);
+      } else {
+        fetchCategoriesData(branches[selectedBranch].id);
+        localStorage.setItem("selected_branch_id", branches[selectedBranch].id);
+        console.log("ide: ", branches[selectedBranch].id);
+        console.log("closingFunc: ", closingFunc);
+        closingFunc();
+        closingFuncSideMenu();
+      }
     }
   };
 
+  const emptyCarts = async () => {
+    try {
+      await AxiosInstance.delete(`/carts/trash`, {})
+        .then(() => {
+          dispatch(setCartItemsData([]));
+          dispatch(getCartItemsCount(0));
+        })
+        .finally(async () => {
+          await fetchCartData().then((r) => null);
+        });
+    } catch (error) {}
+  };
+
+  const handleEmptyCarts = () => {
+    setOpenEmptyCartsConfirmModal(false);
+    emptyCarts();
+    fetchCategoriesData(branches[selectedBranch].id);
+    localStorage.setItem("selected_branch_id", branches[selectedBranch].id);
+    console.log("ide: ", branches[selectedBranch].id);
+    console.log("closingFunc: ", closingFunc);
+    closingFunc();
+    closingFuncSideMenu();
+  };
   const [isWorkingHours, setIsWorkingHours] = useState(false);
   const [selectedDay, setSelectedDay] = useState("thursday");
   const [currentBranch, setCurrentBranch] = useState(null);
@@ -365,6 +400,14 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
       >
         <img src={XIcon} alt="x icon" className="w-[6.25px] h-[6.25px]" />
       </div>
+      <ConfirmationModal
+        isOpen={openEmptyCartsConfirmModal}
+        message={t(
+          "When you change the current branch, the carts will be empty."
+        )}
+        onConfirm={handleEmptyCarts}
+        onClose={() => setOpenEmptyCartsConfirmModal(false)}
+      />
     </div>
   );
 };

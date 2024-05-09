@@ -21,18 +21,6 @@ const Footer = ({
     footer_text_fontWeight,
     footer_text_fontSize,
     footer_text_color,
-    terms_and_conditions_color,
-    terms_and_conditions_alignment,
-    terms_and_conditions_text_fontFamily,
-    terms_and_conditions_text_fontWeight,
-    terms_and_conditions_text_fontSize,
-    terms_and_conditions_text_color,
-    privacy_policy_color,
-    privacy_policy_alignment,
-    privacy_policy_text_fontFamily,
-    privacy_policy_text_fontWeight,
-    privacy_policy_text_fontSize,
-    privacy_policy_text_color,
   } = restuarantEditorStyle;
 
   const { t } = useTranslation();
@@ -75,6 +63,25 @@ const Footer = ({
         // borderRadius: footer_radius,
       }}
     >
+      <div className={`px-1 flex justify-end`}>
+        <span
+          className="text-[#7D0A0A] font-medium cursor-pointer relative"
+          onClick={onPrivacyPolicyClick}
+        >
+          {t("Privacy Policy")}
+          <img
+            src={GreenDot}
+            alt="green dot"
+            className={`${
+              activeSubitem != null &&
+              navItems[activeSection]?.subItems[activeSubitem]?.title ==
+                t("Privacy Policy")
+                ? "absolute w-[5px] h-[5px] right-[-7px] top-[-3px]"
+                : "hidden"
+            }`}
+          />
+        </span>
+      </div>
       <div
         className={`px-1 flex ${
           footer_alignment == "right"
@@ -106,18 +113,7 @@ const Footer = ({
           />
         </h3>
       </div>
-      <div
-        style={{
-          color: terms_and_conditions_text_color,
-        }}
-        className={`px-1 flex ${
-          terms_and_conditions_alignment == "right"
-            ? "justify-end"
-            : terms_and_conditions_alignment == "left"
-            ? "justify-start"
-            : "justify-center"
-        }`}
-      >
+      <div className={`px-1 flex justify-start`}>
         <span
           className="text-[#7D0A0A] font-medium cursor-pointer relative"
           onClick={onTermsAndConditionsClick}
@@ -130,36 +126,6 @@ const Footer = ({
               activeSubitem != null &&
               navItems[activeSection]?.subItems[activeSubitem]?.title ==
                 t("Terms and Conditions")
-                ? "absolute w-[5px] h-[5px] right-[-7px] top-[-3px]"
-                : "hidden"
-            }`}
-          />
-        </span>
-      </div>
-      <div
-        style={{
-          color: privacy_policy_text_color,
-        }}
-        className={`px-1 flex ${
-          privacy_policy_alignment == "right"
-            ? "justify-end"
-            : privacy_policy_alignment == "left"
-            ? "justify-start"
-            : "justify-center"
-        }`}
-      >
-        <span
-          className="text-[#7D0A0A] font-medium cursor-pointer relative"
-          onClick={onPrivacyPolicyClick}
-        >
-          {t("Privacy Policy")}
-          <img
-            src={GreenDot}
-            alt="green dot"
-            className={`${
-              activeSubitem != null &&
-              navItems[activeSection]?.subItems[activeSubitem]?.title ==
-                t("Privacy Policy")
                 ? "absolute w-[5px] h-[5px] right-[-7px] top-[-3px]"
                 : "hidden"
             }`}

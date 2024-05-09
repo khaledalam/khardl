@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import FooterModal from "../../EditorsPage/Restuarants/components/FooterModal";
+import { useNavigate } from "react-router-dom";
 
 const Footer = ({ restaurantStyle }) => {
   const {
@@ -11,25 +10,10 @@ const Footer = ({ restaurantStyle }) => {
     footer_text_fontWeight,
     footer_text_fontSize,
     footer_text_color,
-    terms_and_conditions_color,
-    terms_and_conditions_alignment,
-    terms_and_conditions_text_fontFamily,
-    terms_and_conditions_text_fontWeight,
-    terms_and_conditions_text_fontSize,
-    terms_and_conditions_text_color,
-    privacy_policy_color,
-    privacy_policy_alignment,
-    privacy_policy_text_fontFamily,
-    privacy_policy_text_fontWeight,
-    privacy_policy_text_fontSize,
-    privacy_policy_text_color,
   } = restaurantStyle;
 
   const { t } = useTranslation();
-  const [isTermsAndConditionsModalOpened, setIsTermsAndConditionsModalOpened] =
-    useState(false);
-  const [isPrivacyPolicyModalOpened, setIsPrivacyPolicyModalOpened] =
-    useState(false);
+  const navigate = useNavigate();
   return (
     <div
       className={`w-full h-[56px] z-10 grid grid-cols-3 px-[16px] md:mt-[8px] rounded-xl items-center ${
@@ -54,6 +38,14 @@ const Footer = ({ restaurantStyle }) => {
         // borderRadius: footer_radius,
       }}
     >
+      <div className={`flex justify-end`}>
+        <span
+          className="text-[#7D0A0A] font-medium cursor-pointer relative"
+          onClick={() => navigate("/privacy")}
+        >
+          {t("Privacy Policy")}
+        </span>
+      </div>
       <div
         className={`flex ${
           footer_alignment == "right"
@@ -74,58 +66,14 @@ const Footer = ({ restaurantStyle }) => {
           </a>
         </h3>
       </div>
-      <div
-        style={{
-          color: terms_and_conditions_text_color,
-        }}
-        className={`flex ${
-          terms_and_conditions_alignment == "right"
-            ? "justify-end"
-            : terms_and_conditions_alignment == "left"
-            ? "justify-start"
-            : "justify-center"
-        }`}
-      >
+      <div className={`flex justify-start`}>
         <span
           className="text-[#7D0A0A] font-medium cursor-pointer relative"
-          onClick={() => setIsTermsAndConditionsModalOpened(true)}
+          onClick={() => navigate("/policies")}
         >
           {t("Terms and Conditions")}
         </span>
       </div>
-      <div
-        style={{
-          color: privacy_policy_text_color,
-        }}
-        className={`flex ${
-          privacy_policy_alignment == "right"
-            ? "justify-end"
-            : privacy_policy_alignment == "left"
-            ? "justify-start"
-            : "justify-center"
-        }`}
-      >
-        <span
-          className="text-[#7D0A0A] font-medium cursor-pointer relative"
-          onClick={() => setIsPrivacyPolicyModalOpened(true)}
-        >
-          {t("Privacy Policy")}
-        </span>
-      </div>
-      {isPrivacyPolicyModalOpened && (
-        <FooterModal
-          edit={false}
-          type="privacyPolicy"
-          setModalOpened={setIsPrivacyPolicyModalOpened}
-        />
-      )}
-      {isTermsAndConditionsModalOpened && (
-        <FooterModal
-          edit={false}
-          type="termsAndConditions"
-          setModalOpened={setIsTermsAndConditionsModalOpened}
-        />
-      )}
     </div>
   );
 };

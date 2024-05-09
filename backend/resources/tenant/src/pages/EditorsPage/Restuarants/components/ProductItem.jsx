@@ -476,7 +476,7 @@ const ProductItem = ({
           backgroundColor: menu_card_background_color,
           borderRadius: `${menu_card_radius}px`,
         }}
-        className="w-full max-w-32 shadow-md sm:max-w-36 h-44 relative hover:scale-110 transform transition-transform duration-300 ease-in-out hover:cursor-pointer"
+        className="w-full max-w-32 shadow-md sm:max-w-36 h-44 relative hover:scale-110 transform transition-transform duration-300 ease-in-out hover:cursor-pointer overflow-hidden"
         key={valuekey}
         onClick={() => document.getElementById(id).showModal()}
       >
@@ -796,7 +796,7 @@ const ProductItem = ({
                                                     : item?.value[1]
                                                 }
                                                 price={
-                                                  item.price === 0
+                                                  item?.price === 0
                                                     ? t("Free")
                                                     : `${Number(
                                                         item?.price

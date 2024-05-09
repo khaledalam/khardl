@@ -901,8 +901,8 @@
     "Back to step 1" : "⬅ العودة إلى الخطوة 1",
     "Ready" : "جاهزة",
     "Order by" : "الترتيب ب",
-    "Highest orders" : "الاعلي في الطلبات",
-    "Highest customers" : "الاعلي في العملاء",
+    "Highest orders" : "أعلي طبات",
+    "Highest customers" : "أعلي عملاء",
     "Swift code" : "سويفت كود",
     "SWIFT code e.g. SWFT12345678909836435647" : "سويفت كود مثال : SWFT12345678909836435647",
     "IBAN e.g. INBNK00045545555555555555":"IBAN e.g. INBNK00045545555555555555",
@@ -1243,7 +1243,7 @@
     "Update item":"تحديث المنتج",
     "Manage purchase notifications":"إدارة إشعارات الشراء",
     "Ability to Manage purchase notifications":"القدرة على إدارة إشعارات الشراء",
-    "Prices is required for Checkbox":"Prices is required for Checkbox",
+    "Prices is required for Checkbox":"الأسعار مطلوبة للخيارات(اختيار متعدد)",
     "Options[:num] name[AR] of checkbox can not be empty":"الاسم العربي للخيار[:num] مطلوب للخيارات(اختيار متعدد) ",
     "Options[:num] name[EN] of checkbox can not be empty":"الاسم الانجليزي للخيار[:num] مطلوب للخيارات(اختيار متعدد) ",
     "Price[:num] of checkbox can not be empty":"السعر[:num] للخيارات(اختيار متعدد) مطلوب",
@@ -1313,7 +1313,7 @@
     "Can add and edit drivers":"يمكن إضافة وتحرير السائقين",
     "Can view details of orders and update order status":"يمكن عرض تفاصيل الطلبات وتعديل حالة الطلب",
     "Daily visitors":"الزوار يوميا",
-    "Monthly visitors":"الزوار في كل شهر",
+    "Monthly visitors":"الزوار شهريا",
     "Daily":"يومي",
     "Monthly":"شهري",
     "You app has been published and ready for download":"تم نشر التطبيق بنجاح وجاهز للتحميل",
@@ -1379,8 +1379,19 @@
     "Approval Business":"موافقة علي الاعمال",
     "Khardl | Contact Us request":"خردل |طلب تواصل",
     "Renew your restaurant subscription":"جدد اشتراك مطعمك",
-    "Khardl | TAP Lead ID to Merchant ID request":"Khardl |اضغط على معرف الرصاص إلى طلب معرف التاجر"
-
-
-
+    "Khardl | TAP Lead ID to Merchant ID request":"Khardl |اضغط على معرف الرصاص إلى طلب معرف التاجر",
+    "Visitors count":"عدد الزوار",
+    "7 Days":"٧ ايام",
+    "6 Months":"٦ اشهر",
+    "Within :count days":"خلال :count أيام",
+    "Within :count Months":"في خلال :count أشهر",
+    "Visitors":"زائرين",
+    "Visitors within 7 days":"الزوار في خلال 7 أيام",
+    "Visitor":"زائر",
+    "Visitors within 6 months":"الزوار في خلال 6 أشهر",
+    "Revenues within 6 months":"الايرادات في خلال 6 أشهر",
+    "Revenues within 7 days":"الإيرادات في خلال 7 أيام",
+    "Highest Revenues":"أعلى الإيرادات",
+    "Highest visitors":"أعلى الزوار",
+    "Image will be shown to customers":"سيتم عرض الصورة للعملاء"
 }

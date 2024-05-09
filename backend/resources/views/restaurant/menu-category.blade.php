@@ -738,60 +738,61 @@
                                                     <!--end::Title-->
                                                 </div>
                                                 <!--end::Heading-->
-                                                <!--begin::Input group-->
-                                                <div class="d-flex flex-column mb-8 fv-row">
-                                                    <!--begin::Label-->
-                                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                        <span >{{__('item-photo')}}</span>
-                                                    </label>
-                                                    <div class="row">
-                                                        <div class="col-md-9">
-                                                            <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                         <!--begin::Input group-->
+                                                        <div class="d-flex flex-column mb-8 fv-row">
+                                                            <!--begin::Label-->
+                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                                <span class="required">{{__('item-photo')}}</span>
+                                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('Image will be shown to customers') }}"></i>
+                                                            </label>
+                                                            <input type="file"  data-item="{{ $item->id }}" class="item_image form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <img alt="product_image" src="{{ $item->photo }}" class="rounded" style="max-height: 100%;max-width:100%" />
+                                                        <!--end::Input group-->
+
+                                                        <!--begin::Input group-->
+                                                        <div class="d-flex flex-column mb-8">
+                                                            <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
+
+                                                            <ul class="nav nav-tabs">
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en-{{ $item->id }}">{{ __('English') }}</a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar-{{ $item->id }}">{{ __('Arabic') }}</a>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="tab-content mt-3">
+                                                                <div class="tab-pane fade show active" id="name-en-{{ $item->id }}">
+                                                                    <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="item_name_en" value="{{ old('item_name_en') ??  $item->getTranslation('name', 'en') }}" />
+                                                                </div>
+                                                                <div class="tab-pane fade" id="name-ar-{{ $item->id }}">
+                                                                    <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="item_name_ar" value="{{ old('item_name_ar') ?? $item->getTranslation('name', 'ar') }}" />
+                                                                </div>
+                                                            </div>
                                                         </div>
+
+                                                        <!--begin::Input group-->
+                                                        <div class="d-flex flex-column mb-8 fv-row">
+                                                            <!--begin::Label-->
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                                    <span class="required">{{__('item-availability')}}</span>
+                                                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
+                                                                </label>
+                                                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                                    <input type="checkbox" name="availability" value="1" {{ old('availability') || $item->availability ? 'checked' : '' }}>
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+                                                        <!--end::Input group-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <img alt="product_image" src="{{ $item->photo }}" id="item-image-preview-{{ $item->id }}" class="rounded" style="max-height: 100%;max-width:100%" />
                                                     </div>
                                                 </div>
-                                                <!--end::Input group-->
-
-                                                <!--begin::Input group-->
-                                                <div class="d-flex flex-column mb-8">
-                                                    <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
-
-                                                    <ul class="nav nav-tabs">
-                                                        <li class="nav-item">
-                                                            <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en-{{ $item->id }}">{{ __('English') }}</a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar-{{ $item->id }}">{{ __('Arabic') }}</a>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="tab-content mt-3">
-                                                        <div class="tab-pane fade show active" id="name-en-{{ $item->id }}">
-                                                            <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="item_name_en" value="{{ old('item_name_en') ??  $item->getTranslation('name', 'en') }}" />
-                                                        </div>
-                                                        <div class="tab-pane fade" id="name-ar-{{ $item->id }}">
-                                                            <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="item_name_ar" value="{{ old('item_name_ar') ?? $item->getTranslation('name', 'ar') }}" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!--begin::Input group-->
-                                                <div class="d-flex flex-column mb-8 fv-row">
-                                                    <!--begin::Label-->
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                            <span class="required">{{__('item-availability')}}</span>
-                                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
-                                                        </label>
-                                                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                            <input type="checkbox" name="availability" value="1" {{ old('availability') || $item->availability ? 'checked' : '' }}>
-                                                        </label>
-                                                    </div>
-
-                                                </div>
-                                                <!--end::Input group-->
                                                 <!--begin::Input group-->
                                                 <div class="row g-9 mb-8">
                                                     <!--begin::Col-->
@@ -1069,52 +1070,59 @@
                     </div>
                     <!--end::Heading-->
                     <!--begin::Input group-->
-                    <div class="d-flex flex-column mb-8 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">{{__('item-photo')}}</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference"></i>
-                        </label>
-                        <!--end::Label-->
-                        <input type="file" class="form-control form-control-solid" required placeholder="Enter Target Title" name="photo" accept="image/*" />
-                    </div>
-                    <!--end::Input group-->
+                    <div class="row">
+                        <div class="col-md-8">
 
-                    <!--begin::Input group-->
-                    <div class="d-flex flex-column mb-8">
-                        <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
-
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">{{ __('English') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">{{ __('Arabic') }}</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content mt-3">
-                            <div class="tab-pane fade show active" id="name-en">
-                                <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="item_name_en" />
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <!--begin::Label-->
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <span class="required">{{__('item-photo')}}</span>
+                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('Image will be shown to customers') }}"></i>
+                                </label>
+                                <input type="file" id="item_image" class="form-control form-control-solid" required placeholder="Enter Target Title" name="photo" accept="image/*" />
                             </div>
-                            <div class="tab-pane fade" id="name-ar">
-                                <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="item_name_ar" />
+                            <!--end::Input group-->
+
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-column mb-8">
+                                <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
+
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">{{ __('English') }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">{{ __('Arabic') }}</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content mt-3">
+                                    <div class="tab-pane fade show active" id="name-en">
+                                        <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="item_name_en" />
+                                    </div>
+                                    <div class="tab-pane fade" id="name-ar">
+                                        <input type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="item_name_ar" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <!--begin::Label-->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                        <span class="required">{{__('item-availability')}}</span>
+                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
+                                    </label>
+                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                        <input type="checkbox" name="availability" checked value="1">
+                                    </label>
+                                </div>
+
                             </div>
                         </div>
-                    </div>
-
-                    <!--begin::Input group-->
-                    <div class="d-flex flex-column mb-8 fv-row">
-                        <!--begin::Label-->
-                        <div class="d-flex justify-content-between align-items-center">
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__('item-availability')}}</span>
-                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
-                            </label>
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <input type="checkbox" name="availability" checked value="1">
-                            </label>
+                        <div class="col-md-4">
+                            <img src="#" id="item-image-preview" class="rounded" style="max-height: 100%;max-width:100%" />   <!--for preview purpose -->
                         </div>
-
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
@@ -1464,4 +1472,29 @@
 
 </style>
 <!--end::Content-->
+{{-- Image preview --}}
+<script>
+    function readURL(input,item_id = null) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                console.log(item_id);
+                if(item_id){
+                    $(`#item-image-preview-${item_id}`).attr('src', e.target.result);
+                }else{
+                    $('#item-image-preview').attr('src', e.target.result);
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#item_image").change(function(){
+        readURL(this);
+    });
+    $(".item_image").change(function(){
+        var itemID = $(this).data('item');
+        readURL(this,itemID);
+    });
+</script>
 @endsection
