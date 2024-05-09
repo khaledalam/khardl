@@ -126,7 +126,7 @@
                                                                             <div class="form-check form-check-solid form-switch fv-row">
                                                                                 <input class="form-check-input w-35px h-20px" type="checkbox" id="is_application_purchase" value="1" checked name="is_application_purchase">
                                                                                 <label class="form-check-label" for="is_application_purchase">
-                                                                                    {{ __('On purchase the app')}}
+                                                                                    {{ __('On purchase yearly app')}}
                                                                                 </label>
                                                                             </div>
                                                                             <!--end::Label-->
@@ -137,6 +137,16 @@
                                                                                 <input class="form-check-input w-35px h-20px" type="checkbox" id="is_branch_purchase" value="1" checked name="is_branch_purchase">
                                                                                 <label class="form-check-label" for="is_branch_purchase">
                                                                                     {{ __('On purchase branch')}}
+                                                                                </label>
+                                                                            </div>
+                                                                            <!--end::Label-->
+                                                                        </div>
+                                                                        <div class="row mb-0">
+                                                                            <!--begin::Label-->
+                                                                            <div class="form-check form-check-solid form-switch fv-row">
+                                                                                <input class="form-check-input w-35px h-20px" type="checkbox" id="is_lifetime_purchase" value="1" checked name="is_lifetime_purchase">
+                                                                                <label class="form-check-label" for="is_lifetime_purchase">
+                                                                                    {{ __('On purchase lifetime app')}}
                                                                                 </label>
                                                                             </div>
                                                                             <!--end::Label-->
@@ -193,8 +203,10 @@
                                               <th class="min-w-150px">{{ __('discount') }}</th>
                                               <th class="min-w-150px">{{ __('Type') }}</th>
                                               <th class="min-w-150px">{{ __('Number of usage') }}</th>
-                                              <th class="min-w-150px">{{ __('app subscription') }}</th>
+                                         
                                               <th class="min-w-150px">{{ __('restaurant subscription') }}</th>
+                                              <th class="min-w-150px">{{ __('lifetime app') }}</th>
+                                              <th class="min-w-150px">{{ __('yearly app') }}</th>
                                               <th class="min-w-150px text-end">{{ __('actions')}}</th>
                                           </tr>
                                       </thead>
@@ -228,11 +240,15 @@
                                                 <td>
                                                     <span class="badge badge-light-success fw-bolder px-4 py-3">{{ __($coupon->n_of_usage) }}</span>
                                                 </td>
-                                                <td>
-                                                    <span class="badge  fw-bolder px-4 py-3">{{ $coupon->is_application_purchase ? '✅':'❌' }}</span>
-                                                </td>
+                                                
                                                 <td>
                                                     <span class="badge  fw-bolder px-4 py-3">{{ $coupon->is_branch_purchase ? '✅':'❌' }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge  fw-bolder px-4 py-3">{{ $coupon->is_lifetime_purchase ? '✅':'❌' }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge  fw-bolder px-4 py-3">{{ $coupon->is_application_purchase ? '✅':'❌' }}</span>
                                                 </td>
                                                 <td class="text-end">
                                                     <form class="delete-form justify-content-end" action="{{ route('admin.delete-promoter-coupon', ['id' => $coupon->id]) }}" method="POST">
