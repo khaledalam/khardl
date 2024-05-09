@@ -55,17 +55,17 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
 function submitPayment(e, containerID) {
     loadedContainer  = containerID;
-    var waiting = document.querySelector('#waiting-item');
-    waiting.style.display = 'block';
-    var submitButton = document.getElementById('tap-btn');
-    submitButton.disabled = true;
+    // var waiting = document.querySelector('#waiting-item');
+    // waiting.style.display = 'block';
+    // var submitButton = document.getElementById('tap-btn');
+    // submitButton.disabled = true;
 
     e.preventDefault();
     goSell.submit();
-    setTimeout(() => {
-        waiting.style.display = 'none';
-        submitButton.disabled = false;    
-    }, 2000);
+    // setTimeout(() => {
+    //     waiting.style.display = 'none';
+    //     submitButton.disabled = false;    
+    // }, 2000);
   
    
 }
@@ -75,7 +75,6 @@ function submitPayment(e, containerID) {
         callback: function(event) {
             var waiting = document.querySelector('#waiting-item');
             var submitButton = document.getElementById('tap-btn');
-
             waiting.style.display = 'block';
             submitButton.disabled = true;    
             if (event.card.id) {
@@ -795,9 +794,10 @@ function openModal(modalID) {
                                                                 <!--begin::Price-->
                                                                 <div class="text-center my-5">
 
-                                                                    <h2 class="fw-boldest text-center text-khardl mt-3">{{$customer_app_sub->amount}} {{__('SAR')}}</h2>
+                                                                    <h2 class="fw-boldest text-center text-khardl mt-3">{{$customer_app_sub->amount}} |  {{$lifetime_customer_app_sub?->amount }} {{__('SAR')}}</h2>
 
                                                                 </div>
+         
                                                                 <!--end::Price-->
                                                             </div>
                                                             <!--end::Heading-->
