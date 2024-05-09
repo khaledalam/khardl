@@ -446,7 +446,7 @@ class TapController extends Controller
                $type = ROSubscription::NEW;
             }
         }
-        if($request->coupon_code){
+        if($request->coupon_code && !$sub){
             $chargeData = tenancy()->central(function()use($request,$AppLifetimeSubscription){
                 $coupon = ROSubscriptionCoupon::
                 where('code',$request->coupon_code)
