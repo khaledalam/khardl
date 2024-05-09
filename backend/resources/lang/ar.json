@@ -143,6 +143,7 @@
     "Arabic name is required": "الاسم العربي مطلوب",
     "Deleted successfully":"تم الحذف بنجاح",
     "Number of usage":"عدد الاستخدام",
+    "subscription coupons":"قسائم خصم الاشتراكات",
     "Restored successfully":"تمت الاستعادة بنجاح",
     "This restaurant has no tap account on the server":"هذا المطعم ليس لديه حساب علي بوابة الدفع ",
     "Invalid status transition. Allowed transitions: ":"غير مسموح بتغير الي هذه الحالة, الحالات القابلة لتغيرها ",

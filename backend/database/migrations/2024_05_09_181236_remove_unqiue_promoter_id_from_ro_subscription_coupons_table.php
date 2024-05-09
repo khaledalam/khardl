@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('ro_subscription_coupons', function (Blueprint $table) {
-
-            $table->unsignedBigInteger('promoter_id')->change();
+            $table->dropForeign('ro_subscription_coupons_promoter_id_foreign');
+            $table->unsignedBigInteger('promoter_id')->unique(false)->change();
         });
     }
 
@@ -23,8 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('ro_subscription_coupons', function (Blueprint $table) {
-
             $table->unsignedBigInteger('promoter_id')->unique()->change();
-        });
+      });
     }
 };

@@ -58,7 +58,7 @@
                 <th class="fs-4 font-weight-bold text-black">{{ __('The number of users who used the link') }}</th>
                 <th class="fs-4 font-weight-bold text-black">{{ __('Registered Users Count') }}</th>
                 
-                @if($sub_coupon)<th class="fs-4 font-weight-bold text-black">{{ __('The number of users who used subscription coupon') }}</th>@endif
+                {{-- @if($sub_coupons)<th class="fs-4 font-weight-bold text-black">{{ __('The number of users who used subscription coupon') }}</th>@endif --}}
 
             </thead>
             <tbody>
@@ -107,15 +107,41 @@
                     <td>
                         <strong class="text-success">{{ $promoter->registered }}</strong>
                     </td>
-                    @if($sub_coupon)
-                    <td>
-                        <strong class="text-success">{{ $sub_coupon->n_of_usage }}</strong>
-                    </td>
-                    @endif
+                   
                 </tr>
             </tbody>
         </table>
         <hr>
+        @if($sub_coupons->count())
+        <h2 class="text-center">{{__('subscription coupons')}}</h2>
+        <table class="table table-responsive">
+            <thead>
+                <th class="fs-4 font-weight-bold text-black">{{ __('Code') }}</th>
+                <th class="fs-4 font-weight-bold text-black">{{ __('Amount') }}</th>
+                <th class="fs-4 font-weight-bold text-black">{{ __('Number of usage') }}</th>
+            
+            </thead>
+            <tbody>
+                
+                @foreach ($sub_coupons as $coupon)
+                <tr>
+                    <td class="text-primary">
+                        {{ $coupon->code }}
+                    </td>
+                    <td>
+                        {{($coupon->type == App\Enums\Admin\CouponTypes::PERCENTAGE_COUPON->value)?$coupon->amount."%":$coupon->amount}}
+                    </td>
+                    <td>
+                        {{ $coupon->n_of_usage }}
+                    </td>
+                   
+                </tr>
+                @endforeach
+                
+              
+            </tbody>
+        </table>
+        @endif
     </div>
 
 </body>
