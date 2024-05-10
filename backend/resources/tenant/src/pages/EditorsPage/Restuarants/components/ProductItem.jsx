@@ -768,14 +768,20 @@ const ProductItem = ({
                                               </span>
                                             )}
                                           </h3>
-                                          <span className="text-[12px] mb-[8px]">
-                                            {t("Maximum number of choises: ")}
-                                            {
-                                              checkbox_input_maximum_choices[
-                                                checkbox_idx
-                                              ]
-                                            }
-                                          </span>
+                                          {checkbox_input_maximum_choices[
+                                            checkbox_idx
+                                          ] <
+                                            checkboxItems[checkbox_idx]
+                                              .length && (
+                                            <span className="text-[12px] mb-[8px]">
+                                              {t("Maximum number of choises: ")}
+                                              {
+                                                checkbox_input_maximum_choices[
+                                                  checkbox_idx
+                                                ]
+                                              }
+                                            </span>
+                                          )}
                                         </>
                                       )}
                                       <div className="flex flex-col gap-2">
@@ -998,17 +1004,24 @@ const ProductItem = ({
                           <div id={"checkbox"} className="" key={checkbox_idx}>
                             {title[0] && (
                               <>
-                                <h3 className="text-[12px] font-medium mt-[16px]">
+                                <h3 className="text-[12px] font-medium mt-[16px] mb-1">
                                   {language === "en" ? title[0] : title[1]}
                                   {checkbox_required[checkbox_idx] ===
                                     "true" && (
                                     <span className="text-red-500">*</span>
                                   )}
                                 </h3>
-                                <span className="text-[10px] mb-2 inline-block">
-                                  {t("Maximum number of choises: ")}
-                                  {checkbox_input_maximum_choices[checkbox_idx]}
-                                </span>
+                                {checkbox_input_maximum_choices[checkbox_idx] <
+                                  checkboxItems[checkbox_idx].length && (
+                                  <span className="text-[10px] mb-2 inline-block">
+                                    {t("Maximum number of choises: ")}
+                                    {
+                                      checkbox_input_maximum_choices[
+                                        checkbox_idx
+                                      ]
+                                    }
+                                  </span>
+                                )}
                               </>
                             )}
                             <div className="flex flex-col gap-2">

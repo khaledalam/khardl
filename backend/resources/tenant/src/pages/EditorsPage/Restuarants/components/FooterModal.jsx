@@ -124,31 +124,38 @@ const FooterModal = ({ type, setModalOpened }) => {
               <button
                 className={`${
                   language == "en" ? " rounded-l-lg" : "rounded-r-lg"
-                } border py-1 px-2 transition-all ${
-                  languageType === "en"
+                } border py-1 px-2 transition-all duration-75 ${
+                  languageType === language
                     ? "bg-red-900 text-white hover:bg-opacity-75"
                     : "bg-neutral-700 text-neutral-200 hover:bg-neutral-200 hover:text-neutral-700"
                 }`}
-                onClick={() => setLanguageType("en")}
+                onClick={() =>
+                  language == "en"
+                    ? setLanguageType("en")
+                    : setLanguageType("ar")
+                }
               >
-                {t("EN")}
+                {language == "en" ? t("EN") : t("AR")}
               </button>
               <button
                 className={`${
                   language == "en" ? " rounded-r-lg" : "rounded-l-lg"
-                } border py-1 px-2 transition-all ${
-                  languageType !== "en"
+                } border py-1 px-2 transition-all duration-75 ${
+                  languageType !== language
                     ? "bg-red-900 text-white hover:bg-opacity-75"
-                    : "bg-neutral-500 text-neutral-200 hover:bg-neutral-700"
+                    : "bg-neutral-700 text-neutral-200 hover:bg-neutral-200 hover:text-neutral-700"
                 }`}
-                onClick={() => setLanguageType("ar")}
+                onClick={() =>
+                  language == "en"
+                    ? setLanguageType("ar")
+                    : setLanguageType("en")
+                }
               >
-                {t("AR")}
+                {language == "en" ? t("AR") : t("EN")}
               </button>
             </div>
           </div>
           <ReactQuill
-            // theme="snow"
             value={text}
             // bounds={".custom-quill-container"}
             theme="snow"

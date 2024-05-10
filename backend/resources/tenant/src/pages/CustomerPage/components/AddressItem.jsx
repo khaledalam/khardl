@@ -78,7 +78,10 @@ const AddressItem = ({ address, onEdit, onDelete, onSetAsDefault }) => {
           </div>
         </div>
       </div>
-      <div className="self-stretch text-neutral-700 font-light font-['Plus Jakarta Sans']">
+      <div
+        className="overflow-hidden overflow-ellipsis text-neutral-700 font-light font-['Plus Jakarta Sans'] min-h-14 h-14 max-h-14"
+        title={t(address?.address)}
+      >
         {t(address?.address)}
       </div>
       {/* <div className="self-stretch justify-between items-center inline-flex">

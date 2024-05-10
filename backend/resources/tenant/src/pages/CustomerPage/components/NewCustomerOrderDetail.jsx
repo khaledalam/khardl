@@ -208,7 +208,7 @@ const CustomerOrderDetail = ({ orderId }) => {
               </div>
               <div className="self-stretch justify-start items-start gap-2.5 inline-flex">
                 <div className="text-gray-900 text-opacity-75 font-semibold">
-                  {t(customerAddress.addressValue)}
+                  {t(singleOrder?.shipping_address)}
                 </div>
               </div>
             </div>

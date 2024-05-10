@@ -8,6 +8,7 @@ import EmptyBackground60 from "../../../assets/emptyBackground60.png";
 import UploadIcon from "../../../assets/uploadIcon.png";
 import { useTranslation } from "react-i18next";
 import { SetSideBar } from "../../../redux/NewEditor/restuarantEditorSlice";
+import Skeleton from "react-loading-skeleton";
 
 const Header = ({ restaurantStyle, categories, handleGotoCart }) => {
   const dispatch = useDispatch();
@@ -81,28 +82,44 @@ const Header = ({ restaurantStyle, categories, handleGotoCart }) => {
         )}
       </div>
 
-      <div
-        className={`w-[30px] h-[30px]relative rounded-full flex items-center justify-center cursor-pointer self-center shadow-md ${
-          logo_alignment == "left"
-            ? "justify-self-start"
-            : logo_alignment == "right"
-            ? "justify-self-end"
-            : "justify-self-center"
-        }`}
-        style={{
-          borderRadius: logo_border_radius ? `${logo_border_radius}px` : "50px",
-        }}
-      >
-        <img
-          src={logo}
-          className={`w-[30px] h-[30px] rounded-full shadow-md `}
+      {logo ? (
+        <div
+          className={`w-[30px] h-[30px] relative rounded-full flex items-center justify-center cursor-pointer self-center shadow-md ${
+            logo_alignment == "left"
+              ? "justify-self-start"
+              : logo_alignment == "right"
+              ? "justify-self-end"
+              : "justify-self-center"
+          }`}
           style={{
             borderRadius: logo_border_radius
               ? `${logo_border_radius}px`
               : "50px",
           }}
-        />
-      </div>
+        >
+          <img
+            src={logo}
+            className={`w-[30px] h-[30px] rounded-full shadow-md `}
+            style={{
+              borderRadius: logo_border_radius
+                ? `${logo_border_radius}px`
+                : "50px",
+            }}
+          />
+        </div>
+      ) : (
+        <div
+          className={`w-[30px] h-[30px] relative -top-[2px] rounded-full shadow-md self-center ${
+            logo_alignment == "left"
+              ? "justify-self-start"
+              : logo_alignment == "right"
+              ? "justify-self-end"
+              : "justify-self-center"
+          }`}
+        >
+          <Skeleton className="w-full h-full" />
+        </div>
+      )}
     </div>
   );
 };

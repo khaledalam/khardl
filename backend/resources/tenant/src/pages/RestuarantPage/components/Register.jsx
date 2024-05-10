@@ -65,10 +65,9 @@ const Register = ({ closingFunc }) => {
         last_name: data.last_name,
         email: data.email,
         phone: data.phone,
-        id_sms: localStorage.getItem('phone_sms_otp_id'),
-        otp: otp
+        id_sms: localStorage.getItem("phone_sms_otp_id"),
+        otp: otp,
       });
-
 
       if (res.data) {
         sessionStorage.setItem(PREFIX_KEY + "phone", data.phone);
@@ -83,18 +82,19 @@ const Register = ({ closingFunc }) => {
 
         toast.error(`${t("Account creation failed")}`);
       }
-    } catch(e) {
-      toast.error(`${e.response?.data?.message || t("Account creation failed")}`);
+    } catch (e) {
+      toast.error(
+        `${e.response?.data?.message || t("Account creation failed")}`
+      );
     }
-  }
+  };
 
   /////////////////////////////////////////////////////////////////////////////////////
   // API POST REQUEST
   const onSubmit = async (data) => {
-
     console.log("data:", data);
 
-    if (otp && localStorage.getItem('phone_sms_otp_id')) {
+    if (otp && localStorage.getItem("phone_sms_otp_id")) {
       await onRegisterSendOTP(data);
       return;
     }
@@ -108,8 +108,11 @@ const Register = ({ closingFunc }) => {
       console.log("res", response.data);
 
       if (response.data?.data?.id) {
-        toast.success(response?.data?.message || `${t("The code has been sent successfully")}`);
-        localStorage.setItem('phone_sms_otp_id', response.data?.data?.id);
+        toast.success(
+          response?.data?.message ||
+            `${t("The code has been sent successfully")}`
+        );
+        localStorage.setItem("phone_sms_otp_id", response.data?.data?.id);
       } else if (response.data?.message) {
         toast.info(`${response.data?.message}`);
       }
@@ -171,12 +174,11 @@ const Register = ({ closingFunc }) => {
 
   // API POST REQUEST
   const ResendCode = async (event) => {
-
     try {
       setSpinner(true);
       resetTimer();
       const response = await AxiosInstance.post(`/phone/send-verify`, {
-        phone: registerFormRef.current.phone.value
+        phone: registerFormRef.current.phone.value,
       });
       if (response.data) {
         console.log("ResendCode", response?.data);
@@ -242,7 +244,6 @@ const Register = ({ closingFunc }) => {
     }
   }, [showOTP]);
 
-
   const [lengthOfPhone, setLengthOfPhone] = useState(0);
 
   return (
@@ -304,9 +305,7 @@ const Register = ({ closingFunc }) => {
           <input
             type="email"
             className="w-full h-8 px-4 py-[7px] bg-white rounded-[50px] border border-gray-200 justify-start items-center gap-1.5 inline-flex text-zinc-500 text-xs font-normal leading-[18px] outline-none"
-            placeholder={t(
-              "Write your email address here..."
-            )}
+            placeholder={t("Write your email address here...")}
             {...register("email", { required: false })}
           />
           <div className="h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
@@ -325,20 +324,35 @@ const Register = ({ closingFunc }) => {
               {...register("phone", {
                 required: true,
               })}
-              onChange={(data) => {
-                setLengthOfPhone(data.target.value.length);
+              onChange={(event) => {
+                let temp = "";
+                for (let i = 0; i < event.target.value.length; i += 1) {
+                  if (
+                    event.target.value[i] >= '0' &&
+                    event.target.value[i] <= '9'
+                  ) {
+                    temp += event.target.value[i];
+                  }
+                }
+                event.target.value = temp;
+                setLengthOfPhone(event.target.value.length);
                 // console.log(data.target.value.length);
               }}
               minLength={9}
               maxLength={9}
               onKeyDown={(event) => {
                 if (
+                  event.ctrlKey &&
+                  event.key === "v"
+                ) {
+                } else if (
                   (event.which < 48 || event.which > 57) &&
                   (event.which < 96 || event.which > 105) &&
                   event.which !== 8 &&
                   event.which !== 46 &&
                   event.which !== 37 &&
-                  event.which !== 39
+                  event.which !== 39 &&
+                  !event.ctrlKey
                 ) {
                   event.preventDefault();
                 }
@@ -353,7 +367,10 @@ const Register = ({ closingFunc }) => {
           <div className="w-[84px] h-8 p-1 rounded-[50px] border border-gray-200 justify-start items-center gap-1 inline-flex relative">
             <div className="w-[15px] h-[15px] py-0.5 flex-col justify-center items-center gap-2.5 inline-flex" />
 
-            <div dir={"ltr"} className="text-zinc-500 text-xs font-normal font-['Plus Jakarta Sans'] leading-[18px]">
+            <div
+              dir={"ltr"}
+              className="text-zinc-500 text-xs font-normal font-['Plus Jakarta Sans'] leading-[18px]"
+            >
               +966
             </div>
 
