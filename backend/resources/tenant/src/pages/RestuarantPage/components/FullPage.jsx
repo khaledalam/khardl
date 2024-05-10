@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
-
+import Skeleton from "react-loading-skeleton";
 import Header from "./Header";
 // import Logo from "./Logo";
 import Banner from "./Banner";
@@ -93,7 +93,13 @@ const FullPage = ({ categories }) => {
         />
         {/* <Logo restaurantStyle={restaurantStyle} /> */}
         <Banner restaurantStyle={restaurantStyle} />
-        <Category restaurantStyle={restaurantStyle} categories={categories} />
+        {categories.length ? (
+          <Category restaurantStyle={restaurantStyle} categories={categories} />
+        ) : (
+          <div className="min-h-[30px]">
+            <Skeleton className="h-full" />
+          </div>
+        )}
         {/* <SocialMedia restaurantStyle={restaurantStyle} /> */}
         <Footer restaurantStyle={restaurantStyle} />
       </div>

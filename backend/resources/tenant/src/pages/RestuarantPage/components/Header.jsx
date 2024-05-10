@@ -109,7 +109,7 @@ const Header = ({ restaurantStyle, categories, handleGotoCart }) => {
         </div>
       ) : (
         <div
-          className={`w-[30px] h-[30px] rounded-full shadow-md self-center ${
+          className={`w-[30px] h-[30px] relative -top-[2px] rounded-full shadow-md self-center ${
             logo_alignment == "left"
               ? "justify-self-start"
               : logo_alignment == "right"
