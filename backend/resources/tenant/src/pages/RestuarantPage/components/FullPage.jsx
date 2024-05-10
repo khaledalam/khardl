@@ -78,7 +78,7 @@ const FullPage = ({ categories }) => {
         style={{
           backgroundColor: page_color,
         }}
-        className="w-full h-full p-4 flex flex-col gap-[16px] relative mx-auto max-w-[1200px]"
+        className="w-full h-full p-2 pt-1 md:p-4 flex flex-col gap-[16px] relative mx-auto max-w-[1200px]"
       >
         <Header
           restaurantStyle={restaurantStyle}
@@ -94,7 +94,7 @@ const FullPage = ({ categories }) => {
         {/* <Logo restaurantStyle={restaurantStyle} /> */}
         <Banner restaurantStyle={restaurantStyle} />
         <Category restaurantStyle={restaurantStyle} categories={categories} />
-        <SocialMedia restaurantStyle={restaurantStyle} />
+        {/* <SocialMedia restaurantStyle={restaurantStyle} /> */}
         <Footer restaurantStyle={restaurantStyle} />
       </div>
       {isBranchModelOpen ? (

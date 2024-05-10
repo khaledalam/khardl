@@ -9,6 +9,7 @@ import { getCartItemsCount } from "../../../redux/NewEditor/categoryAPISlice";
 import MobileMenu from "../components/MobileMenu";
 import homeIcon from "../../../assets/homeIcon.svg";
 import { useTranslation } from "react-i18next";
+import Skeleton from "react-loading-skeleton";
 
 const NavbarCustomer = ({
   customerDashboard = false,
@@ -60,15 +61,19 @@ const NavbarCustomer = ({
         className="text-neutral-400 cursor-pointer hidden md:block"
         onClick={() => setShowMenu(!showMenu)}
       />
-      <img
-        onClick={() => navigate("/")}
-        style={{
-          borderRadius: logo_border_radius + "px",
-        }}
-        className="w-[50px] h-[50px] bg-neutral-200 relative flex items-center justify-center cursor-pointer"
-        src={logo || homeIcon}
-        alt="home"
-      />
+      {logo ? (
+        <img
+          onClick={() => navigate("/")}
+          style={{
+            borderRadius: logo_border_radius + "px",
+          }}
+          className="w-[50px] h-[50px] bg-neutral-200 relative flex items-center justify-center cursor-pointer"
+          src={logo}
+          alt="home"
+        />
+      ) : (
+        <Skeleton />
+      )}
     </div>
   );
 };

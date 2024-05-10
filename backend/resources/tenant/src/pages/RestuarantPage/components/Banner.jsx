@@ -4,6 +4,7 @@ import Sliderr from "../../EditorsPage/Restuarants/components/Sliderr";
 
 import EmptyBackground from "../../../assets/emptyBackground.png";
 import UploadIcon from "../../../assets/uploadIcon.png";
+import Skeleton from "react-loading-skeleton";
 
 const Banner = ({ restaurantStyle }) => {
   const { t } = useTranslation();
@@ -58,7 +59,8 @@ const Banner = ({ restaurantStyle }) => {
       }}
       className={`w-full min-h-[180px] aspect-[2/1] flex pt-[56px] md:pt-[80px] justify-center relative`}
     >
-      <div
+      <Skeleton />
+      {/* <div
         className={`${
           uploadedSingleBanner ? "hidden" : "flex flex-col items-center"
         } `}
@@ -75,7 +77,7 @@ const Banner = ({ restaurantStyle }) => {
           }}
           className="w-[18px] h-[18px] object-cover"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

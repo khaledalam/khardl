@@ -29,7 +29,7 @@ export const CustomerPage = () => {
   pages[t("Orders")] = <CustomerOrder />;
   pages[t("Profile")] = <CustomerProfile />;
   pages[t("Addresses")] = <CustomerAddresses />;
-  pages[t("Wallet")] = <CustomerPayment />;
+  // pages[t("Wallet")] = <CustomerPayment />;
 
   let orderId = searchParam.get("orderId");
 

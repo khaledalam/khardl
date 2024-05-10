@@ -8,6 +8,7 @@ import EmptyBackground60 from "../../../assets/emptyBackground60.png";
 import UploadIcon from "../../../assets/uploadIcon.png";
 import { useTranslation } from "react-i18next";
 import { SetSideBar } from "../../../redux/NewEditor/restuarantEditorSlice";
+import Skeleton from "react-loading-skeleton";
 
 const Header = ({ restaurantStyle, categories, handleGotoCart }) => {
   const dispatch = useDispatch();
@@ -93,15 +94,19 @@ const Header = ({ restaurantStyle, categories, handleGotoCart }) => {
           borderRadius: logo_border_radius ? `${logo_border_radius}px` : "50px",
         }}
       >
-        <img
-          src={logo}
-          className={`w-[30px] h-[30px] rounded-full shadow-md `}
-          style={{
-            borderRadius: logo_border_radius
-              ? `${logo_border_radius}px`
-              : "50px",
-          }}
-        />
+        {logo ? (
+          <img
+            src={logo}
+            className={`w-[30px] h-[30px] rounded-full shadow-md `}
+            style={{
+              borderRadius: logo_border_radius
+                ? `${logo_border_radius}px`
+                : "50px",
+            }}
+          />
+        ) : (
+          <Skeleton />
+        )}
       </div>
     </div>
   );

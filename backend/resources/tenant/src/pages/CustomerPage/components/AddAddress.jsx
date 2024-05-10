@@ -59,9 +59,6 @@ const AddAddress = ({ onSave, onCancel, address, setAddress }) => {
               ) {
                 return toast.error("Address value can't be empty.");
               }
-              setAddress({
-                type: "home",
-              });
               onSave(address);
             }}
           >
