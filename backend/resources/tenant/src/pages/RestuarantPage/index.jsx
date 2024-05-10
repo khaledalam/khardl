@@ -23,6 +23,9 @@ export const RestuarantHomePage = () => {
   const categories = useSelector((state) => state.categoryAPI.categories);
 
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
+  const restaurantStyleVersion = useSelector(
+    (state) => state.styleDataRestaurant.restaurantStyleVersion
+  );
   const branches = restaurantStyle.branches;
 
   let branch_id = localStorage.getItem("selected_branch_id");
@@ -35,9 +38,9 @@ export const RestuarantHomePage = () => {
           branch_id
             ? `&selected_branch_id=${branch_id}`
             : id
-              ? `&selected_branch_id=${id}`
-              : ""
-        }`,
+            ? `&selected_branch_id=${id}`
+            : ""
+        }`
       );
       // const restaurantCategoriesResponse =[];
 
@@ -51,7 +54,7 @@ export const RestuarantHomePage = () => {
           selectedCategoryAPI({
             name: restaurantCategoriesResponse.data?.data[0].name,
             id: restaurantCategoriesResponse.data?.data[0].id,
-          }),
+          })
         );
 
         if (!branch_id && id) {
@@ -77,9 +80,19 @@ export const RestuarantHomePage = () => {
   };
   const fetchResStyleData = async () => {
     try {
-      AxiosInstance.get(`restaurant-style`).then((response) => {
-        dispatch(changeRestuarantEditorStyle(response.data?.data));
-      });
+      if (
+        localStorage.getItem("restaurantStyleVersion") == restaurantStyleVersion
+      ) {
+        dispatch(
+          changeRestuarantEditorStyle(JSON.parse(localStorage.getItem("restaurantStyle")))
+        );
+      } else {
+        localStorage.setItem("restaurantStyleVersion", restaurantStyleVersion);
+        AxiosInstance.get(`restaurant-style`).then((response) => {
+          localStorage.setItem("restaurantStyle", JSON.stringify(response.data?.data));
+          dispatch(changeRestuarantEditorStyle(response.data?.data));
+        });
+      }
       setisLoading(false);
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)

@@ -225,7 +225,7 @@ const CartPage = () => {
     ).toFixed(2);
 
   return (
-    <div className="p-12">
+    <div className="p-4 sm:p-6 md:p-12">
       {loading && (
         <div className={"m-auto w-28 pt-28"}>
           <ClipLoader
