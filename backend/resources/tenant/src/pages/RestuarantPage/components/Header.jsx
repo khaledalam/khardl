@@ -82,19 +82,21 @@ const Header = ({ restaurantStyle, categories, handleGotoCart }) => {
         )}
       </div>
 
-      <div
-        className={`w-[30px] h-[30px]relative rounded-full flex items-center justify-center cursor-pointer self-center shadow-md ${
-          logo_alignment == "left"
-            ? "justify-self-start"
-            : logo_alignment == "right"
-            ? "justify-self-end"
-            : "justify-self-center"
-        }`}
-        style={{
-          borderRadius: logo_border_radius ? `${logo_border_radius}px` : "50px",
-        }}
-      >
-        {logo ? (
+      {logo ? (
+        <div
+          className={`w-[30px] h-[30px] relative rounded-full flex items-center justify-center cursor-pointer self-center shadow-md ${
+            logo_alignment == "left"
+              ? "justify-self-start"
+              : logo_alignment == "right"
+              ? "justify-self-end"
+              : "justify-self-center"
+          }`}
+          style={{
+            borderRadius: logo_border_radius
+              ? `${logo_border_radius}px`
+              : "50px",
+          }}
+        >
           <img
             src={logo}
             className={`w-[30px] h-[30px] rounded-full shadow-md `}
@@ -104,10 +106,20 @@ const Header = ({ restaurantStyle, categories, handleGotoCart }) => {
                 : "50px",
             }}
           />
-        ) : (
-          <Skeleton />
-        )}
-      </div>
+        </div>
+      ) : (
+        <div
+          className={`w-[30px] h-[30px] rounded-full shadow-md self-center ${
+            logo_alignment == "left"
+              ? "justify-self-start"
+              : logo_alignment == "right"
+              ? "justify-self-end"
+              : "justify-self-center"
+          }`}
+        >
+          <Skeleton className="w-full h-full" />
+        </div>
+      )}
     </div>
   );
 };

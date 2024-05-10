@@ -28,7 +28,7 @@ const Banner = ({ restaurantStyle }) => {
           return {
             croppedImage: `${image.url}`,
           };
-        }),
+        })
       );
     }
     if (banner_type == "one-photo" && banner_image) {
@@ -47,37 +47,8 @@ const Banner = ({ restaurantStyle }) => {
       </div>
     </>
   ) : (
-    <div
-      style={{
-        backgroundColor: banner_background_color,
-        backgroundImage: uploadedSingleBanner
-          ? `url(${uploadedSingleBanner})`
-          : `url(${EmptyBackground})`,
-        borderRadius: banner_shape === "sharp" ? 0 : 12,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-      }}
-      className={`w-full min-h-[180px] aspect-[2/1] flex pt-[56px] md:pt-[80px] justify-center relative`}
-    >
-      <Skeleton />
-      {/* <div
-        className={`${
-          uploadedSingleBanner ? "hidden" : "flex flex-col items-center"
-        } `}
-      >
-        <span className="uppercase text-[24px] leading-[30px] font-semibold text-black/[.54] mb-[8px]">
-          {t("Banner")}
-        </span>
-
-        <img
-          src={UploadIcon}
-          alt={""}
-          style={{
-            borderRadius: logo_shape === "sharp" ? 0 : 12,
-          }}
-          className="w-[18px] h-[18px] object-cover"
-        />
-      </div> */}
+    <div class="w-full aspect-[2/1]">
+      <Skeleton className="h-full w-full" />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   styleDataRestaurant: null,
+  restaurantStyleVersion: 0,
 };
 
 const styleDataRestaurantSlice = createSlice({
@@ -11,8 +12,12 @@ const styleDataRestaurantSlice = createSlice({
     changeStyleDataRestaurant: (state, action) => {
       state.styleDataRestaurant = action.payload;
     },
+    changeRestaurantStyleVersion: (state, action) => {
+      state.restaurantStyleVersion = action.payload;
+    },
   },
 });
 
-export const { changeStyleDataRestaurant } = styleDataRestaurantSlice.actions;
+export const { changeStyleDataRestaurant, changeRestaurantStyleVersion } =
+  styleDataRestaurantSlice.actions;
 export default styleDataRestaurantSlice.reducer;

@@ -72,7 +72,9 @@ const NavbarCustomer = ({
           alt="home"
         />
       ) : (
-        <Skeleton />
+        <div className="w-[50px] h-[50px]">
+          <Skeleton className="w-full h-full"/>
+        </div>
       )}
     </div>
   );
