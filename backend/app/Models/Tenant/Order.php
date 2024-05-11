@@ -330,6 +330,11 @@ class Order extends Model
     {
         return $this->payment_method?->name == PaymentMethod::CASH_ON_DELIVERY;
     }
+
+    public function isLoyaltyPointPayment()
+    {
+        return $this->payment_method?->name == PaymentMethod::LOYALTY_POINTS;
+    }
     public function user()
     {
         return $this->belongsTo(RestaurantUser::class);

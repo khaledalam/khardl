@@ -30,7 +30,11 @@ class OrderObserver
     private function updateCashBackAndLoyalty($user,$order)
     {
         $setting = Setting::first();
-        if($setting->loyalty_points) $user->loyalty_points += ($order->total * $setting->loyalty_points);
+
+        if (!$order->isLoyaltyPointPayment()) {
+            if ($setting->loyalty_points) $user->loyalty_points += ($order->total * $setting->loyalty_points);
+            $user->save();
+        }
 
 //        if($setting->cashback_percentage){
 //            if($order->total >= $setting->cashback_threshold){
@@ -38,7 +42,7 @@ class OrderObserver
 //            }
 //        }
 
-        $user->save();
+
     }
     /**
      * Handle the Order "deleted" event.

@@ -27,6 +27,7 @@ class PaymentMethod extends Model
 
     const CASH_ON_DELIVERY = 'Cash on Delivery';
     const ONLINE = 'Online';
+    const LOYALTY_POINTS = 'Loyalty points';
 
 
     public function orders()

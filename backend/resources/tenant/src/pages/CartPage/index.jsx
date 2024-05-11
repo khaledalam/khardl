@@ -273,6 +273,17 @@ const CartPage = () => {
                   </div>
                   <div className="cartDetailSection h-36xw mt-8">
                     <h3>{t("Select Payment Method")}</h3>
+
+                    {cart?.allow_buy_with_loyalty_points && <CartDetailSection
+                      key={"Loyalty points"}
+                      name={"Loyalty points"}
+                      onChange={(e) => setPaymentMethod("Loyalty points")}
+                      isChecked={paymentMethod === "Loyalty points"}
+                      img={pmcc}
+                      displayName={"Loyalty points"}
+                      callBackfn={cardPaymentCallbackFunc}
+                    />}
+
                     {cart.payment_methods.some(
                       (obj) => obj.name === "Online"
                     ) && (
