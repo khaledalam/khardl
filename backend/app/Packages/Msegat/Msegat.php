@@ -70,6 +70,7 @@ class Msegat
         ]);
     }
     public static function verifyOTP(string $otp,?int $id){
+        //  TODO remove $id 
         if(env("APP_ENV") == 'local' ||  env("APP_ENV") == 'testing'|| $id == '1000'){
             return [
                 'http_code'=>ResponseHelper::HTTP_OK,
