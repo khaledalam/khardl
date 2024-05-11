@@ -36,6 +36,9 @@
     .bg-khardl-grey {
         background-color: #525a4d !important;
     }
+    .mt-45 {
+        margin-top: 45px;
+    }
 </style>
 <link
 href="https://goSellJSLib.b-cdn.net/v2.0.0/css/gosell.css"
@@ -360,17 +363,18 @@ function openModal(modalID) {
                                                                             <label  class="">{{__('Add a coupon code')}}</label>
                                                                             <div class="d-flex flex-row bd-highlight" style="height: 55px">
 
-                                                                                <div class="p-2 bd-highlight">
-
-                                                                                    <input type="text"  name="coupon_code" value="" id="coupon_code_web" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center mb-10"  >
-
+                                                                                <div class="p-2 bd-highlight" style="margin-top:25px">
+                                                                                    {{-- <input type="text" name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center mb-10"  > --}}
+                                                                                    <div class="input-group mb-3">
+                                                                                       
+                                                                                        <input type="text" style="width: 115px" name="coupon_code" value="" id="coupon_code_web" class="form-control"  >
+                                                                                        <div class="input-group-prepend" id="input-group-web">
+                                                                                            <a href="#" id="apply_copoun_web"   class="btn btn-khardl rounded-0">{{__('Apply')}}</a>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="p-2 bd-highlight" id="apply_copoun_web_div">
-                                                                                    <a href="#" id="apply_copoun_web"   class="btn btn-khardl">{{__('Apply')}}</a>
+                                                                                <h5 id="coupon_message_web" class="text-danger " style="margin-right: 15px"></h5>
 
-
-
-                                                                                </div>
                                                                                 <div class="p-2 bd-highlight">
                                                                                     <span class="indicator-progress " id="apply_copoun_web_spinner" style="margin-top: 10px">
                                                                                         <span class="spinner-border spinner-border-sm align-middle ms-2" style="width: 20px;height:20px"></span>
@@ -378,7 +382,7 @@ function openModal(modalID) {
                                                                                 </div>
 
                                                                               </div>
-                                                                              <h5 id="coupon_message_web" class="text-danger " style="margin-right: 15px"></h5>
+                  
 
 
                                                                         </div>
@@ -547,7 +551,8 @@ function openModal(modalID) {
                                                                                         <div class="col-md-6 text-center">
                                                                                             <div class="radio-container">
                                                                                                 <input class="form-check-input" type="radio"  name="customer_app_sub_option" id="second-sub" value="is_lifetime_purchase">
-                                                                                                <label class="form-check-label" for="second-sub">{{__('Lifetime subscription')}}</label>
+                                                                                                <label class="form-check-label" for="second-sub">   <small>{{__('One time purchase for a lifetime')}}</small></label>
+                                                                                             
                                                                                                 </div>
                                                                                         </div>
                                                                                     </div>
@@ -579,22 +584,25 @@ function openModal(modalID) {
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-md-12">
-                                                                                        <label  class="badge badge-primary d-flex justify-content-center">{{__('Add a coupon code')}}</label>
+                                                                                        <label  class="badge bg-khardl d-flex justify-content-center">{{__('Add a coupon code')}}</label>
                                                                                         <div class="form-group d-flex justify-content-center">
                                                                                             
                                                                                             <div class="d-flex flex-row bd-highlight" style="height: 55px">
 
-                                                                                                <div class="p-2 bd-highlight">
-                                                                                                    <input type="text" name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center mb-10"  >
-
+                                                                                                <div class="p-2 bd-highlight" style="margin-top:25px">
+                                                                                                    {{-- <input type="text" name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center mb-10"  > --}}
+                                                                                                    <div class="input-group mb-3">
+                                                                                                       
+                                                                                                        <input type="text" style="width: 115px" name="coupon_code" value="" id="coupon_code_app" class="form-control"  >
+                                                                                                        <div class="input-group-prepend" id="input-group-app">
+                                                                                                            <a href="#" id="apply_copoun_app"   class="btn btn-khardl rounded-0">{{__('Apply')}}</a>
+                                                                                                        </div>
+                                                                                                    </div>
                                                                                                 </div>
                                                                                                 <div></div>
-                                                                                                <div class="p-2 " id="apply_copoun_app_div" >
-                                                                                                    <a href="#" id="apply_copoun_app"   class="btn btn-khardl ">{{__('Apply')}}</a>
-
-
-                                                                                                </div>
-                                                                                                <div class="p-2 bd-highlight">
+                                 
+                                                                                                 <h5 id="coupon_message_app" class="text-danger "></h5>
+                                                                                                <div class="p-2 bd-highlight mt-45">
                                                                                                     <span class="indicator-progress " id="apply_copoun_app_spinner" >
                                                                                                         <span class="spinner-border spinner-border-sm align-middle ms-2" ></span>
                                                                                                     </span>
@@ -606,22 +614,22 @@ function openModal(modalID) {
 
 
                                                                                         </div>
-                                                                                        <div class="col-md-12 d-flex justify-content-center">
-                                                                                            <h5 id="coupon_message_app" class="text-danger "></h5>
-                                                                                        </div>
+                                                                                        
                                                                                         <div id="discount_app"></div>
                                                                                     </div>
                                                                                   </div>
 
 
 
-                                                                                <button id="tap-btn"   type="submit"   onclick="submitPayment(event,'root_customer_app')" class="btn btn-khardl text-white ">
+                                                                                  <div class="mt-5">
+                                                                                    <button id="tap-btn"   type="submit"   onclick="submitPayment(event,'root_customer_app')" class="btn  btn-khardl text-white ">
 
-                                                                                    <span class="indicator-label"> {{__("purchase")}} ✔️</span>
-                                                                                    <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
-                                                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                                </button>
-
+                                                                                        <span class="indicator-label"> {{__("purchase")}} ✔️</span>
+                                                                                        <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
+                                                                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                                    </button>
+    
+                                                                                  </div>
                                                                             </div>
 
                                                                         </div>
@@ -685,32 +693,7 @@ function openModal(modalID) {
                                                                                               <label for="factor">{{__('Total Price')}}</label>
                                                                                               <input type="text" class="form-control bg-secondary" name="price" value="{{ $lifetime_customer_app_sub?->amount }}" readonly>
                                                                                           </div>
-                                                                                          <div class="form-group">
-                                                                                              <label  class="">{{__('Add a coupon code')}}</label>
-                                                                                              <div class="d-flex flex-row bd-highlight" style="height: 55px">
-
-                                                                                                  <div class="p-2 bd-highlight">
-                                                                                                      <input type="text" style="width: 115px" name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center bg-khardl-grey mb-10"  >
-
-                                                                                                  </div>
-                                                                                                  <div></div>
-                                                                                                  <div class="p-2 " id="apply_copoun_app_div" >
-                                                                                                      <a href="#" id="apply_copoun_app"   class="btn btn-primary ">{{__('Apply')}}</a>
-
-
-                                                                                                  </div>
-                                                                                                  <div class="p-2 bd-highlight">
-                                                                                                      <span class="indicator-progress " id="apply_copoun_app_spinner" style="margin-top: 10px">
-                                                                                                          <span class="spinner-border spinner-border-sm align-middle ms-2" style="width: 20px;height:20px"></span>
-                                                                                                      </span>
-                                                                                                  </div>
-
-                                                                                                </div>
-                                                                                                <h5 id="coupon_message_app" class="text-danger " style="margin-right: 15px"></h5>
-
-
-                                                                                          </div>
-                                                                                          <div id="discount_app"></div>
+                                                                                          
                                                                                       </div>
                                                                                     </div>
                                                                                   </div>
@@ -1076,12 +1059,12 @@ function openModal(modalID) {
                             .replace(':type', 'is_branch_purchase'),
                             success: function(response) {
                                 if(response.cost){
-                                    $('#coupon_code_web').css({'background-color':'forestgreen','color':'white'});
+                                    $('#coupon_code_web').css({'background-color':'forestgreen'});
                                     $('#coupon_message_web')
 
                                     .removeClass('text-danger')
                                     .append('<div class="form-group mt-5 "><label for="factor">{{__("Total Price after discount")}}</label><input type="text" class="form-control bg-secondary" id="coupon_discount_input_web" value="' + response.cost + '" readonly ></div>');
-                                    $('#apply_copoun_web_div').html('<div class="p-2 bd-highlight mt-2"><a href="" class="text-white bg-danger mr-5 rounded-circle p-2 m-1" id="cancel_coupn_web">X</a></div>');
+                                    $('#input-group-web').html('<span class="input-group-text rounded-0 text-danger"  id="cancel_coupn_web">X</span>');
 
                                 }else {
                                     $('#coupon_code_web').css('background-color','crimson');
@@ -1110,13 +1093,15 @@ function openModal(modalID) {
                             success: function(response) {
                                 if(response.cost){
                                     $('#coupon_message_app')
-
+                                    .removeClass('mt-45')
                                     .removeClass('text-danger')
                                     .append('<div class="form-group mt-5 "><label for="factor">{{__("Total Price after discount")}}</label><input type="text" class="form-control bg-secondary" value="' + response.cost + '" readonly ></div>');
-                                    $('#apply_copoun_app_div').html('<div class="p-2 bd-highlight mt-2"><a href="" class="text-white bg-danger mr-5 rounded-circle p-2 m-1" id="cancel_coupn_app">X</a></div>');
+                                    $('#input-group-app').html('  <span class="input-group-text rounded-0 text-danger"  id="cancel_coupn_app">X</span>');
                                 }else {
                               
-                                    $('#coupon_message_app').addClass('text-danger');
+                                    $('#coupon_message_app')
+                                    .addClass('text-danger')
+                                    .addClass('mt-45');
                                     $('#coupon_message_app').append("{{__('Invalid coupon')}}");
                                 }
                             },
@@ -1139,9 +1124,8 @@ function openModal(modalID) {
             $('#modal_base_content').on('click', '#cancel_coupn_web', function(e) {
                 e.preventDefault();
                 $('#coupon_message_web').empty();
-                $('#coupon_code_web')
-                .val('');
-                $('#apply_copoun_web_div').html('<a href="#" id="apply_copoun_web"   class="btn btn-khardl">{{__('Apply')}}</a>');
+             
+                $('#input-group-web').html('<a href="#" id="apply_copoun_web"   class="btn btn-khardl">{{__('Apply')}}</a>');
 
 
             });
@@ -1153,7 +1137,7 @@ function openModal(modalID) {
                 $('#coupon_message_app').empty();
                 $('#coupon_code_app')
                 .val('');
-                $('#apply_copoun_app_div').html('<a href="#" id="apply_copoun_app"   class="btn btn-primary">{{__('Apply')}}</a>');
+                $('#input-group-app').html('<a href="#" id="apply_copoun_app"   class="btn btn-khardl rounded-0">{{__('Apply')}}</a>');
             }
 
             // Execute the AJAX request when the radio button changes
