@@ -10,13 +10,8 @@ const StatsCard = ({ title, Stats, ShowIcons, IsUp }) => {
   const GlobalShape = useSelector((state) => state.button.GlobalShape);
 
   return (
-    <div
-      style={{
-        borderRadius: GlobalShape,
-      }}
-      className="flex flex-col justify-between max-w-sm py-2 bg-white shadow-[0_0px_2px_var(--Forth)] hover:bg-gray-50"
-    >
-      <h5 className="mb-2 text-[14px] tracking-tight text-[var(--Forth)] px-4">
+    <div className="flex flex-col justify-between max-w-sm py-2 bg-white rounded-md shadow-md">
+      <h5 className="mb-2 text-md tracking-tight text-[var(--Forth)] px-4">
         {title}
       </h5>
       <hr />
@@ -24,7 +19,7 @@ const StatsCard = ({ title, Stats, ShowIcons, IsUp }) => {
         <p className="text-center text-gray-700 font-bold text-[27px]">
           {Stats}
         </p>
-        {ShowIcons && (
+        {/* {ShowIcons && (
           <div>
             {IsUp ? (
               <HiOutlineArrowTrendingUp
@@ -38,7 +33,7 @@ const StatsCard = ({ title, Stats, ShowIcons, IsUp }) => {
               />
             )}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
