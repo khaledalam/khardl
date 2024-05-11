@@ -698,6 +698,8 @@
     "item-photo" : "صوره المنتج",
     "create-new-items" : "انشاء منتج جديد",
     "item-availability" : "اتاحه المنتج",
+    "Allow buy with loyalty points?": "اتاحه الشراء بنقاط الولاء؟",
+    "Price using loyalty points (how many points)": "السعر بنقاط الولاء (كم نقطة)",
     "category-logo" : "شعار الصنف",
     "logo" : "شعار",
     "others" : "اخري",
