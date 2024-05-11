@@ -44,7 +44,7 @@
                 </div>
                 <div class="mr-auto p-2 ">
                     <a href="{{ route('coupons.create') }}">
-                        <button class="btn btn-sm btn-primary">
+                        <button class="btn btn-sm btn-khardl">
                             {{ __('Add new') }}
                         </button>
                     </a>

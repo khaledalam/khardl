@@ -24,7 +24,7 @@ class CustomerPDF implements PdfPrintInterface
             $logo = RestaurantStyle::first()->logo;
             $data = [
                 'restaurant_name'=> $this->restaurant->restaurant_name,
-                'logo' =>($logo)?storage_path("app/public/".RestaurantStyle::STORAGE."/".basename($logo)): public_path('/images/Logo.webp')
+                'logo' =>($logo)?storage_path("app/public/".RestaurantStyle::STORAGE."/".basename($logo)): public_path('/images/Logo_White.svg')
             ];
             if($this->id){
                 $data['customers'] = [RestaurantUser::findOrFail($this->id)];

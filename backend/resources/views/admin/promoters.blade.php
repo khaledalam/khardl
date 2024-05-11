@@ -35,7 +35,7 @@
                                                     <!--end::Button-->
                                                     <!--begin::Button-->
                                                     <button type="submit" id="kt_ecommerce_add_product_submit"
-                                                        class="btn btn-sm btn-primary">
+                                                        class="btn btn-sm btn-khardl">
                                                         <span class="indicator-label">{{ __('add') }}</span>
                                                         <span class="indicator-progress">{{ __('please-wait') }}
                                                             <span

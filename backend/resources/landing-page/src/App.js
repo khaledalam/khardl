@@ -57,7 +57,7 @@ const App = () => {
   console.log(localStorage.getItem("i18nextLng"));
   const Language = useSelector((state) => state.languageMode.languageMode);
   const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
-  const fontFamily = "cairo, sans-serif";
+  const fontFamily = "Almarai, sans-serif";
   const location = useLocation();
   const { loading } = useAuthContext();
   const showHeader = !["/complete-register", "/verification-email"].includes(

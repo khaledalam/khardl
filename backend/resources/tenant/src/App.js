@@ -3,6 +3,7 @@ import "./App.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "react-quill/dist/quill.snow.css";
+import 'react-loading-skeleton/dist/skeleton.css'
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
@@ -67,7 +68,7 @@ const App = () => {
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle);
   const Language = useSelector((state) => state.languageMode.languageMode);
   const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
-  const fontFamily = "cairo, sans-serif";
+  const fontFamily = "Almarai, sans-serif";
   const location = useLocation();
   const { loading } = useAuthContext();
   // const [isMobile, setIsMobile] = useState(false);

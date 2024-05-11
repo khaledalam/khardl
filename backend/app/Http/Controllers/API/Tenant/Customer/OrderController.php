@@ -55,7 +55,7 @@ class OrderController
                 'lat' => $user->lat,
                 'lng' => $user->lng,
             ],
-            'cashback' => $user->cashback,
+//            'cashback' => $user->cashback,
             'loyalty_points' => $user->loyalty_points,
         ], '');
     }
@@ -102,7 +102,7 @@ class OrderController
             'should_logout' => $shouldLogout
         ], __('Please re-login again'));
     }
-   
+
 
 
     public function paymentRedirect(OrderRequest $request,CartRepository $cart){
@@ -131,7 +131,7 @@ class OrderController
 
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
                 if(isset($charge['message']['source']['payment_method']) && $charge['message']['source']['payment_method'] == 'APPLE_PAY'){
-            
+
 
                     if($charge['message']['status'] == 'CAPTURED'){
                         try {
@@ -151,12 +151,12 @@ class OrderController
         }catch(Exception $e){
             \Sentry\captureMessage('failed charge '.$e->getMessage());
         }
-  
+
         return route("payment.failed");
     }
     public function paymentResponse(Request $request,CartRepository $cart){
         if ($request->tap_id) {
-            
+
             $charge = TapCharge::retrieve($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
@@ -165,7 +165,7 @@ class OrderController
                 }
 
             }
-            
+
         }
         return redirect()->route("payment.failed");
 

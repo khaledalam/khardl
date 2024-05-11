@@ -47,7 +47,7 @@ use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 class RestaurantController extends BaseController
 {
 
-    /* public function promotions()
+    public function promotions()
     {
         $user = Auth::user();
 
@@ -57,24 +57,24 @@ class RestaurantController extends BaseController
             'restaurant.promotions',
             compact('user', 'settings')
         );
-    } */
+    }
 
     public function updatePromotions(Request $request)
     {
 
         $request->validate([
             'loyalty_points' => 'required|numeric|min:0',
-            'loyalty_point_price' => 'required|numeric|min:0',
-            'cashback_threshold' => 'required|numeric|min:0',
-            'cashback_percentage' => 'required|numeric|min:0',
+//            'loyalty_point_price' => 'required|numeric|min:0',
+//            'cashback_threshold' => 'required|numeric|min:0',
+//            'cashback_percentage' => 'required|numeric|min:0',
         ]);
 
         $settings = Setting::all()->firstOrFail();
 
         $settings->loyalty_points = $request->loyalty_points;
-        $settings->loyalty_point_price = $request->loyalty_point_price;
-        $settings->cashback_threshold = $request->cashback_threshold;
-        $settings->cashback_percentage = $request->cashback_percentage;
+//        $settings->loyalty_point_price = $request->loyalty_point_price;
+//        $settings->cashback_threshold = $request->cashback_threshold;
+//        $settings->cashback_percentage = $request->cashback_percentage;
         $settings->save();
 
         return redirect()->back()->with('success', __('Restaurant promotions successfully updated.'));

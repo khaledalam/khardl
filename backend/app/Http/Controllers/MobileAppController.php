@@ -23,7 +23,7 @@ class MobileAppController extends BaseController
             return [
                 'restaurant_name' => $restaurant->restaurant_name,
                 'url' => $restaurant->getUrlAttribute(),
-                'logo' => $restaurant->restaurant_logo ?? global_asset('images/Logo.webp')
+                'logo' => $restaurant->restaurant_logo ?? global_asset('images/Logo_White.svg')
             ];
         }),'');
     }

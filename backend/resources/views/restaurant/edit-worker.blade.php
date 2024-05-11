@@ -30,10 +30,10 @@
                                             <h2>{{ __('edit-worker')}}</h2>
                                         </div>
                                         <a href="{{ route('restaurant.workers', ['branchId' => App\Models\User::find($worker->id)->branch_id]) }}">
-                                            <button type="button" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-arrow-left"></i>
-                                                {{ __('Back to list') }}
-                                            </button>
+                                            <button type="button" class="btn btn-khardl btn-sm">
+                                <i class="fa fa-arrow-left"></i>
+                                {{ __('Back to list') }}
+                            </button>
                                         </a>
                                     </div>
                                     <!--end::Card header-->

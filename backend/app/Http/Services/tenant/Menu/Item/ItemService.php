@@ -72,6 +72,8 @@ class ItemService
             }
 
             $item->price = $request->input('price');
+            $item->allow_buy_with_loyalty_points = ($request->input('allow_buy_with_loyalty_points') ? true : false);
+            $item->price_using_loyalty_points = $request->input('price_using_loyalty_points');
             $item->calories = $request->input('calories');
             $item->name = trans_json($request->input('item_name_en'), $request->input('item_name_ar'));
             $item->description = trans_json($request->input('description_en'), $request->input('description_ar'));

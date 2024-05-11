@@ -29,10 +29,10 @@
                                             <h2>{{ __('edit-driver')}}</h2>
                                         </div>
                                         <a href="{{ route('drivers.index') }}">
-                                            <button type="button" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-arrow-left"></i>
-                                                {{ __('Back to list') }}
-                                            </button>
+                                            <button type="button" class="btn btn-khardl btn-sm">
+                                <i class="fa fa-arrow-left"></i>
+                                {{ __('Back to list') }}
+                            </button>
                                         </a>
                                     </div>
                                     <!--end::Card header-->

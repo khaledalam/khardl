@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import logo from "../../assets/Logo.webp";
+import logo from "../../assets/Logo_White.svg";
 import Copyright from "./Copyright";
 import LogoPattern from "../../assets/LogoPattern.webp";
 import {

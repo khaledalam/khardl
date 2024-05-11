@@ -216,6 +216,16 @@ class CartRepository
     {
         return $this->cart->refresh()->items->sum('total');
     }
+
+    public function totalLoyaltyPointsPrice()
+    {
+        $totalPoints = 0;
+        foreach ($this->cart->refresh()->items as $item) {
+            $totalPoints += $item->item->price_using_loyalty_points;
+        }
+        return $totalPoints;
+    }
+
     public function tax($subTotal = null)
     {
         $vat = self::VAT_PERCENTAGE;
@@ -266,10 +276,6 @@ class CartRepository
         $settings = Setting::all()->firstOrFail();
         $items = $this->cart->items->load(['item']);
 
-//        foreach ($items as &$item) {
-//            $item['item']['photo'] .= '?ver=' . random_hash();
-//        }
-
         return $this->sendResponse([
             'sub_total' => $this->subTotal(),
             'total' => $this->total(),
@@ -278,6 +284,7 @@ class CartRepository
             'discount' => $this->discount(),
             'count' => $this->cartCount(),
             'items' => $items,
+            'allow_buy_with_loyalty_points' => $this->cart->canPayWithLoyaltyPoints(),
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
             'delivery_fee' => $settings['delivery_fee'],
@@ -335,6 +342,12 @@ class CartRepository
     public function hasItems():bool{
         return $this->cart->items()->exists();
     }
+
+    public function canPayWithLoyaltyPoints(): bool
+    {
+        return $this->cart->canPayWithLoyaltyPoints();
+    }
+
     public function hasBranch($branch_id){
         // check if cart has branch or not
         if($this->cart->branch_id == null){
@@ -364,6 +377,10 @@ class CartRepository
 
     public function hasPayment($name)
     {
+        if ($name == PaymentMethod::LOYALTY_POINTS) {
+            return $this->canPayWithLoyaltyPoints();
+        }
+
         $method = PaymentMethod::where('name',$name)->first();
         $setting = Setting::first();
         if($this->hasPaymentCreditCard($name) && (!$setting->merchant_id || !$setting->lead_id))

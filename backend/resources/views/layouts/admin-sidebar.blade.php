@@ -11,9 +11,9 @@
     <meta property="og:title" content="" />
     <meta property="og:url" content="#/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
-    <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
-    <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}"/>
-    <link rel="icon" href="{{ global_asset('images/Logo.webp')}}"/>
+    <link rel="canonical" href="{{ global_asset('images/Logo_White.svg')}}" />
+    <link rel="shortcut png" href="{{ global_asset('images/Logo_White.svg')}}"/>
+    <link rel="icon" href="{{ global_asset('images/Logo_White.svg')}}"/>
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ global_asset('assets/css/global.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ global_asset('assets/css/admin-main.css')}}" rel="stylesheet" type="text/css" />
@@ -114,7 +114,7 @@
                 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                     <!--begin::Logo-->
                     <a href="{{ route('admin.dashboard') }}">
-                        <img alt="Logo" src="{{ global_asset('images/Logo.webp') }}" class="h-70px logo" />
+                        <img alt="Logo" src="{{ global_asset('images/Logo_White.svg') }}" class="h-70px logo" />
                     </a>
                     <!--end::Logo-->
                     <!--begin::Aside toggler-->
@@ -443,7 +443,7 @@
                         <!--begin::Mobile logo-->
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                             <a href="../../demo1/dist/index.html" class="d-lg-none">
-                                <img alt="Logo" src="{{ global_asset('images/Logo.webp') }}" class="h-30px" />
+                                <img alt="Logo" src="{{ global_asset('images/Logo_White.svg') }}" class="h-30px" />
                             </a>
                         </div>
                         <!--end::Mobile logo-->

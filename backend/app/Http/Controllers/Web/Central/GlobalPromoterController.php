@@ -37,8 +37,8 @@ class GlobalPromoterController extends Controller
         $promoter = Promoter::with(['users'])->where('name', $name)->first();
        
         if ($promoter) {
-            $sub_coupon = $promoter->sub_coupon;
-            return view('global.promoters.show', compact('promoter','sub_coupon'));
+            $sub_coupons = $promoter->sub_coupons;
+            return view('global.promoters.show', compact('promoter','sub_coupons'));
         } else {
             $this->increaseFailedAttempts();
             return view('global.promoters.not_found');

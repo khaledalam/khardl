@@ -225,7 +225,7 @@ const CartPage = () => {
     ).toFixed(2);
 
   return (
-    <div className="p-12">
+    <div className="p-4 sm:p-6 md:p-12">
       {loading && (
         <div className={"m-auto w-28 pt-28"}>
           <ClipLoader
@@ -273,6 +273,17 @@ const CartPage = () => {
                   </div>
                   <div className="cartDetailSection h-36xw mt-8">
                     <h3>{t("Select Payment Method")}</h3>
+
+                    {cart?.allow_buy_with_loyalty_points && <CartDetailSection
+                      key={"Loyalty points"}
+                      name={"Loyalty points"}
+                      onChange={(e) => setPaymentMethod("Loyalty points")}
+                      isChecked={paymentMethod === "Loyalty points"}
+                      img={pmcc}
+                      displayName={"Loyalty points"}
+                      callBackfn={cardPaymentCallbackFunc}
+                    />}
+
                     {cart.payment_methods.some(
                       (obj) => obj.name === "Online"
                     ) && (

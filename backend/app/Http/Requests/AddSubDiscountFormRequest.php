@@ -23,14 +23,15 @@ class AddSubDiscountFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'promoter_id' => ['required','unique:ro_subscription_coupons,promoter_id'],
+            'promoter_id' => ['required'],
             'code' => ['required', 'string', 'max:100','unique:ro_subscription_coupons,code'],
             'type' => ['required', 'in:fixed,percentage'],
             'fixed' => [new RequiredIf($this->type == 'fixed'), 'min:1', 'nullable', 'numeric'],
             'percentage' => [new RequiredIf($this->type == 'percentage'), 'nullable', 'min:1', 'numeric', 'max:100'],
             'max_use' => ['nullable', 'min:0', 'integer'],
-            'is_application_purchase' => ['nullable','boolean',new RequiredIf(!$this->is_branch_purchase)],
-            'is_branch_purchase' => ['nullable','boolean',new RequiredIf(!$this->is_application_purchase)],
+            'is_application_purchase' => ['nullable','boolean',new RequiredIf(!$this->is_branch_purchase && !$this->is_lifetime_purchase)],
+            'is_branch_purchase' => ['nullable','boolean',new RequiredIf(!$this->is_application_purchase && !$this->is_lifetime_purchase)],
+            'is_lifetime_purchase' => ['nullable','boolean',new RequiredIf(!$this->is_application_purchase && !$this->is_branch_purchase)],
         ];
     }
 }

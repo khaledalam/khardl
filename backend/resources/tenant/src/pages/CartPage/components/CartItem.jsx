@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "primereact/card";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -71,6 +71,10 @@ const CartItem = ({ cartitem, onReload }) => {
 
   let optionsItems = parseOptionItems(cartitem);
 
+  useEffect(() => {
+    setValue(cartitem.notes);
+  }, [cartitem]);
+
   return (
     <div className="cartitem">
       <Card>
@@ -141,7 +145,9 @@ const CartItem = ({ cartitem, onReload }) => {
             </div>
             <h2>{`${cartitem.total} ${t("SAR")}`}</h2>
           </div>
-          <div className="w-7 h-7 bg-red-500 rounded-full flex items-center justify-center absolute top-1 left-1 deleteBtn">
+          <div
+            className={`w-7 h-7 bg-red-500 rounded-full flex items-center justify-center absolute top-1 left-1 deleteBtn`}
+          >
             <Button onClick={() => handleRemoveItem(cartitem.id)}>
               <MdDelete className="text-lg text-white " />
             </Button>

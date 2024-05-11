@@ -428,8 +428,8 @@
                             @foreach ($branches as $branchLoop)
                             <div class="col-md-3">
                                 <a href="{{ route('restaurant.get-category',['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1, 'branchId' => $branchLoop->id]) }}">
-                                    <button type="button" class="btn btn-sm @if($branchLoop->id == $branchId) btn-warning text-black @else btn-primary @endif">
-                                        @if($branchLoop->id == $branchId)<i class="fa fa-arrow-down text-black mx-1"></i>@endif {{ $branchLoop->name }}
+                                    <button type="button" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl text-black @else btn-primary @endif">
+                                        @if($branchLoop->id == $branchId)<i class="fa fa-arrow-down text-white mx-1"></i>@endif {{ $branchLoop->name }}
                                     </button>
                                 </a>
                             </div>
@@ -817,6 +817,28 @@
                                                 </div>
                                                 <!--end::Input group-->
 
+                                                <!--begin::Input group-->
+                                                <div class="row g-9 mb-8">
+                                                    <!--begin::Col-->
+                                                    <div class="col-md-6 fv-row">
+                                                        <label class="d-flex align-items-between fs-6 fw-bold mb-4">
+                                                            <span class="required">{{__('Allow buy with loyalty points?')}}</span>
+                                                        </label>
+                                                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                            <input type="checkbox" id="allow_buy_with_loyalty_points" name="allow_buy_with_loyalty_points" @if($item->price_using_loyalty_points) checked @endif value="1">
+                                                        </label>
+                                                    </div>
+                                                    <!--end::Col-->
+                                                    <!--begin::Col-->
+                                                    <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item->price_using_loyalty_points) d-block @else d-none @endif" id="loyalty_point_price_section">
+                                                        <label class="fs-6 fw-bold mb-2">{{ __('Price using loyalty points (how many points)') }}</label>
+                                                        <input type="number" step="0.1" min="0" required name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item->price_using_loyalty_points }}" class="form-control form-control-solid ps-12" />
+                                                    </div>
+                                                    <!--end::Col-->
+
+                                                </div>
+                                                <!--end::Input group-->
+
                                                 <div class="d-flex flex-column mb-8">
                                                     <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
 
@@ -1149,6 +1171,28 @@
                     </div>
                     <!--end::Input group-->
 
+                    <!--begin::Input group-->
+                    <div class="row g-9 mb-8">
+                        <!--begin::Col-->
+                        <div class="col-md-6 fv-row">
+                            <label class="d-flex align-items-between fs-6 fw-bold mb-4">
+                                <span class="required">{{__('Allow buy with loyalty points?')}}</span>
+                            </label>
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                <input type="checkbox" id="allow_buy_with_loyalty_points-new" name="allow_buy_with_loyalty_points" @if($item->price_using_loyalty_points) checked @endif value="1">
+                            </label>
+                        </div>
+                        <!--end::Col-->
+                        <!--begin::Col-->
+                        <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item->price_using_loyalty_points) d-block @else d-none @endif" id="loyalty_point_price_section-new">
+                            <label class="fs-6 fw-bold mb-2">{{ __('Price using loyalty points (how many points)') }}</label>
+                            <input type="number" step="0.1" min="0" required name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item->price_using_loyalty_points }}" class="form-control form-control-solid ps-12" />
+                        </div>
+                        <!--end::Col-->
+
+                    </div>
+                    <!--end::Input group-->
+
                     <div class="d-flex flex-column mb-8">
                         <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
 
@@ -1246,6 +1290,42 @@
 <!--begin::Javascript-->
 {{-- Items form validations --}}
 <script>
+
+
+
+    if (document.getElementById('allow_buy_with_loyalty_points')) {
+        document.getElementById('allow_buy_with_loyalty_points').addEventListener('click', function (e) {
+            if (e.target.checked) {
+                if (document.getElementById('loyalty_point_price_section').classList.contains("d-none")) {
+                    document.getElementById('loyalty_point_price_section').classList.remove('d-none');
+                }
+                document.getElementById('loyalty_point_price_section').classList.add('d-block');
+            } else {
+                if (document.getElementById('loyalty_point_price_section').classList.contains("d-block")) {
+                    document.getElementById('loyalty_point_price_section').classList.remove('d-block');
+                }
+                document.getElementById('loyalty_point_price_section').classList.add('d-none');
+            }
+        });
+    }
+
+    if (document.getElementById('allow_buy_with_loyalty_points-new')) {
+        document.getElementById('allow_buy_with_loyalty_points-new').addEventListener('click', function (e) {
+            if (e.target.checked) {
+                if (document.getElementById('loyalty_point_price_section-new').classList.contains("d-none")) {
+                    document.getElementById('loyalty_point_price_section-new').classList.remove('d-none');
+                }
+                document.getElementById('loyalty_point_price_section-new').classList.add('d-block');
+            } else {
+                if (document.getElementById('loyalty_point_price_section-new').classList.contains("d-block")) {
+                    document.getElementById('loyalty_point_price_section-new').classList.remove('d-block');
+                }
+                document.getElementById('loyalty_point_price_section-new').classList.add('d-none');
+            }
+        });
+    }
+
+
     document.addEventListener('submit', function(e) {
         if(e.target.classList.contains('item_form')){
             e.preventDefault();

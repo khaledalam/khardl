@@ -66,7 +66,7 @@ const Privacy = ({ onClose }) => {
                 agree to it and start subscribing to KHARDL.
               </p>
               <p></p>
-              <p>Boot</p>
+              <h3>Boot</h3>
               <p></p>
               <p>
                 • "KHARDL" means the Dannf Company Ltd., and this definition
@@ -81,15 +81,15 @@ const Privacy = ({ onClose }) => {
               </p>
               <p></p>
               <p>
-                • "Consumer" means any consumer who purchases a product or
-                service from the customer through the merchant's online store
+                "Consumer" means any consumer who purchases a product or service
+                from the customer through the merchant's online store
                 established by him through KHARDL.
               </p>
               <p>
                 • "Agreement" means the rules, terms and conditions for using
                 the KHARDL platform, i.e. all the terms and conditions of this
                 agreement, which govern and regulate the relationship between
-                the parties to this agreement.
+                the parties to this agreement
               </p>
               <p></p>
               <p>
@@ -98,7 +98,7 @@ const Privacy = ({ onClose }) => {
                 means merely providing the link between the customer and the
                 service provider.
               </p>
-              <p>Eligibility for services</p>
+              <h3>Eligibility for services</h3>
               <p></p>
               <p>
                 • You represent and warrant that: Your use of the KHARDL
@@ -111,7 +111,7 @@ const Privacy = ({ onClose }) => {
                 be in breach of any law or agreement.
               </p>
               <p></p>
-              <p>Scope of the license</p>
+              <h3>Scope of the license</h3>
               <p></p>
               <p>
                 You grant the customer a non-exclusive, non-transferable,
@@ -145,10 +145,8 @@ const Privacy = ({ onClose }) => {
               </p>
               <p></p>
               <p></p>
-              <p>
-                Representations and Warranties KHARDL acknowledges that it will
-                be:
-              </p>
+              <h3>Representations and Warranties</h3>
+              <p>KHARDL acknowledges that it will be:</p>
               <p>
                 • Responsible for technical support and repair of malfunctions
                 and problems that may occur as quickly as possible.
@@ -225,10 +223,8 @@ const Privacy = ({ onClose }) => {
                 as usernames or passwords.
               </p>
               <p></p>
-              <p>
-                • Provides all evidence proving his identity to "Khardl".
-                Intellectual Property Rights
-              </p>
+              <p>• Provides all evidence proving his identity to "Khardl".</p>
+              <h3>Intellectual Property Rights</h3>
               <p>
                 • "KHARDL" complies with the intellectual property rights of
                 customers from the content that they have created through their
@@ -247,7 +243,7 @@ const Privacy = ({ onClose }) => {
                 can use your logo and pictures for marketing purposes.
               </p>
               <p></p>
-              <p>propulsion</p>
+              <h3>propulsion</h3>
               <p></p>
               <p>
                 Khardl undertakes to provide prices for the Services in advance
@@ -262,7 +258,7 @@ const Privacy = ({ onClose }) => {
                 paid is non-refundable.
               </p>
               <p></p>
-              <p>Compensation</p>
+              <h3>Compensation</h3>
               <p></p>
               <p>
                 By agreeing to these User Terms and using the System or Service,
@@ -283,18 +279,15 @@ const Privacy = ({ onClose }) => {
               <p></p>
               <p>
                 3. Your use or misuse of any of the services provided by KHARDL.
-                . Legal Liability
               </p>
+              <h3>Legal Liability</h3>
               <p>
                 The information, recommendations and/or services provided to you
                 on or through the Website, Service and App are for general
                 information purposes only and do not constitute any advice.
-              </p>
-              <p>
                 KHARDL will keep the website, application and contents as
                 correct and up to date.
               </p>
-              <p></p>
               <p>
                 KHARDL shall not be liable for any damages resulting from the
                 use (or inability to use) the Site or App, including damages
@@ -310,12 +303,11 @@ const Privacy = ({ onClose }) => {
                 connection with or arising out of the services provided by the
                 Service Provider, nor shall liability be accepted for any acts,
                 actions, conduct, omissions, or all of the foregoing, on the
-                part of the Service Providers.
+                part of the Service Providers. Therefore, any complaints about
+                the services should be submitted to the service provider.
               </p>
-              <p>
-                Therefore, any complaints about the services should be submitted
-                to the service provider. Modification of services
-              </p>
+              <p></p>
+              <h3>Modification of services</h3>
               <p>
                 KHARDL reserves the right, at its sole discretion, to do the
                 following at any time:
@@ -331,8 +323,10 @@ const Privacy = ({ onClose }) => {
               </p>
               <p>
                 • If KHARDL decides to exclude and introduce delivery companies
-                to its platform. Security
+                to its platform.
               </p>
+              <p></p>
+              <h3>Security</h3>
               <p>
                 You acknowledge that you are solely responsible for the privacy
                 of the Services, and you are solely responsible for their use by
@@ -344,7 +338,7 @@ const Privacy = ({ onClose }) => {
                 prevent or stop the damage.
               </p>
               <p></p>
-              <p>Dealings with third parties</p>
+              <h3>Dealings with third parties</h3>
               <p></p>
               <p>
                 While using the Website, Application and Service, links to
@@ -364,16 +358,16 @@ const Privacy = ({ onClose }) => {
                 privacy policies on those sites before using them.
               </p>
               <p></p>
-              <p>Payment services for electronic payments</p>
+              <h3>Payment services for electronic payments</h3>
               <p></p>
               <p>
                 • KHARDL provides online payment service through its partners
                 through the platform, and KHARDL provides this service for the
                 purpose of facilitating operations and maintaining the level of
-                service, and financial settlements are on a weekly basis with
-                the following fees:
+                service, and financial settlements are on a daily or weekly
+                basis with the following fees:
               </p>
-              <p>o 1.99% + SAR 1 per transaction on any card type</p>
+              <p>• 1.99% + SAR 1 per transaction on any card type</p>
               <p></p>
               <p>
                 • In the event of any change in the payment service fees, the
@@ -411,7 +405,7 @@ const Privacy = ({ onClose }) => {
                 returns and others.
               </p>
               <p></p>
-              <p>Invalidity of one or more judgments</p>
+              <h3>Invalidity of one or more judgments</h3>
               <p></p>
               <p>
                 The invalidity of any provision of these Terms of User shall not
@@ -422,16 +416,14 @@ const Privacy = ({ onClose }) => {
                 an unacceptable provision in certain circumstances in accordance
                 with the criteria of reasonableness and fairness and only to
                 that extent, it shall operate in its place between the parties
-                by a provision that is acceptable in
+                by a provision that is acceptable in all circumstances and
+                complies with the provisions of the void condition as far as
+                possible, taking into account the content and purpose of these
+                User Terms.
               </p>
               <p></p>
-              <p>
-                all circumstances and complies with the provisions of the void
-                condition as far as possible, taking into account the content
-                and purpose of these User Terms.
-              </p>
               <p></p>
-              <p>Confidentiality of information</p>
+              <h3>Confidentiality of information</h3>
               <p></p>
               <p>
                 KHARDL takes high-quality security standards to protect all
@@ -443,7 +435,7 @@ const Privacy = ({ onClose }) => {
                 independent terms and conditions and privacy policy.
               </p>
               <p></p>
-              <p>Modification of Service and User Terms</p>
+              <h3>Modification of Service and User Terms</h3>
               <p></p>
               <p>
                 KHARDL reserves the right, in its sole discretion, to modify or
@@ -457,7 +449,7 @@ const Privacy = ({ onClose }) => {
                 entire Service without notice or liability.
               </p>
               <p></p>
-              <p>Notification</p>
+              <h3>Notification</h3>
               <p></p>
               <p>
                 "KHARDL" may send notice by sending a public notice about the
@@ -467,7 +459,7 @@ const Privacy = ({ onClose }) => {
                 registered in the account information with "KHARDL".
               </p>
               <p></p>
-              <p>Applicable Law and Dispute Resolution</p>
+              <h3>Applicable Law and Dispute Resolution</h3>
               <p></p>
               <p>
                 These User Terms shall be governed by and applied to the
@@ -479,12 +471,13 @@ const Privacy = ({ onClose }) => {
                 Kingdom of Saudi Arabia if the Customer is in the Middle East.
               </p>
               <p></p>
-              <p>Contact Us</p>
+              <h3>Contact Us</h3>
               <p></p>
               <p>
                 If you have any questions regarding these User Terms, the
                 practices of this system, or your dealings with the system, you
-                can contact us via Support@khardl.com
+                can contact us via{" "}
+                <a href="mailto:Support@khardl.com">Support@khardl.com</a>
               </p>
               <p></p>
               <p>Kingdom of Saudi Arabia – Riyadh</p>
@@ -512,7 +505,7 @@ const Privacy = ({ onClose }) => {
                   </button>
                 </div>
                 <h1 className="blog-title text-center max-sm:text-xl ">
-                  <p>الشروط والأحكام لـKhardl</p>
+                  <h3>الشروط والأحكام لـKhardl</h3>
                 </h1>
               </header>
               <p>
@@ -529,15 +522,15 @@ const Privacy = ({ onClose }) => {
                 منصة إلكترونية ) وتعتبر هذه الاتفاقية سارية المفعول ونافذة بمجرد
                 قيامكم بالموافقة عليها والبدء في الإشتراك في خردل.
               </p>
-              <p>تمهيد</p>
+              <h3>تمهيد</h3>
               <p>
-                • “خردل” يقصَد بهذه العبارة شركة دنف المحدودة، ويشمل هذا التعريف
+                • ”خردل” يقصَد بهذه العبارة شركة دنف المحدودة، ويشمل هذا التعريف
                 كافة أشكال شركة دنف المحدودة على الشبكة العنكبوتية، سواءً كانت
                 تطبيق الكتروني، أو موقع الكتروني على الشبكة العنكبوتية.
               </p>
               <p>
-                • “العميل” يقصَد بهذه العبارة كل تاجر يشترك في خردل وفي خدمات
-                خردل.
+                • العميل” يقصَد بهذه العبارة كل تاجر يشترك في خردل وفي خدمات
+                خردل”.
               </p>
               <p>
                 • “المستهلك” يقصَد بهذه العبارة كل مستهلك يقوم بشراء المنتج أو
@@ -554,7 +547,7 @@ const Privacy = ({ onClose }) => {
                 بتوفيرها للعملاء عن طريق أطراف ثالثة ، ويُقصد بـ توفير الخدمات
                 أي مجرد توفير الربط بين العميل ومزود الخدمة.
               </p>
-              <p>أحقية الحصول على الخدمات</p>
+              <h3>أحقية الحصول على الخدمات</h3>
               <p>
                 • أنت تقر وتضمن التالي: أنه لم يسبق أن تم تعطيل استخدامك لخدمات
                 خردل أو منعك من استخدامها في أي وقت من الأوقات.
@@ -563,7 +556,7 @@ const Privacy = ({ onClose }) => {
                 • أنك تتمتع بكامل القوة والسلطة للتعاقد وأنك بذلك لن تكون
                 منتهكاً لأي قانون أو إتفاقية.
               </p>
-              <p>نطاق الترخيص</p>
+              <h3>نطاق الترخيص</h3>
               <p>
                 تمنح خردل العميل ترخيص غير حصري، وغير قابل للتحويل، وغير قابل
                 للتنازل، وغير قابل للترخيص من الباطن وغير قابل للإلغاء وذلك
@@ -589,20 +582,20 @@ const Privacy = ({ onClose }) => {
                 • عدم تعمد نقل، أو توزيع الخدمات، أو السماح بتحميل الخدمات
                 للاستخدام بخلاف ما هو محدد هنا.
               </p>
-              <p>التعهدات والضمانات</p>
+              <h3>التعهدات والضمانات</h3>
               <p>تقر خردل بأنها سوف تكون:</p>
               <p>
                 • مسؤولة عن الدعم الفني وإصلاح الأعطال والمشاكل التي قد تحصل
-                باقصى سرعة ممكنة.{" "}
+                باقصى سرعة ممكنة.
               </p>
               <p>• مسؤولة عن الصيانة الدورية لنظام “خردل”</p>
               <p>
                 • مسؤولة عن إدارة البنية التحتية لأجهزة الخوادم وخدماتها التي
-                يقدمها طرف ثالث.{" "}
+                يقدمها طرف ثالث.
               </p>
               <p>
                 • تلتزم باتخاذ كافة الإجراءات وبذل كل الجهود لضمان عمل خدمات
-                الطرف الثالث المرتبطة ب “خردل”{" "}
+                الطرف الثالث المرتبطة ب “خردل”
               </p>
               <p>يقر “العميل” ويضمن بأنه سوف:</p>
               <p>• يمتثل لكافة القوانين واللوائح المعمول بها في دولته.</p>
@@ -642,12 +635,12 @@ const Privacy = ({ onClose }) => {
               </p>
               <p>
                 • يكون مسؤولاً عن جميع معلومات الدخول لحسابه مثل اسماء
-                المستخدمين أو كلمات المرور.{" "}
+                المستخدمين أو كلمات المرور.
               </p>
               <p>• يقدم كافة الدلائل التي تثبت هويته لـ “خردل – Khardl”.</p>
-              <p>حقوق الملكية الفكرية</p>
+              <h3>حقوق الملكية الفكرية</h3>
               <p>
-                • توافق “خردل” حقوق الملكية الفكرية الخاصة بالعملاء من محتوى
+                • توافق “خردل” على حقوق الملكية الفكرية الخاصة بالعملاء من محتوى
                 والتي كوّنوها عبر متاجرهم وتطبيقاتهم، سواءً كانت مملوكة لهم قبل
                 تأسيس الموقع أو التطبيق أم بعد تأسيسه.
               </p>
@@ -658,9 +651,9 @@ const Privacy = ({ onClose }) => {
                 بموجب حقوق الملكية الفكرية وقوانين العلامات التجارية وتعد ملكية
                 خالصة لخردل ولا يحق بأي حال من الأحوال التعدي عليها أو استخدامها
                 دون تفويض من إدارة خردل كما يحق لخردل استخدام الشعارات و الصور
-                الخاصة بك لغرض التسويق{" "}
+                الخاصة بك لغرض التسويق
               </p>
-              <p>الدفع</p>
+              <h3>الدفع</h3>
               <p>
                 تتعهد خردل بتوفير أسعار الخدمات مسبقًا قبل الإشتراك وبعده، ويقع
                 على عاتقك مسؤولية البقاء على معرفة بالأسعار الحالية للخدمات
@@ -672,7 +665,7 @@ const Privacy = ({ onClose }) => {
                 تقديم الخدمة لك. وتتحمل وحدك مسؤولية دفع جميع الرسوم في موعدها و
                 تقر بأن أي مبلغ يُدفع لا يمكن استرداده.
               </p>
-              <p>التعويض</p>
+              <h3>التعويض</h3>
               <p>
                 بموافقتك على شروط المستخدم الماثلة واستخدام النظام أو الخدمة،
                 فإنك توافق على تحمل المسؤولية بالكامل عن الأضرار التي تنشأ عن أو
@@ -683,16 +676,16 @@ const Privacy = ({ onClose }) => {
                 لأي قانون أو لوائح معمول بها، سواء أشير إليها في شروط وأحكام
                 الاستخدام هذه أم لا.
               </p>
-              <p>2. انتهاكك لأي حقوق تخص الغير، بما في ذلك مُقدمي الخدمات. </p>
+              <p>2. انتهاكك لأي حقوق تخص الغير، بما في ذلك مُقدمي الخدمات.</p>
               <p>
-                3. استخدامك أو إساءة استخدامك لأي من الخدمات المقدمة من خردل. .
+                3. استخدامك أو إساءة استخدامك لأي من الخدمات المقدمة من خردل.
               </p>
-              <p>المسؤولية القانونية</p>
+              <h3>المسؤولية القانونية</h3>
               <p>
                 المعلومات والتوصيات والخدمات أو أي منها التي قُدمت لك على أو من
                 خلال موقع الويب والخدمة والتطبيق هي لأغراض المعلومات العامة فقط
                 ولا تمثل أي نصيحة. ستحافظ خردل قدر الإمكان على صحة وتحديث الموقع
-                والتطبيق ومحتوياته.{" "}
+                والتطبيق ومحتوياته.
               </p>
               <p>
                 لا تتحمل خردل المسؤولية عن أي أضرار تنتج عن استخدام (أو عدم
@@ -709,7 +702,7 @@ const Privacy = ({ onClose }) => {
                 سبق، من جانب مقدمي الخدمة. ومن ثم، فإن أي شكاوى بشأن الخدمات
                 ينبغي تقديمها على مقدم الخدمة.
               </p>
-              <p>تعديل الخدمات</p>
+              <h3>تعديل الخدمات</h3>
               <p>
                 تحتفظ خردل بحقها، وبإرادتها المنفردة، بأن تقوم في أي وقت بالآتي:
               </p>
@@ -720,8 +713,8 @@ const Privacy = ({ onClose }) => {
                 • إذا قررت خردل إيقاف نشر خدماتها، فإنها قد تقوم بإرادتها
                 باستبدال الخدمات بمواد أخرى مشابهة.
               </p>
-              <p>• اذا قررت خردل استبعاد وإدخال شركات توصيل لمنصتها. </p>
-              <p>الأمان</p>
+              <p>• اذا قررت خردل استبعاد وإدخال شركات توصيل لمنصتها.</p>
+              <h3>الأمان</h3>
               <p>
                 إنك تقر بتحملك المسئولية منفرداً عن خصوصية الخدمات، وتكون
                 مسئولاً منفرداً عن استخدامها من قبل أي شخص آخر باستخدام حسابك
@@ -729,9 +722,9 @@ const Privacy = ({ onClose }) => {
                 أنك توافق على إخطار خردل إذا أصبحت على علم بأي خسارة، أو سرقة،
                 أو احتيال، أو استخدام غير مصرح به لأي كلمة مرور، أو اسم مستخدم
                 أو عنوان بروتوكول الانترنت IP، أو غير ذلك من أساليب الوصول إلى
-                الخدمات وتتعهد خردل باتباع كل السبل الممكنة لمنع أو ايقاف الضرر.{" "}
+                الخدمات وتتعهد خردل باتباع كل السبل الممكنة لمنع أو ايقاف الضرر.
               </p>
-              <p>التعاملات مع الغير</p>
+              <h3>التعاملات مع الغير</h3>
               <p>
                 أثناء استخدام موقع الويب والتطبيق والخدمة، قد يتم من آن لآخر
                 توفير ارتباطات لمواقع ويب يمتلكها ويتحكم فيها الغير على سبيل
@@ -746,43 +739,43 @@ const Privacy = ({ onClose }) => {
                 شخصية، ومن ثم، نوصيك بالتحقق من شروط الاستخدام أو سياسات
                 الخصوصية الموجودة على تلك المواقع قبل استخدامها.
               </p>
-              <p>خدمات السداد للمدفوعات الإلكترونية </p>
+              <h3>خدمات السداد للمدفوعات الإلكترونية </h3>
               <p>
                 • تقوم خردل توفير خدمة المدفوعات الإلكترونية عبر شركائها من خلال
                 المنصة وتوفر خردل هذه الخدمة بغرض تسهيل العمليات والمحافظة على
-                مستوى الخدمة وتكون التسويات المالية على أساس أسبوعي بالرسوم
+                مستوى الخدمة وتكون التسويات المالية بشكل يومي او أسبوعي بالرسوم
                 التالية:
               </p>
-              <p>o 1.99% + 1 ريال على كل عملية مهما كان نوع بطاقة العميل</p>
+              <p>• 1.99% + 1 ريال على كل عملية لجميع انواع البطاقات</p>
               <p>
                 • في حال كان هناك أي تغيير على رسوم خدمة المدفوعات، سيتم إبلاغ
                 العميل من خلال قنوات التواصل المعتمدة مثل الإيميل قبلها بثلاثين
-                يوماً.{" "}
+                يوماً.
               </p>
               <p>
                 • لا يحق للعميل اختيار توفير المدفوعات الإلكترونية الا من خلال
-                بوابات المدفوعات الإلكترونية المرتبطة بخردل.{" "}
+                بوابات المدفوعات الإلكترونية المرتبطة بخردل.
               </p>
               <p>
                 • ليس لخردل علاقة في حال كانت طريقة الدفع التي اختارها المستهلك
-                هي “نقداً”.{" "}
+                هي “نقداً”.
               </p>
               <p>
                 • يحق لخردل ايقاف أو تعديل خدمة المدفوعات الإلكترونية التي تقدم
-                من خلالها مباشرة وسيتم إبلاغ المتاجر قبلها ب ٦٠ يوماً.{" "}
+                من خلالها مباشرة وسيتم إبلاغ المتاجر قبلها ب 30 يوماً.
               </p>
               <p>
                 • في حال كان هناك اشتباه احتيال من قبل البنوك أو شركات البطاقات
                 الإئتمانية على العمليات، فإن خردل ستقدم كل المستندات التي تطلبها
                 البنوك أو شركات البطاقات الإئتمانية علماً بأن قرار أثبات عملية
                 الإحتيال تتخذه تلك الجهات، وعند الإثبات، سيتم خصم المبلغ من
-                العميل من قبل البنك.{" "}
+                العميل من قبل البنك.
               </p>
               <p>
                 • خردل تقدم خدمة المدفوعات عبر شركائها وعليه هي ليست مسؤولة عن
-                تأخر العمليات في حالات الإسترجاع وغيرها.{" "}
+                تأخر العمليات في حالات الإسترجاع وغيرها.
               </p>
-              <p>بطلان حكم أو أكثر</p>
+              <h3>بطلان حكم أو أكثر</h3>
               <p>
                 لا يؤثر بطلان أي حكم من أحكام شروط المستخدم الماثلة على صحة باقي
                 الأحكام الأخرى الواردة فيها.
@@ -794,16 +787,16 @@ const Privacy = ({ onClose }) => {
                 مراعاةً لجميع الظروف ويتوافق مع أحكام الشرط الباطل قدر الإمكان،
                 مع مراعاة محتوى شروط المستخدم الماثلة وغرضها.
               </p>
-              <p>سرية المعلومات</p>
+              <h3>سرية المعلومات</h3>
               <p>
                 تتخذ خردل المعايير الأمنية ذات الجودة العالية لحماية المستخدمين
                 كافة ومنع الوصول للمعلومات مالم يكون الشخص مخولاً للوصول لها.
                 كما أن خردل ليس لها تحكم على خدمات الطرف الثالث المرتبطة بها مثل
                 شركات التوصيل أو بوابات المدفوعات الإلكترونية أو المكتبات
                 البرمجية التي في الموقع أو التطبيق علماً بأن كل تلك الخدمات لها
-                شروط وأحكام وسياسة خصوصية مستقلة.{" "}
+                شروط وأحكام وسياسة خصوصية مستقلة.
               </p>
-              <p>تعديل الخدمة وشروط المستخدم</p>
+              <h3>تعديل الخدمة وشروط المستخدم</h3>
               <p>
                 تحتفظ خردل لنفسها بالحق، وفقًا لتقديرها وحدها، في تعديل أي شرط
                 من شروط المستخدم الماثلة أو استبداله، أو تغيير الخدمة أو التطبيق
@@ -814,26 +807,27 @@ const Privacy = ({ onClose }) => {
                 ميزات وخدمات مُعيَّنة أو تقصر وصولك إلى أجزاء من الخدمة أو
                 الخدمة بأكملها دون إخطار أو مسؤولية.
               </p>
-              <p>الإخطار</p>
+              <h3>الإخطار</h3>
               <p>
                 يجوز لـ ”خردل” أن ترسل إخطارًا عن طريق إرسال إخطار عام عن الخدمة
                 أو التطبيق، أو بإرسال بريد إلكتروني إلى عنوانك البريدي المُسجل
                 في معلومات الحساب لدى ”خردل” ، أو بإرسال مكاتبة بالبريد العادي
                 على عنوانك المسجل في معلومات الحساب لدى ”خردل”.
               </p>
-              <p>القانون المعمول به وحل النزاعات</p>
+              <h3>القانون المعمول به وحل النزاعات</h3>
               <p>
                 تخضع شروط المستخدم الماثلة ويطبق على تسوية أي نزاع أو مطالبة أو
                 خلاف ينشأ عن شروط المستخدم الماثلة أو يتعلق بها أو أي انتهاك لها
                 أو إنهائها أو تنفيذها أو تفسيرها أو صحتها أو استخدام الموقع أو
                 الخدمة أو التطبيق، للقوانين والأنظمة المطبقة في المملكة العربية
-                السعودية وتفسر وفقا لها في حال كان العميل في منطقة الشرق الأوسط.
+                السعودية وفق انظمة التحكيم السعودي وتفسر وفقا لها في حال كان
+                العميل في منطقة الشرق الأوسط.
               </p>
-              <p>للتواصل معنا</p>
+              <h3>للتواصل معنا</h3>
               <p>
                 إذا كان لديك أي أسئلة بشأن شروط المستخدم هذه، أو الممارسات بهذا
                 النظام، أو تعاملاتك مع النظام، يمكنكم التواصل معنا عبر
-                Support@khardl.com{" "}
+                <a href="mailto:Support@khardl.com">Support@khardl.com</a>
               </p>
               <p>المملكة العربية السعودية – الرياض</p>
             </div>
