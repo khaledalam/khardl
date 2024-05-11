@@ -30,7 +30,7 @@ const CustomerOrder = () => {
       const ordersResponse = await AxiosInstance.get(
         `orders?items&item&per_page=${""}&page=${""}&search=${search}&status=${
           orderStatus.value || ""
-        }`
+        }&date=${dateAdded.value || ""}`
       );
 
       console.log("orders per page >>>", ordersResponse?.data?.data);
@@ -47,7 +47,7 @@ const CustomerOrder = () => {
 
   useEffect(() => {
     fetchOrderPerpage().then(() => {});
-  }, [pageNumber, search, orderStatus]);
+  }, [pageNumber, search, orderStatus, dateAdded]);
 
   return (
     <div className="m-4 mt-8 md:m-12 mb-5">

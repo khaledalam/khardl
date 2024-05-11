@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GreenDot from "../../../../assets/greenDot.png";
 import { useTranslation } from "react-i18next";
 import KcalIcon from "../../../../assets/kcalIcon.png";
@@ -72,6 +72,7 @@ const ProductItem = ({
   const [spinner, setSpinner] = useState(false);
   const modalRef = useRef(null);
 
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const handleAddToCart = async () => {
     try {
@@ -104,22 +105,21 @@ const ProductItem = ({
       }
       setOpenModal(false);
       setSpinner(false);
-      setSelectedStatus([]);
-      setDropdownStatus([]);
-      setCheckedStatus([]);
+      setFeedback();
+      setQtyCount(1);
     } catch (error) {
       console.error(error);
       setSpinner(false);
       toast.error(error.response?.data?.message);
       setOpenModal(false);
-      setSelectedStatus([]);
-      setDropdownStatus([]);
-      setCheckedStatus([]);
+      setFeedback();
+      setQtyCount(1);
     }
   };
 
   useEffect(() => {
-    let tempArray = [];
+    let tempArray = [],
+      statusArray = [];
     checkbox_input_titles.map((title, index) => {
       if (!title?.length) {
         return;
@@ -139,11 +139,13 @@ const ProductItem = ({
         status += "0";
       });
       tempArray.push(temp);
-      setCheckedStatus((prev) => [...prev, status]);
+      statusArray.push(status);
     });
 
     setCheckBoxItems(tempArray);
+    setCheckedStatus(statusArray);
   }, [
+    openModal,
     checkbox_required,
     checkbox_input_titles,
     checkbox_input_names,
@@ -152,7 +154,8 @@ const ProductItem = ({
   ]);
 
   useEffect(() => {
-    let tempArray = [];
+    let tempArray = [],
+      statusArray = [];
     selection_input_titles.map((title, index) => {
       if (!title?.length) {
         return;
@@ -169,12 +172,13 @@ const ProductItem = ({
         });
       });
       tempArray.push(temp);
-      selectedStatus.push(-1);
+      statusArray.push(null);
     });
 
-    setSelectedStatus([...selectedStatus]);
+    setSelectedStatus(statusArray);
     setSelectionItems(tempArray);
   }, [
+    openModal,
     selection_required,
     selection_input_titles,
     selection_input_names,
@@ -182,7 +186,8 @@ const ProductItem = ({
   ]);
 
   useEffect(() => {
-    let tempArray = [];
+    let tempArray = [],
+      statusArray = [];
     dropdown_input_titles.map((title, index) => {
       if (!title?.length) {
         return;
@@ -199,12 +204,13 @@ const ProductItem = ({
         });
       });
       tempArray.push(temp);
-      dropdownStatus.push("");
+      statusArray.push("");
     });
 
-    setDropdownStatus([...dropdownStatus]);
+    setDropdownStatus(statusArray);
     setDropdownItems(tempArray);
   }, [
+    openModal,
     dropdown_required,
     dropdown_input_titles,
     dropdown_input_names,
@@ -230,12 +236,12 @@ const ProductItem = ({
     checkedStatus.map((row, index) => {
       for (let i = 0; i < row.length; i += 1) {
         if (row[i] == "1") {
-          total += parseFloat(selection_input_prices[index][i]);
+          total += parseFloat(checkbox_input_prices[index][i]);
         }
       }
     });
     selectedStatus.map((value, index) => {
-      if (value != -1) {
+      if (value != null) {
         total += parseFloat(selection_input_prices[index][value]);
       }
     });
@@ -428,7 +434,7 @@ const ProductItem = ({
               </div>
               <div className="flex flex-row gap-2.5 items-center">
                 <div className="text-red-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight">
-                  {t("SAR")}&nbsp;{totalPrice}
+                  {t("SAR")}&nbsp;{totalPrice.toFixed(2)}
                 </div>
                 <div className="flex gap-2 rounded-[30px] border border-orange-100 justify-between items-center min-w-32 select-none">
                   <FiMinus
@@ -575,7 +581,7 @@ const ProductItem = ({
                   onChange={(event) =>
                     setDropdownStatus((currentStatus) =>
                       currentStatus.map((status, idx) =>
-                        idx == index ? event.target.value : status
+                        idx == index ? parseInt(event.target.value) : status
                       )
                     )
                   }
