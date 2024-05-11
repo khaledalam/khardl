@@ -92,9 +92,10 @@ class OurServicesService
         return ROSubscription::serviceCalculate($type, $number_of_branches,$subscription_id,true);
     }
     public function coupon($coupon,$type,$number_of_branches = null){
-
+      
         if($type == NotificationReceipt::is_application_purchase || $type == NotificationReceipt::is_branch_purchase ||  $type == NotificationReceipt::is_lifetime_purchase) {
             return response()->json( tenancy()->central(function()use($coupon,$type,$number_of_branches){
+         
                 $coupon = ROSubscriptionCoupon::where('code',$coupon)->where($type,true)->where(function ($query) {
                     $query->whereColumn('max_use', '>', 'n_of_usage')
                           ->orWhereNull('max_use');
@@ -104,9 +105,9 @@ class OurServicesService
                 if($type == NotificationReceipt::is_branch_purchase ){
                     $cost = CentralSubscription::first()->amount;
                 }elseif ($type == NotificationReceipt::is_application_purchase ){
-                    $cost = CentralSubscription::skip(2)->first()->amount;
+                    $cost = CentralSubscription::skip(1)->first()->amount;
                 }elseif ($type == NotificationReceipt::is_lifetime_purchase ){
-                    $cost = CentralSubscription::skip(3)->first()->amount;
+                    $cost = CentralSubscription::skip(2)->first()->amount;
                 }
                 $after_discount = ($coupon->type == CouponTypes::FIXED_COUPON->value)? $cost * ($number_of_branches ?? 1) - $coupon->amount : (($cost * ($number_of_branches ?? 1)) - ((($cost * ($number_of_branches ?? 1)) * $coupon->amount) / 100));
                 return [
