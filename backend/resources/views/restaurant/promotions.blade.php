@@ -63,7 +63,6 @@
                                                                         <!--begin::input-->
                                                                         <input type="number" min="0" step="0.01" name="loyalty_points" class="form-control mb-2" placeholder="{{ __('e.g 0.02') }}" value="{{$settings['loyalty_points']}}" />
                                                                         <!--end::input-->
-                                                                        <small class="text-muted">({{ __('0 means turn off') }})</small>
 
                                                                     </div>
                                                                     <!--begin::input group-->

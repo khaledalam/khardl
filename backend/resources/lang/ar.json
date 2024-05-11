@@ -1105,6 +1105,7 @@
     "How many loyalty points customer get per spend each 1 SAR" : "كم عدد نقاط الولاء التي يحصل عليها العميل مقابل الانفاق لكل 1 ريال سعودي؟",
     "e.g 0.02" : "على سبيل المثال 0.02",
     "0 means turn off": "0 يعني ايقاف الخاصيه",
+    "How many loyalty points customer get per spend each 1 SAR?": "كم عدد نقاط الولاء التي يحصل عليها العميل لكل 1 ريال سعودي يتم انفاقة؟",
     "Price per 1 loyalty point per purchase" : "السعر لكل نقطة ولاء واحدة عند الشراء",
     "Cash-back" : "استرداد النقود",
     "get cash back when total is above this value" : "احصل على استرداد نقدي عندما يكون الإجمالي أعلى من هذه القيمة",

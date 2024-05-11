@@ -377,7 +377,7 @@ class CartRepository
 
     public function hasPayment($name)
     {
-        if ($name == 'Loyalty points') {
+        if ($name == PaymentMethod::LOYALTY_POINTS) {
             return $this->canPayWithLoyaltyPoints();
         }
 
