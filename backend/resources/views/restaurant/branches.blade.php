@@ -16,6 +16,63 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 ></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+
+<style>
+
+    .google_map {
+        position: static !important;
+        width: 100%;
+        height: auto;
+    }
+    /* .google_map div {
+
+        height: 70%;
+        width: 43%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        background-color: rgb(229, 227, 223);
+    } */
+
+    #map-autocomplete-card-new_branch {
+        position: relative !important;
+    }
+    .map-overlay {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .overlay-text {
+        position: absolute;
+        border-radius: 25px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 16px;
+        color: white;
+        text-align: center;
+    }
+
+    .overlay-text::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .card-map {
+        height: 300px;
+    }
+</style>
 @endpush
 @push('scripts')
     <script>
@@ -112,7 +169,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     <div class="alert alert-warning text-center mx-2">
                         <p>{{ __('You can add new branches from services') }}</p>
                         <a href="{{ route('restaurant.service') }}">
-                            <button type="button" class="btn btn-success btn-sm">{{ __('View services') }}</button>
+                            <button type="button" class="btn btn-khardl btn-sm">{{ __('View services') }}</button>
                         </a>
                     </div>
                     @endif
@@ -135,67 +192,32 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             <!--begin::Row-->
                             <div class="row gx-9">
                                 <!--begin::Col-->
+                                <div id="map-autocomplete-card{{ $branch->id }}"></div>
 
-                                <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}">
-                                    @if(!$branch->deleted_at)
-                                    <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}" style="display: none;" value="{{$branch->address}}">
-                                    @endif
+                                <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}" >
+                                    {{-- @if(!$branch->deleted_at)
+                                    <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}"  style="display: none;" value="{{$branch->address}}">
+                                    @endif --}}
                                     <div class="map-container" data-branch-id="{{ $branch->id }}">
-                                        <div id="map{{ $branch->id }}" class="google_map">
-                                            <div class="map-overlay">
-                                                <div class="overlay-text">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.19 512.19" style="enable-background:new 0 0 512.19 512.19;" xml:space="preserve" width="48" height="48">
-                                                        <g>
-                                                            <circle cx="256.095" cy="256.095" r="85.333" />
-                                                            <path d="M496.543,201.034C463.455,147.146,388.191,56.735,256.095,56.735S48.735,147.146,15.647,201.034   c-20.862,33.743-20.862,76.379,0,110.123c33.088,53.888,108.352,144.299,240.448,144.299s207.36-90.411,240.448-144.299   C517.405,277.413,517.405,234.777,496.543,201.034z M256.095,384.095c-70.692,0-128-57.308-128-128s57.308-128,128-128   s128,57.308,128,128C384.024,326.758,326.758,384.024,256.095,384.095z" />
-                                                        </g>
-                                                    </svg>
+                                        <div class="card card-flush border-0 card-map">
+                                            <!--begin::Body-->
+                                            <div class="card-body py-2">
+                                                <div id="map{{ $branch->id }}" class="google_map" >
+                                                    <div class="map-overlay">
+                                                        <div class="overlay-text">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.19 512.19" style="enable-background:new 0 0 512.19 512.19;" xml:space="preserve" width="48" height="48">
+                                                                <g>
+                                                                    <circle cx="256.095" cy="256.095" r="85.333" />
+                                                                    <path d="M496.543,201.034C463.455,147.146,388.191,56.735,256.095,56.735S48.735,147.146,15.647,201.034   c-20.862,33.743-20.862,76.379,0,110.123c33.088,53.888,108.352,144.299,240.448,144.299s207.36-90.411,240.448-144.299   C517.405,277.413,517.405,234.777,496.543,201.034z M256.095,384.095c-70.692,0-128-57.308-128-128s57.308-128,128-128   s128,57.308,128,128C384.024,326.758,326.758,384.024,256.095,384.095z" />
+                                                                </g>
+                                                            </svg>
+                                                        </div>
+                                                        <img src="{{ global_asset("images/blured_map.png") }}" class="img-fluid" alt="">
+                                                    </div>
                                                 </div>
-                                                <img src="{{ global_asset("images/blured_map.png") }}" class="img-fluid" alt="">
                                             </div>
                                         </div>
 
-                                        <style>
-                                            .google_map {
-                                                position: relative;
-                                                width: 100%;
-                                                height: auto;
-                                            }
-
-                                            .map-overlay {
-                                                position: relative;
-                                                cursor: pointer;
-                                            }
-
-                                            .overlay-text {
-                                                position: absolute;
-                                                border-radius: 25px;
-                                                top: 50%;
-                                                left: 50%;
-                                                transform: translate(-50%, -50%);
-                                                font-size: 16px;
-                                                color: white;
-                                                text-align: center;
-                                            }
-
-                                            .overlay-text::after {
-                                                content: "";
-                                                display: block;
-                                                width: 100%;
-                                                height: 100%;
-                                                position: absolute;
-                                                top: 0;
-                                                left: 0;
-                                                z-index: -1;
-                                            }
-
-                                            img {
-                                                display: block;
-                                                width: 100%;
-                                                height: auto;
-                                            }
-
-                                        </style>
 
 
 
@@ -243,14 +265,14 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                     <span class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
                                                     <p>
                                                         @if(!$branch->deleted_at)
-                                                        <a data-bs-toggle="modal" data-bs-target="#modalTime{{ $branch->id }}" class="text-light bg-dark p-1 rounded cursor-pointer">{{$branch->phone ?? ''}} 
+                                                        <a data-bs-toggle="modal" data-bs-target="#modalTime{{ $branch->id }}" class="text-light bg-dark p-1 rounded cursor-pointer">{{$branch->phone ?? ''}}
                                                             <svg class="feather feather-edit" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                                                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                                                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg></a>
                                                         @else
                                                         <span class="text-light bg-dark p-1 rounded cursor-pointer">{{$branch->phone ?? ''}}</span>
                                                         @endif
-                                                       
+
                                                     </p>
                                                     <style>
                                                         .cursor-pointer:hover {
@@ -270,14 +292,14 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                     @elseif(!$branch->active)
 
                                                     <div class="d-flex justify-content-center mt-1">
-                                                        <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}" class="btn btn-success text-center">{{__('Activate')}} <i class="fa  fa-play text-white m-2"></i></a>
+                                                        <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}" class="btn btn-khardl text-center">{{__('Activate')}} <i class="fa  fa-play text-white m-2"></i></a>
                                                     </div>
 
                                                     @endif
                                                 </div>
                                                 <!--end::Title-->
                                             </div>
-                                         
+
                                             <!--end::Modal body-->
 
                                             <!--end::Heading-->
@@ -686,7 +708,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                         <h4>{{ __('You do not the availability to add new branch') }}</h4>
                                         <p>{{ __('You have to purchase new service') }}</p>
                                         <a href="{{ route('restaurant.service') }}">
-                                            <button type="button" class="btn btn-success btn-sm">{{ __('View services') }}</button>
+                                            <button type="button" class="btn btn-khardl btn-sm">{{ __('View services') }}</button>
                                         </a>
                                     </div>
                                 </div>
@@ -770,9 +792,12 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
-                            <div class="col-md-12 fv-row">
+                            <div class="col-md-12 fv-row" >
+                            <div id="map-autocomplete-card-new_branch" style="width: 80%;float: left;"></div>
+                            </div>
+                            <div class="col-md-12 fv-row" >
                                 <label class="required fs-6 fw-bold mb-2">{{ __('location-branch') }}</label>
-                                <input id="pac-input-new_branch" class="form-control" type="text" required placeholder="{{ __('search-for-place')}}" name="address">
+                                {{-- <input id="pac-input-new_branch" class="form-control" type="text" required placeholder="{{ __('search-for-place')}}" name="address"> --}}
                                 <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
                                 <input type="hidden" id="lat-new_branch" name="lat-new_branch" />
                                 <input type="hidden" id="lng-new_branch" name="lng-new_branch" />
@@ -966,7 +991,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 @section('js')
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&v=weekly&libraries=places&loading=async&v=beta" ></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
@@ -1115,36 +1140,36 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             //     e.target.value = $(this).data('val');
             // });
 
-            {{--$('.time-24').on('change', function (e) {--}}
+            // {{--$('.time-24').on('change', function (e) {--}}
 
-            {{--    e.preventDefault();--}}
+            // {{--    e.preventDefault();--}}
 
-            {{--    let $isFromTime = [...e.target.classList].indexOf('from') > -1;--}}
+            // {{--    let $isFromTime = [...e.target.classList].indexOf('from') > -1;--}}
 
-            {{--    let $fromInput = e.target.parentNode.parentNode.getElementsByTagName('input')[0];--}}
-            {{--    let $toInput = e.target.parentNode.parentNode.getElementsByTagName('input')[1];--}}
+            // {{--    let $fromInput = e.target.parentNode.parentNode.getElementsByTagName('input')[0];--}}
+            // {{--    let $toInput = e.target.parentNode.parentNode.getElementsByTagName('input')[1];--}}
 
-            {{--    let $time1InMinutesForTimeFrom = getTimeAsNumberOfMinutes($fromInput.value);--}}
-            {{--    let $time1InMinutesForTimeTo = getTimeAsNumberOfMinutes($toInput.value);--}}
+            // {{--    let $time1InMinutesForTimeFrom = getTimeAsNumberOfMinutes($fromInput.value);--}}
+            // {{--    let $time1InMinutesForTimeTo = getTimeAsNumberOfMinutes($toInput.value);--}}
 
-            {{--    console.log("from: ", $fromInput.value, $time1InMinutesForTimeFrom)--}}
-            {{--    console.log("to: ", $toInput.value, $time1InMinutesForTimeTo)--}}
+            // {{--    console.log("from: ", $fromInput.value, $time1InMinutesForTimeFrom)--}}
+            // {{--    console.log("to: ", $toInput.value, $time1InMinutesForTimeTo)--}}
 
-            {{--    if (parseInt($time1InMinutesForTimeFrom) > parseInt($time1InMinutesForTimeTo)) {--}}
-            {{--        --}}{{--alert("{{__("Time from should be before to")}}");--}}
-            {{--            e.target.value = $(this).data('val')--}}
-            {{--    }--}}
-            {{--    else {--}}
-            {{--        $(this).data('val', $(this).val());--}}
-            {{--    }--}}
-            {{--})--}}
+            // {{--    if (parseInt($time1InMinutesForTimeFrom) > parseInt($time1InMinutesForTimeTo)) {--}}
+            // {{--        --}}{{--alert("{{__("Time from should be before to")}}");--}}
+            // {{--            e.target.value = $(this).data('val')--}}
+            // {{--    }--}}
+            // {{--    else {--}}
+            // {{--        $(this).data('val', $(this).val());--}}
+            // {{--    }--}}
+            // {{--})--}}
 
         });
 
 
     </script>
 
-    @include('components.map')
+
 
 
 

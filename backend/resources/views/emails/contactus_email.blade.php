@@ -120,7 +120,7 @@ table, td { color: #000000; } </style>
   <tr>
     <td style="padding-right: 0px;padding-left: 0px;" align="center">
 
-      <img align="center" border="0" src="{{global_asset('img/logo-white.jpeg')}}" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 27%;max-width: 129.6px;" width="129.6"/>
+      <img align="center" border="0" src="{{global_asset('images/Logo_White.svg')}}" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 27%;max-width: 129.6px;" width="129.6"/>
 
     </td>
   </tr>

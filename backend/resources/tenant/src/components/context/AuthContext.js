@@ -16,6 +16,7 @@ import {
   HTTP_NOT_VERIFIED,
 } from "../../config";
 import { changeLanguage } from "../../redux/languageSlice";
+import { changeRestaurantStyleVersion } from "../../redux/editor/styleDataRestaurantSlice";
 
 const AuthContext = createContext();
 
@@ -31,11 +32,9 @@ export const AuthContextProvider = (props) => {
   const checkAuthenticated = useCallback(async () => {
     try {
       const response = await axiosAuth.post(API_ENDPOINT + "/auth-validation");
+      const restaurantStyleVersion = response.headers['restaurant-style-version'];
+      dispatch(changeRestaurantStyleVersion(restaurantStyleVersion));
       if (response?.data?.is_loggedin) {
-        localStorage.setItem(
-          "i18nextLng",
-          response?.data?.default_locale ?? "ar",
-        );
         let newLanguage = response?.data?.default_locale ?? "ar";
         dispatch(changeLanguage(newLanguage));
       }

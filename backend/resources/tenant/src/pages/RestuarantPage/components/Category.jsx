@@ -13,6 +13,9 @@ const Category = ({ restaurantStyle, categories = [] }) => {
     menu_category_position,
     menu_section_background_color,
     menu_section_radius,
+    menu_category_color,
+    menu_category_font,
+    menu_category_weight,
   } = restaurantStyle;
 
   const visibleCategories = categories.filter((c) => c.items.length > 0);
@@ -28,7 +31,7 @@ const Category = ({ restaurantStyle, categories = [] }) => {
       className={`w-full h-full flex ${
         menu_category_position === "center"
           ? "flex-col justify-center items-center"
-          : "flex-row items-start"
+          : "flex-row items-start "
       }  gap-[16px]`}
     >
       <div
@@ -36,10 +39,10 @@ const Category = ({ restaurantStyle, categories = [] }) => {
           menu_category_position === "left"
             ? "order-1 w-[33%]"
             : menu_category_position === "right"
-              ? "order-2 w-[33%]"
-              : menu_category_position === "center"
-                ? "w-full"
-                : "w-[33%]"
+            ? "order-2 w-[33%]"
+            : menu_category_position === "center"
+            ? "w-full"
+            : "w-[33%]"
         } `}
       >
         <EditorSlider
@@ -58,10 +61,10 @@ const Category = ({ restaurantStyle, categories = [] }) => {
           menu_category_position === "left"
             ? "order-2 w-[75%]"
             : menu_category_position === "right"
-              ? "order-1 w-[75%]"
-              : menu_category_position === "center"
-                ? "w-full max-w-[710px]"
-                : "w-[75%]"
+            ? "order-1 w-[75%]"
+            : menu_category_position === "center"
+            ? "w-full"
+            : "w-auto"
         } py-[32]
                 `}
       >
@@ -78,7 +81,14 @@ const Category = ({ restaurantStyle, categories = [] }) => {
                   key={i}
                   id={category.name}
                 >
-                  <div className="text-black text-opacity-75 text-lg font-medium mb-[16px]">
+                  <div
+                    className="text-black text-opacity-75 text-lg font-medium mb-[16px]"
+                    style={{
+                      fontFamily: menu_category_font,
+                      fontWeight: menu_category_weight,
+                      color: menu_category_color,
+                    }}
+                  >
                     {category.name}
                   </div>
                   <div className="flex w-full flex-row flex-wrap gap-[25px] justify-center">

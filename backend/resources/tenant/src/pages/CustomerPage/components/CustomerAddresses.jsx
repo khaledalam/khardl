@@ -177,7 +177,14 @@ const CustomerAddresses = () => {
                 <div>{t("Please add one or more addresses.")}</div>
                 <div
                   className="cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border font-['Plus Jakarta Sans'] leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 w-32 transition-all shadow-md"
-                  onClick={() => setAddMode(true)}
+                  onClick={() => {
+                    setAddress(
+                      {
+                        type: "home",
+                      },
+                      setAddMode(true)
+                    );
+                  }}
                 >
                   {t("Add address")}
                 </div>
@@ -192,10 +199,20 @@ const CustomerAddresses = () => {
             if (addMode) {
               setAddMode(false);
               addAddress();
+              dispatch(
+                updateCustomerAddress({
+                  addressValue: "",
+                  lat: 26.39925,
+                  lng: 49.98436,
+                })
+              );
             } else if (editMode !== -1) {
               updateAddress(editMode);
               setEditMode(-1);
             }
+            setAddress({
+              type: "home",
+            });
           }}
           onCancel={() => {
             setAddMode(false);

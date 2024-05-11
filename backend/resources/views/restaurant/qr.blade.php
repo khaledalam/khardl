@@ -611,7 +611,9 @@
                                                             </script>
                                                         </div>
 
-                                                        <button type="submit" class="badge col-lg-3 badge-light-khardl p-4 text-hover-khardl bg-hover-khardl" style="border:none; text-align: center;" data-kt-search-element="advanced-options-form-cancel">{{ __('Add') }}</button>
+                                                        <div class="col-md-3">
+                                                            <button type="submit"  class="btn btn-khardl">{{ __('Add') }}</button>
+                                                        </div>
                                                     </div>
                                                     <!--end::Actions-->
                                                 </div>

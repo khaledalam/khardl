@@ -57,14 +57,14 @@ const AddressItem = ({ address, onEdit, onDelete, onSetAsDefault }) => {
                   setSettingModalVisible(false);
                 }}
               >
-                Set as default
+                {t('Set as default')}
               </div>
             )}
             <div
               className="cursor-pointer hover:bg-neutral-900 hover:text-white p-2"
               onClick={onEdit}
             >
-              Edit
+              {t('Edit')}
             </div>
             <div
               className="cursor-pointer hover:bg-red-900 hover:text-white p-2"
@@ -73,12 +73,15 @@ const AddressItem = ({ address, onEdit, onDelete, onSetAsDefault }) => {
                 setSettingModalVisible(false);
               }}
             >
-              Delete
+              {t('Delete')}
             </div>
           </div>
         </div>
       </div>
-      <div className="self-stretch text-neutral-700 font-light font-['Plus Jakarta Sans']">
+      <div
+        className="overflow-hidden overflow-ellipsis text-neutral-700 font-light font-['Plus Jakarta Sans'] min-h-14 h-14 max-h-14"
+        title={t(address?.address)}
+      >
         {t(address?.address)}
       </div>
       {/* <div className="self-stretch justify-between items-center inline-flex">

@@ -265,7 +265,7 @@ Route::group([
                 Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
 
 
-                /* Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions'); */
+                Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
                 Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings');
 
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
@@ -340,14 +340,20 @@ Route::group([
 
 
             Route::middleware('verifiedPhone')->group(function () {
-                Route::delete("carts/trash", [CartController::class, 'trash'])->name('carts.trash');
-                Route::get("carts/count", [CartController::class, 'count'])->name('carts.count');
+                /* Start Cart Route */
                 Route::resource("carts", CartController::class)->only([
                     'index',
                     'store',
                     'destroy',
                     'update'
                 ]);
+                Route::controller(CartController::class)
+                ->name('carts.')
+                ->group(function () {
+                    Route::delete("carts/trash", 'trash')->name('trash');
+                    Route::get("carts/count", 'count')->name('count');
+                });
+                /* End Cart Route */
                 Route::post("orders/validate", [CustomerOrderController::class, 'validateOrder'])->name('orders.validate');
                 Route::post("orders/payment/redirect", [CustomerOrderController::class, 'paymentRedirect'])->name('orders.payment.redirect');
                 Route::get("orders/payment/response", [CustomerOrderController::class, 'paymentResponse'])->name('orders.payment.response');
@@ -369,7 +375,7 @@ Route::group([
                     Route::get('get-default','getDefault');
                 });
                 /* Customer address */
-                Route::delete("cards/{card_id}/delete", [CustomerCardController::class, 'delete'])->name('customer.cards');
+                Route::delete("cards/{card_id}/delete", [CustomerCardController::class, 'delete']);
             });
 
 
@@ -480,6 +486,8 @@ Route::middleware([
             Route::post('/register', [LoginCustomerController::class, 'registerCustomerOnly']);
             Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
             Route::post('/send/sms', [LoginCustomerController::class, 'sendSMS']);
+            Route::get('/branches', [BranchController::class, 'index']);
+            Route::get('/branches/{branch_id}/categories', [BranchController::class, 'categories']);
 
             Route::middleware(['auth:sanctum','customer'])->group(function () {
                 Route::get('/', [CustomerOrderController::class, 'user']);
@@ -496,7 +504,7 @@ Route::middleware([
                     Route::get('get-default','getDefault');
                 });
                 /* Customer address */
-                Route::get("/cards", [CustomerCardController::class, 'show'])->name('customer.cards');
+                Route::get("/cards", [CustomerCardController::class, 'show']);
             });
         });
 

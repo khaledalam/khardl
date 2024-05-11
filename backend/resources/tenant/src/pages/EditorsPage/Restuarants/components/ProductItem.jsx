@@ -476,7 +476,7 @@ const ProductItem = ({
           backgroundColor: menu_card_background_color,
           borderRadius: `${menu_card_radius}px`,
         }}
-        className="w-full max-w-32 shadow-md sm:max-w-36 h-44 relative hover:scale-110 transform transition-transform duration-300 ease-in-out hover:cursor-pointer"
+        className="w-full max-w-32 shadow-md sm:max-w-36 h-44 relative hover:scale-110 transform transition-transform duration-300 ease-in-out hover:cursor-pointer overflow-hidden"
         key={valuekey}
         onClick={() => document.getElementById(id).showModal()}
       >
@@ -768,14 +768,20 @@ const ProductItem = ({
                                               </span>
                                             )}
                                           </h3>
-                                          <span className="text-[12px] mb-[8px]">
-                                            {t("Maximum number of choises: ")}
-                                            {
-                                              checkbox_input_maximum_choices[
-                                                checkbox_idx
-                                              ]
-                                            }
-                                          </span>
+                                          {checkbox_input_maximum_choices[
+                                            checkbox_idx
+                                          ] <
+                                            checkboxItems[checkbox_idx]
+                                              .length && (
+                                            <span className="text-[12px] mb-[8px]">
+                                              {t("Maximum number of choises: ")}
+                                              {
+                                                checkbox_input_maximum_choices[
+                                                  checkbox_idx
+                                                ]
+                                              }
+                                            </span>
+                                          )}
                                         </>
                                       )}
                                       <div className="flex flex-col gap-2">
@@ -796,7 +802,7 @@ const ProductItem = ({
                                                     : item?.value[1]
                                                 }
                                                 price={
-                                                  item.price === 0
+                                                  item?.price === 0
                                                     ? t("Free")
                                                     : `${Number(
                                                         item?.price
@@ -998,17 +1004,24 @@ const ProductItem = ({
                           <div id={"checkbox"} className="" key={checkbox_idx}>
                             {title[0] && (
                               <>
-                                <h3 className="text-[12px] font-medium mt-[16px]">
+                                <h3 className="text-[12px] font-medium mt-[16px] mb-1">
                                   {language === "en" ? title[0] : title[1]}
                                   {checkbox_required[checkbox_idx] ===
                                     "true" && (
                                     <span className="text-red-500">*</span>
                                   )}
                                 </h3>
-                                <span className="text-[10px] mb-2 inline-block">
-                                  {t("Maximum number of choises: ")}
-                                  {checkbox_input_maximum_choices[checkbox_idx]}
-                                </span>
+                                {checkbox_input_maximum_choices[checkbox_idx] <
+                                  checkboxItems[checkbox_idx].length && (
+                                  <span className="text-[10px] mb-2 inline-block">
+                                    {t("Maximum number of choises: ")}
+                                    {
+                                      checkbox_input_maximum_choices[
+                                        checkbox_idx
+                                      ]
+                                    }
+                                  </span>
+                                )}
                               </>
                             )}
                             <div className="flex flex-col gap-2">

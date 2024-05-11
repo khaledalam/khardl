@@ -156,27 +156,6 @@
                             <!--end::Labels-->
                         </div>
                         <!--end::Card body-->
-
-                        <!--begin::Header-->
-                        <div class="card-footer pt-5">
-                            <!--begin::Title-->
-                            <div class="card-title d-flex flex-column">
-                                <!--begin::Info-->
-                                <div class="d-flex align-items-center">
-                                    <!--begin::Amount-->
-                                    <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">
-                                        {{ getAmount((float)$salesThisMonth) }} {{ __('SAR') }}
-                                    </span>
-                                    <!--end::Amount-->
-                                </div>
-                                <!--end::Info-->
-                                <!--begin::Subtitle-->
-                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('Sales This month')}}</span>
-                                <!--end::Subtitle-->
-                            </div>
-                            <!--end::Title-->
-                        </div>
-                        <!--end::Header-->
                     </div>
                     <!--end::Card widget 5-->
                 </div>
@@ -185,8 +164,8 @@
                         <div class="col-md-2 filtration">
                             <div class="mb-4">
                                 <select class="form-select" id="filter_range">
-                                    <option value="daily" selected>{{ __('Daily') }}</option>
-                                    <option value="monthly">{{ __('Monthly') }}</option>
+                                    <option value="daily" selected>{{ __('7 Days') }}</option>
+                                    <option value="monthly">{{ __('6 Months') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -198,7 +177,14 @@
                                     <div class="container">
                                         <div class="card">
                                             <div class="card-body p-1">
-                                                <h1>{{ $profitMonths->options['chart_title'] }}</h1>
+                                                <h3>
+                                                    {{ __("Revenues within 6 months") }} :
+                                                    <span class="btn-tooltip" data-bs-toggle="tooltip"
+                                                    title="{{ $sum = getSumOfDataGraph($profitMonths) }} {{ __('SAR') }}" data-container="body"
+                                                    data-animation="true" data-bs-toggle="tooltip">
+                                                        {{ getAmount($sum) }} {{ __('SAR') }}
+                                                    </span>
+                                                </h3>
                                                 {!! $profitMonths->renderHtml() !!}
                                             </div>
                                         </div>
@@ -217,7 +203,14 @@
                                     <div class="container">
                                         <div class="card">
                                             <div class="card-body p-1">
-                                                <h1>{{ $profitDays->options['chart_title'] }}</h1>
+                                                <h3>
+                                                    {{ __("Revenues within 7 days") }} :
+                                                    <span class="btn-tooltip" data-bs-toggle="tooltip"
+                                                    title="{{ $sum = getSumOfDataGraph($profitDays) }} {{ __('SAR') }}" data-container="body"
+                                                    data-animation="true" data-bs-toggle="tooltip">
+                                                        {{ getAmount($sum) }} {{ __('SAR') }}
+                                                    </span>
+                                                </h3>
                                                 {!! $profitDays->renderHtml() !!}
                                             </div>
                                         </div>

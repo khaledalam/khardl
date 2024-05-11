@@ -217,6 +217,7 @@ return [
         "image" => "الصورة",
         'is_application_purchase'=>"عند شراء التطبيق",
         'is_branch_purchase'=>"عند شراء الفرع",
+        'is_lifetime_purchase'=>"عند شراء تطبيق مدي الحياة",
         'promoter_id'=>"المروج",
         "pickup_availability" => "الاستلام من المطعم",
         "commercial registration number"=>"رقم التسجيل التجاري",

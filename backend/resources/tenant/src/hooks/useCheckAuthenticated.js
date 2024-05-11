@@ -21,10 +21,6 @@ export default function useCheckAuthenticated() {
 
         const isLoggedin = response?.data?.is_loggedin;
         if (isLoggedin) {
-          localStorage.setItem(
-            "i18nextLng",
-            response?.data?.default_locale ?? "ar",
-          );
           let newLanguage = response?.data?.default_locale;
           dispatch(changeLanguage(newLanguage));
         }

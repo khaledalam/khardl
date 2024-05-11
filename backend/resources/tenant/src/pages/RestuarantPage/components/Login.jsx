@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import Logo from "../../../assets/Logo.webp";
+import Logo from "../../../assets/Logo_White.svg";
 import ContactUsCover from "../../../assets/ContactUsCover.webp";
 import { useTranslation } from "react-i18next";
 import MainText from "../../../components/MainText";
@@ -23,7 +23,7 @@ import {
   SetRegisterModal,
   SetLoginModal,
 } from "../../../redux/NewEditor/restuarantEditorSlice";
-import imgLogo from "../../../assets/khardl_Logo.png";
+import imgLogo from "../../../assets/Logo_White.svg";
 import SA from "../../../assets/SA.png";
 import Down from "../../../assets/down.svg";
 import { getCartItemsCount } from "../../../redux/NewEditor/categoryAPISlice";
@@ -79,13 +79,13 @@ const Login = ({ closingFunc }) => {
       setSpinner(true);
 
       let sms_id = {};
-      if (localStorage.getItem('phone_sms_otp_id')?.length > 0) {
-        sms_id['id_sms'] = localStorage.getItem('phone_sms_otp_id');
+      if (localStorage.getItem("phone_sms_otp_id")?.length > 0) {
+        sms_id["id_sms"] = localStorage.getItem("phone_sms_otp_id");
       }
       const response = await AxiosInstance.post(`/login-tenant`, {
         phone: data.phone,
         otp: otp,
-        ...sms_id
+        ...sms_id,
         // remember_me: data.remember_me, // used only in API token-based
       });
 
@@ -120,19 +120,28 @@ const Login = ({ closingFunc }) => {
         }
       }
     } catch (error) {
-      if (localStorage.getItem('phone_sms_otp_id')?.length > 0) {
-        localStorage.setItem('phone_sms_otp_id', "");
+      if (localStorage.getItem("phone_sms_otp_id")?.length > 0) {
+        localStorage.setItem("phone_sms_otp_id", "");
       }
 
       if (error?.response?.status == 400) {
         setShowOTP(true);
         if (error?.response?.data?.data?.id) {
-          localStorage.setItem('phone_sms_otp_id', error?.response?.data?.data?.id)
+          localStorage.setItem(
+            "phone_sms_otp_id",
+            error?.response?.data?.data?.id
+          );
         }
-        toast.info(error?.response?.data?.message || `${t("The code has been sent successfully")}`);
+        toast.info(
+          error?.response?.data?.message ||
+            `${t("The code has been sent successfully")}`
+        );
         return;
       } else if (error?.response?.status == 403) {
-        toast.error(error?.response?.data?.message || `${t("The code has been sent successfully")}`);
+        toast.error(
+          error?.response?.data?.message ||
+            `${t("The code has been sent successfully")}`
+        );
         return;
       }
       console.log("error response > ", error);
@@ -255,6 +264,16 @@ const Login = ({ closingFunc }) => {
                 required: true,
               })}
               onChange={(event) => {
+                let temp = "";
+                for (let i = 0; i < event.target.value.length; i += 1) {
+                  if (
+                    event.target.value[i] >= '0' &&
+                    event.target.value[i] <= '9'
+                  ) {
+                    temp += event.target.value[i];
+                  }
+                }
+                event.target.value = temp;
                 setLengthOfPhone(event.target.value.length);
                 // console.log(data.target.value.length);
               }}
@@ -262,12 +281,17 @@ const Login = ({ closingFunc }) => {
               maxLength={9}
               onKeyDown={(event) => {
                 if (
+                  event.ctrlKey &&
+                  event.key === "v" 
+                ) {
+                } else if (
                   (event.which < 48 || event.which > 57) &&
                   (event.which < 96 || event.which > 105) &&
                   event.which !== 8 &&
                   event.which !== 46 &&
                   event.which !== 37 &&
-                  event.which !== 39
+                  event.which !== 39 &&
+                  !event.ctrlKey
                 ) {
                   event.preventDefault();
                 }
@@ -282,7 +306,10 @@ const Login = ({ closingFunc }) => {
           <div className="w-[84px] h-[38px] p-1 rounded-[50px] border border-gray-200 justify-start items-center gap-1 inline-flex relative">
             <div className="w-[15px] h-[15px] py-0.5 flex-col justify-center items-center gap-2.5 inline-flex" />
 
-            <div dir={"ltr"} className="text-zinc-500 text-xs font-normal font-['Plus Jakarta Sans'] leading-[18px]">
+            <div
+              dir={"ltr"}
+              className="text-zinc-500 text-xs font-normal font-['Plus Jakarta Sans'] leading-[18px]"
+            >
               +966
             </div>
 
@@ -295,7 +322,6 @@ const Login = ({ closingFunc }) => {
                 />
               </div>
             </div>
-
 
             <div className="w-9 h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
               <div className="text-zinc-500 text-[9px] font-normal font-['Plus Jakarta Sans']">

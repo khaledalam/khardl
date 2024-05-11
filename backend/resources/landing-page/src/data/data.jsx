@@ -3,7 +3,7 @@ import ClientLogo2 from "../assets/ClientLogo2.webp";
 import ClientLogo3 from "../assets/ClientLogo3.webp";
 
 import PersonalImage from "../assets/image.webp";
-import Logo from "../assets/Logo.webp";
+import Logo from "../assets/Logo_White.svg";
 
 export const branches = [
   {

@@ -65,6 +65,7 @@ class AdminController extends Controller
             'amount'=> $request->type == 'fixed' ? $request->fixed:$request->percentage,
             'is_branch_purchase'=>  $request->is_branch_purchase ?? false,
             'is_application_purchase'=>  $request->is_application_purchase ?? false,
+            'is_lifetime_purchase'=>  $request->is_lifetime_purchase ?? false,
             'type'=>  $request->type,
             'max_use'=> $request->max_use ?? null ,
             'promoter_id'=> $request->promoter_id ,
@@ -256,7 +257,7 @@ class AdminController extends Controller
         $restaurants = $query->paginate();
         $user = Auth::user();
 
-        return view('admin.restaraunts', compact('restaurants', 'user'));
+        return view('admin.restaurants', compact('restaurants', 'user'));
     }
 
 

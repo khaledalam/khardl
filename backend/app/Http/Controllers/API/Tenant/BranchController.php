@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers\API\Tenant;
 
-use App\Http\Requests\API\Branch\UpdateBranchSettingsRequest;
-use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\Item;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
 use App\Traits\APIResponseTrait;
+use App\Models\Tenant\DeliveryType;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\API\Tenant\BranchResource;
+use App\Http\Requests\API\Branch\UpdateBranchSettingsRequest;
+use App\Http\Resources\API\Tenant\CategoryResource;
+use App\Http\Resources\API\Tenant\ItemResource;
 
 class BranchController extends Controller
 {
     use APIResponseTrait;
+    public function index(){
+        return BranchResource::collection(Branch::where('active',true)->get());
+    }
+    public function categories($branch_id){
 
+        $branch = Branch::where('active',true)->findOrFail($branch_id);
+        return CategoryResource::collection($branch->categories);
+    }
     public function updateDelivery(UpdateBranchSettingsRequest $request, $branch)
     {
         $delivery_types = null;

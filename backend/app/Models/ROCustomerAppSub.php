@@ -43,7 +43,7 @@ class ROCustomerAppSub extends Model
     public const SUSPEND = 'suspend';
     public const REQUESTED ='requested';
 
-    public const LIFETIME_SUBSCRIPTION ="lifetime-sub";
+    public const LIFETIME_SUBSCRIPTION ="is_lifetime_purchase";
 
     public function user(){
         return $this->belongsTo(RestaurantUser::class,'user_id');

@@ -111,7 +111,7 @@ const CartPage = () => {
   const fetchResStyleData = async () => {
     try {
       AxiosInstance.get(`restaurant-style`).then((response) =>
-        dispatch(changeRestuarantEditorStyle(response.data?.data)),
+        dispatch(changeRestuarantEditorStyle(response.data?.data))
       );
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
@@ -221,11 +221,11 @@ const CartPage = () => {
   const getTotalPrice = () =>
     Number(
       parseFloat(cart?.total) +
-        (deliveryType === "PICKUP" ? 0.0 : parseFloat(cart?.delivery_fee)),
+        (deliveryType === "PICKUP" ? 0.0 : parseFloat(cart?.delivery_fee))
     ).toFixed(2);
 
   return (
-    <div className="p-12">
+    <div className="p-4 sm:p-6 md:p-12">
       {loading && (
         <div className={"m-auto w-28 pt-28"}>
           <ClipLoader
@@ -251,8 +251,8 @@ const CartPage = () => {
               </Button>
               <h1 className="font-bold text-xl">{t("Your Cart")}</h1>
 
-              <div className="grid grid-cols-12 gap-x-6 pt-8">
-                <div className="sm:col-span-7 col-span-12">
+              <div className="flex flex-wrap md:grid md:grid-cols-12 gap-x-6 pt-8">
+                <div className="md:col-span-7 w-full">
                   <div className="flex flex-col gap-y-6">
                     {cartItemsData &&
                       cartItemsData.length > 0 &&
@@ -267,14 +267,25 @@ const CartPage = () => {
                       })}
                   </div>
                 </div>
-                <div className="sm:col-span-5 col-span-12 paymentDetails p-4 mt-6 sm:mt-0">
+                <div className="md:col-span-5 w-full paymentDetails p-4 mt-6 sm:mt-0">
                   <div className="cartDetailSection mt-6">
                     <OrderReviewSummary cart={cart} />
                   </div>
                   <div className="cartDetailSection h-36xw mt-8">
                     <h3>{t("Select Payment Method")}</h3>
+
+                    {cart?.allow_buy_with_loyalty_points && <CartDetailSection
+                      key={"Loyalty points"}
+                      name={"Loyalty points"}
+                      onChange={(e) => setPaymentMethod("Loyalty points")}
+                      isChecked={paymentMethod === "Loyalty points"}
+                      img={pmcc}
+                      displayName={"Loyalty points"}
+                      callBackfn={cardPaymentCallbackFunc}
+                    />}
+
                     {cart.payment_methods.some(
-                      (obj) => obj.name === "Online",
+                      (obj) => obj.name === "Online"
                     ) && (
                       <CartDetailSection
                         key={"Online"}
@@ -287,7 +298,7 @@ const CartPage = () => {
                       />
                     )}
                     {cart.payment_methods.some(
-                      (obj) => obj.name === "Online",
+                      (obj) => obj.name === "Online"
                     ) &&
                       isSafari && (
                         <CartDetailSection
@@ -301,7 +312,7 @@ const CartPage = () => {
                         />
                       )}
                     {cart.payment_methods.some(
-                      (obj) => obj.name === "Cash on Delivery",
+                      (obj) => obj.name === "Cash on Delivery"
                     ) && (
                       <CartDetailSection
                         key={"Cash on Delivery"}
@@ -408,7 +419,7 @@ const CartPage = () => {
                   <div className="cartDetailSection h-36xw mt-8">
                     <h3>{t("Select Delivery Type")}</h3>
                     {deliveryTypesData.some(
-                      (obj) => obj.name === "Delivery",
+                      (obj) => obj.name === "Delivery"
                     ) && (
                       <CartDetailSection
                         name="Delivery"
@@ -503,7 +514,7 @@ const CartPage = () => {
 
                   <Button
                     label={t("Place Order")}
-                    className="w-full placeOrderBtn"
+                    className="mt-[15px] w-full cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border  leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 transition-all shadow-md"
                     onClick={handlePlaceOrder}
                   />
                 </div>
@@ -517,7 +528,7 @@ const CartPage = () => {
               </p>
               <p className="mb-6 font-semibold text-gray-500">
                 {t(
-                  "Before proceeding to checkout you must add some products to cart",
+                  "Before proceeding to checkout you must add some products to cart"
                 )}
               </p>
 

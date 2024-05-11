@@ -5,7 +5,7 @@ import { MenuContext } from "react-flexible-sliding-menu";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import imgLogo from "../../../assets/khardl_Logo.png";
+import imgLogo from "../../../assets/Logo_White.svg";
 import { useTranslation } from "react-i18next";
 import { getCartItemsCount } from "../../../redux/NewEditor/categoryAPISlice";
 import AxiosInstance from "../../../axios/axios";

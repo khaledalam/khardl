@@ -9,13 +9,13 @@
     <meta name="author" content="Khardl">
     <meta property="og:title" content="{{ucfirst($restaurant_name)}}" />
     <meta property="og:description" content="Khardl, Digital Ecosystem Solution For Restaurants, Create your website and app with Khardl in minutes, start selling right away, and pay based on your orders only" />
-    <meta property="og:image" content="{{ $logo ?? global_asset('images/Logo.webp') }}" />
+    <meta property="og:image" content="{{ $logo ?? global_asset('images/Logo_White.svg') }}" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ucfirst($restaurant_name)}}</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <link rel="canonical" href="{{ $logo ?? global_asset('images/Logo.webp') }}" />
-    <link rel="shortcut png" href="{{ $logo ?? global_asset('images/Logo.webp') }}"/>
-    <link rel="icon" href="{{ $logo ?? global_asset('images/Logo.webp') }}"/>
+    <link rel="canonical" href="{{ $logo ?? global_asset('images/Logo_White.svg') }}" />
+    <link rel="shortcut png" href="{{ $logo ?? global_asset('images/Logo_White.svg') }}"/>
+    <link rel="icon" href="{{ $logo ?? global_asset('images/Logo_White.svg') }}"/>
 {{--    <link rel="preconnect" href="https://fonts.googleapis.com" />--}}
 {{--        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />--}}
 {{--        <link--}}

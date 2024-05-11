@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../../assets/Logo.webp";
+import logo from "../../../assets/Logo_White.svg";
 import HeroImg from "../../../assets/Hero.webp";
 import HeroPitcureAr from "../../../assets/HeroPitcureAr.webp";
 import HeroPitcureEn from "../../../assets/HeroPitcureEn.webp";
@@ -25,6 +25,7 @@ const Hero = () => {
           <div className="md:relative">
             <h3 className="leading-10 text-4xl text-[#000000] mt-5 home-heading">
               {t("Unlock a pathway to")}
+
               <span className="text-[#C0D123] ms-1">
                 {t("commissions")}
               </span>{" "}

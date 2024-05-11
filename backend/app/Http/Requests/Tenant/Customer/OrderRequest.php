@@ -35,7 +35,7 @@ class OrderRequest extends FormRequest
             'cart'=>'nullable',
             'address'=>'nullable',
             'manual_order_first_name' => 'nullable',
-            'manual_order_last_name' => 'nullable'
+            'manual_order_last_name' => 'nullable',
         ];
     }
     public function withValidator($validator)
@@ -48,6 +48,17 @@ class OrderRequest extends FormRequest
                 $validator->errors()->add('cart', __('This branch is no longer accepting orders'));
 
             }
+
+            if ($this->payment_method == "Loyalty points") {
+                if ($user->loyalty_points < $cart->totalLoyaltyPointsPrice()) {
+                    $validator->errors()->add('use_loyalty_points_value', __('You do not have enough loyalty points'));
+                    return;
+                } else if (!$cart->canPayWithLoyaltyPoints()) {
+                    $validator->errors()->add('use_loyalty_points_option', __('You can not use loyalty points for place this order'));
+                    return;
+                }
+            }
+
             if($this->delivery_type == DeliveryType::DELIVERY &&
                 (!$user->address || !$user->lat || !$user->lng) && !$this->address
             ){

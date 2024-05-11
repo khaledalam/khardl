@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
-
+import Skeleton from "react-loading-skeleton";
 import Header from "./Header";
 // import Logo from "./Logo";
 import Banner from "./Banner";
@@ -48,6 +48,25 @@ const FullPage = ({ categories }) => {
     setIsModelOpen(false);
   }, [isBranchModelOpen, isLoginModalOpen]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 27) {
+        if (isLoginModalOpen) {
+          dispatch(SetLoginModal(false));
+        }
+        if (isRegisterModalOpen) {
+          dispatch(SetRegisterModal(false));
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isLoginModalOpen, isRegisterModalOpen, dispatch]);
+
   return (
     <div
       style={{
@@ -59,7 +78,7 @@ const FullPage = ({ categories }) => {
         style={{
           backgroundColor: page_color,
         }}
-        className="w-full h-full p-4 flex flex-col gap-[16px] relative mx-auto max-w-[1200px]"
+        className="w-full h-full p-2 pt-1 md:p-4 flex flex-col gap-[16px] relative mx-auto max-w-[1200px]"
       >
         <Header
           restaurantStyle={restaurantStyle}
@@ -74,8 +93,14 @@ const FullPage = ({ categories }) => {
         />
         {/* <Logo restaurantStyle={restaurantStyle} /> */}
         <Banner restaurantStyle={restaurantStyle} />
-        <Category restaurantStyle={restaurantStyle} categories={categories} />
-        <SocialMedia restaurantStyle={restaurantStyle} />
+        {categories.length ? (
+          <Category restaurantStyle={restaurantStyle} categories={categories} />
+        ) : (
+          <div className="min-h-[30px]">
+            <Skeleton className="h-full" />
+          </div>
+        )}
+        {/* <SocialMedia restaurantStyle={restaurantStyle} /> */}
         <Footer restaurantStyle={restaurantStyle} />
       </div>
       {isBranchModelOpen ? (

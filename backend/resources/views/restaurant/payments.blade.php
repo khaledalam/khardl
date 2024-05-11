@@ -111,8 +111,8 @@ $tap_info = $settings->lead_response;
                                                                 </p></div>
                                                                 <div class="p-2"> <p>{{$ROSubscription?->discount}}  {{__('SAR')}}</p></div>
                                                             </div>
-                                                               
-                                                               
+
+
                                                             @else
                                                              <span class="py-3 px-4 fs-23">{{ $ROSubscription?->amount }} {{ __('SAR') }}</span>
 
@@ -176,7 +176,7 @@ $tap_info = $settings->lead_response;
                     <h4>{{ __('You do not have subscription') }}</h4>
                     <p>{{ __('You can subscription now') }}</p>
                     <a href="{{ route('restaurant.service') }}">
-                        <button type="button" class="btn btn-success btn-sm">{{ __('View services') }}</button>
+                        <button type="button" class="btn btn-khardl btn-sm">{{ __('View services') }}</button>
                     </a>
                 </div>
                 @endif
@@ -215,7 +215,7 @@ $tap_info = $settings->lead_response;
                                                         @csrf
                                                         <div class="d-flex my-0">
                                                             <input type="hidden" name="download" value="csv">
-                                                            <button type="submit" id="download_app_transactions" class="btn btn-success mx-2">
+                                                            <button type="submit" id="download_app_transactions" class="btn btn-khardl mx-2">
                                                                 <span class="indicator-label">{{ __('Download') }} <i class="fa fa-download"></i></span>
                                                                 <span class="indicator-progress">{{ __('please-wait')}}
                                                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -274,11 +274,11 @@ $tap_info = $settings->lead_response;
                                                                             </p></div>
                                                                             <div class="p-2"> <p>{{$invoice?->discount}}  {{__('SAR')}}</p></div>
                                                                         </div>
-                                                                           
-                                                                           
+
+
                                                                         @else
                                                                          <span class="py-3 px-4 fs-23">{{ $invoice?->amount }} {{ __('SAR') }}</span>
-            
+
                                                                         @endif
                                                                 </td>
                                                                 <td>
@@ -357,7 +357,7 @@ $tap_info = $settings->lead_response;
                                                 <!--begin::Table body-->
                                                 <tbody class="fw-bolder text-gray-600">
                                                     <!--begin::Item-->
-                                                 
+
                                                     <!--end::Item-->
                                                     @if(isset($ROCustomerAppSubscription?->subscription?->name))
                                                     <!--begin::Item-->
@@ -384,8 +384,8 @@ $tap_info = $settings->lead_response;
                                                                 </p></div>
                                                                 <div class="p-2"> <p>{{$ROCustomerAppSubscription?->discount}}  {{__('SAR')}}</p></div>
                                                             </div>
-                                                               
-                                                               
+
+
                                                             @else
                                                              <span class="py-3 px-4 fs-23">{{ $ROCustomerAppSubscription?->amount }} {{ __('SAR') }}</span>
 
@@ -450,7 +450,7 @@ $tap_info = $settings->lead_response;
                     <h4>{{ __('You do not have subscription') }}</h4>
                     <p>{{ __('You can subscription now') }}</p>
                     <a href="{{ route('restaurant.service') }}">
-                        <button type="button" class="btn btn-success btn-sm">{{ __('View services') }}</button>
+                        <button type="button" class="btn btn-khardl btn-sm">{{ __('View services') }}</button>
                     </a>
                 </div>
                 @endif
@@ -489,7 +489,7 @@ $tap_info = $settings->lead_response;
                                                         @csrf
                                                         <div class="d-flex my-0">
                                                             <input type="hidden" name="download" value="download_app">
-                                                            <button type="submit" id="download_transactions" class="btn btn-success mx-2">
+                                                            <button type="submit" id="download_transactions" class="btn btn-khardl mx-2">
                                                                 <span class="indicator-label">{{ __('Download') }} <i class="fa fa-download"></i></span>
                                                                 <span class="indicator-progress">{{ __('please-wait')}}
                                                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -534,7 +534,7 @@ $tap_info = $settings->lead_response;
                                                                     <span class="py-3 px-4 fs-23 badge badge-light-khardl">{{ __(''.$invoice->status) }}</span>
                                                                     @endif
                                                                 </td>
-                                                              
+
                                                                 <td class="text-start">
                                                                     @if($invoice?->discount)
                                                                     <div class="d-flex flex-row">
@@ -543,11 +543,11 @@ $tap_info = $settings->lead_response;
                                                                         </p></div>
                                                                         <div class="p-2"> <p>{{$invoice?->discount}}  {{__('SAR')}}</p></div>
                                                                     </div>
-                                                                       
-                                                                       
+
+
                                                                     @else
                                                                      <span class="py-3 px-4 fs-23">{{ $invoice?->amount }} {{ __('SAR') }}</span>
-        
+
                                                                     @endif
                                                             </td>
                                                                 <td>

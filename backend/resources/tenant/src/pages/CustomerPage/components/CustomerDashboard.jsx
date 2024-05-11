@@ -7,22 +7,45 @@ import AxiosInstance from "../../../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-
+import {
+  updateOrderList,
+  updateOrdersMeta,
+  updatePageLinks,
+} from "../../../redux/NewEditor/customerSlice";
 const CustomerDashboard = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const ordersList = useSelector((state) => state.customerAPI.ordersList);
-  const [orderLength, setOrderLength] = useState(6);
   const [isViewMore, setIsViewMore] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [cashback, setCashback] = useState(0);
   const [loyaltyPoints, setLoyaltyPoints] = useState(0);
+
+  const fetchOrderPerpage = async () => {
+    try {
+      const ordersResponse = await AxiosInstance.get(
+        `orders?items&item&per_page=${6}&page=${""}&search=${""}&status=${""}`
+      );
+
+      console.log("orders per page >>>", ordersResponse?.data?.data);
+      if (ordersResponse.data) {
+        dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)));
+        dispatch(updatePageLinks(ordersResponse?.data.links));
+        dispatch(updateOrdersMeta(ordersResponse?.data.meta));
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
 
   // useEffect(() => {
   //   fetchProfileData().then((r) => null);
   // }, []);
   useEffect(() => {
     fetchProfileData().then((r) => null);
+    fetchOrderPerpage().then(() => {});
   }, []);
 
   const fetchProfileData = async () => {
@@ -74,7 +97,6 @@ const CustomerDashboard = () => {
   //   setIsViewMore(false)
   // }, [])
 
-  let slicedOrderData = ordersList ? ordersList.slice(0, orderLength) : [];
 
   return (
     <div className="m-4 mt-8 md:m-12 mb-5">
@@ -104,10 +126,10 @@ const CustomerDashboard = () => {
       <div className="w-full">
         <h3 className="my-4">{t("Last Orders")}</h3>
         <div className="overflow-x-scroll hide-scroll">
-          <OrderTable data={slicedOrderData} />
+          <OrderTable data={ordersList} />
         </div>
       </div>
-      {slicedOrderData.length > 0 && (
+      {ordersList.length > 0 && (
         <div className="w-full p-5 flex items-center justify-center cursor-pointer">
           <div
             onClick={() => navigate("/profile-summary#Orders")}
