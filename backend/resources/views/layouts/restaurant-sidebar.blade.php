@@ -417,7 +417,7 @@
                             </a>
                         </div>
                         <!-- Promotions -->
-                        {{-- <div class="menu-item menu-accordion">
+                        <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.promotions')}}">
                                 <span class="{{ ($link == 'promotions' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -430,7 +430,7 @@
                                     <span class="menu-title">{{__('promotions')}}</span>
                                 </span>
                             </a>
-                        </div> --}}
+                        </div>
                         <!-- QR maker -->
                         {{-- <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.qr')}}">

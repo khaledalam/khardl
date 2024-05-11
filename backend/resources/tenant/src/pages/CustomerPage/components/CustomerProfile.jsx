@@ -12,6 +12,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import ConfirmationModal from "../../../components/confirmationModal";
 import { useNavigate } from "react-router-dom";
+import StatsCard from "../../../components/Customers/CustomersPreview/components/Dashboard/components/statsCard";
 
 const CustomerProfile = () => {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ const CustomerProfile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
+  const [loyalPointsValue, setLoyalPointsValue] = useState("");
   const customerAddress = useSelector((state) => state.customerAPI.address);
 
   const [isDisabled, setIsDisabled] = useState(true);
@@ -40,6 +42,7 @@ const CustomerProfile = () => {
 
       console.log("profileResponse >>>PROFILE", profileResponse.data);
       if (profileResponse.data) {
+        setLoyalPointsValue(profileResponse.data?.data?.loyalty_points ?? t("N/A"));
         setFirstName(profileResponse.data?.data?.firstName ?? t("N/A"));
         userProfileInfo["firstName"] = profileResponse.data?.data?.firstName;
         setLastName(profileResponse.data?.data?.lastName ?? t("N/A"));
@@ -145,6 +148,23 @@ const CustomerProfile = () => {
         <img src={profileIcon} alt="dashboard" className="w-8" />
         <h3 className="text-3xl font-medium">{t("Profile")}</h3>
       </div>
+
+      <div className="grid grid-cols-3 gap-4 mb-4">
+        {/*<StatsCard title={t("Wallet")} Stats="700" />*/}
+        <StatsCard
+          title={t("Loyalty Point")}
+          Stats={loyalPointsValue}
+          ShowIcons={true}
+          IsUp={loyalPointsValue > 0}
+        />
+        {/*<StatsCard*/}
+        {/*    title={t("Total Cash Back")}*/}
+        {/*    Stats="1500"*/}
+        {/*    ShowIcons={true}*/}
+        {/*    IsUp={true}*/}
+        {/*/>*/}
+      </div>
+
       {/* <h3 className="text-lg my-5 ">{t("Profile Details")}</h3> */}
       <div className="w-full bg-white shadow-md rounded-md  min-h-[300px] h-full p-4">
         <div className="w-full lg:w-1/3 flex flex-col gap-4">

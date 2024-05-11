@@ -58,23 +58,25 @@
                                                                     <!--begin::input group-->
                                                                     <div class="fv-row">
                                                                         <!--begin::label-->
-                                                                        <label class="required form-label">{{ __('Loyalty points per 1 SAR') }}</label>
+                                                                        <label class="required form-label">{{ __('How many loyalty points customer get per spend each 1 SAR?') }}</label>
                                                                         <!--end::label-->
                                                                         <!--begin::input-->
-                                                                        <input type="number" min="1" step="0.01" name="loyalty_points" class="form-control mb-2" placeholder="{{ __('e.g 0.02') }}" value="{{$settings['loyalty_points']}}" />
+                                                                        <input type="number" min="0" step="0.01" name="loyalty_points" class="form-control mb-2" placeholder="{{ __('e.g 0.02') }}" value="{{$settings['loyalty_points']}}" />
                                                                         <!--end::input-->
+                                                                        <small class="text-muted">({{ __('0 means turn off') }})</small>
+
                                                                     </div>
                                                                     <!--begin::input group-->
-                                                                    <div class="mb-10 fv-row">
-                                                                        <!--begin::label-->
-                                                                        <label class="required form-label">{{__('Price per 1 loyalty point per purchase')}}
-                                                                            <small class="text-muted">({{ __('SAR') }})</small>
-                                                                        </label>
-                                                                        <!--end::label-->
-                                                                        <!--begin::input-->
-                                                                        <input type="number" min="1" step="0.01" name="loyalty_point_price" class="form-control mb-2" placeholder="1 {{ __('SAR') }}" value="{{$settings['loyalty_point_price']}}" />
-                                                                        <!--end::input-->
-                                                                    </div>
+{{--                                                                    <div class="mb-10 fv-row">--}}
+{{--                                                                        <!--begin::label-->--}}
+{{--                                                                        <label class="required form-label">{{__('Price per 1 loyalty point per purchase')}}--}}
+{{--                                                                            <small class="text-muted">({{ __('SAR') }})</small>--}}
+{{--                                                                        </label>--}}
+{{--                                                                        <!--end::label-->--}}
+{{--                                                                        <!--begin::input-->--}}
+{{--                                                                        <input type="number" min="1" step="0.01" name="loyalty_point_price" class="form-control mb-2" placeholder="1 {{ __('SAR') }}" value="{{$settings['loyalty_point_price']}}" />--}}
+{{--                                                                        <!--end::input-->--}}
+{{--                                                                    </div>--}}
                                                                     <!--end::input group-->
 
 
@@ -90,68 +92,69 @@
                                             </div>
                                             <!--end::main column-->
 
+
                                             <!--begin::Main column-->
-                                            <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+{{--                                            <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">--}}
 
-                                                <!--begin::Tab content-->
-                                                <div class="tab-content">
-                                                    <!--begin::Tab pane-->
-                                                    <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
-                                                        <div class="d-flex flex-column gap-7 gap-lg-10">
-                                                            <!--begin::General options-->
-                                                            <div class="card card-flush py-4">
-                                                                <!--begin::Card header-->
-                                                                <div class="card-header">
-                                                                    <div class="card-title">
-                                                                        <h2>{{ __('Cash-back') }}</h2>
-                                                                    </div>
-                                                                </div>
-                                                                <!--end::Card header-->
-                                                                <!--begin::Card body-->
-                                                                <div class="card-body pt-0">
-                                                                    <!--begin::Input group-->
-                                                                    <div class="fv-row">
-                                                                        <!--begin::Label-->
-                                                                        <label class="required form-label">{{ __('Start from') }}
-                                                                            <small class="text-muted">({{ __('get cash back when total is above this value') }})</small>
-                                                                        </label>
-                                                                        <!--end::Label-->
-                                                                        <!--begin::Input-->
-                                                                        <input type="number" min="1" step="0.01" name="cashback_threshold" class="form-control mb-2" placeholder="e.x. 50" value="{{$settings['cashback_threshold']}}" />
-                                                                        <!--end::Input-->
-                                                                    </div>
-                                                                    <!--end::Input group-->
-                                                                    <!--begin::Input group-->
-                                                                    <div class="mb-10 mt-1 fv-row">
-                                                                        <!--begin::Input-->
-                                                                        {{-- <input type="checkbox" name="threshold" id="threshold"/>--}}
-                                                                        {{-- <!--end::Input-->--}}
-                                                                        {{-- <!--begin::Label-->--}}
-                                                                        {{-- <label class="form-label" for="threshold">Enable threshold</label>--}}
-                                                                        <!--end::Label-->
-                                                                    </div>
-                                                                    <!--end::Input group-->
-                                                                    <!--begin::Input group-->
-                                                                    <div class="mb-10 fv-row">
-                                                                        <!--begin::Label-->
-                                                                        <label class="required form-label">{{ __('Cash back in percentage (%)') }}</label>
-                                                                        <!--end::Label-->
-                                                                        <!--begin::Input-->
-                                                                        <input type="number" min="1" step="0.01" name="cashback_percentage" class="form-control mb-2" placeholder="e.x. 5%" value="{{$settings['cashback_percentage']}}" />
-                                                                        <!--end::Input-->
-                                                                    </div>
-                                                                    <!--end::Input group-->
+{{--                                                <!--begin::Tab content-->--}}
+{{--                                                <div class="tab-content">--}}
+{{--                                                    <!--begin::Tab pane-->--}}
+{{--                                                    <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">--}}
+{{--                                                        <div class="d-flex flex-column gap-7 gap-lg-10">--}}
+{{--                                                            <!--begin::General options-->--}}
+{{--                                                            <div class="card card-flush py-4">--}}
+{{--                                                                <!--begin::Card header-->--}}
+{{--                                                                <div class="card-header">--}}
+{{--                                                                    <div class="card-title">--}}
+{{--                                                                        <h2>{{ __('Cash-back') }}</h2>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                                <!--end::Card header-->--}}
+{{--                                                                <!--begin::Card body-->--}}
+{{--                                                                <div class="card-body pt-0">--}}
+{{--                                                                    <!--begin::Input group-->--}}
+{{--                                                                    <div class="fv-row">--}}
+{{--                                                                        <!--begin::Label-->--}}
+{{--                                                                        <label class="required form-label">{{ __('Start from') }}--}}
+{{--                                                                            <small class="text-muted">({{ __('get cash back when total is above this value') }})</small>--}}
+{{--                                                                        </label>--}}
+{{--                                                                        <!--end::Label-->--}}
+{{--                                                                        <!--begin::Input-->--}}
+{{--                                                                        <input type="number" min="1" step="0.01" name="cashback_threshold" class="form-control mb-2" placeholder="e.x. 50" value="{{$settings['cashback_threshold']}}" />--}}
+{{--                                                                        <!--end::Input-->--}}
+{{--                                                                    </div>--}}
+{{--                                                                    <!--end::Input group-->--}}
+{{--                                                                    <!--begin::Input group-->--}}
+{{--                                                                    <div class="mb-10 mt-1 fv-row">--}}
+{{--                                                                        <!--begin::Input-->--}}
+{{--                                                                        --}}{{-- <input type="checkbox" name="threshold" id="threshold"/>--}}
+{{--                                                                        --}}{{-- <!--end::Input-->--}}
+{{--                                                                        --}}{{-- <!--begin::Label-->--}}
+{{--                                                                        --}}{{-- <label class="form-label" for="threshold">Enable threshold</label>--}}
+{{--                                                                        <!--end::Label-->--}}
+{{--                                                                    </div>--}}
+{{--                                                                    <!--end::Input group-->--}}
+{{--                                                                    <!--begin::Input group-->--}}
+{{--                                                                    <div class="mb-10 fv-row">--}}
+{{--                                                                        <!--begin::Label-->--}}
+{{--                                                                        <label class="required form-label">{{ __('Cash back in percentage (%)') }}</label>--}}
+{{--                                                                        <!--end::Label-->--}}
+{{--                                                                        <!--begin::Input-->--}}
+{{--                                                                        <input type="number" min="1" step="0.01" name="cashback_percentage" class="form-control mb-2" placeholder="e.x. 5%" value="{{$settings['cashback_percentage']}}" />--}}
+{{--                                                                        <!--end::Input-->--}}
+{{--                                                                    </div>--}}
+{{--                                                                    <!--end::Input group-->--}}
 
-                                                                </div>
-                                                                <!--end::Card header-->
-                                                            </div>
-                                                            <!--end::General options-->
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Tab pane-->
-                                                </div>
+{{--                                                                </div>--}}
+{{--                                                                <!--end::Card header-->--}}
+{{--                                                            </div>--}}
+{{--                                                            <!--end::General options-->--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                    <!--end::Tab pane-->--}}
+{{--                                                </div>--}}
 
-                                            </div>
+{{--                                            </div>--}}
                                             <!--end::Main column-->
 
                                             <button type="submit" class="btn btn-sm fw-bolder btn-khardl px-4">{{__('save')}}</button>
