@@ -6,7 +6,7 @@ import { RiArrowDownDoubleFill } from "react-icons/ri";
 
 function Cards() {
   const { t } = useTranslation();
-  const [Visible, setVisible] = useState(10);
+  const [Visible, setVisible] = useState(23);
   const showMoreItems = () => {
     setVisible((prevValue) => prevValue + 5);
   };

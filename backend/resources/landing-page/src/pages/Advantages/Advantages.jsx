@@ -11,7 +11,7 @@ import { RiArrowDownDoubleFill } from "react-icons/ri";
 
 function Advantages() {
   const { t } = useTranslation();
-  const [Visible, setVisible] = useState(10);
+  const [Visible, setVisible] = useState(27);
   const showMoreItems = () => {
     setVisible((prevValue) => prevValue + 5);
   };

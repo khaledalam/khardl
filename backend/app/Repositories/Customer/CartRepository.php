@@ -62,36 +62,23 @@ class CartRepository
             $options_price += $this->loopingTroughSelectionOptions($item,$request['selectedRadio'],$selection_options);
         }
         if($request['selectedDropdown'] ?? false){
-            $options_price += $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
+            $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
 
-        $query = CartItem::where('item_id', $item->id)
-        ->where('cart_id', $this->cart->id);
-        if($checkbox_options)$query->whereJsonContains('checkbox_options', $checkbox_options);
-        if($selection_options)$query->whereJsonContains('selection_options', $selection_options);
-        if($dropdown_options)$query->whereJsonContains('dropdown_options', $dropdown_options);
-        $existingCartItem = $query->first();
-        if ($existingCartItem) {
-            $quantity = $existingCartItem->quantity + $request['quantity'];
-            $total = ($item->price + $options_price) * $quantity;
-            $existingCartItem->update([
-                'quantity' => $quantity,
-                'total' => $total,
-            ]);
-            return $existingCartItem;
-        }
-
-        return CartItem::create([
-            'item_id' => $item->id,
+        return CartItem::updateOrCreate([
             'cart_id' => $this->cart->id,
-            'price' => $item->price,
-            'total' => ($item->price + $options_price) * $request['quantity'],
+
+        ],[
+            'cart_id' => $this->cart->id,
+            'item_id' => $item->id,
+            'price' =>$item->price,
+            'total' =>($item->price + $options_price) * $request['quantity'] ,
             'quantity' => $request['quantity'],
             'notes' => $request['notes'] ?? null,
-            'options_price' => $options_price,
-            'checkbox_options' => $checkbox_options,
-            'selection_options' => $selection_options,
-            'dropdown_options' => $dropdown_options,
+            'options_price'=>$options_price,
+            'checkbox_options'=>$checkbox_options,
+            'selection_options'=>$selection_options,
+            'dropdown_options'=>$dropdown_options,
         ]);
     }
     public function loopingTroughCheckboxOptions($item, $options, &$updatedOptions)
@@ -99,9 +86,11 @@ class CartRepository
         $totalPrice = 0;
         foreach ($options as $i => $option) {
             foreach ($option as $j => $sub_option) {
-                $updatedOptions[$i]['ar'][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$sub_option][1], $item->checkbox_input_prices[$i][$sub_option]];
-                $updatedOptions[$i]['en'][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$sub_option][0], $item->checkbox_input_prices[$i][$sub_option]];
-                $totalPrice += (float) ($item->checkbox_input_prices[$i][$sub_option] ?? 0);
+                if($sub_option!==null){
+                    $updatedOptions[$i]['ar'][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$sub_option][1], $item->checkbox_input_prices[$i][$sub_option]];
+                    $updatedOptions[$i]['en'][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$sub_option][0], $item->checkbox_input_prices[$i][$sub_option]];
+                    $totalPrice += (float) ($item->checkbox_input_prices[$i][$sub_option] ?? 0);
+                }
             }
         }
         return $totalPrice;
@@ -110,9 +99,11 @@ class CartRepository
     {
         $totalPrice = 0;
         foreach ($options as $i => $option) {
-            $updatedOptions[$i]['ar'][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$option][1], $item->selection_input_prices[$i][$option]];
-            $updatedOptions[$i]['en'][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$option][0], $item->selection_input_prices[$i][$option]];
-            $totalPrice += (float) ($item->selection_input_prices[$i][$option] ?? 0);
+            if($option!==null){
+                $updatedOptions[$i]['ar'][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$option][1], $item->selection_input_prices[$i][$option]];
+                $updatedOptions[$i]['en'][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$option][0], $item->selection_input_prices[$i][$option]];
+                $totalPrice += (float) ($item->selection_input_prices[$i][$option] ?? 0);
+            }
         }
         return $totalPrice;
     }

@@ -130,7 +130,7 @@ const ProductItem = ({
         items: [],
         maximumCounts: checkbox_input_maximum_choices[index],
       };
-      let status = "";
+      let status = null;
       checkbox_input_names[index]?.map((name, id) => {
         temp.items.push({
           name,
@@ -204,7 +204,7 @@ const ProductItem = ({
         });
       });
       tempArray.push(temp);
-      statusArray.push("");
+      statusArray.push(null);
     });
 
     setDropdownStatus(statusArray);
@@ -246,7 +246,7 @@ const ProductItem = ({
       }
     });
     dropdownStatus.map((value, index) => {
-      if (value != "") {
+      if (value != null) {
         total += parseFloat(dropdown_input_prices[index][value]);
       }
     });
@@ -586,7 +586,7 @@ const ProductItem = ({
                     )
                   }
                 >
-                  <option disabled value="">
+                  <option disabled value={null}>
                     {t("select option")}
                   </option>
                   {dropdownItem.items?.map((item, id) => (

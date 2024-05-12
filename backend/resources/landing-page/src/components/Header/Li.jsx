@@ -6,7 +6,7 @@ const Li = ({ link, handleLinkClick, close, title, activeLink, className }) => {
     <li className="nav-link">
       <Link
         to={link}
-        className={`transition-all delay-200 header-link ${activeLink === link ? "active text-[#C0D123] border-b-2 border-[#C0D123]" : ""} ${className}`}
+        className={`transition-all delay-200 header-link ${activeLink === link ? "active text-[#C0D123] border-b-2 border-[#C0D123]" : ""} ${className ? className : ""}`}
         onClick={() => {
           handleLinkClick(link);
           close();
