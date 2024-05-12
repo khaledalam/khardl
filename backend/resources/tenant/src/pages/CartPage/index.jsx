@@ -509,7 +509,10 @@ const CartPage = () => {
                     <Divider />
                     <div className="flex justify-between mt-1">
                       <div>{t("Total Payment")}</div>
-                      <div>{`${getTotalPrice()} ${t("SAR")}`}</div>
+                      <div className={"flex-column"}>
+                        {paymentMethod !== "Loyalty points" && <div>{`${getTotalPrice()} ${t("SAR")}`}</div>}
+                        {paymentMethod === "Loyalty points" && cart?.allow_buy_with_loyalty_points ? <div>{cart?.total_price_with_loyalty_points + " " + t("points-price")}</div> : null}
+                      </div>
                     </div>
                   </div>
 
