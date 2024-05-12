@@ -4,7 +4,7 @@ import ImgPlaceholder from "../../../../assets/imgPlaceholder.png";
 import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg";
 import { IoCloseOutline, IoMenuOutline } from "react-icons/io5";
 import CategoryItem from "./CategoryItem";
-import ProductItem from "./ProductItem";
+import ProductItem from "./NewProductItem";
 import EditorSlider from "./EditorSlider";
 import { useSelector, useDispatch } from "react-redux";
 import { MenuContext } from "react-flexible-sliding-menu";

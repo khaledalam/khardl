@@ -1,5 +1,5 @@
 import EditorSlider from "../../../pages/EditorsPage/Restuarants/components/EditorSlider";
-import ProductItem from "../../../pages/EditorsPage/Restuarants/components/ProductItem";
+import ProductItem from "../../../pages/EditorsPage/Restuarants/components/NewProductItem";
 
 const Category = ({ restaurantStyle, categories = [] }) => {
   const {
@@ -72,7 +72,7 @@ const Category = ({ restaurantStyle, categories = [] }) => {
           className={`w-full h-full flex flex-col max-h-[610px] items-start justify-center `}
         >
           <div
-            className={`flex flex-col gap-[30px] h-fit p-3 md:p-4 overflow-y-scroll hide-scroll w-full`}
+            className={`flex flex-col gap-[30px] h-fit p-3 md:p-4 overflow-y-scroll scrollbar-custom w-full`}
           >
             {categories &&
               visibleCategories.map((category, i) => (
