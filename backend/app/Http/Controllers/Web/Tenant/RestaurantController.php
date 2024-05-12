@@ -344,6 +344,8 @@ class RestaurantController extends BaseController
                         'dropdown_input_titles' => $item->dropdown_input_titles,
                         'dropdown_input_names' => $item->dropdown_input_names,
                         'dropdown_input_prices' => $item->dropdown_input_prices,
+                        'allow_buy_with_loyalty_points' =>$item->allow_buy_with_loyalty_points,
+                        'price_using_loyalty_points' =>$item->price_using_loyalty_points,
                         'user_id' => Auth::user()->id
                     ]);
 
