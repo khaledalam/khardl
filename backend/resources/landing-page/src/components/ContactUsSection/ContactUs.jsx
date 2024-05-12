@@ -9,6 +9,7 @@ import mail from "../../assets/mail.png";
 import { HiChevronRight } from "react-icons/hi2";
 import { useSelector } from "react-redux";
 import {HiChevronLeft} from "react-icons/hi";
+import { BsWhatsapp } from "react-icons/bs";
 
 function ContactUs() {
   const { t } = useTranslation();
@@ -89,12 +90,24 @@ function ContactUs() {
               <h3 className="contact-text">{t("Footer-text")}</h3>
               {/* <div className="contact-details"><span><img src={call}/>
               </span>(+966)121-212-121</div> */}
-              <div className="contact-details">
-                <span>
-                  <img src={mail} />
-                </span>
+              <div className="contact-details items-center">
+                <a href={"mailto:contact-us@khardl.com"}>
+                  <span>
+                    <img src={mail} />
+                  </span>
+                </a>
                 <a href={"mailto:contact-us@khardl.com"}>
                   contact-us@khardl.com
+                </a>
+              </div>
+              <div className="contact-details items-center">
+                <a href={"https://wa.me/966531100671"} style={{direction: 'ltr'}}>
+                  <span>
+                    <BsWhatsapp size={23} />
+                  </span>
+                </a>
+                <a href={"https://wa.me/966531100671"} style={{direction: 'ltr'}}>
+                  +966 53 110 0671
                 </a>
               </div>
               {/* <div className="contact-details"><span><img src={location}/>
