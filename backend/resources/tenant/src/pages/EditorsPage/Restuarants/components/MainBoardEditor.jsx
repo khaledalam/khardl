@@ -32,6 +32,7 @@ import GreenDot from "../../../../assets/greenDot.png";
 import { set } from "react-hook-form";
 import Footer from "./Footer";
 import FooterModal from "./FooterModal";
+import { toast } from "react-toastify";
 
 const MainBoardEditor = ({
   categories,
@@ -229,6 +230,17 @@ const MainBoardEditor = ({
 
   const handleBannerUpload = (event) => {
     event.preventDefault();
+
+    const file = event.target.files[0];
+    const maxSizeInBytes = 5 * 1024 * 1024;
+    if (file.size > maxSizeInBytes) {
+      toast.warn(
+        t("File size exceeds the limit of 5MB. Please choose a smaller file.")
+      );
+      // You can also reset the file input here if needed
+      event.target.value = null;
+      return;
+    }
 
     const selectedBanner = event.target.files[0];
 
@@ -852,15 +864,17 @@ const MainBoardEditor = ({
                       alt="banner"
                       className="w-[80px] h-[40px] rounded-[10px] object-cover"
                     />
-                    <div className="absolute top-[-0.8rem] right-[-1rem]">
-                      <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
-                        <IoCloseOutline
-                          size={16}
-                          className="text-red-500"
-                          onClick={() => removeUploadedImage(idx)}
-                        />
+                    {listofBannerImages.length > 1 && (
+                      <div className="absolute top-[-0.8rem] right-[-1rem]">
+                        <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
+                          <IoCloseOutline
+                            size={16}
+                            className="text-red-500"
+                            onClick={() => removeUploadedImage(idx)}
+                          />
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -869,7 +883,7 @@ const MainBoardEditor = ({
                 type="file"
                 name="banner"
                 id={"banner"}
-                accept="image/*"
+                accept=".jpg, .jpeg, .png"
                 onChange={handleBannerUpload}
                 className="hidden"
                 hidden
