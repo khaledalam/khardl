@@ -9,7 +9,7 @@ const RowTable = ({ points, price, without }) => {
       <div className="w-[100%] content max-md:w-[100%]">
         <div className="text-center items-center  py-3">
           {/* <h1 className='content'>{points} {without ? "" : <>{t("point")}</> }</h1> */}
-          <h1>
+          <h1 className={"flex justify-center items-center"}>
             {" "}
             <span className="small">{t("SAR")}</span>
             <span className="price">{t("399")}</span>
@@ -23,7 +23,7 @@ const RowTable = ({ points, price, without }) => {
       <div className="w-[100%] content max-md:w-[100%]">
         <div className="text-center items-center  py-3">
           {/* <h1 className='content'>{points} {without ? "" : <>{t("point")}</> }</h1> */}
-          <h4>
+          <h1 className={"flex justify-center items-center"}>
             {" "}
             <span className="small">{t("SAR")}</span>
             <span className="bold mx-1">{t("0,75")}</span>
@@ -31,7 +31,7 @@ const RowTable = ({ points, price, without }) => {
             <span className="text-[#C0D123]  hover:text-[#C0D123] ms-2">
               {t("* Flat")}
             </span>
-          </h4>
+          </h1>
         </div>
       </div>
     </>

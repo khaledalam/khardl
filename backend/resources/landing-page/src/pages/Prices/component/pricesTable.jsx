@@ -17,7 +17,7 @@ function PricesTable() {
       <div className="flex flex-col items-center w-[100%] flex-grow">
         <div className="price-box h-[100%] hover:bg-[#000] mt-10">
           <Header headerText={t("Website")} />
-          <div className="flex flex-col items-center justify-start my-6">
+          <div className="flex flex-col items-center justify-center my-6">
             <RowTable without />
           </div>
           <div
@@ -47,9 +47,9 @@ function PricesTable() {
                 <FaStarOfLife size={10} className="text-[#8AD123]" />
                 <h3 className="text-[12px] text-[#8AD123]">{t("Devices")}</h3>
               </div>
-              <div className="flex flex-col items-start justify-start text-start">
-                <div className="mt-4 flex justify-between items-start gap-4 min-w-[150px]">
-                  <p>
+              <div className="flex flex-col items-center justify-center text-start">
+                <div className="mt-4 flex justify-between items-center gap-4 min-w-[150px]">
+                  <p className={"flex justify-between items-center"}>
                     <span className="small">{t("SAR")}</span>
                     <span className="price mx-3">{1399}</span>
                   </p>
@@ -59,8 +59,8 @@ function PricesTable() {
                   {/*<PricesDropdown />*/}
                 </div>
 
-                <div className="mt-4 flex justify-between items-start gap-4 min-w-[150px]">
-                  <p>
+                <div className="mt-4 flex justify-between items-center gap-4 min-w-[150px]">
+                  <p className={"flex justify-between items-center"}>
                     <span className="small">{t("SAR")}</span>
                     <span className={"mx-1"} style={{textDecoration: 'line-through'}}>7999</span>
                     <span className="price mx-3">{3400}</span>
@@ -76,7 +76,7 @@ function PricesTable() {
             style={{
               display: "flex",
               justifyContent: "center",
-              marginTop: "85px",
+              marginTop: "35px",
             }}
           >
             <Link to="/register">
