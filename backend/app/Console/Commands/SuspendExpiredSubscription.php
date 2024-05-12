@@ -51,7 +51,7 @@ class SuspendExpiredSubscription extends Command
                     $sub_already_sent = false;
                     $app_sub_already_sent = false;
                     // switch the sub status to suspend if RO didn't activate the sub after $days days passed
-    
+
                     if($activeOrNonActiveSub  &&  $activeOrNonActiveSub->end_at->addDays($days)->isPast()){
                         $sub_already_sent = true;
                         if($activeOrNonActiveSub->status == ROSubscription::ACTIVE  && $activeOrNonActiveSub->reminder_suspend_email_sent == false )
@@ -85,7 +85,7 @@ class SuspendExpiredSubscription extends Command
     
                     // Send email to RO if the `RESTAURANT` sub has expired
                     if($activeSubscription && $activeSubscription->end_at->isPast()){
-                        $futureDate = $activeSubscription->end_at->copy()->addDays($days);
+                        $futureDate = $activeSubscription->end_at->copy()->addDays($days+1);
                         $todayDate = Carbon::now();
                         $numberOfDaysDiff = $todayDate->diffInDays($futureDate);
                         if(!$sub_already_sent  && $activeSubscription->reminder_email_sent == false)
@@ -104,7 +104,7 @@ class SuspendExpiredSubscription extends Command
                     // Send email to RO if the `CUSTOMER APP` sub has expired
                     if($activeAppSubscription && $activeAppSubscription->end_at->isPast() ){
                       
-                        $futureDate = $activeOrNonActiveAppSub->end_at->copy()->addDays($days);
+                        $futureDate = $activeOrNonActiveAppSub->end_at->copy()->addDays($days+1);
                         $todayDate = Carbon::now();
                         $numberOfDaysDiff = $todayDate->diffInDays($futureDate);
                         if(!$app_sub_already_sent && $activeAppSubscription->reminder_email_sent == false)

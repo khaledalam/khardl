@@ -605,9 +605,11 @@
                                                    class="fw-bold text-muted text-hover-khardl fs-7">{{ Auth::user()->email }}</a>
                                                 <small class="my-4">{{__("Restaurant code")}}
                                                     <code id="r-code" class="cursor-pointer">{{tenant()->mapper_hash}}</code>
-                                                    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
+                                                    <i  lass="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
                                                     title="{{ __('This code is required when workers log in to the restaurant and also when retrieving the password.') }}">
                                                     </i>
+                                                    <span id="copy-text" class="text-muted ms-1" style="display: none;">{{__('Copied')}}</span>
+
                                                 </small>
                                             </div>
                                             <!--end::Username-->
@@ -766,7 +768,28 @@
     ></script>
 @endif
 
-<script>
+    <script>
+      document.getElementById('r-code').addEventListener('click', function() {
+    copyToClipboard(this.innerText);
+    showCopiedText();
+});
+
+function copyToClipboard(text) {
+    const el = document.createElement('textarea');
+    el.value = text;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+}
+
+function showCopiedText() {
+    const copiedText = document.getElementById('copy-text');
+    copiedText.style.display = 'inline';
+    setTimeout(function() {
+        copiedText.style.display = 'none';
+    }, 2000); // Hide the "Copied" text after 2 seconds
+}
     const r_code = document.getElementById("r-code");
 
     r_code.onclick = function() {

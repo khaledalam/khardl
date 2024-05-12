@@ -187,12 +187,8 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 
   <!--[if mso]><table width="100%"><tr><td><![endif]-->
     <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p>{{ __("We hope this message finds you well. We regret to inform you that your current subscription for the restaurant ':restaurantName' has been suspended.", ['restaurantName' => $restaurant_name]) }}</p>
-@if($type == 'website')
 <p>{{ __('To proceed with the renewal and start receiving orders again, please follow this link:') }} <a href="{{ $url }}">{{ __('Renew Subscription') }}. </a>{{ __('Our team is ready to assist you throughout the process and answer any questions you may have.') }}</p>
-@elseif($type == 'app')
-<p>{{ __('Unfortunately, your customers cannot place orders through the app until your subscription is renewed. To proceed with the renewal and start receiving orders again, please follow this link:') }}<a href="{{ $url }}">{{ __('Renew Subscription') }}. </a>{{ __('Our team is ready to assist you throughout the process and answer any questions you may have.') }}</p>
-<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #000000; text-align: center; white-space: normal; background-color: #ffffff;">@endif</p>
-<p>{{ __('Unfortunately, your customers cannot place orders through the app until your subscription is renewed. To proceed with the renewal and start receiving orders again, please follow this link:') }}</p></h4>
+
   <!--[if mso]></td></tr></table><![endif]-->
 
       </td>
