@@ -43,6 +43,8 @@ class ItemService
                     'dropdown_input_titles' => (isset($request->dropdownInputTitleEn)) ? array_map(null, $request->dropdownInputTitleEn, $request->dropdownInputTitleAr) : null,
                     'dropdown_input_names' => $this->processOptions($request, 'dropdownInputNameEn', 'dropdownInputNameAr'),
                     'dropdown_input_prices' => $request->input('dropdownInputPrice') ? array_values($request->input('dropdownInputPrice')) : null,
+                    'allow_buy_with_loyalty_points' => ($request->input('allow_buy_with_loyalty_points') ? true : false),
+                    'price_using_loyalty_points' => $request->input('price_using_loyalty_points'),
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,
                     'availability' => ($request->input('availability')) ? true : false,
