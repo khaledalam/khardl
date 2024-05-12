@@ -291,6 +291,12 @@ function PlacesAutoComplete({
     }
   };
 
+  useEffect(() => {
+    if (isCart === true) {
+      getPosition();
+    }
+  }, [isCart]);
+
   return (
     <Combobox onSelect={handleSelect}>
       <div className="flex items-center gap-4">
@@ -306,7 +312,11 @@ function PlacesAutoComplete({
           value={value || ""}
           onChange={(e) => setValue(e.target.value)}
           disabled={!ready}
-          className={inputStyle}
+          className={
+            isCart
+              ? "w-fit md:w-[200px] lg:w-[300px] scale-90 sm:scale-100"
+              : inputStyle
+          }
           placeholder={t("Write custom address")}
         />
         <div
