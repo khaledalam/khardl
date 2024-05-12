@@ -649,6 +649,7 @@ const MainBoardEditor = ({
                             {category.items.map((product, idx) => (
                               <ProductItem
                                 key={idx + "prdt"}
+                                product={product}
                                 id={product.id}
                                 name={product.name}
                                 imgSrc={product.photo}
