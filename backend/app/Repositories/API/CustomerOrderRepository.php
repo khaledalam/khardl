@@ -14,6 +14,7 @@ class CustomerOrderRepository extends DefaultRepositoryPattern
     {
         $user= Auth::user();
         $this->model = Order::where('user_id',$user->id)
+        ->whenDateString(request('date') ?? null)
         ->orderBy('created_at','DESC')
         ->orderBy('updated_at','DESC');
         $this->resource = new OrderResource(new Order());
