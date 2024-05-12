@@ -101,12 +101,12 @@ function ContactUs() {
                 </a>
               </div>
               <div className="contact-details items-center">
-                <a href={"https://wa.me/966531100671"} style={{direction: 'ltr'}}>
+                <a href={"https://wa.me/966531100671"} target={"_blank"} style={{direction: 'ltr'}}>
                   <span>
                     <BsWhatsapp size={23} />
                   </span>
                 </a>
-                <a href={"https://wa.me/966531100671"} style={{direction: 'ltr'}}>
+                <a href={"https://wa.me/966531100671"} target={"_blank"} style={{direction: 'ltr'}}>
                   +966 53 110 0671
                 </a>
               </div>

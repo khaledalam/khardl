@@ -23,15 +23,15 @@ const RowTable = ({ points, price, without }) => {
       <div className="w-[100%] content max-md:w-[100%]">
         <div className="text-center items-center  py-3">
           {/* <h1 className='content'>{points} {without ? "" : <>{t("point")}</> }</h1> */}
-          <h1>
+          <h4>
             {" "}
             <span className="small">{t("SAR")}</span>
-            <span className="price">{t("0,75")}</span>
+            <span className="bold mx-1">{t("0,75")}</span>
             <span className="small">{t("/Order")}</span>
             <span className="text-[#C0D123]  hover:text-[#C0D123] ms-2">
               {t("* Flat")}
             </span>
-          </h1>
+          </h4>
         </div>
       </div>
     </>
