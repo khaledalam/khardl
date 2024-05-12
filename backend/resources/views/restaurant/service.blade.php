@@ -840,7 +840,7 @@ function openModal(modalID) {
                                                                 @elseif($ROCustomerAppSub?->status == \App\Models\ROCustomerAppSub::REQUESTED  )
                                                                     <div class="text-center my-5">
 
-                                                                        <h4 class=" badge-primary m-2 p-2 w-boldest text-center text-white mt-3 ">
+                                                                        <h4 class=" badge-khardl m-2 p-2 w-boldest text-center text-white mt-3 ">
                                                                             {{__('Your request has been sent to the admin and the applications will be activated soon')}}
                                                                         </h4>
 
@@ -1126,7 +1126,7 @@ function openModal(modalID) {
                 $('#coupon_message_app').empty();
                 $('#coupon_code_app')
                 .val('');
-                $('#apply_copoun_app_div').html('<a href="#" id="apply_copoun_app"   class="btn btn-primary">{{__('Apply')}}</a>');
+                $('#apply_copoun_app_div').html('<a href="#" id="apply_copoun_app"   class="btn btn-khardl">{{__('Apply')}}</a>');
             });
 
             // Execute the AJAX request when the radio button changes

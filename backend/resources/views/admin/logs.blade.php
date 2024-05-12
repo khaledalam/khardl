@@ -108,7 +108,7 @@
                                     <td>{{ $log->created_at }}</td>
                                     <td>
                                         @if($log->metadata)
-                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal_{{ $log->id }}">
+                                        <button class="btn btn-khardl btn-sm" data-bs-toggle="modal" data-bs-target="#modal_{{ $log->id }}">
                                             <i class="fa fa-eye"></i>
                                         </button>
                                         <div class="modal fade" id="modal_{{ $log->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

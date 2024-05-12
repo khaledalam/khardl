@@ -19,7 +19,7 @@
                         </div>
                     </span>
                     <a href="{{ route('drivers.index') }}">
-                        <button type="button" class="btn btn-primary btn-sm">
+                        <button type="button" class="btn btn-khardl btn-sm">
                             <i class="fa fa-arrow-left"></i>
                             {{ __('Back to list') }}
                         </button>
@@ -68,7 +68,7 @@
                                         <img alt="driver image" src="{{ global_asset('images/driver_logo.jpg') }}" />
                                     </div>
                                     @endif
-                                  
+
                                 </td>
                             </tr>
                         </tbody>

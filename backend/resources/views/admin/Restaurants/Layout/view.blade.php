@@ -234,34 +234,34 @@
                         <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder">
                             <!--begin::Nav item-->
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5 {{!request()->has('config')?'active':""}}" data-bs-toggle="tab" href="#overview">{{ __('overview')}}</a>
+                                <a class="nav-link text-active-khardl ms-0 me-10 py-5 {{!request()->has('config')?'active':""}}" data-bs-toggle="tab" href="#overview">{{ __('overview')}}</a>
                             </li>
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
                             @if ($is_live)
 
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#restuarant_orders">{{ __('orders')}}</a>
+                                <a class="nav-link text-active-khardl ms-0 me-10 py-5" data-bs-toggle="tab" href="#restuarant_orders">{{ __('orders')}}</a>
                             </li>
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#customers">{{ __('customers')}}</a>
+                                <a class="nav-link text-active-khardl ms-0 me-10 py-5" data-bs-toggle="tab" href="#customers">{{ __('customers')}}</a>
                             </li>
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#delivery_companies">{{ __('Delivery companies')}}</a>
+                                <a class="nav-link text-active-khardl ms-0 me-10 py-5" data-bs-toggle="tab" href="#delivery_companies">{{ __('Delivery companies')}}</a>
                             </li>
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5 {{request()->has('config')?'active':""}}" data-bs-toggle="tab" href="#config">{{ __('configurations')}}</a>
+                                <a class="nav-link text-active-khardl ms-0 me-10 py-5 {{request()->has('config')?'active':""}}" data-bs-toggle="tab" href="#config">{{ __('configurations')}}</a>
                             </li>
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#tap">{{ __('Payment gateway')}}</a>
+                                <a class="nav-link text-active-khardl ms-0 me-10 py-5" data-bs-toggle="tab" href="#tap">{{ __('Payment gateway')}}</a>
                             </li>
                             @endif
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
                             <!-- <li class="nav-item mt-2">
-                                    <a class="nav-link text-active-primary ms-0 me-10 py-5" href="./logs.html">Logs</a>
+                                    <a class="nav-link text-active-khardl ms-0 me-10 py-5" href="./logs.html">Logs</a>
                                 </li> -->
                             <!--end::Nav item-->
                         </ul>

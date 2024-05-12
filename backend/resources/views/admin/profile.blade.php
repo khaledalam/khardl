@@ -29,7 +29,7 @@
                                   <h2>{{ __('profile')}}</h2>
                               </div>
                               <div>
-                                  <a href="{{ route('admin.edit-profile') }}" class="badge badge-primary p-3"><i class="fas fa-edit text-white"></i></a>
+                                  <a href="{{ route('admin.edit-profile') }}" class="badge badge-khardl p-3"><i class="fas fa-edit text-white"></i></a>
                               </div>
                             </div>
                           </div>
