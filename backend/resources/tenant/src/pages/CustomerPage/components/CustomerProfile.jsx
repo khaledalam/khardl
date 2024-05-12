@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ConfirmationModal from "../../../components/confirmationModal";
 import { useNavigate } from "react-router-dom";
 import StatsCard from "../../../components/Customers/CustomersPreview/components/Dashboard/components/statsCard";
+import coins from "../../../assets/coins.png";
 
 const CustomerProfile = () => {
   const { t } = useTranslation();
@@ -154,8 +155,10 @@ const CustomerProfile = () => {
       <div className="w-full bg-white shadow-md rounded-md  min-h-[300px] h-full p-4">
         <div className="w-full lg:w-1/3 flex flex-col gap-4">
           <label className="h-fit w-full flex items-center p-1">
-            <span className="label-text">{t("Loyalty Point")}:</span>&nbsp;
-            <span className="text-neutral-900 text-lg">{loyalPointsValue}</span>
+            <img src={coins} alt="loyalty points" width={25} height={25} className="mx-2"></img>
+            <span className="label-text">{t("Loyalty Point")}: </span>
+            <span className="text-neutral-900 text-lg mx-2">{loyalPointsValue}</span>
+
           </label>
           <PrimaryTextInput
             id={"first-name"}

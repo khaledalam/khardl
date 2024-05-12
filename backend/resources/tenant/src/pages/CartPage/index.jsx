@@ -10,6 +10,7 @@ import {
 } from "../../redux/NewEditor/categoryAPISlice";
 import CartItem from "./components/CartItem";
 import pmcc from "../../assets/pmcc.png";
+import coins from "../../assets/coins.png";
 import pmcod from "../../assets/pmcod.png";
 import apple from "../../assets/apple-logo.png";
 import applePay from "../../assets/apple-pay.png";
@@ -279,7 +280,7 @@ const CartPage = () => {
                       name={"Loyalty points"}
                       onChange={(e) => setPaymentMethod("Loyalty points")}
                       isChecked={paymentMethod === "Loyalty points"}
-                      img={pmcc}
+                      img={coins}
                       displayName={"Loyalty points"}
                       callBackfn={cardPaymentCallbackFunc}
                     />}
