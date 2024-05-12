@@ -63,8 +63,8 @@ class OrderRepository
             $statusLog->status = Order::PENDING;
             $statusLog->notes = $request->order_notes;
             $statusLog->saveOrFail();
-      
-            if($cart->hasPaymentCashOnDelivery($request->payment_method)){
+
+            if($cart->canPayWithLoyaltyPoints() || $cart->hasPaymentCashOnDelivery($request->payment_method)){
 
                 // @TODO: fetch transaction fee percentage that need to be deduce from
                 // each TAP transaction from super admin dashboard settings

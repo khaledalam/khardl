@@ -122,7 +122,7 @@ const CustomerOrderDetail = ({ orderId }) => {
                         {item?.name}
                       </div>
                       <div className="text-black text-opacity-75 text-xs font-extralight">
-                        Qty: {item?.quantity}
+                        {t("Qty")}: {item?.quantity}
                       </div>
                     </div>
                   </div>
@@ -185,7 +185,7 @@ const CustomerOrderDetail = ({ orderId }) => {
               </div>
               <div className="self-stretch justify-between items-start inline-flex">
                 <div className="text-opacity-50 font-medium">
-                  {t("Total payment")}
+                  {t("Total Payment")}
                 </div>
                 <div className="text-opacity-75 font-semibold">
                   {t("SAR")} {parseFloat(singleOrder?.total)}
@@ -193,7 +193,7 @@ const CustomerOrderDetail = ({ orderId }) => {
               </div>
               <div className="self-stretch justify-between items-start inline-flex">
                 <div className="text-opacity-50 font-medium">
-                  {t("Payment method")}
+                  {t("Payment Method")}
                 </div>
                 <div className="text-opacity-75 font-semibold">
                   {t(singleOrder?.payment_method)}
@@ -208,7 +208,7 @@ const CustomerOrderDetail = ({ orderId }) => {
               </div>
               <div className="self-stretch justify-start items-start gap-2.5 inline-flex">
                 <div className="text-gray-900 text-opacity-75 font-semibold">
-                  {t(customerAddress.addressValue)}
+                  {t(singleOrder?.shipping_address)}
                 </div>
               </div>
             </div>

@@ -36,7 +36,9 @@ class Item extends Model
         'dropdown_input_titles',
         'dropdown_input_names',
         'dropdown_input_prices',
-        'availability'
+        'availability',
+        'allow_buy_with_loyalty_points',
+        'price_using_loyalty_points'
     ];
     public $translatable = ['description','name'];
     protected $casts = [

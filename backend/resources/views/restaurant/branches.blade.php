@@ -470,6 +470,13 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             <form id="modalTimeForm{{ $branch->id }}" class="form" action="{{ route('restaurant.update-branch-details', ['id' => $branch->id]) }}" method="POST" id="myForm">
                                 @csrf
                                 @method('PUT')
+                                <div class="mb-13 text-center">
+                                    <!--begin::Title-->
+                                    <label class="form-check-label" for="nameText">{{__('Name')}}</label>
+                                    <input class="form-control form-control-solid" name="name" id="nameText" required value="{{ $branch->name }}">
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Head-->
                                 <!--begin::Heading-->
                                 <div class="mb-13 text-center">
                                     <!--begin::Title-->
@@ -483,7 +490,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <div class="mb-13 text-center">
                                     <!--begin::Title-->
                                     <label class="form-check-label" for="cityText">{{__('city')}}</label>
-                                    <input class="form-control form-control-solid" name="city" id="cityText" required value="{{ $branch->city }}">
+                                    <input class="form-control form-control-solid" name="city" id="cityText"  value="{{ $branch->city }}">
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
@@ -493,7 +500,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <div class="mb-13 text-center">
                                     <!--begin::Title-->
                                     <label class="form-check-label" for="neighborhoodText">{{__('neighborhood')}}</label>
-                                    <input class="form-control form-control-solid" name="neighborhood" id="neighborhoodText" required value="{{ $branch->neighborhood }}">
+                                    <input class="form-control form-control-solid" name="neighborhood" id="neighborhoodText"  value="{{ $branch->neighborhood }}">
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->

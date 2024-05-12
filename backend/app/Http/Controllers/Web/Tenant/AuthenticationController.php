@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
+use App\Models\Tenant\RestaurantStyle;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\User;
 use Laravel\Passport\Token;
@@ -25,26 +26,39 @@ class AuthenticationController extends Controller
         /** @var ?RestaurantUser $user */
         $user = Auth::user();
 
+        // Adding R- version to invalidate and trigger fetching new style
+        // on mobile side
+        try {
+            $restaurant_style_version = RestaurantStyle::first()?->version;
+        } catch (\Throwable $exception) {
+
+        }
         if ($user) {
             if (!$user->hasVerifiedPhone()) {
                 return ResponseHelper::response([
                     'message' => 'User is not verified phone yet',
                     'is_loggedin' => true,
                     'phone' => $user?->phone
-                ], ResponseHelper::HTTP_NOT_VERIFIED);
+                ], ResponseHelper::HTTP_NOT_VERIFIED)->withHeaders([
+                    "Restaurant-Style-Version"  => $restaurant_style_version
+                ]);
             }
             return ResponseHelper::response([
                 'message' => 'User is authenticated',
                 'default_locale'   => $user->default_lang,
                 'phone'=>$user->phone,
                 'is_loggedin' => true
-            ], ResponseHelper::HTTP_OK);
+            ], ResponseHelper::HTTP_OK)->withHeaders([
+                "Restaurant-Style-Version"  => $restaurant_style_version
+            ]);
         }
         return ResponseHelper::response([
             'message' => 'User is not authenticated',
             'default_locale'   => app()->getLocale(),
             'is_loggedin' => false
-        ], ResponseHelper::HTTP_NOT_AUTHENTICATED);
+        ], ResponseHelper::HTTP_NOT_AUTHENTICATED)->withHeaders([
+            "Restaurant-Style-Version"  => $restaurant_style_version
+        ]);
     }
 
 

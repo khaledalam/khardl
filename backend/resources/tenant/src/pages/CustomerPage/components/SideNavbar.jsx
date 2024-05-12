@@ -34,13 +34,13 @@ const SideNavbar = () => {
   );
 
   const navItems = [
-    {
-      id: 1,
-      imgUrl: DashboardBlack,
-      activeImgUrl: Dashboard,
-      title: t("Dashboard"),
-      link: "/profile-summary#Dashboard",
-    },
+    // {
+    //   id: 1,
+    //   imgUrl: DashboardBlack,
+    //   activeImgUrl: Dashboard,
+    //   title: t("Dashboard"),
+    //   link: "/profile-summary#Dashboard",
+    // },
     {
       id: 2,
       imgUrl: OrderBlack,
@@ -55,13 +55,13 @@ const SideNavbar = () => {
       title: t("Addresses"),
       link: "/profile-summary#Addresses",
     },
-    {
-      id: 4,
-      imgUrl: CardIcon,
-      activeImgUrl: CardWhiteIcon,
-      title: t("Wallet"),
-      link: "/profile-summary#Wallet",
-    },
+    // {
+    //   id: 4,
+    //   imgUrl: CardIcon,
+    //   activeImgUrl: CardWhiteIcon,
+    //   title: t("Wallet"),
+    //   link: "/profile-summary#Wallet",
+    // },
     {
       id: 5,
       imgUrl: ProfileIcon,

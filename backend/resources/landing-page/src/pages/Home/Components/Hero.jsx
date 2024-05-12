@@ -25,6 +25,7 @@ const Hero = () => {
           <div className="md:relative">
             <h3 className="leading-10 text-4xl text-[#000000] mt-5 home-heading">
               {t("Unlock a pathway to")}
+
               <span className="text-[#C0D123] ms-1">
                 {t("commissions")}
               </span>{" "}

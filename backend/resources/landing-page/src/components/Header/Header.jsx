@@ -164,7 +164,7 @@ const Header = () => {
               link="/fqa"
               handleLinkClick={handleLinkClick}
               close={closeDrawerHandler}
-              title={t("FAQ")}
+              title={t("Frequently Asked Question")}
               activeLink={activeLink}
             />
           </ul>

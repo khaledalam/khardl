@@ -24,11 +24,11 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
 ) {
   const { t } = useTranslation();
 
-  const [selectValue, setSelectValue] = useState("");
+  const [selectValue, setSelectValue] = useState(null);
 
   useImperativeHandle(ref, () => ({
     resetDropdown() {
-      setSelectValue("");
+      setSelectValue(null);
     },
   }));
 

@@ -9,15 +9,18 @@ import ScrollToTop from "./ScrollToTop";
 import App from "./App";
 import { AuthContextProvider } from "./components/context/AuthContext";
 import "primereact/resources/themes/lara-light-blue/theme.css";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <ScrollToTop />
     <Provider store={store}>
-      <AuthContextProvider>
-        <App />
-      </AuthContextProvider>{" "}
+      <SkeletonTheme baseColor="#BBB" highlightColoBr="#C0C0C0">
+        <AuthContextProvider>
+          <App />
+        </AuthContextProvider>{" "}
+      </SkeletonTheme>
     </Provider>{" "}
-  </BrowserRouter>,
+  </BrowserRouter>
 );

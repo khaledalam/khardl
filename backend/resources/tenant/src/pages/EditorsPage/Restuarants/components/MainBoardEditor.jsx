@@ -4,7 +4,7 @@ import ImgPlaceholder from "../../../../assets/imgPlaceholder.png";
 import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg";
 import { IoCloseOutline, IoMenuOutline } from "react-icons/io5";
 import CategoryItem from "./CategoryItem";
-import ProductItem from "./ProductItem";
+import ProductItem from "./NewProductItem";
 import EditorSlider from "./EditorSlider";
 import { useSelector, useDispatch } from "react-redux";
 import { MenuContext } from "react-flexible-sliding-menu";
@@ -14,7 +14,6 @@ import { selectedCategoryAPI } from "../../../../redux/NewEditor/categoryAPISlic
 import {
   logoUpload,
   setBannerUpload,
-  moveSelectedIconsToMedia,
   setSelectedSocialMediaId,
   bannerType,
   BannerImages,
@@ -30,7 +29,6 @@ import getCroppedImg from "./cropImage";
 import RightIcon from "../../../../assets/rightIcon.png";
 import LeftIcon from "../../../../assets/leftIcon.png";
 import GreenDot from "../../../../assets/greenDot.png";
-import { AiOutlineClose } from "react-icons/ai";
 import { set } from "react-hook-form";
 import Footer from "./Footer";
 import FooterModal from "./FooterModal";
@@ -330,10 +328,6 @@ const MainBoardEditor = ({
     } else {
       console.error("Index out of bounds!");
     }
-  };
-
-  const handleRemoveMediaSelect = (id) => {
-    dispatch(moveSelectedIconsToMedia(id));
   };
 
   const handleSocialMediaSelect = (id) => {
@@ -639,13 +633,23 @@ const MainBoardEditor = ({
                           key={i}
                           id={category.name}
                         >
-                          <div className="text-black text-opacity-75 text-lg font-medium mb-[16px]">
+                          <div
+                            className="text-black text-opacity-75 text-lg font-medium mb-[16px]"
+                            style={{
+                              fontFamily:
+                                restuarantEditorStyle?.menu_category_font,
+                              fontWeight:
+                                restuarantEditorStyle?.menu_category_weight,
+                              color: restuarantEditorStyle?.menu_category_color,
+                            }}
+                          >
                             {category.name}
                           </div>
                           <div className="flex flex-row flex-wrap gap-[25px] justify-center w-full">
                             {category.items.map((product, idx) => (
                               <ProductItem
                                 key={idx + "prdt"}
+                                product={product}
                                 id={product.id}
                                 name={product.name}
                                 imgSrc={product.photo}
@@ -726,81 +730,6 @@ const MainBoardEditor = ({
             </div>
           </div>
         )}
-      </div>
-      {/* social media */}
-      <div
-        style={{ backgroundColor: social_media_color }}
-        className={`w-full min-h-[70px] px-3  rounded-xl flex ${
-          socialMediaIcons_alignment === "center"
-            ? "items-center justify-center"
-            : socialMediaIcons_alignment === "left"
-            ? "items-center justify-start"
-            : socialMediaIcons_alignment === "right"
-            ? "items-center justify-end"
-            : ""
-        }
-
-                ${
-                  navItems[activeSection]?.title === "Social Media" &&
-                  "shadow-inner border-[#C0D123] border-[2px]"
-                }
-                ${selectedSocialIcons?.length == 0 ? "hidden" : ""}`}
-      >
-        <div className="flex items-center gap-5">
-          {selectedSocialIcons?.map((socialMedia) => (
-            <a
-              key={socialMedia.id}
-              href={socialMedia.link ? socialMedia.link : null}
-              target="_blank"
-              className="cursor-pointer"
-            >
-              <div
-                className={`w-[35px] h-[35px] bg-[#F3F3F3] flex justify-center items-center relative shadow-md`}
-                style={{
-                  borderRadius: social_media_radius
-                    ? social_media_radius + "%"
-                    : "50%",
-                  backgroundColor: social_media_background_color
-                    ? social_media_background_color
-                    : "#F3F3F3",
-                }}
-              >
-                <img
-                  src={socialMedia.imgUrl}
-                  alt={"whatsapp"}
-                  className="w-[20px] h-[20px] object-cover"
-                  // onClick={() =>
-                  //     handleSocialMediaSelect(socialMedia.id)
-                  // }
-                />
-                {
-                  <button
-                    key={socialMedia.id}
-                    className="absolute top-[-5px] right-[-4px] text-[10px] text-bold h-fit w-fit rounded-full bg-red-500 p-[3px] text-white"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      handleRemoveMediaSelect(socialMedia.id);
-                    }}
-                  >
-                    <AiOutlineClose size={7} />
-                  </button>
-                }
-                <img
-                  src={GreenDot}
-                  alt="green dot"
-                  className={`${
-                    activeSubitem != null &&
-                    navItems[activeSection].subItems[activeSubitem].title ==
-                      "Social Media"
-                      ? "absolute w-[5px] h-[5px] right-[-8px] top-[-8px]"
-                      : "hidden"
-                  }`}
-                />
-              </div>
-            </a>
-          ))}
-        </div>
       </div>
       {/* footer */}
       <Footer

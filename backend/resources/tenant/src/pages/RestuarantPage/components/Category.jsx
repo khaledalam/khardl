@@ -1,5 +1,5 @@
 import EditorSlider from "../../../pages/EditorsPage/Restuarants/components/EditorSlider";
-import ProductItem from "../../../pages/EditorsPage/Restuarants/components/ProductItem";
+import ProductItem from "../../../pages/EditorsPage/Restuarants/components/NewProductItem";
 
 const Category = ({ restaurantStyle, categories = [] }) => {
   const {
@@ -13,6 +13,9 @@ const Category = ({ restaurantStyle, categories = [] }) => {
     menu_category_position,
     menu_section_background_color,
     menu_section_radius,
+    menu_category_color,
+    menu_category_font,
+    menu_category_weight,
   } = restaurantStyle;
 
   const visibleCategories = categories.filter((c) => c.items.length > 0);
@@ -36,10 +39,10 @@ const Category = ({ restaurantStyle, categories = [] }) => {
           menu_category_position === "left"
             ? "order-1 w-[33%]"
             : menu_category_position === "right"
-              ? "order-2 w-[33%]"
-              : menu_category_position === "center"
-                ? "w-full"
-                : "w-[33%]"
+            ? "order-2 w-[33%]"
+            : menu_category_position === "center"
+            ? "w-full"
+            : "w-[33%]"
         } `}
       >
         <EditorSlider
@@ -58,10 +61,10 @@ const Category = ({ restaurantStyle, categories = [] }) => {
           menu_category_position === "left"
             ? "order-2 w-[75%]"
             : menu_category_position === "right"
-              ? "order-1 w-[75%]"
-              : menu_category_position === "center"
-                ? "w-full"
-                : "w-auto"
+            ? "order-1 w-[75%]"
+            : menu_category_position === "center"
+            ? "w-full"
+            : "w-auto"
         } py-[32]
                 `}
       >
@@ -69,7 +72,7 @@ const Category = ({ restaurantStyle, categories = [] }) => {
           className={`w-full h-full flex flex-col max-h-[610px] items-start justify-center `}
         >
           <div
-            className={`flex flex-col gap-[30px] h-fit p-3 md:p-4 overflow-y-scroll hide-scroll w-full`}
+            className={`flex flex-col gap-[30px] h-fit p-3 md:p-4 overflow-y-scroll scrollbar-custom w-full`}
           >
             {categories &&
               visibleCategories.map((category, i) => (
@@ -78,12 +81,20 @@ const Category = ({ restaurantStyle, categories = [] }) => {
                   key={i}
                   id={category.name}
                 >
-                  <div className="text-black text-opacity-75 text-lg font-medium mb-[16px]">
+                  <div
+                    className="text-black text-opacity-75 text-lg font-medium mb-[16px]"
+                    style={{
+                      fontFamily: menu_category_font,
+                      fontWeight: menu_category_weight,
+                      color: menu_category_color,
+                    }}
+                  >
                     {category.name}
                   </div>
                   <div className="flex w-full flex-row flex-wrap gap-[25px] justify-center">
                     {category.items.map((product, idx) => (
                       <ProductItem
+                        product={product}
                         key={idx + "prdt"}
                         id={product.id}
                         name={product.name}

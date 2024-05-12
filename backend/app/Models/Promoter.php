@@ -32,7 +32,7 @@ class Promoter extends Model
     {
       return PromoterFactory::new();
     }
-    public function sub_coupon(){
-        return $this->hasOne(ROSubscriptionCoupon::class);
+    public function sub_coupons(){
+        return $this->hasMany(ROSubscriptionCoupon::class);
     }
 }

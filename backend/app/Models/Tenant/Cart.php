@@ -36,5 +36,34 @@ class Cart extends Model
         return $this->belongsTo(Coupon::class);
     }
 
+    public function canPayWithLoyaltyPoints(): bool
+    {
+        if ($this->items()->count() < 1) {
+            return false;
+        }
+
+        foreach ($this->items()->get() as $cart_item) {
+            if (!$cart_item->item->allow_buy_with_loyalty_points) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function totalPriceWithLoyaltyPoints()
+    {
+        if ($this->items()->count() < 1) {
+            return 0;
+        }
+        $total = 0;
+
+        foreach ($this->items()->get() as $cart_item) {
+            $total += $cart_item->item->price_using_loyalty_points;
+        }
+
+        return $total;
+    }
+
 
 }

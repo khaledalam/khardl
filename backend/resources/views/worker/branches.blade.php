@@ -7,6 +7,61 @@
       .border-not-active {
             border: 2px solid #e80000;
         }
+
+
+    .google_map {
+        position: static !important;
+        width: 100%;
+        height: auto;
+    }
+    /* .google_map div {
+
+        height: 70%;
+        width: 43%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        background-color: rgb(229, 227, 223);
+    } */
+
+    #map-autocomplete-card-new_branch {
+        position: relative !important;
+    }
+    .map-overlay {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .overlay-text {
+        position: absolute;
+        border-radius: 25px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 16px;
+        color: white;
+        text-align: center;
+    }
+
+    .overlay-text::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .card-map {
+        height: 300px;
+    }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -19,69 +74,33 @@
         <div class="post d-flex flex-column-fluid" id="kt_post">
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
-                <div class="card card-flush border-0 h-md-100">
+                <div class="card card-flush border-0 ">
                     <!--begin::Body-->
                     <div class="card-body py-9 {{!$branch->active ? 'border-not-active':''}}">
                         <!--begin::Row-->
                         <div class="row gx-9">
                             <!--begin::Col-->
+                            <div id="map-autocomplete-card{{ $branch->id }}"></div>
+
                             <div class="col-sm-6 branches-google-maps">
                                 <!--begin::Image-->
 
-                                    <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
-                                        <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{__('search-for-place')}}" value="{{$branch->address}}">
-                                        <div class="map-container" data-branch-id="{{ $branch->id }}">
-                                        <div id="map{{ $branch->id }}" class="google_map">
-                                            <div class="map-overlay">
-                                                <div class="overlay-text">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.19 512.19" style="enable-background:new 0 0 512.19 512.19;" xml:space="preserve" width="48" height="48"><g><circle cx="256.095" cy="256.095" r="85.333"/><path d="M496.543,201.034C463.455,147.146,388.191,56.735,256.095,56.735S48.735,147.146,15.647,201.034   c-20.862,33.743-20.862,76.379,0,110.123c33.088,53.888,108.352,144.299,240.448,144.299s207.36-90.411,240.448-144.299   C517.405,277.413,517.405,234.777,496.543,201.034z M256.095,384.095c-70.692,0-128-57.308-128-128s57.308-128,128-128   s128,57.308,128,128C384.024,326.758,326.758,384.024,256.095,384.095z"/></g></svg>
+                                        <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
+                                            <div class="map-container" data-branch-id="{{ $branch->id }}">
+                                                <div class="card card-flush border-0 card-map">
+                                                    <!--begin::Body-->
+                                                    <div class="card-body py-2">
+
+                                            <div id="map{{ $branch->id }}" class="google_map">
+                                                <div class="map-overlay">
+                                                    <div class="overlay-text">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.19 512.19" style="enable-background:new 0 0 512.19 512.19;" xml:space="preserve" width="48" height="48"><g><circle cx="256.095" cy="256.095" r="85.333"/><path d="M496.543,201.034C463.455,147.146,388.191,56.735,256.095,56.735S48.735,147.146,15.647,201.034   c-20.862,33.743-20.862,76.379,0,110.123c33.088,53.888,108.352,144.299,240.448,144.299s207.36-90.411,240.448-144.299   C517.405,277.413,517.405,234.777,496.543,201.034z M256.095,384.095c-70.692,0-128-57.308-128-128s57.308-128,128-128   s128,57.308,128,128C384.024,326.758,326.758,384.024,256.095,384.095z"/></g></svg>
+                                                    </div>
+                                                    <img src="{{ global_asset("images/blured_map.png") }}" class="img-fluid" alt="">
                                                 </div>
-                                                <img src="{{ global_asset("images/blured_map.png") }}" class="img-fluid" alt="">
                                             </div>
                                         </div>
-
-                                        <style>
-
-                                            .google_map {
-                                                position: relative;
-                                                width: 100%;
-                                                height: auto;
-                                            }
-
-                                            .map-overlay {
-                                                position: relative;
-                                                cursor: pointer;
-                                            }
-
-                                            .overlay-text {
-                                                position: absolute;
-                                                border-radius: 25px;
-                                                top: 50%;
-                                                left: 50%;
-                                                transform: translate(-50%, -50%);
-                                                font-size: 16px;
-                                                color: white;
-                                                text-align: center;
-                                            }
-
-                                            .overlay-text::after {
-                                                content: "";
-                                                display: block;
-                                                width: 100%;
-                                                height: 100%;
-                                                position: absolute;
-                                                top: 0;
-                                                left: 0;
-                                                z-index: -1;
-                                            }
-
-                                            img {
-                                                display: block;
-                                                width: 100%;
-                                                height: auto;
-                                            }
-
-                                        </style>
+                                    </div>
 
 
 
@@ -581,7 +600,7 @@
 
 
 @section('js')
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places&loading=async&v=beta"></script>
        <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
 
     @include('components.map')

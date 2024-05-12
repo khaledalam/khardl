@@ -12,6 +12,8 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import ConfirmationModal from "../../../components/confirmationModal";
 import { useNavigate } from "react-router-dom";
+import StatsCard from "../../../components/Customers/CustomersPreview/components/Dashboard/components/statsCard";
+import coins from "../../../assets/coins.png";
 
 const CustomerProfile = () => {
   const { t } = useTranslation();
@@ -19,6 +21,7 @@ const CustomerProfile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
+  const [loyalPointsValue, setLoyalPointsValue] = useState("");
   const customerAddress = useSelector((state) => state.customerAPI.address);
 
   const [isDisabled, setIsDisabled] = useState(true);
@@ -40,6 +43,9 @@ const CustomerProfile = () => {
 
       console.log("profileResponse >>>PROFILE", profileResponse.data);
       if (profileResponse.data) {
+        setLoyalPointsValue(
+          profileResponse.data?.data?.loyalty_points ?? t("N/A")
+        );
         setFirstName(profileResponse.data?.data?.firstName ?? t("N/A"));
         userProfileInfo["firstName"] = profileResponse.data?.data?.firstName;
         setLastName(profileResponse.data?.data?.lastName ?? t("N/A"));
@@ -148,6 +154,12 @@ const CustomerProfile = () => {
       {/* <h3 className="text-lg my-5 ">{t("Profile Details")}</h3> */}
       <div className="w-full bg-white shadow-md rounded-md  min-h-[300px] h-full p-4">
         <div className="w-full lg:w-1/3 flex flex-col gap-4">
+          <label className="h-fit w-full flex items-center p-1">
+            <img src={coins} alt="loyalty points" width={25} height={25} className="mx-2"></img>
+            <span className="label-text">{t("Loyalty Point")}: </span>
+            <span className="text-neutral-900 text-lg mx-2">{loyalPointsValue}</span>
+
+          </label>
           <PrimaryTextInput
             id={"first-name"}
             name={"first-name"}
@@ -188,7 +200,6 @@ const CustomerProfile = () => {
       <div className="flex w-full items-center justify-between mt-6 mb-4 flex-wrap">
         <button
           onClick={() => setDeleteModalOpen(true)}
-          disabled={isDisabled || isLoading}
           className="cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border font-['Plus Jakarta Sans'] leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 w-fit transition-all shadow-md"
         >
           {t("Delete my account")}

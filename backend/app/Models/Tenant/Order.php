@@ -330,6 +330,18 @@ class Order extends Model
     {
         return $this->payment_method?->name == PaymentMethod::CASH_ON_DELIVERY;
     }
+
+    /**
+     * @TODO: make LOYALTY_POINTS same as other Payment methods to be fetched from DB and has relation.
+     * currently I depend on the fact of any item has allow_buy_with_loyalty_points => true
+     *
+     * @return bool
+     */
+    public function isLoyaltyPointPayment()
+    {
+        return $this->items()->first()?->item()->first()?->allow_buy_with_loyalty_points;
+    }
+
     public function user()
     {
         return $this->belongsTo(RestaurantUser::class);
