@@ -50,6 +50,7 @@ import {
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
 
 const ProductItem = ({
+                       product,
   id,
   imgSrc,
   name,
@@ -559,6 +560,9 @@ const ProductItem = ({
               >
                 {t("SAR")} {amount}
               </div>
+              {product?.allow_buy_with_loyalty_points  && <div className="text-green-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight p-2 border">
+                ⛁  {product?.price_using_loyalty_points}
+              </div>}
               <img
                 src={GreenDot}
                 alt="green dot"

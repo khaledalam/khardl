@@ -35,7 +35,9 @@ class ItemResource extends JsonResource
             'dropdown_required' => $this->dropdown_required,
             'dropdown_input_names' => $this->dropdown_input_names,
             'dropdown_input_titles' => $this->dropdown_input_titles,
-            'dropdown_input_prices' => $this->dropdown_input_prices
+            'dropdown_input_prices' => $this->dropdown_input_prices,
+            'price_using_loyalty_points' => $this->price_using_loyalty_points,
+            'allow_buy_with_loyalty_points' => $this->allow_buy_with_loyalty_points
 
         ];
     }

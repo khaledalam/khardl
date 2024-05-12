@@ -5,7 +5,7 @@ import KcalIcon from "../../../../assets/kcalIcon.png";
 import imgHotFire from "../../../../assets/hot-fire.svg";
 import PlusIcon from "../../../../assets/plusIcon.png";
 import MinusIcon from "../../../../assets/minusIcon.png";
-import { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { SetLoginModal } from "../../../../redux/NewEditor/restuarantEditorSlice";
 import { getCartItemsCount } from "../../../../redux/NewEditor/categoryAPISlice";
@@ -13,6 +13,7 @@ import AxiosInstance from "../../../../axios/axios";
 import { toast } from "react-toastify";
 
 const ProductItem = ({
+                       product,
   id,
   imgSrc,
   name,
@@ -434,8 +435,14 @@ const ProductItem = ({
               </div>
               <div className="flex flex-row gap-2.5 items-center">
                 <div className="text-red-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight">
-                  {t("SAR")}&nbsp;{totalPrice.toFixed(2)}
+                  {t("SAR")}&nbsp;{totalPrice.toFixed(2)}<br />
+
+                  {product?.allow_buy_with_loyalty_points  && <div className="text-green-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight p-1">
+                    {t("points-price")} {product?.price_using_loyalty_points}
+                  </div>}
+
                 </div>
+
                 <div className="flex gap-2 rounded-[30px] border border-orange-100 justify-between items-center min-w-32 select-none">
                   <FiMinus
                     className={`flex w-[29px] h-[29px] ${

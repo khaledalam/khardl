@@ -94,6 +94,7 @@ const Category = ({ restaurantStyle, categories = [] }) => {
                   <div className="flex w-full flex-row flex-wrap gap-[25px] justify-center">
                     {category.items.map((product, idx) => (
                       <ProductItem
+                        product={product}
                         key={idx + "prdt"}
                         id={product.id}
                         name={product.name}
