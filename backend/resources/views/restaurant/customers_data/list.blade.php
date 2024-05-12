@@ -66,9 +66,6 @@
                                         <th class="min-w-175px">{{ __('Name') }}</th>
                                         <th class="min-w-70px">{{ __('Phone') }}</th>
                                         <th class="min-w-70px">{{ __('Email') }}</th>
-                                        <th class="min-w-70px">{{ __('Status') }}</th>
-                                        <th class="min-w-100px">{{ __('Address') }}<i class="fas fa-info-circle"></i></th></th>
-                                        <th class="min-w-100px">{{ __('Branch') }}</th>
                                         <th class="min-w-100px">{{ __('Last login') }}</th>
                                         <th class="min-w-100px">{{ __('Registration') }}</th>
                                         <th class="min-w-100px">{{ __('Actions') }}
@@ -90,16 +87,11 @@
                                         </td>
                                         <td>{{ $customer->phone }}</td>
                                         <td>{{ $customer->email }}</td>
-                                        <td>
-                                            <span class="badge {{ $customer->status }}">{{__("$customer->status")}}</span>
-                                        </td>
-                                        <td>
-                                            <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $customer->address }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">{{ Str::limit($customer->address, 20, '...') }}</span>
-                                        </td>
-                                        <td>{{ $customer->branch?->name }}</td>
+                                       
+                                   
                                         <td>{{ $customer->last_login?->format('Y-m-d') }}</td>
                                         <td>{{ $customer->created_at?->format('Y-m-d') }}</td>
-                                        <td class="text-end">
+                                        <td >
                                             <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                                 <span class="svg-icon svg-icon-5 m-0">
