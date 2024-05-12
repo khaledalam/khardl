@@ -267,6 +267,8 @@ class CartRepository
         $settings = Setting::all()->firstOrFail();
         $items = $this->cart->items->load(['item']);
 
+        $allowPayWithLoyaltyPoints = $this->cart->canPayWithLoyaltyPoints();
+
         return $this->sendResponse([
             'sub_total' => $this->subTotal(),
             'total' => $this->total(),
@@ -275,7 +277,8 @@ class CartRepository
             'discount' => $this->discount(),
             'count' => $this->cartCount(),
             'items' => $items,
-            'allow_buy_with_loyalty_points' => $this->cart->canPayWithLoyaltyPoints(),
+            'allow_buy_with_loyalty_points' => $allowPayWithLoyaltyPoints,
+            'total_price_with_loyalty_points' => (!$allowPayWithLoyaltyPoints ? -1 : $this->cart->totalPriceWithLoyaltyPoints()),
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
             'delivery_fee' => $settings['delivery_fee'],

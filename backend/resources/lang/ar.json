@@ -1200,6 +1200,7 @@
     "Branch has been deactivated":"تم إلغاء تنشيط الفرع",
     "This branch is no longer accepting orders":"هذا الفرع لم يعد يقبل الطلبات",
     "You do not have enough loyalty points": "انت لا تمتلك نقاط ولاء كافيه",
+    "Loyalty points allow with pickup option only": "استخدام نقاط الولاء متاح فقط مع خيار التقاط الطلب",
     "You can not use loyalty points for place this order": "لا يمكنك استخدام نقاط الولاء لهذا الطلب",
     "Cannot login, Branch is not active":"لا يمكن تسجيل الدخول ، الفرع غير نشط",
     "Order has been delivered for customer (:name) by delivery company (:company).":"تم توصيل الطلب للعميل :name عن طريقة شركة التوصيل :company",
