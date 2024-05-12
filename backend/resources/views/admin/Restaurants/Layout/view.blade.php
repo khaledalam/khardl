@@ -20,7 +20,7 @@
 
                                 <img alt="Logo" src="{{ $logo ?? global_asset('assets/default_logo.png') }}" />
 
-                                @if($is_live)<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>@endif
+                                @if($is_live)<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-khardl rounded-circle border border-4 border-white h-20px w-20px"></div>@endif
 
                             </div>
                         </div>

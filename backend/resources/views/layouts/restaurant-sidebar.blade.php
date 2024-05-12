@@ -174,16 +174,7 @@
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                 viewBox="0 0 24 24" fill="none">
-                                                <rect x="2" y="2" width="9" height="9" rx="2" fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
-                                                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2"
-                                                      fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
-                                                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2"
-                                                      fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
-                                                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2"
-                                                      fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
-                                            </svg>
+                                            <i class="fas fa-chart-line"></i>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
@@ -198,7 +189,7 @@
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="{{ ($link == 'site-editor' ) ? '#c2da08' : '#000000' }}"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} .st1{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;} .st2{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5.2066,0;} </style> <line class="st0" x1="3" y1="11" x2="29" y2="11"></line> <line class="st0" x1="7" y1="8" x2="7" y2="8"></line> <line class="st0" x1="10" y1="8" x2="10" y2="8"></line> <line class="st0" x1="13" y1="8" x2="13" y2="8"></line> <path class="st0" d="M8.8,27H3V5h26v22l-5.8,0c0.3-0.1,0.6-0.1,0.9-0.1c0.1-0.6,0.2-1.3,0.2-1.9c0-0.7-0.1-1.3-0.2-1.9 c-1,0.1-2-0.3-2.5-1.3c-0.5-0.9-0.4-2,0.2-2.8c-0.9-0.9-2.1-1.6-3.4-2c-0.4,0.9-1.3,1.6-2.4,1.6s-2-0.7-2.4-1.6 c-1.3,0.4-2.4,1.1-3.4,2c0.6,0.8,0.7,1.9,0.2,2.8c-0.5,0.9-1.6,1.4-2.5,1.3c-0.1,0.6-0.2,1.3-0.2,1.9c0,0.7,0.1,1.3,0.2,1.9 C8.2,26.9,8.5,26.9,8.8,27L8.8,27z"></path> <circle class="st0" cx="16" cy="25" r="3"></circle> </g></svg>
+                                            <i class="fas fa-window-maximize"></i>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
@@ -214,11 +205,7 @@
                                 <span class="menu-icon">
                                     <!--begin::Svg Icon -->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path d="M21 9V11C21 11.6 20.6 12 20 12H14V8H20C20.6 8 21 8.4 21 9ZM10 8H4C3.4 8 3 8.4 3 9V11C3 11.6 3.4 12 4 12H10V8Z" fill="{{ ($link == 'branches') ? '#c2da08' : '#000000' }}" />
-                                                <path d="M15 2C13.3 2 12 3.3 12 5V8H15C16.7 8 18 6.7 18 5C18 3.3 16.7 2 15 2Z" fill="{{ ($link == 'branches') ? '#c2da08' : '#000000' }}" />
-                                                <path opacity="0.3" d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z" fill="{{ ($link == 'branches') ? '#c2da08' : '#000000' }}" />
-                                            </svg>
+                                            <i class="fas fa-building"></i>
                                         </span>
                                     <!--end::Svg Icon-->
                                 </span>
@@ -234,13 +221,7 @@
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                                <g id="SVGRepo_iconCarrier">
-                                                    <path d="M16 6.00008V4.2844C16 3.51587 16 3.13161 15.8387 2.88321C15.6976 2.66587 15.4776 2.5118 15.2252 2.45345C14.9366 2.38677 14.5755 2.51809 13.8532 2.78073L6.57982 5.4256C6.01064 5.63257 5.72605 5.73606 5.51615 5.91845C5.33073 6.07956 5.18772 6.28374 5.09968 6.51304C5 6.77264 5 7.07546 5 7.6811V12.0001M9 17.0001H15M9 13.5001H15M9 10.0001H15M8.2 21.0001H15.8C16.9201 21.0001 17.4802 21.0001 17.908 20.7821C18.2843 20.5903 18.5903 20.2844 18.782 19.9081C19 19.4802 19 18.9202 19 17.8001V9.20008C19 8.07997 19 7.51992 18.782 7.0921C18.5903 6.71577 18.2843 6.40981 17.908 6.21807C17.4802 6.00008 16.9201 6.00008 15.8 6.00008H8.2C7.0799 6.00008 6.51984 6.00008 6.09202 6.21807C5.71569 6.40981 5.40973 6.71577 5.21799 7.0921C5 7.51992 5 8.07997 5 9.20008V17.8001C5 18.9202 5 19.4802 5.21799 19.9081C5.40973 20.2844 5.71569 20.5903 6.09202 20.7821C6.51984 21.0001 7.07989 21.0001 8.2 21.0001Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                </g>
-                                            </svg>
+                                            <i class="fas fa-utensils"></i>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
@@ -254,13 +235,7 @@
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                                <g id="SVGRepo_iconCarrier">
-                                                    <path d="M16 6.00008V4.2844C16 3.51587 16 3.13161 15.8387 2.88321C15.6976 2.66587 15.4776 2.5118 15.2252 2.45345C14.9366 2.38677 14.5755 2.51809 13.8532 2.78073L6.57982 5.4256C6.01064 5.63257 5.72605 5.73606 5.51615 5.91845C5.33073 6.07956 5.18772 6.28374 5.09968 6.51304C5 6.77264 5 7.07546 5 7.6811V12.0001M9 17.0001H15M9 13.5001H15M9 10.0001H15M8.2 21.0001H15.8C16.9201 21.0001 17.4802 21.0001 17.908 20.7821C18.2843 20.5903 18.5903 20.2844 18.782 19.9081C19 19.4802 19 18.9202 19 17.8001V9.20008C19 8.07997 19 7.51992 18.782 7.0921C18.5903 6.71577 18.2843 6.40981 17.908 6.21807C17.4802 6.00008 16.9201 6.00008 15.8 6.00008H8.2C7.0799 6.00008 6.51984 6.00008 6.09202 6.21807C5.71569 6.40981 5.40973 6.71577 5.21799 7.0921C5 7.51992 5 8.07997 5 9.20008V17.8001C5 18.9202 5 19.4802 5.21799 19.9081C5.40973 20.2844 5.71569 20.5903 6.09202 20.7821C6.51984 21.0001 7.07989 21.0001 8.2 21.0001Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                </g>
-                                            </svg>
+                                            <i class="fas fa-utensils"></i>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
@@ -280,8 +255,8 @@
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{{ ($link == 'workers') ? '#c2da08' : '#000000' }}" class="bi bi-person" viewBox="0 0 16 16">
-                                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
+                                            <i class="fas fa-users"></i>
+                                        </span>
                                         <!--end::Svg Icon-->
                                     </span>
                                     <span class="menu-title">{{__('staff-modification')}}</span>
@@ -308,11 +283,9 @@
                             <a href="{{route('drivers.index')}}">
                                 <span class="{{ ($link == 'drivers') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
-                                        <!--begin::Svg Icon -->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{{ ($link == 'workers') ? '#c2da08' : '#000000' }}" class="bi bi-person" viewBox="0 0 16 16">
-                                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
-                                        <!--end::Svg Icon-->
+                                            <i class="fas fa-motorcycle"></i>
+                                        </span>
                                     </span>
                                     <span class="menu-title">{{__('drivers')}}</span>
                                 </span>
@@ -323,8 +296,8 @@
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{{ ($link == 'workers') ? '#c2da08' : '#000000' }}" class="bi bi-person" viewBox="0 0 16 16">
-                                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
+                                            <i class="fas fa-motorcycle"></i>
+                                        </span>
                                         <!--end::Svg Icon-->
                                     </span>
                                     <span class="menu-title">{{__('drivers')}}</span>
@@ -343,7 +316,7 @@
                                     <span class="menu-icon">
                                          <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg fill="{{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'products-out-of-stock') ? '#c2da08' : '#000000' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M78.8,62.1l-3.6-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,70.6c-1.2,0.6-2.7,0.6-3.9,0L26.5,60.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.6,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,78.5c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,65,80.4,62.8,78.8,62.1z"></path> </g> <g> <path d="M78.8,48.1l-3.7-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,56.6c-1.2,0.6-2.7,0.6-3.9,0L26.6,46.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.7,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,64.6c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,51.1,80.4,48.9,78.8,48.1 z"></path> </g> <g> <path d="M21.2,37.8l26.8,12.7c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7c1.6-0.8,1.6-2.9,0-3.7L51.9,21.4 c-1.2-0.6-2.7-0.6-3.9,0L21.2,34.2C19.6,34.9,19.6,37.1,21.2,37.8z"></path> </g> </g> </g></svg>
+                                            <i class="fas fa-shopping-cart"></i>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>

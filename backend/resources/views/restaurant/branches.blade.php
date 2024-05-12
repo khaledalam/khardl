@@ -309,7 +309,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                 <div class="d-flex align-items-center">
                                                     <!--begin::Symbol-->
                                                     <div class="symbol symbol-30px symbol-circle me-3">
-                                                        <span class="symbol-label bg-success">
+                                                        <span class="symbol-label bg-khardl">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs042.svg-->
                                                             <span class="svg-icon svg-icon-5 svg-icon-white">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

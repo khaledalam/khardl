@@ -115,7 +115,7 @@
                                         <!--begin::Label-->
                                         <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                             <!--begin::Bullet-->
-                                            <div class="bullet w-8px h-6px rounded-2 bg-success me-3"></div>
+                                            <div class="bullet w-8px h-6px rounded-2 bg-khardl me-3"></div>
                                             <!--end::Bullet-->
                                             <!--begin::Label-->
                                             <div class="text-gray-500 flex-grow-1 me-4">
@@ -222,7 +222,7 @@
                                     @foreach ($bestSellingItems as $orderItem)
                                     <div class="d-flex align-items-center mb-8">
                                         <!--begin::Bullet-->
-                                        <span class="bullet bullet-vertical h-40px bg-success"></span>
+                                        <span class="bullet bullet-vertical h-40px bg-khardl"></span>
                                         <!--end::Bullet-->
                                         <!--begin::Checkbox-->
                                         <div class="form-check form-check-custom form-check-solid mx-5">

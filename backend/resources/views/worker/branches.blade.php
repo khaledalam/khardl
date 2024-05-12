@@ -39,20 +39,20 @@
                                                 <img src="{{ global_asset("images/blured_map.png") }}" class="img-fluid" alt="">
                                             </div>
                                         </div>
-    
+
                                         <style>
-    
+
                                             .google_map {
                                                 position: relative;
                                                 width: 100%;
                                                 height: auto;
                                             }
-    
+
                                             .map-overlay {
                                                 position: relative;
                                                 cursor: pointer;
                                             }
-    
+
                                             .overlay-text {
                                                 position: absolute;
                                                 border-radius: 25px;
@@ -63,7 +63,7 @@
                                                 color: white;
                                                 text-align: center;
                                             }
-    
+
                                             .overlay-text::after {
                                                 content: "";
                                                 display: block;
@@ -74,17 +74,17 @@
                                                 left: 0;
                                                 z-index: -1;
                                             }
-    
+
                                             img {
                                                 display: block;
                                                 width: 100%;
                                                 height: auto;
                                             }
-    
+
                                         </style>
-    
-    
-    
+
+
+
                                         @if(!$branch->deleted_at)
                                         <form  method="POST">
                                             @csrf
@@ -134,7 +134,7 @@
                                             <div class="d-flex align-items-center">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-30px symbol-circle me-3">
-                                                    <span class="symbol-label bg-success">
+                                                    <span class="symbol-label bg-khardl">
                                                         <!--begin::Svg Icon | path: icons/duotune/abstract/abs042.svg-->
                                                         <span class="svg-icon svg-icon-5 svg-icon-white">
                                                             <svg xmlns="http://www.w3.org/2000/svg"
