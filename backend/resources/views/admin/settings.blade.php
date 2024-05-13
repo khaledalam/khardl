@@ -70,7 +70,7 @@
 {{--                      <!--end::Card body-->--}}
 {{--                      <!--begin::Actions-->--}}
 {{--                      <div class="card-footer d-flex justify-content-end py-6 px-9">--}}
-{{--                          <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('discard')}}</button>--}}
+{{--                          <button type="reset" class="btn btn-light btn-active-light-khardl me-2">{{ __('discard')}}</button>--}}
 {{--                          <button type="submit" class="btn btn-khardl" id="kt_account_profile_details_submit">{{ __('save-changes')}}</button>--}}
 {{--                      </div>--}}
 {{--                      <!--end::Actions-->--}}
@@ -142,7 +142,7 @@
     <!--end::Card body-->
     <!--begin::Actions-->
     <div class="card-footer d-flex justify-content-end py-6 px-9">
-      <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('discard')}}</button>
+      <button type="reset" class="btn btn-light btn-active-light-khardl me-2">{{ __('discard')}}</button>
       <button type="submit" class="btn btn-khardl" id="kt_account_profile_details_submit">
         <i class="bi bi-check2-square mx-1"></i>
         {{ __('save-changes')}}
@@ -216,7 +216,7 @@
 {{--      <!--end::Card body-->--}}
 {{--      <!--begin::Actions-->--}}
 {{--      <div class="card-footer d-flex justify-content-end py-6 px-9">--}}
-{{--        <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('discard')}}</button>--}}
+{{--        <button type="reset" class="btn btn-light btn-active-light-khardl me-2">{{ __('discard')}}</button>--}}
 {{--        <button type="submit" class="btn btn-khardl" id="kt_account_profile_details_submit">{{ __('save-changes')}}</button>--}}
 {{--      </div>--}}
 {{--      <!--end::Actions-->--}}

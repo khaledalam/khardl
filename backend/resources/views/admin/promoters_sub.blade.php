@@ -13,7 +13,7 @@
                   <div id="kt_content_container" class="container-xxl">
 
                       <!--begin::Form-->
-                
+
                   <!--begin::Main column-->
                     <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                         <!--begin::Tab content-->
@@ -34,7 +34,7 @@
                                                     <div class="card-title">
                                                         <h2>{{ __('Make a new coupon for subscriptions') }}</h2>
                                                     </div>
-                                                   
+
                                                 </div>
                                                 <!--end::Card header-->
                                                 <form action="{{ route('admin.save.promoters.sub') }}" method="POST">
@@ -115,8 +115,8 @@
                                                                         </div>
                                                                         <input type="number" min="1" name="max_use" value="{{ old('max_use') }}" class="form-control mb-2" placeholder="{{ __('Max use') }}" />
                                                                     </div>
-                                                               
-                                                                  
+
+
                                                                 </div>
                                                                 <div id="kt_account_settings_profile_details" class="collapse show">
                                                                     <!--begin::Card body-->
@@ -152,12 +152,12 @@
                                                                             </div>
                                                                             <!--end::Label-->
                                                                         </div>
-                    
+
                                                                         <!--end::Input group-->
                                                                     </div>
                                                                     <!--end::Card body-->
                                                                 </div>
-                                                              
+
 
                                                         </div>
                                                         <!--begin::Actions-->
@@ -180,7 +180,7 @@
                                 <!--end::Tab pane-->
                     </div>
                     <!--end::Main column-->
-      
+
               <!--end::Form-->
 
 
@@ -222,7 +222,7 @@
                                               <th class="min-w-150px">{{ __('discount') }}</th>
                                               <th class="min-w-150px">{{ __('Type') }}</th>
                                               <th class="min-w-150px">{{ __('Number of usage') }}</th>
-                                         
+
                                               <th class="min-w-150px">{{ __('restaurant subscription') }}</th>
                                               <th class="min-w-150px">{{ __('lifetime app') }}</th>
                                               <th class="min-w-150px">{{ __('yearly app') }}</th>
@@ -246,7 +246,7 @@
                                                         </a>
                                                     </div>
                                                 </td>
-                                            
+
                                                 <td>
                                                     <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $coupon->code }}</span>
                                                 </td>
@@ -259,7 +259,7 @@
                                                 <td>
                                                     <span class="badge badge-light-success fw-bolder px-4 py-3">{{ __($coupon->n_of_usage) }}</span>
                                                 </td>
-                                                
+
                                                 <td>
                                                     <span class="badge  fw-bolder px-4 py-3">{{ $coupon->is_branch_purchase ? '✅':'❌' }}</span>
                                                 </td>
@@ -273,7 +273,7 @@
                                                     <form class="delete-form justify-content-end" action="{{ route('admin.delete-promoter-coupon', ['id' => $coupon->id]) }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                        <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-khardl btn-sm">
                                                           <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                           <span class="svg-icon svg-icon-3">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -285,9 +285,9 @@
                                                           <!--end::Svg Icon-->
                                                         </button>
                                                       </form>
-                                                </td> 
+                                                </td>
                                             </tr>
-                                        @endforeach 
+                                        @endforeach
                                       </tbody>
                                       <!--end::Table body-->
                                   </table>

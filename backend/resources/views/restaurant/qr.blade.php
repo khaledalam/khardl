@@ -659,8 +659,8 @@
                                 <!--end::Checkbox-->
                                 <!--begin::Description-->
                                 <div class="flex-grow-1">
-                                    <a href="#" class="text-gray-800 text-hover-primary fw-bolder fs-6">{{ $qrcode->name }}</a>
-                                    <span class="fw-bold d-block text-hover-primary">{{ $qrcode->url }}</span>
+                                    <a href="#" class="text-gray-800 text-hover-khardl fw-bolder fs-6">{{ $qrcode->name }}</a>
+                                    <span class="fw-bold d-block text-hover-khardl">{{ $qrcode->url }}</span>
                                 </div>
                             </div>
                         @endforeach

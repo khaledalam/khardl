@@ -83,12 +83,12 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('customers_data.show',$customer->id) }}" class="text-gray-600 text-hover-primary">{{ $customer->full_name }}</a>
+                                            <a href="{{ route('customers_data.show',$customer->id) }}" class="text-gray-600 text-hover-khardl">{{ $customer->full_name }}</a>
                                         </td>
                                         <td>{{ $customer->phone }}</td>
                                         <td>{{ $customer->email }}</td>
-                                       
-                                   
+
+
                                         <td>{{ $customer->last_login?->format('Y-m-d') }}</td>
                                         <td>{{ $customer->created_at?->format('Y-m-d') }}</td>
                                         <td >

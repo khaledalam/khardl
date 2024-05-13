@@ -299,7 +299,7 @@
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
-                            <input type="hidden" name="dropdown_required[${dropdownCount}]" value="false" />
+                            <input type="hidden" name="dropdown_required[${dropdownCount}]" value="true" />
                             <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" disabled checked >&nbsp;{{ __('Required') }}
                         </label>
                     </div>
@@ -420,7 +420,7 @@
                 <div class="card">
                     <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                         <div class="d-flex flex-wrap gap-1">
-                            <h3 class="text-primary">{{ __('Branches') }}</h3>
+                            <h3 class="text-khardl">{{ __('Branches') }}</h3>
                         </div>
                     </div>
                     <div class="card-body">
@@ -428,7 +428,7 @@
                             @foreach ($branches as $branchLoop)
                             <div class="col-md-3">
                                 <a href="{{ route('restaurant.get-category',['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1, 'branchId' => $branchLoop->id]) }}">
-                                    <button type="button" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl text-black @else btn-primary @endif">
+                                    <button type="button" class="btn  btn-sm @if($branchLoop->id == $branchId) btn-khardl text-black @else btn-active-light-khardl @endif">
                                         @if($branchLoop->id == $branchId)<i class="fa fa-arrow-down text-white mx-1"></i>@endif {{ $branchLoop->name }}
                                     </button>
                                 </a>
@@ -463,7 +463,7 @@
                         <div class="card-body">
                             <!--begin::Button-->
                             {{-- <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">--}}
-                            {{-- <p class="btn btn-primary text-uppercase w-100 mb-10">--}}
+                            {{-- <p class="btn btn-khardl text-uppercase w-100 mb-10">--}}
                             {{-- {{ __('all-categories') }}--}}
                             {{-- </p>--}}
                             {{-- </a>--}}
@@ -647,7 +647,7 @@
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                             <!--begin::Actions-->
                             <div class="d-flex flex-wrap gap-1">
-                                <h3 class="text-primary">{{ DB::table('branches')->where('id', $branchId)?->value('name') }} @if($selectedCategory) | {{ $selectedCategory->name }} @endif</h3>
+                                <h3 class="text-active-khardl">{{ DB::table('branches')->where('id', $branchId)?->value('name') }} @if($selectedCategory) | {{ $selectedCategory->name }} @endif</h3>
                             </div>
                             <!--end::Actions-->
                             <!--begin::Pagination-->
@@ -695,7 +695,7 @@
                                         <!--begin::Modal header-->
                                         <div class="modal-header pb-0 border-0 justify-content-end">
                                             <!--begin::Close-->
-                                            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                            <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                                                 <span class="svg-icon svg-icon-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -977,7 +977,7 @@
                                         <!--end::Title-->
                                         <!--begin::Date-->
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
+                                            <a href="#" class="btn btn-sm btn-light btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                                 <span class="svg-icon svg-icon-5 m-0">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -1046,7 +1046,7 @@
             <!--begin::Modal header-->
             <div class="modal-header pb-0 border-0 justify-content-end">
                 <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                     <span class="svg-icon svg-icon-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

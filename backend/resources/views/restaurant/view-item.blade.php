@@ -29,7 +29,7 @@
                                     <!--begin::Name-->
                                     <div class="d-flex align-items-center mb-2">
 
-                                        <a class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{ $item->name }}
+                                        <a class="text-gray-900 text-hover-khardl fs-2 fw-bolder me-1">{{ $item->name }}
                                         </a>
                                     </div>
                                     <!--end::Name-->
