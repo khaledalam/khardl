@@ -420,7 +420,7 @@
                 <div class="card">
                     <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                         <div class="d-flex flex-wrap gap-1">
-                            <h3 class="text-primary">{{ __('Branches') }}</h3>
+                            <h3 class="text-khardl">{{ __('Branches') }}</h3>
                         </div>
                     </div>
                     <div class="card-body">
@@ -428,7 +428,7 @@
                             @foreach ($branches as $branchLoop)
                             <div class="col-md-3">
                                 <a href="{{ route('restaurant.get-category',['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1, 'branchId' => $branchLoop->id]) }}">
-                                    <button type="button" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl text-black @else btn-primary @endif">
+                                    <button type="button" class="btn  btn-sm @if($branchLoop->id == $branchId) btn-khardl text-black @else btn-active-light-khardl @endif">
                                         @if($branchLoop->id == $branchId)<i class="fa fa-arrow-down text-white mx-1"></i>@endif {{ $branchLoop->name }}
                                     </button>
                                 </a>
@@ -647,7 +647,7 @@
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                             <!--begin::Actions-->
                             <div class="d-flex flex-wrap gap-1">
-                                <h3 class="text-primary">{{ DB::table('branches')->where('id', $branchId)?->value('name') }} @if($selectedCategory) | {{ $selectedCategory->name }} @endif</h3>
+                                <h3 class="text-active-khardl">{{ DB::table('branches')->where('id', $branchId)?->value('name') }} @if($selectedCategory) | {{ $selectedCategory->name }} @endif</h3>
                             </div>
                             <!--end::Actions-->
                             <!--begin::Pagination-->
