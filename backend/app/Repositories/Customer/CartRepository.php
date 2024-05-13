@@ -62,7 +62,7 @@ class CartRepository
             $options_price += $this->loopingTroughSelectionOptions($item,$request['selectedRadio'],$selection_options);
         }
         if($request['selectedDropdown'] ?? false){
-            $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
+            $options_price += $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
         $query = CartItem::where('item_id', $item->id)
         ->where('cart_id', $this->cart->id);
