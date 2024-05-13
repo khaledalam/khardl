@@ -172,7 +172,6 @@ class CartRepository
     }
     public function remove($id): JsonResponse
     {
-
         $this->cart->items()
             ->where('id', $id)
             ->delete();
