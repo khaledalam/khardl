@@ -325,7 +325,7 @@
                             </a>
                         </div>
 
-
+    
                         <!-- Coupons -->
                            <div class="menu-item menu-accordion">
                             <a href="{{route('coupons.index')}}">
