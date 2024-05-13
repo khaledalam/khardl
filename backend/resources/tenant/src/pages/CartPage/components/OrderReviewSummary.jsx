@@ -9,7 +9,8 @@ export default function OrderReviewSummary({ cart }) {
   const parseCartItems = () => {
     const summary = cart?.items.map((product, index) => {
       let extra = 0;
-      const productName = product.item.name.ar;
+      const productName =
+        language == "en" ? product.item.name.en : product.item.name.ar;
       const productCount = product.quantity;
       const productPrice = productCount * product.price;
 
