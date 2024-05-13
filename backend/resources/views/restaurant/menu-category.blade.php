@@ -825,12 +825,12 @@
                                                             <span class="required">{{__('Allow buy with loyalty points?')}}</span>
                                                         </label>
                                                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                            <input type="checkbox" id="allow_buy_with_loyalty_points" name="allow_buy_with_loyalty_points" @if($item?->price_using_loyalty_points) checked @endif value="1">
+                                                            <input type="checkbox" id="allow_buy_with_loyalty_points" name="allow_buy_with_loyalty_points" @if($item?->allow_buy_with_loyalty_points) checked @endif value="1">
                                                         </label>
                                                     </div>
                                                     <!--end::Col-->
                                                     <!--begin::Col-->
-                                                    <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points) d-block @else d-none @endif" id="loyalty_point_price_section">
+                                                    <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item?->allow_buy_with_loyalty_points) d-block @else d-none @endif" id="loyalty_point_price_section">
                                                         <label class="fs-6 fw-bold mb-2">{{ __('Price using loyalty points (how many points)') }}</label>
                                                         <input type="number" step="0.1" min="0" required name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control form-control-solid ps-12" />
                                                     </div>

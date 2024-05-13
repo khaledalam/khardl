@@ -777,7 +777,7 @@ const ProductItem = ({
                             </span>
                             &nbsp;
                             <span className="text-base font-medium">
-                              {product?.price_using_loyalty_points}
+                              {product?.price_using_loyalty_points * qtyCount}
                             </span>
                           </div>
                         ) : (

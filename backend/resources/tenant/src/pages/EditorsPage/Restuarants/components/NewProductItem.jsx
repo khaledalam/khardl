@@ -461,7 +461,7 @@ const ProductItem = ({
                   {t("SAR")}&nbsp;{totalPrice.toFixed(2)}<br />
 
                   {product?.allow_buy_with_loyalty_points  && <div className="text-green-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight p-1">
-                    {t("points-price")} {product?.price_using_loyalty_points}
+                    {t("points-price")} {product?.price_using_loyalty_points * qtyCount}
                   </div>}
 
                 </div>
