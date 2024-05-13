@@ -187,7 +187,7 @@
                 @foreach($order->items as $index => $cart)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $cart->item->name }}</td>
+                    <td>{{ $cart->item->name ?? __('Deleted') }}</td>
                     <td>{{ $cart->quantity }}</td>
                     <td>{{ $cart->price }}</td>
                     <td>{{ $cart->total }}</td>
