@@ -123,12 +123,12 @@
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div class="d-flex justify-content-start flex-column">
-                                                            <a class="text-dark fw-bolder text-hover-primary fs-6">{{ $promoter->name }}</a>
+                                                            <a class="text-dark fw-bolder text-hover-khardl fs-6">{{ $promoter->name }}</a>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="/register?ref={{ $promoter->url }}" target="_blank" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $promoter->url }}</a>
+                                                    <a href="/register?ref={{ $promoter->url }}" target="_blank" class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $promoter->url }}</a>
                                                 </td>
                                                 <td>
                                                     <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $promoter->entered }}</span>

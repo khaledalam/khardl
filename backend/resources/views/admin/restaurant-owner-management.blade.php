@@ -64,18 +64,18 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex justify-content-start flex-column">
-                                                <span href="#" class="text-dark fw-bolder text-hover-primary fs-6">{{ $admin->first_name }}</span>
+                                                <span href="#" class="text-dark fw-bolder text-hover-khardl fs-6">{{ $admin->first_name }}</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <span href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $admin->last_name }}</span>
+                                        <span href="#" class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $admin->last_name }}</span>
                                     </td>
                                     <td>
-                                        <span href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $admin->phone }}</span>
+                                        <span href="#" class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $admin->phone }}</span>
                                     </td>
                                     <td>
-                                        <span href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $admin->email }}
+                                        <span href="#" class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $admin->email }}
                                             <br>
                                             @if(is_null($admin->email_verified_at))
                                             <span class="badge badge-warning">{{ __('unverified') }}</span>
@@ -86,7 +86,7 @@
                                     </td>
                                     <td>
                                         @if ($admin?->restaurant)
-                                        <a class="text-dark fw-bolder text-hover-primary d-block fs-6" href="{{ route('admin.view-restaurants', ['tenant' => $admin->restaurant?->id]) }}">
+                                        <a class="text-dark fw-bolder text-hover-khardl d-block fs-6" href="{{ route('admin.view-restaurants', ['tenant' => $admin->restaurant?->id]) }}">
                                             {{ $admin->restaurant?->restaurant_name }}
                                             <br>
                                             @if ($admin->restaurant->is_live())

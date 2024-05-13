@@ -129,7 +129,7 @@
 
                                     {{-- {{dd($restaurant)}}--}}
                                     <!--begin::Name-->
-                                    <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">
+                                    <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-khardl fw-bolder mb-0">
                                         @php
                                             $customer_app = null;
                                             $sub = null;
@@ -254,7 +254,7 @@
                                                     <!--begin::Info-->
 
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="mb-1 text-gray-800 text-hover-primary">{{ $restaurant->restaurant_name }}</a>
+                                                        <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="mb-1 text-gray-800 text-hover-khardl">{{ $restaurant->restaurant_name }}</a>
                                                         <div class="fw-bold fs-6 text-gray-400">{{ $restaurant->email }}</div>
                                                     </div>
                                                     <!--end::Info-->

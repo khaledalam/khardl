@@ -644,7 +644,7 @@
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted fw-bold me-1">{{date('Y')}} ©</span>
                             <a href="https://www.khardl.com" target="_blank"
-                                class="text-gray-800 text-hover-primary">{{ __('khardl')}}</a>
+                                class="text-gray-800 text-hover-khardl">{{ __('khardl')}}</a>
                         </div>
                         <!--end::Copyright-->
                     </div>

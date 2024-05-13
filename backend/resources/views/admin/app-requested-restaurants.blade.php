@@ -74,7 +74,7 @@
                                                     <!--begin::Info-->
 
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}?config=1" class="mb-1 text-gray-800 text-hover-primary">{{ $restaurant->restaurant_name }}</a>
+                                                        <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}?config=1" class="mb-1 text-gray-800 text-hover-khardl">{{ $restaurant->restaurant_name }}</a>
                                                         <div class="fw-bold fs-6 text-gray-400">{{ $restaurant->email }}</div>
                                                     </div>
                                                     <!--end::Info-->
@@ -109,7 +109,7 @@
                                                 <div class="col-lg-8">
                                                     <span class="fw-bolder fs-6 text-gray-800">
                                                         <a href="{{ $customer_app->android_url}}" target="_blank">
-                                                            <p class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1"><i class="fas fa-external-link-alt"></i></p>
+                                                            <p class="text-gray-900 text-hover-khardl fs-2 fw-bolder me-1"><i class="fas fa-external-link-alt"></i></p>
                                                         </a>
                                                     </span>
                                                 </div>
@@ -120,7 +120,7 @@
                                                 <div class="col-lg-8">
                                                     <span class="fw-bolder fs-6 text-gray-800">
                                                         <a href="{{ $customer_app->ios_url}}" target="_blank">
-                                                            <p class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1"><i class="fas fa-external-link-alt"></i></p>
+                                                            <p class="text-gray-900 text-hover-khardl fs-2 fw-bolder me-1"><i class="fas fa-external-link-alt"></i></p>
                                                         </a>
                                                     </span>
                                                 </div>

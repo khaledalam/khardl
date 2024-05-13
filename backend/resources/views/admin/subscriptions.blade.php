@@ -19,7 +19,7 @@
        <span class="card-label fw-bolder fs-3 mb-1">{{ __('subscriptions')}}</span>
        <span class="text-muted mt-1 fw-bold fs-7">{{ count($subscriptions) }} {{ __('subscriptions')}}</span>
      </h3>
-    
+
    </div>
    <!--end::Header-->
    <!--begin::Body-->
@@ -49,12 +49,12 @@
               <td>
                 <div class="d-flex align-items-center">
                   <div class="d-flex justify-content-start flex-column">
-                    <span href="#" class="text-dark fw-bolder text-hover-primary fs-6">{{ $subscription->name }}</span>
+                    <span href="#" class="text-dark fw-bolder text-hover-khardl fs-6">{{ $subscription->name }}</span>
                   </div>
                 </div>
               </td>
               <td>
-                <span href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $subscription->amount }}</span>
+                <span href="#" class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $subscription->amount }}</span>
               </td>
 
 
