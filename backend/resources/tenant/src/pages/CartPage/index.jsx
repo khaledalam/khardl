@@ -122,6 +122,7 @@ const CartPage = () => {
 
   const fetchCartData = async () => {
     try {
+      setLoading(true);
       const cartResponse = await AxiosInstance.get(`carts`);
       if (cartResponse.data) {
         if (
@@ -139,6 +140,7 @@ const CartPage = () => {
         // setAddress(cartResponse.data?.data?.address ?? t("N/A"));
         setTap(cartResponse.data?.data?.tap_information);
       }
+      setLoading(false);
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
       console.log(error);
@@ -270,20 +272,24 @@ const CartPage = () => {
                 </div>
                 <div className="md:col-span-6 w-full paymentDetails p-4 mt-6 sm:mt-0">
                   <div className="cartDetailSection mt-6">
-                    <OrderReviewSummary cart={cart} />
+                    {Array.isArray(cart.items) && (
+                      <OrderReviewSummary cart={cart} />
+                    )}
                   </div>
                   <div className="cartDetailSection h-36xw mt-8">
                     <h3>{t("Select Payment Method")}</h3>
 
-                    {cart?.allow_buy_with_loyalty_points && <CartDetailSection
-                      key={"Loyalty points"}
-                      name={"Loyalty points"}
-                      onChange={(e) => setPaymentMethod("Loyalty points")}
-                      isChecked={paymentMethod === "Loyalty points"}
-                      img={coins}
-                      displayName={"Loyalty points"}
-                      callBackfn={cardPaymentCallbackFunc}
-                    />}
+                    {cart?.allow_buy_with_loyalty_points && (
+                      <CartDetailSection
+                        key={"Loyalty points"}
+                        name={"Loyalty points"}
+                        onChange={(e) => setPaymentMethod("Loyalty points")}
+                        isChecked={paymentMethod === "Loyalty points"}
+                        img={coins}
+                        displayName={"Loyalty points"}
+                        callBackfn={cardPaymentCallbackFunc}
+                      />
+                    )}
 
                     {cart.payment_methods.some(
                       (obj) => obj.name === "Online"
@@ -510,8 +516,17 @@ const CartPage = () => {
                     <div className="flex justify-between mt-1">
                       <div>{t("Total Payment")}</div>
                       <div className={"flex-column"}>
-                        {paymentMethod !== "Loyalty points" && <div>{`${getTotalPrice()} ${t("SAR")}`}</div>}
-                        {paymentMethod === "Loyalty points" && cart?.allow_buy_with_loyalty_points ? <div>{cart?.total_price_with_loyalty_points + " " + t("points-price")}</div> : null}
+                        {paymentMethod !== "Loyalty points" && (
+                          <div>{`${getTotalPrice()} ${t("SAR")}`}</div>
+                        )}
+                        {paymentMethod === "Loyalty points" &&
+                        cart?.allow_buy_with_loyalty_points ? (
+                          <div>
+                            {cart?.total_price_with_loyalty_points +
+                              " " +
+                              t("points-price")}
+                          </div>
+                        ) : null}
                       </div>
                     </div>
                   </div>
