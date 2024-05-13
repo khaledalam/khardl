@@ -52,21 +52,20 @@
                                                         <!--begin::Avatar-->
                                                         <div class="symbol symbol-35px symbol-circle">
                                                             @php
-                                                                $customer_app = null;
-                                                                $restaurant->run(function() use ($restaurant,&$customer_app){
-                                                                    $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
-                                                                    $customer_app = App\Models\ROCustomerAppSub::first();
-
-                                                                    if ($restaurant->is_live()) {
-                                                                        echo <<<HTML
-                                                                            <img alt="Pic" src="$logo" />
-                                                                        HTML;
-                                                                    } else {
-                                                                        echo '<img alt="Pic" src="'. global_asset('assets/default_logo.png') . '" />';
-                                                                    }
-
-                                                                });
+                                                            $customer_app = null;
+                                                            $is_live = null;
+                                                            $logo = null;
+                                                            $restaurant->run(function() use ($restaurant,&$customer_app,&$is_live,&$logo){
+                                                            $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
+                                                            $customer_app = App\Models\ROCustomerAppSub::first();
+                                                            $is_live = $restaurant->is_live();
+                                                            });
                                                             @endphp
+                                                            @if ($is_live&&$logo)
+                                                            <img alt="Logo" src="{{ $logo }}" class="logo" />
+                                                            @else
+                                                            <img alt="Logo" src="{{ global_asset('assets/default_logo.png') }}" class="logo" />
+                                                            @endif
                                                         </div>
                                                         <!--end::Avatar-->
                                                     </div>
@@ -81,13 +80,12 @@
                                                 </div>
                                                 <!--end::User-->
                                             </td>
-                                            <td>{{ $customer_app?->getOriginal('created_at')->format('Y-m-d') }}</td>
+                                            <td>{{ $customer_app?->getOriginal('created_at')?->format('Y-m-d') }}</td>
                                             <td>
                                                 @if($customer_app->icon ?? null)
                                                 <img src="{{$customer_app->icon}}" alt="" width="50" height="50" class="rounded-circle ">
                                                 @endif
                                             </td>
-
                                             <td>
                                                 @if($customer_app && $customer_app->status == \App\Models\ROSubscription::ACTIVE)
                                                 <span class="badge badge-success fw-bolder">{{ __('active')}}</span>
@@ -114,7 +112,7 @@
                                                     </span>
                                                 </div>
                                                 @endif
-                                                </td>
+                                            </td>
                                             <td>
                                                 @if($customer_app?->ios_url)
                                                 <div class="col-lg-8">
@@ -124,18 +122,18 @@
                                                         </a>
                                                     </span>
                                                 </div>
-                                                @endif </td>
-
-                                                <!--begin::Menu-->
-
-                                                <!--end::Menu item-->
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                {{ $restaurants->withQueryString()->links('pagination::bootstrap-4') }}
+                                <!--begin::Menu-->
+                                <!--end::Menu item-->
                             </div>
                             <!--end::Menu-->
-                            </td>
-                            </tr>
-                            @endforeach
 
-                            </tbody>
                             <!--end::Body-->
                             </table>
                             <!--end::Table-->
@@ -151,55 +149,11 @@
 
             <!--end::Card-->
         </div>
-        <div class="d-flex flex-stack flex-wrap pt-10">
-        <div class="fs-6 fw-bold text-gray-700">
-            {{ __('showing')}} {{ $restaurants->firstItem() }} {{ __('to')}} {{ $restaurants->lastItem() }} {{ __('of')}} {{ $restaurants->total() }} {{ __('entries')}}
-        </div>
-        <!--begin::Pages-->
-        <ul class="pagination">
-            @if ($restaurants->currentPage() > 1)
-            <li class="page-item previous">
-                <a href="{{ $restaurants->previousPageUrl() }}" class="page-link">
-                    <i class="previous"></i>
-                </a>
-            </li>
-            @endif
-
-            @for ($page = max(1, $restaurants->currentPage() - 2); $page <= min($restaurants->lastPage(), $restaurants->currentPage() + 2); $page++)
-                <li class="page-item {{ $page == $restaurants->currentPage() ? 'active' : '' }}">
-                    <a href="{{ $restaurants->url($page) }}" class="page-link">{{ $page }}</a>
-                </li>
-                @endfor
-
-                @if ($restaurants->hasMorePages())
-                <li class="page-item next">
-                    <a href="{{ $restaurants->nextPageUrl() }}" class="page-link">
-                        <i class="next"></i>
-                    </a>
-                </li>
-                @endif
-        </ul>
-        <!--end::Pages-->
-    </div>
         <!--end::Col-->
         <!-- End foreach -->
-
     </div>
     <!--end::Row-->
     <!--begin::Pagination-->
 
-</div>
-<!--end::Tab pane-->
-<!--begin::Tab pane-->
-
-<!--end::Card-->
-</div>
-<!--end::Tab pane-->
-</div>
-<!--end::Tab Content-->
-</div>
-<!--end::Container-->
-</div>
-<!--end::Post-->
 </div>
 @endsection
