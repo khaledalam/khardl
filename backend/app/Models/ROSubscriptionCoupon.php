@@ -13,4 +13,13 @@ class ROSubscriptionCoupon extends Model
     public function promoter(){
         return $this->belongsTo(Promoter::class);
     }
+    public function scopeWhenSearch($query,$search)
+    {
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('code', 'like', '%' . $search . '%')
+            ->orWhereHas('promoter', function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            });
+        });
+    }
 }
