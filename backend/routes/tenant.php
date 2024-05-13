@@ -350,7 +350,7 @@ Route::group([
                 Route::controller(CartController::class)
                 ->name('carts.')
                 ->group(function () {
-                    Route::delete("carts/trash", 'trash')->name('trash');
+                    Route::delete("trash/carts", 'trash')->name('trash');
                     Route::get("carts/count", 'count')->name('count');
                 });
                 /* End Cart Route */
