@@ -59,7 +59,7 @@ class Cart extends Model
         $total = 0;
 
         foreach ($this->items()->get() as $cart_item) {
-            $total += $cart_item->item->price_using_loyalty_points;
+            $total += ($cart_item->item->price_using_loyalty_points * $cart_item->quantity);
         }
 
         return $total;

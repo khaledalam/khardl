@@ -226,7 +226,7 @@ class CartRepository
     {
         $totalPoints = 0;
         foreach ($this->cart->refresh()->items as $item) {
-            $totalPoints += ($item->item->price_using_loyalty_points * $item->item->quantity);
+            $totalPoints += ($item->item->price_using_loyalty_points * $item->quantity);
         }
         return $totalPoints;
     }
