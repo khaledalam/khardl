@@ -1063,7 +1063,7 @@ function openModal(modalID) {
                                     $('#coupon_message_web')
 
                                     .removeClass('text-danger')
-                                    .append('<div class="form-group mt-5 "><label for="factor">{{__("Total Price after discount")}}</label><input type="text" class="form-control bg-secondary" id="coupon_discount_input_web" value="' + response.cost + '" readonly ></div>');
+                                    .append('<div class="form-group mt-5 "><label for="factor">{{__("Total Price after discount")}}</label><input type="text" class="form-control bg-secondary" id="coupon_discount_input_web" value="' + response.cost.toFixed(2) + '" readonly ></div>');
                                     $('#input-group-web').html('<span class="input-group-text rounded-0 text-danger"  id="cancel_coupn_web">X</span>');
 
                                 }else {
