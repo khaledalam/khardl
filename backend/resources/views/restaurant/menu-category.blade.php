@@ -832,7 +832,7 @@
                                                     <!--begin::Col-->
                                                     <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item?->allow_buy_with_loyalty_points) d-block @else d-none @endif" id="loyalty_point_price_section">
                                                         <label class="fs-6 fw-bold mb-2">{{ __('Price using loyalty points (how many points)') }}</label>
-                                                        <input type="number" step="0.1" min="0" required name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control form-control-solid ps-12" />
+                                                        <input type="number" step="0.1" min="0" name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control form-control-solid ps-12" />
                                                     </div>
                                                     <!--end::Col-->
 
@@ -1186,7 +1186,7 @@
                         <!--begin::Col-->
                         <div class="col-md-6 fv-row d-block" id="loyalty_point_price_section-new">
                             <label class="fs-6 fw-bold mb-2">{{ __('Price using loyalty points (how many points)') }}</label>
-                            <input type="number" step="0.1" min="0" required name="price_using_loyalty_points" class="form-control form-control-solid ps-12" />
+                            <input type="number" step="0.1" min="0" value="0.5" name="price_using_loyalty_points" class="form-control form-control-solid ps-12" />
                         </div>
                         <!--end::Col-->
 
