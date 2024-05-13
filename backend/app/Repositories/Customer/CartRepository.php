@@ -64,25 +64,36 @@ class CartRepository
         if($request['selectedDropdown'] ?? false){
             $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
+        $query = CartItem::where('item_id', $item->id)
+        ->where('cart_id', $this->cart->id);
+        if($checkbox_options)$query->whereJsonContains('checkbox_options', $checkbox_options);
+        if($selection_options)$query->whereJsonContains('selection_options', $selection_options);
+        if($dropdown_options)$query->whereJsonContains('dropdown_options', $dropdown_options);
+        $existingCartItem = $query->first();
+        if ($existingCartItem) {
+            $quantity = $existingCartItem->quantity + $request['quantity'];
+            $total = ($item->price + $options_price) * $quantity;
+            $existingCartItem->update([
+                'quantity' => $quantity,
+                'total' => $total,
+                'notes' => $request['notes'] ?? null,
+                'options_price' => $options_price,
+                'price' => $item->price,
+            ]);
+            return $existingCartItem;
+        }
 
-        return CartItem::updateOrCreate([
+        return CartItem::create([
             'item_id' => $item->id,
             'cart_id' => $this->cart->id,
-            'checkbox_options'=>$checkbox_options,
-            'selection_options'=>$selection_options,
-            'dropdown_options'=>$dropdown_options,
-
-        ],[
-            'cart_id' => $this->cart->id,
-            'item_id' => $item->id,
-            'price' =>$item->price,
-            'total' =>($item->price + $options_price) * $request['quantity'] ,
+            'price' => $item->price,
+            'total' => ($item->price + $options_price) * $request['quantity'],
             'quantity' => $request['quantity'],
             'notes' => $request['notes'] ?? null,
-            'options_price'=>$options_price,
-            'checkbox_options'=>$checkbox_options,
-            'selection_options'=>$selection_options,
-            'dropdown_options'=>$dropdown_options,
+            'options_price' => $options_price,
+            'checkbox_options' => $checkbox_options,
+            'selection_options' => $selection_options,
+            'dropdown_options' => $dropdown_options,
         ]);
     }
     public function loopingTroughCheckboxOptions($item, $options, &$updatedOptions)
