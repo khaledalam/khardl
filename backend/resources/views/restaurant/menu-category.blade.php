@@ -299,7 +299,7 @@
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
-                            <input type="hidden" name="dropdown_required[${dropdownCount}]" value="false" />
+                            <input type="hidden" name="dropdown_required[${dropdownCount}]" value="true" />
                             <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" disabled checked >&nbsp;{{ __('Required') }}
                         </label>
                     </div>
