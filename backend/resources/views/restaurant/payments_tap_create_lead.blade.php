@@ -315,7 +315,7 @@
 
                 <!--begin::Actions-->
                 <div class="text-center m-5">
-                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary" id="kt_modal_new_target_next_step1">
+                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl" id="kt_modal_new_target_next_step1">
                         <span class="indicator-label">{{ __('Submit ✔️') }}</span>
 
                         <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}

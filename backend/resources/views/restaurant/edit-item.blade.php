@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <a href="{{ route('restaurant.get-category', ['id' => $item->category_id,'branchId' => $item->branch_id]) }}" class="mt-4">
-                        <button type="button" class="btn btn-primary btn-sm">
+                        <button type="button" class="btn btn-khardl btn-sm">
                             <i class="fa fa-arrow-left"></i>
                             {{ __('Back to list') }}
                         </button>
@@ -188,7 +188,7 @@
 
                                         <!--begin::Actions-->
                                         <div class="text-center">
-                                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                                                 <span class="indicator-label">{{__('submit')}}</span>
                                                 <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

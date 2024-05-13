@@ -90,7 +90,7 @@
                                                 <div class="card card-flush border-0 card-map">
                                                     <!--begin::Body-->
                                                     <div class="card-body py-2">
-                                                    
+
                                             <div id="map{{ $branch->id }}" class="google_map">
                                                 <div class="map-overlay">
                                                     <div class="overlay-text">
@@ -101,9 +101,9 @@
                                             </div>
                                         </div>
                                     </div>
-        
-        
-        
+
+
+
                                         @if(!$branch->deleted_at)
                                         <form  method="POST">
                                             @csrf
@@ -153,7 +153,7 @@
                                             <div class="d-flex align-items-center">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-30px symbol-circle me-3">
-                                                    <span class="symbol-label bg-success">
+                                                    <span class="symbol-label bg-khardl">
                                                         <!--begin::Svg Icon | path: icons/duotune/abstract/abs042.svg-->
                                                         <span class="svg-icon svg-icon-5 svg-icon-white">
                                                             <svg xmlns="http://www.w3.org/2000/svg"

@@ -43,7 +43,7 @@
                         </div>
                     </span>
                     <a href="{{ route('admin.notifications-receipt.index') }}">
-                        <button type="button" class="btn btn-primary btn-sm">
+                        <button type="button" class="btn btn-khardl btn-sm">
                             <i class="fa fa-arrow-left"></i>
                             {{ __('Back to list') }}
                         </button>

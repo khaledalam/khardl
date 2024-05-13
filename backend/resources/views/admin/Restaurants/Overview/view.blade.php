@@ -55,7 +55,7 @@
                                 <!--begin::Label-->
                                 <div class="d-flex fs-6 fw-bold align-items-center my-3 my-3">
                                     <!--begin::Bullet-->
-                                    <div class="bullet w-8px h-6px rounded-2 bg-success me-3"></div>
+                                    <div class="bullet w-8px h-6px rounded-2 bg-khardl me-3"></div>
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
@@ -424,7 +424,7 @@
                             <div>
                                 <a href="{{ route('admin.download.file',  ['path' =>\App\Models\User::STORAGE .'/'. $restaurant->user->id, 'fileName'=>$restaurant->restaurant_name.' - Trader requirements' ]) }}" class="btn btn-khardl ">
                                     <i class="fas fa-download me-1 text-black"></i> {{ __('download') }}
-                                    <span class="badge bg-success ms-1">
+                                    <span class="badge bg-khardl ms-1">
                                         {{$filesCount}} {{ __('files') }}
                                     </span>
                                 </a>

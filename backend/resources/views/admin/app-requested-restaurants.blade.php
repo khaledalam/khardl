@@ -36,7 +36,7 @@
                                             <th class="min-w-90px">{{ __('End date')}}</th>
                                             <th class="min-w-90px">{{ __('Android URL')}}</th>
                                             <th class="min-w-90px">{{ __('IOS URL')}}</th>
-                   
+
                                         </tr>
                                     </thead>
                                     <!--end::Head-->
@@ -56,7 +56,7 @@
                                                                 $restaurant->run(function() use ($restaurant,&$customer_app){
                                                                     $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
                                                                     $customer_app = App\Models\ROCustomerAppSub::first();
-                                                                   
+
                                                                     if ($restaurant->is_live()) {
                                                                         echo <<<HTML
                                                                             <img alt="Pic" src="$logo" />
@@ -64,7 +64,7 @@
                                                                     } else {
                                                                         echo '<img alt="Pic" src="'. global_asset('assets/default_logo.png') . '" />';
                                                                     }
-                
+
                                                                 });
                                                             @endphp
                                                         </div>
@@ -72,7 +72,7 @@
                                                     </div>
                                                     <!--end::Wrapper-->
                                                     <!--begin::Info-->
-                
+
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}?config=1" class="mb-1 text-gray-800 text-hover-primary">{{ $restaurant->restaurant_name }}</a>
                                                         <div class="fw-bold fs-6 text-gray-400">{{ $restaurant->email }}</div>
@@ -96,13 +96,13 @@
                                                 @elseif($customer_app && $customer_app->status == \App\Models\ROCustomerAppSub::DEACTIVATE)
                                                 <span class="badge badge-light-warning fw-bolder">{{ __('cancellation request')}}</span>
                                                 @elseif($customer_app && $customer_app->status == \App\Models\ROCustomerAppSub::REQUESTED)
-                                                <span class="badge badge-primary fw-bolder">{{ __('Request for app')}}</span>
+                                                <span class="badge badge-khardl fw-bolder">{{ __('Request for app')}}</span>
                                                 @else
                                                 <span class="badge badge-light-danger fw-bolder">{{ __('not subscribed')}}</span>
                                                 @endif
                                             </td>
                                             <td>{{ $customer_app?->start_at->format('Y-m-d') }}</td>
-                
+
                                             <td>{{ $customer_app?->end_at->format('Y-m-d')}}</td>
                                             <td>
                                                 @if($customer_app?->android_url)
@@ -125,16 +125,16 @@
                                                     </span>
                                                 </div>
                                                 @endif </td>
-                
+
                                                 <!--begin::Menu-->
-                                          
+
                                                 <!--end::Menu item-->
                             </div>
                             <!--end::Menu-->
                             </td>
                             </tr>
                             @endforeach
-                
+
                             </tbody>
                             <!--end::Body-->
                             </table>
@@ -148,7 +148,7 @@
             </div>
             <!--end::Toolbar-->
             <!--begin::Tab Content-->
-          
+
             <!--end::Card-->
         </div>
         <div class="d-flex flex-stack flex-wrap pt-10">

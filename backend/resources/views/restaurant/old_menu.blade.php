@@ -25,7 +25,7 @@
                             @foreach ($branches as $branchLoop)
                             <div class="col-md-3">
                                 <a href="{{ route('restaurant.get-category',['id' => \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1, 'branchId' => $branchLoop->id]) }}">
-                                    <button type="button" class="btn btn-primary">
+                                    <button type="button" class="btn btn-khardl">
                                         {{ $branchLoop->name }}
                                     </button>
                                 </a>
@@ -82,7 +82,7 @@
                                     <!--begin::Inbox-->
                                     @if($user->isRestaurantOwner())
                                     <div class="col-md-2 edit-category">
-                                        <button class="btn btn-primary btn-sm mt-3 rounded" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}', '{{$category->sort}}')">
+                                        <button class="btn btn-khardl btn-sm mt-3 rounded" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}', '{{$category->sort}}')">
                                             <i class="fa fa-edit"></i>
                                         </button>
                                     </div>
@@ -373,7 +373,7 @@
                     <!--begin::Actions-->
                     <div class="text-center">
                         <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Cancel</button>
-                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                             <span class="indicator-label">Submit</span>
                             <span class="indicator-progress">{{ __('Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

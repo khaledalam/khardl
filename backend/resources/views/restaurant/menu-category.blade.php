@@ -921,7 +921,7 @@
                                                 <!--begin::Actions-->
                                                 <div class="text-center">
                                                     <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
-                                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                                                         <span class="indicator-label">{{__('submit')}}</span>
                                                         <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -1235,7 +1235,7 @@
                     <!--begin::Actions-->
                     <div class="text-center">
                         <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
-                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                             <span class="indicator-label">{{__('submit')}}</span>
                             <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
