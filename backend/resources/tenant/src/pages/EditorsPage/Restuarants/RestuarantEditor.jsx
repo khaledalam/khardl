@@ -492,19 +492,13 @@ export const RestuarantEditor = () => {
           // contentPositionOnChange: [
           //   (value) => dispatch(footerAlignment(value)),
           // ],
-          // text: ["font", "weight", "size", "color"],
-          // textInitialValues: [
-          //   footer_text_fontFamily,
-          //   footer_text_fontWeight,
-          //   footer_text_fontSize,
-          //   footer_text_color,
-          // ],
-          // textOnChange: [
-          //   (value) => dispatch(footerTextFont(value)),
-          //   (value) => dispatch(footerTextWeight(value)),
-          //   (value) => dispatch(footerTextSize(value)),
-          //   (color) => dispatch(footerTextColor(color)),
-          // ],
+          text: ["color"],
+          textInitialValues: [
+            footer_text_color,
+          ],
+          textOnChange: [
+            (color) => dispatch(footerTextColor(color)),
+          ],
           link: [],
         },
         {
