@@ -51,7 +51,7 @@
 
                             <!--begin:Action-->
                             <div class="d-flex align-items-center">
-                                <button type="submit" class="btn btn-primary me-5">{{ __('search')}}</button>
+                                <button type="submit" class="btn btn-khardl me-5">{{ __('search')}}</button>
                             </div>
                             <!--end:Action-->
                         </div>
@@ -75,7 +75,7 @@
                     <!--begin::Tab nav-->
                     <ul class="nav nav-pills me-6 mb-2 mb-sm-0">
                         <li class="nav-item m-0">
-                            <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary me-3 active" data-bs-toggle="tab" href="#kt_project_users_card_pane">
+                            <a class="btn btn-sm btn-icon btn-kardl btn-color-muted btn-active-khardl me-3 active" data-bs-toggle="tab" href="#kt_project_users_card_pane">
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
                                 <span class="svg-icon svg-icon-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
@@ -91,7 +91,7 @@
                             </a>
                         </li>
                         <li class="nav-item m-0">
-                            <a class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-primary" data-bs-toggle="tab" href="#kt_project_users_table_pane">
+                            <a class="btn btn-sm btn-icon btn-kardl btn-color-muted btn-active-khardl" data-bs-toggle="tab" href="#kt_project_users_table_pane">
                                 <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
                                 <span class="svg-icon svg-icon-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -282,7 +282,7 @@
                                                 <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $restaurant->total_earning['number_formatted'] }} {{ __('SAR') }}</span>
                                             </td>
                                             <td class="text-end">
-                                                <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('actions')}}
+                                                <a href="#" class="btn btn-sm btn-light btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('actions')}}
                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                                     <span class="svg-icon svg-icon-5 m-0">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

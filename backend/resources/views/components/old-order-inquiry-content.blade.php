@@ -10,7 +10,7 @@
                 @csrf
                 <div class="form-group">
                     <input type="text" name="order_id" min="16" max="16" value="{{ request('order_id') }}" class="form-control mb-3" placeholder="{{ __('Enter order ID') }}">
-                    <button class="btn btn-primary mt-2" type="submit">
+                    <button class="btn btn-khardl mt-2" type="submit">
                         {{ __('Search') }}
                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                             <span class="svg-icon svg-icon-2">

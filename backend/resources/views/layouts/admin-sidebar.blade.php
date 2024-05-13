@@ -421,7 +421,7 @@
                     <div class="container-fluid d-flex align-items-stretch justify-content-between">
                         <!--begin::Aside mobile toggle-->
                         <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show aside menu">
-                            <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
+                            <div class="btn btn-icon btn-active-light-khardl w-30px h-30px w-md-40px h-md-40px"
                                 id="kt_aside_mobile_toggle">
                                 <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
                                 <span class="svg-icon svg-icon-1">
@@ -603,7 +603,7 @@
                                 <!--end::User menu-->
                                 <!--begin::Header menu toggle-->
                                 <div class="d-flex align-items-center d-lg-none ms-2 me-n3" title="Show header menu">
-                                    <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
+                                    <div class="btn btn-icon btn-active-light-khardl w-30px h-30px w-md-40px h-md-40px"
                                         id="kt_header_menu_mobile_toggle">
                                         <!--begin::Svg Icon | path: icons/duotune/text/txt001.svg-->
                                         <span class="svg-icon svg-icon-1">

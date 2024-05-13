@@ -463,7 +463,7 @@
                         <div class="card-body">
                             <!--begin::Button-->
                             {{-- <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">--}}
-                            {{-- <p class="btn btn-primary text-uppercase w-100 mb-10">--}}
+                            {{-- <p class="btn btn-khardl text-uppercase w-100 mb-10">--}}
                             {{-- {{ __('all-categories') }}--}}
                             {{-- </p>--}}
                             {{-- </a>--}}
@@ -977,7 +977,7 @@
                                         <!--end::Title-->
                                         <!--begin::Date-->
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
+                                            <a href="#" class="btn btn-sm btn-light btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                                 <span class="svg-icon svg-icon-5 m-0">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
