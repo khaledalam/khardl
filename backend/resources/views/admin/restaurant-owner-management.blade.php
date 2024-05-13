@@ -102,7 +102,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-end flex-shrink-0">
-                                            {{-- <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            {{-- <a href="#" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
                     <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                     <span class="svg-icon svg-icon-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -112,7 +112,7 @@
                     </span>
                     <!--end::Svg Icon-->
                   </a> --}}
-                                            <a href="#" class="btn  btn-active-color-primary btn-sm me-1 toggle-status-btn" data-user-id="{{ $admin->id }}">
+                                            <a href="#" class="btn  btn-active-color-khardl btn-sm me-1 toggle-status-btn" data-user-id="{{ $admin->id }}">
                                                 <span class="svg-icon svg-icon-3">
                                                     <div class="form-check form-switch">
                                                         <input class="form-check-input toggle-status-switch" type="checkbox" role="switch" id="flexSwitchCheck{{ $admin->id }}" {{ !$admin->isBlocked() ? 'checked' : '' }}>

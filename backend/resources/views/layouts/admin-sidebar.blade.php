@@ -118,7 +118,7 @@
                     </a>
                     <!--end::Logo-->
                     <!--begin::Aside toggler-->
-                    <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
+                    <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-khardl aside-toggle"
                         data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
                         data-kt-toggle-name="aside-minimize">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg-->

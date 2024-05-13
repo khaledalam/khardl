@@ -147,7 +147,7 @@
                                                     <form class="delete-form justify-content-end" action="{{ route('admin.delete-promoter', ['id' => $promoter->id]) }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                        <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-khardl btn-sm">
                                                           <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                           <span class="svg-icon svg-icon-3">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

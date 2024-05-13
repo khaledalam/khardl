@@ -88,7 +88,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -136,7 +136,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -184,7 +184,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -232,7 +232,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -280,7 +280,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -328,56 +328,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
-                                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
-                                                                        <span class="svg-icon svg-icon-1">
-																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                            <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" />
-                                                                          </svg>
-
-                                                                            </svg>
-																	</span>
-                                                                        <!--end::Svg Icon-->
-                                                                    </button>
-
-                                                                    <!--end::Menu-->
-                                                                </div>
-                                                                <!--end::Action-->
-                                                            </div>
-                                                            <!--end::Info-->
-                                                            <!--begin::Customer-->
-                                                            <div class="d-flex flex-stack">
-                                                                <!--begin::Name-->
-                                                                <span class="text-gray-400 fw-bolder">Price :
-															<a href="../../demo1/dist/apps/ecommerce/sales/details.html" class="text-gray-800 text-hover-khardl fw-bolder">150$</a></span>
-                                                                <!--end::Name-->
-                                                                <!--begin::Label-->
-                                                                <span class="badge badge-light-success">in stock</span>
-                                                                <!--end::Label-->
-                                                            </div>
-                                                            <!--end::Customer-->
-                                                        </div>
-                                                        <!--end::Item-->
-
-
-                                                        <!--begin::Item-->
-                                                        <div class="rounded border-gray-300 border-1 border-gray-300 border-dashed px-7 py-3 mb-6">
-                                                            <!--begin::Info-->
-                                                            <div class="d-flex flex-stack mb-3">
-                                                                <!--begin::Wrapper-->
-                                                                <div class="me-3">
-                                                                    <!--begin::Icon-->
-                                                                    <img src="../../assets/media/stock/ecommerce/210.gif" class="w-50px ms-n1 me-1" alt="" />
-                                                                    <!--end::Icon-->
-                                                                    <!--begin::Title-->
-                                                                    <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" class="text-gray-800 text-hover-khardl fw-bolder">Elephant 1802</a>
-                                                                    <!--end::Title-->
-                                                                </div>
-                                                                <!--end::Wrapper-->
-                                                                <!--begin::Action-->
-                                                                <div class="m-0">
-                                                                    <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -426,7 +377,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -475,7 +426,56 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
+                                                                        <span class="svg-icon svg-icon-1">
+																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                            <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" />
+                                                                          </svg>
+
+                                                                            </svg>
+																	</span>
+                                                                        <!--end::Svg Icon-->
+                                                                    </button>
+
+                                                                    <!--end::Menu-->
+                                                                </div>
+                                                                <!--end::Action-->
+                                                            </div>
+                                                            <!--end::Info-->
+                                                            <!--begin::Customer-->
+                                                            <div class="d-flex flex-stack">
+                                                                <!--begin::Name-->
+                                                                <span class="text-gray-400 fw-bolder">Price :
+															<a href="../../demo1/dist/apps/ecommerce/sales/details.html" class="text-gray-800 text-hover-khardl fw-bolder">150$</a></span>
+                                                                <!--end::Name-->
+                                                                <!--begin::Label-->
+                                                                <span class="badge badge-light-success">in stock</span>
+                                                                <!--end::Label-->
+                                                            </div>
+                                                            <!--end::Customer-->
+                                                        </div>
+                                                        <!--end::Item-->
+
+
+                                                        <!--begin::Item-->
+                                                        <div class="rounded border-gray-300 border-1 border-gray-300 border-dashed px-7 py-3 mb-6">
+                                                            <!--begin::Info-->
+                                                            <div class="d-flex flex-stack mb-3">
+                                                                <!--begin::Wrapper-->
+                                                                <div class="me-3">
+                                                                    <!--begin::Icon-->
+                                                                    <img src="../../assets/media/stock/ecommerce/210.gif" class="w-50px ms-n1 me-1" alt="" />
+                                                                    <!--end::Icon-->
+                                                                    <!--begin::Title-->
+                                                                    <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" class="text-gray-800 text-hover-khardl fw-bolder">Elephant 1802</a>
+                                                                    <!--end::Title-->
+                                                                </div>
+                                                                <!--end::Wrapper-->
+                                                                <!--begin::Action-->
+                                                                <div class="m-0">
+                                                                    <!--begin::Menu-->
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -523,7 +523,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -571,7 +571,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -619,7 +619,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -667,7 +667,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -715,7 +715,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -763,7 +763,7 @@
                                                                 <!--begin::Action-->
                                                                 <div class="m-0">
                                                                     <!--begin::Menu-->
-                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                                                                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-khardl justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
                                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
                                                                         <span class="svg-icon svg-icon-1">
 																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
