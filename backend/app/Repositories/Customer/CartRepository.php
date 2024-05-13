@@ -68,6 +68,9 @@ class CartRepository
         return CartItem::updateOrCreate([
             'item_id' => $item->id,
             'cart_id' => $this->cart->id,
+            'checkbox_options'=>$checkbox_options,
+            'selection_options'=>$selection_options,
+            'dropdown_options'=>$dropdown_options,
 
         ],[
             'cart_id' => $this->cart->id,
