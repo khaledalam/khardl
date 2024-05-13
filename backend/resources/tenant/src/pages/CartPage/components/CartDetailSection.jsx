@@ -1,7 +1,14 @@
 import { RadioButton } from "primereact/radiobutton";
 import { useTranslation } from "react-i18next";
 
-const CartDetailSection = ({ name, onChange, isChecked, img, displayName }) => {
+const CartDetailSection = ({
+  name,
+  onChange,
+  isChecked,
+  img,
+  displayName,
+  disabled,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -12,6 +19,7 @@ const CartDetailSection = ({ name, onChange, isChecked, img, displayName }) => {
         value={name}
         onChange={onChange}
         checked={isChecked}
+        disabled={disabled}
         pt={{
           input: {
             className: "bg-black",

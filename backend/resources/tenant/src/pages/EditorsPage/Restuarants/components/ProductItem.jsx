@@ -817,7 +817,7 @@ const ProductItem = ({
                           radioItems[0]?.length > 0 ||
                           dropdownItems[0]?.length > 0) && (
                           <div className="px-6 my-4 md:h-[550px]">
-                            <div className="flex flex-col gap-5 py-4">
+                            <div className="flex flex-col gap-5 py-4 divide-y">
                               {/* checkbox */}
                               {Array.isArray(checkbox_input_titles) &&
                                 checkbox_input_titles.length > 0 &&
