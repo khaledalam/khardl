@@ -43,17 +43,17 @@ class AdminController extends Controller
         return view('admin.add-user', compact('user'));
     }
 
-    public function promoters(){
+    public function promoters(Request $request){
 
-        $promoters = Promoter::orderBy('id','desc')
+        $promoters = Promoter::orderBy('id','desc')->whenSearch($request['search'] ?? null)
         ->paginate(config('application.perPage') ?? 15);
 
         $user = Auth::user();
         return view('admin.promoters', compact('user', 'promoters'));
     }
-    public function promotersSub(){
+    public function promotersSub(Request $request){
         $promoters = Promoter::orderBy('id','desc')->get();
-        $coupons = ROSubscriptionCoupon::with('promoter')->orderBy('id','desc')
+        $coupons = ROSubscriptionCoupon::whenSearch($request['search'] ?? null)->with('promoter')->orderBy('id','desc')
         ->paginate(config('application.perPage') ?? 15);
         $user = Auth::user();
         return view('admin.promoters_sub', compact('user','coupons', 'promoters'));

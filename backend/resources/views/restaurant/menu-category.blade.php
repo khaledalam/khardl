@@ -947,9 +947,9 @@
                                     @foreach ($items as $item)
                                     <tr>
                                         <td>
-                                            @if(!$item->availability)<span class="badge badge-danger mx-1">Not available</span>
+                                            @if(!$item->availability)<span class="badge badge-danger mx-1">{{__('Not available')}}</span>
                                             @else
-                                            <span class="badge badge-success mx-1">Available</span>
+                                            <span class="badge badge-success mx-1">{{__('Available')}}</span>
                                             @endif
                                         </td>
                                         <td>

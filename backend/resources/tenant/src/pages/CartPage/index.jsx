@@ -253,7 +253,7 @@ const CartPage = () => {
               <h1 className="font-bold text-xl">{t("Your Cart")}</h1>
 
               <div className="flex flex-wrap md:grid md:grid-cols-12 gap-x-6 pt-8">
-                <div className="md:col-span-7 w-full">
+                <div className="md:col-span-6 w-full">
                   <div className="flex flex-col gap-y-6">
                     {cartItemsData &&
                       cartItemsData.length > 0 &&
@@ -268,7 +268,7 @@ const CartPage = () => {
                       })}
                   </div>
                 </div>
-                <div className="md:col-span-5 w-full paymentDetails p-4 mt-6 sm:mt-0">
+                <div className="md:col-span-6 w-full paymentDetails p-4 mt-6 sm:mt-0">
                   <div className="cartDetailSection mt-6">
                     <OrderReviewSummary cart={cart} />
                   </div>

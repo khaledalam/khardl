@@ -50,7 +50,7 @@ import {
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
 
 const ProductItem = ({
-                       product,
+  product,
   id,
   imgSrc,
   name,
@@ -386,6 +386,7 @@ const ProductItem = ({
 
         const response = await AxiosInstance.post(`/carts`, payload);
         closeModal();
+        handleReset();
         if (response?.data) {
           toast.success(`${t("Item added to cart")}`);
           dispatch(getCartItemsCount(response?.data.data.count));
@@ -468,6 +469,19 @@ const ProductItem = ({
 
   const handleGotoCart = () => {
     navigate("/cart");
+  };
+
+  const handleReset = () => {
+    const checkboxes = modalRef.current.querySelectorAll(
+      'input[type="checkbox"]'
+    );
+    checkboxes.forEach((checkbox) => (checkbox.checked = false));
+
+    const radios = modalRef.current.querySelectorAll('input[type="radio"]');
+    radios.forEach((radio) => (radio.checked = false));
+
+    const selects = modalRef.current.querySelectorAll("select");
+    selects.forEach((select) => (select.selectedIndex = 0));
   };
 
   return (
@@ -560,9 +574,13 @@ const ProductItem = ({
               >
                 {t("SAR")} {amount}
               </div>
-              {product?.allow_buy_with_loyalty_points  && <div className="text-green-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight p-2 border">
-                ⛁  {product?.price_using_loyalty_points}
-              </div>}
+              {product?.allow_buy_with_loyalty_points ? (
+                <div className="text-green-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight p-2 border">
+                  ⛁ {product?.price_using_loyalty_points}
+                </div>
+              ) : (
+                ""
+              )}
               <img
                 src={GreenDot}
                 alt="green dot"
@@ -602,8 +620,8 @@ const ProductItem = ({
                 checkboxItems[0]?.length > 0 ||
                 radioItems[0]?.length > 0 ||
                 dropdownItems[0]?.length > 0
-                  ? "sm:h-[700px]"
-                  : "sm:h-[550px]"
+                  ? "md:h-[700px]"
+                  : "md:h-[550px]"
               } flex flex-col justify-end items-center z-[100]`}
             >
               <Fragment>
@@ -639,12 +657,12 @@ const ProductItem = ({
                     checkboxItems[0]?.length > 0 ||
                     radioItems[0]?.length > 0 ||
                     dropdownItems[0]?.length > 0
-                      ? "sm:h-[550px]"
-                      : "sm:h-[430px]"
+                      ? "md:h-[550px]"
+                      : "md:h-[430px]"
                   } `}
                 >
                   <div className="">
-                    <div className="w-[100px] h-[100px] mt-5 sm:mt-[-5.8rem] mx-auto">
+                    <div className="w-[100px] h-[100px] mt-5 md:mt-[-5.8rem] mx-auto">
                       <img
                         src={imgSrc}
                         alt="product"
@@ -707,13 +725,28 @@ const ProductItem = ({
                           : "mt-5"
                       } `}
                     >
-                      <div className="font-inter text-[#ff3d00]">
-                        <span className="text-[13px] font-light">
-                          {t("SAR")}
-                        </span>{" "}
-                        <span className="text-base font-medium">
-                          {totalPrice && finalPrice.toFixed(2)}
-                        </span>
+                      <div className="flex flex-col gap-2">
+                        <div className="font-inter text-[#ff3d00]">
+                          <span className="text-[13px] font-light">
+                            {t("SAR")}
+                          </span>{" "}
+                          <span className="text-base font-medium">
+                            {totalPrice && finalPrice.toFixed(2)}
+                          </span>
+                        </div>
+                        {product?.allow_buy_with_loyalty_points ? (
+                          <div className="text-green-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight p-1">
+                            <span className="text-[13px] font-light">
+                              {t("points-price")}
+                            </span>
+                            &nbsp;
+                            <span className="text-base font-medium">
+                              {product?.price_using_loyalty_points}
+                            </span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
                       <div className="flex items-center justify-between cursor-pointer w-[120px] h-8 bg-orange-100 bg-opacity-20 rounded-lg px-[7.89px]">
                         <div
@@ -747,7 +780,7 @@ const ProductItem = ({
                         {(checkboxItems[0]?.length > 0 ||
                           radioItems[0]?.length > 0 ||
                           dropdownItems[0]?.length > 0) && (
-                          <div className="px-6 my-4 sm:h-[550px]">
+                          <div className="px-6 my-4 md:h-[550px]">
                             <div className="flex flex-col gap-5 py-4">
                               {/* checkbox */}
                               {checkbox_input_titles &&

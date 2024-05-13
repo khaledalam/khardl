@@ -439,12 +439,18 @@
                                                             <div class="d-flex align-items-center">
                                                                 <!--begin::Thumbnail-->
                                                                 <a href="#" class="symbol symbol-50px">
-                                                                    <span class="symbol-label" style="background-image:url({{$order_item->item->photo}});"></span>
+                                                                    @if($order_item->item)
+                                                                    <span class="symbol-label" style="background-image:url({{$order_item->item?->photo}});"></span>
+
+                                                                    @else
+                                                                    <span class="symbol-label text-danger text-center" >{{__('Deleted')}}</span>
+
+                                                                    @endif
                                                                 </a>
                                                                 <!--end::Thumbnail-->
                                                                 <!--begin::Title-->
                                                                 <div class="ms-5">
-                                                                    <a href="#" class="fw-bolder text-gray-600 text-hover-khardl">{{$order_item->item->name}}</a>
+                                                                    <a href="#" class="fw-bolder text-gray-600 text-hover-khardl">{{$order_item->item?->name}}</a>
                                                                     <div class="fs-7 text-muted">{{__('notes')}}: {{$order_item->notes ?? __('NA')}}</div>
 
                                                                 </div>
@@ -452,44 +458,46 @@
                                                                 <!--end::Title-->
                                                             </div>
                                                             <div class="text-muted">
+                                                                @if($order_item->item_id)
+                                                                    @if($order_item->checkbox_options)
+                                                                        @foreach($order_item->checkbox_options as $value)
+                                                                            <?php $option = array_keys($value[$locale]); ?>
 
-                                                                @if($order_item->checkbox_options)
-                                                                    @foreach($order_item->checkbox_options as $value)
-                                                                        <?php $option = array_keys($value[$locale]); ?>
+                                                                            <ul class="list-group" style="border-radius: 0;">
+                                                                                <li class="list-group-item" style="width: 100%; overflow: hidden;">
 
-                                                                        <ul class="list-group" style="border-radius: 0;">
-                                                                            <li class="list-group-item" style="width: 100%; overflow: hidden;">
+                                                                                    <span >{{ $option[0] }}</span>:
+                                                                                    <i >{{ implode(', ', array_column($value[$locale][$option[0]], 0)) }}</span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        @endforeach
 
-                                                                                <span >{{ $option[0] }}</span>:
-                                                                                <i >{{ implode(', ', array_column($value[$locale][$option[0]], 0)) }}</span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    @endforeach
+                                                                    @endif
+                                                                    @if($order_item->selection_options)
+                                                                        @foreach($order_item->selection_options as $value)
+                                                                            <?php $option = array_keys($value[$locale]); ?>
+                                                                            <ul class="list-group" style="border-radius: 0;">
+                                                                                <li class="list-group-item" style="width: 100%; overflow: hidden;">
+                                                                                    <span >{{ $option[0] }}</span>:
 
-                                                                @endif
-                                                                @if($order_item->selection_options)
-                                                                    @foreach($order_item->selection_options as $value)
-                                                                        <?php $option = array_keys($value[$locale]); ?>
-                                                                        <ul class="list-group" style="border-radius: 0;">
-                                                                            <li class="list-group-item" style="width: 100%; overflow: hidden;">
-                                                                                <span >{{ $option[0] }}</span>:
+                                                                                    <i >{{ $value[$locale][$option[0]][0] }}</span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        @endforeach
+                                                                    @endif
+                                                                    @if($order_item->dropdown_options)
+                                                                        @foreach($order_item->dropdown_options as $value)
+                                                                            <?php $option = array_keys($value[$locale]); ?>
+                                                                            <ul class="list-group" style="border-radius: 0;">
+                                                                                <li class="list-group-item" style="width: 100%; overflow: hidden;">
+                                                                                    <span >{{ $option[0] }}</span>:
+                                                                                    <i >{{$value[$locale][$option[0]]}}</span>
 
-                                                                                <i >{{ $value[$locale][$option[0]][0] }}</span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    @endforeach
-                                                                @endif
-                                                                @if($order_item->dropdown_options)
-                                                                    @foreach($order_item->dropdown_options as $value)
-                                                                        <?php $option = array_keys($value[$locale]); ?>
-                                                                        <ul class="list-group" style="border-radius: 0;">
-                                                                            <li class="list-group-item" style="width: 100%; overflow: hidden;">
-                                                                                <span >{{ $option[0] }}</span>:
-                                                                                <i >{{$value[$locale][$option[0]]}}</span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        @endforeach
+                                                                    @endif
 
-                                                                            </li>
-                                                                        </ul>
-                                                                    @endforeach
                                                                 @endif
                                                             </div>
                                                         </td>
