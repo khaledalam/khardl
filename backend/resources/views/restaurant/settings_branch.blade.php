@@ -216,7 +216,7 @@
                                         <!--end::Card body-->
                                         <!--begin::Card footer-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <button class="btn btn-light btn-active-light-primary me-2" type="reset">{{__('discard')}}</button>
+                                            <button class="btn btn-light btn-active-light-khardl me-2" type="reset">{{__('discard')}}</button>
                                             <button class="btn btn-khardl px-6" type="submit">{{__('save-changes')}}</button>
                                         </div>
                                         <!--end::Card footer-->

@@ -137,6 +137,13 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         };
         return $run_on_tenant ? $this->run($orderQuery) : $orderQuery();
     }
+    public function customerApp($run_on_tenant = true)
+    {
+        $query = function () {
+            return ROCustomerAppSub::first();
+        };
+        return $run_on_tenant ? $this->run($query) : $query();
+    }
     public function allCustomers($run_on_tenant = true)
     {
         $customerQuery = function () {

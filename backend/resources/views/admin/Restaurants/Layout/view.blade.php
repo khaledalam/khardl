@@ -34,7 +34,7 @@
                                     <!--begin::Name-->
                                     <div class="d-flex align-items-center mb-2">
 
-                                        <a class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{ $restaurant->restaurant_name }}
+                                        <a class="text-gray-900 text-hover-khardl fs-2 fw-bolder me-1">{{ $restaurant->restaurant_name }}
                                         </a>
                                         <a>
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen026.svg-->
@@ -52,7 +52,7 @@
                                     <!--end::Name-->
                                     <!--begin::Info-->
                                     <div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2">
-                                        <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                        <a href="#" class="d-flex align-items-center text-gray-400 text-hover-khardl me-5 mb-2">
                                             <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
                                             <span class="svg-icon svg-icon-4 me-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -61,7 +61,7 @@
                                                 </svg>
                                             </span>
                                             <!--end::Svg Icon-->{{ $owner->first_name }} {{ $owner->last_name }}</a>
-                                        {{-- <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                        {{-- <a href="#" class="d-flex align-items-center text-gray-400 text-hover-khardl me-5 mb-2">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
                                             <span class="svg-icon svg-icon-4 me-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -70,7 +70,7 @@
                                                 </svg>
                                             </span>
                                             <!--end::Svg Icon-->SA, Al-Riyadh</a> --}}
-                                        <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                                        <a href="#" class="d-flex align-items-center text-gray-400 text-hover-khardl mb-2">
                                             <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
                                             <span class="svg-icon svg-icon-4 me-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

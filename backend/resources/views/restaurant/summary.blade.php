@@ -239,7 +239,7 @@
                                             @else
                                             <span class="symbol-label" ></span>
                                             @endif
-                                            
+
                                         </div>
                                         <!--end::Checkbox-->
                                         <!--begin::Description-->

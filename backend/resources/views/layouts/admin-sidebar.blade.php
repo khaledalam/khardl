@@ -118,7 +118,7 @@
                     </a>
                     <!--end::Logo-->
                     <!--begin::Aside toggler-->
-                    <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
+                    <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-khardl aside-toggle"
                         data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
                         data-kt-toggle-name="aside-minimize">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg-->
@@ -394,8 +394,7 @@
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                             <span class="svg-icon svg-icon-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{{ ($admin_link == 'subscriptions' ) ? '#c2da08' : '#000000' }}" class="bi bi-cash" viewBox="0 0 16 16">
-                                                     <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/> <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/> </svg>
+                                                <i class="fas fa-cubes"></i>
                                             </span>
                                             <!--end::Svg Icon-->
                                         </span>
@@ -422,7 +421,7 @@
                     <div class="container-fluid d-flex align-items-stretch justify-content-between">
                         <!--begin::Aside mobile toggle-->
                         <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show aside menu">
-                            <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
+                            <div class="btn btn-icon btn-active-light-khardl w-30px h-30px w-md-40px h-md-40px"
                                 id="kt_aside_mobile_toggle">
                                 <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
                                 <span class="svg-icon svg-icon-1">
@@ -604,7 +603,7 @@
                                 <!--end::User menu-->
                                 <!--begin::Header menu toggle-->
                                 <div class="d-flex align-items-center d-lg-none ms-2 me-n3" title="Show header menu">
-                                    <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
+                                    <div class="btn btn-icon btn-active-light-khardl w-30px h-30px w-md-40px h-md-40px"
                                         id="kt_header_menu_mobile_toggle">
                                         <!--begin::Svg Icon | path: icons/duotune/text/txt001.svg-->
                                         <span class="svg-icon svg-icon-1">
@@ -644,7 +643,7 @@
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted fw-bold me-1">{{date('Y')}} ©</span>
                             <a href="https://www.khardl.com" target="_blank"
-                                class="text-gray-800 text-hover-primary">{{ __('khardl')}}</a>
+                                class="text-gray-800 text-hover-khardl">{{ __('khardl')}}</a>
                         </div>
                         <!--end::Copyright-->
                     </div>
