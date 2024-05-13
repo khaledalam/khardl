@@ -288,6 +288,7 @@ const CartPage = () => {
                         img={coins}
                         displayName={"Loyalty points"}
                         callBackfn={cardPaymentCallbackFunc}
+                        disabled={deliveryType != "PICKUP"}
                       />
                     )}
 
