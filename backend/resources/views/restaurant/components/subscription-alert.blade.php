@@ -6,7 +6,7 @@
 {{--    <div class="alert alert-warning text-center">--}}
 {{--        <h3>{{ __('You need to configure your payment account to start selling') }}</h3>--}}
 {{--    --}}{{--    <a href="{{ route('tap.payments_submit_lead_get') }}">--}}
-{{--    --}}{{--        <button class="btn btn-primary btn-sm my-2">{{ __('Manage payment gateway') }}</button>--}}
+{{--    --}}{{--        <button class="btn btn-khardl btn-sm my-2">{{ __('Manage payment gateway') }}</button>--}}
 {{--    --}}{{--    </a>--}}
 {{--    </div>--}}
 {{--@endif--}}
@@ -20,7 +20,7 @@
 @if ($sub=\App\Models\ROSubscription::first())
     @if($sub->status ==  \App\Models\ROSubscription::ACTIVE && \App\Models\Tenant\Branch::count() == 0)
     <div class="alert alert-success">
-        <span class="badge badge-primary mx-1">&#9432;</span>
+        <span class="badge badge-khardl mx-1">&#9432;</span>
 
         {!! __('You must add a :branches to activate your subscription',['branches'=>
          "<a href='".route('restaurant.branches')."'>".__('branches')."</a>"

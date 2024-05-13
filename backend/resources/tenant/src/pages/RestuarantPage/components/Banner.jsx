@@ -37,7 +37,7 @@ const Banner = ({ restaurantStyle }) => {
     }
   }, [restaurantStyle]);
 
-  return listofBannerImages?.length > 1 ? (
+  return listofBannerImages?.length >= 1 ? (
     <>
       <div className={`w-full aspect-[2/1]`}>
         <Sliderr

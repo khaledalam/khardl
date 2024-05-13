@@ -115,7 +115,7 @@
                                         <!--begin::Label-->
                                         <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                             <!--begin::Bullet-->
-                                            <div class="bullet w-8px h-6px rounded-2 bg-success me-3"></div>
+                                            <div class="bullet w-8px h-6px rounded-2 bg-khardl me-3"></div>
                                             <!--end::Bullet-->
                                             <!--begin::Label-->
                                             <div class="text-gray-500 flex-grow-1 me-4">
@@ -222,10 +222,11 @@
                                     @foreach ($bestSellingItems as $orderItem)
                                     <div class="d-flex align-items-center mb-8">
                                         <!--begin::Bullet-->
-                                        <span class="bullet bullet-vertical h-40px bg-success"></span>
+                                        <span class="bullet bullet-vertical h-40px bg-khardl"></span>
                                         <!--end::Bullet-->
                                         <!--begin::Checkbox-->
                                         <div class="form-check form-check-custom form-check-solid mx-5">
+                                            @if($orderItem->item_id)
                                             @if(Auth::user()->hasPermissionWorker('can_edit_menu'))
                                             <a href="{{ route('restaurant.view-item',['item' => $orderItem->item_id]) }}" class="symbol symbol-50px">
                                                 <span class="symbol-label" style="background-image:url({{$orderItem->item?->photo}});"></span>
@@ -235,16 +236,20 @@
                                                 <span class="symbol-label" style="background-image:url({{$orderItem->item?->photo}});"></span>
                                             </a>
                                             @endif
+                                            @else
+                                            <span class="symbol-label" ></span>
+                                            @endif
+                                            
                                         </div>
                                         <!--end::Checkbox-->
                                         <!--begin::Description-->
                                         <div class="flex-grow-1">
                                             @if(Auth::user()->hasPermissionWorker('can_edit_menu'))
                                             <a href="{{ route('restaurant.view-item',['item' => $orderItem->item_id]) }}" class="text-gray-800 text-hover-primary fw-bolder fs-6">
-                                                {{ $orderItem->item?->name }}
+                                                {{ $orderItem->item->name ?? __('Deleted') }}
                                             </a>
                                             @else
-                                            <span>{{ $orderItem->item?->name }}</span>
+                                            <span>{{ $orderItem->item->name ?? __('Deleted') }}</span>
                                             @endif
                                             <span class="text-muted fw-bold d-block">{{ $orderItem->item?->price }} {{ __('SAR') }}</span>
                                         </div>

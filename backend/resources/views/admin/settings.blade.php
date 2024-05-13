@@ -71,7 +71,7 @@
 {{--                      <!--begin::Actions-->--}}
 {{--                      <div class="card-footer d-flex justify-content-end py-6 px-9">--}}
 {{--                          <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('discard')}}</button>--}}
-{{--                          <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">{{ __('save-changes')}}</button>--}}
+{{--                          <button type="submit" class="btn btn-khardl" id="kt_account_profile_details_submit">{{ __('save-changes')}}</button>--}}
 {{--                      </div>--}}
 {{--                      <!--end::Actions-->--}}
 {{--                  </form>--}}
@@ -143,7 +143,7 @@
     <!--begin::Actions-->
     <div class="card-footer d-flex justify-content-end py-6 px-9">
       <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('discard')}}</button>
-      <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">
+      <button type="submit" class="btn btn-khardl" id="kt_account_profile_details_submit">
         <i class="bi bi-check2-square mx-1"></i>
         {{ __('save-changes')}}
     </button>
@@ -217,7 +217,7 @@
 {{--      <!--begin::Actions-->--}}
 {{--      <div class="card-footer d-flex justify-content-end py-6 px-9">--}}
 {{--        <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('discard')}}</button>--}}
-{{--        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">{{ __('save-changes')}}</button>--}}
+{{--        <button type="submit" class="btn btn-khardl" id="kt_account_profile_details_submit">{{ __('save-changes')}}</button>--}}
 {{--      </div>--}}
 {{--      <!--end::Actions-->--}}
 {{--    </form>--}}

@@ -324,7 +324,7 @@
             <div class="text-center">
                 <a href="{{route('tap.payments_upload_tap_documents_get')}}" type="button" id="prev_step_btn" class="btn btn-warning me-3">{{ __('Back to step 1') }}</a>
                 <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{ __('Reset ↻') }}</button>
-                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                     <span class="indicator-label">{{ __('Submit ✔️') }}</span>
                     <span class="indicator-progress" id="waiting-item">
                         {{ __('Please wait...') }}

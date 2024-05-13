@@ -3,7 +3,7 @@
     <div class="text-center m-3">
         <!--begin::Card title-->
         <div class="card-title m-0 ">
-            <h3 class="fw-bolder m-0  badge-primary p-2">{{ __('Payment gateway keys') }}</h3>
+            <h3 class="fw-bolder m-0  badge-khardl p-2">{{ __('Payment gateway keys') }}</h3>
         </div>
         <!--end::Card title-->
     </div>
@@ -11,22 +11,22 @@
             @if($setting->lead_id)
                 <div class="container">
                     <div class="d-flex justify-content-center mt-5">
-                        <h2 class="badge badge-primary text-center w-20">{{__('The payment gateway is linked to the restaurant')}}</h2> 
-            
+                        <h2 class="badge badge-khardl text-center w-20">{{__('The payment gateway is linked to the restaurant')}}</h2>
+
                     </div>
-            
-            
+
+
                 </div>
             @endif
             <form action="{{route('admin.update-restaurants-config',['tenant'=>$restaurant->id])}}" method="POST">
                 @csrf
                 @method('PATCH')
-            
+
                 <!--begin::Card header-->
                 <!--begin::Card body-->
                 <div class="card-body p-9">
                     <!--begin::Row-->
-        
+
                     <div class="row mb-7">
                         <!--begin::Label-->
                         <label class="col-lg-4 fw-bold text-muted">{{ __('Merchant ID') }}
@@ -41,7 +41,7 @@
                 </div>
                 <div class="card-body p-9">
                     <!--begin::Row-->
-        
+
                     <div class="row mb-7">
                         <!--begin::Label-->
                         <label class="col-lg-4 fw-bold text-muted">{{ __('Lead ID') }}
@@ -54,9 +54,9 @@
                         <!--end::Col-->
                     </div>
                 </div>
-              
+
                 <div class="text-center">
-                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl"
                         <span class="indicator-label">{{__('save-changes')}} ✔️</span>
                         <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -71,15 +71,15 @@
             </div>
             @endif
         </div>
-        
+
     <!--begin::Card header-->
     @if(!$setting->lead_id)
-    
+
     <hr>
     <div class="text-center m-3">
         <!--begin::Card title-->
         <div class="card-title m-0 ">
-            <h3 class="fw-bolder m-0  badge-primary p-2">{{ __('New contract with payment gateway') }}</h3>
+            <h3 class="fw-bolder m-0  badge-khardl p-2">{{ __('New contract with payment gateway') }}</h3>
         </div>
         <!--end::Card title-->
     </div>
@@ -232,17 +232,17 @@
                                     <input type="text" class="form-control" placeholder="{{ __('Enter Last Name') }}" name="user[name][last]" id="name_last" value="{{ old('user.name.last')  ?? $RO->last_name }}" />
                                 </div>
                             </div>
-      
+
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="countrySelect">
                                     <span class="required">{{__('Nationality')}}</span>
-    
+
                                 </label>
                                 <!--end::Label-->
                                 <select id="countrySelect" class="form-select" required name="user[nationality]"></select>
                             </div>
-                           
+
                             <!--end::Input group-->
 
                             <!--begin::Input group-->
@@ -262,8 +262,8 @@
                                         </div>
                                         <input type="text" class="form-control" name="user[phone][number]" value="{{ old('user.phone.0.number')  ?? substr($RO->phone,3)}}" />
                                     </div>
-                                   
-                            </div> 
+
+                            </div>
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
@@ -303,14 +303,14 @@
                          </div>
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
-                 
-    
+
+
                                 <!--end::Label-->
                                 <div class="d-flex flex-column mb-8 fv-row">
                                     <!--begin::Label-->
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="countrySelect">
                                         <span class="required">{{__('Country of origin')}}</span>
-    
+
                                     </label>
                                     <!--end::Label-->
                                     <select id="countrySelect2" class="form-select"  placeholder="{{ __('country') }}" name="user[birth][country]"></select>
@@ -320,7 +320,7 @@
                                     <!--begin::Label-->
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                         {{__("City")}}
-    
+
                                     </label>
                                     <!--end::Label-->
                                     <input type="text" class="form-control" placeholder="{{ __('City') }}" name="user[birth][city]" value="{{old('user.birth.city')}}" />
@@ -338,14 +338,14 @@
                                     <!--begin::Label-->
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                         <span class="required">{{__("Date of birth")}}</span>
-    
+
                                     </label>
                                     <!--end::Label-->
                                     <input type="date" required name="user[birth][date]" class="form-control mb-2" value="{{ old('user.birth.date')  ?? $owner->dob}}" />
                                     <small class="text-info">{{__('The date of birth must match the National ID number')}}</small>
                                 </div>
-    
-    
+
+
                             </div>
 
                         </div>
@@ -380,13 +380,13 @@
                             </label>
                             <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][swift]" value="{{old('wallet.bank.account.swift')}}" /><br/>
 
-                           
+
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                                 <span class="">{{__('IBAN authentication number')}}<span class="text-danger h4"> * </span></span>
                             </label>
                         <br>
                             <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][documents][0][number]" value="{{old('wallet.bank.documents.0.number')}}" /><br/>
-                           
+
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
@@ -413,9 +413,9 @@
 
                     </div>
 
-                  
+
                 </div>
-               
+
                     <div class="tab-pane fade  " id="tax" role="tabpanel" aria-labelledby="tax-tab">
                         <div class="row m-4" >
 
@@ -428,7 +428,7 @@
                                 <!--end::Label-->
                                 <input type="text" class="form-control" name="entity[tax][number]" value="{{old('entity.tax.number')}}" />
                             </div>
-         
+
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
@@ -465,7 +465,7 @@
 
   <!--begin::Actions-->
     <div class="text-center m-5">
-        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary" id="kt_modal_new_target_next_step1">
+        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl" id="kt_modal_new_target_next_step1">
             <span class="indicator-label">{{ __('Sign a new contract ✔️') }}</span>
 
             <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
@@ -477,12 +477,12 @@
     </div>
     <!--end::Content-->
     @endif
- 
+
 
 
  </div>
 <script>
-    
+
     document.addEventListener('DOMContentLoaded', function(e) {
         e.preventDefault();
         let lang = '{{app()->getLocale()}}'
@@ -491,10 +491,10 @@
             .then(data => {
                 // Populate the select element with options
                 let countrySelect = document.getElementById('countrySelect');
-                let countrySelect2 = document.getElementById('countrySelect2');   
+                let countrySelect2 = document.getElementById('countrySelect2');
                 data.forEach((country) => {
 
-               
+
 
                 let option = document.createElement('option');
                 let option2 = document.createElement('option');
@@ -526,7 +526,7 @@
 
 
 
-     
+
     });
     document.getElementById('kt_modal_new_target_form').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -534,7 +534,7 @@
         submitButton.disabled = true;
         var waiting = document.querySelector('#waiting-item');
         waiting.style.display = 'block';
-       
+
         Swal.fire({
             title: '{{ __('are-you-sure') }}',
             text: `{{ __("Are you sure you want to sign new contract ?") }}`,
@@ -571,7 +571,7 @@
 
     // Initial call to toggleEntityVisibility to set initial visibility based on checkbox state
     toggleEntityVisibility();
-    
+
 </script>
 
 @push('scripts')

@@ -921,7 +921,7 @@
                                                 <!--begin::Actions-->
                                                 <div class="text-center">
                                                     <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
-                                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                                                         <span class="indicator-label">{{__('submit')}}</span>
                                                         <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -947,9 +947,9 @@
                                     @foreach ($items as $item)
                                     <tr>
                                         <td>
-                                            @if(!$item->availability)<span class="badge badge-danger mx-1">Not available</span>
+                                            @if(!$item->availability)<span class="badge badge-danger mx-1">{{__('Not available')}}</span>
                                             @else
-                                            <span class="badge badge-success mx-1">Available</span>
+                                            <span class="badge badge-success mx-1">{{__('Available')}}</span>
                                             @endif
                                         </td>
                                         <td>
@@ -1235,7 +1235,7 @@
                     <!--begin::Actions-->
                     <div class="text-center">
                         <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
-                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                             <span class="indicator-label">{{__('submit')}}</span>
                             <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

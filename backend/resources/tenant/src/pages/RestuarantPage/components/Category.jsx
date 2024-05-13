@@ -1,5 +1,5 @@
 import EditorSlider from "../../../pages/EditorsPage/Restuarants/components/EditorSlider";
-import ProductItem from "../../../pages/EditorsPage/Restuarants/components/NewProductItem";
+import ProductItem from "../../../pages/EditorsPage/Restuarants/components/ProductItem";
 
 const Category = ({ restaurantStyle, categories = [] }) => {
   const {
