@@ -80,6 +80,13 @@ const CartPage = () => {
     fetchProfileData().then(() => null);
   }, []);
 
+  useEffect(() => {
+    if (paymentMethod === "Loyalty points" && deliveryType != "PICKUP") {
+      toast.error(t("Loyalty points option can be used with pickup only"));
+      setPaymentMethod(null);
+    }
+  }, [paymentMethod, deliveryType]);
+
   const validateCoupon = async () => {
     if (coupon === "") {
       return;
