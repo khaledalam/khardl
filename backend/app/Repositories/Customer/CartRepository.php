@@ -66,6 +66,7 @@ class CartRepository
         }
 
         return CartItem::updateOrCreate([
+            'item_id' => $item->id,
             'cart_id' => $this->cart->id,
 
         ],[
