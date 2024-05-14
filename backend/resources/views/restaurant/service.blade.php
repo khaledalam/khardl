@@ -369,11 +369,11 @@ function openModal(modalID) {
                                                                             <input type="text" class="form-control bg-secondary" id="price" name="price" value="{{ $subscription->amount }}" readonly>
                                                                         </div>
 
-                                                                        <div class="form-group">
-                                                                            <label  class="">{{__('Add a coupon code')}}</label>
-                                                                            <div class="d-flex flex-row bd-highlight" style="height: 55px">
+                                                                        <div class="col-md-12">
+                                                                            <label  class="badge bg-khardl justify-content-center">{{__('Add a coupon code')}}</label>
+                                                                            <div >
 
-                                                                                <div class="p-2 bd-highlight" style="margin-top:25px">
+                                                                                <div >
                                                                                     {{-- <input type="text" name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center mb-10"  > --}}
                                                                                     <div class="input-group mb-3">
 
@@ -553,27 +553,15 @@ function openModal(modalID) {
                                                                             </div>
                                                                             <div class="modal-body">
 
-                                                                                <div class="form-group">
-                                                                                    <div class="row">
-                                                                                        <div class="col-md-6 text-center">
+                                                                                  <div class="row">
+
+                                                                                    <div class="col-md-6">
+                                                                                        <div class=" text-center">
                                                                                             <div class="radio-container">
                                                                                                 <input class="form-check-input" checked type="radio" name="customer_app_sub_option" id="first-sub" value="is_application_purchase">
                                                                                                 <label class="form-check-label" for="first-sub">{{__('Annual subscription')}}</label>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="col-md-6 text-center">
-                                                                                            <div class="radio-container">
-                                                                                                <input class="form-check-input" type="radio"  name="customer_app_sub_option" id="second-sub" value="is_lifetime_purchase">
-                                                                                                <label class="form-check-label" for="second-sub">   <small>{{__('One time purchase for a lifetime')}}</small></label>
-
-                                                                                                </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                  <div class="row">
-
-                                                                                    <div class="col-md-6">
                                                                                       <div class="card mb-3 customer-app-card selected-card"  data-value="is_application_purchase">
                                                                                         <div class="card-body">
 
@@ -586,6 +574,13 @@ function openModal(modalID) {
                                                                                       </div>
                                                                                     </div>
                                                                                     <div class="col-md-6">
+                                                                                        <div class="text-center">
+                                                                                            <div class="radio-container">
+                                                                                                <input class="form-check-input" type="radio"  name="customer_app_sub_option" id="second-sub" value="is_lifetime_purchase">
+                                                                                                <label class="form-check-label" for="second-sub">   <small>{{__('One time purchase for a lifetime')}}</small></label>
+                                                                                             
+                                                                                            </div>
+                                                                                        </div>
                                                                                         <div class="card mb-3 customer-app-card" data-value="is_lifetime_purchase">
                                                                                           <div class="card-body">
                                                                                               <div class="form-group">
@@ -597,12 +592,12 @@ function openModal(modalID) {
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-md-12">
-                                                                                        <label  class="badge bg-khardl d-flex justify-content-center">{{__('Add a coupon code')}}</label>
-                                                                                        <div class="form-group d-flex justify-content-center">
+                                                                                        <label  class="badge bg-khardl justify-content-center">{{__('Add a coupon code')}}</label>
+                                                                                        <div >
+                                                                                            
+                                                                                            <div >
 
-                                                                                            <div class="d-flex flex-row bd-highlight" style="height: 55px">
-
-                                                                                                <div class="p-2 bd-highlight" style="margin-top:25px">
+                                                                                                <div class="p-2 bd-highlight" >
                                                                                                     {{-- <input type="text" name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center mb-10"  > --}}
                                                                                                     <div class="input-group mb-3">
 
@@ -612,10 +607,10 @@ function openModal(modalID) {
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div></div>
-
-                                                                                                 <h5 id="coupon_message_app" class="text-danger "></h5>
-                                                                                                <div class="p-2 bd-highlight mt-45">
+                                                                                                
+                                 
+                                                                                                 <div id="coupon_message_app" class="text-danger "></div>
+                                                                                                <div class="p-2 bd-highlight ">
                                                                                                     <span class="indicator-progress " id="apply_copoun_app_spinner" >
                                                                                                         <span class="spinner-border spinner-border-sm align-middle ms-2" ></span>
                                                                                                     </span>
@@ -1072,7 +1067,7 @@ function openModal(modalID) {
                             .replace(':type', 'is_branch_purchase'),
                             success: function(response) {
                                 if(response.cost){
-                                    $('#coupon_code_web').css({'background-color':'forestgreen'});
+                         
                                     $('#coupon_message_web')
 
                                     .removeClass('text-danger')
@@ -1080,7 +1075,7 @@ function openModal(modalID) {
                                     $('#input-group-web').html('<span class="input-group-text rounded-0 text-danger"  id="cancel_coupn_web">X</span>');
 
                                 }else {
-                                    $('#coupon_code_web').css('background-color','crimson');
+                            
                                     $('#coupon_message_web').append("{{__('Invalid coupon')}}");
                                 }
                             },
@@ -1106,15 +1101,15 @@ function openModal(modalID) {
                             success: function(response) {
                                 if(response.cost){
                                     $('#coupon_message_app')
-                                    .removeClass('mt-45')
+                         
                                     .removeClass('text-danger')
                                     .append('<div class="form-group mt-5 "><label for="factor">{{__("Total Price after discount")}}</label><input type="text" class="form-control bg-secondary" value="' + response.cost + '" readonly ></div>');
                                     $('#input-group-app').html('  <span class="input-group-text rounded-0 text-danger"  id="cancel_coupn_app">X</span>');
                                 }else {
 
                                     $('#coupon_message_app')
-                                    .addClass('text-danger')
-                                    .addClass('mt-45');
+                                    .addClass('text-danger');
+                                   
                                     $('#coupon_message_app').append("{{__('Invalid coupon')}}");
                                 }
                             },
