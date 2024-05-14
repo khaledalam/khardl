@@ -5,7 +5,7 @@ import KcalIcon from "../../../../assets/kcalIcon.png";
 import imgHotFire from "../../../../assets/hot-fire.svg";
 import PlusIcon from "../../../../assets/plusIcon.png";
 import MinusIcon from "../../../../assets/minusIcon.png";
-import { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { SetLoginModal } from "../../../../redux/NewEditor/restuarantEditorSlice";
 import { getCartItemsCount } from "../../../../redux/NewEditor/categoryAPISlice";
@@ -13,6 +13,7 @@ import AxiosInstance from "../../../../axios/axios";
 import { toast } from "react-toastify";
 
 const ProductItem = ({
+                       product,
   id,
   imgSrc,
   name,
@@ -172,7 +173,7 @@ const ProductItem = ({
         });
       });
       tempArray.push(temp);
-      statusArray.push(null);
+      statusArray.push(0);
     });
 
     setSelectedStatus(statusArray);
@@ -204,7 +205,7 @@ const ProductItem = ({
         });
       });
       tempArray.push(temp);
-      statusArray.push(null);
+      statusArray.push(0);
     });
 
     setDropdownStatus(statusArray);
@@ -396,46 +397,75 @@ const ProductItem = ({
       >
         <div className="relative mx-auto" ref={modalRef}>
           <button
-            className="btn btn-xs btn-circle bg-white text-black absolute -right-2 -top-2 hover:rotate-90 hover:bg-gray-100"
+            className="btn btn-xs btn-circle bg-white text-black absolute right-2 -top-2 hover:rotate-90 hover:bg-gray-100 "
             onClick={() => setOpenModal(false)}
           >
             ✕
           </button>
-          <div className="flex flex-col px-4 pt-4 pb-[70px] bg-white rounded-md w-[390px] h-[500px] sm:h-[700px] gap-4 shadow-lg border-gray-100 border overflow-y-scroll scrollbar-custom">
-            <div className="flex flex-row gap-4 border border-orange-100 rounded-xl p-2.5">
+          <div className="mx-4 flex flex-col px-4 pt-4 pb-[70px] bg-white rounded-xl w-[390px] h-[500px] sm:h-[700px] gap-4 shadow-lg border-gray-100 border overflow-y-scroll scrollbar-custom">
+            <div className="flex justify-center flex-col pt-5 sm:pt-[-5.8rem]">
               <img
                 src={imgSrc}
                 alt="product"
-                className="w-20 h-20 rounded-md min-w-20 max-w-20"
+                className="w-[100px] h-[100px] object-cover mx-auto"
               />
-              <div className="flex flex-col gap-2.5 min-h-[68px]">
-                <div className="flex flex-col gap-2 justify-center">
-                  <div className="text-neutral-700 font-semibold font-['Plus Jakarta Sans'] text-base leading-[18px]">
-                    {name}
-                  </div>
-                  <div className="w-[248px] text-neutral-700 text-xs font-normal font-['Plus Jakarta Sans'] leading-none min-h-8">
-                    {description}
-                  </div>
+              <div className="flex flex-col items-center justify-center">
+                <h3 className="text-[18px] text-[#111827C4]/[0.77] font-semibold mt-[16px]">
+                  {name}
+                </h3>
+                <h3 className="text-[10px] text-[#111827C4]/[0.77] font-light mt-[9px] max-w-[205px] text-center">
+                  {description}
+                </h3>
+
+                <div className="flex flex-row items-center mt-[13px]">
+                  <img
+                    src={imgHotFire}
+                    alt="hot"
+                    className="w-[20px] h-[20px]"
+                  />
+                  <p className="inline-flex items-baseline ml-1.5">
+                    <span className="text-[12px] font-normal">
+                      {caloryInfo}
+                    </span>
+                    <span className="text-[8px] font-normal ml-[2px]">
+                      {t("Kcal")}
+                    </span>
+                  </p>
                 </div>
-                <div className="h-8 px-4 py-2 bg-orange-100/opacity-10 rounded-2xl border border-orange-10 items-center gap-[5px] inline-flex w-fit">
-                  <img src={imgHotFire} alt="hot" className="w-3 h-3" />
-                  <span className="text-neutral-700 text-[10px] font-semibold font-['Plus Jakarta Sans'] leading-none">
-                    {caloryInfo}
-                  </span>
-                  <span className="text-neutral-700 text-[10px] font-light font-['Plus Jakarta Sans'] leading-non">
-                    {t("Kcal")}
-                  </span>
+
+                <div className="w-full h-[88px] mt-[18px] relative">
+                  <div className="w-full h-[76px] left-0 top-[12px] absolute">
+                    <div className="w-full h-[76px] left-0 top-0 absolute bg-white rounded-[14px] border border-orange-100" />
+                    <textarea
+                      type="text"
+                      placeholder={t("e.g. Please make the meat super tender.")}
+                      value={feedback}
+                      onChange={(e) => setFeedback(e.target.value)}
+                      style={{
+                        resize: "none",
+                      }}
+                      className="outline-none w-[243px] h-[52px] left-[16px] top-[14px] pt-2 absolute text-black text-[12px] font-light placeholder-black/30"
+                    />
+                  </div>
+                  <div className="w-[89px] h-6 left-[130px] top-0 absolute">
+                    <div className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px] text-white text-[8px] font-normal flex justify-center items-center">
+                      {t("Order Notes")}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="flex flex-row justify-between items-center">
-              <div className="text-neutral-700 font-bold font-['Plus Jakarta Sans']">
-                {t("TOTAL")}
-              </div>
-              <div className="flex flex-row gap-2.5 items-center">
+            <div className="flex flex-col px-2 gap-2">
+              <div className="flex flex-row justify-between items-center">
                 <div className="text-red-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight">
-                  {t("SAR")}&nbsp;{totalPrice.toFixed(2)}
+                  {t("SAR")}&nbsp;{totalPrice.toFixed(2)}<br />
+
+                  {product?.allow_buy_with_loyalty_points  && <div className="text-green-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight p-1">
+                    {t("points-price")} {product?.price_using_loyalty_points * qtyCount}
+                  </div>}
+
                 </div>
+
                 <div className="flex gap-2 rounded-[30px] border border-orange-100 justify-between items-center min-w-32 select-none">
                   <FiMinus
                     className={`flex w-[29px] h-[29px] ${
@@ -452,160 +482,156 @@ const ProductItem = ({
                   />
                 </div>
               </div>
-            </div>
-            {checkBoxItems.map((checkBoxItem, index) => (
-              <div
-                key={index}
-                className="pb-4 border-b border-gray-200 flex-col gap-2"
-              >
-                <div className="text-neutral-700 font-medium font-['Plus Jakarta Sans'] leading-[18px]">
-                  {language == "en"
-                    ? checkBoxItem.title[0]
-                    : checkBoxItem.title[1]}
-                  {checkBoxItem.required === "true" && (
-                    <span className="text-red-500">*</span>
-                  )}
-                </div>
-                {checkBoxItem.maximumCounts < checkBoxItems.length && (
-                  <div className="text-xs flex justify-end -mt-3">
-                    {t("Maximum number of choises: ") +
-                      checkBoxItem.maximumCounts}
-                  </div>
-                )}
-                <div>
-                  {checkBoxItem.items?.map((item, id) => (
-                    <div
-                      key={id}
-                      className="flex flex-row items-center justify-between"
-                    >
-                      <div className="flex flex-row gap-2 items-center">
-                        <input
-                          className="w-[16px] h-[16px] accent-[#FFECD6] border border-[#e5e7eb] checked:border-[#7D0A0A] rounded-[4px] checked:accent-[#FFECD6] focus:accent-[#FFECD6] checked:ring-1 checked:ring-[#7D0A0A]"
-                          type="checkbox"
-                          disabled={
-                            checkedStatus[index][id] == "0" &&
-                            checkBoxItem.maximumCounts <=
-                              (() => {
-                                const matches =
-                                  checkedStatus[index].match(/1/g);
-                                return matches ? matches.length : 0;
-                              })()
-                          }
-                          checked={checkedStatus[index][id] == "1"}
-                          onChange={() =>
-                            setCheckedStatus((currentStatus) =>
-                              currentStatus.map((row, idx) => {
-                                if (idx === index) {
-                                  return (
-                                    row.substring(0, id) +
-                                    (row[id] === "0" ? "1" : "0") +
-                                    row.substring(id + 1)
-                                  );
-                                }
-                                return row;
-                              })
-                            )
-                          }
-                        />
-                        <p className="text-[10px] font-normal">
-                          {language == "en" ? item.name[0] : item.name[1]}
-                        </p>
-                      </div>
-                      <span className="label-text text-[10px] font-semibold">
-                        {item.price}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-            {selectionItems.map((selectionItem, index) => (
-              <div
-                key={index}
-                className="pb-4 border-b border-gray-200 flex-col gap-2"
-              >
-                <div className="text-neutral-700 font-medium font-['Plus Jakarta Sans'] leading-[18px]">
-                  {language == "en"
-                    ? selectionItem.title[0]
-                    : selectionItem.title[1]}
-                  {selectionItem.required === "true" && (
-                    <span className="text-red-500">*</span>
-                  )}
-                </div>
-                <div>
-                  {selectionItem.items?.map((item, id) => (
-                    <div
-                      key={id}
-                      className="cursor-pointer flex items-center justify-between"
-                    >
-                      <div className="flex flex-row items-center gap-2">
-                        <input
-                          className="w-[14px] h-[14px] border checked:border-[3px] checked:bg-[#7D0A0A]"
-                          type="radio"
-                          checked={selectedStatus[index] == id}
-                          onChange={() =>
-                            setSelectedStatus((currentStatus) =>
-                              currentStatus.map((status, idx) =>
-                                idx == index ? id : status
-                              )
-                            )
-                          }
-                        />
-                        {language == "en" ? item.name[0] : item.name[1]}
-                      </div>
-                      <span className="label-text text-[10px] font-semibold">
-                        {item.price}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-            {dropdownItems.map((dropdownItem, index) => (
-              <div
-                key={index}
-                className="pb-4 border-b border-gray-200 flex-col gap-2"
-              >
-                <div className="text-neutral-700 font-medium font-['Plus Jakarta Sans'] leading-[18px]">
-                  {language == "en"
-                    ? dropdownItem.title[0]
-                    : dropdownItem.title[1]}
-                  {dropdownItem.required === "true" && (
-                    <span className="text-red-500">*</span>
-                  )}
-                </div>
-                <select
-                  className="w-full cursor-pointer text-xs h-8 min-h-5 bg-white select select-bordered"
-                  key={id}
-                  value={dropdownStatus[index]}
-                  onChange={(event) =>
-                    setDropdownStatus((currentStatus) =>
-                      currentStatus.map((status, idx) =>
-                        idx == index ? parseInt(event.target.value) : status
-                      )
-                    )
-                  }
+              {checkBoxItems.map((checkBoxItem, index) => (
+                <div
+                  key={index}
+                  className="pb-4 border-b border-gray-200 flex-col gap-2"
                 >
-                  <option disabled value={null}>
-                    {t("select option")}
-                  </option>
-                  {dropdownItem.items?.map((item, id) => (
-                    <option
-                      key={id}
-                      value={id}
-                      className="bg-white p-2 py-4 border-b border-gray-300"
-                    >
-                      {(language == "en" ? item.name[0] : item.name[1]) +
-                        " " +
-                        item.price +
-                        " " +
-                        t("SAR")}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            ))}
-            <div className="relative mt-2 h-full">
+                  <div className="text-neutral-700 font-medium font-['Plus Jakarta Sans'] leading-[18px] pb-2">
+                    {language == "en"
+                      ? checkBoxItem.title[0]
+                      : checkBoxItem.title[1]}
+                    {checkBoxItem.required === "true" && (
+                      <span className="text-red-500">*</span>
+                    )}
+                  </div>
+                  {checkBoxItem.maximumCounts < checkBoxItems.length && (
+                    <div className="text-xs flex justify-end -mt-3">
+                      {t("Maximum number of choises: ") +
+                        checkBoxItem.maximumCounts}
+                    </div>
+                  )}
+                  <div className="px-2">
+                    {checkBoxItem.items?.map((item, id) => (
+                      <div
+                        key={id}
+                        className="flex flex-row items-center justify-between"
+                      >
+                        <div className="flex flex-row gap-2 items-center">
+                          <input
+                            className="w-[16px] h-[16px] accent-[#FFECD6] border border-[#e5e7eb] checked:border-[#7D0A0A] rounded-[4px] checked:accent-[#FFECD6] focus:accent-[#FFECD6] checked:ring-1 checked:ring-[#7D0A0A]"
+                            type="checkbox"
+                            disabled={
+                              checkedStatus[index][id] == "0" &&
+                              checkBoxItem.maximumCounts <=
+                                (() => {
+                                  const matches =
+                                    checkedStatus[index].match(/1/g);
+                                  return matches ? matches.length : 0;
+                                })()
+                            }
+                            checked={checkedStatus[index][id] == "1"}
+                            onChange={() =>
+                              setCheckedStatus((currentStatus) =>
+                                currentStatus.map((row, idx) => {
+                                  if (idx === index) {
+                                    return (
+                                      row.substring(0, id) +
+                                      (row[id] === "0" ? "1" : "0") +
+                                      row.substring(id + 1)
+                                    );
+                                  }
+                                  return row;
+                                })
+                              )
+                            }
+                          />
+                          <p className="text-[10px] font-normal">
+                            {language == "en" ? item.name[0] : item.name[1]}
+                          </p>
+                        </div>
+                        <span className="label-text text-[10px] font-semibold">
+                          {item.price != 0 ? item.price : "FREE"}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              {selectionItems.map((selectionItem, index) => (
+                <div
+                  key={index}
+                  className="pb-4 border-b border-gray-200 flex-col gap-2"
+                >
+                  <div className="text-neutral-700 font-medium font-['Plus Jakarta Sans'] leading-[18px] pb-2">
+                    {language == "en"
+                      ? selectionItem.title[0]
+                      : selectionItem.title[1]}
+                    {/* {selectionItem.required === "true" && ( */}
+                    <span className="text-red-500">*</span>
+                    {/* )} */}
+                  </div>
+                  <div className="px-2">
+                    {selectionItem.items?.map((item, id) => (
+                      <div
+                        key={id}
+                        className="cursor-pointer flex items-center justify-between"
+                      >
+                        <div className="flex flex-row items-center gap-2">
+                          <input
+                            className="w-[14px] h-[14px] border checked:border-[3px] checked:bg-[#7D0A0A]"
+                            type="radio"
+                            checked={selectedStatus[index] == id}
+                            onChange={() =>
+                              setSelectedStatus((currentStatus) =>
+                                currentStatus.map((status, idx) =>
+                                  idx == index ? id : status
+                                )
+                              )
+                            }
+                          />
+                          {language == "en" ? item.name[0] : item.name[1]}
+                        </div>
+                        <span className="label-text text-[10px] font-semibold">
+                          {item.price != 0 ? item.price : "FREE"}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              {dropdownItems.map((dropdownItem, index) => (
+                <div
+                  key={index}
+                  className="pb-4 border-b border-gray-200 flex-col gap-2"
+                >
+                  <div className="text-neutral-700 font-medium font-['Plus Jakarta Sans'] leading-[18px] pb-2">
+                    {language == "en"
+                      ? dropdownItem.title[0]
+                      : dropdownItem.title[1]}
+                    {/* {dropdownItem.required === "true" && ( */}
+                    <span className="text-red-500">*</span>
+                    {/* )} */}
+                  </div>
+                  <select
+                    className="w-full cursor-pointer text-xs h-8 min-h-5 bg-white select select-bordered mx-2"
+                    key={id}
+                    value={dropdownStatus[index]}
+                    onChange={(event) =>
+                      setDropdownStatus((currentStatus) =>
+                        currentStatus.map((status, idx) =>
+                          idx == index ? parseInt(event.target.value) : status
+                        )
+                      )
+                    }
+                  >
+                    {dropdownItem.items?.map((item, id) => (
+                      <option
+                        key={id}
+                        value={id}
+                        className="bg-white p-2 py-4 border-b border-gray-300"
+                      >
+                        {(language == "en" ? item.name[0] : item.name[1]) +
+                          (item.price == 0
+                            ? ""
+                            : `(${item.price} ${t("SAR")})`)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ))}
+            </div>
+            {/* <div className="relative mt-2 h-full">
               <div className="text-zinc-700 text-xs font-normal font-['Plus Jakarta Sans'] absolute -top-2 bg-white rounded-md px-2">
                 {t("Order notes")}
               </div>
@@ -616,7 +642,7 @@ const ProductItem = ({
                 onChange={(e) => setFeedback(e.target.value)}
                 className="w-full px-2 py-3 resize-none outline-none min-h-[78px] text-black text-xs font-light placeholder-black/30 border-gray-200 border rounded-md h-full"
               />
-            </div>
+            </div> */}
             <div className="flex text-center items-center w-[358px] h-[70px] bg-white absolute bottom-0">
               <div
                 className="w-full px-4 py-2.5 bg-red-900 rounded-[50px] border text-white border-red-900 transition-all cursor-pointer hover:text-red-900 hover:bg-white text-xs"

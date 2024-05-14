@@ -31,7 +31,7 @@ class DeniedEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject(__('Account Rejected | Requirements'))->view('emails.denied_email',[
+        return $this->subject(__('Reupload following documents'))->view('emails.denied_email',[
             'user' => $this->user,
             'reasons' => $this->reasons,
         ]);

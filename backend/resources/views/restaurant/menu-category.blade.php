@@ -299,7 +299,7 @@
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
-                            <input type="hidden" name="dropdown_required[${dropdownCount}]" value="false" />
+                            <input type="hidden" name="dropdown_required[${dropdownCount}]" value="true" />
                             <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" disabled checked >&nbsp;{{ __('Required') }}
                         </label>
                     </div>
@@ -420,7 +420,7 @@
                 <div class="card">
                     <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                         <div class="d-flex flex-wrap gap-1">
-                            <h3 class="text-primary">{{ __('Branches') }}</h3>
+                            <h3 class="text-khardl">{{ __('Branches') }}</h3>
                         </div>
                     </div>
                     <div class="card-body">
@@ -428,7 +428,7 @@
                             @foreach ($branches as $branchLoop)
                             <div class="col-md-3">
                                 <a href="{{ route('restaurant.get-category',['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1, 'branchId' => $branchLoop->id]) }}">
-                                    <button type="button" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl text-black @else btn-primary @endif">
+                                    <button type="button" class="btn  btn-sm @if($branchLoop->id == $branchId) btn-khardl text-black @else btn-active-light-khardl @endif">
                                         @if($branchLoop->id == $branchId)<i class="fa fa-arrow-down text-white mx-1"></i>@endif {{ $branchLoop->name }}
                                     </button>
                                 </a>
@@ -463,7 +463,7 @@
                         <div class="card-body">
                             <!--begin::Button-->
                             {{-- <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">--}}
-                            {{-- <p class="btn btn-primary text-uppercase w-100 mb-10">--}}
+                            {{-- <p class="btn btn-khardl text-uppercase w-100 mb-10">--}}
                             {{-- {{ __('all-categories') }}--}}
                             {{-- </p>--}}
                             {{-- </a>--}}
@@ -647,7 +647,7 @@
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                             <!--begin::Actions-->
                             <div class="d-flex flex-wrap gap-1">
-                                <h3 class="text-primary">{{ DB::table('branches')->where('id', $branchId)?->value('name') }} @if($selectedCategory) | {{ $selectedCategory->name }} @endif</h3>
+                                <h3 class="text-active-khardl">{{ DB::table('branches')->where('id', $branchId)?->value('name') }} @if($selectedCategory) | {{ $selectedCategory->name }} @endif</h3>
                             </div>
                             <!--end::Actions-->
                             <!--begin::Pagination-->
@@ -695,7 +695,7 @@
                                         <!--begin::Modal header-->
                                         <div class="modal-header pb-0 border-0 justify-content-end">
                                             <!--begin::Close-->
-                                            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                            <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                                                 <span class="svg-icon svg-icon-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -825,14 +825,14 @@
                                                             <span class="required">{{__('Allow buy with loyalty points?')}}</span>
                                                         </label>
                                                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                            <input type="checkbox" id="allow_buy_with_loyalty_points" name="allow_buy_with_loyalty_points" @if($item?->price_using_loyalty_points) checked @endif value="1">
+                                                            <input type="checkbox" id="allow_buy_with_loyalty_points" name="allow_buy_with_loyalty_points" @if($item?->allow_buy_with_loyalty_points) checked @endif value="1">
                                                         </label>
                                                     </div>
                                                     <!--end::Col-->
                                                     <!--begin::Col-->
-                                                    <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points) d-block @else d-none @endif" id="loyalty_point_price_section">
+                                                    <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item?->allow_buy_with_loyalty_points) d-block @else d-none @endif" id="loyalty_point_price_section">
                                                         <label class="fs-6 fw-bold mb-2">{{ __('Price using loyalty points (how many points)') }}</label>
-                                                        <input type="number" step="0.1" min="0" required name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control form-control-solid ps-12" />
+                                                        <input type="number" step="0.1" min="0" name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control form-control-solid ps-12" />
                                                     </div>
                                                     <!--end::Col-->
 
@@ -921,7 +921,7 @@
                                                 <!--begin::Actions-->
                                                 <div class="text-center">
                                                     <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
-                                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                                                         <span class="indicator-label">{{__('submit')}}</span>
                                                         <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -947,9 +947,9 @@
                                     @foreach ($items as $item)
                                     <tr>
                                         <td>
-                                            @if(!$item->availability)<span class="badge badge-danger mx-1">Not available</span>
+                                            @if(!$item->availability)<span class="badge badge-danger mx-1">{{__('Not available')}}</span>
                                             @else
-                                            <span class="badge badge-success mx-1">Available</span>
+                                            <span class="badge badge-success mx-1">{{__('Available')}}</span>
                                             @endif
                                         </td>
                                         <td>
@@ -977,7 +977,7 @@
                                         <!--end::Title-->
                                         <!--begin::Date-->
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
+                                            <a href="#" class="btn btn-sm btn-light btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                                 <span class="svg-icon svg-icon-5 m-0">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -1046,7 +1046,7 @@
             <!--begin::Modal header-->
             <div class="modal-header pb-0 border-0 justify-content-end">
                 <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                     <span class="svg-icon svg-icon-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -1186,7 +1186,7 @@
                         <!--begin::Col-->
                         <div class="col-md-6 fv-row d-block" id="loyalty_point_price_section-new">
                             <label class="fs-6 fw-bold mb-2">{{ __('Price using loyalty points (how many points)') }}</label>
-                            <input type="number" step="0.1" min="0" required name="price_using_loyalty_points" class="form-control form-control-solid ps-12" />
+                            <input type="number" step="0.1" min="0" value="0.5" name="price_using_loyalty_points" class="form-control form-control-solid ps-12" />
                         </div>
                         <!--end::Col-->
 
@@ -1235,7 +1235,7 @@
                     <!--begin::Actions-->
                     <div class="text-center">
                         <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
-                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                             <span class="indicator-label">{{__('submit')}}</span>
                             <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

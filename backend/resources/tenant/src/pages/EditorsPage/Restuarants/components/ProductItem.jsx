@@ -50,6 +50,7 @@ import {
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
 
 const ProductItem = ({
+  product,
   id,
   imgSrc,
   name,
@@ -93,6 +94,7 @@ const ProductItem = ({
   const [gotoCart, setGotoCart] = useState(false);
   const [checkboxTotalPrice, setCheckboxTotalPrice] = useState(0);
   const [radioTotalPrice, setRadioTotalPrice] = useState(0);
+  const [dropdownTotalPrice, setDropdownTotalPrice] = useState(0);
   const [selectedCheckbox, setSelectedCheckbox] = useState([]);
   const [selectedRadio, setSelectedRadio] = useState([]);
   const [selectedDropdown, setSelectedDropdown] = useState([]);
@@ -207,6 +209,7 @@ const ProductItem = ({
     });
 
     const total_new = newTotal;
+    console.log(newTotal, totalPrice);
 
     setTotalPrice(newTotal - checkboxTotalPrice);
     setCheckboxTotalPrice(total_new - totalPrice);
@@ -228,10 +231,21 @@ const ProductItem = ({
       temparr.splice(delIndex, 1);
       setSelectedRadio(temparr);
     }
+
+    const total_new = newTotal;
+
+    setTotalPrice(newTotal - radioTotalPrice);
+    setRadioTotalPrice(total_new - totalPrice);
+  }, [selectedRadio]);
+
+  useEffect(() => {
+    let newTotal = totalPrice;
     let delIndexdp = null;
     selectedDropdown.map((mainItem, mainIndex) => {
       if (mainItem !== "") {
-        console.log(mainItem);
+        console.log(dropdown_input_prices[mainIndex][mainItem]);
+        const price = dropdown_input_prices[mainIndex][mainItem];
+        newTotal += parseFloat(price);
       } else {
         delIndexdp = mainIndex;
       }
@@ -244,9 +258,9 @@ const ProductItem = ({
 
     const total_new = newTotal;
 
-    setTotalPrice(newTotal - radioTotalPrice);
-    setRadioTotalPrice(total_new - totalPrice);
-  }, [selectedRadio, selectedDropdown]);
+    setTotalPrice(newTotal - dropdownTotalPrice);
+    setDropdownTotalPrice(total_new - totalPrice);
+  }, [selectedDropdown]);
 
   const handleCheckboxChange = (checkbox_index, index, event) => {
     if (
@@ -319,6 +333,7 @@ const ProductItem = ({
     //   return updatedRadio
     // })
   };
+
   const handleDropdownChange = (dropdown_index, index) => {
     let updatedDropdown = [];
     if (selectedDropdown.length > 0) {
@@ -342,6 +357,7 @@ const ProductItem = ({
   const finalPrice = qtyCount * totalPrice;
 
   function closeModal() {
+    handleReset();
     setSelectedDropdown([]);
     dropdDownRef.current.forEach((value, index) => {
       if (dropdDownRef.current[index] != null) {
@@ -363,8 +379,25 @@ const ProductItem = ({
       dropdown_input_titles.length > 0 &&
       dropdownItems[0]?.length > 0
     ) {
-      dropdown_required.map((isRequired, index) => {
-        if (isRequired === "true" && isNaN(selectedDropdown[index])) {
+      console.log("MANDATORY", selectedDropdown);
+      dropdown_input_titles.map((_, index) => {
+        console.log(isNaN(selectedDropdown[index]));
+        if (isNaN(selectedDropdown[index])) {
+          passMandatoryDrodowns = false;
+        }
+      });
+    }
+
+    if (
+      selection_input_titles &&
+      selection_input_prices?.length > 0 &&
+      selection_input_titles.length > 0 &&
+      radioItems[0]?.length > 0
+    ) {
+      console.log("MANDATORY", selectedRadio);
+      selection_input_titles.map((_, index) => {
+        console.log(isNaN(selectedRadio[index]));
+        if (isNaN(selectedRadio[index])) {
           passMandatoryDrodowns = false;
         }
       });
@@ -385,6 +418,7 @@ const ProductItem = ({
 
         const response = await AxiosInstance.post(`/carts`, payload);
         closeModal();
+        handleReset();
         if (response?.data) {
           toast.success(`${t("Item added to cart")}`);
           dispatch(getCartItemsCount(response?.data.data.count));
@@ -392,12 +426,16 @@ const ProductItem = ({
         }
         setSpinner(false);
         setSelectedDropdown([]);
+        setSelectedCheckbox([]);
+        setSelectedRadio([]);
       } catch (error) {
         setSpinner(false);
         console.log(error);
 
         toast.error(error.response?.data?.message);
+        setSelectedCheckbox([]);
         setSelectedDropdown([]);
+        setSelectedRadio([]);
         setGotoCart(false);
       }
       dispatch(addItemToCart("props.name"));
@@ -467,6 +505,19 @@ const ProductItem = ({
 
   const handleGotoCart = () => {
     navigate("/cart");
+  };
+
+  const handleReset = () => {
+    const checkboxes = modalRef.current.querySelectorAll(
+      'input[type="checkbox"]'
+    );
+    checkboxes.forEach((checkbox) => (checkbox.checked = false));
+
+    const radios = modalRef.current.querySelectorAll('input[type="radio"]');
+    radios.forEach((radio) => (radio.checked = false));
+
+    const selects = modalRef.current.querySelectorAll("select");
+    selects.forEach((select) => (select.selectedIndex = 0));
   };
 
   return (
@@ -559,6 +610,13 @@ const ProductItem = ({
               >
                 {t("SAR")} {amount}
               </div>
+              {/* {product?.allow_buy_with_loyalty_points ? (
+                <div className="text-green-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight p-2 border">
+                  ⛁ {product?.price_using_loyalty_points}
+                </div>
+              ) : (
+                ""
+              )} */}
               <img
                 src={GreenDot}
                 alt="green dot"
@@ -598,8 +656,8 @@ const ProductItem = ({
                 checkboxItems[0]?.length > 0 ||
                 radioItems[0]?.length > 0 ||
                 dropdownItems[0]?.length > 0
-                  ? "sm:h-[700px]"
-                  : "sm:h-[550px]"
+                  ? "md:h-[700px]"
+                  : "md:h-[550px]"
               } flex flex-col justify-end items-center z-[100]`}
             >
               <Fragment>
@@ -635,12 +693,12 @@ const ProductItem = ({
                     checkboxItems[0]?.length > 0 ||
                     radioItems[0]?.length > 0 ||
                     dropdownItems[0]?.length > 0
-                      ? "sm:h-[550px]"
-                      : "sm:h-[430px]"
+                      ? "md:h-[550px]"
+                      : "md:h-[430px]"
                   } `}
                 >
                   <div className="">
-                    <div className="w-[100px] h-[100px] mt-5 sm:mt-[-5.8rem] mx-auto">
+                    <div className="w-[100px] h-[100px] mt-5 md:mt-[-5.8rem] mx-auto">
                       <img
                         src={imgSrc}
                         alt="product"
@@ -703,13 +761,28 @@ const ProductItem = ({
                           : "mt-5"
                       } `}
                     >
-                      <div className="font-inter text-[#ff3d00]">
-                        <span className="text-[13px] font-light">
-                          {t("SAR")}
-                        </span>{" "}
-                        <span className="text-base font-medium">
-                          {totalPrice && finalPrice.toFixed(2)}
-                        </span>
+                      <div className="flex flex-col gap-2">
+                        <div className="font-inter text-[#ff3d00]">
+                          <span className="text-[13px] font-light">
+                            {t("SAR")}
+                          </span>{" "}
+                          <span className="text-base font-medium">
+                            {totalPrice && finalPrice.toFixed(2)}
+                          </span>
+                        </div>
+                        {product?.allow_buy_with_loyalty_points ? (
+                          <div className="text-green-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight p-1">
+                            <span className="text-[13px] font-light">
+                              {t("points-price")}
+                            </span>
+                            &nbsp;
+                            <span className="text-base font-medium">
+                              {product?.price_using_loyalty_points * qtyCount}
+                            </span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
                       <div className="flex items-center justify-between cursor-pointer w-[120px] h-8 bg-orange-100 bg-opacity-20 rounded-lg px-[7.89px]">
                         <div
@@ -743,11 +816,12 @@ const ProductItem = ({
                         {(checkboxItems[0]?.length > 0 ||
                           radioItems[0]?.length > 0 ||
                           dropdownItems[0]?.length > 0) && (
-                          <div className="px-6 my-4 sm:h-[550px]">
-                            <div className="flex flex-col gap-5 py-4">
+                          <div className="px-6 my-4 md:h-[550px]">
+                            <div className="flex flex-col gap-5 py-4 divide-y">
                               {/* checkbox */}
-                              {checkbox_input_titles &&
+                              {Array.isArray(checkbox_input_titles) &&
                                 checkbox_input_titles.length > 0 &&
+                                checkboxItems[0]?.length > 0 &&
                                 checkbox_input_titles.map(
                                   (title, checkbox_idx) => (
                                     <div
@@ -825,8 +899,9 @@ const ProductItem = ({
                                 )}
 
                               {/* selection  */}
-                              {selection_input_titles &&
+                              {Array.isArray(selection_input_titles) &&
                                 selection_input_titles.length > 0 &&
+                                radioItems[0]?.length > 0 &&
                                 selection_input_titles.map(
                                   (title, selection_idx) => (
                                     <div
@@ -839,12 +914,9 @@ const ProductItem = ({
                                           {language === "en"
                                             ? title[0]
                                             : title[1]}
-                                          {selection_required[selection_idx] ===
-                                            "true" && (
-                                            <span className="text-red-500">
-                                              *
-                                            </span>
-                                          )}
+                                          <span className="text-red-500">
+                                            *
+                                          </span>
                                         </h3>
                                       )}
                                       <div className="flex flex-col gap-2">
@@ -884,7 +956,7 @@ const ProductItem = ({
                                 )}
 
                               {/* dropdown */}
-                              {dropdown_input_titles &&
+                              {Array.isArray(dropdown_input_titles) &&
                                 dropdown_input_prices?.length > 0 &&
                                 dropdown_input_titles.length > 0 &&
                                 dropdownItems[0]?.length > 0 &&
@@ -900,12 +972,9 @@ const ProductItem = ({
                                           {language === "en"
                                             ? title[0]
                                             : title[1]}
-                                          {dropdown_required[dropdown_idx] ===
-                                            "true" && (
-                                            <span className="text-red-500">
-                                              *
-                                            </span>
-                                          )}
+                                          <span className="text-red-500">
+                                            *
+                                          </span>
                                         </h3>
                                       )}
                                       <div className="flex flex-col gap-2 mb-3">
@@ -998,8 +1067,9 @@ const ProductItem = ({
                   <div className="px-6 sm:pl-[30px] sm:pr-10 my-4 sm:h-[550px] w-full overflow-auto">
                     <div className="flex flex-col gap-5 py-4 divide-y">
                       {/* checkbox */}
-                      {checkbox_input_titles &&
+                      {Array.isArray(checkbox_input_titles) &&
                         checkbox_input_titles.length > 0 &&
+                        checkboxItems[0]?.length > 0 &&
                         checkbox_input_titles.map((title, checkbox_idx) => (
                           <div id={"checkbox"} className="" key={checkbox_idx}>
                             {title[0] && (
@@ -1064,15 +1134,13 @@ const ProductItem = ({
                       {/* selection  */}
                       {selection_input_titles &&
                         selection_input_titles.length > 0 &&
+                        radioItems[0]?.length > 0 &&
                         selection_input_titles.map((title, selection_idx) => (
                           <div id={"radio"} className="" key={selection_idx}>
                             {title[0] && (
                               <h3 className="text-[12px] font-medium mb-1 mt-[16px]">
                                 {language === "en" ? title[0] : title[1]}
-                                {selection_required[selection_idx] ===
-                                  "true" && (
-                                  <span className="text-red-500">*</span>
-                                )}
+                                <span className="text-red-500">*</span>
                               </h3>
                             )}
                             <div className="flex flex-col gap-2">
@@ -1112,9 +1180,7 @@ const ProductItem = ({
                             {title[0] && (
                               <h3 className="text-[12px] font-medium mb-[8px] mt-[16px]">
                                 {language === "en" ? title[0] : title[1]}
-                                {dropdown_required[dropdown_idx] === "true" && (
-                                  <span className="text-red-500">*</span>
-                                )}
+                                <span className="text-red-500">*</span>
                               </h3>
                             )}
                             <div className="flex flex-col gap-2 mb-3">

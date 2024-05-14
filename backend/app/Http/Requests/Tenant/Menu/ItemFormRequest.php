@@ -18,7 +18,8 @@ class ItemFormRequest extends FormRequest
         $regexRules = [
             'item_name_en' => 'required|regex:/^[0-9a-zA-Z\s]+$/',
             'item_name_ar' => 'required|regex:/^[0-9\p{Arabic}\s]+$/u',
-            'checkbox_input_maximum_choices' => 'nullable|int|min:1'
+            'checkbox_input_maximum_choices' => 'nullable|int|min:1',
+            'price_using_loyalty_points' => 'required_if:allow_buy_with_loyalty_points,1'
         ];
         $arabic_optional_text = ['checkboxInputNameAr', 'description_ar', 'selectionInputNameAr', 'dropdownInputNameAr'];
         $english_optional_text = ['checkboxInputNameEn', 'description_en', 'selectionInputNameEn', 'dropdownInputNameEn'];

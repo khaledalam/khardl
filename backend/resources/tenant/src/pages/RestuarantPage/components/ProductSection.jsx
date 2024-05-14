@@ -43,6 +43,7 @@ const ProductSection = ({ categories, isMobile }) => {
                         .map((product, i) => (
                           <span key={i}>
                             <ProductItem
+                              product={product}
                               key={product.id}
                               valuekey={product.id}
                               id={product.id}
@@ -175,6 +176,7 @@ const ProductSection = ({ categories, isMobile }) => {
                             .map((product, i) => (
                               <span key={i}>
                                 <ProductItem
+                                  product={product}
                                   key={product.id}
                                   valuekey={product.id}
                                   id={product.id}
@@ -270,6 +272,7 @@ const ProductSection = ({ categories, isMobile }) => {
                             .map((product, i) => (
                               <span key={i}>
                                 <ProductItem
+                                  product={product}
                                   key={product.id}
                                   valuekey={product.id}
                                   id={product.id}

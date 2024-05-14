@@ -51,5 +51,19 @@ class Cart extends Model
         return true;
     }
 
+    public function totalPriceWithLoyaltyPoints()
+    {
+        if ($this->items()->count() < 1) {
+            return 0;
+        }
+        $total = 0;
+
+        foreach ($this->items()->get() as $cart_item) {
+            $total += ($cart_item->item->price_using_loyalty_points * $cart_item->quantity);
+        }
+
+        return $total;
+    }
+
 
 }

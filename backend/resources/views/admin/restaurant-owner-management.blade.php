@@ -64,18 +64,18 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex justify-content-start flex-column">
-                                                <span href="#" class="text-dark fw-bolder text-hover-primary fs-6">{{ $admin->first_name }}</span>
+                                                <span href="#" class="text-dark fw-bolder text-hover-khardl fs-6">{{ $admin->first_name }}</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <span href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $admin->last_name }}</span>
+                                        <span href="#" class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $admin->last_name }}</span>
                                     </td>
                                     <td>
-                                        <span href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $admin->phone }}</span>
+                                        <span href="#" class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $admin->phone }}</span>
                                     </td>
                                     <td>
-                                        <span href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $admin->email }}
+                                        <span href="#" class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $admin->email }}
                                             <br>
                                             @if(is_null($admin->email_verified_at))
                                             <span class="badge badge-warning">{{ __('unverified') }}</span>
@@ -86,7 +86,7 @@
                                     </td>
                                     <td>
                                         @if ($admin?->restaurant)
-                                        <a class="text-dark fw-bolder text-hover-primary d-block fs-6" href="{{ route('admin.view-restaurants', ['tenant' => $admin->restaurant?->id]) }}">
+                                        <a class="text-dark fw-bolder text-hover-khardl d-block fs-6" href="{{ route('admin.view-restaurants', ['tenant' => $admin->restaurant?->id]) }}">
                                             {{ $admin->restaurant?->restaurant_name }}
                                             <br>
                                             @if ($admin->restaurant->is_live())
@@ -102,7 +102,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-end flex-shrink-0">
-                                            {{-- <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            {{-- <a href="#" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
                     <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                     <span class="svg-icon svg-icon-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -112,7 +112,7 @@
                     </span>
                     <!--end::Svg Icon-->
                   </a> --}}
-                                            <a href="#" class="btn  btn-active-color-primary btn-sm me-1 toggle-status-btn" data-user-id="{{ $admin->id }}">
+                                            <a href="#" class="btn  btn-active-khardl btn-sm me-1 toggle-status-btn" data-user-id="{{ $admin->id }}">
                                                 <span class="svg-icon svg-icon-3">
                                                     <div class="form-check form-switch">
                                                         <input class="form-check-input toggle-status-switch" type="checkbox" role="switch" id="flexSwitchCheck{{ $admin->id }}" {{ !$admin->isBlocked() ? 'checked' : '' }}>

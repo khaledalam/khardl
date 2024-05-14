@@ -62,7 +62,7 @@ class CartRepository
             $options_price += $this->loopingTroughSelectionOptions($item,$request['selectedRadio'],$selection_options);
         }
         if($request['selectedDropdown'] ?? false){
-            $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
+            $options_price += $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
         $query = CartItem::where('item_id', $item->id)
         ->where('cart_id', $this->cart->id);
@@ -226,7 +226,7 @@ class CartRepository
     {
         $totalPoints = 0;
         foreach ($this->cart->refresh()->items as $item) {
-            $totalPoints += $item->item->price_using_loyalty_points;
+            $totalPoints += ($item->item->price_using_loyalty_points * $item->quantity);
         }
         return $totalPoints;
     }
@@ -281,6 +281,8 @@ class CartRepository
         $settings = Setting::all()->firstOrFail();
         $items = $this->cart->items->load(['item']);
 
+        $allowPayWithLoyaltyPoints = $this->cart->canPayWithLoyaltyPoints();
+
         return $this->sendResponse([
             'sub_total' => $this->subTotal(),
             'total' => $this->total(),
@@ -289,7 +291,8 @@ class CartRepository
             'discount' => $this->discount(),
             'count' => $this->cartCount(),
             'items' => $items,
-            'allow_buy_with_loyalty_points' => $this->cart->canPayWithLoyaltyPoints(),
+            'allow_buy_with_loyalty_points' => $allowPayWithLoyaltyPoints,
+            'total_price_with_loyalty_points' => (!$allowPayWithLoyaltyPoints ? -1 : $this->cart->totalPriceWithLoyaltyPoints()),
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
             'delivery_fee' => $settings['delivery_fee'],

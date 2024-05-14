@@ -31,7 +31,7 @@
                                                         <h2>{{ __('edit-profile')}}</h2>
                                                     </div>
                                                     <div>
-                                                        <button type="submit" style="border: 0;" class="badge badge-primary p-3"><i class="fas fa-save text-white"></i></button>
+                                                        <button type="submit" style="border: 0;" class="badge badge-khardl p-3"><i class="fas fa-save text-white"></i></button>
                                                     </div>
                                                 </div>
                                             </div>

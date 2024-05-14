@@ -50,6 +50,10 @@ class OrderRequest extends FormRequest
             }
 
             if ($this->payment_method == "Loyalty points") {
+                if ($this->delivery_type != DeliveryType::PICKUP){
+                    $validator->errors()->add('use_loyalty_points_usage', __('Loyalty points allow with pickup option only'));
+                    return;
+                }
                 if ($user->loyalty_points < $cart->totalLoyaltyPointsPrice()) {
                     $validator->errors()->add('use_loyalty_points_value', __('You do not have enough loyalty points'));
                     return;

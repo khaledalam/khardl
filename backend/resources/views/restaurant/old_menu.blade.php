@@ -25,7 +25,7 @@
                             @foreach ($branches as $branchLoop)
                             <div class="col-md-3">
                                 <a href="{{ route('restaurant.get-category',['id' => \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1, 'branchId' => $branchLoop->id]) }}">
-                                    <button type="button" class="btn btn-primary">
+                                    <button type="button" class="btn btn-khardl">
                                         {{ $branchLoop->name }}
                                     </button>
                                 </a>
@@ -82,7 +82,7 @@
                                     <!--begin::Inbox-->
                                     @if($user->isRestaurantOwner())
                                     <div class="col-md-2 edit-category">
-                                        <button class="btn btn-primary btn-sm mt-3 rounded" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}', '{{$category->sort}}')">
+                                        <button class="btn btn-khardl btn-sm mt-3 rounded" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}', '{{$category->sort}}')">
                                             <i class="fa fa-edit"></i>
                                         </button>
                                     </div>
@@ -232,7 +232,7 @@
             <!--begin::Modal header-->
             <div class="modal-header pb-0 border-0 justify-content-end">
                 <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                     <span class="svg-icon svg-icon-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -373,7 +373,7 @@
                     <!--begin::Actions-->
                     <div class="text-center">
                         <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Cancel</button>
-                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                             <span class="indicator-label">Submit</span>
                             <span class="indicator-progress">{{ __('Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
