@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\Tenant\Summary;
 
 use App\Http\Services\tenant\Summary\SummaryService;
 use App\Http\Controllers\Web\BaseController;
-
+use Illuminate\Http\Request;
 
 class SummaryController extends BaseController
 {
@@ -12,8 +12,8 @@ class SummaryController extends BaseController
         private SummaryService $summaryService
     ) {
     }
-    public function index()
+    public function index(Request $request)
     {
-        return $this->summaryService->index();
+        return $this->summaryService->index($request);
     }
 }
