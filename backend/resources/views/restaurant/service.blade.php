@@ -5,8 +5,14 @@
 @section('content')
 @push("styles")
 <style>
+    .btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon) {
+        padding: calc(0.75rem + 2px) calc(1.5rem + 1px);
+    }
     .card {
       cursor: pointer;
+    }
+    .customer-app-card {
+        border: 1px solid #c2da08;
     }
     .selected-card {
       background-color: #c2da08;
@@ -15,7 +21,6 @@
     /* Custom CSS for radio buttons */
     .radio-container {
       display: inline-block;
-      width: 50%;
     }
     .radio-container input[type="radio"] {
       display: none;
