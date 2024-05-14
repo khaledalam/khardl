@@ -1415,5 +1415,6 @@
     "Revenues within 7 days":"الإيرادات في خلال 7 أيام",
     "Highest Revenues":"أعلى الإيرادات",
     "Highest visitors":"أعلى الزوار",
-    "Image will be shown to customers":"سيتم عرض الصورة للعملاء"
+    "Image will be shown to customers":"سيتم عرض الصورة للعملاء",
+    "This will refresh the summary result of page, note that the results will be refresh automatically for every :hour hours.":"سيؤدي ذلك إلى تحديث ارقام الملخص للصفحة ، لاحظ أن النتائج سيتم تحديثها تلقائيًا كل :hours ساعات."
 }
