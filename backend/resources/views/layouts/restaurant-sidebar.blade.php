@@ -325,23 +325,54 @@
                             </a>
                         </div>
 
-    
-                        <!-- Coupons -->
-                           <div class="menu-item menu-accordion">
-                            <a href="{{route('coupons.index')}}">
-                                <span class="{{ ($link == 'coupons' ) ? 'menu-link active' : 'menu-link ' }}">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon -->
+                        @if($user?->hasPermission("can_access_restaurants"))
+                        <!-- Restaurants -->
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($link == 'promotions' || $link == 'coupons')  ? 'show' : ''}}">
+                            <span class="{{ ($link == 'promotions' || $link == 'coupons')? 'menu-link active ' : 'menu-link' }}">
+                                <span class="menu-icon">
+                                    <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
+                                    <i class="fa fa-store"></i>
+                                        <!--end::Svg Icon-->
+                                </span>
+                                <span class="menu-title">{{ __('Discounts')}} </span>
+                                <span class="menu-arrow"></span>
+                            </span>
+                            <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                <div class="menu-item">
+                                    <a class="menu-link {{($link == 'promotions') ? ' bg-black' : ''}}" href="{{ route('restaurant.promotions') }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                            <span class="svg-icon svg-icon-2">
+                                                <i class="fas fa-percentage"></i>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <span class="menu-title  {{($link == 'coupons') ? 'text-khardl  ' : ''}}">{{ __('promotions')}}</span>
+                                    </a>
+                                </div>
+                              
+                            
+                                <!-- Staff evaluation -->
+                                <div class="menu-item">
+                                    <a class="menu-link {{($link == 'coupons') ? 'bg-black  ' : ''}}" href="{{ route('coupons.index') }}">
+                                        <span class="menu-icon " >
+                                            <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                             <span class="svg-icon svg-icon-2">
                                                 <i class="bi bi-cash-stack"></i>
                                             </span>
-                                        <!--end::Svg Icon-->
-                                    </span>
-                                        <span class="menu-title">{{__('Coupons')}}</span>
-                                </span>
-                            </a>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <span class="menu-title {{($link == 'coupons') ? 'text-khardl  ' : ''}}">{{ __('Coupons')}}</span>
+                                    </a>
+                                </div>
+                      
+                             
+        
+                            </div>
                         </div>
-
+                    @endif
+                        <!-- Coupons -->
+                    
                         @if(\App\Models\Tenant\Setting::first()?->is_live && \App\Models\ROSubscription::first()?->status == \App\Models\ROSubscription::ACTIVE)
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('restaurant.qr')}}">
@@ -389,21 +420,7 @@
                                 </span>
                             </a>
                         </div>
-                        <!-- Promotions -->
-                        <div class="menu-item menu-accordion">
-                            <a href="{{route('restaurant.promotions')}}">
-                                <span class="{{ ($link == 'promotions' ) ? 'menu-link active' : 'menu-link ' }}">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                        <span class="svg-icon svg-icon-2">
-                                            <i class="fas fa-percentage"></i>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </span>
-                                    <span class="menu-title">{{__('promotions')}}</span>
-                                </span>
-                            </a>
-                        </div>
+                      
                         <!-- QR maker -->
                         {{-- <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.qr')}}">
