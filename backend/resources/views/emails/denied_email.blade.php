@@ -183,20 +183,6 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
 
-  <!--[if mso]><table width="100%"><tr><td><![endif]-->
-    <h4 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Cabin',sans-serif; font-size: 16px; font-weight: 400;"><p style="color: #000000; text-align: -webkit-center; white-space: normal; background-color: #ffffff; line-height: 160%;">{{ __('We regret to inform you that your account request has been denied. Our team has reviewed your information and determined that it does not meet our criteria for approval at this time.') }}</p></h4>
-  <!--[if mso]></td></tr></table><![endif]-->
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
-
   <div style="font-size: 16px; line-height: 140%; text-align: center; word-wrap: break-word;">
   <p style="line-height: 140%;"><strong>{{ __('Dear partner, please reupload the following documents to complete the registration process and start establishing your own application') }}</strong></p>
   </div>
