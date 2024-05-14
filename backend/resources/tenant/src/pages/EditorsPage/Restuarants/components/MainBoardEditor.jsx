@@ -149,11 +149,13 @@ const MainBoardEditor = ({
 
   useEffect(() => {
     setListofBannerImages(
-      banner_images.map((image) => {
-        return {
-          croppedImage: `${image.url}`,
-        };
-      })
+      Array.isArray(banner_images)
+        ? banner_images.map((image) => {
+            return {
+              croppedImage: `${image.url}`,
+            };
+          })
+        : []
     );
   }, [banner_images]);
   const showCroppedImage = async () => {
@@ -258,7 +260,7 @@ const MainBoardEditor = ({
       }
       dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)));
       setShowCropSection(true);
-      if (listofBannerImages.length < 2) {
+      if (listofBannerImages?.length < 2) {
         dispatch(bannerType("one-photo"));
       } else {
         dispatch(bannerType("slider"));
@@ -284,13 +286,15 @@ const MainBoardEditor = ({
         })
       );
     }
-    if (banner_type == "slider" && banner_images.length > 0) {
+    if (banner_type == "slider" && banner_images?.length > 0) {
       setListofBannerImages(
-        banner_images.map((image) => {
-          return {
-            croppedImage: `${image.url}`,
-          };
-        })
+        Array.isArray(banner_images)
+          ? banner_images.map((image) => {
+              return {
+                croppedImage: `${image.url}`,
+              };
+            })
+          : []
       );
     }
     if (banner_type == "one-photo" && banner_image) {
@@ -328,11 +332,11 @@ const MainBoardEditor = ({
 
   const removeUploadedImage = (index) => {
     console.log("index", index);
-    if (index >= 0 && index < listofBannerImages.length) {
+    if (index >= 0 && index < listofBannerImages?.length) {
       // console.log("log list", listofBannerImages.splice(index, 1));
       setListofBannerImages(listofBannerImages.filter((_, id) => id !== index));
       console.log("list of uploaded images - after", listofBannerImages);
-      if (listofBannerImages.length < 2) {
+      if (listofBannerImages?.length < 2) {
         dispatch(bannerType("one-photo"));
       } else {
         dispatch(bannerType("slider"));
@@ -852,19 +856,19 @@ const MainBoardEditor = ({
 
               <div
                 className={`${
-                  listofBannerImages.length > 0
+                  listofBannerImages?.length > 0
                     ? "flex flex-row space-x-[8px] mt-[8px] "
                     : "hidden"
                 }`}
               >
-                {listofBannerImages.map((image, idx) => (
+                {listofBannerImages?.map((image, idx) => (
                   <div key={idx} className="relative">
                     <img
                       src={image.croppedImage}
                       alt="banner"
                       className="w-[80px] h-[40px] rounded-[10px] object-cover"
                     />
-                    {listofBannerImages.length > 1 && (
+                    {listofBannerImages?.length > 1 && (
                       <div className="absolute top-[-0.8rem] right-[-1rem]">
                         <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
                           <IoCloseOutline
@@ -912,20 +916,20 @@ const MainBoardEditor = ({
               <div className="flex flex-row space-x-[16px] my-[16px]">
                 <button
                   onClick={() => {
-                    listofBannerImages.length == 1 &&
+                    listofBannerImages?.length == 1 &&
                       setUploadedSingleBanner(
                         listofBannerImages[0].croppedImage
                       );
                     setIsBannerModalOpened(false);
-                    listofBannerImages.length == 0 &&
+                    listofBannerImages?.length == 0 &&
                       setUploadedSingleBanner(null);
 
-                    if (listofBannerImages.length < 2) {
+                    if (listofBannerImages?.length < 2) {
                       dispatch(bannerType("one-photo"));
                     } else {
                       dispatch(
                         BannerImages(
-                          listofBannerImages.map((image) => {
+                          listofBannerImages?.map((image) => {
                             return {
                               url: image.croppedImage,
                             };
