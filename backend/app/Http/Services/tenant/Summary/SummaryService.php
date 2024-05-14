@@ -20,12 +20,10 @@ class SummaryService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        if ($request->has('refresh')) {
-            Cache::delete('cache_RO_Summary_Page');
-            return redirect()->route('restaurant.summary');
-        }
+        if ($request->has('refresh'))
+            $this->clearCache();
         $branches = Branch::all();
-      
+
         /* $thisMonthRevenues = $this->getTotalPriceThisMonth(clone $orders);
         $lastMonthRevenues = $this->getLastMonthRevenue(clone $orders);
         $dailySales = $this->getDailySales(clone $completedOrders);
@@ -36,9 +34,9 @@ class SummaryService
         $percentageChangeForMonth = ($lastMonthRevenues > 0)
             ? (number_format((($thisMonthRevenues - $lastMonthRevenues) / $lastMonthRevenues) * 100, 2))
             : (($thisMonthRevenues > 0) ? 100 : 0); */
-        
+
         [
-            $pending ,
+            $pending,
             $accepted,
             $completed,
             $cancelled,
@@ -52,30 +50,45 @@ class SummaryService
             $noOfUsersThisMonth,
             $bestSellingItems,
             $monthVisitors,
-            $dailyVisitors 
+            $dailyVisitors
         ] =
-        $this->cacheItems(); 
-       
-        return view('restaurant.summary', compact(
-            'user',
-            'branches',
-            'total',
-            'pending',
-            'cancelled',
-            'completed',
-            'rejected',
-            'accepted',
-            'ready',
-            'receivedByRes',
-            'noOfUsersThisMonth',
-            'bestSellingItems',
-            'dailyRevenues',
-            'monthlyRevenues',
-            'dailyVisitors',
-            'monthVisitors',
-        ));
-    }
+            $this->cacheItems();
 
+        return view(
+            'restaurant.summary',
+            compact(
+                'user',
+                'branches',
+                'total',
+                'pending',
+                'cancelled',
+                'completed',
+                'rejected',
+                'accepted',
+                'ready',
+                'receivedByRes',
+                'noOfUsersThisMonth',
+                'bestSellingItems',
+                'dailyRevenues',
+                'monthlyRevenues',
+                'dailyVisitors',
+                'monthVisitors',
+            )
+        );
+    }
+    public function clearCache()
+    {
+        Cache::delete($this->cacheKey());
+        return redirect()->route('restaurant.summary');
+    }
+    public function cacheKey()
+    {
+        return tenancy()?->tenant?->id . $this->cacheName();
+    }
+    public function cacheName()
+    {
+        return 'cache_RO_Summary_Page';
+    }
     private function bestSellingItems()
     {
         return OrderItem::with('item')
@@ -132,9 +145,10 @@ class SummaryService
     {
         return $this->profitMonths(6);
     }
-    public function cacheItems(){
-        $cacheKey = 'cache_RO_Summary_Page';
-        return Cache::remember($cacheKey, config("application.$cacheKey", 24 * 60 * 60), function () {
+    public function cacheItems()
+    {
+        $cacheName = $this->cacheName();
+        return Cache::remember($this->cacheKey(), config("application.$cacheName", 24 * 60 * 60), function () {
             $orders = Order::query();
             $pending = $this->getOrderStatusCount(clone $orders, 'pending');
             $accepted = $this->getOrderStatusCount(clone $orders, 'accepted');
