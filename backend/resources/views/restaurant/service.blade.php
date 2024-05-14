@@ -315,8 +315,18 @@ function openModal(modalID) {
                                                                     <!--begin::Modal content-->
                                                                     <div class="modal-content rounded ">
 
-                                                                            <div class="modal-header pb-0 border-0  d-flex justify-content-center">
-                                                                                <h5 class="modal-title text-center">{{__('Card Details')}}</h5>
+                                                                            <div class="modal-header pb-0 border-0  d-flex justify-content-end">
+
+                                                                                <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
+                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                <span class="svg-icon svg-icon-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
                                                                             </div>
                                                                             <div id="root"></div>
                                                                             <p id="msg"></p>
@@ -419,6 +429,7 @@ function openModal(modalID) {
                                                                         <!--begin::Modal header-->
                                                                         <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                             <h5 class="modal-title text-center">{{$subscription->name}} ({{__('Adding new branches')}})</h5>
+                                                                            
                                                                         </div>
                                                                         <div class="modal-body d-flex justify-content-center">
 
@@ -455,6 +466,8 @@ function openModal(modalID) {
                                                                                             <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
                                                                                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                                                         </button>
+                                                                                       
+
                                                                                     </div>
 
                                                                                 </div>
@@ -977,7 +990,7 @@ function openModal(modalID) {
                                                         </div>
                                                         <!--end::image-->
                                                         <!--begin::Title-->
-                                                        <h3 class="text-dark mb-5 fw-boldest text-center">{{__('Order receiving application')}}</h3>
+                                                        <h3 class="text-dark mb-5 fw-boldest text-center">{{__('Driver application')}}</h3>
                                                         <!--end::Title-->
                                                         <!--begin::Price-->
                                                         <div class="text-center">
@@ -1063,7 +1076,7 @@ function openModal(modalID) {
                                     $('#coupon_message_web')
 
                                     .removeClass('text-danger')
-                                    .append('<div class="form-group mt-5 "><label for="factor">{{__("Total Price after discount")}}</label><input type="text" class="form-control bg-secondary" id="coupon_discount_input_web" value="' + response.cost + '" readonly ></div>');
+                                    .append('<div class="form-group mt-5 "><label for="factor">{{__("Total Price after discount")}}</label><input type="text" class="form-control bg-secondary" id="coupon_discount_input_web" value="' + response.cost.toFixed(2) + '" readonly ></div>');
                                     $('#input-group-web').html('<span class="input-group-text rounded-0 text-danger"  id="cancel_coupn_web">X</span>');
 
                                 }else {
