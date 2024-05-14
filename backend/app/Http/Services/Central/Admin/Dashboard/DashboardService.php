@@ -18,6 +18,10 @@ class DashboardService
     public function index(Request $request)
     {
         $user = Auth::user();
+        if ($request->has('refresh')) {
+            Cache::delete('cache_Admin_Summary_Page');
+            return redirect()->route('admin.dashboard');
+        }
 
         [
             $restaurantsAll,

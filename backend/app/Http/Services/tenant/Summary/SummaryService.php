@@ -2,23 +2,28 @@
 
 namespace App\Http\Services\tenant\Summary;
 
-use App\Models\Tenant\OrderItem;
 use App\Models\User;
-use Illuminate\Support\Carbon;
 use App\Models\Tenant\Order;
+use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
+use Illuminate\Support\Carbon;
+use App\Models\Tenant\OrderItem;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class SummaryService
 {
-    public function index()
+    public function index(Request $request)
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
+        if ($request->has('refresh')) {
+            Cache::delete('cache_RO_Summary_Page');
+            return redirect()->route('restaurant.summary');
+        }
         $branches = Branch::all();
       
         /* $thisMonthRevenues = $this->getTotalPriceThisMonth(clone $orders);
