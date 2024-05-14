@@ -19,58 +19,21 @@ class DashboardService
     {
         $user = Auth::user();
 
-        //
-        $restaurantsAll = Tenant::with("primary_domain")->get();
-
-        // not complete register step2
-        $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->count();
-        // TODO @todo save data in session
-        $restaurantsLive = 0;
-        $totalOrders = 0;
-        $pendingOrders = 0;
-        $completedOrders = 0;
-        $acceptedOrders = 0;
-        $cancelledOrders = 0;
-        $readyOrders = 0;
-        $receivedByResOrders = 0;
-        $rejectedOrders = 0;
-        $self = $this;
-        foreach ($restaurantsAll as $restaurant) {
-            $restaurant->run(static function ($tenant) use (
-                &$restaurantsLive,
-                &$totalOrders,
-                $self,
-                &$pendingOrders,
-                &$acceptedOrders,
-                &$completedOrders,
-                &$cancelledOrders,
-                &$readyOrders,
-                &$receivedByResOrders,
-                &$rejectedOrders
-                ) {
-                $setting = Setting::first();
-                if ($setting&&$setting->is_live) {
-                    $restaurantsLive++;
-                }
-
-//                $currentMonth = Carbon::now()->month;
-//                $customers += RestaurantUser::customers()->whereMonth('created_at', '=', $currentMonth)->count();
-                $orders = Order::query();
-                $pendingOrders += $self->getOrderStatusCount(clone $orders, 'pending');
-                $acceptedOrders += $self->getOrderStatusCount(clone $orders, 'accepted');
-                $completedOrders += $self->getOrderStatusCount(clone $orders, 'completed');
-                $cancelledOrders += $self->getOrderStatusCount(clone $orders, 'cancelled');
-                $rejectedOrders += $self->getOrderStatusCount(clone $orders, 'rejected');
-                $readyOrders += $self->getOrderStatusCount(clone $orders, 'ready');
-                $receivedByResOrders += $self->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
-                $totalOrders += $orders->count();
-            });
-        }
-        $restaurantsAll = count($restaurantsAll);
-
-
-        $dailyVisitors = $this->dailyVisitors();
-        $monthVisitors = $this->monthlyVisitors();
+        [
+            $restaurantsAll,
+            $restaurantsOwnersNotUploadFiles,
+            $restaurantsLive,
+            $totalOrders,
+            $acceptedOrders,
+            $pendingOrders,
+            $completedOrders,
+            $cancelledOrders,
+            $readyOrders,
+            $receivedByResOrders,
+            $rejectedOrders,
+            $monthVisitors,
+            $dailyVisitors
+        ] = $this->cacheItems();
         return view(
             'admin.dashboard',
             compact(
@@ -97,10 +60,7 @@ class DashboardService
     }
     public function dailyVisitors()
     {
-        $cacheKey = 'daily_visitors';
-        return Cache::remember($cacheKey, config('application.cache_daily_visitors', 4 * 60 * 60), function () {
-            return $this->getDaily();
-        });
+        return $this->getDaily();
     }
     public function getDaily()
     {
@@ -121,10 +81,7 @@ class DashboardService
     }
     public function monthlyVisitors()
     {
-        $cacheKey = 'monthly_visitors';
-        return Cache::remember($cacheKey, config('application.cache_monthly_visitors', 24 * 60 * 60), function () {
-            return $this->getMonthly();
-        });
+        return $this->getMonthly();
     }
     public function getMonthly()
     {
@@ -142,5 +99,71 @@ class DashboardService
             'chart_color' => '0, 158, 247',
         ];
         return new LaravelChart($chart_options);
+    }
+    public function cacheItems(){
+        $cacheKey = 'cache_Admin_Summary_Page';
+        return Cache::remember($cacheKey, config("application.$cacheKey", 24 * 60 * 60), function () {
+            $restaurantsAll = Tenant::with("primary_domain")->get();
+            // not complete register step2
+            $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->count();
+            $restaurantsLive = 0;
+            $totalOrders = 0;
+            $pendingOrders = 0;
+            $completedOrders = 0;
+            $acceptedOrders = 0;
+            $cancelledOrders = 0;
+            $readyOrders = 0;
+            $receivedByResOrders = 0;
+            $rejectedOrders = 0;
+            $self = $this;
+            foreach ($restaurantsAll as $restaurant) {
+                $restaurant->run(static function ($tenant) use (
+                    &$restaurantsLive,
+                    &$totalOrders,
+                    $self,
+                    &$pendingOrders,
+                    &$acceptedOrders,
+                    &$completedOrders,
+                    &$cancelledOrders,
+                    &$readyOrders,
+                    &$receivedByResOrders,
+                    &$rejectedOrders
+                    ) {
+                    $setting = Setting::first();
+                    if ($setting&&$setting->is_live) {
+                        $restaurantsLive++;
+                    }
+                    $orders = Order::query();
+                    $pendingOrders += $self->getOrderStatusCount(clone $orders, 'pending');
+                    $acceptedOrders += $self->getOrderStatusCount(clone $orders, 'accepted');
+                    $completedOrders += $self->getOrderStatusCount(clone $orders, 'completed');
+                    $cancelledOrders += $self->getOrderStatusCount(clone $orders, 'cancelled');
+                    $rejectedOrders += $self->getOrderStatusCount(clone $orders, 'rejected');
+                    $readyOrders += $self->getOrderStatusCount(clone $orders, 'ready');
+                    $receivedByResOrders += $self->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
+                    $totalOrders += $orders->count();
+                });
+            }
+            $restaurantsAll = count($restaurantsAll);
+    
+    
+            $dailyVisitors = $this->dailyVisitors();
+            $monthVisitors = $this->monthlyVisitors();
+            return [
+                $restaurantsAll,
+                $restaurantsOwnersNotUploadFiles,
+                $restaurantsLive,
+                $totalOrders,
+                $acceptedOrders,
+                $pendingOrders,
+                $completedOrders,
+                $cancelledOrders,
+                $readyOrders,
+                $receivedByResOrders,
+                $rejectedOrders,
+                $monthVisitors,
+                $dailyVisitors
+            ];
+        });
     }
 }
