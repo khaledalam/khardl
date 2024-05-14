@@ -641,6 +641,7 @@
     "payment-address":"عنوان الدفع",
     "shipping-address":"عنوان الشحن",
     "preparations":"تجهيزات الطلب",
+    "The file size is large, a maximum of 4 MB must be uploaded!":"حجم الملف كبير يجب رفع بحد اقصي ٤ ميجا",
     "are-you-sure-you-want-to-approve-order-status":"هل انت متأكد من تأكيد حالة الطلب",
     "are-you-sure-you-want-to-cancel-order-status":"هل انت متأكد من الغاء الطلب ",
     "are-you-sure-you-want-to-change-order-status":"هل انت متأكد من تغير حالة الطلب ",
