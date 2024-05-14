@@ -5,12 +5,14 @@
 @section('content')
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
     <div class="d-flex justify-content-center mb-5">
-        <a href="{{route('restaurant.summary')}}?refresh=true" >
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
-                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
-              </svg>
-          </a>
+        <a href="{{route('restaurant.summary')}}?refresh=true"  style="cursor: pointer">
+            <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ __('This will refresh the summary result of page, note that the results will be refresh automatically for every :hour hours.',['hours' => calculateHours($cacheSeconds)]) }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z" />
+                    <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />
+                </svg>
+            </span>
+        </a>
     </div>
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -244,7 +246,7 @@
                                             </a>
                                             @endif
                                             @else
-                                            <span class="symbol-label" ></span>
+                                            <span class="symbol-label"></span>
                                             @endif
 
                                         </div>
@@ -294,9 +296,7 @@
                                                 <div class="card-body p-1">
                                                     <h3>
                                                         {{ __("Revenues within 7 days") }} :
-                                                        <span class="btn-tooltip" data-bs-toggle="tooltip"
-                                                        title="{{ $sum = getSumOfDataGraph($dailyRevenues) }} {{ __('SAR') }}" data-container="body"
-                                                        data-animation="true" data-bs-toggle="tooltip">
+                                                        <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $sum = getSumOfDataGraph($dailyRevenues) }} {{ __('SAR') }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">
                                                             {{ getAmount($sum) }} {{ __('SAR') }}
                                                         </span>
                                                     </h3>
@@ -324,9 +324,7 @@
                                                     <div class="card-body p-1">
                                                         <h3>
                                                             {{ __("Revenues within 6 months") }} :
-                                                            <span class="btn-tooltip" data-bs-toggle="tooltip"
-                                                            title="{{ $sum = getSumOfDataGraph($monthlyRevenues) }} {{ __('SAR') }}" data-container="body"
-                                                            data-animation="true" data-bs-toggle="tooltip">
+                                                            <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $sum = getSumOfDataGraph($monthlyRevenues) }} {{ __('SAR') }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">
                                                                 {{ getAmount($sum) }} {{ __('SAR') }}
                                                             </span>
                                                         </h3>
@@ -365,9 +363,7 @@
                                                 <div class="card-body p-1">
                                                     <h3>
                                                         {{ __("Visitors within 7 days") }} :
-                                                        <span class="btn-tooltip" data-bs-toggle="tooltip"
-                                                        title="{{ $sum = getSumOfDataGraph($dailyVisitors) }} {{ __('Visitor') }}" data-container="body"
-                                                        data-animation="true" data-bs-toggle="tooltip">
+                                                        <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $sum = getSumOfDataGraph($dailyVisitors) }} {{ __('Visitor') }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">
                                                             {{ getAmount($sum) }} {{ __('Visitor') }}
                                                         </span>
                                                     </h3>
@@ -395,9 +391,7 @@
                                                     <div class="card-body p-1">
                                                         <h3>
                                                             {{ __("Visitors within 6 months") }} :
-                                                            <span class="btn-tooltip" data-bs-toggle="tooltip"
-                                                            title="{{ $sum = getSumOfDataGraph($monthVisitors) }} {{ __('Visitor') }}" data-container="body"
-                                                            data-animation="true" data-bs-toggle="tooltip">
+                                                            <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $sum = getSumOfDataGraph($monthVisitors) }} {{ __('Visitor') }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">
                                                                 {{ getAmount($sum) }} {{ __('Visitor') }}
                                                             </span>
                                                         </h3>
@@ -441,7 +435,7 @@
         const monthly_visitors_selector = document.getElementById('monthly_visitors_selector');
 
         if (filter_range?.length) {
-            filter_range.addEventListener('change', function () {
+            filter_range.addEventListener('change', function() {
                 if (filter_range.value === 'daily') {
                     daily_statistics.style.display = 'block';
                     monthly_statistics.style.display = 'none';
@@ -452,7 +446,7 @@
             });
         }
         if (filter_range_visitors?.length) {
-            filter_range_visitors.addEventListener('change', function () {
+            filter_range_visitors.addEventListener('change', function() {
                 if (filter_range_visitors.value === 'daily') {
                     daily_visitors_selector.style.display = 'block';
                     monthly_visitors_selector.style.display = 'none';
@@ -463,6 +457,7 @@
             });
         }
     });
+
 </script>
 @endsection
 @endsection

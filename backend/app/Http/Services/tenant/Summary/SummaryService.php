@@ -20,25 +20,11 @@ class SummaryService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        if ($request->has('refresh')) {
-            Cache::delete('cache_RO_Summary_Page');
-            return redirect()->route('restaurant.summary');
-        }
+        if ($request->has('refresh'))
+            $this->clearCache();
         $branches = Branch::all();
-      
-        /* $thisMonthRevenues = $this->getTotalPriceThisMonth(clone $orders);
-        $lastMonthRevenues = $this->getLastMonthRevenue(clone $orders);
-        $dailySales = $this->getDailySales(clone $completedOrders);
-        $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
-        $percentageChange = ($averageLast7DaysSales > 0)
-            ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
-            : (($dailySales > 0) ? 100 : 0);
-        $percentageChangeForMonth = ($lastMonthRevenues > 0)
-            ? (number_format((($thisMonthRevenues - $lastMonthRevenues) / $lastMonthRevenues) * 100, 2))
-            : (($thisMonthRevenues > 0) ? 100 : 0); */
-        
         [
-            $pending ,
+            $pending,
             $accepted,
             $completed,
             $cancelled,
@@ -52,30 +38,46 @@ class SummaryService
             $noOfUsersThisMonth,
             $bestSellingItems,
             $monthVisitors,
-            $dailyVisitors 
+            $dailyVisitors
         ] =
-        $this->cacheItems(); 
-       
-        return view('restaurant.summary', compact(
-            'user',
-            'branches',
-            'total',
-            'pending',
-            'cancelled',
-            'completed',
-            'rejected',
-            'accepted',
-            'ready',
-            'receivedByRes',
-            'noOfUsersThisMonth',
-            'bestSellingItems',
-            'dailyRevenues',
-            'monthlyRevenues',
-            'dailyVisitors',
-            'monthVisitors',
-        ));
+            $this->cacheItems();
+        $cacheSeconds = config('application.cache_RO_Summary_Page') ?? 0;
+        return view(
+            'restaurant.summary',
+            compact(
+                'user',
+                'branches',
+                'total',
+                'pending',
+                'cancelled',
+                'completed',
+                'rejected',
+                'accepted',
+                'ready',
+                'receivedByRes',
+                'noOfUsersThisMonth',
+                'bestSellingItems',
+                'dailyRevenues',
+                'monthlyRevenues',
+                'dailyVisitors',
+                'monthVisitors',
+                'cacheSeconds'
+            )
+        );
     }
-
+    public function clearCache()
+    {
+        Cache::delete($this->cacheKey());
+        return redirect()->route('restaurant.summary');
+    }
+    public function cacheKey()
+    {
+        return tenancy()?->tenant?->id . $this->cacheName();
+    }
+    public function cacheName()
+    {
+        return 'cache_RO_Summary_Page';
+    }
     private function bestSellingItems()
     {
         return OrderItem::with('item')
@@ -132,9 +134,10 @@ class SummaryService
     {
         return $this->profitMonths(6);
     }
-    public function cacheItems(){
-        $cacheKey = 'cache_RO_Summary_Page';
-        return Cache::remember($cacheKey, config("application.$cacheKey", 24 * 60 * 60), function () {
+    public function cacheItems()
+    {
+        $cacheName = $this->cacheName();
+        return Cache::remember($this->cacheKey(), config("application.$cacheName", 4 * 60 * 60), function () {
             $orders = Order::query();
             $pending = $this->getOrderStatusCount(clone $orders, 'pending');
             $accepted = $this->getOrderStatusCount(clone $orders, 'accepted');
@@ -270,4 +273,14 @@ class SummaryService
             ->get()
             ->avg('total') ?? 0;
     }
+    /* $thisMonthRevenues = $this->getTotalPriceThisMonth(clone $orders);
+    $lastMonthRevenues = $this->getLastMonthRevenue(clone $orders);
+    $dailySales = $this->getDailySales(clone $completedOrders);
+    $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
+    $percentageChange = ($averageLast7DaysSales > 0)
+        ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
+        : (($dailySales > 0) ? 100 : 0);
+    $percentageChangeForMonth = ($lastMonthRevenues > 0)
+        ? (number_format((($thisMonthRevenues - $lastMonthRevenues) / $lastMonthRevenues) * 100, 2))
+        : (($thisMonthRevenues > 0) ? 100 : 0); */
 }

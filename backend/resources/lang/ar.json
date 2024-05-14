@@ -641,6 +641,7 @@
     "payment-address":"عنوان الدفع",
     "shipping-address":"عنوان الشحن",
     "preparations":"تجهيزات الطلب",
+    "The file size is large, a maximum of 4 MB must be uploaded!":"حجم الملف كبير يجب رفع بحد اقصي ٤ ميجا",
     "are-you-sure-you-want-to-approve-order-status":"هل انت متأكد من تأكيد حالة الطلب",
     "are-you-sure-you-want-to-cancel-order-status":"هل انت متأكد من الغاء الطلب ",
     "are-you-sure-you-want-to-change-order-status":"هل انت متأكد من تغير حالة الطلب ",
@@ -1415,5 +1416,6 @@
     "Revenues within 7 days":"الإيرادات في خلال 7 أيام",
     "Highest Revenues":"أعلى الإيرادات",
     "Highest visitors":"أعلى الزوار",
-    "Image will be shown to customers":"سيتم عرض الصورة للعملاء"
+    "Image will be shown to customers":"سيتم عرض الصورة للعملاء",
+    "This will refresh the summary result of page, note that the results will be refresh automatically for every :hour hours.":"سيؤدي ذلك إلى تحديث ارقام الملخص للصفحة ، لاحظ أن النتائج سيتم تحديثها تلقائيًا كل :hours ساعات."
 }
