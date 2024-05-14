@@ -23,18 +23,6 @@ class SummaryService
         if ($request->has('refresh'))
             $this->clearCache();
         $branches = Branch::all();
-
-        /* $thisMonthRevenues = $this->getTotalPriceThisMonth(clone $orders);
-        $lastMonthRevenues = $this->getLastMonthRevenue(clone $orders);
-        $dailySales = $this->getDailySales(clone $completedOrders);
-        $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
-        $percentageChange = ($averageLast7DaysSales > 0)
-            ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
-            : (($dailySales > 0) ? 100 : 0);
-        $percentageChangeForMonth = ($lastMonthRevenues > 0)
-            ? (number_format((($thisMonthRevenues - $lastMonthRevenues) / $lastMonthRevenues) * 100, 2))
-            : (($thisMonthRevenues > 0) ? 100 : 0); */
-
         [
             $pending,
             $accepted,
@@ -53,7 +41,7 @@ class SummaryService
             $dailyVisitors
         ] =
             $this->cacheItems();
-
+        $cacheSeconds = config('application.cache_RO_Summary_Page') ?? 0;
         return view(
             'restaurant.summary',
             compact(
@@ -73,6 +61,7 @@ class SummaryService
                 'monthlyRevenues',
                 'dailyVisitors',
                 'monthVisitors',
+                'cacheSeconds'
             )
         );
     }
@@ -148,7 +137,7 @@ class SummaryService
     public function cacheItems()
     {
         $cacheName = $this->cacheName();
-        return Cache::remember($this->cacheKey(), config("application.$cacheName", 24 * 60 * 60), function () {
+        return Cache::remember($this->cacheKey(), config("application.$cacheName", 4 * 60 * 60), function () {
             $orders = Order::query();
             $pending = $this->getOrderStatusCount(clone $orders, 'pending');
             $accepted = $this->getOrderStatusCount(clone $orders, 'accepted');
@@ -284,4 +273,14 @@ class SummaryService
             ->get()
             ->avg('total') ?? 0;
     }
+    /* $thisMonthRevenues = $this->getTotalPriceThisMonth(clone $orders);
+    $lastMonthRevenues = $this->getLastMonthRevenue(clone $orders);
+    $dailySales = $this->getDailySales(clone $completedOrders);
+    $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
+    $percentageChange = ($averageLast7DaysSales > 0)
+        ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
+        : (($dailySales > 0) ? 100 : 0);
+    $percentageChangeForMonth = ($lastMonthRevenues > 0)
+        ? (number_format((($thisMonthRevenues - $lastMonthRevenues) / $lastMonthRevenues) * 100, 2))
+        : (($thisMonthRevenues > 0) ? 100 : 0); */
 }

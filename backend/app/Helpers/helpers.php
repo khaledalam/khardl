@@ -271,6 +271,15 @@ if (!function_exists('getSumOfDataGraph')) {
         return isset($dataGraph?->getDatasets()[0]['data']) ? $dataGraph?->getDatasets()[0]['data']?->sum() : 0;
     }
 }
+if (!function_exists('calculateHours')) {
+    function calculateHours($cacheSeconds)
+    {
+        if(!$cacheSeconds)return 0;
+        else{
+            return $cacheSeconds / (60 * 60);
+        }
+    }
+}
 
 if (!function_exists('getTenantByOrderId')) {
     function getTenantByOrderId(string $orderid)
