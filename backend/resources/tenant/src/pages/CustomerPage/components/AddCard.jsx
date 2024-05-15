@@ -4,11 +4,16 @@ import PrimaryTextInput from "./PrimaryTextInput";
 import imgPayment from "../../../assets/cardProfileIcon.svg";
 import imgMasterCard from "../../../assets/mastercard.svg";
 import imgVisa from "../../../assets/visa.svg";
+import { useSelector } from "react-redux";
 
 export const CardTypeIcons = { VISA: imgVisa, MASTERCARD: imgMasterCard };
 
 const AddCard = ({ onAdd, onCancel }) => {
   const { t } = useTranslation();
+  const restuarantEditorStyle = useSelector(
+    (state) => state.restuarantEditorStyle
+  );
+  const { price_background_color } = restuarantEditorStyle;
   const [card, setCard] = useState({
     cardType: "VISA",
     name: "",
@@ -115,7 +120,11 @@ const AddCard = ({ onAdd, onCancel }) => {
           </div>
           <div className="self-stretch h-fit flex-col justify-start items-center gap-4 flex text-center">
             <div
-              className="w-full cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border  leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 transition-all shadow-md"
+              className={`w-full cursor-pointer text-white rounded-lg px-4 py-2.5 border  leading-[18px] hover:bg-white transition-all shadow-md ${
+                price_background_color
+                  ? `hover:border-[${price_background_color}] hover;text-[${price_background_color}] bg-[${price_background_color}]`
+                  : "hover:border-red-900 hover:text-red-900 bg-red-900"
+              }`}
               onClick={() => onAdd(card)}
             >
               {t("Save card")}

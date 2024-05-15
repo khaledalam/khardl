@@ -10,22 +10,29 @@ import {
 } from "../../../redux/NewEditor/customerSlice";
 import AxiosInstance from "../../../axios/axios";
 import { toast } from "react-toastify";
-// import ConfirmationModal from "../../../components/confirmationModal";
+import ConfirmationModal from "../../../components/confirmationModal";
 
 const CustomerAddresses = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const addresses = useSelector((state) => state.customerAPI.addressesList);
   const [addMode, setAddMode] = useState(false);
-  // const [openDeleteConfirmModal, setOpenDeleteConfirmModal] = useState(-1);
+  const [openDeleteConfirmModal, setOpenDeleteConfirmModal] = useState(-1);
   const [editMode, setEditMode] = useState(-1);
   const [address, setAddress] = useState({
-    type: "home",
+    type: "",
   });
 
   const setAddresses = (addresses) => {
     dispatch(updateAddressesList(addresses));
   };
+  const [isMouseHover, setIsMouseHover] = useState(false);
+
+  const restuarantEditorStyle = useSelector(
+    (state) => state.restuarantEditorStyle
+  );
+
+  const { price_background_color } = restuarantEditorStyle;
 
   const fetchAddresses = async () => {
     try {
@@ -139,8 +146,24 @@ const CustomerAddresses = () => {
             </div>
             {addresses?.length !== 0 && (
               <div
+                onMouseEnter={() => setIsMouseHover(true)}
+                onMouseLeave={() => setIsMouseHover(false)}
                 className="text-center cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border font-['Plus Jakarta Sans'] leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 w-32 transition-all"
-                onClick={() => setAddMode(true)}
+                onClick={() => {
+                  setAddMode(true);
+                  setIsMouseHover(false);
+                }}
+                style={
+                  price_background_color
+                    ? {
+                        backgroundColor: isMouseHover
+                          ? "white"
+                          : price_background_color,
+                        color: isMouseHover ? price_background_color : "white",
+                        borderColor: price_background_color,
+                      }
+                    : {}
+                }
               >
                 {t("Add address")}
               </div>
@@ -176,14 +199,30 @@ const CustomerAddresses = () => {
                 </div>
                 <div>{t("Please add one or more addresses.")}</div>
                 <div
-                  className="cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border font-['Plus Jakarta Sans'] leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 w-32 transition-all shadow-md"
+                  onMouseEnter={() => setIsMouseHover(true)}
+                  onMouseLeave={() => setIsMouseHover(false)}
+                  className={`cursor-pointer text-white rounded-lg px-4 py-2.5 border font-['Plus Jakarta Sans'] leading-[18px] hover:bg-white bg-red-900 hover:border-red-900 hover:text-red-900 w-32 transition-all shadow-md`}
+                  style={
+                    price_background_color
+                      ? {
+                          backgroundColor: isMouseHover
+                            ? "white"
+                            : price_background_color,
+                          color: isMouseHover
+                            ? price_background_color
+                            : "white",
+                          borderColor: price_background_color,
+                        }
+                      : {}
+                  }
                   onClick={() => {
                     setAddress(
                       {
-                        type: "home",
+                        type: "",
                       },
                       setAddMode(true)
                     );
+                    setIsMouseHover(false);
                   }}
                 >
                   {t("Add address")}
@@ -211,7 +250,7 @@ const CustomerAddresses = () => {
               setEditMode(-1);
             }
             setAddress({
-              type: "home",
+              type: "",
             });
           }}
           onCancel={() => {
@@ -221,7 +260,7 @@ const CustomerAddresses = () => {
           setAddress={setAddress}
         />
       )}
-      {/* <ConfirmationModal
+      <ConfirmationModal
         isOpen={openDeleteConfirmModal !== -1}
         message={t("Are You sure you want to delete this address?")}
         onClose={() => {
@@ -231,7 +270,7 @@ const CustomerAddresses = () => {
           deleteAddress(openDeleteConfirmModal);
           setOpenDeleteConfirmModal(-1);
         }}
-      /> */}
+      />
     </>
   );
 };

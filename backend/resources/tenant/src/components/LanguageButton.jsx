@@ -76,9 +76,9 @@ const LanguageButton = ({ id }) => {
     >
       <div
         onClick={handleLanguageChange}
-        className="w-full mx-auto flex flex-row gap-1 bg-neutral-100 rounded-lg border  items-center "
+        className="w-full mx-auto flex flex-row gap-1 bg-transparent rounded-lg items-center text-black text-lg"
         style={{
-          borderColor: restuarantStyle?.categoryDetail_cart_color,
+          // borderColor: restuarantStyle?.categoryDetail_cart_color,
         }}
       >
         <div className="w-[50px] h-[50px] rounded-xl p-2  flex items-center justify-center">

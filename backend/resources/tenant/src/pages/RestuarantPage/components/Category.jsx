@@ -16,6 +16,7 @@ const Category = ({ restaurantStyle, categories = [] }) => {
     menu_category_color,
     menu_category_font,
     menu_category_weight,
+    price_background_color,
   } = restaurantStyle;
 
   const visibleCategories = categories.filter((c) => c.items.length > 0);
@@ -34,6 +35,18 @@ const Category = ({ restaurantStyle, categories = [] }) => {
           : "flex-row items-start "
       }  gap-[16px]`}
     >
+      <style jsx>{`
+        .custom-checkbox:checked {
+          border-color: ${price_background_color || "#7D0A0A"} !important;
+          --tw-ring-color: ${price_background_color || "#7D0A0A"} !important;
+        }
+        .custom-radio:checked {
+          background-color: ${price_background_color || "#7D0A0A"};
+        }
+        .dropdown-option:hover {
+          background-color: ${price_background_color || "#7D0A0A"};
+        }
+      `}</style>
       <div
         className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
           menu_category_position === "left"

@@ -108,10 +108,10 @@ const SideNavbar = () => {
           />
         ))}
       </div>
-      <div className={"mt-5"}>
+      <div>
         <LanguageButton id={"test"} />
 
-        <div className={"w-[100%] mx-auto p-1 mt-5"}>
+        <div className={"w-[100%] mx-auto p-1"}>
           <LogoutButton outerSidebarNav={false} />
         </div>
       </div>

@@ -358,7 +358,6 @@ const ProductItem = ({
 
   function closeModal() {
     handleReset();
-    setSelectedDropdown([]);
     dropdDownRef.current.forEach((value, index) => {
       if (dropdDownRef.current[index] != null) {
         dropdDownRef.current[index].resetDropdown();
@@ -418,7 +417,6 @@ const ProductItem = ({
 
         const response = await AxiosInstance.post(`/carts`, payload);
         closeModal();
-        handleReset();
         if (response?.data) {
           toast.success(`${t("Item added to cart")}`);
           dispatch(getCartItemsCount(response?.data.data.count));
@@ -518,6 +516,10 @@ const ProductItem = ({
 
     const selects = modalRef.current.querySelectorAll("select");
     selects.forEach((select) => (select.selectedIndex = 0));
+
+    setSelectedCheckbox([]);
+    setSelectedDropdown([]);
+    setSelectedRadio([]);
   };
 
   return (
@@ -746,7 +748,10 @@ const ProductItem = ({
                           />
                         </div>
                         <div className="w-[89px] h-6 left-[92px] top-0 absolute">
-                          <div className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px] text-white text-[8px] font-normal flex justify-center items-center">
+                          <div
+                            className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px] text-white text-[8px] font-normal flex justify-center items-center"
+                            style={{ backgroundColor: price_background_color }}
+                          >
                             {t("Order Notes")}
                           </div>
                         </div>
@@ -788,6 +793,9 @@ const ProductItem = ({
                         <div
                           onClick={decrementQty}
                           className="w-[22.11px] h-[22.40px] bg-orange-100 bg-opacity-30 rounded-md flex justify-center items-center"
+                          style={{
+                            backgroundColor: price_background_color + "50",
+                          }}
                         >
                           <img
                             src={MinusIcon}
@@ -801,6 +809,9 @@ const ProductItem = ({
                         <div
                           onClick={incrementQty}
                           className="w-[22.11px] h-[22.40px] bg-orange-100 rounded-md flex justify-center items-center"
+                          style={{
+                            backgroundColor: price_background_color + "50",
+                          }}
                         >
                           <img
                             src={PlusIcon}
@@ -817,7 +828,7 @@ const ProductItem = ({
                           radioItems[0]?.length > 0 ||
                           dropdownItems[0]?.length > 0) && (
                           <div className="px-6 my-4 md:h-[550px]">
-                            <div className="flex flex-col gap-5 py-4 divide-y">
+                            <div className="product-items flex flex-col gap-5 py-4 divide-y">
                               {/* checkbox */}
                               {Array.isArray(checkbox_input_titles) &&
                                 checkbox_input_titles.length > 0 &&
@@ -876,7 +887,7 @@ const ProductItem = ({
                                                     : item?.value[1]
                                                 }
                                                 price={
-                                                  item?.price === 0
+                                                  item?.price == 0
                                                     ? t("Free")
                                                     : `${Number(
                                                         item?.price
@@ -933,7 +944,7 @@ const ProductItem = ({
                                                 }
                                                 name={`radio_item_${selection_idx}`}
                                                 price={
-                                                  item.price === 0
+                                                  item.price == 0
                                                     ? t("Free")
                                                     : `${Number(
                                                         item?.price
@@ -1041,7 +1052,10 @@ const ProductItem = ({
                         }
                       }}
                     >
-                      <div className="w-[308px] h-10 bg-[#7d0a0a] rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center hover:cursor-pointer">
+                      <div
+                        className="w-[308px] h-10 bg-[#7d0a0a] rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center hover:cursor-pointer"
+                        style={{ backgroundColor: price_background_color }}
+                      >
                         <div className="text-center text-white text-[14px] font-medium">
                           {t("Add to cart")}
                         </div>
@@ -1065,7 +1079,7 @@ const ProductItem = ({
                   radioItems[0]?.length > 0 ||
                   dropdownItems[0]?.length > 0) && (
                   <div className="px-6 sm:pl-[30px] sm:pr-10 my-4 sm:h-[550px] w-full overflow-auto">
-                    <div className="flex flex-col gap-5 py-4 divide-y">
+                    <div className="product-items flex flex-col gap-5 py-4 divide-y">
                       {/* checkbox */}
                       {Array.isArray(checkbox_input_titles) &&
                         checkbox_input_titles.length > 0 &&
@@ -1112,7 +1126,7 @@ const ProductItem = ({
                                           : item?.value[1]
                                       }
                                       price={
-                                        item.price === 0
+                                        item.price == 0
                                           ? t("Free")
                                           : `${Number(item?.price)} ${t("SAR")}`
                                       }
@@ -1156,7 +1170,7 @@ const ProductItem = ({
                                     }
                                     name={`radio_item_${selection_idx}`}
                                     price={
-                                      item.price === 0
+                                      item.price == 0
                                         ? t("Free")
                                         : `${Number(item?.price)} ${t("SAR")}`
                                     }

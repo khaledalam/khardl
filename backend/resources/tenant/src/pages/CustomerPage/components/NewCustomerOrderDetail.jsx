@@ -71,28 +71,32 @@ const CustomerOrderDetail = ({ orderId }) => {
               </span>
             </div>
           </div>
-          <div className="flex flex-row w-fit h-max gap-2 font-['Plus Jakarta Sans']">
-            <MdOutlineTimelapse className="w-6 h-6 border-2 border-neutral-200 justify-center items-center gap-2.5 inline-flex rounded-full p-[2px]" />
-            <div className="flex flex-row items-center">
-              <span className="text-opacity-60 font-extralight">
-                {t("Estimated delivery")}:
-              </span>
-              <span className="text-opacity-75 font-semibold ">
-                &nbsp;{singleOrder?.deliver_by}
-              </span>
+          {singleOrder?.deliver_by && (
+            <div className="flex flex-row w-fit h-max gap-2 font-['Plus Jakarta Sans']">
+              <MdOutlineTimelapse className="w-6 h-6 border-2 border-neutral-200 justify-center items-center gap-2.5 inline-flex rounded-full p-[2px]" />
+              <div className="flex flex-row items-center">
+                <span className="text-opacity-60 font-extralight">
+                  {t("Estimated delivery")}:
+                </span>
+                <span className="text-opacity-75 font-semibold ">
+                  &nbsp;{singleOrder?.deliver_by}
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-row w-fit h-max gap-2 font-['Plus Jakarta Sans']">
-            <MdDeliveryDining className="w-6 h-6 border-2 border-neutral-200 justify-center items-center gap-2.5 inline-flex rounded-full p-[2px]" />
-            <div className="flex flex-row items-center">
-              <span className="text-opacity-60 font-extralight">
-                {t("Driver")}:
-              </span>
-              <span className="text-opacity-75 font-semibold ">
-                &nbsp;{singleOrder?.deliver_by}
-              </span>
+          )}
+          {singleOrder?.deliver_by && (
+            <div className="flex flex-row w-fit h-max gap-2 font-['Plus Jakarta Sans']">
+              <MdDeliveryDining className="w-6 h-6 border-2 border-neutral-200 justify-center items-center gap-2.5 inline-flex rounded-full p-[2px]" />
+              <div className="flex flex-row items-center">
+                <span className="text-opacity-60 font-extralight">
+                  {t("Driver")}:
+                </span>
+                <span className="text-opacity-75 font-semibold ">
+                  &nbsp;{singleOrder?.deliver_by}
+                </span>
+              </div>
             </div>
-          </div>
+          )}
           <Badge value={singleOrder?.status} />
         </div>
         <div className="flex-wrap flex flex-row gap-4 w-full font-['Plus Jakarta Sans']">
@@ -119,15 +123,12 @@ const CustomerOrderDetail = ({ orderId }) => {
                     />
                     <div className="flex-col justify-start items-start inline-flex">
                       <div className="text-black text-opacity-75 font-semibold">
-                        {item?.name}
-                      </div>
-                      <div className="text-black text-opacity-75 text-xs font-extralight">
-                        {t("Qty")}: {item?.quantity}
+                        {item?.name}&nbsp;x{item?.quantity}
                       </div>
                     </div>
                   </div>
                   <div className="text-black text-opacity-75 font-semibold">
-                    {t("SAR")} {item?.price}
+                    {t("SAR")} {item?.total}
                   </div>
                 </div>
                 {item.additional && (
@@ -162,8 +163,8 @@ const CustomerOrderDetail = ({ orderId }) => {
               </div>
             ))}
           </div>
-          <div className="flex-1 w-1/2 min-w-fit font-['Plus Jakarta Sans'] flex-wrap p-4 bg-white rounded-lg border border-neutral-200 flex-col justify-start items-start gap-4 inline-flex">
-            <div className="self-stretch h-fit pb-4 border-b border-zinc-100 flex-col justify-start items-start gap-4 flex">
+          <div className="flex-1 w-1/2 min-w-fit font-['Plus Jakarta Sans'] flex-wrap p-4 bg-white rounded-lg border border-neutral-200 flex-col justify-start gap-4 inline-flex divide-y items-center">
+            <div className="h-full w-full py-4 border-zinc-100 flex-col justify-start items-start gap-4 flex">
               <div className="self-stretch justify-start items-start gap-2.5 inline-flex">
                 <div className="text-opacity-50 font-extralight">
                   {t("Payment Summary")}:
@@ -172,7 +173,7 @@ const CustomerOrderDetail = ({ orderId }) => {
               <div className="self-stretch justify-between items-start inline-flex">
                 <div className="text-opacity-50 font-medium">{t("Items")}</div>
                 <div className="text-opacity-75 font-semibold">
-                  {t("SAR")} {singleOrder?.total}
+                  {t("SAR")} {singleOrder?.total - singleOrder?.delivery_cost}
                 </div>
               </div>
               <div className="self-stretch justify-between items-start inline-flex">
@@ -200,30 +201,34 @@ const CustomerOrderDetail = ({ orderId }) => {
                 </div>
               </div>
             </div>
-            <div className="self-stretch h-fit pb-4 border-b border-zinc-100 flex-col justify-start items-start gap-4 flex">
-              <div className="self-stretch justify-start items-start gap-2.5 inline-flex">
-                <div className="text-opacity-50 font-extralight">
-                  {t("Address")}:
+            {singleOrder?.shipping_address && (
+              <div className="self-stretch h-fit pb-4 border-b border-zinc-100 flex-col justify-start items-start gap-4 flex">
+                <div className="self-stretch justify-start items-start gap-2.5 inline-flex">
+                  <div className="text-opacity-50 font-extralight">
+                    {t("Address")}:
+                  </div>
+                </div>
+                <div className="self-stretch justify-start items-start gap-2.5 inline-flex">
+                  <div className="text-gray-900 text-opacity-75 font-semibold">
+                    {t(singleOrder?.shipping_address)}
+                  </div>
                 </div>
               </div>
-              <div className="self-stretch justify-start items-start gap-2.5 inline-flex">
-                <div className="text-gray-900 text-opacity-75 font-semibold">
-                  {t(singleOrder?.shipping_address)}
+            )}
+            {singleOrder?.order_notes && (
+              <div className="self-stretch h-fit flex-col justify-start items-start gap-4 flex">
+                <div className="self-stretch justify-start items-center inline-flex">
+                  <div className="text-opacity-50 font-extralight">
+                    {t("Order Notes")}:
+                  </div>
+                </div>
+                <div className="self-stretch justify-start items-center inline-flex">
+                  <div className="text-opacity-75 font-semibold leading-[15px] tracking-tight">
+                    {t(singleOrder?.order_notes)}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="self-stretch h-fit flex-col justify-start items-start gap-4 flex">
-              <div className="self-stretch justify-start items-center inline-flex">
-                <div className="text-opacity-50 font-extralight">
-                  {t("Order Notes")}:
-                </div>
-              </div>
-              <div className="self-stretch justify-start items-center inline-flex">
-                <div className="text-opacity-75 font-semibold leading-[15px] tracking-tight">
-                  {t(singleOrder?.order_notes)}
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

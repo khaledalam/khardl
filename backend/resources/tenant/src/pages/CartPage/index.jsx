@@ -58,10 +58,12 @@ const CartPage = () => {
     return state.restuarantEditorStyle;
   });
 
+  const { price_background_color } = restaurantStyle;
   const cartItemsData = useSelector((state) => state.categoryAPI.cartItemsData);
   const [tap, setTap] = useState(null);
 
   const customerAddress = useSelector((state) => state.customerAPI.address);
+  const [isHovered, setIsHovered] = useState(false);
 
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [deliveryType, setDeliveryType] = useState("Delivery");
@@ -79,6 +81,18 @@ const CartPage = () => {
     fetchCartData().then(() => null);
     fetchProfileData().then(() => null);
   }, []);
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      const elements = document.getElementsByClassName("p-radiobutton-box");
+      Array.from(elements).forEach((element) => {
+        element.style.cssText = `background-color: ${
+          price_background_color || "green"
+        } !important;`;
+      });
+      console.log("PRICE_BACKGROUND_COLOR", price_background_color, elements);
+    }
+  }, [price_background_color]);
 
   useEffect(() => {
     if (paymentMethod === "Loyalty points" && deliveryType != "PICKUP") {
@@ -538,8 +552,19 @@ const CartPage = () => {
                       </div>
                     </div>
                   </div>
-
                   <Button
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    style={{
+                      backgroundColor: isHovered
+                        ? "white"
+                        : restaurantStyle?.price_background_color || "",
+                      color: isHovered
+                        ? restaurantStyle?.price_background_color || ""
+                        : "white",
+                      borderColor:
+                        restaurantStyle?.price_background_color || "",
+                    }}
                     label={t("Place Order")}
                     className="mt-[15px] w-full cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border  leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 transition-all shadow-md"
                     onClick={handlePlaceOrder}
@@ -560,8 +585,19 @@ const CartPage = () => {
               </p>
 
               <Button
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
                 label={t("Continue Shopping")}
-                className="w-64 h-10 bg-[#7D0A0A] text-white text-sm mt-4"
+                className="w-64 h-10 bg-red-900 hover:bg-white hover:text-red-900 hover:border-red-900 text-white text-sm mt-4 border transition-all shadow-md  leading-[18px]"
+                style={{
+                  backgroundColor: isHovered
+                    ? "white"
+                    : restaurantStyle?.price_background_color || "",
+                  color: isHovered
+                    ? restaurantStyle?.price_background_color || ""
+                    : "white",
+                  borderColor: restaurantStyle?.price_background_color || "",
+                }}
                 onClick={() => navigate("/")}
               />
             </div>
