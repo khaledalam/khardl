@@ -285,7 +285,7 @@ class CartRepository
                 "tap_public_key"=>env('TAP_PAYMENT_TECHNOLOGY_NEW_SECRET_KEY_LIVE',''),
                 'url_host'=>parse_url(request()->getSchemeAndHttpHost() , PHP_URL_HOST)
             ],
-            'address' => $this->cart->user->address
+            'address' => $this->cart->user->address ?? $this->cart?->user?->addresses
         ], $message);
     }
     public function items()
