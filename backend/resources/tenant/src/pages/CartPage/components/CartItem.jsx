@@ -25,6 +25,8 @@ const CartItem = ({ cartitem, onReload }) => {
     return state.restuarantEditorStyle;
   });
 
+  const { price_background_color } = restaurantStyle;
+
   const handleRemoveItem = async (cartItemId) => {
     try {
       const response = await AxiosInstance.delete(`/carts/` + cartItemId, {});
@@ -138,10 +140,24 @@ const CartItem = ({ cartitem, onReload }) => {
             }}
           />
           <div className="flex justify-end flex-row gap-4 items-center">
-            <div className="flex rounded-md bg-neutral-50 flex-row gap-6 p-2 px-4">
-              <Button className="" label="+" onClick={incrementQty} />
-              <div className="">{cartitem.quantity}</div>
-              <Button className="" label="-" onClick={decrementQty} />
+            <div className="flex rounded-md bg-neutral-50 flex-row gap-6 p-2 px-4 items-center">
+              <Button
+                style={{
+                  backgroundColor: price_background_color + "50",
+                }}
+                className="w-[22.11px] h-[22.40px] bg-orange-100 rounded-md flex justify-center items-center"
+                label="+"
+                onClick={incrementQty}
+              />
+              <div>{cartitem.quantity}</div>
+              <Button
+                style={{
+                  backgroundColor: price_background_color + "50",
+                }}
+                className="w-[22.11px] h-[22.40px] bg-orange-100 rounded-md flex justify-center items-center"
+                label="-"
+                onClick={decrementQty}
+              />
             </div>
             <h2>{`${cartitem.total} ${t("SAR")}`}</h2>
           </div>

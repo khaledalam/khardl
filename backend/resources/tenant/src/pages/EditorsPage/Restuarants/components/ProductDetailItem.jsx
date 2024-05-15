@@ -3,8 +3,11 @@ import React, {
   useState,
   forwardRef,
   useImperativeHandle,
+  useEffect,
+  useRef,
 } from "react";
 import { useTranslation } from "react-i18next";
+import ReactDOM from "react-dom";
 
 const ProductDetailItem = forwardRef(function ProductDetailItem(
   {
@@ -20,7 +23,7 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
     options,
     optionsPrice,
   },
-  ref,
+  ref
 ) {
   const { t } = useTranslation();
 
@@ -47,7 +50,7 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
                 id={id}
                 type="checkbox"
                 name={name}
-                className={`w-[16px] h-[16px] accent-[#FFECD6] border-[1px] border-[#e5e7eb] checked:border-[#7D0A0A] rounded-[4px] checked:accent-[#FFECD6] focus:accent-[#FFECD6] checked:ring-1 checked:ring-[#7D0A0A]`}
+                className={`custom-checkbox w-[16px] h-[16px] border-[1px]  checked:ring-1 rounded-[4px] accent-[#FFFFFF] border-[#FFFFFF] checked:border-[#7D0A0A] checked:accent-[#FFFFFF] focus:accent-[#FFFFFF] checked:ring-[#7D0A0A]`}
                 onChange={onChange}
               />
               <p className="text-[10px] font-normal">{label}</p>
@@ -67,7 +70,7 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
                 id={id}
                 type={isRadio ? "radio" : "text"}
                 name={name}
-                className={`${
+                className={`custom-radio ${
                   isRadio ? "radio" : ""
                 } w-[14px] h-[14px] border-[1px] checked:border-[3px] checked:bg-[#7D0A0A]`}
                 onChange={onChange}
@@ -93,15 +96,17 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
           </option>
           {options.map((option, idx) => {
             console.log("optionsPrice > ", optionsPrice);
-            let price = optionsPrice
-              ? `(${optionsPrice[idx]} ${t("SAR")})`
+            let optionPrice = optionsPrice
+              ? optionsPrice[idx] == 0
+                ? "(Free)"
+                : `(${optionsPrice[idx]} ${t("SAR")})`
               : null;
 
             return (
               <option key={idx} value={idx}>
                 {`${
                   language === "en" ? option?.value[0] : option?.value[1]
-                } ${price}`}
+                } ${optionPrice}`}
               </option>
             );
           })}
