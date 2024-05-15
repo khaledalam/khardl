@@ -36,7 +36,7 @@ const Sliderr = ({ banner_images, setIsBannerModalOpened }) => {
         {banner_images.map((image, index) => (
           <img
             key={index}
-            src={image.croppedImage}
+            src={image.croppedImage + "?var=" + Math.floor(Math.random() * 10000)}
             alt="banner"
             className="flex aspect-[2/1] w-full rounded-[10px] object-cover shrink-0 grow-0 transition-transform duration-500 ease-in-out"
             style={{
