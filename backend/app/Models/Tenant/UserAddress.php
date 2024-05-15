@@ -14,5 +14,6 @@ class UserAddress extends Model
         'lng',
         'default',
         'type',
+        'name'
     ];
 }
