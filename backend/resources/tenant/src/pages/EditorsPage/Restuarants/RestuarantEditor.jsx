@@ -503,17 +503,15 @@ export const RestuarantEditor = () => {
         },
         {
           title: t("Social Media"),
-          layout: ["color"],
-          layoutInitialValues: [social_media_color],
-          layoutOnChange: [(color) => dispatch(socialMediaColor(color))],
-          contentPosition: ["positionContent", "radius", "color"],
+          layout: [],
+          layoutInitialValues: [],
+          layoutOnChange: [],
+          contentPosition: ["radius", "color"],
           contentPositionInitialValues: [
-            socialMediaIcons_alignment,
             social_media_radius,
             social_media_background_color,
           ],
           contentPositionOnChange: [
-            (value) => dispatch(socialMediaIconsAlignment(value)),
             (value) => dispatch(socialMediaRadius(value)),
             (value) => dispatch(socialMediaBackgroundColor(value)),
           ],

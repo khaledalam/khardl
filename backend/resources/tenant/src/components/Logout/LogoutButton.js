@@ -46,9 +46,9 @@ const LogoutButton = () => {
     <div className="w-full mb-20 cursor-pointer">
       <div
         onClick={handleLogout}
-        className="w-[90%] mx-auto flex flex-row gap-1 bg-neutral-100 rounded-lg border  items-center cursor-pointer"
+        className="w-[90%] mx-auto flex flex-row gap-1 rounded-lg items-center cursor-pointer text-black text-lg"
         style={{
-          borderColor: restuarantStyle?.categoryDetail_cart_color,
+          // borderColor: restuarantStyle?.categoryDetail_cart_color,
         }}
       >
         <div className="w-[50px] h-[50px] rounded-xl p-2  flex items-center justify-center">

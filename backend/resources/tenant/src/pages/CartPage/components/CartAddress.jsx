@@ -17,7 +17,8 @@ const CartAddress = ({
           name={user?.address?.addressValue}
           onChange={() => onChange(0)}
           isChecked={selectedDeliveryAddress === 0}
-          displayName={user?.address?.addressValue}
+          // displayName={user?.address?.addressValue}
+          displayName="Default"
         />
       )}
       <CartDetailSection

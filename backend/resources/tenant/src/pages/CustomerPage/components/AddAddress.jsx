@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import orderIcon from "../../../assets/orderBlack.svg";
 import { useTranslation } from "react-i18next";
 import Places from "../../../components/Customers/CustomersEditor/components/Dashboard/components/Places";
 import { AddressTypeIcons } from "./AddressItem";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import PrimaryTextInput from "./PrimaryTextInput";
 
 const AddAddress = ({ onSave, onCancel, address, setAddress }) => {
   const { t } = useTranslation();
+
+  const [isMouseHover, setIsMouseHover] = useState(false);
+
+  const restuarantEditorStyle = useSelector(
+    (state) => state.restuarantEditorStyle
+  );
+
+  const { price_background_color } = restuarantEditorStyle;
 
   return (
     <div className="m-4 mt-8 md:m-12 mb-5">
@@ -15,7 +25,7 @@ const AddAddress = ({ onSave, onCancel, address, setAddress }) => {
         <h3 className="text-3xl font-medium">{t("Add new address")}</h3>
       </div>
       <div className="flex flex-col lg:flex-nowrap gap-4 mb-5 mt-8 min-h-96 font-['Plus Jakarta Sans']">
-        <div className="justify-start items-center flex flex-wrap gap-5">
+        {/* <div className="justify-start items-center flex flex-wrap gap-5">
           <div className="text-black text-opacity-75 font-medium text-sm">
             {t("Select address type")}
           </div>
@@ -40,7 +50,19 @@ const AddAddress = ({ onSave, onCancel, address, setAddress }) => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
+        <PrimaryTextInput
+          placeholder={t("Write the address name here...")}
+          value={address.type || ""}
+          onChange={(value) =>
+            setAddress((prevAddress) => ({
+              ...prevAddress,
+              type: value,
+            }))
+          }
+          id="name"
+          label={t("Addresss Name")}
+        />
         <div className="w-full rounded-[10px] border border-black border-opacity-20 flex-col gap-2.5 flex h-full p-4">
           <Places
             inputStyle={
@@ -50,7 +72,9 @@ const AddAddress = ({ onSave, onCancel, address, setAddress }) => {
         </div>
         <div className="h-fit flex-row items-center gap-4 flex text-center">
           <div
-            className="w-full cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border  leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 transition-all shadow-md"
+            onMouseEnter={() => setIsMouseHover(true)}
+            onMouseLeave={() => setIsMouseHover(false)}
+            className={`w-full cursor-pointer text-white rounded-lg px-4 py-2.5 border leading-[18px] hover:bg-white transition-all shadow-md border-red-900 hover:text-red-900 bg-red-900`}
             onClick={() => {
               if (
                 address.address === "" ||
@@ -61,6 +85,17 @@ const AddAddress = ({ onSave, onCancel, address, setAddress }) => {
               }
               onSave(address);
             }}
+            style={
+              price_background_color
+                ? {
+                    backgroundColor: isMouseHover
+                      ? "white"
+                      : price_background_color,
+                    color: isMouseHover ? price_background_color : "white",
+                    borderColor: price_background_color,
+                  }
+                : {}
+            }
           >
             {t("Save address")}
           </div>
