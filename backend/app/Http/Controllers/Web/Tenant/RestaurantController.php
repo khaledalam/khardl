@@ -2,46 +2,47 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
-use App\Enums\Admin\CouponTypes;
-use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
-use App\Models\Subscription;
 use App\Models\Tenant\Item;
-use App\Models\Tenant\QrCode;
-use App\Models\Tenant\RestaurantStyle;
-use App\Packages\DeliveryCompanies\DeliveryCompanies;
-use Database\Seeders\Tenant\DeliveryTypesSeeder;
-use Database\Seeders\Tenant\PaymentMethodSeeder;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use App\Models\Subscription;
 use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
+use App\Models\Tenant\QrCode;
+use App\Models\ROSubscription;
 use App\Models\Tenant\Setting;
 use Illuminate\Support\Carbon;
 use App\Models\Tenant\Category;
 use Illuminate\Validation\Rule;
+use App\Enums\Admin\CouponTypes;
+use App\Models\ROCustomerAppSub;
 use Illuminate\Support\Facades\DB;
+use App\Models\NotificationReceipt;
 use App\Models\Tenant\DeliveryType;
+use App\Models\ROSubscriptionCoupon;
 use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use App\Models\Tenant\RestaurantUser;
+use App\Models\Tenant\DeliveryCompany;
 use App\Models\Tenant\OrderStatusLogs;
+use App\Models\Tenant\RestaurantStyle;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\RegisterWorkerRequest;
-use App\Models\Subscription as CentralSubscription;
-use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
-use Illuminate\Contracts\Database\Query\Builder;
-use App\Http\Services\tenant\Restaurant\RestaurantService;
-use App\Models\NotificationReceipt;
-use App\Models\ROCustomerAppSub;
-use App\Models\ROSubscription;
-use App\Models\ROSubscriptionCoupon;
-use App\Models\Tenant\DeliveryCompany;
+use App\Http\Requests\UpdateBranchInfoRequest;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
+use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
+use Database\Seeders\Tenant\DeliveryTypesSeeder;
+use Database\Seeders\Tenant\PaymentMethodSeeder;
+use Illuminate\Contracts\Database\Query\Builder;
+use App\Models\Subscription as CentralSubscription;
+use App\Packages\DeliveryCompanies\DeliveryCompanies;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
+use App\Http\Services\tenant\Restaurant\RestaurantService;
+use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
 
 
 class RestaurantController extends BaseController
@@ -449,7 +450,7 @@ class RestaurantController extends BaseController
             ->with('success', __('Branch updated successfully'));
     }
 
-    public function updateBranchDetails(Request $request, $id)
+    public function updateBranchDetails(UpdateBranchInfoRequest $request, $id)
     {
         $branch = Branch::findOrFail($id);
 

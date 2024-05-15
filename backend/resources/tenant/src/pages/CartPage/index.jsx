@@ -10,6 +10,7 @@ import {
 } from "../../redux/NewEditor/categoryAPISlice";
 import CartItem from "./components/CartItem";
 import pmcc from "../../assets/pmcc.png";
+import coins from "../../assets/coins.png";
 import pmcod from "../../assets/pmcod.png";
 import apple from "../../assets/apple-logo.png";
 import applePay from "../../assets/apple-pay.png";
@@ -79,6 +80,13 @@ const CartPage = () => {
     fetchProfileData().then(() => null);
   }, []);
 
+  useEffect(() => {
+    if (paymentMethod === "Loyalty points" && deliveryType != "PICKUP") {
+      toast.error(t("Loyalty points option can be used with pickup only"));
+      setPaymentMethod(null);
+    }
+  }, [paymentMethod, deliveryType]);
+
   const validateCoupon = async () => {
     if (coupon === "") {
       return;
@@ -121,6 +129,7 @@ const CartPage = () => {
 
   const fetchCartData = async () => {
     try {
+      setLoading(true);
       const cartResponse = await AxiosInstance.get(`carts`);
       if (cartResponse.data) {
         if (
@@ -138,6 +147,7 @@ const CartPage = () => {
         // setAddress(cartResponse.data?.data?.address ?? t("N/A"));
         setTap(cartResponse.data?.data?.tap_information);
       }
+      setLoading(false);
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
       console.log(error);
@@ -252,7 +262,7 @@ const CartPage = () => {
               <h1 className="font-bold text-xl">{t("Your Cart")}</h1>
 
               <div className="flex flex-wrap md:grid md:grid-cols-12 gap-x-6 pt-8">
-                <div className="md:col-span-7 w-full">
+                <div className="md:col-span-6 w-full">
                   <div className="flex flex-col gap-y-6">
                     {cartItemsData &&
                       cartItemsData.length > 0 &&
@@ -267,22 +277,27 @@ const CartPage = () => {
                       })}
                   </div>
                 </div>
-                <div className="md:col-span-5 w-full paymentDetails p-4 mt-6 sm:mt-0">
+                <div className="md:col-span-6 w-full paymentDetails p-4 mt-6 sm:mt-0">
                   <div className="cartDetailSection mt-6">
-                    <OrderReviewSummary cart={cart} />
+                    {Array.isArray(cart.items) && (
+                      <OrderReviewSummary cart={cart} />
+                    )}
                   </div>
                   <div className="cartDetailSection h-36xw mt-8">
                     <h3>{t("Select Payment Method")}</h3>
 
-                    {cart?.allow_buy_with_loyalty_points && <CartDetailSection
-                      key={"Loyalty points"}
-                      name={"Loyalty points"}
-                      onChange={(e) => setPaymentMethod("Loyalty points")}
-                      isChecked={paymentMethod === "Loyalty points"}
-                      img={pmcc}
-                      displayName={"Loyalty points"}
-                      callBackfn={cardPaymentCallbackFunc}
-                    />}
+                    {cart?.allow_buy_with_loyalty_points && (
+                      <CartDetailSection
+                        key={"Loyalty points"}
+                        name={"Loyalty points"}
+                        onChange={(e) => setPaymentMethod("Loyalty points")}
+                        isChecked={paymentMethod === "Loyalty points"}
+                        img={coins}
+                        displayName={"Loyalty points"}
+                        callBackfn={cardPaymentCallbackFunc}
+                        disabled={deliveryType != "PICKUP"}
+                      />
+                    )}
 
                     {cart.payment_methods.some(
                       (obj) => obj.name === "Online"
@@ -508,7 +523,19 @@ const CartPage = () => {
                     <Divider />
                     <div className="flex justify-between mt-1">
                       <div>{t("Total Payment")}</div>
-                      <div>{`${getTotalPrice()} ${t("SAR")}`}</div>
+                      <div className={"flex-column"}>
+                        {paymentMethod !== "Loyalty points" && (
+                          <div>{`${getTotalPrice()} ${t("SAR")}`}</div>
+                        )}
+                        {paymentMethod === "Loyalty points" &&
+                        cart?.allow_buy_with_loyalty_points ? (
+                          <div>
+                            {cart?.total_price_with_loyalty_points +
+                              " " +
+                              t("points-price")}
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
 

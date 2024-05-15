@@ -35,4 +35,10 @@ class Promoter extends Model
     public function sub_coupons(){
         return $this->hasMany(ROSubscriptionCoupon::class);
     }
+    public function scopeWhenSearch($query,$search)
+    {
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('name', 'like', '%' . $search . '%');
+        });
+    }
 }

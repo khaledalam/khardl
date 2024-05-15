@@ -200,7 +200,7 @@ const PaymentSection = ({
     if (isloading) return;
     try {
       setIsLoading(true);
-      await AxiosInstance.delete(`/carts/trash`, {}).finally(async () => {
+      await AxiosInstance.delete(`/trash/carts`, {}).finally(async () => {
         await fetchCartData().then((r) => null);
       });
     } catch (error) {}

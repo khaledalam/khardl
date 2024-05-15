@@ -57,7 +57,7 @@
                 <th class="fs-4 font-weight-bold text-black">{{ __('URL') }}</th>
                 <th class="fs-4 font-weight-bold text-black">{{ __('The number of users who used the link') }}</th>
                 <th class="fs-4 font-weight-bold text-black">{{ __('Registered Users Count') }}</th>
-                
+
                 {{-- @if($sub_coupons)<th class="fs-4 font-weight-bold text-black">{{ __('The number of users who used subscription coupon') }}</th>@endif --}}
 
             </thead>
@@ -68,7 +68,7 @@
                     </td>
                     <td>
                         <h4 style="display: inline-block">
-                            <a href="#" onclick="copyToClipboard('{{ url('/register?ref=') . $promoter->url }}', this)" class="text-primary fw-bolder text-hover-primary ">
+                            <a href="#" onclick="copyToClipboard('{{ url('/register?ref=') . $promoter->url }}', this)" class="text-primary fw-bolder text-hover-khardl ">
                                 {{ __('Click here') }}
                                 <svg id='Copy_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
 
@@ -107,7 +107,7 @@
                     <td>
                         <strong class="text-success">{{ $promoter->registered }}</strong>
                     </td>
-                   
+
                 </tr>
             </tbody>
         </table>
@@ -119,10 +119,10 @@
                 <th class="fs-4 font-weight-bold text-black">{{ __('Code') }}</th>
                 <th class="fs-4 font-weight-bold text-black">{{ __('Amount') }}</th>
                 <th class="fs-4 font-weight-bold text-black">{{ __('Number of usage') }}</th>
-            
+
             </thead>
             <tbody>
-                
+
                 @foreach ($sub_coupons as $coupon)
                 <tr>
                     <td class="text-primary">
@@ -134,11 +134,11 @@
                     <td>
                         {{ $coupon->n_of_usage }}
                     </td>
-                   
+
                 </tr>
                 @endforeach
-                
-              
+
+
             </tbody>
         </table>
         @endif

@@ -28,7 +28,7 @@
                   <h2>{{ __('New subscription')}}</h2>
                 </div>
                 <a href="{{ route('admin.subscriptions') }}">
-                    <button type="button" class="btn btn-primary btn-sm">
+                    <button type="button" class="btn btn-khardl btn-sm">
                         <i class="fa fa-arrow-left"></i>
                         {{ __('Back to list') }}
                     </button>
@@ -87,7 +87,7 @@
                               <div class="d-flex justify-content-end mt-3">
                                   <!--begin::Button-->
                                   <button type="submit" id="kt_ecommerce_add_product_submit"
-                                      class="btn btn-primary">
+                                      class="btn btn-khardl">
                                       <i class="bi bi-check2-square mx-1"></i>
                                       <span class="indicator-label">{{ __('update') }}</span>
                                       <span class="indicator-progress">{{ __('please-wait')}}

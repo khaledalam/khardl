@@ -18,20 +18,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
 
 <style>
-    /* .input-container { z-index: 1000004 !important;     position: fixed;
-    display: inline-block;}
-    .widget-container { z-index: 1000004 !important;     position: fixed;
-    display: inline-block;}
-    .map-autocomplete-card-new_branch {z-index: 1000004 !important;}
-    .map-new_branch {z-index: 1000004 !important;}
-    .pac-container { z-index: 1000004 !important; }
-    .predictions-anchor { z-index: 1000004 !important; }
-    .modal{
-        z-index: 20 !important;   
-    }
-    .modal-backdrop{
-        z-index: 10 !important;        
-    }​ */
+
     .google_map {
         position: static !important;
         width: 100%;
@@ -168,7 +155,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             </div>
                             @if($available_branches > 0)
                             <div class="row gx-9 d-flex justify-content-center align-items-center">
-                                <a href="#" class="fs-6 text-700 fw-bolder text-center p-3 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh" id="add-new-branch">+ {{ __('add-new-branch') }}</a>
+                                <a href="#" class="fs-6 text-700 fw-bolder text-center p-3 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">+ {{ __('add-new-branch') }}</a>
                             </div>
                             @endif
                         </div>
@@ -199,7 +186,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             <div class="post d-flex flex-column-fluid my-5" id="kt_post">
                 <!--begin::Container-->
                 <div id="kt_content_container " class="container-xxl ">
-                    <div class="card card-flush border-0 ">
+                    <div class="card card-flush border-0 h-md-100">
                         <!--begin::Body-->
                         <div class="card-body py-9 {{$branch->deleted_at ? 'border-not-active ':''}}">
                             <!--begin::Row-->
@@ -212,7 +199,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                     <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}"  style="display: none;" value="{{$branch->address}}">
                                     @endif --}}
                                     <div class="map-container" data-branch-id="{{ $branch->id }}">
-                                        <div class="card card-flush border-0 card-map overflow-hidden">
+                                        <div class="card card-flush border-0 card-map">
                                             <!--begin::Body-->
                                             <div class="card-body py-2">
                                                 <div id="map{{ $branch->id }}" class="google_map" >
@@ -322,7 +309,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                 <div class="d-flex align-items-center">
                                                     <!--begin::Symbol-->
                                                     <div class="symbol symbol-30px symbol-circle me-3">
-                                                        <span class="symbol-label bg-success">
+                                                        <span class="symbol-label bg-khardl">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs042.svg-->
                                                             <span class="svg-icon svg-icon-5 svg-icon-white">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -483,6 +470,13 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             <form id="modalTimeForm{{ $branch->id }}" class="form" action="{{ route('restaurant.update-branch-details', ['id' => $branch->id]) }}" method="POST" id="myForm">
                                 @csrf
                                 @method('PUT')
+                                <div class="mb-13 text-center">
+                                    <!--begin::Title-->
+                                    <label class="form-check-label" for="nameText">{{__('Name')}}</label>
+                                    <input class="form-control form-control-solid" name="name" id="nameText" required value="{{ $branch->name }}">
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Head-->
                                 <!--begin::Heading-->
                                 <div class="mb-13 text-center">
                                     <!--begin::Title-->
@@ -496,7 +490,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <div class="mb-13 text-center">
                                     <!--begin::Title-->
                                     <label class="form-check-label" for="cityText">{{__('city')}}</label>
-                                    <input class="form-control form-control-solid" name="city" id="cityText" required value="{{ $branch->city }}">
+                                    <input class="form-control form-control-solid" name="city" id="cityText"  value="{{ $branch->city }}">
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
@@ -506,7 +500,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <div class="mb-13 text-center">
                                     <!--begin::Title-->
                                     <label class="form-check-label" for="neighborhoodText">{{__('neighborhood')}}</label>
-                                    <input class="form-control form-control-solid" name="neighborhood" id="neighborhoodText" required value="{{ $branch->neighborhood }}">
+                                    <input class="form-control form-control-solid" name="neighborhood" id="neighborhoodText"  value="{{ $branch->neighborhood }}">
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
@@ -806,7 +800,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-md-12 fv-row" >
-                            <div id="map-autocomplete-card-new_branch" style="width: 80%;float: left; z-index: 100004 !important; "></div>
+                            <div id="map-autocomplete-card-new_branch" style="width: 80%;float: left;"></div>
                             </div>
                             <div class="col-md-12 fv-row" >
                                 <label class="required fs-6 fw-bold mb-2">{{ __('location-branch') }}</label>

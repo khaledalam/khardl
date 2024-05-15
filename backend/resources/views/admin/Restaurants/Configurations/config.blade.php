@@ -1,7 +1,7 @@
  <!--begin::details View-->
  <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
     <!--begin::Card header-->
-   
+
         <div class="card-header cursor-pointer">
             <!--begin::Card title-->
             <div class="card-title m-0">
@@ -78,14 +78,14 @@
                 <div class="col-lg-1 ">
                     <img alt="Logo" src="{{ $customer_app->icon ?? global_asset('assets/default_logo.png') }}" width="40" />
                 </div>
-             
+
                 <!--end::Col-->
             </div>
         </div>
-      
+
         <div class="text-center">
             <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Reset ↻</button>
-            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                 <span class="indicator-label">{{__('save-changes')}} ✔️</span>
                 <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -94,11 +94,11 @@
     </form>
         @else
             <div class="card-title m-0 ">
-                <h3 class="fw-bolder m-0  badge-primary p-2 text-center">{{ __('There is no subscription for customer application yet') }}</h3>
+                <h3 class="fw-bolder m-0  badge-khardl p-2 text-center">{{ __('There is no subscription for customer application yet') }}</h3>
             </div>
         @endif
-       
-  
+
+
 
 </div>
 <!--end::details View-->

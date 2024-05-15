@@ -19,7 +19,7 @@
        <span class="card-label fw-bolder fs-3 mb-1">{{ __('subscriptions')}}</span>
        <span class="text-muted mt-1 fw-bold fs-7">{{ count($subscriptions) }} {{ __('subscriptions')}}</span>
      </h3>
-    
+
    </div>
    <!--end::Header-->
    <!--begin::Body-->
@@ -49,17 +49,17 @@
               <td>
                 <div class="d-flex align-items-center">
                   <div class="d-flex justify-content-start flex-column">
-                    <span href="#" class="text-dark fw-bolder text-hover-primary fs-6">{{ $subscription->name }}</span>
+                    <span href="#" class="text-dark fw-bolder text-hover-khardl fs-6">{{ $subscription->name }}</span>
                   </div>
                 </div>
               </td>
               <td>
-                <span href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $subscription->amount }}</span>
+                <span href="#" class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $subscription->amount }}</span>
               </td>
 
 
               <td>
-                <a href="{{ route('admin.subscriptions.show', ['subscription' => $subscription->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                <a href="{{ route('admin.subscriptions.show', ['subscription' => $subscription->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
                   <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                   <span class="svg-icon svg-icon-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

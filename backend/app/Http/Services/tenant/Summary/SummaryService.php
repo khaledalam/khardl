@@ -2,69 +2,81 @@
 
 namespace App\Http\Services\tenant\Summary;
 
-use App\Models\Tenant\OrderItem;
 use App\Models\User;
-use Illuminate\Support\Carbon;
 use App\Models\Tenant\Order;
+use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
+use Illuminate\Support\Carbon;
+use App\Models\Tenant\OrderItem;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class SummaryService
 {
-    public function index()
+    public function index(Request $request)
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
+        if ($request->has('refresh'))
+            $this->clearCache();
         $branches = Branch::all();
-        $orders = Order::query();
-        $pending = $this->getOrderStatusCount(clone $orders, 'pending');
-        $accepted = $this->getOrderStatusCount(clone $orders, 'accepted');
-        $completed = $this->getOrderStatusCount(clone $orders, 'completed');
-        $cancelled = $this->getOrderStatusCount(clone $orders, 'cancelled');
-        $rejected = $this->getOrderStatusCount(clone $orders, 'rejected');
-        $ready = $this->getOrderStatusCount(clone $orders, 'ready');
-        $receivedByRes = $this->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
-        $allOrders = $orders->get();
-        $completedOrders = $orders->completed();
-        $total = $allOrders->count();
-        $dailyRevenues = $this->dailyRevenues();
-        $monthlyRevenues = $this->monthlyRevenues();
-        $noOfUsersThisMonth = $this->getNumberOfUsersThisMonth();
-        $bestSellingItems = $this->bestSellingItems();
-        $monthVisitors = $this->monthlyVisitors();
-        $dailyVisitors = $this->dailyVisitors();
-        /* $thisMonthRevenues = $this->getTotalPriceThisMonth(clone $orders);
-        $lastMonthRevenues = $this->getLastMonthRevenue(clone $orders);
-        $dailySales = $this->getDailySales(clone $completedOrders);
-        $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
-        $percentageChange = ($averageLast7DaysSales > 0)
-            ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
-            : (($dailySales > 0) ? 100 : 0);
-        $percentageChangeForMonth = ($lastMonthRevenues > 0)
-            ? (number_format((($thisMonthRevenues - $lastMonthRevenues) / $lastMonthRevenues) * 100, 2))
-            : (($thisMonthRevenues > 0) ? 100 : 0); */
-        return view('restaurant.summary', compact(
-            'user',
-            'branches',
-            'total',
-            'pending',
-            'cancelled',
-            'completed',
-            'rejected',
-            'accepted',
-            'ready',
-            'receivedByRes',
-            'noOfUsersThisMonth',
-            'bestSellingItems',
-            'dailyRevenues',
-            'monthlyRevenues',
-            'dailyVisitors',
-            'monthVisitors',
-        ));
+        [
+            $pending,
+            $accepted,
+            $completed,
+            $cancelled,
+            $rejected,
+            $ready,
+            $receivedByRes,
+            $allOrders,
+            $total,
+            $dailyRevenues,
+            $monthlyRevenues,
+            $noOfUsersThisMonth,
+            $bestSellingItems,
+            $monthVisitors,
+            $dailyVisitors
+        ] =
+            $this->cacheItems();
+        $cacheSeconds = config('application.cache_RO_Summary_Page') ?? 0;
+        return view(
+            'restaurant.summary',
+            compact(
+                'user',
+                'branches',
+                'total',
+                'pending',
+                'cancelled',
+                'completed',
+                'rejected',
+                'accepted',
+                'ready',
+                'receivedByRes',
+                'noOfUsersThisMonth',
+                'bestSellingItems',
+                'dailyRevenues',
+                'monthlyRevenues',
+                'dailyVisitors',
+                'monthVisitors',
+                'cacheSeconds'
+            )
+        );
+    }
+    public function clearCache()
+    {
+        Cache::delete($this->cacheKey());
+        return redirect()->route('restaurant.summary');
+    }
+    public function cacheKey()
+    {
+        return tenancy()?->tenant?->id . $this->cacheName();
+    }
+    public function cacheName()
+    {
+        return 'cache_RO_Summary_Page';
     }
     private function bestSellingItems()
     {
@@ -116,31 +128,59 @@ class SummaryService
     }
     public function dailyRevenues()
     {
-        $cacheKey = 'RO_daily_revenues';
-        return Cache::remember($cacheKey, config('application.cache_daily_visitors', 4 * 60 * 60), function () {
-            return $this->profitDays(7);
-        });
+        return $this->profitDays(7);
     }
     public function monthlyRevenues()
     {
-        $cacheKey = 'RO_monthly_revenues';
-        return Cache::remember($cacheKey, config('application.cache_monthly_visitors', 24 * 60 * 60), function () {
-            return $this->profitMonths(6);
+        return $this->profitMonths(6);
+    }
+    public function cacheItems()
+    {
+        $cacheName = $this->cacheName();
+        return Cache::remember($this->cacheKey(), config("application.$cacheName", 4 * 60 * 60), function () {
+            $orders = Order::query();
+            $pending = $this->getOrderStatusCount(clone $orders, 'pending');
+            $accepted = $this->getOrderStatusCount(clone $orders, 'accepted');
+            $completed = $this->getOrderStatusCount(clone $orders, 'completed');
+            $cancelled = $this->getOrderStatusCount(clone $orders, 'cancelled');
+            $rejected = $this->getOrderStatusCount(clone $orders, 'rejected');
+            $ready = $this->getOrderStatusCount(clone $orders, 'ready');
+            $receivedByRes = $this->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
+            $allOrders = $orders->get();
+            $total = $allOrders->count();
+            $dailyRevenues = $this->dailyRevenues();
+            $monthlyRevenues = $this->monthlyRevenues();
+            $noOfUsersThisMonth = $this->getNumberOfUsersThisMonth();
+            $bestSellingItems = $this->bestSellingItems();
+            $monthVisitors = $this->monthlyVisitors();
+            $dailyVisitors = $this->dailyVisitors();
+
+            return [
+                $pending,
+                $accepted,
+                $completed,
+                $cancelled,
+                $rejected,
+                $ready,
+                $receivedByRes,
+                $allOrders,
+                $total,
+                $dailyRevenues,
+                $monthlyRevenues,
+                $noOfUsersThisMonth,
+                $bestSellingItems,
+                $monthVisitors,
+                $dailyVisitors,
+            ];
         });
     }
     public function dailyVisitors()
     {
-        $cacheKey = 'RO_daily_visitors';
-        return Cache::remember($cacheKey, config('application.cache_daily_visitors', 4 * 60 * 60), function () {
-            return $this->getDaily(7);
-        });
+        return $this->getDaily(7);
     }
     public function monthlyVisitors()
     {
-        $cacheKey = 'RO_monthly_visitors';
-        return Cache::remember($cacheKey, config('application.cache_monthly_visitors', 24 * 60 * 60), function () {
-            return $this->getMonthly(6);
-        });
+        return $this->getMonthly(6);
     }
     public function getDaily($count)
     {
@@ -233,4 +273,14 @@ class SummaryService
             ->get()
             ->avg('total') ?? 0;
     }
+    /* $thisMonthRevenues = $this->getTotalPriceThisMonth(clone $orders);
+    $lastMonthRevenues = $this->getLastMonthRevenue(clone $orders);
+    $dailySales = $this->getDailySales(clone $completedOrders);
+    $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
+    $percentageChange = ($averageLast7DaysSales > 0)
+        ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
+        : (($dailySales > 0) ? 100 : 0);
+    $percentageChangeForMonth = ($lastMonthRevenues > 0)
+        ? (number_format((($thisMonthRevenues - $lastMonthRevenues) / $lastMonthRevenues) * 100, 2))
+        : (($thisMonthRevenues > 0) ? 100 : 0); */
 }

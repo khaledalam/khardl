@@ -16,7 +16,7 @@ $tap_info = $settings->lead_response;
 
 {{--    <div class="accordion-item">--}}
 {{--        <h2 class="accordion-header" id="headingOne">--}}
-{{--            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#paid_orders" aria-expanded="true" aria-controls="paid_orders">--}}
+{{--            <button class="accordion-button bg-khardl text-white" type="button" data-bs-toggle="collapse" data-bs-target="#paid_orders" aria-expanded="true" aria-controls="paid_orders">--}}
 {{--                {{ __('Online paid orders') }}--}}
 {{--            </button>--}}
 {{--        </h2>--}}
@@ -37,7 +37,7 @@ $tap_info = $settings->lead_response;
 
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#subscriptions" aria-expanded="true" aria-controls="subscriptions">
+            <button class="accordion-button bg-khardl text-white" type="button" data-bs-toggle="collapse" data-bs-target="#subscriptions" aria-expanded="true" aria-controls="subscriptions">
                 {{ __('Your subscription') }}
             </button>
         </h2>
@@ -317,7 +317,7 @@ $tap_info = $settings->lead_response;
     </div>
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#customer-app" aria-expanded="true" aria-controls="customer-app">
+            <button class="accordion-button bg-khardl text-white" type="button" data-bs-toggle="collapse" data-bs-target="#customer-app" aria-expanded="true" aria-controls="customer-app">
                 {{ __('Customer application') }}
             </button>
         </h2>
@@ -586,7 +586,7 @@ $tap_info = $settings->lead_response;
     </div>
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#tap_bussiness_info" aria-expanded="true" aria-controls="tap_bussiness_info">
+            <button class="accordion-button bg-khardl text-white" type="button" data-bs-toggle="collapse" data-bs-target="#tap_bussiness_info" aria-expanded="true" aria-controls="tap_bussiness_info">
                 {{ __('Tab information') }}
             </button>
         </h2>

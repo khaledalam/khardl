@@ -22,7 +22,7 @@ const Banner = ({ restaurantStyle }) => {
   const [uploadedSingleBanner, setUploadedSingleBanner] = useState(null);
 
   useEffect(() => {
-    if (banner_type == "slider" && banner_images.length > 0) {
+    if (banner_type == "slider" && banner_images?.length > 0) {
       setListofBannerImages(
         banner_images.map((image) => {
           return {
@@ -37,7 +37,7 @@ const Banner = ({ restaurantStyle }) => {
     }
   }, [restaurantStyle]);
 
-  return listofBannerImages?.length > 1 ? (
+  return listofBannerImages?.length >= 1 ? (
     <>
       <div className={`w-full aspect-[2/1]`}>
         <Sliderr
@@ -51,6 +51,9 @@ const Banner = ({ restaurantStyle }) => {
       <Skeleton className="h-full w-full" />
     </div>
   );
+  // ) : (
+  //   <div></div>
+  // );
 };
 
 export default Banner;

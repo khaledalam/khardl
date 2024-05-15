@@ -43,7 +43,7 @@
                                                             </div>
                                                             <div class="">
                                                                 <a href="{{ route('coupons.index') }}">
-                                                                    <button class="btn btn-primary btn-sm">{{ __('Back to list') }}</button>
+                                                                    <button class="btn btn-khardl btn-sm">{{ __('Back to list') }}</button>
                                                                 </a>
                                                             </div>
                                                         </div>

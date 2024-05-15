@@ -180,7 +180,7 @@ const App = () => {
                 <Route path="/summary" element={<div></div>} />
                 <Route
                   path="/restaurant-not-live"
-                  element={<RestaurantNotLive />}
+                  element={<RestaurantNotSubscribed />}
                 />
                 <Route
                   path="/restaurant-not-subscribed"
@@ -190,7 +190,7 @@ const App = () => {
                 <Route path="/failed" element={<FailedPayment />} />
                 <Route path="/policies" element={<TermsPolicies />} />{" "}
                 <Route path="/privacy" element={<Privacy />} />{" "}
-                
+
                 {/*<Route path='/advantages' element={<Advantages />} />*/}{" "}
                 {/*<Route path='/services' element={<Services />} />*/}{" "}
                 {/*<Route path='/prices' element={<Prices />} />*/}{" "}

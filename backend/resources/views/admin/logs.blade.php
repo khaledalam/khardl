@@ -92,7 +92,7 @@
                                 <tr data-user-id="{{ $log->user?->id }}" data-action="{{ $log->action }}">
                                     <td>
                                         @if($log->user)
-                                        <a href="{{ route('admin.user-management-edit', ['id' => $log->user?->id]) }}" class="text-hover-primary text-gray-600">{{ $log->user?->full_name }}</a>
+                                        <a href="{{ route('admin.user-management-edit', ['id' => $log->user?->id]) }}" class="text-hover-khardl text-gray-600">{{ $log->user?->full_name }}</a>
                                         @endif
                                     </td>
                                     <td>
@@ -108,7 +108,7 @@
                                     <td>{{ $log->created_at }}</td>
                                     <td>
                                         @if($log->metadata)
-                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal_{{ $log->id }}">
+                                        <button class="btn btn-khardl btn-sm" data-bs-toggle="modal" data-bs-target="#modal_{{ $log->id }}">
                                             <i class="fa fa-eye"></i>
                                         </button>
                                         <div class="modal fade" id="modal_{{ $log->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -116,7 +116,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         @if($log->user)
-                                                        <a href="{{ route('admin.user-management-edit', ['id' => $log->user?->id]) }}" class="text-hover-primary text-gray-600">{{ $log->user?->full_name }}</a>
+                                                        <a href="{{ route('admin.user-management-edit', ['id' => $log->user?->id]) }}" class="text-hover-khardl text-gray-600">{{ $log->user?->full_name }}</a>
                                                         @endif
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>

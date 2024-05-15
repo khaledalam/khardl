@@ -88,13 +88,30 @@
               <!--end::Form-->
 
 
-
-
+                 
                       <!--begin::Tables Widget 9-->
                       <div class="card mb-5 mb-xl-8">
-
+                    
+    
                           <!--begin::Body-->
                           <div class="card-body py-3">
+                            <form method="GET" action="{{ route('admin.promoters') }}">
+                            <div class="position-relative w-md-400px me-md-2">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                        <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <div class="d-flex flex-row">
+                                    <input type="text" class="form-control form-control-solid ps-10" name="search" value="{{ request('search') }}" placeholder="{{ __('search') }}" />
+
+                                    <button type="submit" class="btn btn-khardl">{{__('Search')}}</button>
+                                </div>
+                            </div>
+                            </form>
                               <!--begin::Table container-->
                               <div class="table-responsive">
                                   <!--begin::Table-->
@@ -123,12 +140,12 @@
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div class="d-flex justify-content-start flex-column">
-                                                            <a class="text-dark fw-bolder text-hover-primary fs-6">{{ $promoter->name }}</a>
+                                                            <a class="text-dark fw-bolder text-hover-khardl fs-6">{{ $promoter->name }}</a>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="/register?ref={{ $promoter->url }}" target="_blank" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $promoter->url }}</a>
+                                                    <a href="/register?ref={{ $promoter->url }}" target="_blank" class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $promoter->url }}</a>
                                                 </td>
                                                 <td>
                                                     <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $promoter->entered }}</span>
@@ -147,7 +164,7 @@
                                                     <form class="delete-form justify-content-end" action="{{ route('admin.delete-promoter', ['id' => $promoter->id]) }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                        <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-khardl btn-sm">
                                                           <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                           <span class="svg-icon svg-icon-3">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -166,7 +183,7 @@
                                       <!--end::Table body-->
                                   </table>
                                   <!--end::Table-->
-                                  {{ $promoters->links('pagination::bootstrap-4') }}
+                                  {{ $promoters->withQueryString()->links('pagination::bootstrap-4') }}
                               </div>
                               <!--end::Table container-->
 

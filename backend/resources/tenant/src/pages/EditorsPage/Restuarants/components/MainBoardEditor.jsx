@@ -4,7 +4,7 @@ import ImgPlaceholder from "../../../../assets/imgPlaceholder.png";
 import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg";
 import { IoCloseOutline, IoMenuOutline } from "react-icons/io5";
 import CategoryItem from "./CategoryItem";
-import ProductItem from "./NewProductItem";
+import ProductItem from "./ProductItem";
 import EditorSlider from "./EditorSlider";
 import { useSelector, useDispatch } from "react-redux";
 import { MenuContext } from "react-flexible-sliding-menu";
@@ -32,6 +32,7 @@ import GreenDot from "../../../../assets/greenDot.png";
 import { set } from "react-hook-form";
 import Footer from "./Footer";
 import FooterModal from "./FooterModal";
+import { toast } from "react-toastify";
 
 const MainBoardEditor = ({
   categories,
@@ -148,11 +149,13 @@ const MainBoardEditor = ({
 
   useEffect(() => {
     setListofBannerImages(
-      banner_images.map((image) => {
-        return {
-          croppedImage: `${image.url}`,
-        };
-      })
+      Array.isArray(banner_images)
+        ? banner_images.map((image) => {
+            return {
+              croppedImage: `${image.url}`,
+            };
+          })
+        : []
     );
   }, [banner_images]);
   const showCroppedImage = async () => {
@@ -230,6 +233,17 @@ const MainBoardEditor = ({
   const handleBannerUpload = (event) => {
     event.preventDefault();
 
+    const file = event.target.files[0];
+    const maxSizeInBytes = 5 * 1024 * 1024;
+    if (file.size > maxSizeInBytes) {
+      toast.warn(
+        t("File size exceeds the limit of 5MB. Please choose a smaller file.")
+      );
+      // You can also reset the file input here if needed
+      event.target.value = null;
+      return;
+    }
+
     const selectedBanner = event.target.files[0];
 
     if (selectedBanner) {
@@ -246,7 +260,7 @@ const MainBoardEditor = ({
       }
       dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)));
       setShowCropSection(true);
-      if (listofBannerImages.length < 2) {
+      if (listofBannerImages?.length < 2) {
         dispatch(bannerType("one-photo"));
       } else {
         dispatch(bannerType("slider"));
@@ -272,13 +286,15 @@ const MainBoardEditor = ({
         })
       );
     }
-    if (banner_type == "slider" && banner_images.length > 0) {
+    if (banner_type == "slider" && banner_images?.length > 0) {
       setListofBannerImages(
-        banner_images.map((image) => {
-          return {
-            croppedImage: `${image.url}`,
-          };
-        })
+        Array.isArray(banner_images)
+          ? banner_images.map((image) => {
+              return {
+                croppedImage: `${image.url}`,
+              };
+            })
+          : []
       );
     }
     if (banner_type == "one-photo" && banner_image) {
@@ -316,11 +332,11 @@ const MainBoardEditor = ({
 
   const removeUploadedImage = (index) => {
     console.log("index", index);
-    if (index >= 0 && index < listofBannerImages.length) {
+    if (index >= 0 && index < listofBannerImages?.length) {
       // console.log("log list", listofBannerImages.splice(index, 1));
       setListofBannerImages(listofBannerImages.filter((_, id) => id !== index));
       console.log("list of uploaded images - after", listofBannerImages);
-      if (listofBannerImages.length < 2) {
+      if (listofBannerImages?.length < 2) {
         dispatch(bannerType("one-photo"));
       } else {
         dispatch(bannerType("slider"));
@@ -649,6 +665,7 @@ const MainBoardEditor = ({
                             {category.items.map((product, idx) => (
                               <ProductItem
                                 key={idx + "prdt"}
+                                product={product}
                                 id={product.id}
                                 name={product.name}
                                 imgSrc={product.photo}
@@ -839,27 +856,29 @@ const MainBoardEditor = ({
 
               <div
                 className={`${
-                  listofBannerImages.length > 0
+                  listofBannerImages?.length > 0
                     ? "flex flex-row space-x-[8px] mt-[8px] "
                     : "hidden"
                 }`}
               >
-                {listofBannerImages.map((image, idx) => (
+                {listofBannerImages?.map((image, idx) => (
                   <div key={idx} className="relative">
                     <img
                       src={image.croppedImage}
                       alt="banner"
                       className="w-[80px] h-[40px] rounded-[10px] object-cover"
                     />
-                    <div className="absolute top-[-0.8rem] right-[-1rem]">
-                      <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
-                        <IoCloseOutline
-                          size={16}
-                          className="text-red-500"
-                          onClick={() => removeUploadedImage(idx)}
-                        />
+                    {listofBannerImages?.length > 1 && (
+                      <div className="absolute top-[-0.8rem] right-[-1rem]">
+                        <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
+                          <IoCloseOutline
+                            size={16}
+                            className="text-red-500"
+                            onClick={() => removeUploadedImage(idx)}
+                          />
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -868,7 +887,7 @@ const MainBoardEditor = ({
                 type="file"
                 name="banner"
                 id={"banner"}
-                accept="image/*"
+                accept=".jpg, .jpeg, .png"
                 onChange={handleBannerUpload}
                 className="hidden"
                 hidden
@@ -897,20 +916,20 @@ const MainBoardEditor = ({
               <div className="flex flex-row space-x-[16px] my-[16px]">
                 <button
                   onClick={() => {
-                    listofBannerImages.length == 1 &&
+                    listofBannerImages?.length == 1 &&
                       setUploadedSingleBanner(
                         listofBannerImages[0].croppedImage
                       );
                     setIsBannerModalOpened(false);
-                    listofBannerImages.length == 0 &&
+                    listofBannerImages?.length == 0 &&
                       setUploadedSingleBanner(null);
 
-                    if (listofBannerImages.length < 2) {
+                    if (listofBannerImages?.length < 2) {
                       dispatch(bannerType("one-photo"));
                     } else {
                       dispatch(
                         BannerImages(
-                          listofBannerImages.map((image) => {
+                          listofBannerImages?.map((image) => {
                             return {
                               url: image.croppedImage,
                             };

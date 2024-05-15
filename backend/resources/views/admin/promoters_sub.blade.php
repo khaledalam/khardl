@@ -13,7 +13,7 @@
                   <div id="kt_content_container" class="container-xxl">
 
                       <!--begin::Form-->
-                
+
                   <!--begin::Main column-->
                     <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                         <!--begin::Tab content-->
@@ -28,12 +28,13 @@
                                         <div class="d-flex flex-column gap-7 gap-lg-10">
                                             <!--begin::General options-->
                                             <div class="card card-flush py-4">
+                                               
                                                 <!--begin::Card header-->
                                                 <div class="card-header">
                                                     <div class="card-title">
                                                         <h2>{{ __('Make a new coupon for subscriptions') }}</h2>
                                                     </div>
-                                                   
+
                                                 </div>
                                                 <!--end::Card header-->
                                                 <form action="{{ route('admin.save.promoters.sub') }}" method="POST">
@@ -114,8 +115,8 @@
                                                                         </div>
                                                                         <input type="number" min="1" name="max_use" value="{{ old('max_use') }}" class="form-control mb-2" placeholder="{{ __('Max use') }}" />
                                                                     </div>
-                                                               
-                                                                  
+
+
                                                                 </div>
                                                                 <div id="kt_account_settings_profile_details" class="collapse show">
                                                                     <!--begin::Card body-->
@@ -151,12 +152,12 @@
                                                                             </div>
                                                                             <!--end::Label-->
                                                                         </div>
-                    
+
                                                                         <!--end::Input group-->
                                                                     </div>
                                                                     <!--end::Card body-->
                                                                 </div>
-                                                              
+
 
                                                         </div>
                                                         <!--begin::Actions-->
@@ -179,7 +180,7 @@
                                 <!--end::Tab pane-->
                     </div>
                     <!--end::Main column-->
-      
+
               <!--end::Form-->
 
 
@@ -190,6 +191,24 @@
 
                           <!--begin::Body-->
                           <div class="card-body py-3">
+                            <form method="GET" action="{{ route('admin.promoters.sub') }}">
+                                <div class="position-relative w-md-400px me-md-2">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                    <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                    <div class="d-flex flex-row">
+                                        <input type="text" class="form-control form-control-solid ps-10" name="search" value="{{ request('search') }}" placeholder="{{ __('search') }}" />
+    
+                                        <button type="submit" class="btn btn-khardl">{{__('Search')}}</button>
+                                    </div>
+            
+                                </div>
+                                </form>
                               <!--begin::Table container-->
                               <div class="table-responsive">
                                   <!--begin::Table-->
@@ -203,7 +222,7 @@
                                               <th class="min-w-150px">{{ __('discount') }}</th>
                                               <th class="min-w-150px">{{ __('Type') }}</th>
                                               <th class="min-w-150px">{{ __('Number of usage') }}</th>
-                                         
+
                                               <th class="min-w-150px">{{ __('restaurant subscription') }}</th>
                                               <th class="min-w-150px">{{ __('lifetime app') }}</th>
                                               <th class="min-w-150px">{{ __('yearly app') }}</th>
@@ -227,7 +246,7 @@
                                                         </a>
                                                     </div>
                                                 </td>
-                                            
+
                                                 <td>
                                                     <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $coupon->code }}</span>
                                                 </td>
@@ -240,7 +259,7 @@
                                                 <td>
                                                     <span class="badge badge-light-success fw-bolder px-4 py-3">{{ __($coupon->n_of_usage) }}</span>
                                                 </td>
-                                                
+
                                                 <td>
                                                     <span class="badge  fw-bolder px-4 py-3">{{ $coupon->is_branch_purchase ? '✅':'❌' }}</span>
                                                 </td>
@@ -254,7 +273,7 @@
                                                     <form class="delete-form justify-content-end" action="{{ route('admin.delete-promoter-coupon', ['id' => $coupon->id]) }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                        <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-khardl btn-sm">
                                                           <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                           <span class="svg-icon svg-icon-3">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -266,14 +285,15 @@
                                                           <!--end::Svg Icon-->
                                                         </button>
                                                       </form>
-                                                </td> 
+                                                </td>
                                             </tr>
-                                        @endforeach 
+                                        @endforeach
                                       </tbody>
                                       <!--end::Table body-->
                                   </table>
                                   <!--end::Table-->
-                                  {{ $coupons->links('pagination::bootstrap-4') }}
+                                
+                                  {{ $coupons->withQueryString()->links('pagination::bootstrap-4') }}
                               </div>
                               <!--end::Table container-->
 

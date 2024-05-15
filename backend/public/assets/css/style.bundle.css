@@ -44790,6 +44790,7 @@ show a {
 .aside-light .menu .menu-title {
     font-weight: 500;
 }
+
 @media (min-width: 992px) {
     .content {
         padding: 30px 0;

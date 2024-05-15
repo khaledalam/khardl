@@ -80,11 +80,14 @@ class RestaurantService
             ->whenSearch($request['search'] ?? null);
         $restaurants = $query->orderBy('created_at', 'DESC')->get();
         $totalRestaurantsCount = count($restaurants);
-
-        // TODO @todo make sub active or not tag with search
         $tenants = [];
-
-        $restaurants = $query->paginate(config('application.perPage') ?? 20);
+        $results = $query->get()->map(function ($tenant) {
+            $tenant->run(function ($res) {
+                $res->updated_at = $res->customerApp()?->updated_at;
+            });
+            return $tenant;
+        });
+        $restaurants = $results->sortByDescAndPaginate('updated_at', config('application.perPage'));
         $user = Auth::user();
 
         return view('admin.app-requested-restaurants', compact('restaurants', 'user', 'totalRestaurantsCount'));

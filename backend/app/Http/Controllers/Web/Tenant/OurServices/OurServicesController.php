@@ -38,7 +38,7 @@ class OurServicesController extends BaseController
     }
     public function coupon($coupon,$type,$number_of_branches = null)
     {
-        return $this->ourServicesService->coupon($coupon,$type,$number_of_branches = null);
+        return $this->ourServicesService->coupon($coupon,$type,$number_of_branches);
     }
 
 }

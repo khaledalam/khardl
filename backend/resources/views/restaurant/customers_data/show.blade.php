@@ -3,6 +3,15 @@
 @section('title', __('customers-data'))
 
 @section('content')
+<style>
+  
+  .google_map {
+        position: static !important;
+        width: 100%;
+        height: 500px;
+ 
+    }
+</style>
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
     <!--begin::Post-->
@@ -133,21 +142,7 @@
                                                 {{ $restaurantUser->address }}
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="text-muted">
-                                                <div class="d-flex align-items-center">
-                                                    <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
-                                                    <i class="bi bi-building mx-2"></i>
-                                                    <!--end::Svg Icon-->{{ __('Branch') }}</div>
-                                            </td>
-                                            @if($restaurantUser->branch)
-                                            <td class="fw-bolder text-end">
-                                                <a href="{{ route('restaurant.get-category',['id' => \App\Models\Tenant\Category::where('branch_id', $user->branch->id)?->first()?->id ?? -1, 'branchId' => $restaurantUser->branch->id]) }}">
-                                                    {{ $restaurantUser->branch?->name }}
-                                                </a>
-                                            </td>
-                                            @endif
-                                        </tr>
+                                  
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
@@ -178,7 +173,7 @@
                         <div class="d-flex flex-column gap-7 gap-lg-10">
                             <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
                                 <!--begin::Payment address-->
-                                <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
+                                <div class="card card-flush py-4 flex-row-fluid overflow-hidden p-5">
                                     <!--begin::Background-->
                                     <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">
                                         <img src="assets/media/icons/duotune/ecommerce/ecm001.svg" class="w-175px" />
@@ -194,13 +189,15 @@
                                     </div>
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
-                                    <div class="card-body pt-0">
+                                    <div class="card card-flush border-0 card-map p-5">
+                                    <div class="card-body ">
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <!--begin::Image-->
-
+                                                <div id="map-autocomplete-card{{ $restaurantUser->id }}"></div>
                                                 <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
-                                                    <div id="map{{ $restaurantUser->id }}" style="width: 100%; height: 90%; border:0;"></div>
+                                                    <div id="map{{ $restaurantUser->id }}" class="google_map"></div>
+                                                   
                                                     <input type="hidden" id="lat{{ $restaurantUser->id }}" name="lat" value="{{ $restaurantUser->lat }}" />
                                                     <input type="hidden" id="lng{{ $restaurantUser->id }}" name="lng" value="{{ $restaurantUser->lng }}" />
                                                 </div>
@@ -208,6 +205,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                     <!--end::Card body-->
                                 </div>
                                 <!--end::Payment address-->
@@ -366,7 +364,10 @@
 
 @endsection
 @section('js')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places&loading=async&v=beta"></script>
+
+@include('components.map')
+
 <script>
     $(document).ready(function() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -393,6 +394,7 @@
             }, 800);
         });
     });
+    initializeMapOnClick("{{$restaurantUser->id}}", "{{$restaurantUser->lat ?? ''}}", "{{$restaurantUser->lng ?? ''}}");
 
 </script>
 @endsection

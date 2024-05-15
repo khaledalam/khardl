@@ -18,7 +18,7 @@ import {
 import { useState, useEffect } from "react";
 
 import Modal from "./Modal";
-
+import { toast } from "react-toastify";
 import DoubleRightArrows from "../assets/doubleRightArrows.png";
 import XIcon from "../assets/xIcon.png";
 import { set } from "react-hook-form";
@@ -133,15 +133,18 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
 
   const emptyCarts = async () => {
     try {
-      await AxiosInstance.delete(`/carts/trash`, {})
+      await AxiosInstance.delete(`/trash/carts`, {})
         .then(() => {
           dispatch(setCartItemsData([]));
           dispatch(getCartItemsCount(0));
         })
         .finally(async () => {
+          toast.success(`${t('switched to another branch successfully')}`)
           await fetchCartData().then((r) => null);
         });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleEmptyCarts = () => {
@@ -402,9 +405,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
       </div>
       <ConfirmationModal
         isOpen={openEmptyCartsConfirmModal}
-        message={t(
-          "When you change the current branch, the carts will be empty."
-        )}
+        message={`${t('When you change the current branch, the carts will be empty.')}`}
         onConfirm={handleEmptyCarts}
         onClose={() => setOpenEmptyCartsConfirmModal(false)}
       />
