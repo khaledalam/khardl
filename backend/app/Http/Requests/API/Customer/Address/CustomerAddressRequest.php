@@ -26,6 +26,7 @@ class CustomerAddressRequest extends FormRequest
         return [
             'type' => ['required',new Enum(AddressesTypeEnum::class)],
             'address' => ['required','min:2','max:255'],
+            'name' => ['nullable','min:2','max:255'],
             'lat' => ['nullable','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
             'lng' => ['nullable','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
         ];

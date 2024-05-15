@@ -57,7 +57,8 @@ class AddressService
             'address',
             'type',
             'lat',
-            'lng'
+            'lng',
+            'name'
         ]);
     }
 }
