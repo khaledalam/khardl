@@ -54,15 +54,19 @@ class RestaurantController extends BaseController
 
         $settings = Setting::all()->firstOrFail();
 
+        $categories = Category::where('branch_id', 1)
+//            ->orderByRaw("id = $id DESC")
+            ->get();
+        $selectedCategory = Category::first();
+        $branchId =1;
         return view(
             'restaurant.promotions',
-            compact('user', 'settings')
+            compact('user', 'branchId','settings','categories','selectedCategory')
         );
     }
 
     public function updatePromotions(Request $request)
     {
-
         $request->validate([
             'loyalty_points' => 'required|numeric|min:0',
 //            'loyalty_point_price' => 'required|numeric|min:0',

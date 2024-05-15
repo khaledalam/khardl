@@ -22,11 +22,13 @@ class CouponService
     }
     public function create()
     {
-        return view('restaurant.coupons.create');
+        $user = Auth::user();
+        return view('restaurant.coupons.create',compact('user'));
     }
     public function edit($request, $coupon)
     {
-        return view('restaurant.coupons.edit',compact('coupon'));
+        $user = Auth::user();
+        return view('restaurant.coupons.edit',compact('coupon','user'));
     }
     public function store($request)
     {
