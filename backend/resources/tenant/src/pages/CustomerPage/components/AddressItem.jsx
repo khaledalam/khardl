@@ -24,12 +24,22 @@ const AddressItem = ({ address, onEdit, onDelete, onSetAsDefault }) => {
         address.default === 1 ? "border-green-900" : "border-gray-200"
       }`}
     >
-      <div className="self-stretch justify-start items-center gap-2 inline-flex">
-        <div className="grow shrink basis-0 h-10 justify-start items-center gap-2 flex">
-          <div className="px-[9px] py-1 bg-white rounded-[50px] border border-gray-200 justify-start items-center text-center gap-2 flex">
-            {AddressTypeIcons[address?.type]}
-            <div className="text-zinc-600 font-light font-['Plus Jakarta Sans']">
-              {t(address.type)}
+      <div className="self-stretch justify-end items-center gap-2 inline-flex">
+        <div className="w-full h-10 justify-start items-center gap-2 flex">
+          {address.default == 1 && (
+            <div className="px-[9px] py-1 bg-white rounded-[50px] border border-green-700 justify-start items-center text-center gap-2 flex">
+              <div className="text-zinc-600 font-light font-['Plus Jakarta Sans']">
+                {t("Default")}
+              </div>
+            </div>
+          )}
+          <div className="px-[9px] py-1 bg-white rounded-[50px] border border-gray-200 justify-between items-center text-center max-w-32  gap-2 flex">
+            {/* {AddressTypeIcons[address?.type]} */}
+            <div
+              className="text-zinc-600 font-light font-['Plus Jakarta Sans'] max-w-32 w-fit overflow-hidden text-nowrap text-ellipsis"
+              title={address.type}
+            >
+              {address.type}
             </div>
           </div>
         </div>
@@ -57,14 +67,14 @@ const AddressItem = ({ address, onEdit, onDelete, onSetAsDefault }) => {
                   setSettingModalVisible(false);
                 }}
               >
-                {t('Set as default')}
+                {t("Set as default")}
               </div>
             )}
             <div
               className="cursor-pointer hover:bg-neutral-900 hover:text-white p-2"
               onClick={onEdit}
             >
-              {t('Edit')}
+              {t("Edit")}
             </div>
             <div
               className="cursor-pointer hover:bg-red-900 hover:text-white p-2"
@@ -73,7 +83,7 @@ const AddressItem = ({ address, onEdit, onDelete, onSetAsDefault }) => {
                 setSettingModalVisible(false);
               }}
             >
-              {t('Delete')}
+              {t("Delete")}
             </div>
           </div>
         </div>
