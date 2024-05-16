@@ -3,7 +3,9 @@
 namespace App\Http\Services\tenant\Customer;
 
 use App\Http\Resources\API\Tenant\OrderResource;
+use App\Models\Tenant;
 use App\Models\User;
+use App\Packages\TapPayment\Customer\Customer;
 use App\Traits\APIResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,15 +15,58 @@ class CustomerDataService
     use APIResponseTrait;
     public function getList($request)
     {
+
+
+        // @TODO: to remove
+        $restaurants = Tenant::all();
+        foreach($restaurants as $restaurant){
+            try {
+                $restaurant->run(function() use($restaurant){
+                    $customers = RestaurantUser::Customers()->get();
+                    foreach ($customers as $customer) {
+                        if ($customer->addresses->count()) {
+                            foreach ($customer->addresses as $address) {
+                                if (!$address->city || !$address->region || !$address->country) {
+                                    try {
+                                        // Reverse geocoding using Google API
+                                        list($city, $region, $country) = addressCityRegionCountry($address->lat, $address->lng);
+
+                                        $address->city = $city;
+                                        $address->region = $region;
+                                        $address->country = $country;
+
+                                        $address->save();
+                                    } catch (\Exception $e) {
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                } catch (\Exception $e) {
+
+            }
+        }
+
+
         /** @var RestaurantUser $user */
         $user  = Auth::user();
-        $allCustomers = RestaurantUser::with(['branch'])
+        $allCustomers = RestaurantUser::with(['branch', 'addresses', 'orders'])
         ->Customers()
         ->whenSearch($request['search']??null)
         ->whenStatus($request['status']??null)
         ->orderBy('created_at', 'DESC')
         ->paginate(config('application.perPage')??20);
         $customerStatuses = RestaurantUser::STATUS;
+
+        $customerByLocation = [];
+
+        foreach ($allCustomers as $customer) {
+            dd($customer->orders);
+        }
+
         return view('restaurant.customers_data.list', compact('user','allCustomers','customerStatuses'));
     }
     public function show(Request $request,RestaurantUser $restaurantUser)

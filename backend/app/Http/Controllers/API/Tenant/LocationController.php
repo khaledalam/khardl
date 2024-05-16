@@ -31,36 +31,16 @@ class LocationController extends Controller
         $inputs = $request->all();
         $lat = $inputs['lat'];
         $lng = $inputs['lng'];
-        $googleMapsApiKey = env('GOOGLE_MAPS_API_KEY');
 
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$lng}&key={$googleMapsApiKey}";
-
-//        $ch = curl_init();
-//        curl_setopt($ch, CURLOPT_URL, $url);
-//
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-//        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-//        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  2);
-//        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-//
-//        $response = curl_exec($ch);
-
-        $response = file_get_contents($url);
-
+        $response = convertLatLngToAddress($lat, $lng);
 
         if($response === false) {
-//            $error = curl_error($ch);
             return $this->sendError('Request Error.', 'Error: Unable to retrieve address request.');
         }
 
-//        curl_close($ch);
-
-        $data = json_decode($response, true);
-
-        if ($data['status'] === 'OK') {
-            return $data['results'][0]['formatted_address']
-                ?? $data['geocode']?->plus_code?->compound_code
+        if ($response['status'] === 'OK') {
+            return $response['results'][0]['formatted_address']
+                ?? $response['geocode']?->plus_code?->compound_code
                 ?? "$lat,$lng";
         }
 

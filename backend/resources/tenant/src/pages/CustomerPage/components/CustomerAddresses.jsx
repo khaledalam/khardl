@@ -20,7 +20,7 @@ const CustomerAddresses = () => {
   const [openDeleteConfirmModal, setOpenDeleteConfirmModal] = useState(-1);
   const [editMode, setEditMode] = useState(-1);
   const [address, setAddress] = useState({
-    type: "",
+    type: "other",
   });
 
   const setAddresses = (addresses) => {
@@ -48,6 +48,7 @@ const CustomerAddresses = () => {
 
   const addAddress = async () => {
     try {
+      address['type'] = 'other';
       const addressResponse = await AxiosInstance.post("/add-address", address);
       if (addressResponse?.data?.success === true) {
         toast.success(addressResponse?.data?.message);
