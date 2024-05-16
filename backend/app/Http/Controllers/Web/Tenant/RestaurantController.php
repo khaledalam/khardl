@@ -51,17 +51,15 @@ class RestaurantController extends BaseController
     public function promotions()
     {
         $user = Auth::user();
-
+    
         $settings = Setting::all()->firstOrFail();
 
-        $categories = Category::where('branch_id', 1)
-//            ->orderByRaw("id = $id DESC")
-            ->get();
-        $selectedCategory = Category::first();
-        $branchId =1;
+        $branches = Branch::all()->when($user->isWorker(),function($q)use($user){
+            return $q->where('id',$user->branch_id);
+        });
         return view(
             'restaurant.promotions',
-            compact('user', 'branchId','settings','categories','selectedCategory')
+            compact('user','settings','branches')
         );
     }
 
@@ -750,5 +748,15 @@ class RestaurantController extends BaseController
         $user = Auth::user();
 
         return view('restaurant.profile', compact('user'));
+    }
+    public function toggleLoyaltyPoint($id){
+        $user = Auth::user();
+        $branch = Branch::findOrFail($id);
+        if($user->isWorker() && $id != $user->branch->id)  return null;
+        $branch->loyalty_availability = !$branch->loyalty_availability;
+        $branch->save();
+        return response()->json(['checked' => $branch->loyalty_availability]);
+
+
     }
 }

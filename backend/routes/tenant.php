@@ -93,6 +93,7 @@ Route::group([
 ], static function () {
 
     Route::get('/impersonate/{token}', static function ($token) {
+        // TODO  @todo improvement make custom response to remember user 
        UserImpersonation::makeResponse($token);
        if(Auth::user()?->isRestaurantOwner() || Auth::user()?->hasPermissionWorker('can_access_summary'))return redirect()->route('restaurant.summary');
        return redirect()->route('restaurant.branches');
@@ -241,7 +242,9 @@ Route::group([
             });
 
             Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
-
+            Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions')->middleware('permission:can_access_coupons');
+            Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings')->middleware('permission:can_access_coupons');
+            Route::post('/branches/{id}/toggleLoyaltyPoint', [RestaurantController::class, 'toggleLoyaltyPoint'])->name('restaurant.branch.toggleLoyaltyPoint')->middleware('permission:can_access_coupons');
 
             Route::middleware('restaurant')->group(function () {
 
@@ -265,8 +268,7 @@ Route::group([
                 Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
 
 
-                Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
-                Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings');
+                Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings')->middleware('permission:can_access_coupons');
 
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');

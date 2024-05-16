@@ -325,7 +325,6 @@
                             </a>
                         </div>
 
-                        @if($user?->hasPermission("can_access_restaurants"))
                         <!-- Restaurants -->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($link == 'promotions' || $link == 'coupons')  ? 'show' : ''}}">
                             <span class="{{ ($link == 'promotions' || $link == 'coupons')? 'menu-link active ' : 'menu-link' }}">
@@ -347,7 +346,7 @@
                                             </span>
                                             <!--end::Svg Icon-->
                                         </span>
-                                        <span class="menu-title  {{($link == 'coupons') ? 'text-khardl  ' : ''}}">{{ __('promotions')}}</span>
+                                        <span class="menu-title  {{($link == 'promotions') ? 'text-khardl  ' : ''}}">{{ __('promotions')}}</span>
                                     </a>
                                 </div>
                               
@@ -370,7 +369,7 @@
         
                             </div>
                         </div>
-                    @endif
+            
                         <!-- Coupons -->
                     
                         @if(\App\Models\Tenant\Setting::first()?->is_live && \App\Models\ROSubscription::first()?->status == \App\Models\ROSubscription::ACTIVE)
