@@ -382,7 +382,7 @@
 
 
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                                <span class="">{{__('IBAN authentication number')}}<span class="text-danger h4"> * </span></span>
+                                <span class="">{{__('IBAN authentication number')}}</span>
                             </label>
                         <br>
                             <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][documents][0][number]" value="{{old('wallet.bank.documents.0.number')}}" /><br/>
