@@ -1420,5 +1420,7 @@
     "This will refresh the summary result of page, note that the results will be refresh automatically for every :hour hours.":"سيؤدي ذلك إلى تحديث ارقام الملخص للصفحة ، لاحظ أن النتائج سيتم تحديثها تلقائيًا كل :hours ساعات.",
     "Promotions":"الخصومات",
     "How many restaurants can use this coupon, if left empty it's Unlimited":"كم عدد المطاعم التي يمكنها استخدام هذه القسيمة, إذا تركت فارغة فهي غير محدودة",
-    "App":"تطبيق"
+    "App":"تطبيق",
+    "Subscriped":"تم الاشتراك",
+    "Not subscriped":"غير مشترك"
 }

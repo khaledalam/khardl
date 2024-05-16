@@ -14,11 +14,11 @@
                         </g>
                     </svg>
                 </span>
-                {{__('verified')}}
+                {{__('Subscriped')}}
             </span>
             @else
             <span class="badge badge badge-secondary px-4 py-3">
-                {{__('Not verified')}}
+                {{__('Not subscriped')}}
             </span>
             @endif
         </div>
