@@ -123,12 +123,14 @@
                         @foreach($restaurants as $restaurant)
                         <div class="col-md-6 col-xxl-4">
                             <!--begin::Card-->
-                            <div class="card">
+                            <div class="card restaurants">
                                 <!--begin::Card body-->
                                 <div class="card-body d-flex flex-center flex-column p-9 pt-3">
-
                                     {{-- {{dd($restaurant)}}--}}
                                     <!--begin::Name-->
+                                    <span class="badge badge-khardl">
+                                       {{ $restaurant->mapper_hash }}
+                                    </span>
                                     <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-khardl fw-bolder mb-0">
                                         @php
                                             $customer_app = null;
@@ -162,7 +164,7 @@
 
                                     <!--end::Name-->
                                     <!--begin::Position-->
-                                    <div class="fw-bold text-gray-400 mb-6">{{ $restaurant->first_name }} {{ $restaurant->last_name }}</div>
+                                    <div class="fw-bold text-gray-400 mb-6">{{ $restaurant->full_name }}</div>
                                     <!--end::Position-->
 
 

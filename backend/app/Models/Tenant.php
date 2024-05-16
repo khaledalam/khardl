@@ -48,6 +48,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'global_id'
         );
     }
+    /* Start getter and setters */
     public function getNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
@@ -75,6 +76,10 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     public function getUrlAttribute(){
         return tenant_route($this->primary_domain->domain .'.'.config("tenancy.central_domains")[0], 'home', [], true) . '/api';
     }
+    public function getFullNameAttribute(){
+        return $this->first_name . ' ' . $this->last_name;
+    }
+    /* Start getter and setters */
     public function route($route, $parameters = [], $absolute = true)
     {
         $domain = $this->primary_domain->domain;
@@ -167,8 +172,17 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     {
         return $query->when($search != null, function ($q) use ($search) {
             return $q->where('restaurant_name', 'like', '%' . $search . '%')
+            ->orWhere('email', 'like', '%' . $search . '%')
             ->orWhereHas('primary_domain', static function ($query1) use ($search) {
                 $query1->where('domain', 'like', '%' . $search . '%');
+            })->orWhere(function ($query2) use ($search) {
+                try {
+                    $query2->whereJsonContains('data->mapper_hash', $search)
+                    ->orWhereJsonContains('data->first_name', $search)
+                    ->orWhereJsonContains('data->last_name', $search);
+                } catch (\Exception $e) {
+                    \Sentry\captureException($e);
+                }
             });
         });
     }
