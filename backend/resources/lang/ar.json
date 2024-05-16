@@ -1040,7 +1040,7 @@
     "Make a new coupon" : "انشا قسيمة خصم",
     "Cart total" : "المبلغ الكلي للعربة",
     "each_time" : "مرة",
-    "Coupons" : "قسائم الخصومات",
+    "Coupons" : "الكوبونات",
     "Update" : "تعديل",
     "Your estimated sales (Monthly)":"مبيعاتك المقدرة (شهريا)",
     "Range":"يتراوح",
@@ -1417,5 +1417,6 @@
     "Highest Revenues":"أعلى الإيرادات",
     "Highest visitors":"أعلى الزوار",
     "Image will be shown to customers":"سيتم عرض الصورة للعملاء",
-    "This will refresh the summary result of page, note that the results will be refresh automatically for every :hour hours.":"سيؤدي ذلك إلى تحديث ارقام الملخص للصفحة ، لاحظ أن النتائج سيتم تحديثها تلقائيًا كل :hours ساعات."
+    "This will refresh the summary result of page, note that the results will be refresh automatically for every :hour hours.":"سيؤدي ذلك إلى تحديث ارقام الملخص للصفحة ، لاحظ أن النتائج سيتم تحديثها تلقائيًا كل :hours ساعات.",
+    "Promotions":"الخصومات"
 }
