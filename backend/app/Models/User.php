@@ -176,6 +176,17 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
             }
         });
     }
+    public function scopeWhenSearch($query,$search)
+    {
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('first_name', 'like', '%' . $search . '%')
+            ->orWhere('last_name', 'like', '%' . $search . '%')
+            ->orWhere('email', 'like', '%' . $search . '%')
+            ->orWhere('phone', 'like', '%' . $search . '%')
+            ->orWhere('restaurant_name', 'like', '%' . $search . '%')
+            ->orWhere('restaurant_name_ar', 'like', '%' . $search . '%');
+        });
+    }
     /* Scopes */
     protected static function newFactory()
     {

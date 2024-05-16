@@ -489,6 +489,7 @@ class AdminController extends Controller
     public function restaurantOwnerManagement(Request $request)
     {
         $admins = User::whenType($request['type']??null)
+            ->whenSearch($request['search'] ?? null)
             ->where('id','!=',1)
             ->orderBy('id','desc')
             ->paginate(config('application.perPage')??20);
