@@ -39,14 +39,14 @@
                                     <div class="card-title m-0 float-right">
 
                                         @if($branch->active)
-                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to deactivate this branch ?') }}`)" class="btn btn-danger text-center">
+                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to deactivate this branch ?') }}`)" class="btn btn-danger text-center text-white">
                                             <label for="Activate">{{ __('Deactivate') }}</label>
-                                            <i class="fa fa-play text-white m-2"></i>
+                                            <i class="fa fa-play m-2"></i>
                                         </a>
                                         @else
-                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to activate this branch ?') }}`)" class="btn btn-khardl text-center">
+                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to activate this branch ?') }}`)" class="btn btn-khardl text-center text-white">
                                             <label for="Activate">{{ __('Activate') }}</label>
-                                            <i class="fa fa-play text-white m-2"></i>
+                                            <i class="fa fa-play m-2"></i>
                                         </a>
                                         @endif
 
