@@ -334,7 +334,7 @@
                                     <i class="fa fa-store"></i>
                                         <!--end::Svg Icon-->
                                 </span>
-                                <span class="menu-title">{{ __('Discounts')}} </span>
+                                <span class="menu-title">{{ __('Promotions')}} </span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -350,8 +350,8 @@
                                         <span class="menu-title  {{($link == 'coupons') ? 'text-khardl  ' : ''}}">{{ __('promotions')}}</span>
                                     </a>
                                 </div>
-                              
-                            
+
+
                                 <!-- Staff evaluation -->
                                 <div class="menu-item">
                                     <a class="menu-link {{($link == 'coupons') ? 'bg-black  ' : ''}}" href="{{ route('coupons.index') }}">
@@ -365,14 +365,14 @@
                                         <span class="menu-title {{($link == 'coupons') ? 'text-khardl  ' : ''}}">{{ __('Coupons')}}</span>
                                     </a>
                                 </div>
-                      
-                             
-        
+
+
+
                             </div>
                         </div>
                     @endif
                         <!-- Coupons -->
-                    
+
                         @if(\App\Models\Tenant\Setting::first()?->is_live && \App\Models\ROSubscription::first()?->status == \App\Models\ROSubscription::ACTIVE)
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('restaurant.qr')}}">
@@ -420,7 +420,7 @@
                                 </span>
                             </a>
                         </div>
-                      
+
                         <!-- QR maker -->
                         {{-- <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.qr')}}">
