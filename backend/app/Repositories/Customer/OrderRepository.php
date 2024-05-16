@@ -6,6 +6,7 @@ use App\Enums\Admin\NotificationTypeEnum;
 use App\Models\Tenant\OrderStatusLogs;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\Setting;
+use App\Models\Tenant\UserAddress;
 use App\Notifications\NotificationAction;
 use Exception;
 use App\Models\Tenant\Order;
@@ -22,14 +23,15 @@ use Illuminate\Support\Facades\Notification;
 class OrderRepository
 {
     use APIResponseTrait;
-    public function create(OrderRequest $request,CartRepository $cart,$user = null): Order | JsonResponse
+    public function create(OrderRequest $request, CartRepository $cart, $user = null): Order|JsonResponse
     {
         DB::beginTransaction();
         try {
-            $user= $user ?? Auth::user();
+            $user = $user ?? Auth::user();
             $subtotal = $cart->subTotal();
-            $delivery = DeliveryType::where('name',$request->delivery_type)->first();
-            $paymentMethod = PaymentMethod::where('name',$request->payment_method)?->first();
+            $delivery = DeliveryType::where('name', $request->delivery_type)->first();
+            $paymentMethod = PaymentMethod::where('name', $request->payment_method)?->first();
+            $address = $this->getAddress($request);
             $coupon = $cart->coupon();
             $discount = $cart->discount();
             $order = Order::create([
@@ -48,13 +50,13 @@ class OrderRepository
                 'payment_status' => PaymentMethod::PENDING,
                 'vat' => $cart->tax(),
                 'status' => Order::PENDING,
-                'lat'=>$user->lat ?? null,
-                'lng'=>$user->lng ?? null,
-                'address'=>$user->address ?? null,
+                'lat' => $address->lat ?? null,
+                'lng' => $address->lng ?? null,
+                'address' => $address->address ?? null,
                 'manual_order_first_name' => $request->manual_order_first_name,
                 'manual_order_last_name' => $request->manual_order_last_name
             ]);
-            if($discount&&$coupon){
+            if ($discount && $coupon) {
                 $user->coupons()->attach($coupon->id);
             }
             $cart->clone_to_order_items($order->id);
@@ -64,7 +66,7 @@ class OrderRepository
             $statusLog->notes = $request->order_notes;
             $statusLog->saveOrFail();
 
-            if($cart->canPayWithLoyaltyPoints() || $cart->hasPaymentCashOnDelivery($request->payment_method)){
+            if ($cart->canPayWithLoyaltyPoints() || $cart->hasPaymentCashOnDelivery($request->payment_method)) {
 
                 // @TODO: fetch transaction fee percentage that need to be deduce from
                 // each TAP transaction from super admin dashboard settings
@@ -77,18 +79,26 @@ class OrderRepository
                 DB::commit();
                 return $this->sendResponse($order, __('The order been created successfully.'));
 
-            }else if ($cart->hasPaymentCreditCard($request->payment_method)){
+            } else if ($cart->hasPaymentCreditCard($request->payment_method)) {
                 // Do not commit any change , it should be saved into session
                 DB::rollBack();
                 return $order;
             }
 
-        }catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
             logger($e->getMessage());
         }
         return $this->sendError('Fail', __('The order failed to complete'));
 
+    }
+    public function getAddress($request)
+    {
+        $address = null;
+        if($request->delivery_type == DeliveryType::DELIVERY){
+            $address = UserAddress::find($request->address);
+        }
+        return $address;
     }
     public static function clone_cart_items(
         $order_id,
@@ -101,17 +111,17 @@ class OrderRepository
         $checkbox_options,
         $selection_options,
         $dropdown_options
-    ){
+    ) {
         OrderItem::create([
-            'order_id'=>$order_id,
-            'item_id'=>$item_id,
-            'quantity'=>$quantity,
-            'price'=>$price,
-            'options_price'=>$options_price,
-            'checkbox_options'=>$checkbox_options,
-            'selection_options'=>$selection_options,
-            'dropdown_options'=>$dropdown_options,
-            'total'=>$total,
+            'order_id' => $order_id,
+            'item_id' => $item_id,
+            'quantity' => $quantity,
+            'price' => $price,
+            'options_price' => $options_price,
+            'checkbox_options' => $checkbox_options,
+            'selection_options' => $selection_options,
+            'dropdown_options' => $dropdown_options,
+            'total' => $total,
             'notes' => $notes
         ]);
     }

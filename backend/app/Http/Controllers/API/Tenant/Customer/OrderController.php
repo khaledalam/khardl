@@ -50,11 +50,7 @@ class OrderController
             'lastName' => $user?->last_name,
             'phone' => $user?->phone,
             'email' => $user?->email,
-            'address' => [
-                'addressValue' => $user?->address,
-                'lat' => $user->lat,
-                'lng' => $user->lng,
-            ],
+            'addresses' => $user->addresses,
 //            'cashback' => $user->cashback,
             'loyalty_points' => $user->loyalty_points,
         ], '');
