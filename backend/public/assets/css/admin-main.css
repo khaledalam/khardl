@@ -39,6 +39,14 @@
     opacity: 1;
     transition: 1s all;
 }
+/* All restaurants */
+.restaurants .badge-khardl{
+  position: absolute;
+  top: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0;
+  left: 0;
+}
 /* Restaurant page */
 .restaurant_daily_amount:hover .restaurant_daily_earning{
     opacity: 1;
