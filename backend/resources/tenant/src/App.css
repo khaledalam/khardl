@@ -235,29 +235,6 @@ body::-webkit-scrollbar-track {
   align-items: center;
 }
 
-
-.scrollbar-custom {
-  scrollbar-width:  thin;
-  scrollbar-color: #ccc transparent;
-}
-
-.scrollbar-custom::-webkit-scrollbar {
-  width: 1px;
-}
-
-.scrollbar-custom::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.scrollbar-custom::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 20px;
-}
-
-.scrollbar-custom::-webkit-scrollbar-corner {
-  border-radius: 4px;
-}
-
 .ql-editor h1, .ql-content h1 {
   font-size: 24px !important;
 }

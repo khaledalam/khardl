@@ -19,6 +19,17 @@ module.exports = {
         laptopXL: "1536px",
       },
     },
+    extend: {
+      keyframes: {
+        wiggle: {
+          "0%, 100%": { transform: "translateY(-5%)" },
+          "50%": { transform: "translateY(5%)" },
+        },
+      },
+      animation: {
+        wiggle: "wiggle 1s ease-in-out infinite",
+      },
+    },
   },
   daisyui: {
     themes: ["light"],
