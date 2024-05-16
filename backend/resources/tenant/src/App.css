@@ -253,3 +253,27 @@ body::-webkit-scrollbar-track {
   background-color: #ccc;
   border-radius: 20px;
 }
+
+.scrollbar-custom::-webkit-scrollbar-corner {
+  border-radius: 4px;
+}
+
+.ql-editor h1, .ql-content h1 {
+  font-size: 24px !important;
+}
+
+.ql-editor h2, .ql-content h2 {
+  font-size: 22px !important;
+}
+
+.ql-editor h3, .ql-content h3 {
+  font-size: 19px !important;
+}
+
+.ql-editor p {
+  font-size: 16px !important;
+}
+
+.ql-content {
+  padding: 0 4px;
+}

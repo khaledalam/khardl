@@ -344,12 +344,12 @@ const CartPage = () => {
                       (obj) => obj.name === "Cash on Delivery"
                     ) && (
                       <CartDetailSection
-                        key={"Cash on Delivery"}
-                        name={"Cash on Delivery"}
+                        key={"Cash"}
+                        name={"Cash"}
                         onChange={(e) => setPaymentMethod("Cash on Delivery")}
                         isChecked={paymentMethod === "Cash on Delivery"}
                         img={pmcod}
-                        displayName="Cash on Delivery"
+                        displayName="Cash"
                         callBackfn={cardPaymentCallbackFunc}
                       />
                     )}
@@ -447,20 +447,19 @@ const CartPage = () => {
                   </div>
                   <div className="cartDetailSection h-36xw mt-8">
                     <h3>{t("Select Delivery Type")}</h3>
-                    {deliveryTypesData.some(
-                      (obj) => obj.name === "Delivery"
-                    ) && (
-                      <CartDetailSection
-                        name="Delivery"
-                        onChange={(e) => {
-                          fetchProfileData();
-                          setDeliveryType("Delivery");
-                        }}
-                        isChecked={deliveryType === "Delivery"}
-                        img={dtdelivery}
-                        displayName="delivery"
-                      />
-                    )}
+                    {deliveryTypesData.some((obj) => obj.name === "Delivery") &&
+                      paymentMethod !== "Loyalty points" && (
+                        <CartDetailSection
+                          name="Delivery"
+                          onChange={(e) => {
+                            fetchProfileData();
+                            setDeliveryType("Delivery");
+                          }}
+                          isChecked={deliveryType === "Delivery"}
+                          img={dtdelivery}
+                          displayName="delivery"
+                        />
+                      )}
 
                     {deliveryTypesData.some((obj) => obj.name === "PICKUP") && (
                       <CartDetailSection
@@ -475,7 +474,7 @@ const CartPage = () => {
                   <div className="mt-8">
                     {deliveryType === "Delivery" && (
                       <CartAddress
-                        user={user}
+                        addresses={cart?.address || []}
                         userAddress={userAddress}
                         selectedDeliveryAddress={deliveryAddress}
                         onChange={(type) => setDeliveryAddress(type)}

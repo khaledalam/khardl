@@ -53,11 +53,11 @@ const AddAddress = ({ onSave, onCancel, address, setAddress }) => {
         </div> */}
         <PrimaryTextInput
           placeholder={t("Write the address name here...")}
-          value={address.type || ""}
+          value={address.name || ""}
           onChange={(value) =>
             setAddress((prevAddress) => ({
               ...prevAddress,
-              type: value,
+              name: value,
             }))
           }
           id="name"
@@ -103,7 +103,7 @@ const AddAddress = ({ onSave, onCancel, address, setAddress }) => {
             className="w-full cursor-pointer text-white bg-gray-900 rounded-lg px-4 py-2.5 border  leading-[18px] hover:bg-white hover:border-gray-900 hover:text-gray-900 transition-all shadow-md"
             onClick={() => {
               setAddress({
-                type: "home",
+                name: "",
               });
               onCancel();
             }}

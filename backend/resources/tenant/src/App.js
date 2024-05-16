@@ -3,7 +3,7 @@ import "./App.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "react-quill/dist/quill.snow.css";
-import 'react-loading-skeleton/dist/skeleton.css'
+import "react-loading-skeleton/dist/skeleton.css";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
@@ -190,7 +190,6 @@ const App = () => {
                 <Route path="/failed" element={<FailedPayment />} />
                 <Route path="/policies" element={<TermsPolicies />} />{" "}
                 <Route path="/privacy" element={<Privacy />} />{" "}
-
                 {/*<Route path='/advantages' element={<Advantages />} />*/}{" "}
                 {/*<Route path='/services' element={<Services />} />*/}{" "}
                 {/*<Route path='/prices' element={<Prices />} />*/}{" "}

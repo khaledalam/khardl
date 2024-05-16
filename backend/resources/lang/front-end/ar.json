@@ -431,7 +431,7 @@
     "Credit Card": "بطاقة إئتمان",
     "Online": "اون لاين",
     "My Card": "بطاقتي",
-    "Cash on Delivery": "الدفع عند الاستلام",
+    "Cash": "الدفع عند الاستلام",
     "Card": "بطاقة",
     "Apple Pay": "أبل باي",
     "Loyalty points": "نقاط الولاء",
@@ -535,7 +535,7 @@
     "Done": "منتهي",
     "Slide Added": "تمت إضافة الشريحة",
     "Image Removed": "تمت إزالة الصورة",
-    "PICKUP": "التقاط",
+    "PICKUP": "استلام",
     "Confirm": "تاكيد",
     "ok": "نعم",
     "Enable location permissions for this website in your browser settings.": "تمكين أذونات الموقع لهذا الموقع في إعدادات المتصفح الخاص بك.",
@@ -620,5 +620,6 @@
     "Are You sure you want to delete your profile?": "هل أنت متأكد أنك تريد حذف ملف التعريف الخاص بك؟",
     "Save address": "احفظ العنوان",
     "Set as default": "تعيين كافتراضي",
-    "ِEdit": "تعديل"
+    "ِEdit": "تعديل",
+    "Back": "رجوع"
 }

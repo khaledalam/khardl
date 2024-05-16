@@ -37,9 +37,9 @@ const AddressItem = ({ address, onEdit, onDelete, onSetAsDefault }) => {
             {/* {AddressTypeIcons[address?.type]} */}
             <div
               className="text-zinc-600 font-light font-['Plus Jakarta Sans'] max-w-32 w-fit overflow-hidden text-nowrap text-ellipsis"
-              title={address.type}
+              title={address.name}
             >
-              {address.type}
+              {address.name}
             </div>
           </div>
         </div>

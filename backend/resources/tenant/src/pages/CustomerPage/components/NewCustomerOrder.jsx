@@ -19,7 +19,10 @@ const CustomerOrder = () => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
   const [_, setSearchParams] = useSearchParams();
-  const [dateAdded, setDateAdded] = useState("");
+  const [dateAdded, setDateAdded] = useState({
+    value: "today",
+    text: t("Today"),
+  });
   const [search, setSearch] = useState("");
   const [orderStatus, setOrderStatus] = useState("");
   const [totalCount, setTotalCount] = useState(1);
@@ -105,7 +108,7 @@ const CustomerOrder = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4 mb-5 mx-0 sm:mx-3 min-h-96">
+      <div className="grid gap-4 mb-5 mx-0 sm:mx-3 min-h-96 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {ordersList?.map((order, index) => (
           <OrderItem
             key={index}
