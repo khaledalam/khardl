@@ -56,7 +56,7 @@
                                             </td>
                                             <td class="ps-0">{{ $order?->branch?->name }}</td>
                                             <td class="text-success">{{ $order->total }}</td>
-                                            <td>{{ $order->payment_method->name }}</td>
+                                            <td>{{ $order->payment_method?->name }}</td>
                                             <td class="text-center">
                                                 <a href="{{route('admin.download.pdf',['type'=>'order','id'=>$order->id,'tenant_id'=>$restaurant->id])}}" class="badge badge-light-khardl p-4 text-hover-khardl bg-hover-khardl">{{ __('download') }}</a>
                                             </td>
