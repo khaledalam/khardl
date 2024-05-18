@@ -326,3 +326,8 @@ a {
 .switch-opposite input:checked+.slider {
   box-shadow: 0 0 0 2px #777, 0 0 2px #777;
 }
+/* BUTTONS */
+.btn-darken{
+  border: 1px solid #000 !important;
+  color: #000 !important;
+}
