@@ -4,6 +4,7 @@ namespace App\Http\Services\tenant\Customer;
 
 use App\Http\Resources\API\Tenant\OrderResource;
 use App\Models\Tenant;
+use App\Models\Tenant\Order;
 use App\Models\User;
 use App\Packages\TapPayment\Customer\Customer;
 use App\Traits\APIResponseTrait;
@@ -16,11 +17,34 @@ class CustomerDataService
     public function getList($request)
     {
 
-        // @TODO: to remove
+        // @TODO: to remove (this code added to migrate geo address details for old DB data).
         $restaurants = Tenant::all();
         foreach($restaurants as $restaurant){
             try {
-                $restaurant->run(function() use($restaurant){
+                $restaurant->run(function(){
+
+                    $orders = Order::all();
+                    foreach ($orders as $order) {
+                        if ($order->lat && $order->lng) {
+                            if (!$order->city || !$order->region || !$order->country) {
+
+                                try {
+                                    // Reverse geocoding using Google API
+                                    list($city, $region, $country) = addressCityRegionCountry($order->lat, $order->lng);
+
+                                    $order->city = $city;
+                                    $order->region = $region;
+                                    $order->country = $country;
+
+                                    $order->save();
+                                } catch (\Exception $e) {
+                                }
+                            }
+                        }
+                    }
+
+
+                    /*
                     $customers = RestaurantUser::with('addresses')->Customers()->get();
                     foreach ($customers as $customer) {
                         if ($customer->addresses->count()) {
@@ -46,10 +70,11 @@ class CustomerDataService
                             }
                         }
                     }
+                    */
+
+
                 });
-
                 } catch (\Exception $e) {
-
             }
         }
 
@@ -64,29 +89,24 @@ class CustomerDataService
         ->paginate(config('application.perPage')??20);
         $customerStatuses = RestaurantUser::STATUS;
 
-        $allCustomersWithoutPaginate = RestaurantUser::with(['addresses', 'orders'])
-            ->Customers()
-            ->get();
+        $orders = Order::all();
 
         $customerByLocationByLocation = [];
 
-        foreach ($allCustomersWithoutPaginate as $customer) {
-            $ordersCount = $customer->orders->count();
-            foreach ($customer->addresses as $address) {
-                if (!in_array($address->country, $customerByLocationByLocation)) {
-                    $customerByLocationByLocation[$address->country] = [];
-                }
-
-                if (!in_array($address->city, $customerByLocationByLocation[$address->country])) {
-                    $customerByLocationByLocation[$address->country][$address->city] = [];
-                }
-
-                if (!in_array($address->region, $customerByLocationByLocation[$address->country][$address->city])) {
-                    $customerByLocationByLocation[$address->country][$address->city][$address->region] = 0;
-                }
-
-                $customerByLocationByLocation[$address->country][$address->city][$address->region] += $ordersCount;
+        foreach ($orders as $order) {
+            if (!in_array($order->country ?? 'N/A', $customerByLocationByLocation)) {
+                $customerByLocationByLocation[$order->country ?? 'N/A'] = [];
             }
+
+            if (!in_array($order->city ?? 'N/A', $customerByLocationByLocation[$order->country ?? 'N/A'])) {
+                $customerByLocationByLocation[$order->country ?? 'N/A'][$order->city ?? 'N/A'] = [];
+            }
+
+            if (!in_array($order->region ?? 'N/A', $customerByLocationByLocation[$order->country ?? 'N/A'][$order->city ?? 'N/A'])) {
+                $customerByLocationByLocation[$order->country ?? 'N/A'][$order->city ?? 'N/A'][$order->region ?? 'N/A'] = 0;
+            }
+
+            $customerByLocationByLocation[$order->country ?? 'N/A'][$order->city ?? 'N/A'][$order->region ?? 'N/A']++;
         }
 
         return view('restaurant.customers_data.list', compact('user','allCustomers','customerStatuses',
