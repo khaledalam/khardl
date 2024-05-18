@@ -95,7 +95,6 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
             {t("select option")}
           </option>
           {options.map((option, idx) => {
-            console.log("optionsPrice > ", optionsPrice);
             let optionPrice = optionsPrice
               ? optionsPrice[idx] == 0
                 ? "(Free)"

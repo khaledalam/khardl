@@ -85,7 +85,6 @@ function Edit() {
     dispatch(setSelectedFontFamily(event.target.value));
   };
   const handleFontSizeChange = (event) => {
-    console.log(event.target.value);
     dispatch(setSelectedFontSize(event.target.value + "px"));
   };
   const handleFontWeightChange = (event) => {

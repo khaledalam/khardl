@@ -23,7 +23,6 @@ const CartSection = ({ cartItems }) => {
   const fetchCartData = async () => {
     try {
       const cartResponse = await AxiosInstance.get(`carts`);
-      console.log("cart >>>", cartResponse.data?.data.items);
       if (cartResponse.data) {
         dispatch(setCartItemsData(cartResponse.data?.data.items));
         dispatch(getCartItemsCount(cartResponse.data?.data.count));

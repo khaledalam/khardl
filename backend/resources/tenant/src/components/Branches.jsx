@@ -25,7 +25,6 @@ import { set } from "react-hook-form";
 import ConfirmationModal from "./confirmationModal";
 
 const Branches = ({ closingFunc, closingFuncSideMenu }) => {
-  console.log("Closing: ", closingFunc);
   const { t } = useTranslation();
   const [openEmptyCartsConfirmModal, setOpenEmptyCartsConfirmModal] =
     useState(false);
@@ -40,11 +39,6 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
     (state) => state.categoryAPI.cartItemsCount
   );
 
-  console.log(
-    "currently branches :",
-    localStorage.getItem("selected_branch_id")
-  );
-
   useEffect(() => {
     setSelectedBranch(localStorage.getItem("selected_branch_id") - 1);
   }, []);
@@ -52,7 +46,6 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
   const branches = (function () {
     try {
       let tempBranches = [...restuarantStyle.branches];
-      console.log("tempBranches", tempBranches);
       return tempBranches.map((branch) => {
         let isClosed = false;
         var currentHour = moment();
@@ -91,11 +84,6 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
       const restaurantCategoriesResponse = await AxiosInstance.get(
         `categories?items&user&branch${id ? `&selected_branch_id=${id}` : ""}`
       );
-
-      console.log(
-        "editor rest restaurantCategoriesResponse OuterSidebarNav",
-        restaurantCategoriesResponse.data
-      );
       if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data));
         dispatch(
@@ -123,8 +111,6 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
       } else {
         fetchCategoriesData(branches[selectedBranch].id);
         localStorage.setItem("selected_branch_id", branches[selectedBranch].id);
-        console.log("ide: ", branches[selectedBranch].id);
-        console.log("closingFunc: ", closingFunc);
         closingFunc();
         closingFuncSideMenu();
       }
@@ -152,8 +138,6 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
     emptyCarts();
     fetchCategoriesData(branches[selectedBranch].id);
     localStorage.setItem("selected_branch_id", branches[selectedBranch].id);
-    console.log("ide: ", branches[selectedBranch].id);
-    console.log("closingFunc: ", closingFunc);
     closingFunc();
     closingFuncSideMenu();
   };
@@ -175,8 +159,6 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
             onClick={() => setSelectedBranch(index)}
             className="w-full max-w-[616px] flex justify-between p-[16px] bg-white rounded-[10px] shadow border border-black border-opacity-10 relative"
           >
-            {console.log("branch index: ", index)}
-            {console.log("select index: ", selectedBranch)}
             <div className="flex flex-col">
               <div className="mb-[18px] flex flex-row items-center">
                 <div className="w-[30px] h-[30px] mr-[8px]">

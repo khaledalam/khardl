@@ -80,7 +80,7 @@
                                         <!--begin::Label-->
                                         <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                             <!--begin::Bullet-->
-                                            <div class="bullet w-8px h-6px rounded-2 bg-primary me-3"></div>
+                                            <div class="bullet w-8px h-6px rounded-2 bg-khardl me-3"></div>
                                             <!--end::Bullet-->
                                             <!--begin::Label-->
                                             <div class="text-gray-500 flex-grow-1 me-4">

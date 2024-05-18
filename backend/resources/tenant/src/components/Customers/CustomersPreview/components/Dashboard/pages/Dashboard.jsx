@@ -15,9 +15,9 @@ const Dashboard = () => {
     dispatch(setActiveTab(tabName));
   };
 
-  useEffect(() => {
+ /*  useEffect(() => {
     console.log("Dashboard tab");
-  }, []);
+  }, []); */
 
   return (
     <div className="w-full bg-[var(--secondary)] py-6 px-4">

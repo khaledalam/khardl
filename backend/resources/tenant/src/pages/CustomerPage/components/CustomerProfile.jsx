@@ -40,7 +40,7 @@ const CustomerProfile = () => {
     try {
       const profileResponse = await AxiosInstance.get(`user`);
 
-      console.log("profileResponse >>>PROFILE", profileResponse.data);
+
       if (profileResponse.data) {
         setLoyalPointsValue(
           profileResponse.data?.data?.loyalty_points ?? t("N/A")
@@ -69,7 +69,7 @@ const CustomerProfile = () => {
     dispatch(updateProfileSaveStatus(false));
   });
 
-  console.log("userProfile", userProfile);
+
 
   useEffect(() => {
     if (userProfile) {
@@ -83,10 +83,10 @@ const CustomerProfile = () => {
         // customerAddress?.lng === userProfile?.address?.lng
       ) {
         dispatch(updateProfileSaveStatus(true));
-        console.log("initial values matches userProfile");
+
         setIsDisabled(true);
       } else {
-        console.log("not a match, values changes");
+
         setIsDisabled(false);
         dispatch(updateProfileSaveStatus(false));
       }
@@ -135,7 +135,7 @@ const CustomerProfile = () => {
   //   }
   // }, [saveProfileChange])
 
-  console.log("isDisabled", isDisabled);
+
   return (
     <div className="m-4 mt-8 md:m-12 mb-5">
       <div className="flex flex-row items-center gap-3 mb-8">

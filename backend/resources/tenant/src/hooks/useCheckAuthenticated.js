@@ -17,7 +17,6 @@ export default function useCheckAuthenticated() {
     const checkAuthenticated = async () => {
       try {
         const response = await axiosAuth.get("/auth-validation");
-        console.log(response);
 
         const isLoggedin = response?.data?.is_loggedin;
         if (isLoggedin) {
@@ -29,7 +28,6 @@ export default function useCheckAuthenticated() {
         if (!isLoggedin) {
           dispatch(changeUserState(null));
         }
-        console.log("hi from useCHeckAuth");
       } finally {
         setLoading(false);
       }

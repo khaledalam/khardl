@@ -266,7 +266,6 @@
         var product_copies = {};
         function getOldProductData() {
             var products = {!! json_encode(old('products')) !!};
-            console.log(products);
             var branch_id = "";
             if(products) {
                 Object.keys(products).forEach(key => {
@@ -509,7 +508,6 @@
                 });
             }
             if (haveRequiredFiled) {
-                console.log('test');
                 var addRequired = document.getElementById(`options_${selectedProduct.id}_${product_copies[selectedProduct.id]}`);
                 addRequired.classList.add('required');
             }
@@ -540,23 +538,18 @@
         }
         function onChangeQty(selectedProduct){
             $('#product_table').on('input', `input[name="products[${selectedProduct.id}][${product_copies[selectedProduct.id]}]"]`, function() {
-                console.log('get here');
                 var copy = $(this).data('copy');
                 // Update the total cost when the quantity changes
                 var oldTotal = productTotals[selectedProduct.id][copy] || 0;
                 // Update the total cost by subtracting the old total and adding the new total
                 var quantity = $(this).val();
                 var optionPrice = OptionsPrice[selectedProduct.id][copy];
-                console.log(optionPrice);
                 var productTotal = (parseFloat(selectedProduct.price) + optionPrice)* quantity;
-                console.log(selectedProduct.id, totalCost);
                 totalCost = totalCost - oldTotal + productTotal;
-                console.log(oldTotal, quantity, productTotal, totalCost);
 
                 // Update the old total for this product
                 productTotals[selectedProduct.id][copy] = productTotal;
                 productQuantity[selectedProduct.id][copy] = quantity;
-                console.log(productTotals);
                 updateTotalCost();
             });
         }
@@ -569,7 +562,6 @@
                 if (isChecked) {
                     if(price&&price > 0){
                         var subtotal = parseFloat(price * productQuantity[product][copy]);
-                        console.log(subtotal);
                         totalCost += subtotal;
                         OptionsPrice[product][copy] += parseFloat(price);
                         productTotals[product][copy] +=subtotal;
@@ -592,7 +584,6 @@
                 var index = $(this).data('index');
                 var copy = $(this).data('copy');
                 var Innerindex = $(this).data('inner-index');
-                console.log(price);
                 let subtotal = parseFloat(price * productQuantity[product][copy]);
                 if (typeof oldRadioProductOptions[product] === 'undefined') {
                     oldRadioProductOptions[product] = {};
@@ -611,7 +602,6 @@
                     QtyWhenChange[product][copy][index] = {};
                     OptionsPrice[product][copy] += parseFloat(price);
                 } else {
-                    console.log('Inneer : '+Innerindex);
                     /*
                     We need to get price of last change and the quantity of last change multiply of current qty
                      */
@@ -654,7 +644,6 @@
                     QtyWhenChange[product][copy][index] = {};
                     OptionsPrice[product][copy] += parseFloat(price);
                 } else {
-                    console.log('Inneer : '+Innerindex);
                     /*
                     We need to get price of last change and the quantity of last change multiply of current qty
                      */
@@ -674,16 +663,13 @@
         }
         productSelect.on('select2:select', function(e) {
             // Get the selected product data
-            console.log(e);
             var selectedProduct = e.params.data.data;
             //initiate number of copies of same product
-            console.log(product_copies[selectedProduct.id]);
             if(typeof product_copies[selectedProduct.id] === 'undefined'){
                 product_copies[selectedProduct.id] = 1;
             }else{
                 product_copies[selectedProduct.id]++;
             }
-            console.log(product_copies[selectedProduct.id]);
             //Track on change qty
             onChangeQty(selectedProduct);
             // Append the selected product to the table
@@ -726,9 +712,7 @@
         $('#product_table').on('click', '.remove-product-btn', function() {
             var productId = $(this).data('product');
             var copy = $(this).data('copy');
-            console.log(productId,copy);
             subtotal  = productTotals[productId][copy];
-            console.log(subtotal);
             totalCost -= parseFloat(subtotal);
             delete productTotals[productId][copy];
             $(this).closest('tr').remove();

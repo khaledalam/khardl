@@ -166,7 +166,6 @@ const MainBoardEditor = ({
         croppedAreaPixels,
         rotation
       );
-      console.log("donee", { croppedImage });
 
       setUncroppedImage(null);
       setIsCropModalOpened(false);
@@ -189,8 +188,6 @@ const MainBoardEditor = ({
         rotation
       );
       setListofBannerImages([...listofBannerImages, { croppedImage }]);
-      console.log("donee", { croppedImage });
-      console.log("list of uploaded images", listofBannerImages);
       setUncroppedImage(null);
       dispatch(setBannerUpload(croppedImage));
       setUploadSingleBanner(null);
@@ -249,7 +246,6 @@ const MainBoardEditor = ({
 
     if (selectedBanner) {
       if (selectedBanner.type.includes("video")) {
-        console.log("video", selectedBanner);
         setIsVideo(true);
         setUploadSingleBanner(URL.createObjectURL(selectedBanner));
       } else {
@@ -302,9 +298,7 @@ const MainBoardEditor = ({
       setListofBannerImages([{ croppedImage: `${banner_image.url}` }]);
       setUploadedSingleBanner(`${banner_image.url}`);
     }
-    console.log("checking type: ", banner_type);
-    console.log("checking images: ", banner_images);
-    console.log("checking image: ", banner_image);
+
     activeSubitem != null &&
       console.log(
         "now 2 : ",
@@ -332,11 +326,9 @@ const MainBoardEditor = ({
   };
 
   const removeUploadedImage = (index) => {
-    console.log("index", index);
+
     if (index >= 0 && index < listofBannerImages?.length) {
-      // console.log("log list", listofBannerImages.splice(index, 1));
       setListofBannerImages(listofBannerImages.filter((_, id) => id !== index));
-      console.log("list of uploaded images - after", listofBannerImages);
       if (listofBannerImages?.length < 2) {
         dispatch(bannerType("one-photo"));
       } else {
@@ -419,7 +411,7 @@ const MainBoardEditor = ({
     }
   };
 
-  // console.log("KKK: ")
+
 
   return (
     <div

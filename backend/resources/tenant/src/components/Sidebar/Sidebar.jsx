@@ -44,7 +44,6 @@ const Sidebar = () => {
   const handleSaveStyle = async (e) => {
     e.preventDefault();
 
-    console.log("action save style");
 
     let inputs = {};
     if (template === "restaurants") {

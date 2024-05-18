@@ -36,10 +36,6 @@ const LanguageButton = ({ id }) => {
         `categories?items&user&branch${id ? `&selected_branch_id=${id}` : ""}`,
       );
 
-      console.log(
-        "editor rest restaurantCategoriesResponse OuterSidebarNav",
-        restaurantCategoriesResponse.data,
-      );
       if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data));
         dispatch(

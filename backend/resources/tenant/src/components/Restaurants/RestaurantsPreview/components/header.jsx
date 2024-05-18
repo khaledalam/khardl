@@ -43,7 +43,6 @@ function Header() {
   };
 
   const fetchData = async () => {
-    console.log("test ---- ", styleDataRestaurant);
 
     if (styleDataRestaurant) return;
 

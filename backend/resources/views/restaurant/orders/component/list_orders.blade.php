@@ -325,7 +325,6 @@
                                         form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId);
                                         const reasonInput = $('input[name="reason"]');
                                         if (reasonInput.length) {
-                                            console.log('sssss');
                                             $('#reasonInputContainer').append(reasonInput.clone());
                                         }
                                         document.getElementById('spinner').classList.remove("d-none");
@@ -339,7 +338,6 @@
                     }
                     $(document).on('change','.swal2-select',function(){
                         var val = $('option:selected',this).val();
-                        console.log(val);
                         // Check if the selected value is "rejected"
                         if (val == 'rejected') {
                             // Add input if it doesn't exist

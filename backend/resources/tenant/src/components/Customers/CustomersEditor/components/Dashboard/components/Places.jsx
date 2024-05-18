@@ -54,7 +54,6 @@ const convertToAddress = async (lat, lng) => {
       lat: lat,
       lng: lng,
     }).then((r) => {
-      console.log("convert: ", r);
       return r?.data;
     });
   } catch (error) {
@@ -121,7 +120,6 @@ function Map({ inputStyle, isCart, user }) {
 
     dispatch(updateCustomerAddress({ lat: lat, lng: lng }));
     const addressText = await convertToAddress(lat, lng);
-    console.log("addressText >> ", addressText);
     inputValueRef.current = addressText;
     dispatch(
       updateCustomerAddress({

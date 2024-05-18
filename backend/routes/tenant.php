@@ -140,6 +140,7 @@ Route::group([
                 Route::get('/qr', 'index')->name('qr');
                 Route::post('/qr-create', 'create')->name('qr-create');
                 Route::get('/qr-download/{id}', 'download')->name('qr-download');
+                Route::delete('/qr-delete/{id}', 'delete')->name('qr-delete');
             });
             /* QR page */
             /* Customer data page */
@@ -482,7 +483,7 @@ Route::middleware([
         });
         // Update user in customer app
         Route::prefix('customer')->group(function () {
-            Route::post('/login', [LoginCustomerController::class, 'loginCustomerOnly']);
+            Route::post('/login', [LoginCustomerController::class, 'loginCustomerOnly'])->middleware('throttle:login-customer');
             Route::post('/register', [LoginCustomerController::class, 'registerCustomerOnly']);
             Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
             Route::post('/send/sms', [LoginCustomerController::class, 'sendSMS']);

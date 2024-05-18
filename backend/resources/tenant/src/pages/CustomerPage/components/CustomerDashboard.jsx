@@ -28,7 +28,6 @@ const CustomerDashboard = () => {
         `orders?items&item&per_page=${6}&page=${""}&search=${""}&status=${""}`
       );
 
-      console.log("orders per page >>>", ordersResponse?.data?.data);
       if (ordersResponse.data) {
         dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)));
         dispatch(updatePageLinks(ordersResponse?.data.links));
@@ -54,7 +53,6 @@ const CustomerDashboard = () => {
 
     try {
       const profileResponse = await AxiosInstance.get(`user`);
-      console.log("profileResponse >>>DASHBOARD", profileResponse.data);
 
       if (profileResponse.data) {
         setCashback(profileResponse.data?.data?.cashback);

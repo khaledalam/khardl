@@ -61,7 +61,6 @@ const CartItem = ({ cartitem, onReload }) => {
       })
         .then((e) => {
           toast.success(`${t("Item quantity updated")}`);
-          console.log("successfully", e);
         })
         .finally(async () => {
           onReload();
