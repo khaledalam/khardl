@@ -39,14 +39,7 @@ const Footer = ({
   const { t } = useTranslation();
 
   useEffect(() => {
-    console.log(
-      "ACTIVESECTION",
-      activeSection,
-      ", ACTIVESUBITEM",
-      activeSubitem,
-      ", NAVITEMS",
-      navItems
-    );
+   
   }, [activeSection, activeSubitem, navItems]);
 
   return (

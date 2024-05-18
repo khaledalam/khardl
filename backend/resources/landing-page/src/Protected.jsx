@@ -15,7 +15,6 @@ const Protected = (props) => {
       //     navigate("/login");
       // }
     }
-    console.log("props =>>> ", props.Cmp);
     if (!localStorage.getItem("user-info") && props.Cmp != CreateNewPassword) {
       navigate("/login");
     }

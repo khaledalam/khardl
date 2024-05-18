@@ -1106,7 +1106,6 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
                     return;
 
-                    console.log("here: ", this, dateStr, instance)
 
                     let $input = instance.input;
 
@@ -1119,8 +1118,6 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     let $time1InMinutesForTimeFrom = getTimeAsNumberOfMinutes($fromInput.value);
                     let $time1InMinutesForTimeTo = getTimeAsNumberOfMinutes($toInput.value);
 
-                    console.log("from: ", $fromInput.value, $fromInput)
-                    console.log("to: ", $toInput.value, $toInput)
 
                     if (parseInt($time1InMinutesForTimeFrom) > parseInt($time1InMinutesForTimeTo)) {
                         alert("{{__("Time from should be before to")}}");

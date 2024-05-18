@@ -200,10 +200,7 @@ export const RestuarantEditor = () => {
         }`
       );
 
-      console.log(
-        "editor rest restaurantCategoriesResponse RestuarantEditor",
-        restaurantCategoriesResponse.data
-      );
+
       if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data));
 

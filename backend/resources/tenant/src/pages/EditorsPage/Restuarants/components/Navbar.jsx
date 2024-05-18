@@ -137,21 +137,20 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
       : "";
 
     // inputs.banner_images = restuarantStyle?.banner_images;
-    console.log("bannerUpload 1", restuarantStyle?.bannerUpload);
-    console.log("banner_images 1", restuarantStyle?.banner_images);
+
 
     if (
       restuarantStyle.banner_type == "slider" &&
       Array.isArray(restuarantStyle?.banner_images) &&
       restuarantStyle?.banner_images?.length > 0
     ) {
-      console.log("inside");
+
       const imagePromises = restuarantStyle?.banner_images
         .filter((banner) => banner !== undefined || banner !== null)
         .map(async (image) => {
           return await fetch(image.url).then((r) => r.blob());
         });
-      console.log("imagePromises", await Promise.all(imagePromises));
+
       inputs.banner_images = await Promise.all(imagePromises);
     } else {
       inputs.banner_images = "";
@@ -166,9 +165,9 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
         .map(async (image) => {
           return await fetch(image.url).then((r) => r.blob());
         });
-      console.log("imagePromises", await Promise.all(imagePromises));
+
       inputs.banner_images = await Promise.all(imagePromises);
-      console.log("inputs.banner_images", inputs.banner_images);
+
     } else {
       // inputs.banner_images = "";
     }
@@ -214,8 +213,7 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
 
   const [isBranchModelOpen, setIsBranchModelOpen] = useState(false);
   useEffect(() => {
-    console.log("isModelOpen", isModelOpen);
-    console.log("isBranchModelOpen", isBranchModelOpen);
+
     if (isModelOpen === true && isBranchModelOpen === true) {
       () => setIsModelOpen(false);
     }

@@ -34,8 +34,6 @@ const ForgotPassword = () => {
         email: data.email,
         login_code: data.login_code,
       });
-      console.log("=>>>", response?.data);
-      console.log(response?.data?.success);
       if (response.data.success) {
         sessionStorage.setItem("email", data.email);
 

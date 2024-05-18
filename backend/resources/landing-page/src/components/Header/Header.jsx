@@ -27,8 +27,6 @@ const Header = () => {
   const navigate = useNavigate();
   const { setStatusCode } = useAuthContext();
 
-  console.log("isLoggedIn >> ", isLoggedIn);
-
   const redirectToDashboard = () => {
     // Redirect to an external URL (window.location.href)
     window.open("/dashboard");

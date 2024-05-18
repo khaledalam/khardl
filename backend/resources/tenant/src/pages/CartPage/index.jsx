@@ -90,7 +90,6 @@ const CartPage = () => {
           price_background_color || "green"
         } !important;`;
       });
-      console.log("PRICE_BACKGROUND_COLOR", price_background_color, elements);
     }
   }, [price_background_color]);
 
@@ -189,7 +188,6 @@ const CartPage = () => {
   };
 
   const handlePlaceOrder = async () => {
-    console.log("handlePlaceOrder func, paymentMethod: ", paymentMethod);
 
     let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
     if (paymentMethod === "Online") {
@@ -233,7 +231,6 @@ const CartPage = () => {
       });
 
       if (redirect.data) {
-        console.log("redirect ==>", redirect);
         window.location.href = redirect.data;
       }
     } catch (error) {
@@ -419,7 +416,7 @@ const CartPage = () => {
                           }}
                           // optional (A callback function that will be called when you cancel
                           // the payment process)
-                          onCancel={() => console.log("cancelled")}
+                          /* onCancel={() => console.log("cancelled")} */
                           // optional (A callback function that will be called when you have an error)
                           onError={(err) => console.error(err)}
                           // optional (A async function that will be called after creating the token
@@ -427,19 +424,13 @@ const CartPage = () => {
                           onSuccess={async (token) => {
                             // do your stuff here...
 
-                            console.log("here inline");
-
-                            console.log(token);
-
                             cardPaymentCallbackFunc(token);
                           }}
                           // optional (A callback function that will be called when you button is clickable)
                           onReady={() => {
-                            console.log("Ready");
                           }}
                           // optional (A callback function that will be called when the button clicked)
                           onClick={() => {
-                            console.log("Clicked");
                           }}
                         />
                       </div>

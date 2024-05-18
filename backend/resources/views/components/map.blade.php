@@ -1,11 +1,11 @@
 <script>
 
-  
+
         let maps = {}; // Store maps in an object
         let markers = {}; // Store markers in an object
         let infoWindow;
         async function initializeMapOnClick(branchId, lat, lng) {
-       
+
             const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
                 google.maps.importLibrary("marker"),
                 google.maps.importLibrary("places"),
@@ -20,19 +20,19 @@
             });
             infoWindow = new google.maps.InfoWindow({});
             // const input = document.getElementById("pac-input" + branchId);
-            
+
             const options = {
                 fields: ["formatted_address", "geometry", "name"],
                 strictBounds: false,
             };
-            
+
             const autocomplete = new google.maps.places.PlaceAutocompleteElement();
-    
-          
+
+
             const card = document.getElementById('map-autocomplete-card' + branchId);
             card.appendChild(autocomplete);
             map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
-          
+
 
             const marker = new google.maps.marker.AdvancedMarkerElement({
                 position: latLng,
@@ -40,8 +40,7 @@
                 gmpDraggable: true,
             });
 
-            console.log(card);
-           
+
 
             markers[branchId] = marker; // Store the marker for this branch
             maps[branchId] = map; // Store the map for this branch
@@ -51,16 +50,14 @@
                 // marker.position  = event.latLng;
                 // updateLocationInput(marker.position, branchId);
             // });
-        
+
             // Add a click event listener to the map
             map.addListener( 'click', function (event) {
-                console.log('click');
                 marker.position  = event.latLng;
                 updateLocationInput(marker.position, branchId);
             });
 
             autocomplete.addEventListener("gmp-placeselect", async ({ place }) => {
-                console.log("gmp-placeselect");
                 await place.fetchFields({ fields: ['displayName', 'formattedAddress', 'location'] });
                 if (place.location.viewport) {
                     map.fitBounds(place.location.viewport);
@@ -70,7 +67,7 @@
                 }
                 // marker.setVisible(false);
 
-            
+
 
                 // if (!place.geometry || !place.geometry.location) {
                 //     // User entered the name of a Place that was not suggested and
@@ -103,13 +100,12 @@
                 // marker.setVisible(true);
                 // infowindow.open(map, marker);
             });
-         
+
         }
 
         const mapContainers = document.querySelectorAll('.map-container');
         mapContainers.forEach(container => {
             container.addEventListener('click', function handleClick() {
-                console.log('Container clicked');
                 const branchIdElement = this.getAttribute('data-branch-id');
                 // console.log('Branch ID:', branchIdElement);
                 if (branchIdElement) {
@@ -126,11 +122,7 @@
                         document.getElementById('save-location' + branchIdElement).style.display = 'block';
                         // document.getElementById('pac-input' + branchIdElement).style.display = 'block';
                         container.removeEventListener('click', handleClick);
-                    } else {
-                        console.log('Latitude or longitude element not found');
                     }
-                } else {
-                    console.log('Branch ID attribute not found');
                 }
             });
         });
@@ -160,21 +152,21 @@
         }
 
         async function updateLocationInput(latLng, branchId) {
-            
+
             const latInput = document.getElementById('lat' + branchId);
             const lngInput = document.getElementById('lng' + branchId);
             latInput.value = latLng.lat;
             lngInput.value = latLng.lng;
 
             const addressFromLatLng = await convertToAddress(latLng.lat, latLng.lng);
-         
+
             const locationInput = document.getElementById('location' + branchId);
 
             if (locationInput) {
                 locationInput.value = addressFromLatLng;
             }
 
-            
+
         }
         $('#add-new-branch').one('click', function(event){
                 const centerCoords = {
@@ -213,5 +205,5 @@
 
         });
 
-        
+
 </script>

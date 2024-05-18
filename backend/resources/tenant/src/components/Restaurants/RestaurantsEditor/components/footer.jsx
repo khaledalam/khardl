@@ -29,7 +29,6 @@ function Footer() {
     FaYoutube,
   };
 
-  console.log("icons > ", icons);
   return;
 
   return (

@@ -90,7 +90,6 @@ const Slider = ({ banner_images }) => {
         croppedAreaPixels,
         rotation,
       );
-      console.log("donee", { croppedImage });
       setUncroppedImage(null);
       setIsCropModalOpened(false);
 

@@ -36,7 +36,7 @@ const CustomerOrder = () => {
         }&date=${dateAdded.value || ""}`
       );
 
-      console.log("orders per page >>>", ordersResponse?.data?.data);
+
       if (ordersResponse.data) {
         dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)));
         dispatch(updatePageLinks(ordersResponse?.data.links));

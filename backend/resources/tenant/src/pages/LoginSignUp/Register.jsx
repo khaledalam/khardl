@@ -52,7 +52,6 @@ const Register = () => {
         phone: data.phone,
         terms_and_policies: data.terms_and_policies,
       });
-      console.log(response.data);
       setSpinner(false);
       toast.success(`${t("Account successfully created")}`);
       sessionStorage.setItem(PREFIX_KEY + "phone", data.phone);
@@ -80,7 +79,6 @@ const Register = () => {
       setisLoading(false);
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
-      console.log(error);
       setisLoading(false);
     }
   };
@@ -213,7 +211,6 @@ const Register = () => {
                   })}
                   onChange={(data) => {
                     setLengthOfPhone(data.target.value.length);
-                    console.log(data.target.value.length);
                   }}
                   minLength={9}
                   maxLength={13}

@@ -26,5 +26,9 @@ class QRController extends BaseController
     {
         return $this->QRService->download($id);
     }
+    public function delete($id)
+    {
+        return $this->QRService->delete($id);
+    }
 
 }

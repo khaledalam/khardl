@@ -33,7 +33,6 @@ export const CustomerPage = () => {
 
   let orderId = searchParam.get("orderId");
 
-  console.log("chParam.get(orde >>", orderId);
 
   useEffect(() => {
     if (orderId) {
@@ -52,9 +51,9 @@ export const CustomerPage = () => {
       //   `cards/card_id_here/delete`
       // );@
 
-      if (restaurantStyleResponse.data) {
+     /*  if (restaurantStyleResponse.data) {
           console.log(restaurantStyleResponse.data);
-      }
+      } */
     } catch (error) {
       console.log(error);
     }

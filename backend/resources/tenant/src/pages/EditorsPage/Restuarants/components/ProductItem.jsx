@@ -209,7 +209,6 @@ const ProductItem = ({
     });
 
     const total_new = newTotal;
-    console.log(newTotal, totalPrice);
 
     setTotalPrice(newTotal - checkboxTotalPrice);
     setCheckboxTotalPrice(total_new - totalPrice);
@@ -243,7 +242,6 @@ const ProductItem = ({
     let delIndexdp = null;
     selectedDropdown.map((mainItem, mainIndex) => {
       if (mainItem !== "") {
-        console.log(dropdown_input_prices[mainIndex][mainItem]);
         const price = dropdown_input_prices[mainIndex][mainItem];
         newTotal += parseFloat(price);
       } else {
@@ -378,9 +376,7 @@ const ProductItem = ({
       dropdown_input_titles.length > 0 &&
       dropdownItems[0]?.length > 0
     ) {
-      console.log("MANDATORY", selectedDropdown);
       dropdown_input_titles.map((_, index) => {
-        console.log(isNaN(selectedDropdown[index]));
         if (isNaN(selectedDropdown[index])) {
           passMandatoryDrodowns = false;
         }
@@ -393,9 +389,7 @@ const ProductItem = ({
       selection_input_titles.length > 0 &&
       radioItems[0]?.length > 0
     ) {
-      console.log("MANDATORY", selectedRadio);
       selection_input_titles.map((_, index) => {
-        console.log(isNaN(selectedRadio[index]));
         if (isNaN(selectedRadio[index])) {
           passMandatoryDrodowns = false;
         }
@@ -457,13 +451,11 @@ const ProductItem = ({
       .then((response) => {
         if (response?.data?.success) {
           const responseData = response?.data;
-          console.log(responseData);
           localStorage.setItem(
             "user-info",
             JSON.stringify(responseData?.data?.user)
           );
 
-          console.log(">>> herer ", responseData?.data?.user?.status);
 
           if (responseData.data.user.status === "inactive") {
             sessionStorage.setItem(
@@ -486,7 +478,6 @@ const ProductItem = ({
           dispatch(changeUserState(responseData?.data?.user || null));
           toast.success(`${t("You have been logged in successfully")}`);
         } else {
-          console.log("response?.data?.success false");
           throw new Error(`${t("Login failed")}`);
         }
       })

@@ -42,7 +42,6 @@ const Login = () => {
     try {
       setSpinner(true);
       AxiosInstance.get(`restaurant-style`).then((response) => {
-        console.log(response.data?.data);
         dispatch(changeRestuarantEditorStyle(response.data?.data));
         setSpinner(false);
       });
@@ -94,7 +93,6 @@ const Login = () => {
           window.location.reload();
         }, 200);
       } else {
-        console.log("response?.data?.success false");
         setSpinner(false);
         toast.error(`${response?.data?.message || t("Login failed")}`);
       }
