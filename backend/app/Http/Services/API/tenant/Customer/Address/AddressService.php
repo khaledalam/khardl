@@ -23,12 +23,29 @@ class AddressService
     public function create($request)
     {
         $data = $this->request_data($request);
+
+        // Reverse geocoding using Google API
+        list($city, $region, $country) = addressCityRegionCountry($data['lat'], $data['lng']);
+
+        $data['city'] = $city;
+        $data['region'] = $region;
+        $data['country'] = $country;
+
         $this->customer->addresses()->create($data);
         return $this->sendResponse($this->customer->refresh()->addresses()->get(), __('Created successfully'));
     }
+
     public function update($request,$address)
     {
         $data = $this->request_data($request);
+
+        // Reverse geocoding using Google API
+        list($city, $region, $country) = addressCityRegionCountry($data['lat'], $data['lng']);
+
+        $data['city'] = $city;
+        $data['region'] = $region;
+        $data['country'] = $country;
+
         $this->customer
         ->addresses()
         ->findOrFail($address->id)
@@ -61,4 +78,6 @@ class AddressService
             'name'
         ]);
     }
+
+
 }
