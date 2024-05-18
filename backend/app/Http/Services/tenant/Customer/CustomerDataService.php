@@ -65,7 +65,8 @@ class CustomerDataService
         $customerStatuses = RestaurantUser::STATUS;
 
         $allCustomersWithoutPaginate = RestaurantUser::with(['branch', 'addresses', 'orders'])
-            ->Customers();
+            ->Customers()
+            ->orderBy('created_at', 'DESC');
 
         $customerByLocationByLocation = [];
 
