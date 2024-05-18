@@ -746,6 +746,7 @@
     "na" : "لايوجد",
     "Are u sure to change customer of status ?":"هل انت متأكد من تغير حالة العميل ؟",
     "live-chat" : "محادثه حيه",
+    "auto_update_tap_sheet": "تحديث مستند TAP بشكل اوتوماتك",
     "show" : "عرض",
     "webhook-url" : "رابط webhook",
     "Daily earnings":"الارباح اليومية",

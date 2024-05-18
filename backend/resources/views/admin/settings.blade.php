@@ -100,18 +100,17 @@
     <!--begin::Card body-->
     <div class="card-body border-top p-9">
 
-
-                              <!--begin::Input group-->
-      <div class="row mb-0 mt-5">
-        <!--begin::Label-->
-          <div class="form-check form-check-solid form-switch fv-row">
-            <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing5" name="live_chat_enabled" @if($live_chat_enabled) checked="checked" @endif}} />
-            <label class="form-check-label" for="allowmarketing5">{{ __('show')}} {{ __('live-chat')}}
-                                          </label>
-          </div>
-        <!--begin::Label-->
-      </div>
-      <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="row mb-0 mt-5">
+            <!--begin::Label-->
+            <div class="form-check form-check-solid form-switch fv-row">
+                <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing5" name="auto_update_tap_sheet" @if($live_chat_enabled) checked="checked" @endif}} />
+                <label class="form-check-label" for="allowmarketing5">{{ __('auto_update_tap_sheet')}}</label>
+                <small>(TAP Lead ID)</small>
+            </div>
+            <!--begin::Label-->
+        </div>
+        <!--end::Input group-->
 
         <!--begin::Input group-->
         <div class="row mb-0 mt-5">
@@ -138,11 +137,23 @@
     </div>
     <!--end::Input group-->
 
+        <!--begin::Input group-->
+        <div class="row mb-0 mt-5">
+            <!--begin::Label-->
+            <div class="form-check form-check-solid form-switch fv-row">
+                <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing5" name="live_chat_enabled" @if($live_chat_enabled) checked="checked" @endif}} />
+                <label class="form-check-label" for="allowmarketing5">{{ __('show')}} {{ __('live-chat')}}
+                </label>
+            </div>
+            <!--begin::Label-->
+        </div>
+        <!--end::Input group-->
+
     </div>
     <!--end::Card body-->
     <!--begin::Actions-->
     <div class="card-footer d-flex justify-content-end py-6 px-9">
-      <button type="reset" class="btn btn-light btn-active-light-khardl me-2">{{ __('discard')}}</button>
+      <button type="reset" class="btn btn-light btn-active-light-khardl me-2">{{ __('reset')}}</button>
       <button type="submit" class="btn btn-khardl" id="kt_account_profile_details_submit">
         <i class="bi bi-check2-square mx-1"></i>
         {{ __('save-changes')}}
