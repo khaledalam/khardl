@@ -104,7 +104,7 @@
         <div class="row mb-0 mt-5">
             <!--begin::Label-->
             <div class="form-check form-check-solid form-switch fv-row">
-                <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing5" name="auto_update_tap_sheet" @if($live_chat_enabled) checked="checked" @endif}} />
+                <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing5" name="auto_update_tap_sheet" @if($auto_update_tap_sheet) checked="checked" @endif}} />
                 <label class="form-check-label" for="allowmarketing5">{{ __('auto_update_tap_sheet')}}</label>
                 <small>(TAP Lead ID)</small>
             </div>

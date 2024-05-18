@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CentralSetting;
 use Carbon\Carbon;
 use App\Models\Tenant;
 use App\Models\Tenant\Order;
@@ -343,7 +344,10 @@ class TapController extends Controller
         $response = Lead::connect($data);
         if($response['http_code'] == ResponseHelper::HTTP_OK){
             logger($request);
-            $tenant->run(function()use($response){
+
+            $update_tap_sheet = CentralSetting::first()?->auto_update_tap_sheet;
+
+            $tenant->run(function()use($response, $update_tap_sheet){
                 Setting::first()->update([
                     'lead_id' => $response['message']['id'],
                     'lead_response' => $response['message']
@@ -353,32 +357,9 @@ class TapController extends Controller
                     lead_id :  $response['message']['id'],
                 );
 
-
-                // Update the TAP shared Google sheet (add LEAD ID)
-                // https://docs.google.com/spreadsheets/d/15z09Bphnn6D6fEQSWa5jrlqzkdhbNsr5nrOyCmH2TVo/edit#gid=0
-                $SHEET_ID = '15z09Bphnn6D6fEQSWa5jrlqzkdhbNsr5nrOyCmH2TVo';
-
-                $client = new Client();
-                $client->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
-                $client->setAccessType('offline');
-                $path = base_path() . '/config/true-campus-423716-e3-72946e436b30.json';
-                $client->setAuthConfig($path);
-                $service = new \Google_Service_Sheets($client);
-
-                $newRow = [
-                    now(),
-                    'live',
-                    $response['message']['id'],
-                    ' ',
-                    Setting::first()?->restaurant_name,
-                    $response['message']
-                ];
-                $rows = [$newRow];
-                $valueRange = new \Google_Service_Sheets_ValueRange();
-                $valueRange->setValues($rows);
-                $range = 'Sheet1';
-                $options = ['valueInputOption' => 'USER_ENTERED'];
-                $service->spreadsheets_values->append($SHEET_ID, $range, $valueRange, $options);
+                if ($update_tap_sheet) {
+                   $this->UpdateTAPSheet($response);
+                }
 
             });
 
@@ -392,6 +373,34 @@ class TapController extends Controller
 
     }
 
+    private function UpdateTAPSheet($response)
+    {
+        // Update the TAP shared Google sheet (add LEAD ID)
+        // https://docs.google.com/spreadsheets/d/15z09Bphnn6D6fEQSWa5jrlqzkdhbNsr5nrOyCmH2TVo/edit#gid=0
+        $SHEET_ID = '15z09Bphnn6D6fEQSWa5jrlqzkdhbNsr5nrOyCmH2TVo';
+
+        $client = new Client();
+        $client->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
+        $client->setAccessType('offline');
+        $path = base_path() . '/config/true-campus-423716-e3-72946e436b30.json';
+        $client->setAuthConfig($path);
+        $service = new \Google_Service_Sheets($client);
+
+        $newRow = [
+            now(),
+            'live',
+            $response['message']['id'],
+            ' ',
+            Setting::first()?->restaurant_name,
+            $response['message']
+        ];
+        $rows = [$newRow];
+        $valueRange = new \Google_Service_Sheets_ValueRange();
+        $valueRange->setValues($rows);
+        $range = 'Sheet1';
+        $options = ['valueInputOption' => 'USER_ENTERED'];
+        $service->spreadsheets_values->append($SHEET_ID, $range, $valueRange, $options);
+    }
 
     public function payments_redirect(Request $request){
 
