@@ -26,6 +26,10 @@ class CustomerDataService
                         if ($customer->addresses->count()) {
                             foreach ($customer->addresses as $address) {
                                 if (!$address->city || !$address->region || !$address->country) {
+                                    if (!$address->lat || !$address->lng) {
+                                        continue;
+                                    }
+
                                     try {
                                         // Reverse geocoding using Google API
                                         list($city, $region, $country) = addressCityRegionCountry($address->lat, $address->lng);
