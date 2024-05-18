@@ -299,3 +299,51 @@ if (!function_exists('getTenantByOrderId')) {
     }
 }
 
+if (!function_exists('convertLatLngToAddress')) {
+    function convertLatLngToAddress(string $lat, string $lng)
+    {
+        $googleMapsApiKey = env('GOOGLE_MAPS_API_KEY');
+
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$lng}&key={$googleMapsApiKey}&sensor=false&language=en";
+
+        $response = file_get_contents($url);
+
+        if($response === false) {
+            return false;
+        }
+
+        return json_decode($response, true);
+
+        // geocode?.results[0]?.formatted_address || geocode?.plus_code?.compound_code || `${lat},${lng}`
+
+    }
+}
+
+if (!function_exists('addressCityRegionCountry')) {
+    function addressCityRegionCountry(string $lat, string $lng): array
+    {
+        $addressFromLatLng = convertLatLngToAddress($lat, $lng);
+        $results = $addressFromLatLng['results'];
+
+        for ($j = 0; $j < count($results); $j++) {
+            for ($i = 0; $i < count($results[$j]['address_components'] ?? []) ?? 0; $i++) {
+                if (($results[$j]['address_components'][$i]['types'][0] ?? "") == "locality") {
+                    $city = $results[$j]['address_components'][$i] ?? null;
+                }
+                if (($results[$j]['address_components'][$i]['types'][0] ?? "") == "administrative_area_level_1") {
+                    $region = $results[$j]['address_components'][$i] ?? null;
+                }
+                if (($results[$j]['address_components'][$i]['types'][0] ?? "") == "country") {
+                    $country = $results[$j]['address_components'][$i] ?? null;
+                }
+            }
+        }
+
+        $city = $city['long_name'] ?? null;
+        $region = $region['long_name'] ?? null;
+        $country = $country['long_name'] ?? null;
+
+        return [$city, $region, $country];
+    }
+}
+

@@ -20,6 +20,7 @@ const CustomerAddresses = () => {
   const [openDeleteConfirmModal, setOpenDeleteConfirmModal] = useState(-1);
   const [editMode, setEditMode] = useState(-1);
   const [address, setAddress] = useState({
+    type: "other",
     name: "",
   });
 

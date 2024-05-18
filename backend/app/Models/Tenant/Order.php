@@ -193,6 +193,9 @@ class Order extends Model
     {
         return $query->when($search != null, function ($q) use ($search) {
             return $q->where('shipping_address', 'LIKE', '%' . $search . '%')
+                ->orWhere('city', 'LIKE', '%' . $search . '%')
+                ->orWhere('region', 'LIKE', '%' . $search . '%')
+                ->orWhere('country', 'LIKE', '%' . $search . '%')
                 ->orWhere('id', 'LIKE', '%' . $search . '%');
         });
     }

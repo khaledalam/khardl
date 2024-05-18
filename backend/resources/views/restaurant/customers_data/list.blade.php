@@ -20,6 +20,95 @@
                     <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                         <!--begin::Card title-->
                         <div class="card-title">
+                            <h2>{{ __('Locations') }}</h2>
+                        </div>
+                        <!--end::Card title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar flex-row-fluid justify-content-start gap-5" @if(app()->getLocale() === 'ar') style=" flex-direction: revert;" @endif>
+                            <!--begin::Search-->
+                            <div class="d-flex align-items-center position-relative my-1">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                        <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <input type="text" name="search_location" value="{{ request('search_location')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('City, Region, Country')}}" />
+                            </div>
+                            <button class="btn btn-khardl" type="submit">{{ __('Search') }}</button>
+                        </div>
+                        <!--end::Card toolbar-->
+                    </div>
+                </form>
+                <!--begin::Tab content-->
+                <div id="kt_referred_users_tab_content mb-5" class="tab-content">
+                    <!--begin::Tab panel-->
+                    <div id="kt_referrals_1" class="card-body p-0 tab-pane fade show active" role="tabpanel">
+                        <div class="table-responsive p-4">
+                            <!--begin::Table-->
+                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                                <!--begin::Table head-->
+                                <thead>
+                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                        <th class="min-w-70px">{{ __('city') }}</th>
+                                        <th class="min-w-70px">{{ __('region') }}</th>
+                                        <th class="min-w-175px">{{ __('country') }}</th>
+                                        <th class="min-w-100px">{{ __('orders count') }}</th>
+                                        <th class="min-w-100px">{{ __('rank') }}</th>
+                                    </tr>
+                                </thead>
+                                <!--end::Table head-->
+                                <!--begin::Table body-->
+                                <tbody class="fw-bold text-gray-600">
+                                    @php
+                                        $rank = 1
+                                    @endphp
+                                    @foreach ($customerByLocationByLocation as $country => $countryList)
+                                        @foreach ($countryList as $city => $cityList)
+                                            @foreach ($cityList as $region => $ordersCount)
+                                                @if($country == 'N/A' || $city == 'N/A' || $region == 'N/A')
+                                                    @continue
+                                                @endif
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    <td class="px-2">{{ __($city) }}</td>
+                                                    <td>{{ __($region) }}</td>
+                                                    <td>{{ __($country) }}</td>
+                                                    <td>{{ __($ordersCount) }}</td>
+                                                    <td>{{ $rank++ }}</td>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            @endforeach
+                                        @endforeach
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--end::Tab panel-->
+
+                </div>
+                <!--end::Tab content-->
+            </div>
+            <!--end::Referred users-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Referred users-->
+            <div class="card">
+                <form action="">
+                    @csrf
+                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                        <!--begin::Card title-->
+                        <div class="card-title">
                             <h2>{{ __('Customers') }}</h2>
                         </div>
                         <!--end::Card title-->
@@ -35,15 +124,15 @@
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
-                                <input type="text" name="search" value="{{ request('search')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('Name, email, phone, adress')}}" />
+                                <input type="text" name="search" value="{{ request('search')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('Name, email, phone, address')}}" />
                             </div>
                             <div class="w-100 mw-150px">
                                 <!--begin::Select2-->
                                 <select class="form-select form-select-solid" name="status">
                                     <option value="">{{ __('Status') }}</option>
-                                @foreach ($customerStatuses as $status)
-                                <option value="{{ $status }}" @if($status==request('status')) {{ 'selected' }} @endif>{{ __($status) }}</option>
-                                @endforeach
+                                    @foreach ($customerStatuses as $status)
+                                        <option value="{{ $status }}" @if($status==request('status')) {{ 'selected' }} @endif>{{ __($status) }}</option>
+                                    @endforeach
                                 </select>
                                 <!--end::Select2-->
                             </div>
@@ -61,20 +150,20 @@
                             <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
                                 <!--begin::Table head-->
                                 <thead>
-                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                        <th class="min-w-100px">{{ __('ID') }}</th>
-                                        <th class="min-w-175px">{{ __('Name') }}</th>
-                                        <th class="min-w-70px">{{ __('Phone') }}</th>
-                                        <th class="min-w-70px">{{ __('Email') }}</th>
-                                        <th class="min-w-100px">{{ __('Last login') }}</th>
-                                        <th class="min-w-100px">{{ __('Registration') }}</th>
-                                        <th class="min-w-100px">{{ __('Actions') }}
-                                    </tr>
+                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="min-w-100px">{{ __('ID') }}</th>
+                                    <th class="min-w-175px">{{ __('Name') }}</th>
+                                    <th class="min-w-70px">{{ __('Phone') }}</th>
+                                    <th class="min-w-70px">{{ __('Email') }}</th>
+                                    <th class="min-w-100px">{{ __('Last login') }}</th>
+                                    <th class="min-w-100px">{{ __('Registration') }}</th>
+                                    <th class="min-w-100px">{{ __('Actions') }}
+                                </tr>
                                 </thead>
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody class="fw-bold text-gray-600">
-                                    @foreach ($allCustomers as $customer)
+                                @foreach ($allCustomers as $customer)
                                     <!--begin::Table row-->
                                     <tr>
                                         <td class="px-2">
@@ -122,7 +211,7 @@
                                         </td>
                                     </tr>
                                     <!--end::Table row-->
-                                    @endforeach
+                                @endforeach
                                 </tbody>
                                 <!--end::Table head-->
                                 <form id="approve-form"  method="POST" style="display: inline">
