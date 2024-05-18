@@ -334,7 +334,7 @@
                                     <i class="fa fa-store"></i>
                                         <!--end::Svg Icon-->
                                 </span>
-                                <span class="menu-title">{{ __('Discounts')}} </span>
+                                <span class="menu-title">{{ __('Promotions')}} </span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -350,8 +350,8 @@
                                         <span class="menu-title  {{($link == 'coupons') ? 'text-khardl  ' : ''}}">{{ __('promotions')}}</span>
                                     </a>
                                 </div>
-                              
-                            
+
+
                                 <!-- Staff evaluation -->
                                 <div class="menu-item">
                                     <a class="menu-link {{($link == 'coupons') ? 'bg-black  ' : ''}}" href="{{ route('coupons.index') }}">
@@ -365,14 +365,14 @@
                                         <span class="menu-title {{($link == 'coupons') ? 'text-khardl  ' : ''}}">{{ __('Coupons')}}</span>
                                     </a>
                                 </div>
-                      
-                             
-        
+
+
+
                             </div>
                         </div>
                     @endif
                         <!-- Coupons -->
-                    
+
                         @if(\App\Models\Tenant\Setting::first()?->is_live && \App\Models\ROSubscription::first()?->status == \App\Models\ROSubscription::ACTIVE)
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('restaurant.qr')}}">
@@ -420,7 +420,7 @@
                                 </span>
                             </a>
                         </div>
-                      
+
                         <!-- QR maker -->
                         {{-- <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.qr')}}">
@@ -536,6 +536,18 @@
                                     <!--begin::Title-->
                                     <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">
                                     @yield('title', 'Dashboard')
+                                    @if(isset($refresh))
+                                        <div class="d-flex justify-content-center mx-1">
+                                            <a href="{{route('restaurant.summary')}}?refresh=true"  style="cursor: pointer">
+                                                <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ __('This will refresh the summary result of page, note that the results will be refresh automatically for every :hour hours.',['hours' => calculateHours($cacheSeconds)]) }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z" />
+                                                        <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />
+                                                    </svg>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    @endif
                                     <!--begin::Separator-->
                                         <span class="h-20px border-1 border-gray-200 border-start ms-3 mx-2 me-1"></span>
                                         <!--end::Separator-->

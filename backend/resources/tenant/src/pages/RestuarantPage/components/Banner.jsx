@@ -24,7 +24,7 @@ const Banner = ({ restaurantStyle }) => {
   useEffect(() => {
     if (banner_type == "slider" && banner_images?.length > 0) {
       setListofBannerImages(
-        banner_images.map((image) => {
+        banner_images?.map((image) => {
           return {
             croppedImage: `${image.url}`,
           };

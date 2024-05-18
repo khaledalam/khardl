@@ -99,7 +99,7 @@ const Footer = ({ restaurantStyle }) => {
           <span className="font-light opacity-75">{t("Powered by")}</span>
           <a
             href="https://khardl.com/"
-            className="font-medium hover:cursor-pointer text-green-950"
+            className="font-medium hover:cursor-pointer text-lime-400"
           >
             {" "}
             {t("Khardl")}

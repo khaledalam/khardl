@@ -140,7 +140,11 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
     console.log("bannerUpload 1", restuarantStyle?.bannerUpload);
     console.log("banner_images 1", restuarantStyle?.banner_images);
 
-    if (restuarantStyle.banner_type == "slider") {
+    if (
+      restuarantStyle.banner_type == "slider" &&
+      Array.isArray(restuarantStyle?.banner_images) &&
+      restuarantStyle?.banner_images?.length > 0
+    ) {
       console.log("inside");
       const imagePromises = restuarantStyle?.banner_images
         .filter((banner) => banner !== undefined || banner !== null)

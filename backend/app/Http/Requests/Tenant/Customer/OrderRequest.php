@@ -62,10 +62,7 @@ class OrderRequest extends FormRequest
                     return;
                 }
             }
-
-            if($this->delivery_type == DeliveryType::DELIVERY &&
-                (!$user->address || !$user->lat || !$user->lng) && !$this->address
-            ){
+            if($this->delivery_type == DeliveryType::DELIVERY && (!$this->address || !$user->addresses()?->where('id',$this->address)->count())){
                 $validator->errors()->add('address', __('Please update your location or enter customer address before place an order'));
                 return ;
             }
