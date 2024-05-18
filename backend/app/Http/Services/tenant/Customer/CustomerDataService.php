@@ -56,7 +56,7 @@ class CustomerDataService
 
         /** @var RestaurantUser $user */
         $user  = Auth::user();
-        $allCustomers = RestaurantUser::with(['branch', 'addresses', 'orders'])
+        $allCustomers = RestaurantUser::with(['branch',])
         ->Customers()
         ->whenSearch($request['search']??null)
         ->whenStatus($request['status']??null)
@@ -64,7 +64,7 @@ class CustomerDataService
         ->paginate(config('application.perPage')??20);
         $customerStatuses = RestaurantUser::STATUS;
 
-        $allCustomersWithoutPaginate = RestaurantUser::with(['branch', 'addresses', 'orders'])
+        $allCustomersWithoutPaginate = RestaurantUser::with(['addresses', 'orders'])
             ->Customers()
             ->orderBy('created_at', 'DESC');
 
