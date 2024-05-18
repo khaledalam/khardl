@@ -70,10 +70,10 @@
                                             @foreach ($cityList as $region => $ordersCount)
                                                 <!--begin::Table row-->
                                                 <tr>
-                                                    <td class="px-2">{{ $city }}</td>
-                                                    <td>{{ $region }}</td>
-                                                    <td>{{ $country }}</td>
-                                                    <td>{{ $ordersCount }}</td>
+                                                    <td class="px-2">{{ $city ?? __('N/A') }}</td>
+                                                    <td>{{ $region ?? __('N/A') }}</td>
+                                                    <td>{{ $country ?? __('N/A') }}</td>
+                                                    <td>{{ $ordersCount ?? __('N/A') }}</td>
                                                     <td>{{ $rank++ }}</td>
 
                                                 </tr>
