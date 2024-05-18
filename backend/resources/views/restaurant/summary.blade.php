@@ -244,7 +244,7 @@
                                         <!--begin::Description-->
                                         <div class="flex-grow-1">
                                             @if(Auth::user()->hasPermissionWorker('can_edit_menu'))
-                                            <a href="{{ route('restaurant.view-item',['item' => $orderItem->item_id]) }}" class="text-gray-800 text-hover-primary fw-bolder fs-6">
+                                            <a href="{{ route('restaurant.view-item',['item' => $orderItem->item_id]) }}" class="text-gray-800 text-hover-khardl fw-bolder fs-6">
                                                 {{ $orderItem->item->name ?? __('Deleted') }}
                                             </a>
                                             @else
