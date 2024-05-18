@@ -89,9 +89,13 @@ class CustomerDataService
         ->paginate(config('application.perPage')??20);
         $customerStatuses = RestaurantUser::STATUS;
 
-        $orders = Order::all();
+        $orders = Order::where('manual_order_first_name', '=', null)
+            ->where('status','=', Order::COMPLETED)
+            ->whenSearch($request['search_location']??null)
+            ->get()->all();
 
         $customerByLocationByLocation = [];
+
 
         foreach ($orders as $order) {
             if (!in_array($order->country ?? 'N/A', $customerByLocationByLocation)) {

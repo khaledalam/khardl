@@ -35,7 +35,7 @@
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
-                                <input type="text" name="search" value="{{ request('search')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('City, Region, Country')}}" />
+                                <input type="text" name="search_location" value="{{ request('search_location')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('City, Region, Country')}}" />
                             </div>
                             <button class="btn btn-khardl" type="submit">{{ __('Search') }}</button>
                         </div>
@@ -68,6 +68,9 @@
                                     @foreach ($customerByLocationByLocation as $country => $countryList)
                                         @foreach ($countryList as $city => $cityList)
                                             @foreach ($cityList as $region => $ordersCount)
+                                                @if($country == 'N/A' || $city == 'N/A' || $region == 'N/A')
+                                                    @continue
+                                                @endif
                                                 <!--begin::Table row-->
                                                 <tr>
                                                     <td class="px-2">{{ __($city) }}</td>
