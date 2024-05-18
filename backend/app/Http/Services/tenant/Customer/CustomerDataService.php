@@ -64,9 +64,12 @@ class CustomerDataService
         ->paginate(config('application.perPage')??20);
         $customerStatuses = RestaurantUser::STATUS;
 
+        $allCustomersWithoutPaginate = RestaurantUser::with(['branch', 'addresses', 'orders'])
+            ->Customers();
+
         $customerByLocationByLocation = [];
 
-        foreach ($allCustomers as $customer) {
+        foreach ($allCustomersWithoutPaginate as $customer) {
             $ordersCount = $customer->orders->count();
             foreach ($customer->addresses as $address) {
                 if (!in_array($address->country, $customerByLocationByLocation)) {
