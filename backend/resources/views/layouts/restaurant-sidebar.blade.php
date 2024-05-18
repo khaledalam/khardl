@@ -215,8 +215,8 @@
                         </div>
                         <!-- menu -->
                         <div class="menu-item menu-accordion">
-                            @if( $id = \App\Models\Tenant\Branch::first()?->id)
-                            <a href="{{route('restaurant.get-category', ['id' => \App\Models\Tenant\Category::where('branch_id', $id)?->first()?->id ?? -1, 'branchId' => $id])}}">
+                            @if($branchId = \App\Models\Tenant\Branch::first()?->id)
+                            <a href="{{route('restaurant.get-category', ['id' => \App\Models\Tenant\Category::where('branch_id', $branchId)?->first()?->id ?? -1, 'branchId' => $branchId])}}">
                                 <span class="{{ ($link == 'menu') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
@@ -248,9 +248,9 @@
 
                         <!-- workers -->
                         <div class="menu-item menu-accordion">
-                            @if( $id = \App\Models\Tenant\Branch::first()?->id)
+                            @if( $branchId)
 
-                            <a href="{{route('restaurant.workers',['branchId' => $id])}}">
+                            <a href="{{route('restaurant.workers',['branchId' => $branchId])}}">
                                 <span class="{{ ($link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
@@ -326,6 +326,7 @@
                         </div>
 
                         <!-- Restaurants -->
+                        @if( $branchId)
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($link == 'promotions' || $link == 'coupons')  ? 'show' : ''}}">
                             <span class="{{ ($link == 'promotions' || $link == 'coupons')? 'menu-link active ' : 'menu-link' }}">
                                 <span class="menu-icon">
@@ -353,7 +354,7 @@
                             
                                 <!-- Staff evaluation -->
                                 <div class="menu-item">
-                                    <a class="menu-link {{($link == 'coupons') ? 'bg-black  ' : ''}}" href="{{ route('coupons.index') }}">
+                                    <a class="menu-link {{($link == 'coupons') ? 'bg-black  ' : ''}}" href="{{ route('coupons.index',['branchId'=>$branchId]) }}">
                                         <span class="menu-icon " >
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -369,7 +370,7 @@
         
                             </div>
                         </div>
-            
+                        @endif
                         <!-- Coupons -->
                     
                         @if(\App\Models\Tenant\Setting::first()?->is_live && \App\Models\ROSubscription::first()?->status == \App\Models\ROSubscription::ACTIVE)
@@ -746,6 +747,7 @@
 <script src="{{ global_asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
 <script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
 <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
+
 @yield('js')
 @stack('scripts')
 @if(env('SENTRY_LARAVEL_DSN'))

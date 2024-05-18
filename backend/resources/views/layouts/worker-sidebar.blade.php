@@ -277,7 +277,7 @@
                                 
                                     <!-- Staff evaluation -->
                                     <div class="menu-item">
-                                        <a class="menu-link {{($link == 'coupons') ? 'bg-black  ' : ''}}" href="{{ route('coupons.index') }}">
+                                        <a class="menu-link {{($link == 'coupons') ? 'bg-black  ' : ''}}" href="{{ route('coupons.index',['branchId'=>$user->branch->id]) }}">
                                             <span class="menu-icon " >
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                                 <span class="svg-icon svg-icon-2">

@@ -424,18 +424,37 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            @foreach ($branches as $branchLoop)
-                            <div class="col-md-3">
-                                <a href="{{ route('restaurant.get-category',['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1, 'branchId' => $branchLoop->id]) }}">
-                                    <button type="button" class="btn  btn-sm @if($branchLoop->id == $branchId) btn-khardl text-black @else btn-active-light-khardl @endif">
-                                        @if($branchLoop->id == $branchId)<i class="fa fa-arrow-down text-white mx-1"></i>@endif {{ $branchLoop->name }}
-                                    </button>
-                                </a>
+                        <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                              
+                            <div class="carousel-inner">
+                        @foreach ($branches->chunk(4) as $key => $branchChunk)
+                                    
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <div class="row ">
+                                    @foreach ($branchChunk as $branchLoop)
+                                    <div class="col-md-3 d-flex justify-content-center" >
+                                        <a href="{{ route('restaurant.get-category', ['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1,'branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl border border-dark text-black @else btn-active-light-khardl @endif">
+                                            <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px" >   {{ $branchLoop->name }}</span>
+                                        </a>
+                                    </div>
+                                        
+                                    @endforeach
+                                </div>
+                             
                             </div>
-                            @endforeach
-                        </div>
-                        </ul>
+                        @endforeach
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev" >
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next" >
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                       
+                    
                     </div>
                 </div>
                 <!--end::Card-->
@@ -1256,7 +1275,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+      
     $(document).ready(function() {
+        $('#carouselExample').carousel({
+            pause: true,
+            interval: false,
+        });
         function confirmCloseModal() {
             return confirm("{{ __('are-you-sure-you-want-to-close-without-saving') }}");
         }
@@ -1550,6 +1574,20 @@
         transform-origin: left top;
     }
 
+  
+    .carousel-control-prev-icon
+    {
+        background-image : url('/img/next.png')
+    }
+    .carousel-control-next-icon {
+        background-image : url('/img/prev.png')
+    }
+    .carousel-inner{
+        position: relative;
+        width: 55%;
+        overflow: hidden;
+        margin: auto;
+    }
 </style>
 <!--end::Content-->
 {{-- Image preview --}}
@@ -1577,4 +1615,6 @@
         readURL(this,itemID);
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 @endsection

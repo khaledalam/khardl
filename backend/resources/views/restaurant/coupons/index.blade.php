@@ -3,6 +3,66 @@
 @section('title', __('Coupons'))
 
 @section('content')
+@if($user->isRestaurantOwner())
+<div class="content d-flex flex-column flex-column pt-0" id="kt_content">
+
+    <!--begin::Post-->
+    <div class="post d-flex flex-column" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Inbox App - Messages -->
+            <div class="flex-lg-row-fluid my-2">
+                <!--begin::Card-->
+                <div class="card">
+                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                        <div class="d-flex flex-wrap gap-1">
+                            <h3 class="text-khardl">{{ __('Branches') }}</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                         
+                            <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                              
+                                <div class="carousel-inner">
+                                    @foreach ($branches->chunk(4) as $key => $branchChunk)
+                                    
+                                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                            <div class="row ">
+                                                @foreach ($branchChunk as $branchLoop)
+                                                <div class="col-md-3 d-flex justify-content-center" >
+                                                    <a href="{{ route('coupons.index', ['branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl border border-dark text-black @else btn-active-light-khardl @endif">
+                                                        <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px" >   {{ $branchLoop->name }}</span>
+                                                    </a>
+                                                </div>
+                                                      
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                        
+                                    
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev" >
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next" >
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                  
+                    
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+        </div>
+        <!--end::Inbox App - Messages -->
+    </div>
+    <!--end::Container-->
+</div>
+@endif
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
@@ -43,7 +103,7 @@
                     <!--end::Search-->
                 </div>
                 <div class="mr-auto p-2 ">
-                    <a href="{{ route('coupons.create') }}">
+                    <a href="{{ route('coupons.create',['branchId'=>$branchId]) }}">
                         <button class="btn btn-sm btn-khardl">
                             {{ __('Add new') }}
                         </button>
@@ -153,7 +213,7 @@
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a href="{{ route('coupons.edit',$coupon->id) }}" class="menu-link px-3">{{ __('Edit') }}</a>
+                                                    <a href="{{ route('coupons.edit',['coupon'=>$coupon->id,'branchId'=>$branchId]) }}" class="menu-link px-3">{{ __('Edit') }}</a>
                                                 </div>
                                                 @if(!$coupon->deleted_at)
                                                 <div class="menu-item px-3">
@@ -198,9 +258,35 @@
     <!--end::Post-->
 </div>
 
+<style>
+    
+
+
+  
+    .carousel-control-prev-icon
+    {
+        background-image : url('/img/next.png')
+    }
+    .carousel-control-next-icon {
+        background-image : url('/img/prev.png')
+    }
+    .carousel-inner{
+        position: relative;
+        width: 55%;
+        overflow: hidden;
+        margin: auto;
+    }
+</style>
 @endsection
 @section('js')
 <script>
+    
+    $(document).ready(function() {
+  $('#carouselExample').carousel({
+    pause: true,
+    interval: false,
+  });
+});
     function toggleStatus(itemId) {
         $.ajax({
             url: `{{ route('coupons.change-status', ['coupon' => ':itemId']) }}`.replace(':itemId', itemId)
@@ -257,4 +343,8 @@
     }
 
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 @endsection

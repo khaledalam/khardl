@@ -124,7 +124,7 @@ Route::group([
             /* Summary page */
             /* Coupon page */
             Route::middleware('permission:can_access_coupons')
-            ->resource('coupons',CouponController::class)
+            ->resource('{branchId}/coupons',CouponController::class)
             ->withTrashed(['show','restore','edit','update']);
             Route::middleware('permission:can_access_coupons')
             ->name('coupons.')

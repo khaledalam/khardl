@@ -42,13 +42,13 @@
                                                                     <h2>{{ __('Make a new coupon') }}</h2>
                                                                 </div>
                                                                 <div class="">
-                                                                    <a href="{{ route('coupons.index') }}">
+                                                                    <a href="{{ route('coupons.index',[ 'branchId' => $branchId]) }}">
                                                                         <button class="btn btn-khardl btn-sm">{{ __('Back to list') }}</button>
                                                                     </a>
                                                                 </div>
                                                             </div>
                                                             <!--end::Card header-->
-                                                            <form action="{{ route('coupons.store') }}" method="POST">
+                                                            <form action="{{ route('coupons.store',[ 'branchId' => $branchId]) }}" method="POST">
                                                                 @csrf
                                                                 <!--begin::Card body-->
                                                                 <div class="card-body pt-0">
