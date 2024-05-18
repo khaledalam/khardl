@@ -113,6 +113,8 @@ class CustomerDataService
             $customerByLocationByLocation[$order->country ?? 'N/A'][$order->city ?? 'N/A'][$order->region ?? 'N/A']++;
         }
 
+        asort($customerByLocationByLocation);
+
         return view('restaurant.customers_data.list', compact('user','allCustomers','customerStatuses',
             'customerByLocationByLocation'));
     }
