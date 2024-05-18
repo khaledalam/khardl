@@ -161,4 +161,10 @@ class QRService
             ->header('Content-Disposition', 'attachment; filename="' . $fileName . '"');
 
     }
+    public function delete($id)
+    {
+        $QR = QrCode::findOrFail($id);
+        if(getAuth()->isRestaurantOwner())$QR->delete();
+        return redirect()->route('restaurant.qr')->with('success', __("Deleted successfully"));
+    }
 }

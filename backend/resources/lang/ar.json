@@ -1422,5 +1422,6 @@
     "How many restaurants can use this coupon, if left empty it's Unlimited":"كم عدد المطاعم التي يمكنها استخدام هذه القسيمة, إذا تركت فارغة فهي غير محدودة",
     "App":"تطبيق",
     "Subscriped":"تم الاشتراك",
-    "Not subscriped":"غير مشترك"
+    "Not subscriped":"غير مشترك",
+    "Are you sure you want to delete this QR ?":"هل أنت متأكد أنك تريد حذف الماسح الضوئي؟"
 }

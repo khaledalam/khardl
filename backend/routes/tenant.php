@@ -140,6 +140,7 @@ Route::group([
                 Route::get('/qr', 'index')->name('qr');
                 Route::post('/qr-create', 'create')->name('qr-create');
                 Route::get('/qr-download/{id}', 'download')->name('qr-download');
+                Route::delete('/qr-delete/{id}', 'delete')->name('qr-delete');
             });
             /* QR page */
             /* Customer data page */
