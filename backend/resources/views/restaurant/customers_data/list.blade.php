@@ -52,66 +52,34 @@
                                 <!--begin::Table head-->
                                 <thead>
                                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                        <th class="min-w-100px">{{ __('ID') }}</th>
-                                        <th class="min-w-175px">{{ __('Name') }}</th>
-                                        <th class="min-w-70px">{{ __('Phone') }}</th>
-                                        <th class="min-w-70px">{{ __('Email') }}</th>
-                                        <th class="min-w-100px">{{ __('Last login') }}</th>
-                                        <th class="min-w-100px">{{ __('Registration') }}</th>
-                                        <th class="min-w-100px">{{ __('Actions') }}
+                                        <th class="min-w-70px">{{ __('city') }}</th>
+                                        <th class="min-w-70px">{{ __('region') }}</th>
+                                        <th class="min-w-175px">{{ __('country') }}</th>
+                                        <th class="min-w-100px">{{ __('orders count') }}</th>
+                                        <th class="min-w-100px">{{ __('rank') }}</th>
                                     </tr>
                                 </thead>
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody class="fw-bold text-gray-600">
-                                    @foreach ($allCustomers as $customer)
-                                    <!--begin::Table row-->
-                                    <tr>
-                                        <td class="px-2">
-                                            <a href="{{ route('customers_data.show',$customer->id) }}">
-                                                {{ $customer->id }}
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('customers_data.show',$customer->id) }}" class="text-gray-600 text-hover-khardl">{{ $customer->full_name }}</a>
-                                        </td>
-                                        <td>{{ $customer->phone }}</td>
-                                        <td>{{ $customer->email }}</td>
+                                    @php
+                                        $rank = 1
+                                    @endphp
+                                    @foreach ($customerByLocationByLocation as $country => $countryList)
+                                        @foreach ($countryList as $city => $cityList)
+                                            @foreach ($cityList as $region => $ordersCount)
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    <td class="px-2">{{ $city }}</td>
+                                                    <td>{{ $region }}</td>
+                                                    <td>{{ $country }}</td>
+                                                    <td>{{ $ordersCount }}</td>
+                                                    <td>{{ $rank++ }}</td>
 
-
-                                        <td>{{ $customer->last_login?->format('Y-m-d') }}</td>
-                                        <td>{{ $customer->created_at?->format('Y-m-d') }}</td>
-                                        <td >
-                                            <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                <span class="svg-icon svg-icon-5 m-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon--></a>
-                                            <!--begin::Menu-->
-                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="{{route('customers_data.show',['restaurantUser'=>$customer->id])}}" class="menu-link px-3">{{ __('View') }}</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="{{ route('customers_data.edit',['restaurantUser' => $customer->id]) }}" class="menu-link px-3">{{ __('Edit') }}</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" onclick="showConfirmation({{$customer->id}})" class="menu-link px-3">{{__('status')}}</a>
-                                                </div>
-
-                                                <!--end::Menu item-->
-                                            </div>
-                                            <!--end::Menu-->
-                                        </td>
-                                    </tr>
-                                    <!--end::Table row-->
+                                                </tr>
+                                                <!--end::Table row-->
+                                            @endforeach
+                                        @endforeach
                                     @endforeach
                                 </tbody>
                                 <!--end::Table head-->

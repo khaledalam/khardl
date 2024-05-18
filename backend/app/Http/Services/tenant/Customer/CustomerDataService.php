@@ -16,13 +16,12 @@ class CustomerDataService
     public function getList($request)
     {
 
-
         // @TODO: to remove
         $restaurants = Tenant::all();
         foreach($restaurants as $restaurant){
             try {
                 $restaurant->run(function() use($restaurant){
-                    $customers = RestaurantUser::Customers()->get();
+                    $customers = RestaurantUser::with('addresses')->Customers()->get();
                     foreach ($customers as $customer) {
                         if ($customer->addresses->count()) {
                             foreach ($customer->addresses as $address) {
@@ -61,13 +60,29 @@ class CustomerDataService
         ->paginate(config('application.perPage')??20);
         $customerStatuses = RestaurantUser::STATUS;
 
-        $customerByLocation = [];
+        $customerByLocationByLocation = [];
 
         foreach ($allCustomers as $customer) {
-            dd($customer->orders);
+            $ordersCount = $customer->orders->count();
+            foreach ($customer->addresses as $address) {
+                if (!in_array($address->country, $customerByLocationByLocation)) {
+                    $customerByLocationByLocation[$address->country] = [];
+                }
+
+                if (!in_array($address->city, $customerByLocationByLocation[$address->country])) {
+                    $customerByLocationByLocation[$address->country][$address->city] = [];
+                }
+
+                if (!in_array($address->region, $customerByLocationByLocation[$address->country][$address->city])) {
+                    $customerByLocationByLocation[$address->country][$address->city][$address->region] = 0;
+                }
+
+                $customerByLocationByLocation[$address->country][$address->city][$address->region] += $ordersCount;
+            }
         }
 
-        return view('restaurant.customers_data.list', compact('user','allCustomers','customerStatuses'));
+        return view('restaurant.customers_data.list', compact('user','allCustomers','customerStatuses',
+            'customerByLocationByLocation'));
     }
     public function show(Request $request,RestaurantUser $restaurantUser)
     {
