@@ -48,8 +48,8 @@ class LoginCustomerController extends BaseController
      */
     public function __construct()
     {
-//        dd("TEST");
-//        $this->middleware('guest')->except('logout');
+        $this->middleware('throttle:login-customer')->only('login');
+
     }
 
     public function login(CustomerSendSMSRequest $request)
