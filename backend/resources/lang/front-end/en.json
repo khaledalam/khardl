@@ -352,7 +352,7 @@
     "Inclusive VAT": "Inclusive VAT",
     "Credit Card": "Credit Card",
     "Online": "Online",
-    "Cash on Delivery": "Cash on Delivery",
+    "Cash": "Cash",
     "Card": "Card",
     "Apple Pay": "Apple Pay",
     "Buy with Card": "Buy with Card",
@@ -513,5 +513,6 @@
     "Write your email address here...": "Write your email address here...",
     "Have an account?": "Have an account?",
     "Login here": "Login here",
-    "Register": "Register"
+    "Register": "Register",
+    "Back": "Back"
 }

@@ -10,6 +10,7 @@ const CartDetailSection = ({
   img,
   displayName,
   disabled,
+  title,
 }) => {
   const { t } = useTranslation();
 
@@ -17,15 +18,12 @@ const CartDetailSection = ({
     (state) => state.restuarantEditorStyle
   );
 
-  useEffect(() => {
-    console.log(
-      "PRICE_BACKGROUND_COLOR",
-      restaurantEditorStyle.price_background_color
-    );
-  }, [restaurantEditorStyle]);
-
   return (
-    <div key={name} className="flex align-items-center mt-4">
+    <div
+      key={name}
+      className="flex align-items-center mt-4"
+      title={title}
+    >
       <style jsx>{`
         .custom-radiobutton.p-highlight .p-radiobutton-box {
           background-color: ${restaurantEditorStyle?.price_background_color ||

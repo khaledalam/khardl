@@ -1,15 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Button = ({ title, classContainer, onClick, icon, link, className }) => {
-  console.log(classContainer, icon, "icon");
+  const navigate = useNavigate();
 
   return (
-    <Link className={className} to={link}>
-      <button onClick={onClick}>
-        {title} {icon ? <icon /> : null}
-      </button>
-    </Link>
+    <button
+      onClick={() => {
+        onClick();
+        navigate(link);
+      }}
+      className={className}
+    >
+      {title} {icon ? <icon /> : null}
+    </button>
   );
 };
 

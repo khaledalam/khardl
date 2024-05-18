@@ -57,7 +57,7 @@
     "Please re-login again": "من فضلك قم باعداه تسجيل الدخول",
     "Yeswa":"يسوي",
     "Invalid code":"الرمز غير صحيح",
-    "national_id_number": "الرقم القومي",
+    "national_id_number": "رقم الهوية",
     "bank_name": "اسم البنك",
     "dob": "تاريخ الميلاد",
     "iban": "رقم الحساب المصرفي الدولي (IBAN)",
@@ -247,7 +247,7 @@
     "ZIP code":"الرمز البريدي",
     "Address Line 1":"العنوان الاول",
     "Address Line 2":"العنوان الثاني(الاضافي)",
-    "National ID":"الرقم القومي",
+    "National ID":"رقم الهوية",
     "Phone":"الهاتف",
     "Bank name":"اسم البنك",
     "Bank IBAN":"رقم الحساب المصرفي الدولي (IBAN)",
@@ -1418,5 +1418,9 @@
     "Highest visitors":"أعلى الزوار",
     "Image will be shown to customers":"سيتم عرض الصورة للعملاء",
     "This will refresh the summary result of page, note that the results will be refresh automatically for every :hour hours.":"سيؤدي ذلك إلى تحديث ارقام الملخص للصفحة ، لاحظ أن النتائج سيتم تحديثها تلقائيًا كل :hours ساعات.",
-    "Promotions":"الخصومات"
+    "Promotions":"الخصومات",
+    "How many restaurants can use this coupon, if left empty it's Unlimited":"كم عدد المطاعم التي يمكنها استخدام هذه القسيمة, إذا تركت فارغة فهي غير محدودة",
+    "App":"تطبيق",
+    "Subscriped":"تم الاشتراك",
+    "Not subscriped":"غير مشترك"
 }

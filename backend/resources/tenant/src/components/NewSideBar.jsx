@@ -26,6 +26,7 @@ import {
 
 import Modal from "./Modal";
 import XIcon from "../assets/xIcon.png";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
   const navigate = useNavigate();
@@ -135,7 +136,7 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
               className="w-56 h-8 hover:cursor-pointer px-[10px] items-center bg-white hover:bg-orange-100 bg-opacity-30 rounded-[50px] border border-black border-opacity-10 hover:border-orange-100 text-gray-900 text-xs font-light flex justify-between"
             >
               <div className="">{t("Customer Dashboard")}</div>
-              <img className="w-3 h-3 " src={Dashboard} />
+              <MdOutlineSpaceDashboard  className="w-3 h-3 text-gray-500" />
             </div>
           )}
 

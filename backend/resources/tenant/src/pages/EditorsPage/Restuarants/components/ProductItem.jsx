@@ -550,10 +550,9 @@ const ProductItem = ({
             style={{
               color: menu_name_text_color,
               fontFamily: menu_name_text_font,
-              fontWeight: menu_name_text_weight,
               fontSize: menu_name_text_size,
             }}
-            className="relative"
+            className={`relative font-${menu_name_text_weight}`}
           >
             <span>{name}</span>
             <img
@@ -573,10 +572,9 @@ const ProductItem = ({
                 style={{
                   color: total_calories_text_color,
                   fontFamily: total_calories_text_font,
-                  fontWeight: total_calories_text_weight,
                   fontSize: total_calories_text_size,
                 }}
-                className="relative"
+                className={`relative font-${total_calories_text_weight}`}
               >
                 <span>
                   {caloryInfo} {t("Kcal")}
@@ -605,10 +603,9 @@ const ProductItem = ({
                 style={{
                   color: price_text_color,
                   fontFamily: price_text_font,
-                  fontWeight: price_text_weight,
                   fontSize: price_text_size,
                 }}
-                className=""
+                className={`font-${price_text_weight}`}
               >
                 {t("SAR")} {amount}
               </div>

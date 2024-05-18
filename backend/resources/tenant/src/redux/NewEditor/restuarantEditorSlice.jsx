@@ -484,7 +484,7 @@ const restuarantEditorSlice = createSlice({
       if (state.bannersUpload) {
         state.bannersUpload.splice(index, 1);
       }
-      state.banner_images.splice(index, 1);
+      state.banner_images?.splice(index, 1);
     },
     setSidebarCollapse: (state, action) => {
       state.collapse_sidebar = action.payload;
