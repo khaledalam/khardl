@@ -27,13 +27,13 @@ const VerificationEmail = () => {
   let user_email = sessionStorage.getItem("email") || "";
 
   const [showForm, setShowForm] = useState(false);
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const [showCountdownText, setShowCountdownText] = useState(true);
   const [spinner, setSpinner] = useState(false);
 
   const resetTimer = () => {
-    setCountdown(30);
+    setCountdown(60);
     setCanResend(false);
     startTimer();
   };
