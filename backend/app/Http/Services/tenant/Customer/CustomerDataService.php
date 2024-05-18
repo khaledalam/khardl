@@ -66,7 +66,7 @@ class CustomerDataService
 
         $allCustomersWithoutPaginate = RestaurantUser::with(['addresses', 'orders'])
             ->Customers()
-            ->orderBy('created_at', 'DESC');
+            ->get();
 
         $customerByLocationByLocation = [];
 
