@@ -64,8 +64,6 @@ const Login = () => {
       //
       // return;
 
-      console.log("here", response?.data?.data?.url);
-
       if (response?.data?.success) {
         const responseData = response?.data;
         // console.log("responseData>", responseData)

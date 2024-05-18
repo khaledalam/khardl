@@ -110,14 +110,12 @@ const Register = () => {
         terms_and_policies: data.terms_and_policies,
         restaurant_name_ar: data.restaurant_name_ar,
       });
-      console.log(response.data);
       toast.success(`${t("Account successfully created")}`);
       sessionStorage.setItem("email", data.email);
       window.location.href = "/verification-email";
     } catch (error) {
       setSpinner(false);
       console.log(error);
-      console.log(errors);
 
       // if (error.response.data.errors?.length > 0) {
       //     setError(error.response.data.errors);

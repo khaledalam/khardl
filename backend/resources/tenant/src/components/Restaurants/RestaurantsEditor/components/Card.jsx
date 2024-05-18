@@ -22,7 +22,6 @@ function Card(props) {
   const dispatch = useDispatch();
 
   function showMeDetailesItem() {
-    console.log("clicked");
     if (!showDetailesItem) {
       setShowDetailesItem(true);
     } else {

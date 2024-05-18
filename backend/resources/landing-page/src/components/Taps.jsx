@@ -8,7 +8,6 @@ export function Taps({ children, contentClassName = "" }) {
   const { branch_id } = useParams();
 
   function findActiveTap(a) {
-    console.log("findActiveTap", a);
 
     return a.reduce((accumulator, currentValue, i) => {
       if (currentValue.props.active) {

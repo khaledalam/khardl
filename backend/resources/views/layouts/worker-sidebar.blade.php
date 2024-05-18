@@ -645,7 +645,6 @@
             event.preventDefault();
             if (event.clipboardData) {
                 event.clipboardData.setData("text/plain", r_code.textContent);
-                console.log(event.clipboardData.getData("text"))
             }
         });
 

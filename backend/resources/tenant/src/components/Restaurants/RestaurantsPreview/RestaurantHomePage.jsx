@@ -24,10 +24,7 @@ const RestaurantHomePage = (props) => {
         `categories?items&user&branch&selected_branch_id=${branch_id}`,
       );
 
-      console.log(
-        "editor rest restaurantCategoriesResponse RestaurantHomePage",
-        restaurantCategoriesResponse.data,
-      );
+      
       if (restaurantCategoriesResponse.data) {
         setCategories(restaurantCategoriesResponse.data?.data);
 
@@ -49,7 +46,6 @@ const RestaurantHomePage = (props) => {
   if (!styleDataRestaurant) {
     return;
   }
-  console.log(branch_id);
 
   const categoriesForBranch = categories.filter(
     (category) => category.branch.id == branch_id,

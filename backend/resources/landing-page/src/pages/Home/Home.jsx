@@ -7,7 +7,6 @@ import ContactUs from "../../components/ContactUsSection/ContactUs";
 import "./index.css";
 
 const Home = () => {
-  console.log(window.screen);
   return (
     <div>
       <Helmet>

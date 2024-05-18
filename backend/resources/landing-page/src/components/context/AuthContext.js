@@ -24,7 +24,6 @@ export const AuthContextProvider = (props) => {
   const [loading, setLoading] = useState(true);
 
   const checkAuthenticated = useCallback(async () => {
-    console.log("HERERE");
     try {
       const response = await axiosAuth.post(API_ENDPOINT + "/auth-validation");
       localStorage.setItem(
@@ -41,7 +40,6 @@ export const AuthContextProvider = (props) => {
       }
     } catch (err) {
       sessionStorage.removeItem("email");
-      console.log("HERERE 3 >> ", sessionStorage.getItem("email"));
 
       setStatusCode(err?.response?.status);
       dispatch(changeLogState(err.response?.data?.is_loggedin || false));

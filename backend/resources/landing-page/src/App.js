@@ -54,7 +54,6 @@ if (sentry_on == "1") {
 }
 
 const App = () => {
-  console.log(localStorage.getItem("i18nextLng"));
   const Language = useSelector((state) => state.languageMode.languageMode);
   const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
   const fontFamily = "Almarai, sans-serif";

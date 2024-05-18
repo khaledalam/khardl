@@ -26,14 +26,11 @@ function OrderDetail(props) {
     setOrder(selectedOrder);
   }, [order]);
 
-  console.log("OrderDetail idOrder", idOrder);
-  console.log("OrderDetail order", order);
 
   if (!order || !orders) {
     return;
   }
 
-  console.log("OrderDetail order items", order?.items);
 
   const handleOrderClick = (stutes) => {
     dispatch(setOrderShow(stutes));

@@ -91,7 +91,6 @@ const Login = ({ closingFunc }) => {
 
       if (response?.data?.success) {
         const responseData = response?.data;
-        console.log("login-response", responseData);
         localStorage.setItem(
           "user-info",
           JSON.stringify(responseData?.data?.user)
@@ -282,7 +281,7 @@ const Login = ({ closingFunc }) => {
               onKeyDown={(event) => {
                 if (
                   event.ctrlKey &&
-                  event.key === "v" 
+                  event.key === "v"
                 ) {
                 } else if (
                   (event.which < 48 || event.which > 57) &&

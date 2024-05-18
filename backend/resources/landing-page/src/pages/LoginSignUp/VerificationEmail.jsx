@@ -68,9 +68,6 @@ const VerificationEmail = () => {
         code: data.verificationcode,
         email: data.email,
       });
-
-      console.log(response.data);
-
       if (response.data) {
         setStatusCode(HTTP_NOT_ACCEPTED);
         navigate("/complete-register");
@@ -85,7 +82,6 @@ const VerificationEmail = () => {
 
   const startTimer = () => {
     const timer = setInterval(() => {
-      console.log(3);
       setCountdown((prevCountdown) => {
         if (prevCountdown === 1) {
           clearInterval(timer);

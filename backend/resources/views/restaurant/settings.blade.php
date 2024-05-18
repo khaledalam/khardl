@@ -137,8 +137,6 @@
             var driversOptionCheckbox = document.getElementById('drivers_option');
             var DeliveryCompaniesOptionCheckbox = document.getElementById('delivery_companies_option');
             var limitDeliveryCompanyInput = document.getElementById('limit_delivery_company');
-            console.log(limitDeliveryCompanyInput);
-            console.log(driversOptionCheckbox);
             // Check if the elements are found before setting properties
             if (driversOptionCheckbox && limitDeliveryCompanyInput) {
                 // Enable/disable based on the state of the drivers option checkbox

@@ -1558,7 +1558,6 @@
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                console.log(item_id);
                 if(item_id){
                     $(`#item-image-preview-${item_id}`).attr('src', e.target.result);
                 }else{

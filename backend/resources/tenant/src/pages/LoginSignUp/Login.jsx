@@ -67,7 +67,6 @@ const Login = () => {
 
       if (response?.data?.success) {
         const responseData = response?.data;
-        console.log("login-response", responseData);
         localStorage.setItem(
           "user-info",
           JSON.stringify(responseData?.data?.user),
@@ -98,7 +97,6 @@ const Login = () => {
         dispatch(setIsOpen(false));
         toast.success(`${t("You have been logged in successfully")}`);
       } else {
-        console.log("response?.data?.success false");
         setSpinner(false);
         throw new Error(`${t("Login failed")}`);
       }

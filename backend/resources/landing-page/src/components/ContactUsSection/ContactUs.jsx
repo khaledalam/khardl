@@ -40,7 +40,6 @@ function ContactUs() {
           },
         },
       );
-      console.log(data);
       if (data.success) {
         // const responseData = await response.json()
         toast.success(
@@ -61,7 +60,6 @@ function ContactUs() {
     setIsMobile(!isMobile);
   }, []);
 
-  console.log("ContactUs");
   //  **displayed content**
   return (
     <>

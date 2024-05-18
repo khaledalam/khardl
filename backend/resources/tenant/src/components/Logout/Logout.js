@@ -22,7 +22,6 @@ const Logout = () => {
       dispatch(logout({ method: "POST" }))
         .unwrap()
         .then((res) => {
-          console.log("logout resss ", res);
 
           setStatusCode(HTTP_NOT_AUTHENTICATED);
           setStatusCode(HTTP_NOT_AUTHENTICATED);

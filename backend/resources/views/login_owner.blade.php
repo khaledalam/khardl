@@ -86,7 +86,6 @@
                 },
                 success: function (data) {
                     // Handle successful login
-                    console.log('Login successful');
                     $('#loginPopup').fadeOut();
                 },
                 error: function (xhr, status, error) {

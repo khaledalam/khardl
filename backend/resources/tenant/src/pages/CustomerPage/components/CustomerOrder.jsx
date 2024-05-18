@@ -34,18 +34,13 @@ const CustomerOrder = () => {
 
   const fetchOrderPerpage = async () => {
     try {
-      console.log(
-        `orders?items&item&per_page=${
-          orderPerPage.value || ""
-        }&page=${pageNumber}&search=${search}&status=${orderStatus.value || ""}`
-      );
+
       const ordersResponse = await AxiosInstance.get(
         `orders?items&item&per_page=${
           orderPerPage.value || ""
         }&page=${pageNumber}&search=${search}&status=${orderStatus.value || ""}`
       );
 
-      console.log("orders per page >>>", ordersResponse?.data?.data);
       if (ordersResponse.data) {
         dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)));
         dispatch(updatePageLinks(ordersResponse?.data.links));
@@ -71,7 +66,7 @@ const CustomerOrder = () => {
     setpageNumber((prevPage) => prevPage + 1);
   }, []);
 
-  console.log("pageliks", pagelinks);
+
 
   return (
     <div className="m-12 mb-5">
