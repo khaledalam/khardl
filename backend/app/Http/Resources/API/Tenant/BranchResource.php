@@ -50,10 +50,9 @@ class BranchResource extends JsonResource
             'delivery_companies_option'=>$this->delivery_companies_option,
             'drivers_option'=>$this->drivers_option,
             'pickup_availability'=>$this->pickup_availability,
-            'display_category_icon'=>$this->pickup_availability,
 
         ];
-        
+
         return $data;
     }
 }
