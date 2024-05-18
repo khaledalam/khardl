@@ -205,6 +205,7 @@ return [
         'privacy_and_policy.en' => "Privacy and policy (English)",
         'terms_and_conditions.ar' => "Terms and conditions (Arabic)",
         'terms_and_conditions.en' => "Terms and conditions (English)",
+        "branch_id" => "branch"
     ],
 
 ];
