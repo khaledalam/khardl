@@ -53,7 +53,6 @@ class Branch extends Model
         'drivers_option',
         'pickup_availability',
         'active',
-        'display_category_icon'
     ];
     protected $appends = [
         'delivery_availability'
