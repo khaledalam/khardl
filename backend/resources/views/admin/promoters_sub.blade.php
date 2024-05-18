@@ -28,7 +28,7 @@
                                         <div class="d-flex flex-column gap-7 gap-lg-10">
                                             <!--begin::General options-->
                                             <div class="card card-flush py-4">
-                                               
+
                                                 <!--begin::Card header-->
                                                 <div class="card-header">
                                                     <div class="card-title">
@@ -110,7 +110,7 @@
                                                                         <div class="d-flex justify-content-between align-items-center">
                                                                             <div>
                                                                                 <label class="form-label">{{ __('Max use') }}</label>
-                                                                                <small class="text-muted">({{ __('One time use code per restaurnt owner') }})</small>
+                                                                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __("How many restaurants can use this coupon, if left empty it's Unlimited") }}"></i>
                                                                             </div>
                                                                         </div>
                                                                         <input type="number" min="1" name="max_use" value="{{ old('max_use') }}" class="form-control mb-2" placeholder="{{ __('Max use') }}" />
@@ -203,10 +203,10 @@
                                     <!--end::Svg Icon-->
                                     <div class="d-flex flex-row">
                                         <input type="text" class="form-control form-control-solid ps-10" name="search" value="{{ request('search') }}" placeholder="{{ __('search') }}" />
-    
+
                                         <button type="submit" class="btn btn-khardl">{{__('Search')}}</button>
                                     </div>
-            
+
                                 </div>
                                 </form>
                               <!--begin::Table container-->
@@ -292,7 +292,7 @@
                                       <!--end::Table body-->
                                   </table>
                                   <!--end::Table-->
-                                
+
                                   {{ $coupons->withQueryString()->links('pagination::bootstrap-4') }}
                               </div>
                               <!--end::Table container-->

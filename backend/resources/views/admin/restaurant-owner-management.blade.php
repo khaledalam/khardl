@@ -15,24 +15,32 @@
             <div class="card mb-5 mb-xl-8">
                 <!--begin::Header-->
                 <div class="card-header border-0 pt-5">
-                    <h3 class="card-title align-items-start flex-column">
+                    <h3 class="card-title">
                         <span class="card-label fw-bolder fs-3 mb-1">{{ __('restaurant-owners')}}</span>
-                        <span class="text-muted mt-1 fw-bold fs-7">{{ count($admins) }} {{ __('restaurant-owners')}}</span>
+                        <span class="mx-2 text-muted mt-1 fw-bold fs-7">{{ count($admins) }} {{ __('restaurant-owners')}}</span>
+                        <form action="" method="GET" id="selectForm">
+                            @csrf
+                            <div class="d-flex align-items-center">
+                                <input type="text" class="form-control form-control-solid ps-10" name="search" value="{{ request('search') }}" placeholder="{{ __('search') }}" />
+                                <div class="position-relative w-md-400px me-md-2">
+                                    <div class="card-toolbar form-group mx-2 me-md-2">
+                                        <select name="type" id="selectType" class="form-select form-select-solid">
+                                            <option value="">{{ __('Select') }}</option>
+                                            <option value="complete_step_1" {{ request('type') === 'complete_step_1' ? 'selected' : '' }}>{{ __('Complete Step 1 only') }}</option>
+                                            <option value="complete_step_2" {{ request('type') === 'complete_step_2' ? 'selected' : '' }}>{{ __('Have restaurant') }}</option>
+                                            <option value="have_active_restaurant" {{ request('type') === 'have_active_restaurant' ? 'selected' : '' }}>{{ __('Have active restaurant') }}</option>
+                                            <option value="have_inactive_restaurant" {{ request('type') === 'have_inactive_restaurant' ? 'selected' : '' }}>{{ __('Have inactive restaurant') }}</option>
+                                            <option value="verified_email" {{ request('type') === 'verified_email' ? 'selected' : '' }}>{{ __('Verified email') }}</option>
+                                            <option value="not_verified_email" {{ request('type') === 'not_verified_email' ? 'selected' : '' }}>{{ __('Not verified email') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <button type="submit" class="btn btn-khardl me-5">{{ __('search')}}</button>
+                                </div>
+                            </div>
+                        </form>
                     </h3>
-                    <form action="" method="GET" id="selectForm">
-                        @csrf
-                        <div class="card-toolbar form-group">
-                            <select name="type"  id="selectType" class="form-select">
-                                <option value="">{{ __('Select') }}</option>
-                                <option value="complete_step_1" {{ request('type') === 'complete_step_1' ? 'selected' : '' }}>{{ __('Complete Step 1 only') }}</option>
-                                <option value="complete_step_2" {{ request('type') === 'complete_step_2' ? 'selected' : '' }}>{{ __('Have restaurant') }}</option>
-                                <option value="have_active_restaurant" {{ request('type') === 'have_active_restaurant' ? 'selected' : '' }}>{{ __('Have active restaurant') }}</option>
-                                <option value="have_inactive_restaurant" {{ request('type') === 'have_inactive_restaurant' ? 'selected' : '' }}>{{ __('Have inactive restaurant') }}</option>
-                                <option value="verified_email" {{ request('type') === 'verified_email' ? 'selected' : '' }}>{{ __('Verified email') }}</option>
-                                <option value="not_verified_email" {{ request('type') === 'not_verified_email' ? 'selected' : '' }}>{{ __('Not verified email') }}</option>
-                            </select>
-                        </div>
-                    </form>
                 </div>
                 <!--end::Header-->
                 <!--begin::Body-->
@@ -154,14 +162,14 @@
             var form = button.closest('.delete-form');
 
             Swal.fire({
-                title: '{{ __('are-you-sure') }}'
+                title: `{{ __('are-you-sure') }}`
                 , text: "{{ __('you-wont-be-able-to-undo-this') }}"
                 , icon: 'warning'
                 , showCancelButton: true
                 , confirmButtonColor: '#d33'
                 , cancelButtonColor: '#3085d6'
-                , confirmButtonText: '{{ __('delete ') }}'
-                , cancelButtonText: '{{ __('cancel') }}'
+                , confirmButtonText: `{{ __('delete') }}`
+                , cancelButtonText: `{{ __('cancel') }}`
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();
@@ -197,9 +205,6 @@
                 }
             });
         });
-    });
-    document.getElementById('selectType').addEventListener('change', function () {
-        document.getElementById('selectForm').submit();
     });
 
 </script>

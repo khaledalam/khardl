@@ -42,6 +42,7 @@ class SummaryService
         ] =
             $this->cacheItems();
         $cacheSeconds = config('application.cache_RO_Summary_Page') ?? 0;
+        $refresh = 1;
         return view(
             'restaurant.summary',
             compact(
@@ -61,7 +62,8 @@ class SummaryService
                 'monthlyRevenues',
                 'dailyVisitors',
                 'monthVisitors',
-                'cacheSeconds'
+                'cacheSeconds',
+                'refresh'
             )
         );
     }
