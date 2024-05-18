@@ -11,13 +11,14 @@ use App\Traits\APIResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
+
 class CustomerDataService
 {
     use APIResponseTrait;
     public function getList($request)
     {
-
         // @TODO: to remove (this code added to migrate geo address details for old DB data).
+        /*
         $restaurants = Tenant::all();
         foreach($restaurants as $restaurant){
             try {
@@ -44,7 +45,6 @@ class CustomerDataService
                     }
 
 
-                    /*
                     $customers = RestaurantUser::with('addresses')->Customers()->get();
                     foreach ($customers as $customer) {
                         if ($customer->addresses->count()) {
@@ -70,13 +70,14 @@ class CustomerDataService
                             }
                         }
                     }
-                    */
+
 
 
                 });
                 } catch (\Exception $e) {
             }
         }
+        */
 
 
         /** @var RestaurantUser $user */
