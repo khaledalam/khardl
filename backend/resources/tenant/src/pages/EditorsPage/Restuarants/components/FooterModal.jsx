@@ -47,27 +47,31 @@ const FooterModal = ({ type, setModalOpened }) => {
     setText(editor.getHTML());
   };
   const formats = [
+    "header",
     "font",
     "size",
     "bold",
     "italic",
     "underline",
     "strike",
-    "color",
-    "background",
-    "script",
-    "header",
     "blockquote",
-    "code-block",
-    "indent",
     "list",
-    "direction",
-    "align",
+    "bullet",
+    "indent",
     "link",
     "image",
     "video",
-    "formula",
   ];
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image"],
+      ["clean"],
+    ],
+  };
 
   const onSave = () => {
     if (type === "termsAndConditions") {
@@ -160,7 +164,7 @@ const FooterModal = ({ type, setModalOpened }) => {
             // bounds={".custom-quill-container"}
             theme="snow"
             onChange={handleChange}
-            className="h-[300px] w-full px-2 max-h-[700px] overflow-y-scroll hide-scroll"
+            className="h-[300px] w-full px-2 max-h-[700px] overflow-y-scroll hide-scroll pb-12"
             formats={formats}
           />
           {/* <textarea

@@ -213,7 +213,7 @@ const Slider = ({ banner_images }) => {
                     >
                       +
                     </div>
-                  ) : banner_images.length > 0 ? (
+                  ) : banner_images?.length > 0 ? (
                     <div
                       onClick={addMoreSlider}
                       className="btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex leading-[0px] items-center justify-center text-lg absolute bottom-7"

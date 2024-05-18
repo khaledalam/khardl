@@ -22,7 +22,6 @@ const CustomerProfile = () => {
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [loyalPointsValue, setLoyalPointsValue] = useState("");
-  const customerAddress = useSelector((state) => state.customerAPI.address);
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,15 +51,7 @@ const CustomerProfile = () => {
         userProfileInfo["lastName"] = profileResponse.data?.data?.lastName;
         setPhone(profileResponse.data?.data?.phone ?? t("N/A"));
         userProfileInfo["phone"] = profileResponse.data?.data?.phone;
-        dispatch(
-          updateCustomerAddress({
-            lat: profileResponse.data?.data?.address?.lat,
-            lng: profileResponse.data?.data?.address?.lng,
-            addressValue:
-              profileResponse.data?.data?.address?.addressValue ?? t("N/A"),
-          })
-        );
-        userProfileInfo["address"] = profileResponse.data?.data?.address;
+        dispatch(updateCustomerAddress({}));
 
         localStorage.setItem(
           "userProfileInfo",
@@ -85,11 +76,11 @@ const CustomerProfile = () => {
       if (
         firstName?.trim() === userProfile?.firstName?.trim() &&
         lastName?.trim() === userProfile?.lastName?.trim() &&
-        phone?.trim() === userProfile?.phone?.trim() &&
-        customerAddress?.addressValue?.trim() ===
-          userProfile?.address?.addressValue?.trim() &&
-        customerAddress?.lat === userProfile?.address?.lat &&
-        customerAddress?.lng === userProfile?.address?.lng
+        phone?.trim() === userProfile?.phone?.trim()
+        // && customerAddress?.addressValue?.trim() ===
+        //   userProfile?.address?.addressValue?.trim() &&
+        // customerAddress?.lat === userProfile?.address?.lat &&
+        // customerAddress?.lng === userProfile?.address?.lng
       ) {
         dispatch(updateProfileSaveStatus(true));
         console.log("initial values matches userProfile");
@@ -100,7 +91,7 @@ const CustomerProfile = () => {
         dispatch(updateProfileSaveStatus(false));
       }
     }
-  }, [customerAddress, firstName, lastName, phone, userProfile]);
+  }, [firstName, lastName, phone, userProfile]);
 
   useEffect(() => {
     fetchProfileData().then((r) => null);
@@ -113,12 +104,12 @@ const CustomerProfile = () => {
 
     try {
       await AxiosInstance.post(`/user`, {
-        address: customerAddress && customerAddress?.addressValue,
+        // address: customerAddress && customerAddress?.addressValue,
         first_name: firstName,
         last_name: lastName,
         phone: phone,
-        lat: customerAddress && customerAddress?.lat,
-        lng: customerAddress && customerAddress?.lng,
+        // lat: customerAddress && customerAddress?.lat,
+        // lng: customerAddress && customerAddress?.lng,
       })
         .then((r) => {
           if (r?.data?.data?.should_logout) {
@@ -155,10 +146,17 @@ const CustomerProfile = () => {
       <div className="w-full bg-white shadow-md rounded-md  min-h-[300px] h-full p-4">
         <div className="w-full lg:w-1/3 flex flex-col gap-4">
           <label className="h-fit w-full flex items-center p-1">
-            <img src={coins} alt="loyalty points" width={25} height={25} className="mx-2"></img>
+            <img
+              src={coins}
+              alt="loyalty points"
+              width={25}
+              height={25}
+              className="mx-2"
+            ></img>
             <span className="label-text">{t("Loyalty Point")}: </span>
-            <span className="text-neutral-900 text-lg mx-2">{loyalPointsValue}</span>
-
+            <span className="text-neutral-900 text-lg mx-2">
+              {loyalPointsValue}
+            </span>
           </label>
           <PrimaryTextInput
             id={"first-name"}
@@ -187,8 +185,8 @@ const CustomerProfile = () => {
           />
         </div>
       </div>
-      <h3 className="text-lg my-5 ">{t("Location")}</h3>
-      <div className="w-full bg-white shadow-md  min-h-[400px] h-full p-4 flex">
+      {/* <h3 className="text-lg my-5 ">{t("Location")}</h3> */}
+      {/* <div className="w-full bg-white shadow-md  min-h-[400px] h-full p-4 flex">
         <div className="w-full flex flex-col gap-4">
           <Places
             inputStyle={
@@ -196,7 +194,7 @@ const CustomerProfile = () => {
             }
           />
         </div>
-      </div>
+      </div> */}
       <div className="flex w-full items-center justify-between mt-6 mb-4 flex-wrap">
         <button
           onClick={() => setDeleteModalOpen(true)}

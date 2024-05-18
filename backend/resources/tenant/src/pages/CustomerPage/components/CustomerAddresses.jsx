@@ -20,7 +20,7 @@ const CustomerAddresses = () => {
   const [openDeleteConfirmModal, setOpenDeleteConfirmModal] = useState(-1);
   const [editMode, setEditMode] = useState(-1);
   const [address, setAddress] = useState({
-    type: "",
+    name: "",
   });
 
   const setAddresses = (addresses) => {
@@ -48,6 +48,7 @@ const CustomerAddresses = () => {
 
   const addAddress = async () => {
     try {
+      address.type = "other";
       const addressResponse = await AxiosInstance.post("/add-address", address);
       if (addressResponse?.data?.success === true) {
         toast.success(addressResponse?.data?.message);
@@ -179,8 +180,7 @@ const CustomerAddresses = () => {
                 key={index}
                 address={address}
                 onDelete={() => {
-                  deleteAddress(index);
-                  // setOpenDeleteConfirmModal(index);
+                  setOpenDeleteConfirmModal(index);
                 }}
                 onSetAsDefault={() => {
                   setAsDefault(index);
@@ -218,7 +218,7 @@ const CustomerAddresses = () => {
                   onClick={() => {
                     setAddress(
                       {
-                        type: "",
+                        name: "",
                       },
                       setAddMode(true)
                     );
@@ -250,7 +250,7 @@ const CustomerAddresses = () => {
               setEditMode(-1);
             }
             setAddress({
-              type: "",
+              name: "",
             });
           }}
           onCancel={() => {
