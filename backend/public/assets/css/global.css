@@ -332,3 +332,28 @@ a {
   border: 1px solid #000 !important;
   color: #000 !important;
 }
+/* Service page */
+.service-alert{
+  border: 1px solid #c2da06!important;
+}
+.service-alert-icon{
+  background-color: #c2da06;
+  border-radius: 100%;
+  padding: 8px 4px;
+  margin: 0px 5px;
+}
+.service-alert-icon i{
+  color: #ffffff;
+  font-size: 17px;
+}
+.service-content  > div >div{
+  box-shadow: 1px 1px 5px #CCC;
+  border-radius: 10px;
+}
+.service-content .btn{
+  border-radius: 38px;
+  margin-top: 10px;
+}
+.service-content .row .col-md-6 img{
+  max-height: 200px;
+}

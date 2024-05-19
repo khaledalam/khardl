@@ -4,6 +4,8 @@ namespace App\Http\Services\tenant\AdsPackage;
 
 use App\Http\Middleware\Restaurant;
 use App\Models\AdvertisementPackage;
+use App\Models\ROCustomerAppSub;
+use App\Models\ROSubscription;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\User;
 use App\Traits\APIResponseTrait;
@@ -23,7 +25,9 @@ class AdsPackageService
             $user = User::where('email', $ROUser->email)->first();
             return $user->requested_advertisements()->with('advertisement_package')->get();
         });
-        return view('restaurant.advertisement_services.index', compact('AdsPackages','requestedPackages'));
+        $hasActiveCustomerApp = $ROCustomerAppSub = ROCustomerAppSub::where('status',ROSubscription::ACTIVE)
+        ->first();
+        return view('restaurant.advertisement_services.index', compact('AdsPackages','requestedPackages','hasActiveCustomerApp'));
     }
     public function store($request, $advertisement)
     {

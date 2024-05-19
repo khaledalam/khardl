@@ -12,7 +12,28 @@
             <!--begin::Wrapper-->
             <div class=" d-flex flex-column flex-row-fluid" id="kt_wrapper">
                 <!--begin::Header-->
-
+                @if(!$hasActiveCustomerApp)
+                <div class="card p-10">
+                    <div class="alert service-alert d-flex align-items-center" role="alert">
+                        <div class="service-alert-icon">
+                            <i class="bi bi-info-circle mx-2 text-white "></i>
+                        </div>
+                        <div>
+                            <span>
+                                <h4>{{__('You do not have customer app')}}</h4>
+                                {{__('In order to be able to request an advertising service for the restaurant, you must have a subscription to the customer application.')}}
+                                @if(Auth::user()?->hasPermissionWorker('can_access_service_page'))
+                                <a href="{{route('restaurant.service')}}">
+                                    <u>
+                                        {{ __('You can purchase the customer application from here') }}
+                                    </u>
+                                </a>
+                                @endif
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                @else
                 <!--end::Header-->
                 <!--begin::Content-->
                 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -160,8 +181,8 @@
                                                                 {{ __($request->status) }}
                                                             </span>
                                                             @if($request->status == 'contacted')
-                                                                <br>
-                                                                <span>({{ $request->answered_at?->format('Y-m-d') }})</span>
+                                                            <br>
+                                                            <span>({{ $request->answered_at?->format('Y-m-d') }})</span>
                                                             @endif
                                                         </td>
                                                         <td>
@@ -186,6 +207,7 @@
                     <!--end::Post-->
                 </div>
                 <!--end::Content-->
+                @endif
 
             </div>
             <!--end::Wrapper-->

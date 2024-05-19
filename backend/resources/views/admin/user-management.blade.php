@@ -87,7 +87,7 @@
                     </span>
                     <!--end::Svg Icon-->
                   </a> --}}
-                  <a href="#" class="btn  btn-active-color-khardl btn-sm me-1 toggle-status-btn" data-user-id="{{ $admin->id }}">
+                  <a href="#" class="btn  btn-active-color-primary btn-sm me-1 toggle-status-btn" data-user-id="{{ $admin->id }}">
                     <span class="svg-icon svg-icon-3">
                         <div class="form-check form-switch">
                             <input class="form-check-input toggle-status-switch" type="checkbox" role="switch" id="flexSwitchCheck{{ $admin->id }}" {{ !$admin->isBlocked() ? 'checked' : '' }}>
