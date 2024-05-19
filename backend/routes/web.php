@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Central\Admin\Advertisement\AdvertisementController;
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use App\Http\Controllers\Web\Central\Admin\NotificationReceipt\NotificationReceiptController;
 use App\Http\Controllers\Web\Central\GlobalPromoterController;
@@ -187,7 +188,18 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                         Route::get('/restaurants','index')->middleware('permission:can_access_restaurants')->name('restaurants');
                         Route::post('/delivery/{tenant}', 'activeAndDeactivateDelivery')->name('delivery.activateAndDeactivate');
                         Route::post('/restaurants/{tenant}/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.sign-new-lead');
-                      });
+                    });
+                    Route::middleware('permission:can_access_advertisements')
+                    ->name('advertisement.')
+                    ->prefix('advertisement')
+                    ->group(function () {
+                        Route::resource('/', AdvertisementController::class)
+                        ->parameters(['' => 'advertisement'])
+                        ->withTrashed();
+                        Route::delete('/destroy/{advertisement}', [AdvertisementController::class,'destroy'])
+                        ->name('delete')
+                        ->withTrashed();
+                    });
                     Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');

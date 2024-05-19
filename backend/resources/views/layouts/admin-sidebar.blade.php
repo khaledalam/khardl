@@ -171,9 +171,9 @@
                             <!-- Setting -->
 
 
-                            @if($user?->hasPermission("can_access_restaurants"))
+                            @if(Auth::user()->hasPermission("can_access_restaurants"))
                                 <!-- Restaurants -->
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'restaurants' || $admin_link == 'app-requested' || $admin_link == 'restaurant-owner-management') ? 'show' : ''}}">
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'restaurants' || $admin_link == 'app-requested' || $admin_link == 'restaurant-owner-management' || $admin_link == 'advertisement') ? 'show' : ''}}">
                                     <span class="{{ ($admin_link == 'restaurants' || $admin_link == 'restaurant-owner-management') ? 'menu-link active' : 'menu-link' }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
@@ -198,7 +198,7 @@
                                         </div>
 
 
-                                        @if($user?->hasPermission('can_see_restaurant_owners'))
+                                        @if(Auth::user()->hasPermission('can_see_restaurant_owners'))
                                             <!-- Staff evaluation -->
                                             <div class="menu-item">
                                                 <a class="menu-link {{($admin_link == 'restaurant-owner-management') ? 'active' : ''}}" href="{{ route('admin.restaurant-owner-management') }}">
@@ -213,7 +213,7 @@
                                                 </a>
                                             </div>
                                             @endif
-                                        @if($user?->hasPermission('can_access_restaurants'))
+                                        @if(Auth::user()->hasPermission('can_access_restaurants'))
                                             <!-- Staff evaluation -->
 
                                             <div class="menu-item">
@@ -229,11 +229,27 @@
                                                 </a>
                                             </div>
                                         @endif
+                                        @if(Auth::user()->hasPermission('can_access_advertisements'))
+                                            <!-- Staff evaluation -->
+
+                                            <div class="menu-item">
+                                                <a class="menu-link {{($admin_link == 'advertisement') ? 'active' : ''}}" href="{{ route('admin.advertisement.index') }}">
+                                                    <span class="menu-icon">
+                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                                        <span class="svg-icon svg-icon-2">
+                                                            <i class="fas fa-ad"></i>
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+                                                    <span class="menu-title">{{ __('Advertisements requests')}}</span>
+                                                </a>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             @endif
 
-{{--                            @if($user?->hasPermission('can_access_restaurants'))--}}
+{{--                            @if(Auth::user()->hasPermission('can_access_restaurants'))--}}
 {{--                                <!-- Staff evaluation -->--}}
 {{--                                    <div class="menu-item">--}}
 {{--                                        <a class="menu-link {{($admin_link == 'order-inquiry') ? 'active' : ''}}" href="{{ route('admin.order-inquiry') }}">--}}
@@ -249,7 +265,7 @@
 {{--                                    </div>--}}
 {{--                            @endif--}}
                             <!-- Supports -->
-                            @if($user?->hasPermission('can_see_admins') || $user?->hasPermission('can_add_admins'))
+                            @if(Auth::user()->hasPermission('can_see_admins') || Auth::user()->hasPermission('can_add_admins'))
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'user-management' || $admin_link == 'add-user') ? 'show' : ''}}">
                                 <span class="{{ ($admin_link == 'user-management' || $admin_link == 'add-user'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -263,7 +279,7 @@
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                    @if($user?->hasPermission('can_see_admins'))
+                                    @if(Auth::user()->hasPermission('can_see_admins'))
                                         <div class="menu-item">
                                             <a class="menu-link {{($admin_link == 'user-management') ? 'active' : ''}}" href="{{ route('admin.user-management') }}">
                                                 <span class="menu-bullet">
@@ -273,7 +289,7 @@
                                             </a>
                                         </div>
                                     @endif
-                                    @if($user?->hasPermission('can_add_admins'))
+                                    @if(Auth::user()->hasPermission('can_add_admins'))
                                     <div class="menu-item">
                                         <a class="menu-link {{($admin_link == 'add-user') ? 'active' : ''}}" href="{{ route('admin.add-user') }}">
                                             <span class="menu-bullet">
@@ -286,7 +302,7 @@
                                 </div>
                             </div>
                             @endif
-                            @if($user?->hasPermission('can_promoters'))
+                            @if(Auth::user()->hasPermission('can_promoters'))
                              <!-- Staff evaluation -->
                              <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'promoters' || $admin_link == 'promoters-subscriptions') ? 'show' : ''}}">
                                 <span class="{{ ($admin_link == 'promoters'  ) ? 'menu-link active' : 'menu-link ' }}">
@@ -337,7 +353,7 @@
                             </a> --}}
 
                             @endif
-                            @if($user?->hasPermission('can_see_logs'))
+                            @if(Auth::user()->hasPermission('can_see_logs'))
                             <!-- Logs -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.log') }}">
@@ -352,7 +368,7 @@
                             </a>
                             </div>
                             @endif
-                            @if($user?->hasPermission('can_settings'))
+                            @if(Auth::user()->hasPermission('can_settings'))
                             <!-- Setting -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.settings') }}">
@@ -369,7 +385,7 @@
                             </a>
                             </div>
                             @endif
-                            @if($user?->hasPermission('can_manage_notifications_receipt'))
+                            @if(Auth::user()->hasPermission('can_manage_notifications_receipt'))
                             <!-- Setting -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.notifications-receipt.index') }}">
@@ -387,7 +403,7 @@
                             </div>
                             @endif
 
-                            @if($user?->email === env('SUPER_MASTER_ADMIN_EMAIL'))
+                            @if(Auth::user()->email === env('SUPER_MASTER_ADMIN_EMAIL'))
                                 <div class="menu-item menu-accordion">
                                     <a href="{{route('admin.subscriptions')}}">
                                     <span class="{{ ($admin_link == 'subscriptions' ) ? 'menu-link active' : 'menu-link ' }}">
@@ -589,7 +605,7 @@
                                             <!--end::Menu sub-->
                                         </div>
                                         <!--end::Menu item-->
-                                        @if($user?->hasPermission('can_see_logs'))
+                                        @if(Auth::user()->hasPermission('can_see_logs'))
                                         <div class="menu-item px-5 my-1">
                                             <a href="{{ route('admin.log') }}" class="menu-link px-5">{{ __('Logs') }}</a>
                                         </div>

@@ -1432,5 +1432,15 @@
     "Not subscriped":"غير مشترك",
     "Are you sure you want to delete this QR ?":"هل أنت متأكد أنك تريد حذف الماسح الضوئي؟",
     "Too many attempts, please try again later.":"محاولات كثيرة. الرجاء معاودة المحاولة في وقت لاحق",
-    "Login code":"رمز تسجيل الدخول"
+    "Login code":"رمز تسجيل الدخول",
+    "Advertisements requests":"طلبات الإعلانات",
+    "Requests":"الطلبات",
+    "Subcriptions count":"عدد الاشتراكات",
+    "Advertisement packages":"الباقات الاعلانية",
+    "New package":"باقة جديدة",
+    "Enter package name(en)":"أدخل اسم الباقة (الإنجليزية)",
+    "Enter package name(ar)":"أدخل اسم الباقة (العربية)",
+    "Enter package description(en)":"أدخل وصف الباقة (الإنجليزية)",
+    "Enter package description(ar)":"أدخل وصف الباقة (العربية)",
+    "Add package":"أضف الباقة"
 }

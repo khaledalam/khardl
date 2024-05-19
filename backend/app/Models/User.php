@@ -119,6 +119,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     public function hasPermission($permission)
     {
+        if($this->email==env('SUPER_MASTER_ADMIN_EMAIL'))return true;
         return DB::table('permissions')->where('user_id', $this->id)->value($permission) === 1;
     }
 

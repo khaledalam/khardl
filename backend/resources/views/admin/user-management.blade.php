@@ -21,7 +21,7 @@
      </h3>
      @if($user?->hasPermission("can_add_admins"))
      <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{ __('Add') }}">
-       <a href="{{ route('admin.add-user') }}" class="btn btn-sm btn-light btn-active-primary">
+       <a href="{{ route('admin.add-user') }}" class="btn btn-sm btn-light btn-active-khardl">
        <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
        <span class="svg-icon svg-icon-3">
          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -77,7 +77,7 @@
               </td>
               <td>
                 <div class="d-flex justify-content-end flex-shrink-0">
-                  {{-- <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                  {{-- <a href="#" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
                     <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                     <span class="svg-icon svg-icon-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -87,7 +87,7 @@
                     </span>
                     <!--end::Svg Icon-->
                   </a> --}}
-                  <a href="#" class="btn  btn-active-color-primary btn-sm me-1 toggle-status-btn" data-user-id="{{ $admin->id }}">
+                  <a href="#" class="btn  btn-active-color-khardl btn-sm me-1 toggle-status-btn" data-user-id="{{ $admin->id }}">
                     <span class="svg-icon svg-icon-3">
                         <div class="form-check form-switch">
                             <input class="form-check-input toggle-status-switch" type="checkbox" role="switch" id="flexSwitchCheck{{ $admin->id }}" {{ !$admin->isBlocked() ? 'checked' : '' }}>
@@ -96,7 +96,7 @@
                     </span>
                 </a>
                 @if($user?->hasPermission("can_edit_admins"))
-                  <a href="{{ route('admin.user-management-edit', ['id' => $admin->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                  <a href="{{ route('admin.user-management-edit', ['id' => $admin->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
                     <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                     <span class="svg-icon svg-icon-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -110,7 +110,7 @@
                   <form class="delete-form" action="{{ route('admin.delete-user', ['id' => $admin->id]) }}" method="POST">
                     @method('DELETE')
                     @csrf
-                    <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                    <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-khardl btn-sm">
                       <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                       <span class="svg-icon svg-icon-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

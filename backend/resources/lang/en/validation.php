@@ -205,7 +205,11 @@ return [
         'privacy_and_policy.en' => "Privacy and policy (English)",
         'terms_and_conditions.ar' => "Terms and conditions (Arabic)",
         'terms_and_conditions.en' => "Terms and conditions (English)",
-        "branch_id" => "branch"
+        "branch_id" => "branch",
+        'name.ar' => "Name (arabic)",
+        'name.en' => "Name (english)",
+        'description.ar' => "Description (arabic)",
+        'description.en' => "Description (english)",
     ],
 
 ];
