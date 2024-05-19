@@ -9,6 +9,7 @@ use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 
 use App\Http\Controllers\API\Tenant\Notification\NotificationController;
 use App\Http\Controllers\Notification\PushNotificationController;
+use App\Http\Controllers\Web\Tenant\AdsPackage\AdsPackageController;
 use App\Http\Controllers\Web\Tenant\DeliveryCompanies\DeliveryCompaniesController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\OurServices\OurServicesController;
@@ -183,6 +184,14 @@ Route::group([
                 Route::get('/service/{coupon}/{type}/check/{number_of_branches?}', 'coupon')->name('service.coupon.check');
             });
             /* Our services page */
+            /* Advertisement package page */
+            Route::middleware('permission:can_access_service_page')/* TODO:Add new permissions */
+            ->name('restaurant.advertisements.')
+            ->controller(AdsPackageController::class)->group(function () {
+                Route::get('/advertisements-packages', 'index')->name('index');
+                Route::post('/request-for-ads-service/{advertisement}', 'store')->name('store');
+            });
+            /* Advertisement package page */
             /* Workers page */
             Route::middleware('permission:can_modify_and_see_other_workers')
             ->name('restaurant.')

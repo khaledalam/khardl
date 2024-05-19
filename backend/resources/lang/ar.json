@@ -1443,5 +1443,16 @@
     "Enter package description(en)":"أدخل وصف الباقة (الإنجليزية)",
     "Enter package description(ar)":"أدخل وصف الباقة (العربية)",
     "Add package":"أضف الباقة",
-    "Edit package":"تعديل الباقة"
+    "Edit package":"تعديل الباقة",
+    "Advertising services":"الخدمات الاعلانية",
+    "This service is provided by a third party (another company and we khardl do not bear responsibility for the results)":"هذه الخدمة تقدم من قبل طرف ثالث (شركه اخرى ونحن خردل لا نتحمل مسؤولية النتائج)",
+    "You can now advertise on your restaurant by purchasing one of the advertising packages below":"يمكنك الان الاعلان علي مطعمك من خلال شراء احدي الباقات الاعلانية في الاسفل",
+    "Request for service":"طلب الخدمة",
+    "Request":"طلب",
+    "Type the price of the advertising campaign you want":"اكتب سعر الحملة الاعلانية التي تريدها",
+    "Price in SAR":"السعر بالريال السعودي",
+    "Please enter a price.":"الرجاء إدخال السعر.",
+    "Your request has been sent to the admin, wait for the response":"تم إرسال طلبك إلى المسؤول ، انتظر الرد",
+    "Waiting for response":"بإنتظار الرد",
+    "You already have pending request for this service, please wait for the response":"لديك بالفعل طلب معلق لهذه الخدمة ، يرجى انتظار الرد"
 }

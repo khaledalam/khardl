@@ -28,9 +28,9 @@ class AdvertisementPackageFormRequest extends FormRequest
             'active' => ['required','boolean']
         ];
         if($this->advertisement){
-            $rules['image'] = ['nullable','mimes:png,jpg,jpeg,gif','max:4096'];
+            $rules['image'] = ['nullable','mimes:png,jpg,jpeg,gif,svg','max:4096'];
         }else{
-            $rules['image'] = ['required','mimes:png,jpg,jpeg,gif','max:4096'];
+            $rules['image'] = ['required','mimes:png,jpg,jpeg,gif,svg','max:4096'];
         }
         return $rules;
     }

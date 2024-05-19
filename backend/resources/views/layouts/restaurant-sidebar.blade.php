@@ -405,6 +405,21 @@
                                 </span>
                             </a>
                         </div>
+                        <!-- Advertisement package  -->
+                        <div class="menu-item menu-accordion">
+                            <a href="{{route('restaurant.advertisements.index')}}">
+                                <span class="{{ ($link == 'service' ) ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon -->
+                                            <span class="svg-icon svg-icon-2">
+                                                <i class="fa fa-cubes"></i>
+                                            </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                        <span class="menu-title">{{__('Advertising services')}}</span>
+                                </span>
+                            </a>
+                        </div>
                         <!-- Delivery Companies -->
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.delivery')}}">

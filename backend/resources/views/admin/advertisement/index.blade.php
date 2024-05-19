@@ -82,7 +82,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <span>0</span>
+                                            <span>0</span>{{-- TODO --}}
                                         </div>
                                     </td>
                                     <td>
