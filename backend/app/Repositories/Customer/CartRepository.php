@@ -382,6 +382,11 @@ class CartRepository
     {
         return  $paymentMethod == PaymentMethod::ONLINE;
     }
+    public function hasPaymentLoyaltyPoint($paymentMethod)
+    {
+        return  $paymentMethod == PaymentMethod::LOYALTY_POINTS;
+    }
+
 
     public function hasPayment($name)
     {

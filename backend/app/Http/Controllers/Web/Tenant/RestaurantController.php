@@ -753,9 +753,17 @@ class RestaurantController extends BaseController
         $user = Auth::user();
         $branch = Branch::findOrFail($id);
         if($user->isWorker() && $id != $user->branch->id)  return null;
-        $branch->loyalty_availability = !$branch->loyalty_availability;
-        $branch->save();
-        return response()->json(['checked' => $branch->loyalty_availability]);
+        if($branch->loyalty_availability){
+       
+            $branch->payment_methods()->detach(PaymentMethod::where('name',PaymentMethod::LOYALTY_POINTS)->first()?->id);
+            return response()->json(['checked' => false]);
+
+        }else {
+           
+
+            $branch->payment_methods()->attach(PaymentMethod::where('name',PaymentMethod::LOYALTY_POINTS)->first()?->id);
+            return response()->json(['checked' => true]);
+        }
 
 
     }

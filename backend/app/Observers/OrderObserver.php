@@ -32,17 +32,9 @@ class OrderObserver
         $setting = Setting::first();
 
         if (!$order->isLoyaltyPointPayment()) {
-            // TODO @todo add branch id
             if ($setting->loyalty_points) $user->loyalty_points += ($order->total * $setting->loyalty_points);
             $user->save();
         }
-
-//        if($setting->cashback_percentage){
-//            if($order->total >= $setting->cashback_threshold){
-//                $user->cashback += (($order->total * $setting->cashback_percentage) / 100.0);
-//            }
-//        }
-
 
     }
     /**

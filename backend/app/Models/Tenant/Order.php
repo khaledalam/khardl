@@ -339,7 +339,7 @@ class Order extends Model
      */
     public function isLoyaltyPointPayment()
     {
-        return $this->items()->first()?->item()->first()?->allow_buy_with_loyalty_points;
+        return $this->payment_method?->name == PaymentMethod::LOYALTY_POINTS;
     }
 
     public function user()

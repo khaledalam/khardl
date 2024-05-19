@@ -54,7 +54,7 @@ class Branch extends Model
         'pickup_availability',
         'active',
         'display_category_icon',
-        'loyalty_availability'
+  
     ];
     protected $appends = [
         'delivery_availability'
@@ -114,10 +114,16 @@ class Branch extends Model
                 'number' => $total
         ];
     }
+    public function getLoyaltyAvailabilityAttribute()
+    {
+        $method = PaymentMethod::where('name',PaymentMethod::LOYALTY_POINTS)->first();
+        return $this->payment_methods->contains('id',$method?->id);
+    }
     public function getDeliveryAvailabilityAttribute()
     {
         return $this->delivery_companies_option || $this->drivers_option;
     }
+    
     /* End attributes */
 
     protected static function newFactory()
