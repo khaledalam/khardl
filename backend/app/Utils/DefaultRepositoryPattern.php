@@ -16,6 +16,7 @@ class DefaultRepositoryPattern implements CrudInterface
     public function all($request)
     {
         $model = $this->model
+        ->with(['driver'])
         ->WhenSearch($request['search']??null)
         ->WhenStatus($request['status']??null)
         ->WhenDateString($request['date_string']??null)
