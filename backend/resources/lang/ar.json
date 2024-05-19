@@ -1442,5 +1442,6 @@
     "Enter package name(ar)":"أدخل اسم الباقة (العربية)",
     "Enter package description(en)":"أدخل وصف الباقة (الإنجليزية)",
     "Enter package description(ar)":"أدخل وصف الباقة (العربية)",
-    "Add package":"أضف الباقة"
+    "Add package":"أضف الباقة",
+    "Edit package":"تعديل الباقة"
 }

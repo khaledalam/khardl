@@ -1,5 +1,5 @@
 @extends('layouts.admin-sidebar')
-@section('title', __('Add package'))
+@section('title', __('Edit package'))
 @section('content')
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -9,8 +9,9 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Form-->
-            <form action="{{ route('admin.advertisement.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.advertisement.update',['advertisement' => $advertisement->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('put')
                 <!--begin::Main column-->
                 <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                     <!--begin::Tab content-->
@@ -23,7 +24,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>{{ __('Add package')}}</h2>
+                                            <h2>{{ __('Edit package')}}</h2>
                                         </div>
                                         <a href="{{ route('admin.advertisement.index') }}">
                                             <button type="button" class="btn btn-khardl btn-sm">
@@ -47,10 +48,10 @@
                                         </ul>
                                         <div class="tab-content mt-3 input-group input-group-outline" style="display: block;">
                                             <div class="tab-pane fade show active" id="name_en">
-                                                <input type="text" name="name[en]" value="{{ old('name.en') }}" class="form-control" placeholder="{{ __('Enter package name(en)') }}" required>
+                                                <input type="text" name="name[en]" value="{{ old('name.en') ?? $advertisement->getTranslation('name','en') }}" class="form-control" placeholder="{{ __('Enter package name(en)') }}" required>
                                             </div>
                                             <div class="tab-pane fade" id="name_ar">
-                                                <input type="text" name="name[ar]" value="{{ old('name.ar') }}" class="form-control" placeholder="{{ __('Enter package name(ar)') }}">
+                                                <input type="text" name="name[ar]" value="{{ old('name.ar') ?? $advertisement->getTranslation('name','ar')}}" class="form-control" placeholder="{{ __('Enter package name(ar)') }}">
                                             </div>
                                         </div>
                                         <label class="required form-label my-2">{{ __('Description')}}</label>
@@ -64,18 +65,21 @@
                                         </ul>
                                         <div class="tab-content my-3 input-group input-group-outline" style="display: block;">
                                             <div class="tab-pane fade show active" id="desc_en">
-                                                <textarea name="description[en]" id="" cols="30" rows="10" class="form-control" placeholder="{{ __('Enter package description(en)') }}" required>{{ old('description.en') }}</textarea>
+                                                <textarea name="description[en]" id="" cols="30" rows="10" class="form-control" placeholder="{{ __('Enter package description(en)') }}" required>{{ old('description.en') ?? $advertisement->getTranslation('description','en') }}</textarea>
                                             </div>
                                             <div class="tab-pane fade" id="desc_ar">
-                                                <textarea name="description[ar]" id="" cols="30" rows="10" class="form-control" placeholder="{{ __('Enter package description(ar)') }}">{{ old('description.ar') }}</textarea>
+                                                <textarea name="description[ar]" id="" cols="30" rows="10" class="form-control" placeholder="{{ __('Enter package description(ar)') }}">{{ old('description.ar') ?? $advertisement->getTranslation('description','ar') }}</textarea>
                                             </div>
                                         </div>
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="form-label required">{{ __('Image')}}</label>
+                                            <label class="form-label">{{ __('Image')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="file" class="form-control form-control-solid" placeholder="{{ __('Photo') }}" name="image" accept="image/*" required/>
+                                            <input type="file" class="form-control form-control-solid" placeholder="{{ __('Photo') }}" name="image" accept="image/*"/>
+                                            <div class="mt-2 symbol symbol-100px symbol-lg-100px symbol-fixed position-relative">
+                                                <img alt="package image" src="{{ $advertisement->image }}" />
+                                            </div>
                                             <!--end::Input-->
                                         </div>
                                         <div class="mb-10 fv-row">
@@ -85,8 +89,8 @@
                                             <!--begin::Input-->
                                             <div class="form-group">
                                                 <select name="active" id="status" class="form-select">
-                                                    <option value="1" {{ old('active') == '1' ? 'selected' : ''  }}>{{ __('active') }}</option>
-                                                    <option value="0" {{ old('active') == '0' ? 'selected' : ''  }}>{{ __('inactive') }}</option>
+                                                    <option value="1" {{ old('active') == '1' ? 'selected' : ($advertisement->active ? 'selected' :'')  }}>{{ __('active') }}</option>
+                                                    <option value="0" {{ old('active') == '0' ? 'selected' :  ($advertisement->active ? '' :'selected')  }}>{{ __('inactive') }}</option>
                                                 </select>
                                             </div>
                                             <!--end::Input-->
@@ -101,7 +105,7 @@
                         <div class="d-flex justify-content-end mt-3">
                             <!--begin::Button-->
                             <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-khardl">
-                                <span class="indicator-label">{{ __('Add package') }}</span>
+                                <span class="indicator-label">{{ __('Edit package') }}</span>
                                 <i class="bi bi-check2-square mx-1"></i>
                                 <span class="indicator-progress">{{ __('please-wait')}}
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

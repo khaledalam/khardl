@@ -40,6 +40,7 @@
                                     <th class="min-w-25px">#</th>
                                     <th class="min-w-200px">{{ __('Image')}}</th>
                                     <th class="min-w-150px">{{ __('Name')}}</th>
+                                    <th class="min-w-150px">{{ __('Status')}}</th>
                                     <th class="min-w-150px">{{ __('Subcriptions count')}}</th>
                                     <th class="min-w-150px text-end">{{ __('actions')}}</th>
                                 </tr>
@@ -71,6 +72,13 @@
                                             <span>{{ $package->name }}</span>
                                             @endif
                                         </div>
+                                    </td>
+                                    <td>
+                                        @if($package->active)
+                                        <span class="badge badge-success">{{ __('active') }}</span>
+                                        @else
+                                        <span class="badge badge-danger">{{ __('inactive') }}</span>
+                                        @endif
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">

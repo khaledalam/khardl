@@ -18,6 +18,10 @@ class AdvertisementService
     {
         return view('admin.advertisement.create');
     }
+    public function edit($request,$advertisement)
+    {
+        return view('admin.advertisement.edit',compact('advertisement'));
+    }
     public function store($request)
     {
         $data = $this->request_data($request);
@@ -26,6 +30,15 @@ class AdvertisementService
         }
         AdvertisementPackage::create($data);
         return redirect()->route('admin.advertisement.index')->with(['success' => __('Created successfully')]);
+    }
+    public function update($request,$advertisement)
+    {
+        $data = $this->request_data($request);
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->handleImage($request);
+        }
+        $advertisement->update($data);
+        return redirect()->route('admin.advertisement.index')->with(['success' => __('Updated successfully')]);
     }
     public function destroy($advertisement)
     {

@@ -5,7 +5,7 @@ namespace App\Http\Requests\Central\Advertisement;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateAdvertisementPackageRequest extends FormRequest
+class AdvertisementPackageFormRequest extends FormRequest
 {
 
     public function authorize(): bool
@@ -20,13 +20,18 @@ class CreateAdvertisementPackageRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name.en' => 'required|string',
             'name.ar' => 'required|string',
             'description.en' => 'required|string',
             'description.ar' => 'required|string',
-            'image' => ['required','mimes:png,jpg,jpeg,gif','max:4096'],
             'active' => ['required','boolean']
         ];
+        if($this->advertisement){
+            $rules['image'] = ['nullable','mimes:png,jpg,jpeg,gif','max:4096'];
+        }else{
+            $rules['image'] = ['required','mimes:png,jpg,jpeg,gif','max:4096'];
+        }
+        return $rules;
     }
 }
