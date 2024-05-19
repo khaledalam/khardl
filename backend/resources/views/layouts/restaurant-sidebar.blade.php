@@ -408,7 +408,7 @@
                         <!-- Advertisement package  -->
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.advertisements.index')}}">
-                                <span class="{{ ($link == 'service' ) ? 'menu-link active' : 'menu-link ' }}">
+                                <span class="{{ ($link == 'advertisements-packages' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
                                             <span class="svg-icon svg-icon-2">

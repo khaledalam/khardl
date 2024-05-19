@@ -148,7 +148,7 @@
                                                             </div>
                                                             @else
                                                             <div class="symbol symbol-60px symbol-lg-60px symbol-fixed position-relative">
-                                                                <img alt="package image" src="{{ global_asset('images/driver_logo.jpg') }}" />{{-- TODO; replace for package img --}}
+                                                                <img alt="package image" src="{{ global_asset('images/advertisement.png') }}" />
                                                             </div>
                                                             @endif
                                                         </td>

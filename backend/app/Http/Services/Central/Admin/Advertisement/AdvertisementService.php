@@ -14,7 +14,9 @@ class AdvertisementService
         $packages = AdvertisementPackage::withTrashed()
             ->orderBy('id', 'desc')
             ->get();
-        $requestedPackages = AdsRequest::orderBy('id', 'desc')
+        $requestedPackages = AdsRequest::whenSearch($request['search']?? null)
+            ->whenStatus($request['status']?? null)
+            ->orderBy('id', 'desc')
             ->paginate(config('application.perPage'));
         $allStatus = AdsRequestsStatusEnum::values();
         return view('admin.advertisement.index', compact('packages', 'requestedPackages', 'allStatus'));
