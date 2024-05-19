@@ -6,8 +6,8 @@ const Button = ({ title, classContainer, onClick, icon, link, className }) => {
 
   return (
     <button
-      onClick={() => {
-        onClick();
+      onClick={(e) => {
+        onClick(e);
         navigate(link);
       }}
       className={className}

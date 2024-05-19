@@ -125,7 +125,7 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
           dispatch(getCartItemsCount(0));
         })
         .finally(async () => {
-          toast.success(`${t('switched to another branch successfully')}`)
+          toast.success(`${t("switched to another branch successfully")}`);
           await fetchCartData().then((r) => null);
         });
     } catch (error) {
@@ -235,14 +235,24 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
               )}
               <div className="flex flex-col space-y-[8px]">
                 {branch.delivery_availability ? (
-                  <div className="p-1 w-14 h-5 bg-red-900 rounded-[50px] border flex justify-center items-center">
+                  <div
+                    className="p-1 w-14 h-5 bg-red-900 rounded-[50px] border flex justify-center items-center"
+                    style={{
+                      backgroundColor: restuarantStyle?.price_background_color,
+                    }}
+                  >
                     <div className="text-white text-[8px] font-medium">
                       {t("Delivery")}
                     </div>
                   </div>
                 ) : null}
                 {branch.pickup_availability ? (
-                  <div className="p-1 w-14 h-5 bg-red-900 rounded-[50px] border flex justify-center items-center">
+                  <div
+                    className="p-1 w-14 h-5 bg-red-900 rounded-[50px] border flex justify-center items-center"
+                    style={{
+                      backgroundColor: restuarantStyle?.price_background_color,
+                    }}
+                  >
                     <div className="text-white text-[8px] font-medium">
                       {t("Pickup")}
                     </div>
@@ -261,6 +271,9 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
       <div
         onClick={handleSelectBranch}
         className="w-full max-w-[616px] h-10 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center"
+        style={{
+          backgroundColor: restuarantStyle?.price_background_color,
+        }}
       >
         <div className="text-center text-white text-xs font-medium">
           {t("Select this branch")}
@@ -387,7 +400,9 @@ const Branches = ({ closingFunc, closingFuncSideMenu }) => {
       </div>
       <ConfirmationModal
         isOpen={openEmptyCartsConfirmModal}
-        message={`${t('When you change the current branch, the carts will be empty.')}`}
+        message={`${t(
+          "When you change the current branch, the carts will be empty."
+        )}`}
         onConfirm={handleEmptyCarts}
         onClose={() => setOpenEmptyCartsConfirmModal(false)}
       />
