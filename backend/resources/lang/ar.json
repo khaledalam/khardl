@@ -1459,5 +1459,7 @@
     "Orde date":"تاريخ الطلب",
     "contacted":"تم التواصل",
     "Advertising requests":"الطلبات الاعلانية",
-    "Are you sure you want to change advertisement order #:id status":"هل أنت متأكد من أنك تريد تغيير حالة الاعلان #:id "
+    "Are you sure you want to change advertisement order #:id status":"هل أنت متأكد من أنك تريد تغيير حالة الاعلان #:id ",
+    "Can access advertising services":"يمكن الوصول إلى خدمات الاعلانية",
+    "Can request for advertisement service, can see old requests":"يمكن طلب خدمة الإعلان ، يمكن رؤية الطلبات القديمة"
 }

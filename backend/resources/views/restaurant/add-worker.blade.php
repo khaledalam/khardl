@@ -284,6 +284,17 @@
                                                         <!--end::Label-->
                                                     </div>
                                                     <!--end::Input group-->
+                                                    <!--begin::Input group-->
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_advertising_services" value="1" name="can_access_advertising_services" {{old('can_access_advertising_services') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_advertising_services">{{ __('Can access advertising services')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __("Can request for advertisement service, can see old requests") }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Input group-->
 
                                                 </div>
                                                 <!--end::Card body-->

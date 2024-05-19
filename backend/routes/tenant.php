@@ -185,7 +185,7 @@ Route::group([
             });
             /* Our services page */
             /* Advertisement package page */
-            Route::middleware('permission:can_access_service_page')/* TODO:Add new permissions */
+            Route::middleware('permission:can_access_advertising_services')
             ->name('restaurant.advertisements.')
             ->controller(AdsPackageController::class)->group(function () {
                 Route::get('/advertisements-packages', 'index')->name('index');

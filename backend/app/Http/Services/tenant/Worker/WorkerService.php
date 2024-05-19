@@ -67,6 +67,7 @@ class WorkerService
             'can_access_delivery_companies',
             'can_access_customers_data',
             'can_access_settings',
+            'can_access_advertising_services'
         ];
         $insertData = [];
 
@@ -144,6 +145,7 @@ class WorkerService
             'can_access_delivery_companies',
             'can_access_customers_data',
             'can_access_settings',
+            'can_access_advertising_services'
         ];
 
         $updateData = [];

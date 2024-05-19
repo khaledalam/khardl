@@ -254,6 +254,15 @@
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_advertising_services" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_access_advertising_services') == 1) checked @endif value="1" name="can_access_advertising_services">
+                                                            <label class="form-check-label" for="can_access_advertising_services">{{ __('Can access advertising services')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __("Can request for advertisement service, can see old requests") }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
                                                 </div>
                                                 <!--end::Card body-->
                                             </div>
