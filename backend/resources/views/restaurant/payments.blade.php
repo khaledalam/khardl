@@ -776,8 +776,8 @@ $tap_info = $settings->lead_response;
                                                                 <thead>
                                                                     <!--begin::Table row-->
                                                                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                                        <th class="text-start pe-3 min-w-100px">{{ __('Key') }}</th>
-                                                                        <th class="text-start pe-3 min-w-100px">{{ __('Value') }}</th>
+                                                                        <th class="text-start pe-3 min-w-100px"></th>
+                                                                        <th class="text-start pe-3 min-w-100px"></th>
                                                                     </tr>
                                                                     <!--end::Table row-->
                                                                 </thead>
@@ -867,8 +867,8 @@ $tap_info = $settings->lead_response;
                                                                 <thead>
                                                                     <!--begin::Table row-->
                                                                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                                        <th class="text-start pe-3 min-w-100px">{{ __('Key') }}</th>
-                                                                        <th class="text-start pe-3 min-w-100px">{{ __('Value') }}</th>
+                                                                        <th class="text-start pe-3 min-w-100px"></th>
+                                                                        <th class="text-start pe-3 min-w-100px"></th>
                                                                     </tr>
                                                                     <!--end::Table row-->
                                                                 </thead>
