@@ -222,14 +222,7 @@ class CartRepository
         return $this->cart->refresh()->items->sum('total');
     }
 
-    public function totalLoyaltyPointsPrice()
-    {
-        $totalPoints = 0;
-        foreach ($this->cart->refresh()->items as $item) {
-            $totalPoints += ($item->item->price_using_loyalty_points * $item->quantity);
-        }
-        return $totalPoints;
-    }
+    
 
     public function tax($subTotal = null)
     {
@@ -275,7 +268,9 @@ class CartRepository
     }
 
 
-
+    public function  totalPriceWithLoyaltyPoints() {
+        return  $this->cart->totalPriceWithLoyaltyPoints();
+    }
     public function data($message = '')
     {
         $settings = Setting::all()->firstOrFail();

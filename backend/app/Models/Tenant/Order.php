@@ -50,7 +50,8 @@ class Order extends Model
         'manual_order_last_name',
         'tap_payment_method',
         'refund_id',
-        'accepted_at'
+        'accepted_at',
+        'total_loyalty_points'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $casts = [
