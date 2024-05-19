@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Tenant\Coupon;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\RequiredIf;
@@ -25,9 +26,10 @@ class CouponStoreFormRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
-            'code' => ['required', 'string', 'max:100','unique:coupons,code'],
+            'code' => ['required', 'string', 'max:100', Rule::unique('coupons')->where(function ($query) {
+                return $query->where('branch_id', $this->branchId);
+            })],
             'type' => ['required', 'in:fixed,percentage'],
             'fixed' => [new RequiredIf($this->type == 'fixed'), 'min:1', 'nullable', 'numeric'],
             'percentage' => [new RequiredIf($this->type == 'percentage'), 'nullable', 'min:1', 'numeric', 'max:100'],
@@ -36,7 +38,7 @@ class CouponStoreFormRequest extends FormRequest
             'max_discount_amount' => ['nullable', 'integer'],
             'minimum_cart_amount' => ['nullable', 'numeric'],
             'active_from' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:' . date('Y-m-d')],
-            'expire_at' => ['nullable', 'date', 'after_or_equal:active_from', 'date_format:Y-m-d'],
+            'expire_at' => ['required', 'date', 'after_or_equal:active_from', 'date_format:Y-m-d'],
         ];
     }
 }

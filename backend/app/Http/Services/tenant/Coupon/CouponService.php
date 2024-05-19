@@ -37,29 +37,31 @@ class CouponService
     }
     public function store($request,$branchId)
     {
-        Coupon::create($this->request_data($request));
-        return redirect()->route('coupons.index')->with(['success' => __('Created successfully')]);
+        Coupon::create($this->request_data($request,$branchId));
+        return redirect()->route('coupons.index',$branchId)->with(['success' => __('Created successfully')]);
     }
     public function update($request, Coupon $coupon,$branchId)
     {
-        $coupon->update($this->request_data($request));
-        return redirect()->route('coupons.index')->with(['success' => __('Updated successfully')]);
+        $coupon->update($this->request_data($request,$branchId)+['status'=>1]);
+        return redirect()->route('coupons.index',$branchId)->with(['success' => __('Updated successfully')]);
     }
     public function changeStatus(Coupon $coupon,$branchId)
     {
         $coupon->toggleStatus();
+        return redirect()->route('coupons.index',$branchId)->with(['success' => __('Updated successfully')]);
+
     }
     public function delete(Coupon $coupon,$branchId)
     {
         $coupon->delete();
-        return redirect()->route('coupons.index')->with(['success' => __('Deleted successfully')]);
+        return redirect()->route('coupons.index',$branchId)->with(['success' => __('Deleted successfully')]);
     }
     public function restore(Coupon $coupon,$branchId)
     {
         $coupon->restore();
-        return redirect()->route('coupons.index')->with(['success' => __('Restored successfully')]);
+        return redirect()->route('coupons.index',$branchId)->with(['success' => __('Restored successfully')]);
     }
-    private function request_data($request)
+    private function request_data($request,$branchId)
     {
         if($request->type == CouponTypes::FIXED_COUPON->value)$request['amount'] = $request['fixed'];
         else $request['amount'] = $request['percentage'];
@@ -73,7 +75,7 @@ class CouponService
             'max_discount_amount',
             'active_from',
             'expire_at',
-        ]);
+        ])+['branch_id' => $branchId];
     }
 
 }

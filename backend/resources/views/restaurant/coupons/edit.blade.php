@@ -42,13 +42,13 @@
                                                                 <h2>{{ __('Make a new coupon') }}</h2>
                                                             </div>
                                                             <div class="">
-                                                                <a href="{{ route('coupons.index',[ 'branchId' => $branchId->id])}}">
+                                                                <a href="{{ route('coupons.index',[ 'branchId' => $branchId])}}">
                                                                     <button class="btn btn-khardl btn-sm">{{ __('Back to list') }}</button>
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <!--end::Card header-->
-                                                        <form action="{{ route('coupons.update',$coupon->id) }}" method="POST">
+                                                        <form action="{{ route('coupons.update',[ 'coupon' => $coupon->id,'branchId' => $branchId]) }}" method="POST">
                                                             @method('PUT')
                                                             @csrf
                                                             <!--begin::Card body-->
@@ -173,7 +173,7 @@
                                                                     </div>
                                                                     <!--begin::Actions-->
                                                                     <div class="d-flex justify-content-end">
-                                                                        <button type="submit" class="badge badge-light-khardl p-4 text-hover-khardl bg-hover-khardl" style="border:none" data-kt-search-element="advanced-options-form-cancel">{{ __('Update') }}</button>
+                                                                        <button type="submit" class="badge badge-light-khardl p-4 text-hover-khardl bg-hover-khardl" style="border:none" data-kt-search-element="advanced-options-form-cancel">{{ __('Activate') }}</button>
                                                                     </div>
                                                                     <!--end::Actions-->
 

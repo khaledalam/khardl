@@ -21,15 +21,15 @@
                     </div>
                     <div class="card-body">
                          
-                            <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                            <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="false">
                               
                                 <div class="carousel-inner">
-                                    @foreach ($branches->chunk(4) as $key => $branchChunk)
+                                    @foreach ($branches->chunk(6) as $key => $branchChunk)
                                     
                                         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                                             <div class="row ">
                                                 @foreach ($branchChunk as $branchLoop)
-                                                <div class="col-md-3 d-flex justify-content-center" >
+                                                <div class="col-md-2 d-flex justify-content-start" >
                                                     <a href="{{ route('coupons.index', ['branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl border border-dark text-black @else btn-active-light-khardl @endif">
                                                         <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px" >   {{ $branchLoop->name }}</span>
                                                     </a>
@@ -146,11 +146,9 @@
                                                 {{ $coupon->id }}
                                             </a>
                                         </td>
-                                        <td class="text-black @if($coupon->deleted_at) text-danger @endif">
+                                        <td class="text-black ">
                                             {{ $coupon->code }}
-                                            @if($coupon->deleted_at)
-                                            ({{ __('Deleted') }})
-                                            @endif
+                                            
                                         </td>
                                         <td class="px-3">
                                             @if($coupon->type == \App\Enums\Admin\CouponTypes::FIXED_COUPON->value)
@@ -193,12 +191,20 @@
                                             <span>{{ $coupon->expire_at?->format('Y-m-d') }}</span>
                                         </td>
                                         <td>
-                                            <span class="position-relative">
+                                            {{-- <span class="position-relative">
                                                 <label class="@if($coupon->status) switch-opposite @else switch @endif">
                                                     <input type="checkbox" onclick="toggleStatus({{ $coupon->id }})">
                                                     <span class="slider"></span>
                                                 </label>
-                                            </span>
+                                            </span> --}}
+                                            <?php $status = $coupon->expire_at->lt(today()) || !$coupon->status || !$coupon->validity ?>
+                                            @if($coupon->deleted_at)
+                                            <span class="badge badge-danger">{{ __('Deleted') }}</span>
+                                            @elseif($status)
+                                                <span class="badge badge-warning">{{__('not active')}}</span>
+                                            @else 
+                                                <span class="badge badge-success">{{__('active')}}</span>
+                                            @endif
                                         </td>
                                         <td class="text-end">
                                             <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
@@ -212,12 +218,20 @@
                                             <!--begin::Menu-->
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                 <!--begin::Menu item-->
+                                                
                                                 <div class="menu-item px-3">
+
+                                                    @if($status)
+                                                    <a href="{{ route('coupons.edit',['coupon'=>$coupon->id,'branchId'=>$branchId]) }}" class="menu-link px-3">{{ __('Activate') }}</a>
+
+                                                    @else
+                                                    <a href="{{  route('coupons.change-status', ['coupon'=>$coupon->id,'branchId'=>$branchId]) }}" class="menu-link px-3">{{ __('Deactivate') }}</a>
                                                     <a href="{{ route('coupons.edit',['coupon'=>$coupon->id,'branchId'=>$branchId]) }}" class="menu-link px-3">{{ __('Edit') }}</a>
+                                                    @endif
                                                 </div>
                                                 @if(!$coupon->deleted_at)
                                                 <div class="menu-item px-3">
-                                                    <form class="delete-form" id="delete_coupon_{{ $coupon->id }}" action="{{ route('coupons.delete', ['coupon' => $coupon->id]) }}" method="POST">
+                                                    <form class="delete-form" id="delete_coupon_{{ $coupon->id }}" action="{{ route('coupons.delete', ['coupon' => $coupon->id,'branchId'=>$branchId]) }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
                                                     </form>
@@ -226,7 +240,7 @@
                                                 @endif
                                                 @if($coupon->deleted_at)
                                                 <div class="menu-item px-3">
-                                                    <form class="restore-form" id="restore_coupon_{{ $coupon->id }}" action="{{ route('coupons.restore', ['coupon' => $coupon->id]) }}" method="POST">
+                                                    <form class="restore-form" id="restore_coupon_{{ $coupon->id }}" action="{{ route('coupons.restore', ['coupon' => $coupon->id,'branchId'=>$branchId]) }}" method="POST">
                                                         @method('POST')
                                                         @csrf
                                                     </form>
@@ -272,9 +286,8 @@
     }
     .carousel-inner{
         position: relative;
-        width: 55%;
-        overflow: hidden;
-        margin: auto;
+        width: 70%;
+        margin: 0 115px;
     }
 </style>
 @endsection
@@ -287,22 +300,7 @@
     interval: false,
   });
 });
-    function toggleStatus(itemId) {
-        $.ajax({
-            url: `{{ route('coupons.change-status', ['coupon' => ':itemId']) }}`.replace(':itemId', itemId)
-            , type: 'POST'
-            , dataType: 'json'
-            , data: {
-                '_token': '{{ csrf_token() }}'
-            , }
-            , success: function(response) {
-
-            }
-            , error: function(error) {
-                console.error('Error toggling user status:', error);
-            }
-        });
-    }
+   
 
     function DeleteCoupon(couponId) {
         event.preventDefault();

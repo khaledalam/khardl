@@ -44,6 +44,16 @@
                                     {{ $item->price }}
                                     {{ __('SAR') }}
                                 </a>
+                                @if($item->price_using_loyalty_points)
+                                <a href="#" class="d-flex align-items-center text-hover-success me-5 mb-2">
+                               
+                                 
+                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('For every 10 riyal, :point points correspond to the cost of product options',['point'=>10*$item->LoyaltyPointRatio])}}"></i>
+                                    <i class="bi bi-coin mx-2"></i>
+                                    {{ $item->price_using_loyalty_points }}
+                                    {{ __('Point') }}
+                                </a>
+                                @endif
                                 <a href="#" class="d-flex align-items-center text-hover-success mb-2">
                                     <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
                                     <i class="bi bi-activity mx-2"></i>

@@ -25,23 +25,23 @@ class CouponController extends BaseController
     {
         return $this->couponService->store($request,$branchId);
     }
-    public function edit(Request $request, Coupon $coupon,$branchId)
+    public function edit(Request $request,$branchId,Coupon $coupon)
     {
         return $this->couponService->edit($request,$coupon,$branchId);
     }
-    public function update(CouponUpdateFormRequest $request, Coupon $coupon,$branchId)
+    public function update(CouponUpdateFormRequest $request,$branchId, Coupon $coupon)
     {
         return $this->couponService->update($request, $coupon,$branchId);
     }
-    public function delete(Request $request, Coupon $coupon,$branchId)
+    public function delete(Request $request,$branchId,Coupon $coupon)
     {
         return $this->couponService->delete($coupon,$branchId);
     }
-    public function restore(Request $request, Coupon $coupon,$branchId)
+    public function restore(Request $request,$branchId,Coupon $coupon)
     {
         return $this->couponService->restore($coupon,$branchId);
     }
-    public function changeStatus(Request $request,Coupon $coupon,$branchId)
+    public function changeStatus(Request $request,$branchId,Coupon $coupon)
     {
         return $this->couponService->changeStatus($coupon,$branchId);
     }

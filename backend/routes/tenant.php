@@ -129,9 +129,9 @@ Route::group([
             Route::middleware('permission:can_access_coupons')
             ->name('coupons.')
             ->controller(CouponController::class)->group(function () {
-                Route::delete('coupons/delete/{coupon}','delete')->withTrashed()->name('delete');
-                Route::post('coupons/restore/{coupon}','restore')->withTrashed()->name('restore');
-                Route::post('coupons/change-status/{coupon}','changeStatus')->withTrashed()->name('change-status');
+                Route::delete('{branchId}/coupons/delete/{coupon}','delete')->withTrashed()->name('delete');
+                Route::post('{branchId}/coupons/restore/{coupon}','restore')->withTrashed()->name('restore');
+                Route::get('{branchId}/coupons/change-status/{coupon}','changeStatus')->withTrashed()->name('change-status');
             });
             /* Coupon page */
             /* QR page */
@@ -364,7 +364,7 @@ Route::group([
                     'store',
                     'index'
                 ]);
-                Route::post("validate/coupon", [CustomerCouponController::class,'validateCoupon']);
+                Route::post("validate/{branch_id}/coupon", [CustomerCouponController::class,'validateCoupon']);
                 Route::post("remove/coupon", [CustomerCouponController::class,'removeCoupon']);
                 Route::get("cards", [CustomerCardController::class, 'show'])->name('customer.cards');
                 /* Customer address */
