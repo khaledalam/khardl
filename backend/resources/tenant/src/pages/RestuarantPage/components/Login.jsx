@@ -272,12 +272,19 @@ const Login = ({ closingFunc }) => {
                     temp += event.target.value[i];
                   }
                 }
-                event.target.value = temp;
-                setLengthOfPhone(event.target.value.length);
-                // console.log(data.target.value.length);
+
+                if (temp.length == 10 && temp[0] != '0') {
+                  event.preventDefault();
+                } else {
+                  event.target.value = temp;
+                  setLengthOfPhone(event.target.value.length);
+                  // console.log(data.target.value.length);
+                }
+
+
               }}
-              minLength={9}
-              maxLength={9}
+              minLength={10}
+              maxLength={10}
               onKeyDown={(event) => {
                 if (
                   event.ctrlKey &&
@@ -294,6 +301,13 @@ const Login = ({ closingFunc }) => {
                 ) {
                   event.preventDefault();
                 }
+
+
+
+                console.log(event.target.value);
+
+
+
               }}
             />
             {errors.phone && (
@@ -420,7 +434,7 @@ const Login = ({ closingFunc }) => {
           <button
             type="submit"
             className={`w-full h-8 px-4 pt-1.5 pb-2 ${
-              lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
+              lengthOfPhone >= 9 ? "bg-red-900" : "bg-[#E7E8EA]"
             } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
           >
             {t("Login")}
