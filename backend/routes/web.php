@@ -199,6 +199,9 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                         Route::delete('/destroy/{advertisement}', [AdvertisementController::class,'destroy'])
                         ->name('delete')
                         ->withTrashed();
+                        Route::post('/change-status/{adsRequest}', [AdvertisementController::class,'changeStatus'])
+                        ->name('change-status')
+                        ->withTrashed();
                     });
                     Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');

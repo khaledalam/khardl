@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Web\Central\Admin\Advertisement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Central\Advertisement\AdvertisementPackageFormRequest;
+use App\Http\Requests\Central\Advertisement\ChangeStatusAdvertisementRequest;
 use App\Http\Services\Central\Admin\Advertisement\AdvertisementService;
+use App\Models\AdsRequest;
 use App\Models\AdvertisementPackage;
 use Illuminate\Http\Request;
 
@@ -33,6 +35,10 @@ class AdvertisementController extends Controller
     public function edit(Request $request, AdvertisementPackage $advertisement)
     {
         return $this->advertisementService->edit($request,$advertisement);
+    }
+    public function changeStatus(ChangeStatusAdvertisementRequest $request, AdsRequest $adsRequest)
+    {
+        return $this->advertisementService->changeStatus($request,$adsRequest);
     }
     public function destroy(Request $request, $advertisement)
     {

@@ -143,6 +143,10 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->hasOne(Tenant::class);
     }
+    public function requested_advertisements()
+    {
+        return $this->hasMany(AdsRequest::class);
+    }
 
     /* Scopes */
     public function scopeRestaurantOwners($query)

@@ -108,7 +108,8 @@ a {
   background-color: #009ef7;
 }
 
-.badge.received_by_restaurant {
+.badge.received_by_restaurant,
+.badge.contacted {
   color: #fff;
   background-color: #f7bd00;
 }

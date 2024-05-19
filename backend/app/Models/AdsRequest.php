@@ -15,4 +15,15 @@ class AdsRequest extends Model
         'advertisement_package_id',
         'answered_at'
     ];
+    protected $casts = [
+        'answered_at' => 'date'
+    ];
+    public function advertisement_package()
+    {
+        return $this->belongsTo(AdvertisementPackage::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

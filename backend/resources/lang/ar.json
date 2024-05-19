@@ -1454,5 +1454,10 @@
     "Please enter a price.":"الرجاء إدخال السعر.",
     "Your request has been sent to the admin, wait for the response":"تم إرسال طلبك إلى المسؤول ، انتظر الرد",
     "Waiting for response":"بإنتظار الرد",
-    "You already have pending request for this service, please wait for the response":"لديك بالفعل طلب معلق لهذه الخدمة ، يرجى انتظار الرد"
+    "You already have pending request for this service, please wait for the response":"لديك بالفعل طلب معلق لهذه الخدمة ، يرجى انتظار الرد",
+    "Your requested advertisement packages":"الباقات الإعلانية التي طلبتها",
+    "Orde date":"تاريخ الطلب",
+    "contacted":"تم التواصل",
+    "Advertising requests":"الطلبات الاعلانية",
+    "Are you sure you want to change advertisement order #:id status":"هل أنت متأكد من أنك تريد تغيير حالة الاعلان #:id "
 }

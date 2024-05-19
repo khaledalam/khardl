@@ -2,6 +2,8 @@
 
 namespace App\Http\Services\Central\Admin\Advertisement;
 
+use App\Enums\Admin\AdsRequestsStatusEnum;
+use App\Models\AdsRequest;
 use App\Models\AdvertisementPackage;
 
 
@@ -10,17 +12,20 @@ class AdvertisementService
     public function index($request)
     {
         $packages = AdvertisementPackage::withTrashed()
-        ->orderBy('id','desc')
-        ->paginate(config('application.perPage'));
-        return view('admin.advertisement.index',compact('packages'));
+            ->orderBy('id', 'desc')
+            ->get();
+        $requestedPackages = AdsRequest::orderBy('id', 'desc')
+            ->paginate(config('application.perPage'));
+        $allStatus = AdsRequestsStatusEnum::values();
+        return view('admin.advertisement.index', compact('packages', 'requestedPackages', 'allStatus'));
     }
     public function create($request)
     {
         return view('admin.advertisement.create');
     }
-    public function edit($request,$advertisement)
+    public function edit($request, $advertisement)
     {
-        return view('admin.advertisement.edit',compact('advertisement'));
+        return view('admin.advertisement.edit', compact('advertisement'));
     }
     public function store($request)
     {
@@ -31,13 +36,21 @@ class AdvertisementService
         AdvertisementPackage::create($data);
         return redirect()->route('admin.advertisement.index')->with(['success' => __('Created successfully')]);
     }
-    public function update($request,$advertisement)
+    public function update($request, $advertisement)
     {
         $data = $this->request_data($request);
         if ($request->hasFile('image')) {
             $data['image'] = $this->handleImage($request);
         }
         $advertisement->update($data);
+        return redirect()->route('admin.advertisement.index')->with(['success' => __('Updated successfully')]);
+    }
+    public function changeStatus($request, $adsRequest)
+    {
+        $adsRequest->update($request->only(['status']));
+        if ($request->status == 'contacted') {
+            $adsRequest->update(['answered_at' => now()]);
+        }
         return redirect()->route('admin.advertisement.index')->with(['success' => __('Updated successfully')]);
     }
     public function destroy($advertisement)
