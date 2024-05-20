@@ -515,7 +515,7 @@
                                                         <td class="text-end">{{$order_item->options_price}}</td>
                                                         <!--end::Price-->
                                                         <!--begin::Total-->
-                                                        <td class="text-end">{{$order_item->total}}  {{__('SAR')}}</td>
+                                                        <td class="text-end">{{$order_item->total}}  {{__('SAR')}} 
                                                         <!--end::Total-->
                                                     </tr>
                                                 @endforeach
@@ -555,7 +555,9 @@
                                                 <!--begin::Grand total-->
                                                 <tr>
                                                     <td colspan="4" class="fs-3 text-dark text-end">{{__('grand-total')}}</td>
-                                                    <td class="text-dark fs-3 fw-boldest text-end">{{$order->total }} {{__('SAR')}}</td>
+                                                    <td class="text-dark fs-3 fw-boldest text-end "> <span class="@if($order->payment_method->name == \App\Models\Tenant\PaymentMethod::LOYALTY_POINTS) text-decoration-line-through @endif">{{$order->total }} {{__('SAR')}}</span>  
+                                                        @if($order->payment_method->name == \App\Models\Tenant\PaymentMethod::LOYALTY_POINTS) <br>   <i class="bi bi-coin mx-2"></i> {{$order->total_loyalty_points}} {{ __('Loyalty points') }} @endif</td>
+
                                                     <td> <i> {{App\Repositories\Customer\CartRepository::VAT_PERCENTAGE }} % <br> {{__('inclusive-VAT')}}</i></td>
                                                 </tr>
                                                 <!--end::Grand total-->

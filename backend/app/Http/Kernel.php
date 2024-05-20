@@ -4,8 +4,9 @@ namespace App\Http;
 
 use App\Http\Middleware\CORS;
 use App\Http\Middleware\Driver;
-use App\Http\Middleware\Visitors;
 use App\Http\Middleware\Worker;
+use App\Http\Middleware\Customer;
+use App\Http\Middleware\Visitors;
 use App\Http\Middleware\Restaurant;
 use App\Http\Middleware\ForceLogOut;
 use App\Http\Middleware\TrimStrings;
@@ -38,9 +39,9 @@ use Illuminate\Session\Middleware\StartSession;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\EnsureEmailIsNotVerified;
 use App\Http\Middleware\IsBusinessFilesSubmitted;
+use App\Http\Middleware\UserRoleCouponMiddleware;
 use Spatie\Permission\Middlewares\RoleMiddleware;
 use App\Http\Middleware\ActiveRestaurantAndBranch;
-use App\Http\Middleware\Customer;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -157,6 +158,7 @@ class Kernel extends HttpKernel
         "trans_api"=>LocalizationApi::class,
         'ActiveRestaurantAndBranch'=>ActiveRestaurantAndBranch::class,
         'visitors'=> Visitors::class,
+        'coupon-role'=>UserRoleCouponMiddleware::class
     ];
 
 }

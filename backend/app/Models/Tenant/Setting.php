@@ -41,7 +41,6 @@ class Setting extends Model implements Syncable
             'delivery_fee',
             'restaurant_name',
             'loyalty_points',
-            'loyalty_point_price',
             'cashback_threshold',
             'cashback_percentage',
             'lead_id',
