@@ -87,12 +87,7 @@ Route::get('/health', static function (){
 })->name('health');
 
 Route::get('/test', function (){
-    $user_name = 'test';
-    $sub = 'New Ads requested';
-    $restaurant_name = 'Khardl';
-    $date = '2024-02-02';
-    $cost = 11111;
-    return view('emails.notify_users_for_new_ads_request',compact('user_name','sub','restaurant_name','date','cost'));
+    return response()->json();
 })->name('test');
 
 

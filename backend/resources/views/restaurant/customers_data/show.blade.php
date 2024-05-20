@@ -4,13 +4,13 @@
 
 @section('content')
 <style>
-  
-  .google_map {
+    .google_map {
         position: static !important;
         width: 100%;
         height: 500px;
- 
+
     }
+
 </style>
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
@@ -139,40 +139,42 @@
                                                     <!--end::Svg Icon-->{{ __('Addresses') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
-                                                {{-- {{ $restaurantUser->address }} --}}
+                                                @if($restaurantUser->addresses()->count())
                                                 <div id="carouselExample" class="carousel slide" data-bs-interval="false">
-                              
+
                                                     <div class="carousel-inner">
-                                                @foreach ($restaurantUser->addresses->chunk(4) as $key => $addresses)
-                                                            
-                                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                                        <div class="row ">
-                                                            @foreach ($addresses as $address)
-                                                            <div class="col-md-3 d-flex justify-content-center" >
-                                                                <a href="https://www.google.com/maps?q={{ $address->lat }},{{ $address->lng }}" target="_blank" style="min-width: 140px;" class="btn btn-sm btn-active-light-khardl ">
-                                                                    <span class="d-inline-block text-truncate" style="max-width: 120px;margin:-7px" >   <i class="bi bi-box-arrow-up-right"></i> {{ $address->address }} </span>
-                                                                </a>
+                                                        @foreach ($restaurantUser->addresses->chunk(4) as $key => $addresses)
+
+                                                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                                            <div class="row ">
+                                                                @foreach ($addresses as $address)
+                                                                <div class="col-md-3 d-flex justify-content-center">
+                                                                    <a href="https://www.google.com/maps?q={{ $address->lat }},{{ $address->lng }}" target="_blank" style="min-width: 140px;" class="btn btn-sm btn-active-light-khardl ">
+                                                                        <span class="d-inline-block text-truncate" style="max-width: 120px;margin:-7px"> <i class="bi bi-box-arrow-up-right"></i> {{ $address->address }} </span>
+                                                                    </a>
+                                                                </div>
+
+                                                                @endforeach
                                                             </div>
-                                                                
-                                                            @endforeach
+
                                                         </div>
-                                                     
+                                                        @endforeach
                                                     </div>
-                                                @endforeach
-                                            </div>
-                                            <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev" >
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next" >
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Next</span>
-                                            </a>
-                                        </div>
-                                               
+                                                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                </div>
+                                                @else
+                                                <span>{{ __('No address found') }}</span>
+                                                @endif
                                             </td>
                                         </tr>
-                                  
+
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
@@ -198,7 +200,7 @@
                 <!--begin::Tab content-->
                 <div class="tab-content">
                     <!--begin::Tab pane-->
-                   
+
                     <!--end::Tab pane-->
                     <!--begin::Tab pane-->
                     @if (Auth::user()?->hasPermissionWorker('can_mange_orders'))
@@ -348,20 +350,21 @@
     <!--end::Post-->
 </div>
 <style>
-     
-     .carousel-control-prev-icon
-    {
-        background-image : url('/img/next.png')
+    .carousel-control-prev-icon {
+        background-image: url('/img/next.png')
     }
+
     .carousel-control-next-icon {
-        background-image : url('/img/prev.png')
+        background-image: url('/img/prev.png')
     }
-    .carousel-inner{
+
+    .carousel-inner {
         position: relative;
         width: 70%;
         margin: 0 115px;
         padding: 6px 0px;
     }
+
 </style>
 @endsection
 @section('js')
@@ -369,9 +372,9 @@
 <script>
     $(document).ready(function() {
         $('#carouselExample').carousel({
-            pause: true,
-            interval: false,
-        });
+            pause: true
+            , interval: false
+        , });
         const urlParams = new URLSearchParams(window.location.search);
         const pageParam = urlParams.get('page');
         const statusParam = urlParams.get('status');
