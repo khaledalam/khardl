@@ -319,7 +319,11 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         return 0;
     }
 
-
+    public function updateLastLogin()
+    {
+        $this->last_login = now();
+        $this->save();
+    }
     public function tap_verified(): bool
     {
         return $this->tap_verified;

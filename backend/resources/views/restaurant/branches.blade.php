@@ -155,7 +155,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             </div>
                             @if($available_branches > 0)
                             <div class="row gx-9 d-flex justify-content-center align-items-center">
-                                <a href="#" class="fs-6 text-700 fw-bolder text-center p-3 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">+ {{ __('add-new-branch') }}</a>
+                                <a href="#" class="fs-6 text-700 fw-bolder text-center p-3 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh" id="add-new-branch">+ {{ __('add-new-branch') }}</a>
                             </div>
                             @endif
                         </div>
@@ -192,12 +192,13 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             <!--begin::Row-->
                             <div class="row gx-9">
                                 <!--begin::Col-->
-                                <div id="map-autocomplete-card{{ $branch->id }}"></div>
-
+                             
                                 <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}" >
                                     {{-- @if(!$branch->deleted_at)
                                     <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}"  style="display: none;" value="{{$branch->address}}">
                                     @endif --}}
+                                    <div id="map-autocomplete-card{{ $branch->id }}"></div>
+
                                     <div class="map-container" data-branch-id="{{ $branch->id }}">
                                         <div class="card card-flush border-0 card-map">
                                             <!--begin::Body-->
@@ -799,10 +800,10 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
+                           
                             <div class="col-md-12 fv-row" >
-                            <div id="map-autocomplete-card-new_branch" style="width: 80%;float: left;"></div>
-                            </div>
-                            <div class="col-md-12 fv-row" >
+                                <div id="map-autocomplete-card-new_branch" style="width: 80%;float: left;"></div>
+
                                 <label class="required fs-6 fw-bold mb-2">{{ __('location-branch') }}</label>
                                 {{-- <input id="pac-input-new_branch" class="form-control" type="text" required placeholder="{{ __('search-for-place')}}" name="address"> --}}
                                 <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
