@@ -40,8 +40,6 @@ const NavbarRestuarant = () => {
         // toast.error(`${t('Failed to send verification code')}`)
         console.log(error);
       }
-    } else {
-      console.log("user Unauthenticated");
     }
   };
   useEffect(() => {

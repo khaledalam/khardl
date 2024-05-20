@@ -118,6 +118,7 @@ class RestaurantStyleService
             'terms_and_conditions_arText',
             'privacy_policy_enText',
             'privacy_policy_arText',
+            'display_category_icon'
         ];
 
         foreach ($properties as $property) {
@@ -214,7 +215,6 @@ class RestaurantStyleService
                     'sunday_close',
                     'sunday_closed',
                     'is_primary',
-                    'display_category_icon'
                 ]);
             }
             return $data;

@@ -28,7 +28,6 @@ const DetailesItem = ({ onClose }) => {
   if (selectedBranch.length > 0) {
     selectedBranch = selectedBranch[0];
   }
-  console.log("selectedBranch", selectedBranch);
 
   //
   // if (!selectedBranch?.name) {

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CentralSetting;
 use Carbon\Carbon;
 use App\Models\Tenant;
 use App\Models\Tenant\Order;
+use Google\Client;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
 use App\Utils\ResponseHelper;
@@ -68,7 +70,7 @@ class TapController extends Controller
         try {
             $todayDate = Carbon::now()->format('Y-m-d');
             $filename = "subscription_invoice_$todayDate.csv";
-            return match(true){ 
+            return match(true){
                 $model[0] instanceof ROSubscriptionInvoice => Excel::download(new ExportSubscriptionInvoice($model), $filename),
                 $model[0] instanceof ROCustomerAppSubInvoice => Excel::download(new ExportAppSubscriptionInvoice($model), $filename),
                 default => null
@@ -197,10 +199,10 @@ class TapController extends Controller
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
 
     }
-  
+
     public function payments_submit_card_details(SaveCardRequest $request)
     {
-        
+
         $data = $request->validated();
         $sub = ROSubscription::first();
         $centralSubscription = tenancy()->central(function(){
@@ -246,7 +248,7 @@ class TapController extends Controller
                 $chargeData = ROSubscription::serviceCalculate(ROSubscription::NEW, $data['n_branches'],$centralSubscription->id);
             }
         }
-       
+
         $payload = [
             'amount'=> $chargeData['cost'],
             'metadata'=>[
@@ -296,7 +298,7 @@ class TapController extends Controller
     public function payments_submit_lead($tenant,CreateLeadRequest $request) {
         $tenant = Tenant::findOrFail($tenant);
         $data = $request->all();
-       
+
         // $tenant_id = tenant()->id;
         // $userBankIban = '';
         // tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
@@ -342,15 +344,23 @@ class TapController extends Controller
         $response = Lead::connect($data);
         if($response['http_code'] == ResponseHelper::HTTP_OK){
             logger($request);
-            $tenant->run(function()use($response){
+
+            $update_tap_sheet = CentralSetting::first()?->auto_update_tap_sheet;
+
+            $tenant->run(function()use($response, $update_tap_sheet){
                 Setting::first()->update([
-                    'lead_id'=> $response['message']['id'],
-                    'lead_response'=>$response['message']
+                    'lead_id' => $response['message']['id'],
+                    'lead_response' => $response['message']
                 ]);
                 SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
                     user: RestaurantUser::first(),
                     lead_id :  $response['message']['id'],
                 );
+
+                if ($update_tap_sheet) {
+                   $this->UpdateTAPSheet($response);
+                }
+
             });
 
 
@@ -362,8 +372,38 @@ class TapController extends Controller
         ->with('error', $response['message']);
 
     }
+
+    private function UpdateTAPSheet($response)
+    {
+        // Update the TAP shared Google sheet (add LEAD ID)
+        // https://docs.google.com/spreadsheets/d/15z09Bphnn6D6fEQSWa5jrlqzkdhbNsr5nrOyCmH2TVo/edit#gid=0
+        $SHEET_ID = '15z09Bphnn6D6fEQSWa5jrlqzkdhbNsr5nrOyCmH2TVo';
+
+        $client = new Client();
+        $client->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
+        $client->setAccessType('offline');
+        $path = base_path() . '/config/true-campus-423716-e3-72946e436b30.json';
+        $client->setAuthConfig($path);
+        $service = new \Google_Service_Sheets($client);
+
+        $newRow = [
+            now(),
+            'live',
+            $response['message']['id'],
+            ' ',
+            Setting::first()?->restaurant_name,
+            $response['message']
+        ];
+        $rows = [$newRow];
+        $valueRange = new \Google_Service_Sheets_ValueRange();
+        $valueRange->setValues($rows);
+        $range = 'Sheet1';
+        $options = ['valueInputOption' => 'USER_ENTERED'];
+        $service->spreadsheets_values->append($SHEET_ID, $range, $valueRange, $options);
+    }
+
     public function payments_redirect(Request $request){
-     
+
         if ($request->tap_id) {
             $charge = TapCharge::retrieveSub($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
@@ -429,14 +469,14 @@ class TapController extends Controller
             return [
                 CentralSubscription::skip(1)->first(),
                 CentralSubscription::skip(2)->first(),
-                
+
             ];
         });
         if($request->customer_app_sub_option == ROCustomerAppSub::LIFETIME_SUBSCRIPTION){
             $type = ROCustomerAppSub::LIFETIME_SUBSCRIPTION;
             $amount = $AppLifetimeSubscription->amount;
             $AppSubscription_id = $AppLifetimeSubscription->id;
-            
+
         }else {
             $amount = $AppSubscription->amount;
             $AppSubscription_id = $AppSubscription->id;
@@ -460,14 +500,14 @@ class TapController extends Controller
                     'cost'=> ($coupon->type == CouponTypes::FIXED_COUPON->value)? $AppLifetimeSubscription->amount  - $coupon->amount : ( $AppLifetimeSubscription->amount  - (($AppLifetimeSubscription->amount  * $coupon->amount) / 100)),
                     'coupon_code'=>$request->coupon_code,
                     'sub_amount'=>$AppLifetimeSubscription->amount
-                ]; 
+                ];
             });
             if(!$chargeData){
                 return redirect()->route('restaurant.service')->with('error', __('Invalid coupon'));
             }
-           
+
         }
-       
+
         $payload = [
             'amount'=> $amount,
             'metadata'=>[

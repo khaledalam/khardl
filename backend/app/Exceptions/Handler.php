@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Sentry\Laravel\Integration;
 use Stancl\Tenancy\Exceptions\TenantCouldNotBeIdentifiedOnDomainException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -68,6 +69,16 @@ class Handler extends ExceptionHandler
         }
         if ($exception instanceof TenantCouldNotBeIdentifiedException || $exception instanceof DomainOccupiedByOtherTenantException) {
             return redirect()->route('restaurant_not_found');
+        }
+        if($exception instanceof ThrottleRequestsException) {
+            return parent::render(
+                $request, new ThrottleRequestsException(
+                    __('Too many attempts, please try again later.'),
+                    $exception->getPrevious(),
+                    $exception->getHeaders(),
+                    $exception->getCode()
+                )
+            );
         }
 
         return parent::render($request, $exception);

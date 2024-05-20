@@ -25,7 +25,6 @@ export const SideMenu = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.auth.user);
 
-  console.log("user ---> ", user);
   const navigate = useNavigate();
   const { setStatusCode } = useAuthContext();
   const [showDetailesItem, setShowDetailesItem] = useState(false);
@@ -83,9 +82,6 @@ export const SideMenu = () => {
   if (selectedBranch.length > 0) {
     selectedBranch = selectedBranch[0];
   }
-
-  console.log(" >>> branch ", selectedBranch);
-  console.log(" >>> branch id ", branch_id);
   const title_dashboard = (
     <span
       __html={

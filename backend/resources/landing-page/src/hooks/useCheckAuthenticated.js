@@ -26,7 +26,6 @@ export default function useCheckAuthenticated() {
         setStatusCode(response?.status);
         localStorage.setItem("isLoggedIn", false);
         dispatch(changeLogState(response?.data?.is_loggedin));
-        console.log("hi from useCHeckAuth");
       } finally {
         setLoading(false);
       }

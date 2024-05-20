@@ -150,7 +150,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                           <source
                             src={
                               restaurantStyle?.banner_images &&
-                              restaurantStyle.banner_images.length > 0
+                              restaurantStyle.banner_images?.length > 0
                                 ? restaurantStyle.banner_images[index]?.url
                                 : ""
                             }

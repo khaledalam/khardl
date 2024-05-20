@@ -143,10 +143,16 @@
                                                         </p>
                                                         @endif
                                                         @if(isset($log->metadata['live_chat_enabled']))
-                                                        <p>
-                                                            {{ __('live-chat') }} :
-                                                            <strong>{{ $log->metadata['live_chat_enabled'] }}</strong>
-                                                        </p>
+                                                            <p>
+                                                                {{ __('live-chat') }} :
+                                                                <strong>{{ $log->metadata['live_chat_enabled'] }}</strong>
+                                                            </p>
+                                                        @endif
+                                                        @if(isset($log->metadata['auto_update_tap_sheet']))
+                                                            <p>
+                                                                {{ __('auto_update_tap_sheet') }} :
+                                                                <strong>{{ $log->metadata['auto_update_tap_sheet'] }}</strong>
+                                                            </p>
                                                         @endif
                                                         @else
                                                             <ul style="direction: @if(app()->getLocale() === 'ar') rtl @else ltr @endif">

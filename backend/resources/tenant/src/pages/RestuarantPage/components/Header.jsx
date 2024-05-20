@@ -51,8 +51,7 @@ const Header = ({ restaurantStyle, categories, handleGotoCart }) => {
         onClick={() => dispatch(SetSideBar(!isSideBarOpen))}
       >
         <div
-          style={{ fontWeight: restaurantStyle?.text_fontWeight }}
-          className={`flex items-center gap-3 relative`}
+          className={`flex items-center gap-3 relative font-${restaurantStyle?.text_fontWeight}`}
         >
           <img src={HeaderSidebar} alt="sidebar icon" />
         </div>

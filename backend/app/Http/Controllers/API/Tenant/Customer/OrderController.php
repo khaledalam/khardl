@@ -50,11 +50,7 @@ class OrderController
             'lastName' => $user?->last_name,
             'phone' => $user?->phone,
             'email' => $user?->email,
-            'address' => [
-                'addressValue' => $user?->address,
-                'lat' => $user->lat,
-                'lng' => $user->lng,
-            ],
+            'default_address' => $user->default_address(),
 //            'cashback' => $user->cashback,
             'loyalty_points' => $user->loyalty_points,
         ], '');
@@ -65,17 +61,9 @@ class OrderController
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'lat' => ['required','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
-            'lng' => ['required','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
-        ],[
-            'lat.required'=>__("Location is required"),
-            'lng.required'=>__("Location is required")
         ]);
 
-
         $user = Auth::user();
-
         $shouldLogout = false;
         if ($user->phone != $request->phone) {
             // Remove verify phone status
@@ -83,13 +71,9 @@ class OrderController
             $user->status = RestaurantUser::INACTIVE;
             $shouldLogout= true;
         }
-
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->phone = $request->phone;
-        $user->address = $request->address;
-        $user->lat = $request->lat;
-        $user->lng = $request->lng;
 
         $user->save();
 

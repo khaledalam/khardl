@@ -142,8 +142,6 @@ class RestaurantController extends BaseController
             $branch->update(['preparation_time_delivery' => $request->preparation_time_delivery]);
         }
 
-        $branch->update(['display_category_icon' => $request->has('display_category_icon')]);
-
         return redirect()->back()->with('success', __('Branch settings successfully updated.'));
 
     }

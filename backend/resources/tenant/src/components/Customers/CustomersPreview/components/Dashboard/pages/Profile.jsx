@@ -32,7 +32,6 @@ const Profile = () => {
     try {
       const profileResponse = await AxiosInstance.get(`user`);
 
-      console.log("profileResponse >>>", profileResponse.data);
       if (profileResponse.data) {
         setFirstName(profileResponse.data?.data?.firstName ?? t("N/A"));
         setLastName(profileResponse.data?.data?.lastName ?? t("N/A"));

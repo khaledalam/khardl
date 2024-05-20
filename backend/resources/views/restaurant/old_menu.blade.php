@@ -510,7 +510,6 @@
             return;
         }
         var inputValueAR = document.querySelector('input[name=name_en]').value.trim();
-        console.log(inputValueAR);
         if (inputValueAR === '') {
             alert('Please fill in the input in the (English) tab .');
             submitButton.disabled = false;

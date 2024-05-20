@@ -39,14 +39,14 @@
                                     <div class="card-title m-0 float-right">
 
                                         @if($branch->active)
-                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to deactivate this branch ?') }}`)" class="btn btn-danger text-center">
+                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to deactivate this branch ?') }}`)" class="btn btn-danger text-center text-white">
                                             <label for="Activate">{{ __('Deactivate') }}</label>
-                                            <i class="fa fa-play text-white m-2"></i>
+                                            <i class="fa fa-play m-2"></i>
                                         </a>
                                         @else
-                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to activate this branch ?') }}`)" class="btn btn-khardl text-center">
+                                        <a href="#" onclick="confirmAction('{{ route('restaurant.update-branch-status', ['id' => $branch->id]) }}', `{{ __('Are you sure you want to activate this branch ?') }}`)" class="btn btn-khardl text-center text-white">
                                             <label for="Activate">{{ __('Activate') }}</label>
-                                            <i class="fa fa-play text-white m-2"></i>
+                                            <i class="fa fa-play m-2"></i>
                                         </a>
                                         @endif
 
@@ -198,19 +198,6 @@
                                             </label>
 
                                             <div class="separator separator-dashed my-6"></div>
-
-                                            <!-- display_category_icon begin::Option-->
-                                            <label class="form-check form-check-custom form-check-solid align-items-start">
-                                                <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="display_category_icon" value="{{$branch->display_category_icon}}" {{($branch->display_category_icon)?'checked':''}}  />
-                                                <!--end::Input-->
-                                                <!--begin::Label-->
-                                                <span class="form-check-label d-flex flex-column align-items-start">
-                                                    <span class="fw-bolder fs-5 mb-0">{{__('display-categories-icons')}}</span>
-                                                </span>
-                                                <!--end::Label-->
-                                            </label>
-                                            <!--display_category_icon end::Option-->
 
                                         </div>
                                         <!--end::Card body-->

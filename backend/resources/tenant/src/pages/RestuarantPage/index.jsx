@@ -96,7 +96,6 @@ export const RestuarantHomePage = () => {
       setisLoading(false);
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
-      console.log(error);
       setisLoading(false);
     }
   };

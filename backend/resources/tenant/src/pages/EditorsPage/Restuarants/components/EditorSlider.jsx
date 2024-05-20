@@ -40,7 +40,7 @@ function EditorSlider({
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
+      items: 2,
     },
   };
 
@@ -54,7 +54,6 @@ function EditorSlider({
   const dispatch = useDispatch();
   const { width } = useWindowSize();
   const Language = useSelector((state) => state.languageMode.languageMode);
-  console.log("Language", Language);
 
   const {
     category_hover_color,

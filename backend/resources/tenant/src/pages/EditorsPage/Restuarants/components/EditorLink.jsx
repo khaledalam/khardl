@@ -12,7 +12,7 @@ const EditorLink = ({ label }) => {
     (state) => state.restuarantEditorStyle,
   );
 
-  console.log({ selectedSocialIcons });
+  
 
   const usedMediaIds = selectedSocialIcons.map((socialIcon) =>
     parseInt(socialIcon.id),

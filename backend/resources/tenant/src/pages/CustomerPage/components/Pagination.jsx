@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useTranslation } from "react-i18next";
-const Pagination = ({ page, setPage, totalCount }) => {
+const Pagination = ({ page, setPage, totalCount, perPage = 10 }) => {
   const language = useSelector((state) => state.languageMode.languageMode);
   const dispatch = useDispatch();
   const [pageCount, setPageCount] = useState(0);
@@ -12,7 +12,7 @@ const Pagination = ({ page, setPage, totalCount }) => {
     setPage(page);
   };
   useEffect(() => {
-    setPageCount(Math.ceil(totalCount / 10));
+    setPageCount(Math.ceil(totalCount / perPage));
     setPage(0);
   }, [totalCount]);
   return (

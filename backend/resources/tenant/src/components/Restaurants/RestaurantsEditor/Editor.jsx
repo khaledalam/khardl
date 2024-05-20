@@ -43,10 +43,6 @@ const Editor = () => {
         `categories?items&user&branch&selected_branch_id=${branch_id}`,
       );
 
-      console.log(
-        "editor rest restaurantCategoriesResponse Editor",
-        restaurantCategoriesResponse.data,
-      );
       if (restaurantCategoriesResponse.data) {
         setCategories(restaurantCategoriesResponse.data?.data);
 
@@ -92,7 +88,6 @@ const Editor = () => {
     return;
   }
 
-  console.log("selectedAlign > ", selectedAlign);
 
   return (
     <div

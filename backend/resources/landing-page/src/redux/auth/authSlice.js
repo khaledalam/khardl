@@ -3,8 +3,6 @@ import Axios from "../../axios/axios";
 
 export const logout = createAsyncThunk("auth/logout", async ({ method }) => {
   const response = await Axios({ url: "/logout", method });
-  console.log("logout: ");
-  console.log(response);
   return response?.data?.is_loggedin;
 });
 

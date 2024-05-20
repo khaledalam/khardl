@@ -131,6 +131,7 @@ const MainBoardEditor = ({
     menu_section_background_color,
     menu_section_radius,
     banner_radius,
+    price_background_color
   } = restuarantEditorStyle;
 
   const [listofBannerImages, setListofBannerImages] = useState([]);
@@ -149,11 +150,13 @@ const MainBoardEditor = ({
 
   useEffect(() => {
     setListofBannerImages(
-      banner_images.map((image) => {
-        return {
-          croppedImage: `${image.url}`,
-        };
-      })
+      Array.isArray(banner_images)
+        ? banner_images.map((image) => {
+            return {
+              croppedImage: `${image.url}`,
+            };
+          })
+        : []
     );
   }, [banner_images]);
   const showCroppedImage = async () => {
@@ -163,7 +166,6 @@ const MainBoardEditor = ({
         croppedAreaPixels,
         rotation
       );
-      console.log("donee", { croppedImage });
 
       setUncroppedImage(null);
       setIsCropModalOpened(false);
@@ -186,8 +188,6 @@ const MainBoardEditor = ({
         rotation
       );
       setListofBannerImages([...listofBannerImages, { croppedImage }]);
-      console.log("donee", { croppedImage });
-      console.log("list of uploaded images", listofBannerImages);
       setUncroppedImage(null);
       dispatch(setBannerUpload(croppedImage));
       setUploadSingleBanner(null);
@@ -246,7 +246,6 @@ const MainBoardEditor = ({
 
     if (selectedBanner) {
       if (selectedBanner.type.includes("video")) {
-        console.log("video", selectedBanner);
         setIsVideo(true);
         setUploadSingleBanner(URL.createObjectURL(selectedBanner));
       } else {
@@ -258,7 +257,7 @@ const MainBoardEditor = ({
       }
       dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)));
       setShowCropSection(true);
-      if (listofBannerImages.length < 2) {
+      if (listofBannerImages?.length < 2) {
         dispatch(bannerType("one-photo"));
       } else {
         dispatch(bannerType("slider"));
@@ -284,22 +283,22 @@ const MainBoardEditor = ({
         })
       );
     }
-    if (banner_type == "slider" && banner_images.length > 0) {
+    if (banner_type == "slider" && banner_images?.length > 0) {
       setListofBannerImages(
-        banner_images.map((image) => {
-          return {
-            croppedImage: `${image.url}`,
-          };
-        })
+        Array.isArray(banner_images)
+          ? banner_images.map((image) => {
+              return {
+                croppedImage: `${image.url}`,
+              };
+            })
+          : []
       );
     }
     if (banner_type == "one-photo" && banner_image) {
       setListofBannerImages([{ croppedImage: `${banner_image.url}` }]);
       setUploadedSingleBanner(`${banner_image.url}`);
     }
-    console.log("checking type: ", banner_type);
-    console.log("checking images: ", banner_images);
-    console.log("checking image: ", banner_image);
+
     activeSubitem != null &&
       console.log(
         "now 2 : ",
@@ -327,12 +326,10 @@ const MainBoardEditor = ({
   };
 
   const removeUploadedImage = (index) => {
-    console.log("index", index);
-    if (index >= 0 && index < listofBannerImages.length) {
-      // console.log("log list", listofBannerImages.splice(index, 1));
+
+    if (index >= 0 && index < listofBannerImages?.length) {
       setListofBannerImages(listofBannerImages.filter((_, id) => id !== index));
-      console.log("list of uploaded images - after", listofBannerImages);
-      if (listofBannerImages.length < 2) {
+      if (listofBannerImages?.length < 2) {
         dispatch(bannerType("one-photo"));
       } else {
         dispatch(bannerType("slider"));
@@ -414,7 +411,7 @@ const MainBoardEditor = ({
     }
   };
 
-  // console.log("KKK: ")
+
 
   return (
     <div
@@ -425,6 +422,18 @@ const MainBoardEditor = ({
       }}
       className="w-full p-4 flex flex-col gap-[16px] relative"
     >
+      <style jsx>{`
+        .custom-checkbox:checked {
+          border-color: ${price_background_color || "#7D0A0A"} !important;
+          --tw-ring-color: ${price_background_color || "#7D0A0A"} !important;
+        }
+        .custom-radio:checked {
+          background-color: ${price_background_color || "#7D0A0A"};
+        }
+        .dropdown-option:hover {
+          background-color: ${price_background_color || "#7D0A0A"};
+        }
+      `}</style>
       {/* Header cart */}
       {headerPosition !== "fixed" && (
         <HeaderEdit
@@ -852,19 +861,19 @@ const MainBoardEditor = ({
 
               <div
                 className={`${
-                  listofBannerImages.length > 0
+                  listofBannerImages?.length > 0
                     ? "flex flex-row space-x-[8px] mt-[8px] "
                     : "hidden"
                 }`}
               >
-                {listofBannerImages.map((image, idx) => (
+                {listofBannerImages?.map((image, idx) => (
                   <div key={idx} className="relative">
                     <img
                       src={image.croppedImage}
                       alt="banner"
                       className="w-[80px] h-[40px] rounded-[10px] object-cover"
                     />
-                    {listofBannerImages.length > 1 && (
+                    {listofBannerImages?.length > 1 && (
                       <div className="absolute top-[-0.8rem] right-[-1rem]">
                         <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
                           <IoCloseOutline
@@ -912,20 +921,20 @@ const MainBoardEditor = ({
               <div className="flex flex-row space-x-[16px] my-[16px]">
                 <button
                   onClick={() => {
-                    listofBannerImages.length == 1 &&
+                    listofBannerImages?.length == 1 &&
                       setUploadedSingleBanner(
                         listofBannerImages[0].croppedImage
                       );
                     setIsBannerModalOpened(false);
-                    listofBannerImages.length == 0 &&
+                    listofBannerImages?.length == 0 &&
                       setUploadedSingleBanner(null);
 
-                    if (listofBannerImages.length < 2) {
+                    if (listofBannerImages?.length < 2) {
                       dispatch(bannerType("one-photo"));
                     } else {
                       dispatch(
                         BannerImages(
-                          listofBannerImages.map((image) => {
+                          listofBannerImages?.map((image) => {
                             return {
                               url: image.croppedImage,
                             };
