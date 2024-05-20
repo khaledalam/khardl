@@ -59,7 +59,7 @@ class DownloadController extends Controller
         foreach ($data as $country => $countryList) {
             foreach ($countryList as $city => $cityList) {
                 foreach ($cityList as $region => $ordersCount) {
-                    fputcsv($f, [$city, $region, $country, $ordersCount, $rank], $delimiter);
+                    fputcsv($f, [$city, $region, $country, $ordersCount, $rank++], $delimiter);
                 }
             }
         }

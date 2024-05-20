@@ -9,6 +9,8 @@
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -18,9 +20,13 @@
                 <form action="">
                 @csrf
                     <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+
+
+
                         <!--begin::Card title-->
                         <div class="card-title d-flex justify-content-between align-items-center w-100">
                                 <h2 class="mx-4">{{ __('Locations') }}</h2>
+
 
                             <div class="card-toolbar flex-row-fluid justify-content-start gap-5" @if(app()->getLocale() === 'ar') style=" flex-direction: revert;" @endif>
                                 <!--begin::Search-->
@@ -36,6 +42,17 @@
                                     <input type="text" name="search_location" value="{{ request('search_location')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('City, Region, Country')}}" />
                                 </div>
                                 <button class="btn btn-khardl" type="submit">{{ __('Search') }}</button>
+
+                                <div class="border d-flex justify-content-center gap-2 align-items-center px-3 mx-5">
+                                    <span>{{__('Graph')}}</span>
+                                    <select class="form-select w-auto" name="location_chart_by">
+                                        <option value="city" @if( ($_GET['location_chart_by'] ?? '') == 'city') selected @endif>{{__('City')}}</option>
+                                        <option value="region" @if( ($_GET['location_chart_by'] ?? '') == 'region') selected @endif>{{__('Region')}}</option>
+                                        <option value="country" @if( ($_GET['location_chart_by'] ?? '') == 'country') selected @endif>{{__('Country')}}</option>
+                                    </select>
+                                    <button class="btn btn-primary" type="submit">{{ __('Refresh') }}</button>
+                                </div>
+
                             </div>
 
 
@@ -44,6 +61,43 @@
                             </a>
                         </div>
                         <!--End::Card title-->
+
+
+
+
+                        <div style="width: min(600px, 60%); margin: auto;">
+
+                            <canvas id="barChart"></canvas>
+                        </div>
+
+                        <script>
+                            var ctx = document.getElementById('barChart').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: @json($chart_data['labels']),
+                                    datasets: [{
+                                        label: "{{ucfirst(__($_GET['location_chart_by'] ?? 'City'))}}",
+                                        data: @json($chart_data['data']),
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.7)',
+                                            'rgba(54, 162, 235, 0.7)',
+                                            'rgba(255, 206, 86, 0.7)',
+                                            'rgba(75, 192, 192, 0.7)',
+                                            'rgba(153, 102, 255, 0.7)',
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                        ],
+                                        borderWidth: 1,
+                                    }]
+                                },
+                            });
+                        </script>
 
                     </div>
                 </form>
@@ -99,6 +153,9 @@
         <!--end::Container-->
     </div>
     <!--end::Post-->
+
+
+    <hr />
 
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">

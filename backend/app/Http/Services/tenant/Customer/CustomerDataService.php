@@ -81,6 +81,7 @@ class CustomerDataService
         }
         */
 
+//        dd($request->all());
 
         /** @var RestaurantUser $user */
         $user  = Auth::user();
@@ -94,8 +95,11 @@ class CustomerDataService
 
         $customerByLocationByLocation = OrdersLocationsHelper::getCustomerOrdersByLocation($request);
 
+        $chart_data = OrdersLocationsHelper::getVisualization($customerByLocationByLocation, $request?->location_chart_by ?? 'city');
+
+
         return view('restaurant.customers_data.list', compact('user','allCustomers','customerStatuses',
-            'customerByLocationByLocation'));
+            'customerByLocationByLocation', 'chart_data'));
     }
     public function show(Request $request,RestaurantUser $restaurantUser)
     {
