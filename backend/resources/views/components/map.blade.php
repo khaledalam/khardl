@@ -169,6 +169,7 @@
 
         }
         $('#add-new-branch').one('click', function(event){
+            console.log(223);
                 const centerCoords = {
                     lat: 24.7136,
                     lng: 46.6753,
