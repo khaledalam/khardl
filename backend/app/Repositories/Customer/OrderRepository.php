@@ -70,8 +70,11 @@ class OrderRepository
             if( $cart->hasPaymentLoyaltyPoint($request->payment_method) || $cart->hasPaymentCashOnDelivery($request->payment_method)){
                 // @TODO: fetch transaction fee percentage that need to be deduce from
                 // each TAP transaction from super admin dashboard settings
-                $user->loyalty_points -= $order->total_loyalty_points;
-                $user->save();
+                if( $cart->hasPaymentLoyaltyPoint($request->payment_method)){
+                    $user->loyalty_points -= $order->total_loyalty_points;
+                    $user->save();
+                }
+               
                 self::sendNotifications($user, $order);
                 // @TODO: Create TAP charge
 
