@@ -15,11 +15,7 @@
     <link rel="shortcut png" href="{{ global_asset('images/Logo_White.svg')}}"/>
     <link rel="icon" href="{{ global_asset('images/Logo_White.svg')}}"/>
     <!--begin::Page Vendor Stylesheets(used by this page)-->
-    <link href="{{ global_asset('assets/css/global.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ global_asset('assets/css/admin-main.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
-        <link href="{{ global_asset('assets/css/global-ar.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ global_asset('assets/css/admin-main-ar.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Page Vendor Stylesheets-->
@@ -28,21 +24,27 @@
         <link href="{{ global_asset('assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Global Stylesheets Bundle-->
     @else
-        <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}"rel="stylesheet" type="text/css" />
-        <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
-        <!--end::Page Vendor Stylesheets-->
-        <!--begin::Global Stylesheets Bundle(used by all pages)-->
-        <link href="{{ global_asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}"rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <!--end::Page Vendor Stylesheets-->
+    <!--begin::Global Stylesheets Bundle(used by all pages)-->
+    <link href="{{ global_asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    @endif
+    <link href="{{ global_asset('assets/css/global.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/css/admin-main.css')}}" rel="stylesheet" type="text/css" />
+    @if(app()->getLocale() === 'ar')
+        <link href="{{ global_asset('assets/css/global-ar.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/css/admin-main-ar.css')}}" rel="stylesheet" type="text/css" />
     @endif
 
     @if(app()->getLocale() === 'ar')
-                                <style>
-                                .menu-item.menu-accordion.show:not(.hiding):not(.menu-dropdown) > .menu-link .menu-arrow:after, .menu-item.menu-accordion.showing:not(.menu-dropdown) > .menu-link .menu-arrow:after {
-                                    transform: rotateZ(270deg);
-                                    transition: transform 0.3s ease;
-                                }
-                                </style>
+        <style>
+        .menu-item.menu-accordion.show:not(.hiding):not(.menu-dropdown) > .menu-link .menu-arrow:after, .menu-item.menu-accordion.showing:not(.menu-dropdown) > .menu-link .menu-arrow:after {
+            transform: rotateZ(270deg);
+            transition: transform 0.3s ease;
+        }
+        </style>
     @endif
 </head>
 <!--end::Head-->
@@ -173,7 +175,7 @@
 
                             @if(Auth::user()->hasPermission("can_access_restaurants"))
                                 <!-- Restaurants -->
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'restaurants' || $admin_link == 'app-requested' || $admin_link == 'restaurant-owner-management' || $admin_link == 'advertisement') ? 'show' : ''}}">
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'restaurants' || $admin_link == 'app-requested' || $admin_link == 'restaurant-owner-management') ? 'show' : ''}}">
                                     <span class="{{ ($admin_link == 'restaurants' || $admin_link == 'restaurant-owner-management') ? 'menu-link active' : 'menu-link' }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
@@ -186,10 +188,8 @@
                                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                                         <div class="menu-item">
                                             <a class="menu-link {{($admin_link == 'restaurants') ? 'active' : ''}}" href="{{ route('admin.restaurants') }}">
-                                                <span class="menu-icon">
-                                                    <span class="svg-icon svg-icon-2">
-                                                        <i class="fa fa-store"></i>
-                                                    </span>
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
                                                 </span>
                                                 <span class="menu-title">{{ __('all-restaurants')}}
                                                     {{--                                                    @if(($restaurantsAll  - $restaurantsLive) > 0)<span class="badge badge-danger mx-1">{{($restaurantsAll  - $restaurantsLive)}}</span>@endif--}}
@@ -203,11 +203,9 @@
                                             <div class="menu-item">
                                                 <a class="menu-link {{($admin_link == 'restaurant-owner-management') ? 'active' : ''}}" href="{{ route('admin.restaurant-owner-management') }}">
                                                     <span class="menu-icon">
-                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                                        <span class="svg-icon svg-icon-2">
-                                                            <i class=" fa fa-users"></i>
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <!--end::Svg Icon-->
                                                     </span>
                                                     <span class="menu-title">{{ __('restaurant-owners')}}</span>
                                                 </a>
@@ -219,11 +217,9 @@
                                             <div class="menu-item">
                                                 <a class="menu-link {{($admin_link == 'app-requested') ? 'active' : ''}}" href="{{ route('admin.restaurants.app-requested') }}">
                                                     <span class="menu-icon">
-                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                                        <span class="svg-icon svg-icon-2">
-                                                            <i class="fa fa-mobile"></i>
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <!--end::Svg Icon-->
                                                     </span>
                                                     <span class="menu-title">{{ __('Apps requested')}}</span>
                                                 </a>
@@ -232,23 +228,6 @@
                                     </div>
                                 </div>
                             @endif
-
-{{--                            @if(Auth::user()->hasPermission('can_access_restaurants'))--}}
-{{--                                <!-- Staff evaluation -->--}}
-{{--                                    <div class="menu-item">--}}
-{{--                                        <a class="menu-link {{($admin_link == 'order-inquiry') ? 'active' : ''}}" href="{{ route('admin.order-inquiry') }}">--}}
-{{--                                                            <span class="menu-icon">--}}
-{{--                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->--}}
-{{--                                                                <span class="svg-icon svg-icon-2">--}}
-{{--                                                                    <i class=" fa fa-question"></i>--}}
-{{--                                                                </span>--}}
-{{--                                                                <!--end::Svg Icon-->--}}
-{{--                                                            </span>--}}
-{{--                                            <span class="menu-title">{{ __('order inquiry')}}</span>--}}
-{{--                                        </a>--}}
-{{--                                    </div>--}}
-{{--                            @endif--}}
-                            <!-- Supports -->
                             @if(Auth::user()->hasPermission('can_see_admins') || Auth::user()->hasPermission('can_add_admins'))
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'user-management' || $admin_link == 'add-user') ? 'show' : ''}}">
                                 <span class="{{ ($admin_link == 'user-management' || $admin_link == 'add-user'  ) ? 'menu-link active' : 'menu-link ' }}">
