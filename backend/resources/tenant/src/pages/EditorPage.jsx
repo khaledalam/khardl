@@ -38,7 +38,6 @@ const EditorPage = () => {
     // if (location.pathname === `/site-editor/customers`) {
     //   setTemplate("customers")
     // }
-    console.log("entered editorPage");
   }, [location.pathname]);
 
   return (

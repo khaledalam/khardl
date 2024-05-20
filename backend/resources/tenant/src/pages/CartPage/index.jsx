@@ -58,10 +58,12 @@ const CartPage = () => {
     return state.restuarantEditorStyle;
   });
 
+  const { price_background_color } = restaurantStyle;
   const cartItemsData = useSelector((state) => state.categoryAPI.cartItemsData);
   const [tap, setTap] = useState(null);
 
   const customerAddress = useSelector((state) => state.customerAPI.address);
+  const [isHovered, setIsHovered] = useState(false);
 
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [deliveryType, setDeliveryType] = useState("Delivery");
@@ -72,6 +74,7 @@ const CartPage = () => {
   const [coupon, setCoupon] = useState("");
   const [cart, setCart] = useState(null);
   const [user, setUser] = useState(null);
+  let branch_id = localStorage.getItem("selected_branch_id");
 
   useEffect(() => {
     setLoading(true);
@@ -79,6 +82,17 @@ const CartPage = () => {
     fetchCartData().then(() => null);
     fetchProfileData().then(() => null);
   }, []);
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      const elements = document.getElementsByClassName("p-radiobutton-box");
+      Array.from(elements).forEach((element) => {
+        element.style.cssText = `background-color: ${
+          price_background_color || "green"
+        } !important;`;
+      });
+    }
+  }, [price_background_color]);
 
   useEffect(() => {
     if (paymentMethod === "Loyalty points" && deliveryType != "PICKUP") {
@@ -93,7 +107,7 @@ const CartPage = () => {
     }
 
     try {
-      await AxiosInstance.post(`/validate/coupon`, {
+      await AxiosInstance.post(`/validate/${branch_id}/coupon`, {
         code: coupon,
       });
       await fetchCartData();
@@ -175,7 +189,6 @@ const CartPage = () => {
   };
 
   const handlePlaceOrder = async () => {
-    console.log("handlePlaceOrder func, paymentMethod: ", paymentMethod);
 
     let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
     if (paymentMethod === "Online") {
@@ -219,7 +232,6 @@ const CartPage = () => {
       });
 
       if (redirect.data) {
-        console.log("redirect ==>", redirect);
         window.location.href = redirect.data;
       }
     } catch (error) {
@@ -330,12 +342,12 @@ const CartPage = () => {
                       (obj) => obj.name === "Cash on Delivery"
                     ) && (
                       <CartDetailSection
-                        key={"Cash on Delivery"}
-                        name={"Cash on Delivery"}
+                        key={"Cash"}
+                        name={"Cash"}
                         onChange={(e) => setPaymentMethod("Cash on Delivery")}
                         isChecked={paymentMethod === "Cash on Delivery"}
                         img={pmcod}
-                        displayName="Cash on Delivery"
+                        displayName="Cash"
                         callBackfn={cardPaymentCallbackFunc}
                       />
                     )}
@@ -405,7 +417,7 @@ const CartPage = () => {
                           }}
                           // optional (A callback function that will be called when you cancel
                           // the payment process)
-                          onCancel={() => console.log("cancelled")}
+                          /* onCancel={() => console.log("cancelled")} */
                           // optional (A callback function that will be called when you have an error)
                           onError={(err) => console.error(err)}
                           // optional (A async function that will be called after creating the token
@@ -413,19 +425,13 @@ const CartPage = () => {
                           onSuccess={async (token) => {
                             // do your stuff here...
 
-                            console.log("here inline");
-
-                            console.log(token);
-
                             cardPaymentCallbackFunc(token);
                           }}
                           // optional (A callback function that will be called when you button is clickable)
                           onReady={() => {
-                            console.log("Ready");
                           }}
                           // optional (A callback function that will be called when the button clicked)
                           onClick={() => {
-                            console.log("Clicked");
                           }}
                         />
                       </div>
@@ -433,20 +439,19 @@ const CartPage = () => {
                   </div>
                   <div className="cartDetailSection h-36xw mt-8">
                     <h3>{t("Select Delivery Type")}</h3>
-                    {deliveryTypesData.some(
-                      (obj) => obj.name === "Delivery"
-                    ) && (
-                      <CartDetailSection
-                        name="Delivery"
-                        onChange={(e) => {
-                          fetchProfileData();
-                          setDeliveryType("Delivery");
-                        }}
-                        isChecked={deliveryType === "Delivery"}
-                        img={dtdelivery}
-                        displayName="delivery"
-                      />
-                    )}
+                    {deliveryTypesData.some((obj) => obj.name === "Delivery") &&
+                      paymentMethod !== "Loyalty points" && (
+                        <CartDetailSection
+                          name="Delivery"
+                          onChange={(e) => {
+                            fetchProfileData();
+                            setDeliveryType("Delivery");
+                          }}
+                          isChecked={deliveryType === "Delivery"}
+                          img={dtdelivery}
+                          displayName="delivery"
+                        />
+                      )}
 
                     {deliveryTypesData.some((obj) => obj.name === "PICKUP") && (
                       <CartDetailSection
@@ -461,7 +466,7 @@ const CartPage = () => {
                   <div className="mt-8">
                     {deliveryType === "Delivery" && (
                       <CartAddress
-                        user={user}
+                        addresses={cart?.address || []}
                         userAddress={userAddress}
                         selectedDeliveryAddress={deliveryAddress}
                         onChange={(type) => setDeliveryAddress(type)}
@@ -492,6 +497,7 @@ const CartPage = () => {
                         <div>{cart?.delivery_fee + ` ${t("SAR")}`}</div>
                       </div>
                     )}
+                    
                     <div className="flex justify-between mt-4">
                       <div className="flex flex-col">
                         <span>{t("Coupon Discount")}</span>
@@ -538,8 +544,19 @@ const CartPage = () => {
                       </div>
                     </div>
                   </div>
-
                   <Button
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    style={{
+                      backgroundColor: isHovered
+                        ? "white"
+                        : restaurantStyle?.price_background_color || "",
+                      color: isHovered
+                        ? restaurantStyle?.price_background_color || ""
+                        : "white",
+                      borderColor:
+                        restaurantStyle?.price_background_color || "",
+                    }}
                     label={t("Place Order")}
                     className="mt-[15px] w-full cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border  leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 transition-all shadow-md"
                     onClick={handlePlaceOrder}
@@ -560,8 +577,19 @@ const CartPage = () => {
               </p>
 
               <Button
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
                 label={t("Continue Shopping")}
-                className="w-64 h-10 bg-[#7D0A0A] text-white text-sm mt-4"
+                className="w-64 h-10 bg-red-900 hover:bg-white hover:text-red-900 hover:border-red-900 text-white text-sm mt-4 border transition-all shadow-md  leading-[18px]"
+                style={{
+                  backgroundColor: isHovered
+                    ? "white"
+                    : restaurantStyle?.price_background_color || "",
+                  color: isHovered
+                    ? restaurantStyle?.price_background_color || ""
+                    : "white",
+                  borderColor: restaurantStyle?.price_background_color || "",
+                }}
                 onClick={() => navigate("/")}
               />
             </div>

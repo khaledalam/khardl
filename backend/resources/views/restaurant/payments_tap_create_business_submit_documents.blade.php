@@ -387,8 +387,6 @@
 
                 //
                 var selectedCountry = this.value;
-                console.log('Selected Country ISO2:', selectedCountry);
-                console.log('Selected Country phone:',  selectedOption.getAttribute('data-phone-code'));
             });
             document.getElementById('kt_modal_new_target_form').addEventListener('submit', function (e) {
                 e.preventDefault();

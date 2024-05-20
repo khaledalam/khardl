@@ -14,6 +14,11 @@ class SummaryController extends BaseController
     }
     public function index(Request $request)
     {
+        if ($request->input('session') == 'success') {
+            session()->flash('success', 'The summary has been refreshed successfully!');
+        }
+
         return $this->summaryService->index($request);
     }
+
 }

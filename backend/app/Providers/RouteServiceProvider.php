@@ -24,18 +24,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-        });
-        RateLimiter::for('passwordReset', function (Request $request) {
-            return Limit::perMinute(5);  // Allow 5 attempts per minute
-        });
+
+        $this->configureRateLimiting();
 
         $this->routes(function () {
             $this->mapApiRoutes();
             $this->mapWebRoutes();
         });
-      
+
     }
     protected function mapWebRoutes()
     {
@@ -62,5 +58,17 @@ class RouteServiceProvider extends ServiceProvider
     protected function centralDomains(): array
     {
         return config('tenancy.central_domains');
+    }
+    protected function configureRateLimiting()
+    {
+        RateLimiter::for('login-customer', function (Request $request) {
+            return Limit::perMinutes(5,3)->by($request->ip());
+        });
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+        RateLimiter::for('passwordReset', function (Request $request) {
+            return Limit::perMinute(5);  // Allow 5 attempts per minute
+        });
     }
 }

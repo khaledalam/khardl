@@ -27,13 +27,13 @@ const VerificationEmail = () => {
   let user_email = sessionStorage.getItem("email") || "";
 
   const [showForm, setShowForm] = useState(false);
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const [showCountdownText, setShowCountdownText] = useState(true);
   const [spinner, setSpinner] = useState(false);
 
   const resetTimer = () => {
-    setCountdown(30);
+    setCountdown(60);
     setCanResend(false);
     startTimer();
   };
@@ -68,9 +68,6 @@ const VerificationEmail = () => {
         code: data.verificationcode,
         email: data.email,
       });
-
-      console.log(response.data);
-
       if (response.data) {
         setStatusCode(HTTP_NOT_ACCEPTED);
         navigate("/complete-register");
@@ -85,7 +82,6 @@ const VerificationEmail = () => {
 
   const startTimer = () => {
     const timer = setInterval(() => {
-      console.log(3);
       setCountdown((prevCountdown) => {
         if (prevCountdown === 1) {
           clearInterval(timer);

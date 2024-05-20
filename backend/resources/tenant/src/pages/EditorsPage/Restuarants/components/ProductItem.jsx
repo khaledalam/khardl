@@ -209,7 +209,6 @@ const ProductItem = ({
     });
 
     const total_new = newTotal;
-    console.log(newTotal, totalPrice);
 
     setTotalPrice(newTotal - checkboxTotalPrice);
     setCheckboxTotalPrice(total_new - totalPrice);
@@ -243,7 +242,6 @@ const ProductItem = ({
     let delIndexdp = null;
     selectedDropdown.map((mainItem, mainIndex) => {
       if (mainItem !== "") {
-        console.log(dropdown_input_prices[mainIndex][mainItem]);
         const price = dropdown_input_prices[mainIndex][mainItem];
         newTotal += parseFloat(price);
       } else {
@@ -358,7 +356,6 @@ const ProductItem = ({
 
   function closeModal() {
     handleReset();
-    setSelectedDropdown([]);
     dropdDownRef.current.forEach((value, index) => {
       if (dropdDownRef.current[index] != null) {
         dropdDownRef.current[index].resetDropdown();
@@ -379,9 +376,7 @@ const ProductItem = ({
       dropdown_input_titles.length > 0 &&
       dropdownItems[0]?.length > 0
     ) {
-      console.log("MANDATORY", selectedDropdown);
       dropdown_input_titles.map((_, index) => {
-        console.log(isNaN(selectedDropdown[index]));
         if (isNaN(selectedDropdown[index])) {
           passMandatoryDrodowns = false;
         }
@@ -394,9 +389,7 @@ const ProductItem = ({
       selection_input_titles.length > 0 &&
       radioItems[0]?.length > 0
     ) {
-      console.log("MANDATORY", selectedRadio);
       selection_input_titles.map((_, index) => {
-        console.log(isNaN(selectedRadio[index]));
         if (isNaN(selectedRadio[index])) {
           passMandatoryDrodowns = false;
         }
@@ -418,7 +411,6 @@ const ProductItem = ({
 
         const response = await AxiosInstance.post(`/carts`, payload);
         closeModal();
-        handleReset();
         if (response?.data) {
           toast.success(`${t("Item added to cart")}`);
           dispatch(getCartItemsCount(response?.data.data.count));
@@ -459,13 +451,11 @@ const ProductItem = ({
       .then((response) => {
         if (response?.data?.success) {
           const responseData = response?.data;
-          console.log(responseData);
           localStorage.setItem(
             "user-info",
             JSON.stringify(responseData?.data?.user)
           );
 
-          console.log(">>> herer ", responseData?.data?.user?.status);
 
           if (responseData.data.user.status === "inactive") {
             sessionStorage.setItem(
@@ -488,7 +478,6 @@ const ProductItem = ({
           dispatch(changeUserState(responseData?.data?.user || null));
           toast.success(`${t("You have been logged in successfully")}`);
         } else {
-          console.log("response?.data?.success false");
           throw new Error(`${t("Login failed")}`);
         }
       })
@@ -518,6 +507,10 @@ const ProductItem = ({
 
     const selects = modalRef.current.querySelectorAll("select");
     selects.forEach((select) => (select.selectedIndex = 0));
+
+    setSelectedCheckbox([]);
+    setSelectedDropdown([]);
+    setSelectedRadio([]);
   };
 
   return (
@@ -548,10 +541,9 @@ const ProductItem = ({
             style={{
               color: menu_name_text_color,
               fontFamily: menu_name_text_font,
-              fontWeight: menu_name_text_weight,
               fontSize: menu_name_text_size,
             }}
-            className="relative"
+            className={`relative font-${menu_name_text_weight}`}
           >
             <span>{name}</span>
             <img
@@ -571,10 +563,9 @@ const ProductItem = ({
                 style={{
                   color: total_calories_text_color,
                   fontFamily: total_calories_text_font,
-                  fontWeight: total_calories_text_weight,
                   fontSize: total_calories_text_size,
                 }}
-                className="relative"
+                className={`relative font-${total_calories_text_weight}`}
               >
                 <span>
                   {caloryInfo} {t("Kcal")}
@@ -603,10 +594,9 @@ const ProductItem = ({
                 style={{
                   color: price_text_color,
                   fontFamily: price_text_font,
-                  fontWeight: price_text_weight,
                   fontSize: price_text_size,
                 }}
-                className=""
+                className={`font-${price_text_weight}`}
               >
                 {t("SAR")} {amount}
               </div>
@@ -746,7 +736,10 @@ const ProductItem = ({
                           />
                         </div>
                         <div className="w-[89px] h-6 left-[92px] top-0 absolute">
-                          <div className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px] text-white text-[8px] font-normal flex justify-center items-center">
+                          <div
+                            className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px] text-white text-[8px] font-normal flex justify-center items-center"
+                            style={{ backgroundColor: price_background_color }}
+                          >
                             {t("Order Notes")}
                           </div>
                         </div>
@@ -788,6 +781,9 @@ const ProductItem = ({
                         <div
                           onClick={decrementQty}
                           className="w-[22.11px] h-[22.40px] bg-orange-100 bg-opacity-30 rounded-md flex justify-center items-center"
+                          style={{
+                            backgroundColor: price_background_color + "50",
+                          }}
                         >
                           <img
                             src={MinusIcon}
@@ -801,6 +797,9 @@ const ProductItem = ({
                         <div
                           onClick={incrementQty}
                           className="w-[22.11px] h-[22.40px] bg-orange-100 rounded-md flex justify-center items-center"
+                          style={{
+                            backgroundColor: price_background_color + "50",
+                          }}
                         >
                           <img
                             src={PlusIcon}
@@ -817,7 +816,7 @@ const ProductItem = ({
                           radioItems[0]?.length > 0 ||
                           dropdownItems[0]?.length > 0) && (
                           <div className="px-6 my-4 md:h-[550px]">
-                            <div className="flex flex-col gap-5 py-4 divide-y">
+                            <div className="product-items flex flex-col gap-5 py-4 divide-y">
                               {/* checkbox */}
                               {Array.isArray(checkbox_input_titles) &&
                                 checkbox_input_titles.length > 0 &&
@@ -876,7 +875,7 @@ const ProductItem = ({
                                                     : item?.value[1]
                                                 }
                                                 price={
-                                                  item?.price === 0
+                                                  item?.price == 0
                                                     ? t("Free")
                                                     : `${Number(
                                                         item?.price
@@ -933,7 +932,7 @@ const ProductItem = ({
                                                 }
                                                 name={`radio_item_${selection_idx}`}
                                                 price={
-                                                  item.price === 0
+                                                  item.price == 0
                                                     ? t("Free")
                                                     : `${Number(
                                                         item?.price
@@ -1041,7 +1040,10 @@ const ProductItem = ({
                         }
                       }}
                     >
-                      <div className="w-[308px] h-10 bg-[#7d0a0a] rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center hover:cursor-pointer">
+                      <div
+                        className="w-[308px] h-10 bg-[#7d0a0a] rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center hover:cursor-pointer"
+                        style={{ backgroundColor: price_background_color }}
+                      >
                         <div className="text-center text-white text-[14px] font-medium">
                           {t("Add to cart")}
                         </div>
@@ -1065,7 +1067,7 @@ const ProductItem = ({
                   radioItems[0]?.length > 0 ||
                   dropdownItems[0]?.length > 0) && (
                   <div className="px-6 sm:pl-[30px] sm:pr-10 my-4 sm:h-[550px] w-full overflow-auto">
-                    <div className="flex flex-col gap-5 py-4 divide-y">
+                    <div className="product-items flex flex-col gap-5 py-4 divide-y">
                       {/* checkbox */}
                       {Array.isArray(checkbox_input_titles) &&
                         checkbox_input_titles.length > 0 &&
@@ -1112,7 +1114,7 @@ const ProductItem = ({
                                           : item?.value[1]
                                       }
                                       price={
-                                        item.price === 0
+                                        item.price == 0
                                           ? t("Free")
                                           : `${Number(item?.price)} ${t("SAR")}`
                                       }
@@ -1156,7 +1158,7 @@ const ProductItem = ({
                                     }
                                     name={`radio_item_${selection_idx}`}
                                     price={
-                                      item.price === 0
+                                      item.price == 0
                                         ? t("Free")
                                         : `${Number(item?.price)} ${t("SAR")}`
                                     }

@@ -50,7 +50,8 @@ class Order extends Model
         'manual_order_last_name',
         'tap_payment_method',
         'refund_id',
-        'accepted_at'
+        'accepted_at',
+        'total_loyalty_points'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $casts = [
@@ -193,6 +194,9 @@ class Order extends Model
     {
         return $query->when($search != null, function ($q) use ($search) {
             return $q->where('shipping_address', 'LIKE', '%' . $search . '%')
+                ->orWhere('city', 'LIKE', '%' . $search . '%')
+                ->orWhere('region', 'LIKE', '%' . $search . '%')
+                ->orWhere('country', 'LIKE', '%' . $search . '%')
                 ->orWhere('id', 'LIKE', '%' . $search . '%');
         });
     }
@@ -339,7 +343,7 @@ class Order extends Model
      */
     public function isLoyaltyPointPayment()
     {
-        return $this->items()->first()?->item()->first()?->allow_buy_with_loyalty_points;
+        return $this->payment_method?->name == PaymentMethod::LOYALTY_POINTS;
     }
 
     public function user()

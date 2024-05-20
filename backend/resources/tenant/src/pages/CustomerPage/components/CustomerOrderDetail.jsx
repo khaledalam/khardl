@@ -17,8 +17,7 @@ const CustomerOrderDetail = ({ orderId }) => {
       ? ordersList.find((order) => order.id == orderId)
       : null;
 
-  console.log("singleOrder", singleOrder);
-  console.log("orderlist", ordersList);
+  
 
   return (
     <div className="p-5">

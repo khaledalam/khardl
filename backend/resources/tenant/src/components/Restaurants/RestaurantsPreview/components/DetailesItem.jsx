@@ -73,17 +73,14 @@ const DetailesItem = ({
         // remember_me: data.remember_me, // used only in API token-based
       });
 
-      console.log("response: ", response);
 
       if (response?.data?.success) {
         const responseData = response?.data;
-        console.log(responseData);
         localStorage.setItem(
           "user-info",
           JSON.stringify(responseData?.data?.user),
         );
 
-        console.log(">>> herer ", responseData?.data?.user?.status);
 
         if (responseData?.data?.user?.status === "inactive") {
           sessionStorage.setItem(
@@ -108,7 +105,6 @@ const DetailesItem = ({
         dispatch(setIsOpen(false));
         toast.success(`${t("You have been logged in successfully")}`);
       } else {
-        console.log("response?.data?.success false");
         setSpinner(false);
         throw new Error(`${t("Login failed")}`);
       }
@@ -286,10 +282,6 @@ const DetailesItem = ({
   const handleAddToCart = async () => {
     try {
       // check required options
-      console.log("results");
-      console.log(selectedCheckbox);
-      console.log(selectedRadio);
-      console.log(selectedDropdown);
 
       const response = await AxiosInstance.post(`/carts`, {
         item_id: itemId,
@@ -301,7 +293,6 @@ const DetailesItem = ({
         selectedDropdown: selectedDropdown,
       });
 
-      console.log("response ", response);
 
       if (response?.data) {
         toast.success(`${t("Item added to cart")}`);

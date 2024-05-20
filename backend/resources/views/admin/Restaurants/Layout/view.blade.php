@@ -252,7 +252,7 @@
                                 <a class="nav-link text-active-khardl ms-0 me-10 py-5" data-bs-toggle="tab" href="#delivery_companies">{{ __('Delivery companies')}}</a>
                             </li>
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-khardl ms-0 me-10 py-5 {{request()->has('config')?'active':""}}" data-bs-toggle="tab" href="#config">{{ __('configurations')}}</a>
+                                <a class="nav-link text-active-khardl ms-0 me-10 py-5 {{request()->has('config')?'active':""}}" data-bs-toggle="tab" href="#config">{{ __('App')}}</a>
                             </li>
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-khardl ms-0 me-10 py-5" data-bs-toggle="tab" href="#tap">{{ __('Payment gateway')}}</a>

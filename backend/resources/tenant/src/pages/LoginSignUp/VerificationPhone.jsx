@@ -63,13 +63,11 @@ const VerificationPhone = () => {
 
   // API POST REQUEST
   const onSubmit = async (data) => {
-    console.log("data otp2: ", data);
     try {
       const response = await AxiosInstance.post(`/phone/verify`, {
         otp: data.otp,
       });
 
-      console.log(response.data);
 
       if (response.data) {
         setStatusCode(HTTP_OK);
@@ -86,7 +84,6 @@ const VerificationPhone = () => {
   // TODO @todo startTimer is still working after verification , look at console after verification
   const startTimer = () => {
     const timer = setInterval(() => {
-      console.log(3);
       setCountdown((prevCountdown) => {
         if (prevCountdown === 1) {
           clearInterval(timer);

@@ -13,7 +13,7 @@ import AxiosInstance from "../../../../axios/axios";
 import { toast } from "react-toastify";
 
 const ProductItem = ({
-                       product,
+  product,
   id,
   imgSrc,
   name,
@@ -448,7 +448,10 @@ const ProductItem = ({
                     />
                   </div>
                   <div className="w-[89px] h-6 left-[130px] top-0 absolute">
-                    <div className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px] text-white text-[8px] font-normal flex justify-center items-center">
+                    <div
+                      className="w-[89px] h-6 left-0 top-0 absolute bg-red-900 rounded-[14px] text-white text-[8px] font-normal flex justify-center items-center"
+                      style={{ backgroundColor: price_background_color }}
+                    >
                       {t("Order Notes")}
                     </div>
                   </div>
@@ -458,12 +461,14 @@ const ProductItem = ({
             <div className="flex flex-col px-2 gap-2">
               <div className="flex flex-row justify-between items-center">
                 <div className="text-red-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight">
-                  {t("SAR")}&nbsp;{totalPrice.toFixed(2)}<br />
-
-                  {product?.allow_buy_with_loyalty_points  && <div className="text-green-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight p-1">
-                    {t("points-price")} {product?.price_using_loyalty_points * qtyCount}
-                  </div>}
-
+                  {t("SAR")}&nbsp;{totalPrice.toFixed(2)}
+                  <br />
+                  {product?.allow_buy_with_loyalty_points && (
+                    <div className="text-green-900 text-sm font-bold font-['Plus Jakarta Sans'] leading-tight p-1">
+                      {t("points-price")}{" "}
+                      {product?.price_using_loyalty_points * qtyCount}
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex gap-2 rounded-[30px] border border-orange-100 justify-between items-center min-w-32 select-none">

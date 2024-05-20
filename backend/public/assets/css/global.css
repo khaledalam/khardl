@@ -18,7 +18,8 @@ a {
 .aside-dark .menu .menu-item .menu-link.active .menu-icon .svg-icon,
 .aside-dark .menu .menu-item .menu-link.active .menu-icon i,
 .menu-state-primary .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-title,
-.menu-state-primary .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-title {
+.menu-state-primary .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-title,
+.accordion-button:not(.collapsed) {
   color: #c3da0b !important;
 }
 
@@ -324,4 +325,9 @@ a {
 
 .switch-opposite input:checked+.slider {
   box-shadow: 0 0 0 2px #777, 0 0 2px #777;
+}
+/* BUTTONS */
+.btn-darken{
+  border: 1px solid #000 !important;
+  color: #000 !important;
 }

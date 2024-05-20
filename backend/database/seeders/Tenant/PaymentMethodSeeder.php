@@ -17,6 +17,7 @@ class PaymentMethodSeeder extends Seeder
      */
     public const PAYMENT_METHOD_COD = 1;
     public const PAYMENT_METHOD_CC = 2;
+    public const PAYMENT_METHOD_LP = 3;
 
     public function run(): void
     {
@@ -27,6 +28,10 @@ class PaymentMethodSeeder extends Seeder
         PaymentMethod::create([
             'id'=> self::PAYMENT_METHOD_CC,
             'name'=>PaymentMethod::ONLINE,
+        ]);
+        PaymentMethod::create([
+            'id'=> self::PAYMENT_METHOD_LP,
+            'name'=>PaymentMethod::LOYALTY_POINTS,
         ]);
 
     }

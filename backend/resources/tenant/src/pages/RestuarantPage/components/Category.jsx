@@ -1,3 +1,4 @@
+import FadeButton from "../../../components/Restaurants/RestaurantsPreview/components/FadeButton";
 import EditorSlider from "../../../pages/EditorsPage/Restuarants/components/EditorSlider";
 import ProductItem from "../../../pages/EditorsPage/Restuarants/components/ProductItem";
 
@@ -16,6 +17,7 @@ const Category = ({ restaurantStyle, categories = [] }) => {
     menu_category_color,
     menu_category_font,
     menu_category_weight,
+    price_background_color,
   } = restaurantStyle;
 
   const visibleCategories = categories.filter((c) => c.items.length > 0);
@@ -34,6 +36,18 @@ const Category = ({ restaurantStyle, categories = [] }) => {
           : "flex-row items-start "
       }  gap-[16px]`}
     >
+      <style jsx>{`
+        .custom-checkbox:checked {
+          border-color: ${price_background_color || "#7D0A0A"} !important;
+          --tw-ring-color: ${price_background_color || "#7D0A0A"} !important;
+        }
+        .custom-radio:checked {
+          background-color: ${price_background_color || "#7D0A0A"};
+        }
+        .dropdown-option:hover {
+          background-color: ${price_background_color || "#7D0A0A"};
+        }
+      `}</style>
       <div
         className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
           menu_category_position === "left"
@@ -72,7 +86,8 @@ const Category = ({ restaurantStyle, categories = [] }) => {
           className={`w-full h-full flex flex-col max-h-[610px] items-start justify-center `}
         >
           <div
-            className={`flex flex-col gap-[30px] h-fit p-3 md:p-4 overflow-y-scroll scrollbar-custom w-full`}
+            className={`flex flex-col gap-[30px] h-fit p-3 md:p-4 overflow-y-scroll hide-scroll w-full relative`}
+            id="scrollableDiv"
           >
             {categories &&
               visibleCategories.map((category, i) => (
@@ -154,6 +169,7 @@ const Category = ({ restaurantStyle, categories = [] }) => {
                   </div>
                 </div>
               ))}
+            <FadeButton />
           </div>
         </div>
       </div>

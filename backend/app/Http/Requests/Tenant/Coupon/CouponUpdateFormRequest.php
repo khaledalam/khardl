@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Tenant\Coupon;
 
+use App\Models\Tenant\Coupon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -26,18 +27,33 @@ class CouponUpdateFormRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'code' => ['required', 'string', 'max:100',
-            Rule::unique('coupons')->ignore($this->coupon)->whereNull('deleted_at'),],
+            'code' => ['required', 'string', 'max:100', Rule::unique('coupons')->where(function ($query) {
+                return $query->where('branch_id', $this->branch_id);
+            })->ignore($this->coupon)->whereNull('deleted_at')],
             'type' => ['required', 'in:fixed,percentage'],
             'fixed' => [new RequiredIf($this->type == 'fixed'), 'min:1', 'nullable', 'numeric'],
             'percentage' => [new RequiredIf($this->type == 'percentage'), 'nullable', 'min:1', 'numeric', 'max:100'],
-            'max_use' => ['nullable', 'min:0', 'integer'],
+            'max_use' => ['nullable', 'min:0', 'integer', function ($attribute, $value, $fail) {
+                $users_count = $this->coupon->users()->count();
+                if (!is_null($value) && $this->input('max_use') <= $users_count) {
+                    $fail(__("The discount coupon has been used :count times, please select a number more than :count as the maximum user usage",[
+                        'count'=>$users_count
+                    ]));
+                }
+            }],
             'max_use_per_user' => ['nullable', 'min:0', 'integer'],
             'max_discount_amount' => ['nullable', 'integer'],
             'minimum_cart_amount' => ['nullable', 'numeric'],
-            'active_from' => ['required', 'date', 'date_format:Y-m-d'],
-            'expire_at' => ['nullable', 'date', 'after_or_equal:active_from', 'date_format:Y-m-d'],
+            'active_from' => ['required', 'date', 'date_format:Y-m-d','after:yesterday'],
+            'expire_at' => ['required', 'date', 'after_or_equal:active_from', 'date_format:Y-m-d'],
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'active_from.after'=>__("Cannot select date in the past")
         ];
     }
 }

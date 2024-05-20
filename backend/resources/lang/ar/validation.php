@@ -245,6 +245,8 @@ return [
         'privacy_and_policy.en' => "الخصوصية والسياسة بالانجليزية",
         'terms_and_conditions.ar' => "الأحكام والشروط بالعربية",
         'terms_and_conditions.en' => "الأحكام والشروط بالانجليزية",
+        "yesterday"=>"الامس",
+        'products' => "المنتجات"
 
     ],
     'values' => [

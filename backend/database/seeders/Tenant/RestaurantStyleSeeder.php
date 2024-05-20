@@ -36,8 +36,8 @@ class RestaurantStyleSeeder extends Seeder
             'banner_image' => $banner1,
             'banner_images' => [
                 // @TODO: handle banner_images tenant_asset() in seeder
-                $banner1,
-                $banner2
+                // $banner1,
+                // $banner2
             ],
             'logo_shape' => 'rounded',
             'banner_type' => 'slider',

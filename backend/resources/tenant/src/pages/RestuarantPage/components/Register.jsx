@@ -57,8 +57,6 @@ const Register = ({ closingFunc }) => {
   const onRegisterSendOTP = async (data) => {
     setSpinner(true);
 
-    console.log("herererere 1");
-
     try {
       const res = await AxiosInstance.post(`/register-tenant`, {
         first_name: data.first_name,
@@ -92,8 +90,6 @@ const Register = ({ closingFunc }) => {
   /////////////////////////////////////////////////////////////////////////////////////
   // API POST REQUEST
   const onSubmit = async (data) => {
-    console.log("data:", data);
-
     if (otp && localStorage.getItem("phone_sms_otp_id")) {
       await onRegisterSendOTP(data);
       return;
@@ -104,8 +100,6 @@ const Register = ({ closingFunc }) => {
       const response = await AxiosInstance.post(`/phone/send-verify`, {
         phone: data.phone,
       });
-
-      console.log("res", response.data);
 
       if (response.data?.data?.id) {
         toast.success(
@@ -181,7 +175,6 @@ const Register = ({ closingFunc }) => {
         phone: registerFormRef.current.phone.value,
       });
       if (response.data) {
-        console.log("ResendCode", response?.data);
 
         toast.success(`${t("The code has been re-sent successfully")}`);
       } else {

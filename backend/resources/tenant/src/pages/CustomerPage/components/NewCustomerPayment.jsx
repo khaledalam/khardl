@@ -15,6 +15,12 @@ const CustomerPayment = () => {
 
   const [addMode, setAddMode] = useState(false);
 
+  const restuarantEditorStyle = useSelector(
+    (state) => state.restuarantEditorStyle
+  );
+
+  const { price_background_color } = restuarantEditorStyle;
+
   const setCards = (cards) => {
     dispatch(updateCardsList(cards));
   };
@@ -87,7 +93,7 @@ const CustomerPayment = () => {
                 <div className="text-2xl">{t("You don't have any cards")}</div>
                 <div>{t("Please add one or more cards.")}</div>
                 <div
-                  className="cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border font-['Plus Jakarta Sans'] leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 w-32 transition-all shadow-md"
+                  className={`cursor-pointer text-white rounded-lg px-4 py-2.5 border hover:bg-white bg-[${price_background_color}] hover:border-[${price_background_color}] hover:text-[${price_background_color}] w-32 transition-all shadow-md`}
                   onClick={() => setAddMode(true)}
                 >
                   {t("Add card")}

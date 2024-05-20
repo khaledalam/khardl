@@ -26,13 +26,13 @@ const CategoryItem = ({
   const { t } = useTranslation();
 
   const { branches, menu_category_position } = useSelector(
-    (state) => state.restuarantEditorStyle,
+    (state) => state.restuarantEditorStyle
   );
 
   if (!branches) return;
 
   let selectedBranch = branches?.filter(
-    (b) => b?.id == localStorage.getItem("selected_branch_id"),
+    (b) => b?.id == localStorage.getItem("selected_branch_id")
   )[0];
 
   const handleMouseEnter = () => {
@@ -59,8 +59,8 @@ const CategoryItem = ({
             backgroundColor: isHover
               ? hoverColor
               : active
-                ? hoverColor
-                : "#F5F5F5",
+              ? hoverColor
+              : "#F5F5F5",
           }}
           className={` ${
             menu_category_position == "center"
@@ -98,23 +98,22 @@ const CategoryItem = ({
         style={{
           color: textColor,
           fontFamily: textFontFamily,
-          fontWeight,
           fontSize:
             fontSize && typeof fontSize == "string" && fontSize.includes("px")
               ? Number(fontSize.slice(0, 2)) - 2
               : typeof fontSize == "number"
-                ? fontSize - 2
-                : 14,
+              ? fontSize - 2
+              : 14,
         }}
-        className={`font-normal w-max ${
+        className={`w-max ${
           textAlign === t("Center")
             ? "text-center"
             : textAlign === t("Left")
-              ? "text-left"
-              : textAlign === t("Right")
-                ? "text-right"
-                : ""
-        }`}
+            ? "text-left"
+            : textAlign === t("Right")
+            ? "text-right"
+            : ""
+        } font-${fontWeight}`}
       >
         {name}
       </h3>

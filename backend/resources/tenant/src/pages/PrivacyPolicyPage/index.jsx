@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { MdOutlineArrowBack } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
+import AxiosInstance from "../../axios/axios";
 
 const PrivacyPolicyPage = () => {
   const { t } = useTranslation();
@@ -9,9 +12,59 @@ const PrivacyPolicyPage = () => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   );
-  const { privacy_policy_enText, privacy_policy_arText, page_color } =
-    restuarantEditorStyle;
+  const {
+    privacy_policy_enText,
+    privacy_policy_arText,
+    page_color,
+    price_background_color,
+  } = restuarantEditorStyle;
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isMouseHover, setIsMouseHover] = useState(false);
+  const dispatch = useDispatch();
+  const restaurantStyleVersion = useSelector(
+    (state) => state.styleDataRestaurant.restaurantStyleVersion
+  );
+  const fetchResStyleData = async () => {
+    try {
+      if (
+        localStorage.getItem("restaurantStyleVersion") == restaurantStyleVersion
+      ) {
+        dispatch(
+          changeRestuarantEditorStyle(
+            JSON.parse(localStorage.getItem("restaurantStyle"))
+          )
+        );
+      } else {
+        localStorage.setItem("restaurantStyleVersion", restaurantStyleVersion);
+        AxiosInstance.get(`restaurant-style`).then((response) => {
+          localStorage.setItem(
+            "restaurantStyle",
+            JSON.stringify(response.data?.data)
+          );
+          dispatch(changeRestuarantEditorStyle(response.data?.data));
+        });
+      }
+      setIsLoading(false);
+    } catch (error) {
+      // toast.error(`${t('Failed to send verification code')}`)
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchResStyleData();
+  }, []);
+
+  if (isLoading || !restuarantEditorStyle) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <span className="loading loading-spinner text-primary"></span>
+      </div>
+    );
+  }
+
   return (
     <div
       style={{
@@ -27,13 +80,29 @@ const PrivacyPolicyPage = () => {
           <div className="flex justify-between flex-row items-center mb-3">
             <div className="text-3xl">{t("Privacy Policy")}</div>
             <button
-              className="border border-red-900 bg-red-900 text-white hover:bg-white hover:text-red-900 transition-all px-2 rounded-md py-1 h-fit"
+              onMouseEnter={() => setIsMouseHover(true)}
+              onMouseLeave={() => setIsMouseHover(false)}
+              className="border border-red-900 bg-red-900 text-white hover:bg-white hover:text-red-900 transition-all px-4 rounded-md py-1 h-fit justify-center flex items-center gap-3"
               onClick={() => navigate("/")}
+              style={{
+                borderColor: price_background_color,
+                backgroundColor: isMouseHover
+                  ? "white"
+                  : price_background_color,
+                color: isMouseHover ? price_background_color : "white",
+              }}
             >
-              {t("Go to Home")}
+              <MdOutlineArrowBack
+                className="w-3 h-3"
+                style={{
+                  transform:
+                    language == "en" ? "rotate(0deg)" : "rotate(180deg)",
+                }}
+              />
+              {t("Back")}
             </button>
           </div>
-          <div
+          <div className="ql-content"
             dangerouslySetInnerHTML={{
               __html:
                 language == "en"

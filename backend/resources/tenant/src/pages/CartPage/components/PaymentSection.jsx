@@ -82,7 +82,6 @@ const PaymentSection = ({
       });
 
       if (redirect.data) {
-        console.log("redirect ==>", redirect.data);
         window.location.href = redirect.data;
       }
     } catch (error) {
@@ -224,7 +223,6 @@ const PaymentSection = ({
       setCouponDiscountValue(response.data.data);
       toast.success(`${t("Coupon Applied successfully")}`);
       setSpinner(false);
-      console.log(response);
     } catch (error) {
       setCouponDiscountValue(null);
       setCouponCode(null);
@@ -240,7 +238,6 @@ const PaymentSection = ({
         const response = await AxiosInstance.post(`/remove/coupon`);
         toast.success(`${t("Coupon Removed successfully")}`);
         setSpinner(false);
-        console.log(response);
         window.location.reload(false);
       } catch (error) {
         setSpinner(false);
@@ -434,23 +431,20 @@ const PaymentSection = ({
               }}
               // optional (A callback function that will be called when you cancel
               // the payment process)
-              onCancel={() => console.log("cancelled")}
+              /* onCancel={() => console.log("cancelled")} */
               // optional (A callback function that will be called when you have an error)
               onError={(err) => console.error(err)}
               // optional (A async function that will be called after creating the token
               // successfully)
               onSuccess={async (token) => {
                 // do your stuff here...
-                console.log(token);
                 callbackFunc(token);
               }}
               // optional (A callback function that will be called when you button is clickable)
               onReady={() => {
-                console.log("Ready");
               }}
               // optional (A callback function that will be called when the button clicked)
               onClick={() => {
-                console.log("Clicked");
               }}
             />
             <form method="dialog" className="flex gap-2">

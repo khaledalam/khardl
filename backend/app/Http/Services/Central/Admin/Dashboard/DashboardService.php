@@ -38,6 +38,7 @@ class DashboardService
             $monthVisitors,
             $dailyVisitors
         ] = $this->cacheItems();
+        $refresh = 1;
         return view(
             'admin.dashboard',
             compact(
@@ -54,7 +55,8 @@ class DashboardService
                 'receivedByResOrders',
                 'rejectedOrders',
                 'monthVisitors',
-                'dailyVisitors'
+                'dailyVisitors',
+                'refresh'
             )
         );
     }
@@ -149,8 +151,8 @@ class DashboardService
                 });
             }
             $restaurantsAll = count($restaurantsAll);
-    
-    
+
+
             $dailyVisitors = $this->dailyVisitors();
             $monthVisitors = $this->monthlyVisitors();
             return [

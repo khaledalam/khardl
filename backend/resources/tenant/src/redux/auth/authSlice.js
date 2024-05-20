@@ -10,10 +10,6 @@ export const logout = createAsyncThunk("auth/logout", async ({ method }) => {
 });
 
 export const getIsLoggedIn = () => {
-  console.log(
-    "getIsLoggedIn",
-    JSON.parse(localStorage.getItem("user-info"))?.phone,
-  );
   return (
     JSON.parse(localStorage.getItem("user-info"))?.phone?.length > 0 || false
   );

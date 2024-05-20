@@ -148,7 +148,7 @@
                         <!--begin::Menu-->
                         <div class="menu menu-column menu-title-gray-800 menu-state-title-khardl menu-state-icon-khardl menu-state-bullet-khardl menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
                             <!-- Summary -->
-                            @if(Auth::user()?->hasPermissionWorker('can_access_summary'))
+                            @if($user?->hasPermissionWorker('can_access_summary'))
                             <div class="menu-item menu-accordion">
                                 <a href="{{ route('restaurant.summary') }}">
                                     <span class="{{ ($link == 'summary' ) ? 'menu-link active' : 'menu-link ' }}">
@@ -164,7 +164,7 @@
                                 </a>
                             </div>
                             @endif
-                            @if(Auth::user()?->hasPermissionWorker('can_access_site_editor'))
+                            @if($user?->hasPermissionWorker('can_access_site_editor'))
                              <!-- Site Editor -->
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('restaurants.site_editor')}}" target="_blank">
@@ -198,7 +198,7 @@
                                 </span>
                             </div>
                             <!-- menu -->
-                            @if(Auth::user()?->hasPermissionWorker('can_edit_menu'))
+                            @if($user?->hasPermissionWorker('can_edit_menu'))
                             <div class="menu-item menu-accordion">
                                 <span class="{{ ($link == 'menu') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -208,16 +208,16 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="{{route('restaurant.get-category',['id' => \App\Models\Tenant\Category::where('branch_id', Auth::user()->branch?->id)?->first()?->id ?? -1, 'branchId' => Auth::user()->branch->id])}}">
+                                    <a href="{{route('restaurant.get-category',['id' => \App\Models\Tenant\Category::where('branch_id', $user->branch?->id)?->first()?->id ?? -1, 'branchId' => $user->branch->id])}}">
                                         <span class="menu-title">{{__('menu')}}</span>
                                     </a>
                                 </span>
                             </div>
                             @endif
-                            @if(Auth::user()?->hasPermissionWorker('can_modify_and_see_other_workers'))
+                            @if($user?->hasPermissionWorker('can_modify_and_see_other_workers'))
                             <!-- Staff -->
                             <div class="menu-item menu-accordion {{ ($link == 'workers') ? 'show' : '' }}">
-                                <a href="{{route('restaurant.workers', ['branchId' => Auth::user()->branch->id]) }}">
+                                <a href="{{route('restaurant.workers', ['branchId' => $user->branch->id]) }}">
                                     <span class="{{ ($link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -232,7 +232,7 @@
                             </div>
                             @endif
                             {{-- Orders --}}
-                            @if(Auth::user()?->hasPermissionWorker('can_mange_orders') && \App\Models\Tenant\Branch::first())
+                            @if($user?->hasPermissionWorker('can_mange_orders') && \App\Models\Tenant\Branch::first())
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('restaurant.orders_all')}}">
                                     <span class="{{ ($link == 'orders-all' || $link == 'orders-add') ? 'menu-link active' : 'menu-link ' }}">
@@ -249,26 +249,55 @@
                             </div>
                             @endif
                             <!-- Coupons -->
-                            @if(Auth::user()?->hasPermissionWorker('can_access_coupons'))
-                            <div class="menu-item menu-accordion">
-                                <a href="{{route('coupons.index')}}">
-                                    <span class="{{ ($link == 'coupons' ) ? 'menu-link active' : 'menu-link ' }}">
-                                        <span class="menu-icon">
-                                            <!--begin::Svg Icon -->
+                            @if($user?->hasPermissionWorker('can_access_coupons'))
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($link == 'promotions' || $link == 'coupons')  ? 'show' : ''}}">
+                                <span class="{{ ($link == 'promotions' || $link == 'coupons')? 'menu-link active ' : 'menu-link' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
+                                        <i class="fa fa-store"></i>
+                                            <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">{{ __('Discounts')}} </span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                    <div class="menu-item">
+                                        <a class="menu-link {{($link == 'promotions') ? ' bg-black' : ''}}" href="{{ route('restaurant.promotions') }}">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    <i class="fas fa-percentage"></i>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title  {{($link == 'promotions') ? 'text-khardl  ' : ''}}">{{ __('promotions')}}</span>
+                                        </a>
+                                    </div>
+                                  
+                                
+                                    <!-- Staff evaluation -->
+                                    <div class="menu-item">
+                                        <a class="menu-link {{($link == 'coupons') ? 'bg-black  ' : ''}}" href="{{ route('coupons.index',['branchId'=>$user->branch->id]) }}">
+                                            <span class="menu-icon " >
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                                 <span class="svg-icon svg-icon-2">
                                                     <i class="bi bi-cash-stack"></i>
                                                 </span>
-                                            <!--end::Svg Icon-->
-                                        </span>
-                                            <span class="menu-title">{{__('Coupons')}}</span>
-                                    </span>
-                                </a>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title {{($link == 'coupons') ? 'text-khardl  ' : ''}}">{{ __('Coupons')}}</span>
+                                        </a>
+                                    </div>
+                          
+                                 
+            
+                                </div>
                             </div>
                             @endif
                             @if(
                             \App\Models\Tenant\Setting::first()?->is_live &&
                             \App\Models\ROSubscription::first()?->status == \App\Models\ROSubscription::ACTIVE &&
-                            Auth::user()?->hasPermissionWorker('can_access_qr'))
+                            $user?->hasPermissionWorker('can_access_qr'))
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('restaurant.qr')}}">
                                     <span class="{{ ($link == 'qr' ) ? 'menu-link active' : 'menu-link ' }}">
@@ -284,7 +313,7 @@
                                 </a>
                             </div>
                             @endif
-                            @if(Auth::user()?->hasPermissionWorker('can_access_service_page'))
+                            @if($user?->hasPermissionWorker('can_access_service_page'))
                               <!-- Services -->
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('restaurant.service')}}">
@@ -301,7 +330,7 @@
                                 </a>
                             </div>
                             @endif
-                            @if(Auth::user()?->hasPermissionWorker('can_access_delivery_companies'))
+                            @if($user?->hasPermissionWorker('can_access_delivery_companies'))
                             <!-- Delivery Companies -->
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('restaurant.delivery')}}">
@@ -319,7 +348,7 @@
                             </div>
                             @endif
                             <!-- Customer data -->
-                            @if(Auth::user()?->hasPermissionWorker('can_access_customers_data'))
+                            @if($user?->hasPermissionWorker('can_access_customers_data'))
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('customers_data.list')}}">
                                     <span class="{{ ($link == 'customers-data' ) ? 'menu-link active' : 'menu-link ' }}">
@@ -333,7 +362,7 @@
                                 </a>
                             </div>
                             @endif
-                            @if(Auth::user()?->hasPermissionWorker('can_control_payment')&&App\Models\Tenant\Setting::first()->lead_id)
+                            @if($user?->hasPermissionWorker('can_control_payment')&&App\Models\Tenant\Setting::first()->lead_id)
                             <!-- Payments -->
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('tap.payments')}}">
@@ -349,7 +378,7 @@
                             </div>
                             @endif
                             <!-- Settings -->
-                            @if(Auth::user()?->hasPermissionWorker('can_access_settings'))
+                            @if($user?->hasPermissionWorker('can_access_settings'))
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('restaurant.settings')}}">
                                     <span class="{{ ($link == 'settings' ) ? 'menu-link active' : 'menu-link ' }}">
@@ -459,9 +488,9 @@
                                                 <!--begin::Username-->
                                                 <div class="d-flex flex-column">
                                                     <div class="fw-bolder d-flex align-items-center fs-5">
-                                                        {{Auth::user()->first_name}} {{Auth::user()->last_name}}
+                                                        {{$user->first_name}} {{$user->last_name}}
                                                     </div>
-                                                    <a href="#" class="fw-bold text-muted text-hover-khardl fs-7">{{ Auth::user()->email }}</a>
+                                                    <a href="#" class="fw-bold text-muted text-hover-khardl fs-7">{{ $user->email }}</a>
                                                     <small class="my-4">{{__("Restaurant code")}}
                                                         <code id="r-code" class="cursor-pointer">{{tenant()->mapper_hash}}</code>
                                                         <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('This code is required when workers log in to the restaurant and also when retrieving the password.') }}">
@@ -645,7 +674,6 @@
             event.preventDefault();
             if (event.clipboardData) {
                 event.clipboardData.setData("text/plain", r_code.textContent);
-                console.log(event.clipboardData.getData("text"))
             }
         });
 

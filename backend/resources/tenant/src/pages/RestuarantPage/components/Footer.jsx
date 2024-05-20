@@ -44,25 +44,25 @@ const Footer = ({ restaurantStyle }) => {
     >
       <div className="flex flex-row gap-3 justify-center w-full md:w-[190px]">
         <span
-          className="text-[#7D0A0A] font-medium cursor-pointer relative"
+          className="font-medium cursor-pointer relative"
           onClick={() => navigate("/privacy")}
         >
           {t("Privacy Policy")}
         </span>
         <span
-          className="text-[#7D0A0A] font-medium cursor-pointer relative"
+          className="font-medium cursor-pointer relative"
           onClick={() => navigate("/policies")}
         >
           {t("Terms and Conditions")}
         </span>
       </div>
       <div
-        style={{ backgroundColor: social_media_color }}
+        // style={{ backgroundColor: social_media_color }}
         className={`flex justify-center py-3 w-full md:w-auto ${
           selectedSocialIcons?.length == 0 ? "hidden" : ""
         }`}
       >
-        <div className="flex items-center gap-3 lg:gap-5">
+        <div className="flex items-center gap-3 lg:gap-5 flex-wrap">
           {selectedSocialIcons?.map((socialMedia) => (
             <a
               key={socialMedia.id}
@@ -96,10 +96,10 @@ const Footer = ({ restaurantStyle }) => {
       </div>
       <div className="flex justify-center w-full md:w-[190px]">
         <h3 className={`leading-3 tracking-tight relative`}>
-          <span>{t("Powered by")}</span>
+          <span className="font-light opacity-75">{t("Powered by")}</span>
           <a
             href="https://khardl.com/"
-            className="text-[#7D0A0A] font-medium hover:cursor-pointer"
+            className="font-medium hover:cursor-pointer text-lime-400"
           >
             {" "}
             {t("Khardl")}

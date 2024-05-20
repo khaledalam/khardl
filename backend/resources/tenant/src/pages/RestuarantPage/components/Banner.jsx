@@ -22,9 +22,9 @@ const Banner = ({ restaurantStyle }) => {
   const [uploadedSingleBanner, setUploadedSingleBanner] = useState(null);
 
   useEffect(() => {
-    if (banner_type == "slider" && banner_images.length > 0) {
+    if (banner_type == "slider" && banner_images?.length > 0) {
       setListofBannerImages(
-        banner_images.map((image) => {
+        banner_images?.map((image) => {
           return {
             croppedImage: `${image.url}`,
           };
@@ -51,6 +51,9 @@ const Banner = ({ restaurantStyle }) => {
       <Skeleton className="h-full w-full" />
     </div>
   );
+  // ) : (
+  //   <div></div>
+  // );
 };
 
 export default Banner;
