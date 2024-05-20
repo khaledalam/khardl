@@ -30,7 +30,9 @@ a {
 .aside-dark .menu .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-icon i,
 .aside-dark .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon,
 .aside-dark .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon .svg-icon,
-.aside-dark .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon i {
+.aside-dark .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon i ,
+.aside-dark .menu .menu-item.show > .menu-link .menu-icon,
+.aside-dark .menu .menu-item.show > .menu-link .menu-icon i{
   color: #c3da0b !important;
 }
 .aside-dark .menu .menu-item.hover:not(.here) > .menu-link:not(.disabled):not(.active):not(.here),
@@ -48,14 +50,22 @@ a {
 .aside-dark .menu .menu-item .menu-link:hover {
   border-radius: 8px;
 }
+.aside-dark .menu .menu-item .menu-link.active{
+  background-color: #1b1b28!important;
+  color: #fff!important;
+}
 
 .nav-line-tabs .nav-item .nav-link.active,
 .nav-line-tabs .nav-item .nav-link:hover:not(.disabled) {
   border-color: #c3da0b !important;
 }
 
-.page-item.active .page-link {
+.page-item.active .page-link ,
+.aside-dark .menu .menu-item .menu-link.active .menu-bullet .bullet{
   background-color: #c3da0b !important;
+}
+.aside-dark .menu .menu-item .menu-link .menu-bullet .bullet{
+  color:#494b74
 }
 
 .form-check-input:checked {

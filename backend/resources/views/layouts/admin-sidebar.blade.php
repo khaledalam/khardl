@@ -188,10 +188,8 @@
                                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                                         <div class="menu-item">
                                             <a class="menu-link {{($admin_link == 'restaurants') ? 'active' : ''}}" href="{{ route('admin.restaurants') }}">
-                                                <span class="menu-icon">
-                                                    <span class="svg-icon svg-icon-2">
-                                                        <i class="fa fa-store"></i>
-                                                    </span>
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
                                                 </span>
                                                 <span class="menu-title">{{ __('all-restaurants')}}
                                                     {{--                                                    @if(($restaurantsAll  - $restaurantsLive) > 0)<span class="badge badge-danger mx-1">{{($restaurantsAll  - $restaurantsLive)}}</span>@endif--}}
@@ -205,11 +203,9 @@
                                             <div class="menu-item">
                                                 <a class="menu-link {{($admin_link == 'restaurant-owner-management') ? 'active' : ''}}" href="{{ route('admin.restaurant-owner-management') }}">
                                                     <span class="menu-icon">
-                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                                        <span class="svg-icon svg-icon-2">
-                                                            <i class=" fa fa-users"></i>
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <!--end::Svg Icon-->
                                                     </span>
                                                     <span class="menu-title">{{ __('restaurant-owners')}}</span>
                                                 </a>
@@ -221,11 +217,9 @@
                                             <div class="menu-item">
                                                 <a class="menu-link {{($admin_link == 'app-requested') ? 'active' : ''}}" href="{{ route('admin.restaurants.app-requested') }}">
                                                     <span class="menu-icon">
-                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                                        <span class="svg-icon svg-icon-2">
-                                                            <i class="fa fa-mobile"></i>
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <!--end::Svg Icon-->
                                                     </span>
                                                     <span class="menu-title">{{ __('Apps requested')}}</span>
                                                 </a>
@@ -234,23 +228,6 @@
                                     </div>
                                 </div>
                             @endif
-
-{{--                            @if(Auth::user()->hasPermission('can_access_restaurants'))--}}
-{{--                                <!-- Staff evaluation -->--}}
-{{--                                    <div class="menu-item">--}}
-{{--                                        <a class="menu-link {{($admin_link == 'order-inquiry') ? 'active' : ''}}" href="{{ route('admin.order-inquiry') }}">--}}
-{{--                                                            <span class="menu-icon">--}}
-{{--                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->--}}
-{{--                                                                <span class="svg-icon svg-icon-2">--}}
-{{--                                                                    <i class=" fa fa-question"></i>--}}
-{{--                                                                </span>--}}
-{{--                                                                <!--end::Svg Icon-->--}}
-{{--                                                            </span>--}}
-{{--                                            <span class="menu-title">{{ __('order inquiry')}}</span>--}}
-{{--                                        </a>--}}
-{{--                                    </div>--}}
-{{--                            @endif--}}
-                            <!-- Supports -->
                             @if(Auth::user()->hasPermission('can_see_admins') || Auth::user()->hasPermission('can_add_admins'))
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'user-management' || $admin_link == 'add-user') ? 'show' : ''}}">
                                 <span class="{{ ($admin_link == 'user-management' || $admin_link == 'add-user'  ) ? 'menu-link active' : 'menu-link ' }}">
