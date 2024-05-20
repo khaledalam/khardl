@@ -97,13 +97,12 @@ const Footer = ({ restaurantStyle }) => {
       <div className="flex justify-center w-full md:w-[190px]">
         <h3 className={`leading-3 tracking-tight relative`}>
           <span className="font-light opacity-75">{t("Powered by")}</span>
-          <a
-            href="https://khardl.com/"
-            className="font-medium hover:cursor-pointer text-lime-400"
+          <span
+            className="font-medium text-lime-400"
           >
             {" "}
             {t("Khardl")}
-          </a>
+          </span>
         </h3>
       </div>
     </div>
