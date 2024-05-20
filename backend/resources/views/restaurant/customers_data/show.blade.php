@@ -136,10 +136,40 @@
                                                 <div class="d-flex align-items-center">
                                                     <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
                                                     <i class="bi bi-house mx-2"></i>
-                                                    <!--end::Svg Icon-->{{ __('Address') }}</div>
+                                                    <!--end::Svg Icon-->{{ __('Addresses') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
-                                                {{ $restaurantUser->address }}
+                                                {{-- {{ $restaurantUser->address }} --}}
+                                                <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                              
+                                                    <div class="carousel-inner">
+                                                @foreach ($restaurantUser->addresses->chunk(4) as $key => $branchChunk)
+                                                            
+                                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                                        <div class="row ">
+                                                            @foreach ($branchChunk as $branchLoop)
+                                                            <div class="col-md-2 d-flex justify-content-center" >
+                                                                {{-- <a href="{{ route('restaurant.get-category', ['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1,'branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl border border-dark text-black @else btn-active-light-khardl @endif"> --}}
+                                                                    <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px" >   {{ $branchLoop->address }}</span>
+                                                                {{-- </a> --}}
+                                                            </div>
+                                                                
+                                                            @endforeach
+                                                        </div>
+                                                     
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev" >
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next" >
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                               
                                             </td>
                                         </tr>
                                   
@@ -168,51 +198,7 @@
                 <!--begin::Tab content-->
                 <div class="tab-content">
                     <!--begin::Tab pane-->
-                    <div class="tab-pane fade show active" id="kt_ecommerce_sales_order_summary" role="tab-panel">
-                        <!--begin::Orders-->
-                        <div class="d-flex flex-column gap-7 gap-lg-10">
-                            <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
-                                <!--begin::Payment address-->
-                                <div class="card card-flush py-4 flex-row-fluid overflow-hidden p-5">
-                                    <!--begin::Background-->
-                                    <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">
-                                        <img src="assets/media/icons/duotune/ecommerce/ecm001.svg" class="w-175px" />
-                                    </div>
-                                    <!--end::Background-->
-                                    <!--begin::Card header-->
-                                    <div class="card-header">
-                                        <div class="card-title">
-                                            <h2>
-                                                <a href="https://www.google.com/maps" target="_blank">{{ __('Customer Address') }}</a>
-                                            </h2>
-                                        </div>
-                                    </div>
-                                    <!--end::Card header-->
-                                    <!--begin::Card body-->
-                                    <div class="card card-flush border-0 card-map p-5">
-                                    <div class="card-body ">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <!--begin::Image-->
-                                                <div id="map-autocomplete-card{{ $restaurantUser->id }}"></div>
-                                                <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
-                                                    <div id="map{{ $restaurantUser->id }}" class="google_map"></div>
-                                                   
-                                                    <input type="hidden" id="lat{{ $restaurantUser->id }}" name="lat" value="{{ $restaurantUser->lat }}" />
-                                                    <input type="hidden" id="lng{{ $restaurantUser->id }}" name="lng" value="{{ $restaurantUser->lng }}" />
-                                                </div>
-                                                <!--end::Image-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                    <!--end::Card body-->
-                                </div>
-                                <!--end::Payment address-->
-                            </div>
-                        </div>
-                        <!--end::Orders-->
-                    </div>
+                   
                     <!--end::Tab pane-->
                     <!--begin::Tab pane-->
                     @if (Auth::user()?->hasPermissionWorker('can_mange_orders'))
@@ -361,15 +347,33 @@
     </div>
     <!--end::Post-->
 </div>
-
+<style>
+     
+     .carousel-control-prev-icon
+    {
+        background-image : url('/img/next.png')
+    }
+    .carousel-control-next-icon {
+        background-image : url('/img/prev.png')
+    }
+    .carousel-inner{
+        position: relative;
+        width: 70%;
+        margin: 0 115px;
+    }
+</style>
 @endsection
 @section('js')
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places&loading=async&v=beta"></script>
 
-@include('components.map')
+
 
 <script>
     $(document).ready(function() {
+        $('#carouselExample').carousel({
+            pause: true,
+            interval: false,
+        });
         const urlParams = new URLSearchParams(window.location.search);
         const pageParam = urlParams.get('page');
         const statusParam = urlParams.get('status');
@@ -394,7 +398,7 @@
             }, 800);
         });
     });
-    initializeMapOnClick("{{$restaurantUser->id}}", "{{$restaurantUser->lat ?? ''}}", "{{$restaurantUser->lng ?? ''}}");
+    // initializeMapOnClick("{{$restaurantUser->id}}", "{{$restaurantUser->lat ?? ''}}", "{{$restaurantUser->lng ?? ''}}");
 
 </script>
 @endsection
