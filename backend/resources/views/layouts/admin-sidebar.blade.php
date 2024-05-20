@@ -175,7 +175,7 @@
 
                             @if(Auth::user()->hasPermission("can_access_restaurants"))
                                 <!-- Restaurants -->
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'restaurants' || $admin_link == 'app-requested' || $admin_link == 'restaurant-owner-management' || $admin_link == 'advertisement') ? 'show' : ''}}">
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'restaurants' || $admin_link == 'app-requested' || $admin_link == 'restaurant-owner-management') ? 'show' : ''}}">
                                     <span class="{{ ($admin_link == 'restaurants' || $admin_link == 'restaurant-owner-management') ? 'menu-link active' : 'menu-link' }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
