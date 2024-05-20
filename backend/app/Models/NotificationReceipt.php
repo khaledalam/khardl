@@ -14,6 +14,7 @@ class NotificationReceipt extends Model
         'active',
         'is_branch_purchase',
         'is_application_purchase',
+        'is_ads_requests'
     ];
     /* Scopes */
     const is_branch_purchase = "is_branch_purchase";

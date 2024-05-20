@@ -65,7 +65,7 @@
                                         @foreach ($AdsPackages as $package)
                                         <!--begin::Col branch slot -->
                                         <div class="col-md-6">
-                                            <div class="row" style="min-height: 390px">
+                                            <div class="row" style="min-height: 290px">
                                                 <div class="col-md-5">
                                                     <div class="text-gray-400 fw-bold w-100 mt-6">
                                                         <img src="{{ $package->image_for_tenants }}" class="rounded w-100" alt="">

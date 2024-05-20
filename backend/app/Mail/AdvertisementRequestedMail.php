@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * This is used to send contact us form inputs to super admin email
  */
-class ContactUsMail extends Mailable
+class AdvertisementRequestedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
