@@ -229,22 +229,6 @@
                                                 </a>
                                             </div>
                                         @endif
-                                        @if(Auth::user()->hasPermission('can_access_advertisements'))
-                                            <!-- Staff evaluation -->
-
-                                            <div class="menu-item">
-                                                <a class="menu-link {{($admin_link == 'advertisement') ? 'active' : ''}}" href="{{ route('admin.advertisement.index') }}">
-                                                    <span class="menu-icon">
-                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                                        <span class="svg-icon svg-icon-2">
-                                                            <i class="fas fa-ad"></i>
-                                                        </span>
-                                                        <!--end::Svg Icon-->
-                                                    </span>
-                                                    <span class="menu-title">{{ __('Advertisements requests')}}</span>
-                                                </a>
-                                            </div>
-                                        @endif
                                     </div>
                                 </div>
                             @endif
@@ -368,23 +352,6 @@
                             </a>
                             </div>
                             @endif
-                            @if(Auth::user()->hasPermission('can_settings'))
-                            <!-- Setting -->
-                            <div class="menu-item">
-                                <a href="{{ route('admin.settings') }}">
-                                <span class="{{ ($admin_link == 'settings'  ) ? 'menu-link active' : 'menu-link ' }}">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                        <span class="svg-icon svg-icon-2">
-                                            <i class=" fa fa-cogs"></i>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </span>
-                                    <span class="menu-title">{{ __('settings')}}</span>
-                                </span>
-                            </a>
-                            </div>
-                            @endif
                             @if(Auth::user()->hasPermission('can_manage_notifications_receipt'))
                             <!-- Setting -->
                             <div class="menu-item">
@@ -402,7 +369,22 @@
                             </a>
                             </div>
                             @endif
+                            @if(Auth::user()->hasPermission('can_access_advertisements'))
+                                <!-- Staff evaluation -->
 
+                                <div class="menu-item">
+                                    <a class="menu-link {{($admin_link == 'advertisement') ? 'active' : ''}}" href="{{ route('admin.advertisement.index') }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                            <span class="svg-icon svg-icon-2">
+                                                <i class="fas fa-ad"></i>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <span class="menu-title">{{ __('Advertisements requests')}}</span>
+                                    </a>
+                                </div>
+                            @endif
                             @if(Auth::user()->email === env('SUPER_MASTER_ADMIN_EMAIL'))
                                 <div class="menu-item menu-accordion">
                                     <a href="{{route('admin.subscriptions')}}">
@@ -419,7 +401,23 @@
                                     </a>
                                 </div>
                             @endif
-
+                            @if(Auth::user()->hasPermission('can_settings'))
+                                <!-- Setting -->
+                                <div class="menu-item">
+                                    <a href="{{ route('admin.settings') }}">
+                                    <span class="{{ ($admin_link == 'settings'  ) ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                            <span class="svg-icon svg-icon-2">
+                                                <i class=" fa fa-cogs"></i>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <span class="menu-title">{{ __('settings')}}</span>
+                                    </span>
+                                </a>
+                                </div>
+                            @endif
                         </div>
                         <!--end::Menu-->
                     </div>

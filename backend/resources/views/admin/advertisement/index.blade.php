@@ -194,7 +194,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <span>0</span>{{-- TODO --}}
+                                            <span>{{ $package?->requests()?->count() }}</span>
                                         </div>
                                     </td>
                                     <td>

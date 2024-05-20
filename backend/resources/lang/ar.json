@@ -1465,5 +1465,9 @@
     "You do not have customer app":"ليس لديك تطبيق الزبون",
     "In order to be able to request an advertising service for the restaurant, you must have a subscription to the customer application.":"لكي تتمكن من طلب خدمة اعلانية للمطعم يجب ان يكون ليك اشتراك في تطبيق الزبون.",
     "You can purchase the customer application from here":"يمكنك من هنا شراء تطبيق الزبون",
-    "On Ads request":"عند طلب الإعلانات"
+    "On Ads request":"عند طلب الإعلانات",
+    "New Ads requested":"طلب إعلانات جديد",
+    "We wanted to inform you that an advertising service has been requested from :restaurant_name restaurant, on the :package_name. The advertising service was requested for :price riyals. Please review the order":"اردنا نعلمكم انه تم طلب خدمة اعلانية من مطعم :restaurant_name,  علي :package_name. وتم طلب الخدمة الاعلانية بمبلغ :price ريال. الرجاء مراجعة الطلب",
+    "An error occurred please try later":"حدث خطأ. الرجاء المحاولة لاحقا",
+    "An advertising service has been requested from a restaurant":"تم طلب خدمة اعلانية من مطعم"
 }

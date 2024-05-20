@@ -20,6 +20,7 @@ class NotificationReceipt extends Model
     const is_branch_purchase = "is_branch_purchase";
     const is_application_purchase = "is_application_purchase";
     const is_lifetime_purchase = "is_lifetime_purchase";
+    const is_ads_requests = "is_ads_requests";
     public function scopeWhenSearch($query,$search)
     {
         return $query->when($search != null, function ($q) use ($search) {

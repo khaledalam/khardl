@@ -3,9 +3,9 @@
 namespace App\Jobs;
 
 use App\Enums\Admin\LogTypes;
-use App\Mail\ApprovedBusiness;
+use App\Mail\NotifyUsersForNewAdsRequest;
 use App\Models\Log;
-use App\Models\Tenant\RestaurantUser;
+use App\Models\NotificationReceipt;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -22,9 +22,13 @@ class SendAdsRequestedEmailJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(RestaurantUser $user)
-    {
-        $this->user = $user;
+    public function __construct(
+        public $restaurant_name,
+        public $package_name,
+        public $price,
+
+    ) {
+
     }
 
     /**
@@ -33,35 +37,52 @@ class SendAdsRequestedEmailJob implements ShouldQueue
     public function handle(): void
     {
         try {
-            Mail::to($this->user->email)->send(new ApprovedBusiness($this->user));
-            $actions = [
-                'en' => '[ok] Email approve business sent successfully',
-                'ar' => '[تم] تم ارسال بريد للموافقة علي الاعمال',
-            ];
-            tenancy()->central(function() use ($actions) {
-                Log::create([
-                    'user_id' => $this?->user?->id,
-                    'action' => $actions,
-                    'type' => LogTypes::ApproveBusinessSent,
-                    'metadata' => [
-                        'email' => $this->user->email ?? null,
-                    ]
-                ]);
+            tenancy()->central(function () {
+                $users = NotificationReceipt::where('active', true)->where(NotificationReceipt::is_ads_requests, true)->get();
+                foreach ($users as $user) {
+                    Mail::to($user->email)->send(
+                        new NotifyUsersForNewAdsRequest(
+                            $user->name,
+                            $this->restaurant_name,
+                            $this->package_name,
+                            $this->price,
+
+                        )
+                    );
+                    $actions = [
+                        'en' => "[ok] email has been successfully sent alerting admins of a request to purchase an advertising package",
+                        'ar' => "[تم] إرسال بريد إلكتروني بنجاح لتنبيه المسؤولين عن طلب شراء باقة إعلانية"
+                    ];
+
+                    Log::create([
+                        'user_id' => null,
+                        'action' => $actions,
+                        'type' => LogTypes::RORequestForAdsSent,
+                        'metadata' => [
+                            'email' => $user->email ?? null,
+                            'name' => $user->full_name ?? null,
+                        ]
+                    ]);
+                }
+
             });
 
+
+
         } catch (\Exception $e) {
+            \Sentry\captureException($e);
             $actions = [
-                'en' => '[fail] Email approve business sent successfully',
-                'ar' => '[فشل] تم ارسال بريد للموافقة علي الاعمال',
+                'en' => "[fail] email has been successfully sent alerting admins of a request to purchase an advertising package",
+                'ar' => "[فشل] إرسال بريد إلكتروني بنجاح لتنبيه المسؤولين عن طلب شراء باقة إعلانية"
             ];
-            tenancy()->central(function() use ($actions,$e) {
+            tenancy()->central(function () use ($actions, $e) {
                 Log::create([
                     'action' => $actions,
-                    'user_id' => $this?->user?->id,
-                    'type' => LogTypes::ApproveBusinessFail,
+                    'user_id' => null,
+                    'type' => LogTypes::RORequestForAdsFail,
                     'metadata' => [
-                        'email' => $this->user->email ?? null,
                         'e_message' => $e->getMessage(),
+                        'restaurant_name' => $this->restaurant_name
                     ]
                 ]);
             });

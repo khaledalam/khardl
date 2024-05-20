@@ -412,7 +412,7 @@
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
                                             <span class="svg-icon svg-icon-2">
-                                                <i class="fa fa-cubes"></i>
+                                                <i class="fas fa-ad"></i>
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
