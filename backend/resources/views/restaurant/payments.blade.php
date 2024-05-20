@@ -10,7 +10,7 @@
 $tap_info = $settings->lead_response;
 @endphp
 @if ($settings->lead_id&&$settings->merchant_id)
-@if (1)
+@if ($settings->lead_response)
 <!--begin::Content-->
 <div class="accordion" id="accordionExample">
 
