@@ -21,7 +21,8 @@ a {
 .aside-dark .menu .menu-item .menu-link.active .menu-icon i,
 .menu-state-primary .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-title,
 .menu-state-primary .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-title,
-.aside-dark .accordion-button:not(.collapsed) {
+.aside-dark .accordion-button:not(.collapsed),
+.qr_page .accordion-button:not(.collapsed) {
   color: #c3da0b !important;
 }
 
