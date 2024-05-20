@@ -94,10 +94,7 @@ class LoginCustomerController extends BaseController
         if(!$this->checkVerificationSMSCodeOnly($request->otp,$request->id_sms)){
             return $this->sendError(__('Invalid code'));
         }
-        $user->status = RestaurantUser::ACTIVE;
-        $user->phone_verified_at = now();
-        $user->force_logout = 0;
-        $user->save();
+        $this->updateCredentials($user);
 
         Auth::loginUsingId($user->id,true);
         $user = Auth::user();
@@ -106,6 +103,14 @@ class LoginCustomerController extends BaseController
             'user'=>$user
         ];
         return $this->sendResponse($data, __('User logged in successfully.'));
+    }
+    public function updateCredentials($user)
+    {
+        $user->status = RestaurantUser::ACTIVE;
+        $user->phone_verified_at = now();
+        $user->force_logout = 0;
+        $user->updateLastLogin();
+        $user->save();
     }
     public function loginCustomerOnly(CustomerAppLoginRequest $request){
         if(!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE){
