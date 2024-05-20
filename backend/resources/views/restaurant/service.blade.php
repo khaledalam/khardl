@@ -8,11 +8,6 @@
     .btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon) {
         padding: calc(0.75rem + 2px) calc(1.5rem + 1px);
     }
-
-    .card {
-        cursor: pointer;
-    }
-
     .customer-app-card {
         border: 1px solid #c2da08;
     }
