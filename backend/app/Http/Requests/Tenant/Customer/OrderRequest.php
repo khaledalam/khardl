@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Tenant\Customer;
 
 use App\Models\Tenant\DeliveryType;
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Repositories\Customer\CartRepository;
@@ -49,12 +50,12 @@ class OrderRequest extends FormRequest
 
             }
 
-            if ($this->payment_method == "Loyalty points") {
+            if ($this->payment_method == PaymentMethod::LOYALTY_POINTS) {
                 if ($this->delivery_type != DeliveryType::PICKUP){
                     $validator->errors()->add('use_loyalty_points_usage', __('Loyalty points allow with pickup option only'));
                     return;
                 }
-                if ($user->loyalty_points < $cart->totalLoyaltyPointsPrice()) {
+                if ($user->loyalty_points < $cart->totalPriceWithLoyaltyPoints()) {
                     $validator->errors()->add('use_loyalty_points_value', __('You do not have enough loyalty points'));
                     return;
                 } else if (!$cart->canPayWithLoyaltyPoints()) {

@@ -36,11 +36,6 @@ class OrderObserver
             $user->save();
         }
 
-//        if($setting->cashback_percentage){
-//            if($order->total >= $setting->cashback_threshold){
-//                $user->cashback += (($order->total * $setting->cashback_percentage) / 100.0);
-//            }
-//        }
 
 
     }

@@ -51,18 +51,20 @@ class RestaurantController extends BaseController
     public function promotions()
     {
         $user = Auth::user();
-
+    
         $settings = Setting::all()->firstOrFail();
 
+        $branches = Branch::all()->when($user->isWorker(),function($q)use($user){
+            return $q->where('id',$user->branch_id);
+        });
         return view(
             'restaurant.promotions',
-            compact('user', 'settings')
+            compact('user','settings','branches')
         );
     }
 
     public function updatePromotions(Request $request)
     {
-
         $request->validate([
             'loyalty_points' => 'required|numeric|min:0',
 //            'loyalty_point_price' => 'required|numeric|min:0',
@@ -744,5 +746,23 @@ class RestaurantController extends BaseController
         $user = Auth::user();
 
         return view('restaurant.profile', compact('user'));
+    }
+    public function toggleLoyaltyPoint($id){
+        $user = Auth::user();
+        $branch = Branch::findOrFail($id);
+        if($user->isWorker() && $id != $user->branch->id)  return null;
+        if($branch->loyalty_availability){
+       
+            $branch->payment_methods()->detach(PaymentMethod::where('name',PaymentMethod::LOYALTY_POINTS)->first()?->id);
+            return response()->json(['checked' => false]);
+
+        }else {
+           
+
+            $branch->payment_methods()->attach(PaymentMethod::where('name',PaymentMethod::LOYALTY_POINTS)->first()?->id);
+            return response()->json(['checked' => true]);
+        }
+
+
     }
 }

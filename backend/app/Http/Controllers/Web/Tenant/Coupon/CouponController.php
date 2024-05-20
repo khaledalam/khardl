@@ -13,36 +13,36 @@ class CouponController extends BaseController
 {
     public function __construct(private CouponService $couponService) {
     }
-    public function index(Request $request)
+    public function index(Request $request,$branchId)
     {
-        return $this->couponService->index($request);
+        return $this->couponService->index($request,$branchId);
     }
-    public function create(Request $request)
+    public function create(Request $request,$branchId)
     {
-        return $this->couponService->create();
+        return $this->couponService->create($branchId);
     }
-    public function store(CouponStoreFormRequest $request)
+    public function store(CouponStoreFormRequest $request,$branchId)
     {
-        return $this->couponService->store($request);
+        return $this->couponService->store($request,$branchId);
     }
-    public function edit(Request $request, Coupon $coupon)
+    public function edit(Request $request,$branchId,Coupon $coupon)
     {
-        return $this->couponService->edit($request,$coupon);
+        return $this->couponService->edit($request,$coupon,$branchId);
     }
-    public function update(CouponUpdateFormRequest $request, Coupon $coupon)
+    public function update(CouponUpdateFormRequest $request,$branchId, Coupon $coupon)
     {
-        return $this->couponService->update($request, $coupon);
+        return $this->couponService->update($request, $coupon,$branchId);
     }
-    public function delete(Request $request, Coupon $coupon)
+    public function delete(Request $request,$branchId,Coupon $coupon)
     {
-        return $this->couponService->delete($coupon);
+        return $this->couponService->delete($coupon,$branchId);
     }
-    public function restore(Request $request, Coupon $coupon)
+    public function restore(Request $request,$branchId,Coupon $coupon)
     {
-        return $this->couponService->restore($coupon);
+        return $this->couponService->restore($coupon,$branchId);
     }
-    public function changeStatus(Request $request,Coupon $coupon)
+    public function changeStatus(Request $request,$branchId,Coupon $coupon)
     {
-        return $this->couponService->changeStatus($coupon);
+        return $this->couponService->changeStatus($coupon,$branchId);
     }
 }

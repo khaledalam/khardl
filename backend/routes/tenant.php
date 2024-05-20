@@ -93,6 +93,7 @@ Route::group([
 ], static function () {
 
     Route::get('/impersonate/{token}', static function ($token) {
+        // TODO  @todo improvement make custom response to remember user 
        UserImpersonation::makeResponse($token);
        if(Auth::user()?->isRestaurantOwner() || Auth::user()?->hasPermissionWorker('can_access_summary'))return redirect()->route('restaurant.summary');
        return redirect()->route('restaurant.branches');
@@ -123,14 +124,15 @@ Route::group([
             /* Summary page */
             /* Coupon page */
             Route::middleware('permission:can_access_coupons')
-            ->resource('coupons',CouponController::class)
+            ->resource('{branchId}/coupons',CouponController::class)
+            ->middleware(['permission:can_access_coupons','coupon-role'])
             ->withTrashed(['show','restore','edit','update']);
-            Route::middleware('permission:can_access_coupons')
+            Route::middleware(['permission:can_access_coupons','coupon-role'])
             ->name('coupons.')
             ->controller(CouponController::class)->group(function () {
-                Route::delete('coupons/delete/{coupon}','delete')->withTrashed()->name('delete');
-                Route::post('coupons/restore/{coupon}','restore')->withTrashed()->name('restore');
-                Route::post('coupons/change-status/{coupon}','changeStatus')->withTrashed()->name('change-status');
+                Route::delete('{branchId}/coupons/delete/{coupon}','delete')->withTrashed()->name('delete');
+                Route::post('{branchId}/coupons/restore/{coupon}','restore')->withTrashed()->name('restore');
+                Route::get('{branchId}/coupons/change-status/{coupon}','changeStatus')->withTrashed()->name('change-status');
             });
             /* Coupon page */
             /* QR page */
@@ -242,7 +244,9 @@ Route::group([
             });
 
             Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
-
+            Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions')->middleware('permission:can_access_coupons');
+            Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings')->middleware('permission:can_access_coupons');
+            Route::post('/branches/{id}/toggleLoyaltyPoint', [RestaurantController::class, 'toggleLoyaltyPoint'])->name('restaurant.branch.toggleLoyaltyPoint')->middleware('permission:can_access_coupons');
 
             Route::middleware('restaurant')->group(function () {
 
@@ -266,8 +270,7 @@ Route::group([
                 Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
 
 
-                Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
-                Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings');
+                Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings')->middleware('permission:can_access_coupons');
 
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
@@ -363,7 +366,7 @@ Route::group([
                     'store',
                     'index'
                 ]);
-                Route::post("validate/coupon", [CustomerCouponController::class,'validateCoupon']);
+                Route::post("validate/{branch_id}/coupon", [CustomerCouponController::class,'validateCoupon']);
                 Route::post("remove/coupon", [CustomerCouponController::class,'removeCoupon']);
                 Route::get("cards", [CustomerCardController::class, 'show'])->name('customer.cards');
                 /* Customer address */
