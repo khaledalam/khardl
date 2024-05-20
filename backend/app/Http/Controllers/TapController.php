@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\Restaurant\OrderOnlineInvoice;
 use App\Models\CentralSetting;
 use Carbon\Carbon;
 use App\Models\Tenant;
@@ -45,13 +46,9 @@ class TapController extends Controller
     {
         $user = Auth::user();
         $settings = Setting::first();
-        $orders = Order::onlineCash()
-        ->whenSearch($request['search']?? null)
-        ->whenStatus($request['status']?? null)
+        $orders = Order::whenSearch($request['search']?? null)
         ->WhenDateString($request['date_string']??null)
-        ->whenPaymentStatus($request['payment_status']?? null)
-        ->recent()
-        ->paginate(config('application.perPage',10));
+        ->recent();
         $ROSubscription = ROSubscription::first();
         $ROCustomerAppSubscription = ROCustomerAppSub::first();
         $ROCustomerAppSubscriptionInvoices = ROCustomerAppSubInvoice::orderBy('id','DESC')->get();
@@ -59,9 +56,13 @@ class TapController extends Controller
         if ($ROSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'csv') {
             return $this->handleDownload($request, $ROSubscriptionInvoices);
         }
+        if ($request->filled('download') && $request->input('download') == 'orders_csv'&& $orders->count()) {
+            return $this->handleDownload($request, clone $orders->get());
+        }
         if ($ROCustomerAppSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'download_app') {
             return $this->handleDownload($request, $ROCustomerAppSubscriptionInvoices);
         }
+        $orders =  $orders->paginate(config('application.perPage',10));
 
         return view('restaurant.payments', compact('user','ROCustomerAppSubscription','ROSubscriptionInvoices','ROCustomerAppSubscriptionInvoices','settings','ROSubscription','orders'));
     }
@@ -70,15 +71,19 @@ class TapController extends Controller
         try {
             $todayDate = Carbon::now()->format('Y-m-d');
             $filename = "subscription_invoice_$todayDate.csv";
+            if ($model[0] instanceof Order) {
+                $filename = "order_invoice_$todayDate.csv";
+            }
             return match(true){
                 $model[0] instanceof ROSubscriptionInvoice => Excel::download(new ExportSubscriptionInvoice($model), $filename),
                 $model[0] instanceof ROCustomerAppSubInvoice => Excel::download(new ExportAppSubscriptionInvoice($model), $filename),
+                $model[0] instanceof Order => Excel::download(new OrderOnlineInvoice($model), $filename),
                 default => null
             };
 
         } catch (\Exception $e) {
-            logger($e);
-            return redirect()->route('tap.payments');
+            \Sentry\captureException($e);
+            return redirect()->route('tap.payments')->with('error',__('Could not download CSV file.'));
         }
     }
     public function payments_upload_tap_documents_get()

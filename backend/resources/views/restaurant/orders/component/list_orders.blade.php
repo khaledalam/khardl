@@ -250,7 +250,7 @@
                         </td>
                         <!--begin::Date Added=-->
                         <td class="text-end" data-order="2022-03-22">
-                            <span class="fw-bolder">{{$order->created_at}}</span>
+                            <span class="fw-bolder">{{$order->created_at?->format('Y-m-d')}}</span>
                         </td>
                         <!--end::Date Added=-->
                         <!--begin::Action=-->

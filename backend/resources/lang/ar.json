@@ -1484,5 +1484,6 @@
     "An error occurred please try later":"حدث خطأ. الرجاء المحاولة لاحقا",
     "An advertising service has been requested from a restaurant":"تم طلب خدمة اعلانية من مطعم",
     "No packages are available for now, check it later":"لا تتوفر باقات في الوقت الحالي ، تحقق منها لاحقًا",
-    "No address found":"لم يتم العثور على عنوان"
+    "No address found":"لم يتم العثور على عنوان",
+    "Could not download CSV file.":"لا يمكن تنزيل ملف الاكسيل."
 }
