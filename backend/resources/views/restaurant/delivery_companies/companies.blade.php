@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @if($user->number_of_available_branches() > 0)
+
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
@@ -98,6 +100,22 @@
     </div>
     <!--end::Root-->
     <!--end::Main-->
+
+    @else
+
+        <img src="{{global_asset('img/lock.png')}}"  width="250" class="m-auto my-5"/>
+        <h3 class="m-auto my-3">{{__('You need to have a branch to be able to subscribe to delivery companies')}}</h3>
+
+        <hr class="w-50 m-auto my-4"/>
+        <div class="m-auto my-1">
+            <div class="fs-5 text-center">{{__('cover-area')}}</div>
+            <span class="badge badge-lg badge-light-khardl my-2">الرياض</span>
+            <span class="badge badge-lg badge-light-khardl my-2">جده</span>
+            <span class="badge badge-lg badge-light-khardl my-2">مكه</span>
+            <span class="badge badge-lg badge-light-khardl my-2">ٱلْحِسَى</span>
+        </div>
+
+    @endif
 
 @endsection
 @section('js')
