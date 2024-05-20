@@ -851,7 +851,7 @@
                                                     <!--begin::Col-->
                                                     <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item?->allow_buy_with_loyalty_points) d-block @else d-none @endif" id="price_using_loyalty_points{{$item->id}}" >
                                                         <label class="fs-6 fw-bold mb-2">{{ __('Product price with loyalty points (How many points)') }}</label>
-                                                        <input type="number" step="1" min="0" name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control price_using_loyalty_points form-control-solid ps-12" />
+                                                        <input type="number" step="0.1" min="0" name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control price_using_loyalty_points form-control-solid ps-12" />
                                                         @if($item->LoyaltyPointRatio)
                                                         <div class="loyalty_point_calculation">
                                                             <span>{{__('For every 10 riyal, :point points correspond to the cost of product options',['point'=>10*$item->LoyaltyPointRatio])}}</span> <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('loyalty points for item options will get calculated automatically')}}"></i>
@@ -1214,7 +1214,7 @@
                         <div class="col-md-6 fv-row d-block" id="loyalty_point_price_section-new">
                             <label class="fs-6 fw-bold mb-2">{{ __('Product price with loyalty points (How many points)') }}</label>
 
-                            <input type="number" step="1" min="0"  name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid ps-12" />
+                            <input type="number" step="0.1" min="0"  name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid ps-12" />
                             <div class="loyalty_point_calculation"></div>
                         </div>
                         <!--end::Col-->

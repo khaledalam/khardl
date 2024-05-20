@@ -50,4 +50,10 @@ class CouponUpdateFormRequest extends FormRequest
             'expire_at' => ['required', 'date', 'after_or_equal:active_from', 'date_format:Y-m-d'],
         ];
     }
+    public function messages()
+    {
+        return [
+            'active_from.after'=>__("Cannot select date in the past")
+        ];
+    }
 }
