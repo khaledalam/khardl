@@ -29,9 +29,9 @@
                                         </div>
                                         <a href="{{ route('admin.notifications-receipt.index') }}">
                                             <button type="button" class="btn btn-khardl btn-sm">
-                                <i class="fa fa-arrow-left"></i>
-                                {{ __('Back to list') }}
-                            </button>
+                                                <i class="fa fa-arrow-left"></i>
+                                                {{ __('Back to list') }}
+                                            </button>
                                         </a>
                                     </div>
                                     <!--end::Card header-->
@@ -87,6 +87,16 @@
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="is_branch_purchase" value="1" {{ $notification->is_branch_purchase ? 'checked' : '' }} name="is_branch_purchase">
                                                             <label class="form-check-label" for="is_branch_purchase">
                                                                 {{ __('On purchase branch')}}
+                                                            </label>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="is_ads_requests" value="1" {{ $notification->is_ads_requests ? 'checked' : '' }} name="is_ads_requests">
+                                                            <label class="form-check-label" for="is_ads_requests">
+                                                                {{ __('On Ads request')}}
                                                             </label>
                                                         </div>
                                                         <!--end::Label-->

@@ -258,6 +258,15 @@
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_advertisements" @if (DB::table('permissions')->where('user_id', $userEdit->id)->value('can_access_advertisements') == 1) checked @endif name="can_access_advertisements">
+                                                            <label class="form-check-label" for="can_access_advertisements">{{ __('Can access advertising services')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __("Can request for advertisement service, can see old requests") }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
 
                                                     <!--end::Input group-->
                                                 </div>

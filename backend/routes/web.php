@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Central\Admin\Advertisement\AdvertisementController;
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use App\Http\Controllers\Web\Central\Admin\NotificationReceipt\NotificationReceiptController;
 use App\Http\Controllers\Web\Central\GlobalPromoterController;
@@ -86,14 +87,12 @@ Route::get('/health', static function (){
 })->name('health');
 
 Route::get('/test', function (){
-    $tenant = '93a1d87b-ca97-40bc-879b-ee6ea6c1ef6b';
-    $tenant = Tenant::find($tenant);
-    $app = null;
-    $tenant->run(function() use(&$app){
-        $app = ROCustomerAppSub::first();
-        $app->load(['user']);
-    });
-    return view('emails.customer_app_is_ready',compact('app'));
+    $user_name = 'test';
+    $sub = 'New Ads requested';
+    $restaurant_name = 'Khardl';
+    $date = '2024-02-02';
+    $cost = 11111;
+    return view('emails.notify_users_for_new_ads_request',compact('user_name','sub','restaurant_name','date','cost'));
 })->name('test');
 
 
@@ -187,7 +186,21 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                         Route::get('/restaurants','index')->middleware('permission:can_access_restaurants')->name('restaurants');
                         Route::post('/delivery/{tenant}', 'activeAndDeactivateDelivery')->name('delivery.activateAndDeactivate');
                         Route::post('/restaurants/{tenant}/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.sign-new-lead');
-                      });
+                    });
+                    Route::middleware('permission:can_access_advertisements')
+                    ->name('advertisement.')
+                    ->prefix('advertisement')
+                    ->group(function () {
+                        Route::resource('/', AdvertisementController::class)
+                        ->parameters(['' => 'advertisement'])
+                        ->withTrashed();
+                        Route::delete('/destroy/{advertisement}', [AdvertisementController::class,'destroy'])
+                        ->name('delete')
+                        ->withTrashed();
+                        Route::post('/change-status/{adsRequest}', [AdvertisementController::class,'changeStatus'])
+                        ->name('change-status')
+                        ->withTrashed();
+                    });
                     Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');

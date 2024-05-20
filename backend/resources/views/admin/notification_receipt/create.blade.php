@@ -29,9 +29,9 @@
                                         </div>
                                         <a href="{{ route('admin.notifications-receipt.index') }}">
                                             <button type="button" class="btn btn-khardl btn-sm">
-                                <i class="fa fa-arrow-left"></i>
-                                {{ __('Back to list') }}
-                            </button>
+                                                <i class="fa fa-arrow-left"></i>
+                                                {{ __('Back to list') }}
+                                            </button>
                                         </a>
                                     </div>
                                     <!--end::Card header-->
@@ -43,7 +43,7 @@
                                             <label class="required form-label">{{ __('Name')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="name" class="form-control mb-2" placeholder="{{ __('Name')}}" value="{{old('name')}}" required/>
+                                            <input type="text" name="name" class="form-control mb-2" placeholder="{{ __('Name')}}" value="{{old('name')}}" required />
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
@@ -52,11 +52,11 @@
                                             <label class="required form-label">{{ __('Email')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('Email')}}" value="{{old('email')}}" required/>
+                                            <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('Email')}}" value="{{old('email')}}" required />
                                             <!--end::Input-->
                                         </div>
-                                         <!--begin::Permission-->
-                                         <div style="margin-left: 0!important; padding-left: 0!important;" class="card mb-5 mb-xl-10 mx-0 px-0">
+                                        <!--begin::Permission-->
+                                        <div style="margin-left: 0!important; padding-left: 0!important;" class="card mb-5 mb-xl-10 mx-0 px-0">
                                             <!--begin::Card header-->
                                             <div class="card-header border-0 cursor-pointer mx-0 px-0" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
                                                 <!--begin::Card title-->
@@ -87,6 +87,16 @@
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="is_branch_purchase" value="1" checked name="is_branch_purchase">
                                                             <label class="form-check-label" for="is_branch_purchase">
                                                                 {{ __('On purchase branch')}}
+                                                            </label>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="is_ads_requests" value="1" checked name="is_ads_requests">
+                                                            <label class="form-check-label" for="is_ads_requests">
+                                                                {{ __('On Ads request')}}
                                                             </label>
                                                         </div>
                                                         <!--end::Label-->

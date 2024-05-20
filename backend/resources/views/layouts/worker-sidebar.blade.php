@@ -273,8 +273,8 @@
                                             <span class="menu-title  {{($link == 'promotions') ? 'text-khardl  ' : ''}}">{{ __('promotions')}}</span>
                                         </a>
                                     </div>
-                                  
-                                
+
+
                                     <!-- Staff evaluation -->
                                     <div class="menu-item">
                                         <a class="menu-link {{($link == 'coupons') ? 'bg-black  ' : ''}}" href="{{ route('coupons.index',['branchId'=>$user->branch->id]) }}">
@@ -288,9 +288,9 @@
                                             <span class="menu-title {{($link == 'coupons') ? 'text-khardl  ' : ''}}">{{ __('Coupons')}}</span>
                                         </a>
                                     </div>
-                          
-                                 
-            
+
+
+
                                 </div>
                             </div>
                             @endif
@@ -330,7 +330,23 @@
                                 </a>
                             </div>
                             @endif
-                            @if($user?->hasPermissionWorker('can_access_delivery_companies'))
+                            @if(Auth::user()?->hasPermissionWorker('can_access_advertising_services'))
+                            <div class="menu-item menu-accordion">
+                                <a href="{{route('restaurant.advertisements.index')}}">
+                                    <span class="{{ ($link == 'advertisements-packages' ) ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon -->
+                                                <span class="svg-icon svg-icon-2">
+                                                    <i class="fa fa-cubes"></i>
+                                                </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                            <span class="menu-title">{{__('Advertising services')}}</span>
+                                    </span>
+                                </a>
+                            </div>
+                            @endif
+                            @if(Auth::user()?->hasPermissionWorker('can_access_delivery_companies'))
                             <!-- Delivery Companies -->
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('restaurant.delivery')}}">
