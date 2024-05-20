@@ -77,6 +77,10 @@ class OrdersLocationsHelper
        }
 
 
+       if (!in_array($location_chart_by, ['country', 'city', 'region'])) {
+           $location_chart_by = 'city';
+       }
+
        if ($location_chart_by == 'country') {
            $chart_data =  [
                'labels' => array_keys($byCounty),
