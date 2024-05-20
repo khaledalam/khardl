@@ -3,10 +3,11 @@
 namespace App\Http\Requests\Tenant\Customer;
 
 
-use App\Models\Tenant\Coupon;
 use App\Models\Tenant\Item;
-use App\Repositories\Customer\CartRepository;
+use App\Models\Tenant\Coupon;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Repositories\Customer\CartRepository;
 
 class ValidateCouponRequest extends FormRequest
 {
@@ -34,9 +35,11 @@ class ValidateCouponRequest extends FormRequest
             'code' => [
                 'required',
                 'string',
-                'exists:coupons,code',
+                Rule::exists('coupons')->where(function ($query) {
+                    return $query->where('branch_id', $this->branch_id);
+                }),
                 function ($attribute, $value, $fail) {
-                    if ($coupon = Coupon::where('code', $value)->first()) {
+                    if ($coupon = Coupon::where('code', $value)->where('branch_id',$this->branch_id)->first()) {
                         if (!$coupon->validity) {
                             $fail(__('The coupon has been expired'));
                         }

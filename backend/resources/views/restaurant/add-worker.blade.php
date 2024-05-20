@@ -223,8 +223,8 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_coupons" value="1" name="can_access_coupons" {{old('can_access_coupons') ? 'checked' : ''}}>
-                                                            <label class="form-check-label" for="can_access_coupons">{{ __('Can access coupons')}}</label>
-                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can add, edit and delete coupons') }}"></i>
+                                                            <label class="form-check-label" for="can_access_coupons">{{ __('Can access discounts page')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can access discounts page') }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>

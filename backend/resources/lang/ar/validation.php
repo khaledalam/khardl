@@ -250,6 +250,7 @@ return [
         'name.en' => "الاسم بالانجليزية",
         'description.ar' => "الوصف بالعربي",
         'description.en' => "الوصف بالانجليزية",
+        "yesterday"=>"الامس",
 
     ],
     'values' => [

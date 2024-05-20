@@ -222,14 +222,7 @@ class CartRepository
         return $this->cart->refresh()->items->sum('total');
     }
 
-    public function totalLoyaltyPointsPrice()
-    {
-        $totalPoints = 0;
-        foreach ($this->cart->refresh()->items as $item) {
-            $totalPoints += ($item->item->price_using_loyalty_points * $item->quantity);
-        }
-        return $totalPoints;
-    }
+    
 
     public function tax($subTotal = null)
     {
@@ -275,7 +268,9 @@ class CartRepository
     }
 
 
-
+    public function  totalPriceWithLoyaltyPoints() {
+        return  $this->cart->totalPriceWithLoyaltyPoints();
+    }
     public function data($message = '')
     {
         $settings = Setting::all()->firstOrFail();
@@ -302,7 +297,8 @@ class CartRepository
                 "tap_public_key"=>env('TAP_PAYMENT_TECHNOLOGY_NEW_SECRET_KEY_LIVE',''),
                 'url_host'=>parse_url(request()->getSchemeAndHttpHost() , PHP_URL_HOST)
             ],
-            'address' => $this->cart->user->address ?? $this->cart?->user?->addresses
+            'address' => $this->cart?->user?->addresses   
+
         ], $message);
     }
     public function items()
@@ -382,6 +378,11 @@ class CartRepository
     {
         return  $paymentMethod == PaymentMethod::ONLINE;
     }
+    public function hasPaymentLoyaltyPoint($paymentMethod)
+    {
+        return  $paymentMethod == PaymentMethod::LOYALTY_POINTS;
+    }
+
 
     public function hasPayment($name)
     {

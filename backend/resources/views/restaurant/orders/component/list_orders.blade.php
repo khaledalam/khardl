@@ -236,8 +236,8 @@
                                 @if ($order->shipping_address)
                                 <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $order->shipping_address }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">{{ Str::limit($order->shipping_address, 20, '...') }}</span>
                                 @else
-                                    @if ($order->user?->address)
-                                    <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $order->user?->address }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">{{ Str::limit($order->user?->address, 20, '...') }}</span>
+                                    @if ($order?->address)
+                                    <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $order?->address }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">{{ Str::limit($order?->address, 20, '...') }}</span>
                                     @else
                                         @if ($order->address)
                                         <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $order->address }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">{{ Str::limit($order->address, 20, '...') }}</span>

@@ -17,7 +17,6 @@ class SettingSeeder extends Seeder
         Setting::create([
             'id' => CentralTenantSetting::latest()->first()?->id + 1,
             'loyalty_points' => 0,
-            'loyalty_point_price'   => 0,
             'cashback_threshold'    => 0,
             'cashback_percentage'   => 0,
             'is_live' => false,

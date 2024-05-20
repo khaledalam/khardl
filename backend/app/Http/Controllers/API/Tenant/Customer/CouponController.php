@@ -13,11 +13,11 @@ class CouponController
 {
     use APIResponseTrait;
 
-    public function validateCoupon(ValidateCouponRequest $request)
+    public function validateCoupon(ValidateCouponRequest $request,$branch_id)
     {
         $cart = (new CartRepository)->initiate();
         $subTotal = $cart->subTotal();
-        $coupon = Coupon::where('code', $request->code)->first();
+        $coupon = Coupon::where('code', $request->code)->where('branch_id',$branch_id)->first();
         $discount = $coupon->calculateDiscount($subTotal);
         $cart->cart->update(['coupon_id' => $coupon->id]);
         return $this->sendResponse([

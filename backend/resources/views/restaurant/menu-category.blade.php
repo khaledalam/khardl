@@ -424,18 +424,37 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            @foreach ($branches as $branchLoop)
-                            <div class="col-md-3">
-                                <a href="{{ route('restaurant.get-category',['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1, 'branchId' => $branchLoop->id]) }}">
-                                    <button type="button" class="btn  btn-sm @if($branchLoop->id == $branchId) btn-khardl text-black @else btn-active-light-khardl @endif">
-                                        @if($branchLoop->id == $branchId)<i class="fa fa-arrow-down text-white mx-1"></i>@endif {{ $branchLoop->name }}
-                                    </button>
-                                </a>
+                        <div id="carouselExample" class="carousel slide" data-bs-interval="false">
+                              
+                            <div class="carousel-inner">
+                        @foreach ($branches->chunk(5) as $key => $branchChunk)
+                                    
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <div class="row ">
+                                    @foreach ($branchChunk as $branchLoop)
+                                    <div class="col-md-2 d-flex justify-content-center" >
+                                        <a href="{{ route('restaurant.get-category', ['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1,'branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl border border-dark text-black @else btn-active-light-khardl @endif">
+                                            <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px" >   {{ $branchLoop->name }}</span>
+                                        </a>
+                                    </div>
+                                        
+                                    @endforeach
+                                </div>
+                             
                             </div>
-                            @endforeach
-                        </div>
-                        </ul>
+                        @endforeach
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev" >
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next" >
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                       
+                    
                     </div>
                 </div>
                 <!--end::Card-->
@@ -801,7 +820,7 @@
                                                         <!--begin::Input-->
                                                         <div class="position-relative d-flex align-items-center">
                                                             <!--begin::Datepicker-->
-                                                            <input type="number" min="0" step="0.1" value="{{ old('price') ?? $item->price }}" required name="price" class="form-control form-control-solid ps-12" />
+                                                            <input type="number" min="0" step="1" value="{{ old('price') ?? $item->price }}" required name="price" class="form-control item_price form-control-solid ps-12"  />
                                                             <!--end::Datepicker-->
                                                         </div>
                                                         <!--end::Input-->
@@ -825,14 +844,22 @@
                                                             <span class="required">{{__('Allow buy with loyalty points?')}}</span>
                                                         </label>
                                                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                            <input type="checkbox" id="allow_buy_with_loyalty_points" name="allow_buy_with_loyalty_points" @if($item?->allow_buy_with_loyalty_points) checked @endif value="1">
+                                                            <input type="checkbox" class="allow_buy_with_loyalty_points" data-id="{{$item->id}}" name="allow_buy_with_loyalty_points" @if($item?->allow_buy_with_loyalty_points) checked @endif value="1">
                                                         </label>
                                                     </div>
                                                     <!--end::Col-->
                                                     <!--begin::Col-->
-                                                    <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item?->allow_buy_with_loyalty_points) d-block @else d-none @endif" id="loyalty_point_price_section">
-                                                        <label class="fs-6 fw-bold mb-2">{{ __('Price using loyalty points (how many points)') }}</label>
-                                                        <input type="number" step="0.1" min="0" name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control form-control-solid ps-12" />
+                                                    <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item?->allow_buy_with_loyalty_points) d-block @else d-none @endif" id="price_using_loyalty_points{{$item->id}}" >
+                                                        <label class="fs-6 fw-bold mb-2">{{ __('Product price with loyalty points (How many points)') }}</label>
+                                                        <input type="number" step="0.1" min="0" name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control price_using_loyalty_points form-control-solid ps-12" />
+                                                        @if($item->LoyaltyPointRatio)
+                                                        <div class="loyalty_point_calculation">
+                                                            <span>{{__('For every 10 riyal, :point points correspond to the cost of product options',['point'=>10*$item->LoyaltyPointRatio])}}</span> <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('loyalty points for item options will get calculated automatically')}}"></i>
+                                                        </div>
+                                                        @else 
+                                                        <div class="loyalty_point_calculation"></div>
+                                                        @endif
+                                                    
                                                     </div>
                                                     <!--end::Col-->
 
@@ -864,7 +891,7 @@
                                                     </div>
                                                 </div>
                                                 <!--end::Input group-->
-
+                                             
                                                 <div id="checkboxes_{{ $item->id }}">
                                                     <!-- Checkbox elements will be dynamically added here -->
 
@@ -1133,7 +1160,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                         <span class="required">{{__('item-availability')}}</span>
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
+                                        
                                     </label>
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                         <input type="checkbox" name="availability" checked value="1">
@@ -1155,7 +1182,7 @@
                             <!--begin::Input-->
                             <div class="position-relative d-flex align-items-center">
                                 <!--begin::Datepicker-->
-                                <input type="number" min="0" step="0.1" required name="price" class="form-control form-control-solid ps-12" />
+                                <input type="number" min="0" step="1" required name="price" class="form-control item_price form-control-solid ps-12" "/>
                                 <!--end::Datepicker-->
                             </div>
                             <!--end::Input-->
@@ -1176,7 +1203,7 @@
                         <!--begin::Col-->
                         <div class="col-md-6 fv-row">
                             <label class="d-flex align-items-between fs-6 fw-bold mb-4">
-                                <span class="required">{{__('Allow buy with loyalty points?')}}</span>
+                                <span >{{__('Allow buy with loyalty points?')}}</span>
                             </label>
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <input type="checkbox" id="allow_buy_with_loyalty_points-new" name="allow_buy_with_loyalty_points" checked value="1">
@@ -1185,13 +1212,16 @@
                         <!--end::Col-->
                         <!--begin::Col-->
                         <div class="col-md-6 fv-row d-block" id="loyalty_point_price_section-new">
-                            <label class="fs-6 fw-bold mb-2">{{ __('Price using loyalty points (how many points)') }}</label>
-                            <input type="number" step="0.1" min="0" value="0.5" name="price_using_loyalty_points" class="form-control form-control-solid ps-12" />
+                            <label class="fs-6 fw-bold mb-2">{{ __('Product price with loyalty points (How many points)') }}</label>
+
+                            <input type="number" step="0.1" min="0"  name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid ps-12" />
+                            <div class="loyalty_point_calculation"></div>
                         </div>
                         <!--end::Col-->
 
                     </div>
                     <!--end::Input group-->
+                    
 
                     <div class="d-flex flex-column mb-8">
                         <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
@@ -1216,7 +1246,7 @@
                     <!--end::Input group-->
 
 
-
+                
                     <div id="checkboxes">
                         <!-- Checkbox elements will be dynamically added here -->
 
@@ -1256,7 +1286,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+      
     $(document).ready(function() {
+        $('#carouselExample').carousel({
+            pause: true,
+            interval: false,
+        });
         function confirmCloseModal() {
             return confirm("{{ __('are-you-sure-you-want-to-close-without-saving') }}");
         }
@@ -1291,8 +1326,43 @@
 {{-- Items form validations --}}
 <script>
 
+    $(document).ready(function() {
+        var translations = {
+            'en': 'For every 10 riyal, :point points correspond to the cost of product options',
+            'ar': 'لكل ١٠ ريال مقابلها :point نقطة تكلفة خيارات المنتج'
+        };
 
+        function translate(replacements) {
+            var translation = translations['{{app()->getLocale()}}'];
+            for (var placeholder in replacements) {
+                translation = translation.replace(`:${placeholder}`, replacements[placeholder]);
+            }
+            return translation;
+        }
 
+        $('.item_price, .price_using_loyalty_points').on('input', function() {
+            let container =  $(this).closest('.modal-body');
+            let itemPrice = container.find('.item_price').val()
+            let loyaltyPoints = container.find('.price_using_loyalty_points').val()
+       
+            if (itemPrice !== '' && loyaltyPoints !== '') {
+
+                let text = translate({  point: Math.ceil(10*(loyaltyPoints/itemPrice).toFixed(2)) }); 
+                let loyalty_point_calculation = container.find('.loyalty_point_calculation');
+                loyalty_point_calculation.html(`<span>${text}</span> <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('loyalty points for item options will get calculated automatically')}}"></i>`);
+                loyalty_point_calculation.find('[data-bs-toggle="tooltip"]').tooltip();
+
+            }
+        });
+        $('.allow_buy_with_loyalty_points').change(function(){
+            if($(this).is(':checked')){
+                $('#price_using_loyalty_points'+$(this).data("id")).removeClass('d-none').addClass( 'd-block');
+            }else {
+                $('#price_using_loyalty_points'+$(this).data("id")).removeClass('d-block').addClass( 'd-none');
+            }
+          
+        });
+    });
     if (document.getElementById('allow_buy_with_loyalty_points')) {
         document.getElementById('allow_buy_with_loyalty_points').addEventListener('click', function (e) {
             if (e.target.checked) {
@@ -1550,6 +1620,19 @@
         transform-origin: left top;
     }
 
+  
+    .carousel-control-prev-icon
+    {
+        background-image : url('/img/next.png')
+    }
+    .carousel-control-next-icon {
+        background-image : url('/img/prev.png')
+    }
+    .carousel-inner{
+        position: relative;
+        width: 70%;
+        margin: 0 115px;
+    }
 </style>
 <!--end::Content-->
 {{-- Image preview --}}
@@ -1584,4 +1667,6 @@
         readURL(this,itemID);
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 @endsection
