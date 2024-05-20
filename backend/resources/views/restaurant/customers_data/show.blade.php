@@ -140,18 +140,18 @@
                                             </td>
                                             <td class="fw-bolder text-end">
                                                 {{-- {{ $restaurantUser->address }} --}}
-                                                <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                                                <div id="carouselExample" class="carousel slide" data-bs-interval="false">
                               
                                                     <div class="carousel-inner">
-                                                @foreach ($restaurantUser->addresses->chunk(4) as $key => $branchChunk)
+                                                @foreach ($restaurantUser->addresses->chunk(4) as $key => $addresses)
                                                             
                                                     <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                                                         <div class="row ">
-                                                            @foreach ($branchChunk as $branchLoop)
-                                                            <div class="col-md-2 d-flex justify-content-center" >
-                                                                {{-- <a href="{{ route('restaurant.get-category', ['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1,'branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl border border-dark text-black @else btn-active-light-khardl @endif"> --}}
-                                                                    <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px" >   {{ $branchLoop->address }}</span>
-                                                                {{-- </a> --}}
+                                                            @foreach ($addresses as $address)
+                                                            <div class="col-md-3 d-flex justify-content-center" >
+                                                                <a href="https://www.google.com/maps?q={{ $address->lat }},{{ $address->lng }}" target="_blank" style="min-width: 140px;" class="btn btn-sm btn-active-light-khardl ">
+                                                                    <span class="d-inline-block text-truncate" style="max-width: 120px;margin:-7px" >   <i class="bi bi-box-arrow-up-right"></i> {{ $address->address }} </span>
+                                                                </a>
                                                             </div>
                                                                 
                                                             @endforeach
@@ -360,13 +360,11 @@
         position: relative;
         width: 70%;
         margin: 0 115px;
+        padding: 6px 0px;
     }
 </style>
 @endsection
 @section('js')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places&loading=async&v=beta"></script>
-
-
 
 <script>
     $(document).ready(function() {
@@ -401,4 +399,6 @@
     // initializeMapOnClick("{{$restaurantUser->id}}", "{{$restaurantUser->lat ?? ''}}", "{{$restaurantUser->lng ?? ''}}");
 
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 @endsection
