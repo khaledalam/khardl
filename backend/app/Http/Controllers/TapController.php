@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\Restaurant\OrderOnlineInvoice;
+use App\Http\Services\tenant\AdsPackage\AdsPackageService;
 use App\Models\CentralSetting;
 use Carbon\Carbon;
 use App\Models\Tenant;
@@ -46,7 +47,8 @@ class TapController extends Controller
     {
         $user = Auth::user();
         $settings = Setting::first();
-        $orders = Order::whenSearch($request['search']?? null)
+        $orders = Order::paidOnlineCash()
+        ->whenSearch($request['search']?? null)
         ->WhenDateString($request['date_string']??null)
         ->recent();
         $ROSubscription = ROSubscription::first();
@@ -63,8 +65,13 @@ class TapController extends Controller
             return $this->handleDownload($request, $ROCustomerAppSubscriptionInvoices);
         }
         $orders =  $orders->paginate(config('application.perPage',10));
-
-        return view('restaurant.payments', compact('user','ROCustomerAppSubscription','ROSubscriptionInvoices','ROCustomerAppSubscriptionInvoices','settings','ROSubscription','orders'));
+        $requestedPackages = $this->getRequestedPackages();
+        return view('restaurant.payments', compact('user','ROCustomerAppSubscription','ROSubscriptionInvoices','ROCustomerAppSubscriptionInvoices','settings','ROSubscription','orders','requestedPackages'));
+    }
+    public function getRequestedPackages()
+    {
+        $adsService =  new AdsPackageService();
+        return $adsService->getRequestedPackages();
     }
     private function handleDownload($request, $model)
     {

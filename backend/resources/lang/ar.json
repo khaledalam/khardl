@@ -1485,5 +1485,7 @@
     "An advertising service has been requested from a restaurant":"تم طلب خدمة اعلانية من مطعم",
     "No packages are available for now, check it later":"لا تتوفر باقات في الوقت الحالي ، تحقق منها لاحقًا",
     "No address found":"لم يتم العثور على عنوان",
-    "Could not download CSV file.":"لا يمكن تنزيل ملف الاكسيل."
+    "Could not download CSV file.":"لا يمكن تنزيل ملف الاكسيل.",
+    "You do not have any advertising services before.":"ليس لديك أي خدمات إعلانية من قبل.",
+    "You can request an advertising service from here":"بإمكانك طلب خدمة إعلانية من هنا"
 }
