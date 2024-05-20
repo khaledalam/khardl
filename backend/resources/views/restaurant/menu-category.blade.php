@@ -424,7 +424,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                        <div id="carouselExample" class="carousel slide" data-bs-interval="false">
                               
                             <div class="carousel-inner">
                         @foreach ($branches->chunk(5) as $key => $branchChunk)

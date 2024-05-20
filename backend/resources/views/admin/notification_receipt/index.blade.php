@@ -56,6 +56,7 @@
                                     <th class="min-w-200px">{{ __('Email') }}</th>
                                     <th class="min-w-150px">{{ __('On purchase the app') }}</th>
                                     <th class="min-w-150px">{{ __('On purchase branch') }}</th>
+                                    <th class="min-w-150px">{{ __('On Ads request') }}</th>
                                     <th class="min-w-150px">{{ __('Status') }}</th>
                                     <th class="min-w-150px">{{ __('Created at') }}</th>
                                     <th class="min-w-150px text-end">{{ __('actions') }}</th>
@@ -91,6 +92,17 @@
                                     </td>
                                     <td>
                                         @if ($notification->is_branch_purchase)
+                                        <span class="badge active">
+                                            {{ __('Yes') }}
+                                        </span>
+                                        @else
+                                        <span class="badge inactive">
+                                            {{ __('No') }}
+                                        </span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($notification->is_ads_requests)
                                         <span class="badge active">
                                             {{ __('Yes') }}
                                         </span>

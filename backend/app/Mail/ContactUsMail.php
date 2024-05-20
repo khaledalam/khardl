@@ -46,7 +46,6 @@ class ContactUsMail extends Mailable
     {
         return $this->to([
                env('CONTACT_US_EMAIL')
-//             'khaledalam.net@gmail.com' // @TODO: remove this line
             ])
             ->cc([
                 'khaledalam.net@gmail.com',
