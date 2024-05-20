@@ -15,11 +15,7 @@
     <link rel="shortcut png" href="{{ global_asset('images/Logo_White.svg')}}"/>
     <link rel="icon" href="{{ global_asset('images/Logo_White.svg')}}"/>
     <!--begin::Page Vendor Stylesheets(used by this page)-->
-    <link href="{{ global_asset('assets/css/global.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ global_asset('assets/css/admin-main.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
-        <link href="{{ global_asset('assets/css/global-ar.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ global_asset('assets/css/admin-main-ar.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Page Vendor Stylesheets-->
@@ -28,21 +24,27 @@
         <link href="{{ global_asset('assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Global Stylesheets Bundle-->
     @else
-        <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}"rel="stylesheet" type="text/css" />
-        <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
-        <!--end::Page Vendor Stylesheets-->
-        <!--begin::Global Stylesheets Bundle(used by all pages)-->
-        <link href="{{ global_asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}"rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <!--end::Page Vendor Stylesheets-->
+    <!--begin::Global Stylesheets Bundle(used by all pages)-->
+    <link href="{{ global_asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    @endif
+    <link href="{{ global_asset('assets/css/global.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/css/admin-main.css')}}" rel="stylesheet" type="text/css" />
+    @if(app()->getLocale() === 'ar')
+        <link href="{{ global_asset('assets/css/global-ar.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/css/admin-main-ar.css')}}" rel="stylesheet" type="text/css" />
     @endif
 
     @if(app()->getLocale() === 'ar')
-                                <style>
-                                .menu-item.menu-accordion.show:not(.hiding):not(.menu-dropdown) > .menu-link .menu-arrow:after, .menu-item.menu-accordion.showing:not(.menu-dropdown) > .menu-link .menu-arrow:after {
-                                    transform: rotateZ(270deg);
-                                    transition: transform 0.3s ease;
-                                }
-                                </style>
+        <style>
+        .menu-item.menu-accordion.show:not(.hiding):not(.menu-dropdown) > .menu-link .menu-arrow:after, .menu-item.menu-accordion.showing:not(.menu-dropdown) > .menu-link .menu-arrow:after {
+            transform: rotateZ(270deg);
+            transition: transform 0.3s ease;
+        }
+        </style>
     @endif
 </head>
 <!--end::Head-->
