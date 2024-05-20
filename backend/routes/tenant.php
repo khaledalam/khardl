@@ -125,8 +125,9 @@ Route::group([
             /* Coupon page */
             Route::middleware('permission:can_access_coupons')
             ->resource('{branchId}/coupons',CouponController::class)
+            ->middleware(['permission:can_access_coupons','coupon-role'])
             ->withTrashed(['show','restore','edit','update']);
-            Route::middleware('permission:can_access_coupons')
+            Route::middleware(['permission:can_access_coupons','coupon-role'])
             ->name('coupons.')
             ->controller(CouponController::class)->group(function () {
                 Route::delete('{branchId}/coupons/delete/{coupon}','delete')->withTrashed()->name('delete');
