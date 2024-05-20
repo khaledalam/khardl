@@ -50,4 +50,6 @@ enum LogTypes: string
     case CustomerBranchNotifyFail = "New branch has been added to restaurant owner fail";
     case CustomerAppNotifySent = "Customer has been purchased app sent";
     case CustomerAppNotifyFail = "Customer has been purchased app fail";
+    case RORequestForAdsSent = "Restaurant owner request for Ads sent";
+    case RORequestForAdsFail = "Restaurant owner request for Ads fail";
 }

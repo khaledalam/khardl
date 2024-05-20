@@ -39,6 +39,7 @@ class NotificationReceiptService
         $data = $this->request_data($request);
         $data['is_application_purchase'] = $request->filled('is_application_purchase') ? 1 : 0;
         $data['is_branch_purchase'] = $request->filled('is_branch_purchase') ? 1 : 0;
+        $data['is_ads_requests'] = $request->filled('is_ads_requests') ? 1 : 0;
         NotificationReceipt::create($data);
         return redirect()->route('admin.notifications-receipt.index')->with(['success' => __('Created successfully')]);
     }
@@ -47,6 +48,7 @@ class NotificationReceiptService
         $data = $this->request_data($request);
         $data['is_application_purchase'] = $request->filled('is_application_purchase') ? 1 : 0;
         $data['is_branch_purchase'] = $request->filled('is_branch_purchase') ? 1 : 0;
+        $data['is_ads_requests'] = $request->filled('is_ads_requests') ? 1 : 0;
         $notifications_receipt->update($data);
         return redirect()->route('admin.notifications-receipt.index')->with(['success' => __('Updated successfully')]);
     }
