@@ -38,8 +38,11 @@ class Item extends Model
         'dropdown_input_prices',
         'availability',
         'allow_buy_with_loyalty_points',
-        'price_using_loyalty_points'
+        'price_using_loyalty_points',
+       
     ];
+    protected $appends = ['loyalty_point_ratio'];
+ 
     public $translatable = ['description','name'];
     protected $casts = [
         'checkbox_required' => 'array',
@@ -84,6 +87,13 @@ class Item extends Model
     {
         if(!isset($this->attributes['photo']))return null;
         return getImageFromTenant($this->attributes['photo']);
+    }
+    public function getLoyaltyPointRatioAttribute()
+    {
+        if($this->allow_buy_with_loyalty_points){
+            return ceil($this->price /  $this->price_using_loyalty_points );
+        }
+        return null;
     }
     /* End Relations */
     /* Start Scopes */

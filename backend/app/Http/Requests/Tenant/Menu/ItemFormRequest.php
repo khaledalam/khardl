@@ -147,9 +147,9 @@ class ItemFormRequest extends FormRequest
             ]
         ];
         if ($this->item) {
-            $rules['photo'] = ['nullable', 'mimes:png,jpg,jpeg,gif', 'max:4096'];
+            $rules['photo'] = ['nullable', 'mimes:png,jpg,jpeg,gif,svg', 'max:4096'];
         } else {
-            $rules['photo'] = ['required', 'mimes:png,jpg,jpeg,gif', 'max:4096'];
+            $rules['photo'] = ['required', 'mimes:png,jpg,jpeg,gif,svg', 'max:4096'];
         }
         return array_merge($regexRules, $rules);
     }

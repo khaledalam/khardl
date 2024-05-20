@@ -54,7 +54,8 @@ class OrderRepository
                 'lng' => $address->lng ?? null,
                 'address' => $address->address ?? null,
                 'manual_order_first_name' => $request->manual_order_first_name,
-                'manual_order_last_name' => $request->manual_order_last_name
+                'manual_order_last_name' => $request->manual_order_last_name,
+                'total_loyalty_points'=>($paymentMethod->name == PaymentMethod::LOYALTY_POINTS)? $cart->totalPriceWithLoyaltyPoints() :NULL,
             ]);
             if ($discount && $coupon) {
                 $user->coupons()->attach($coupon->id);
@@ -66,11 +67,14 @@ class OrderRepository
             $statusLog->notes = $request->order_notes;
             $statusLog->saveOrFail();
 
-            if ($cart->canPayWithLoyaltyPoints() || $cart->hasPaymentCashOnDelivery($request->payment_method)) {
-
+            if( $cart->hasPaymentLoyaltyPoint($request->payment_method) || $cart->hasPaymentCashOnDelivery($request->payment_method)){
                 // @TODO: fetch transaction fee percentage that need to be deduce from
                 // each TAP transaction from super admin dashboard settings
-
+                if( $cart->hasPaymentLoyaltyPoint($request->payment_method)){
+                    $user->loyalty_points -= $order->total_loyalty_points;
+                    $user->save();
+                }
+               
                 self::sendNotifications($user, $order);
                 // @TODO: Create TAP charge
 

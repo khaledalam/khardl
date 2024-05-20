@@ -74,6 +74,7 @@ const CartPage = () => {
   const [coupon, setCoupon] = useState("");
   const [cart, setCart] = useState(null);
   const [user, setUser] = useState(null);
+  let branch_id = localStorage.getItem("selected_branch_id");
 
   useEffect(() => {
     setLoading(true);
@@ -106,7 +107,7 @@ const CartPage = () => {
     }
 
     try {
-      await AxiosInstance.post(`/validate/coupon`, {
+      await AxiosInstance.post(`/validate/${branch_id}/coupon`, {
         code: coupon,
       });
       await fetchCartData();
@@ -496,6 +497,7 @@ const CartPage = () => {
                         <div>{cart?.delivery_fee + ` ${t("SAR")}`}</div>
                       </div>
                     )}
+                    
                     <div className="flex justify-between mt-4">
                       <div className="flex flex-col">
                         <span>{t("Coupon Discount")}</span>
