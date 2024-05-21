@@ -438,7 +438,7 @@
     "identity_of_owner_or_manager": "هويه المالك او المدير",
     "commercial_registration" : " السجل التجاري",
     "bank_certificate": "شهادة بنكية",
-    "tax_registration_certificate": "الرقم الضريبي",
+    "tax_registration_certificate": "شهادة التسجيل الضريبي",
     "Rejection reasons": "اسباب الرفض",
     "you-wont-be-able-to-undo-this" : "لن تتمكن من التراجع عن هذا",
     "are-you-sure" : "هل أنت متأكد؟",
@@ -1491,5 +1491,11 @@
     "No address found":"لم يتم العثور على عنوان",
     "Could not download CSV file.":"لا يمكن تنزيل ملف الاكسيل.",
     "You do not have any advertising services before.":"ليس لديك أي خدمات إعلانية من قبل.",
-    "You can request an advertising service from here":"بإمكانك طلب خدمة إعلانية من هنا"
+    "You can request an advertising service from here":"بإمكانك طلب خدمة إعلانية من هنا",
+    "Complete step 2 manually":"أكمل الخطوة 2 يدويًا",
+    "Complete step 2":"اكمل الخطوة الثانية",
+    "Upload files":"تحميل الملفات",
+    "size <= 25 MG":"الحجم <= 25 ميجابايت",
+    "You already completed register step2 successfully.":"انت بالفعل اكملت الخطوة الثانية بنجاح",
+    "Restaurant has been created successfully":"تم إنشاء المطعم بنجاح"
 }

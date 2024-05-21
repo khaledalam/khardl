@@ -251,6 +251,8 @@ return [
         'description.ar' => "الوصف بالعربي",
         'description.en' => "الوصف بالانجليزية",
         "yesterday"=>"الامس",
+        "identity_of_owner_or_manager"=> "هويه المالك او المدير",
+        "commercial_registration_number"=> "رقم التسجيل التجاري"
 
     ],
     'values' => [
