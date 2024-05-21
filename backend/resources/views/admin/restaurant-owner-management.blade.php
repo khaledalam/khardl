@@ -97,7 +97,7 @@
                                         <a class="text-dark fw-bolder text-hover-khardl d-block fs-6" href="{{ route('admin.view-restaurants', ['tenant' => $admin->restaurant?->id]) }}">
                                             {{ $admin->restaurant?->restaurant_name }}
                                             <br>
-                                            @if ($admin->restaurant->is_live())
+                                            @if ($admin->restaurant?->is_live())
                                             <span class="badge badge-success">{{ __('active') }}</span>
                                             @else
                                             <span class="badge badge-warning">{{ __('inactive') }}</span>

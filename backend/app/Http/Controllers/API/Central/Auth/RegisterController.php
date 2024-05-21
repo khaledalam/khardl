@@ -86,7 +86,6 @@ class RegisterController extends BaseController
     }
     public function createTenant($user)
     {
-
         $tenant = (new CreateTenantAction)
         (
             user: $user,
@@ -144,7 +143,9 @@ class RegisterController extends BaseController
                 return $this->sendError('Fail', $fileKey . __('is missing'));
             }
         }
-        TraderRequirement::create($input);
+        TraderRequirement::updateOrCreate([
+            'user_id' => $user->id
+        ],$input);
     }
     public function updateBD($request,$user)
     {

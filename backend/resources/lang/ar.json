@@ -1494,8 +1494,14 @@
     "You can request an advertising service from here":"بإمكانك طلب خدمة إعلانية من هنا",
     "Complete step 2 manually":"أكمل الخطوة 2 يدويًا",
     "Complete step 2":"اكمل الخطوة الثانية",
-    "Upload files":"تحميل الملفات",
+    "Upload files":"رفع الملفات",
     "size <= 25 MG":"الحجم <= 25 ميجابايت",
     "You already completed register step2 successfully.":"انت بالفعل اكملت الخطوة الثانية بنجاح",
-    "Restaurant has been created successfully":"تم إنشاء المطعم بنجاح"
+    "Restaurant has been created successfully":"تم إنشاء المطعم بنجاح",
+    "Upload with restaurant activation":"رفع الملفات مع تنشيط المطعم",
+    "You did not complete step 1 yet.":"لم تكمل الخطوة 1 بعد.",
+    "Required files":"الملفات المطلوبة",
+    "Restaurant owner information":"معلومات مالك المطعم",
+    "User is already have a restaurant":"المستخدم لديه بالفعل مطعم",
+    "An error occurred":"حدث خطأ"
 }

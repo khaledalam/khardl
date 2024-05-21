@@ -12,6 +12,7 @@ use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
+use Exception;
 
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
@@ -101,6 +102,16 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     {
         $settingQuery = function () {
             return Setting::first()->is_live;
+        };
+        return $run_on_tenant ? $this->run($settingQuery) : $settingQuery();
+    }
+    public function activeRestaurant($run_on_tenant = true)
+    {
+        $settingQuery = function () {
+            $setting = Setting::first();
+            $setting->update([
+                'is_live' => 1
+            ]);
         };
         return $run_on_tenant ? $this->run($settingQuery) : $settingQuery();
 

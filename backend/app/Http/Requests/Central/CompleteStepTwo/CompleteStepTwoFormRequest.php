@@ -28,7 +28,7 @@ class CompleteStepTwoFormRequest extends FormRequest
                 'max:25600',
                 function ($attribute, $value, $fail) use ($user) {
                     // Check if the trader's registration requirements already fulfilled.
-                    if ($user?->traderRegistrationRequirement && !$user->isRejected()/*  && $user->restaurant != null */) {
+                    if ($user?->traderRegistrationRequirement && !$user->isRejected() && $user->restaurant !=null) {
                         $fail(__('You already completed register step2 successfully.'));
                     }
                 }
