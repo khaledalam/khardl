@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Central\Auth;
 
 use App\Enums\Admin\LogTypes;
+use App\Http\Requests\Central\CompleteStepTwo\CompleteStepTwoFormRequest;
 use App\Jobs\SendVerifyEmailJob;
 use App\Models\Log;
 use App\Models\Tenant;
@@ -48,40 +49,65 @@ class RegisterController extends BaseController
         return $this->sendResponse($success, 'User register successfully.');
     }
 
-    public function stepTwo(Request $request)
+    public function stepTwo(CompleteStepTwoFormRequest $request)
     {
-        $request->validate([
-            'commercial_registration' => 'nullable|mimes:pdf,jpg,jpeg,png|max:25600', // 25MB
-            'tax_registration_certificate' => 'nullable|mimes:pdf,jpg,jpeg,png|max:25600',
-            'bank_certificate' => 'nullable|mimes:pdf,jpg,jpeg,png|max:25600',
-            'identity_of_owner_or_manager' => 'nullable|mimes:pdf,jpg,jpeg,png|max:25600',
-            'national_address' => 'nullable|mimes:pdf,jpg,jpeg,png|max:25600',
-
-            'commercial_registration_number' => 'nullable|string|min:5|max:255',
-            'IBAN' => 'nullable|string|min:10|max:255',
-            'facility_name' => 'nullable|string|min:5|max:255',
-            'national_id_number' => 'nullable|string|min:5|max:255',
-            'dob' => 'nullable|date_format:Y-m-d'
-        ]);
-
         $user = auth()->user();
-
-        // Check if the trader's registration requirements already fulfilled.
-        if ($user?->traderRegistrationRequirement && !$user->isRejected()) {
-            return $this->sendResponse(null, 'User already completed register step2 successfully.');
+        $tenant = $this->createNewRestaurant($user, $request);
+        return $this->sendResponse(['url'=>$tenant->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID)], 'User complete register step two successfully.');
+    }
+    public function createNewRestaurant($user, $request)
+    {
+        $this->updateBD($request,$user);
+        $this->createTraderRequirements($user,$request);
+        if ($user->isRejected()) {
+            $url = $this->reSubmitFiles($user);
+            return $this->sendResponse(['url' => $url], 'User complete register step two successfully.');
         }
+        // Create tenant logic...
+        return $this->createTenant($user);
+    }
+    public function reSubmitFiles($user)
+    {
 
-        if ($request->has('dob')) {
-            $user->dob = $request->dob;
-            $user->save();
-            $request->request->remove('dob');
-        }
+        $user->status = User::RE_UPLOAD_FILES;
+        $user->save();
 
+        $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', $user->restaurant_name)->first()?->id);
+        // set user status in tenant table too
+        $tenant->run(function () use($user){
+            $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
+            $rUser->status = RestaurantUser::ACTIVE;
+            $rUser->reject_reasons = null;
+            $rUser->save();
+        });
+
+        $url = Tenant::where('restaurant_name', '=', $user?->restaurant_name)->first()->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID); //  USER restaurant owner id
+        return $url;
+    }
+    public function createTenant($user)
+    {
+        $tenant = (new CreateTenantAction)
+        (
+            user: $user,
+            domain: $user->restaurant_name
+        );
+        $actions = [
+            'en' => 'Has created new restaurant',
+            'ar' => 'انشأ مطعم جديد',
+        ];
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => $actions,
+            'type' => LogTypes::CreateNewRestaurant
+        ]);
+        return $tenant;
+    }
+    public function createTraderRequirements($user,$request)
+    {
         $user_id = $user->id;
 
         $input = $request->all();
         $input['user_id'] = $user_id;
-
         // Ensure the directory exists and is writable
         $directory = storage_path("app/private/".User::STORAGE."/{$user_id}");
         if (!File::exists($directory)) {
@@ -117,45 +143,17 @@ class RegisterController extends BaseController
                 return $this->sendError('Fail', $fileKey . __('is missing'));
             }
         }
-        TraderRequirement::create($input);
-
-
-        if ($user->isRejected()) {
-
-            $user->status = User::RE_UPLOAD_FILES;
+        TraderRequirement::updateOrCreate([
+            'user_id' => $user->id
+        ],$input);
+    }
+    public function updateBD($request,$user)
+    {
+        if ($request->has('dob')) {
+            $user->dob = $request->dob;
             $user->save();
-
-            $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', $user->restaurant_name)->first()?->id);
-            // set user status in tenant table too
-            $tenant->run(function () use($user){
-                $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
-                $rUser->status = RestaurantUser::ACTIVE;
-                $rUser->reject_reasons = null;
-                $rUser->save();
-            });
-
-            $url = Tenant::where('restaurant_name', '=', $user?->restaurant_name)->first()->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID); //  USER restaurant owner id
-
-            return $this->sendResponse(['url' => $url], 'User complete register step two successfully.');
+            $request->request->remove('dob');
         }
-
-        // Create tenant logic...
-
-        $tenant = (new CreateTenantAction)
-        (
-            user: $user,
-            domain: $user->restaurant_name
-        );
-        $actions = [
-            'en' => 'Has created new restaurant',
-            'ar' => 'انشأ مطعم جديد',
-        ];
-        Log::create([
-            'user_id' => Auth::id(),
-            'action' => $actions,
-            'type' => LogTypes::CreateNewRestaurant
-        ]);
-        return $this->sendResponse(['url'=>$tenant->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID)], 'User complete register step two successfully.');
     }
 
     public function getStepTwoData(Request $request)
