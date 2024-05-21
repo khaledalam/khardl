@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\Restaurant\OrderOnlineInvoice;
 use App\Http\Services\tenant\AdsPackage\AdsPackageService;
 use App\Models\CentralSetting;
+use App\Utils\Slack;
 use Carbon\Carbon;
 use App\Models\Tenant;
 use App\Models\Tenant\Order;
@@ -19,6 +20,7 @@ use App\Models\ROCustomerAppSub;
 use App\Models\NotificationReceipt;
 use App\Models\ROSubscriptionCoupon;
 use Illuminate\Support\Facades\Auth;
+use JoliCode\Slack\ClientFactory;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\ROSubscriptionInvoice;
 use App\Models\Tenant\RestaurantUser;
@@ -364,14 +366,19 @@ class TapController extends Controller
                     'lead_id' => $response['message']['id'],
                     'lead_response' => $response['message']
                 ]);
-                SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
-                    user: RestaurantUser::first(),
-                    lead_id :  $response['message']['id'],
-                );
+
+                // disable send email to TAP team about new lead id
+//                SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
+//                    user: RestaurantUser::first(),
+//                    lead_id :  $response['message']['id'],
+//                );
 
                 if ($update_tap_sheet) {
                    $this->UpdateTAPSheet($response);
                 }
+
+
+                Slack::send();
 
             });
 
