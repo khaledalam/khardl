@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\Central\Admin\Advertisement\AdvertisementController
 use App\Http\Controllers\Web\Central\Admin\CompleteStepTwo\CompleteStepTwoController;
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use App\Http\Controllers\Web\Central\Admin\NotificationReceipt\NotificationReceiptController;
+use App\Http\Controllers\Web\Central\Admin\RestaurantOwner\RestaurantOwnerController;
 use App\Http\Controllers\Web\Central\GlobalPromoterController;
 use App\Models\ROCustomerAppSub;
 use App\Models\Tenant;
@@ -214,6 +215,13 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     ->controller(CompleteStepTwoController::class)->group(function () {
                         Route::get('/complete-step-two/{user}', 'completeStepTwo')->name('index');
                         Route::post('/complete-step-two/{user}', 'storeStepTwo')->name('store');
+                    });
+                    Route::middleware('permission:can_see_restaurant_owners')
+                    ->name('owner-information.')
+                    ->controller(RestaurantOwnerController::class)->group(function () {
+                        Route::get('/show-restaurant-owner-info/{user}', 'show')->name('show');
+                        Route::post('/update-restaurant-owner-info/{user}', 'update')->name('update');
+
                     });
 //                    Route::get('/order-inquiry', [AdminController::class, 'orderInquiry'])->middleware('permission:can_access_restaurants')->name('order-inquiry');
                     Route::delete('/user-management/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('permission:can_edit_admins')->name('delete-user');

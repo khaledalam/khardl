@@ -58,7 +58,7 @@ class RegisterController extends BaseController
     public function createNewRestaurant($user, $request)
     {
         $this->updateBD($request,$user);
-        $this->createTraderRequirements($user,$request);
+        $this->createOrUpdateTraderRequirements($user,$request);
         if ($user->isRejected()) {
             $url = $this->reSubmitFiles($user);
             return $this->sendResponse(['url' => $url], 'User complete register step two successfully.');
@@ -102,7 +102,7 @@ class RegisterController extends BaseController
         ]);
         return $tenant;
     }
-    public function createTraderRequirements($user,$request)
+    public function createOrUpdateTraderRequirements($user,$request)
     {
         $user_id = $user->id;
 
