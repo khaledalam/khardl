@@ -21,7 +21,7 @@
         <input type="text" name="last_name" class="form-control mb-2" required placeholder="{{ __('last-name')}}" value="{{old('last_name') ?? $user->last_name}}" />
         <!--end::Input-->
     </div>
-    @if(!$user?->traderregistrationrequirement)
+    @if(!$user?->traderregistrationrequirement||!$user->restaurant)
     <div class="mb-10 fv-row">
         <!--begin::Label-->
         <label class="required form-label">{{ __('Restaurant name (English)')}}</label>

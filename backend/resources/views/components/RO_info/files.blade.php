@@ -8,7 +8,7 @@
         <label class="{{ $user?->traderRegistrationRequirement ? '' : 'required'}} form-label">{{ __('commercial_registration')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="file" class="form-control" name="commercial_registration" accept=".pdf, .jpg, .jpeg, .png" required>
+        <input type="file" class="form-control" name="commercial_registration" accept=".pdf, .jpg, .jpeg, .png" {{ $user?->traderregistrationrequirement ? '' : 'required'}}>
         <!--end::Input-->
         <!--begin::Description-->
         <div class="text-muted fs-7">{{__("Accept")}}: PDF, JPG, JPEG, PNG {{__("size <= 25 MG")}}</div>
@@ -17,7 +17,7 @@
     </div>
     <div class="mb-10 fv-row">
         <!--begin::Label-->
-        <label class="{{ $user?->traderregistrationrequirement ? '' : 'required'}}  form-label">{{ __('commercial-registration-number')}}</label>
+        <label class="required form-label">{{ __('commercial-registration-number')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
         <input type="text" class="form-control" name="commercial_registration_number" value="{{ old('commercial_registration_number')  ?? ($user?->traderregistrationrequirement ? $user?->traderregistrationrequirement->commercial_registration_number:'') }}" required>
@@ -41,7 +41,7 @@
         <label class="{{ $user?->traderregistrationrequirement ? '' : 'required'}}  form-label">{{ __('bank-certificate')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="file" class="form-control" name="bank_certificate" accept=".pdf, .jpg, .jpeg, .png" required>
+        <input type="file" class="form-control" name="bank_certificate" accept=".pdf, .jpg, .jpeg, .png" {{ $user?->traderregistrationrequirement ? '' : 'required'}}>
         <!--end::Input-->
         <!--begin::Description-->
         <div class="text-muted fs-7">{{__("Accept")}}: PDF, JPG, JPEG, PNG {{__("size <= 25 MG")}}</div>
@@ -50,7 +50,7 @@
     </div>
     <div class="mb-10 fv-row">
         <!--begin::Label-->
-        <label class="{{ $user?->traderregistrationrequirement ? '' : 'required'}}  form-label">{{ __('Bank IBAN')}}</label>
+        <label class="required form-label">{{ __('Bank IBAN')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
         <input type="text" class="form-control" name="IBAN" value="{{ old('IBAN') ?? ($user?->traderregistrationrequirement ? $user?->traderregistrationrequirement->IBAN:'')}}" required>
@@ -60,7 +60,7 @@
     <!--end::Content-->
     <div class="mb-10 fv-row">
         <!--begin::Label-->
-        <label class="{{ $user?->traderregistrationrequirement ? '' : 'required'}}  form-label">{{ __('facility-name')}}</label>
+        <label class="required form-label">{{ __('facility-name')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
         <input type="text" class="form-control" name="facility_name" value="{{ old('facility_name') ?? ($user?->traderregistrationrequirement ? $user?->traderregistrationrequirement->facility_name:'') }}" required>
@@ -73,7 +73,7 @@
         <label class="{{ $user?->traderregistrationrequirement ? '' : 'required'}}  form-label">{{ __('identity_of_owner_or_manager')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="file" class="form-control" name="identity_of_owner_or_manager" accept=".pdf, .jpg, .jpeg, .png" required>
+        <input type="file" class="form-control" name="identity_of_owner_or_manager" accept=".pdf, .jpg, .jpeg, .png" {{ $user?->traderregistrationrequirement ? '' : 'required'}}>
         <!--end::Input-->
         <!--begin::Description-->
         <div class="text-muted fs-7">{{__("Accept")}}: PDF, JPG, JPEG, PNG {{__("size <= 25 MG")}}</div>
@@ -82,7 +82,7 @@
     </div>
     <div class="mb-10 fv-row">
         <!--begin::Label-->
-        <label class="{{ $user?->traderregistrationrequirement ? '' : 'required'}}  form-label">{{ __('National ID')}}</label>
+        <label class="required form-label">{{ __('National ID')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
         <input type="text" class="form-control" name="national_id_number" value="{{ old('national_id_number') ?? ($user?->traderregistrationrequirement ? $user?->traderregistrationrequirement->national_id_number:'') }}" required>
@@ -91,7 +91,7 @@
     </div>
     <div class="mb-10 fv-row">
         <!--begin::Label-->
-        <label class="{{ $user?->traderregistrationrequirement ? '' : 'required'}}  form-label">{{ __('Date of birth')}}</label>
+        <label class="required form-label">{{ __('Date of birth')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
         <input type="date" class="form-control" name="dob" value="{{ old('dob') ?? ($user?->dob!=null ? $user?->dob:'')}}" required>
@@ -100,10 +100,10 @@
     </div>
     <div class="mb-10 fv-row">
         <!--begin::Label-->
-        <label class="{{ $user?->traderregistrationrequirement ? '' : 'required'}}  form-label">{{ __('national_address')}}</label>
+        <label class="{{ $user?->traderregistrationrequirement ? '' : 'required'}} form-label">{{ __('national_address')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="file" class="form-control" name="national_address" accept=".pdf, .jpg, .jpeg, .png" required>
+        <input type="file" class="form-control" name="national_address" accept=".pdf, .jpg, .jpeg, .png" {{ $user?->traderregistrationrequirement ? '' : 'required'}}>
         <!--end::Input-->
         <!--begin::Description-->
         <div class="text-muted fs-7">{{__("Accept")}}: PDF, JPG, JPEG, PNG {{__("size <= 25 MG")}}</div>

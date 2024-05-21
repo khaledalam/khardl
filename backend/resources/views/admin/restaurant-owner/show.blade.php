@@ -9,7 +9,7 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Form-->
-            <form action="{{ route('admin.owner-information.update',['user' => $user->id]) }}" method="POST" enctype="multipart/form-data" novalidate id="form_step_2">
+            <form action="{{ route('admin.owner-information.update',['user' => $user->id]) }}" method="POST" enctype="multipart/form-data" id="form_step_2">
                 @csrf
 
                 <!--begin::Main column-->

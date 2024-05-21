@@ -74,7 +74,7 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex justify-content-start flex-column">
-                                                <span href="{{ route('admin.owner-information.show',['user' => $admin->id]) }}" class="text-dark fw-bolder text-hover-khardl fs-6">{{ $admin->first_name }}</span>
+                                                <a href="{{ route('admin.owner-information.show',['user' => $admin->id]) }}" class="text-dark fw-bolder text-hover-khardl fs-6">{{ $admin->first_name }}</a>
                                             </div>
                                         </div>
                                     </td>
