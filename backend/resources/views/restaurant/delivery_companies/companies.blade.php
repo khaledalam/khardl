@@ -103,18 +103,15 @@
 
     @else
 
-        <img src="{{global_asset('img/lock.png')}}"  width="250" class="m-auto my-5"/>
-        <h3 class="m-auto my-3">{{__('You need to have a branch to be able to subscribe to delivery companies')}}</h3>
+        <div class="d-flex flex-column flex-root text-center">
 
-        <hr class="w-50 m-auto my-4"/>
-        <div class="m-auto my-1">
-            <div class="fs-5 text-center">{{__('cover-area')}}</div>
-            <span class="badge badge-lg badge-light-khardl my-2">الرياض</span>
-            <span class="badge badge-lg badge-light-khardl my-2">جده</span>
-            <span class="badge badge-lg badge-light-khardl my-2">مكه</span>
-            <span class="badge badge-lg badge-light-khardl my-2">ٱلْحِسَى</span>
+            <img src="{{global_asset('img/lock.png')}}"  width="250" class="m-auto my-5"/>
+            <h3 class="m-auto my-3">{{__('You need to have a branch to be able to subscribe to delivery companies')}}</h3>
+
+            <hr class="w-50 m-auto my-4"/>
+            <span class="w-50 m-auto my-4">{{__('All major cities are covered. If you are located in a non-major area, contact us to ensure there are representatives in the area')}}</span>
+
         </div>
-
     @endif
 
 @endsection
