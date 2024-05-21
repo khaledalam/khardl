@@ -232,7 +232,7 @@
                                                 <!--begin::Title-->
                                                 <!--end::Title-->
                                                 <!--begin::Price-->
-                                                @if($RO_subscription->number_of_branches > 0)
+                                                @if($RO_subscription?->number_of_branches > 0)
                                                 <div class="col-md-10">
                                                     <h6 class="fw-normal">{{__('Number of branches available to add')}}</h6>
                                                 </div>
