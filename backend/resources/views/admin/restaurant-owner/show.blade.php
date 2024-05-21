@@ -1,5 +1,5 @@
 @extends('layouts.admin-sidebar')
-@section('title', __('Complete step 2'))
+@section('title', __('Update information'))
 @section('content')
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -9,7 +9,7 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Form-->
-            <form action="{{ route('admin.complete-step-two.store',['user' => $user->id]) }}" method="POST" enctype="multipart/form-data" novalidate id="form_step_2">
+            <form action="{{ route('admin.owner-information.update',['user' => $user->id]) }}" method="POST" enctype="multipart/form-data" novalidate id="form_step_2">
                 @csrf
 
                 <!--begin::Main column-->
@@ -24,7 +24,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>{{ __('Complete step 2 manually')}}</h2>
+                                            <h2>{{ __('Update restaurant owner profile')}}</h2>
                                         </div>
                                         <a href="{{ route('admin.restaurant-owner-management') }}">
                                             <button type="button" class="btn btn-khardl btn-sm">
@@ -36,7 +36,14 @@
                                     <!--end::Card header-->
                                     @include('components.RO_info.index')
                                     <hr>
+                                    @if($user->traderRegistrationRequirement)
                                     @include('components.RO_info.files')
+                                    @else
+                                    <div class="alert alert-warning p-4 m-4">
+                                        {{ __('Restaurant owner does not have files, you can complete this steps') }}
+                                        <a href="{{ route('admin.complete-step-two.index',['user' => $user->id]) }}">{{ __('here') }}</a>
+                                    </div>
+                                    @endif
                                     <!--end::Card header-->
                                 </div>
                                 <!--end::General options-->
@@ -46,14 +53,10 @@
                         <div class="d-flex justify-content-end mt-3">
                             <!--begin::Button-->
                             <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-active-light-khardl">
-                                <span class="indicator-label">{{ __('Upload files') }}</span>
+                                <span class="indicator-label">{{ __('Update') }}</span>
                                 <i class="bi bi-check2-square mx-1"></i>
                                 <span class="indicator-progress">{{ __('please-wait')}}
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
-                            <button type="submit" class="mx-2 btn btn-khardl" id="upload_with_active">
-                                <span class="indicator-label">{{ __('Upload with restaurant activation') }}</span>
-                                <i class="bi bi-check2-square mx-1"></i>
                             </button>
                             <!--end::Button-->
                         </div>
@@ -67,22 +70,4 @@
     <!--end::Post-->
 </div>
 <!--end::Content-->
-@section('js')
-<script>
-    document.getElementById('upload_with_active').addEventListener('click', function() {
-        console.log(1);
-        event.preventDefault();
-        var newInput = document.createElement('input');
-        newInput.type = 'hidden';
-        newInput.name = 'active';
-        newInput.value = 'true';
-        // Append the new input to the form
-        var form = document.getElementById('form_step_2');
-        form.appendChild(newInput);
-        form.submit(); // Submit the form
-    });
-
-</script>
-
-@endsection
 @endsection

@@ -1503,5 +1503,9 @@
     "Required files":"الملفات المطلوبة",
     "Restaurant owner information":"معلومات مالك المطعم",
     "User is already have a restaurant":"المستخدم لديه بالفعل مطعم",
-    "An error occurred":"حدث خطأ"
+    "An error occurred":"حدث خطأ",
+    "here":"من هنا",
+    "Restaurant owner does not have files, you can complete this steps":"مالك المطعم لا يملك ملفات ، يمكنك إكمال هذه الخطوات",
+    "Update information":"تحديث المعلومات",
+    "Update restaurant owner profile":"تحديث  حساب مالك المطعم"
 }
