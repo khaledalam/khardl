@@ -210,6 +210,15 @@ return [
         'name.en' => "Name (english)",
         'description.ar' => "Description (arabic)",
         'description.en' => "Description (english)",
+        "commercial_registration" => __("commercial_registration"),
+        "tax_registration_certificate" => __('tax_registration_certificate'),
+        "bank_certificate" => __('bank_certificate'),
+        "identity_of_owner_or_manager" => __('identity_of_owner_or_manager'),
+        "national_address" => __('national_address'),
+        "commercial_registration_number" => __('commercial-registration-number'),
+        "IBAN" => __('IBAN'),
+        "facility_name" => __('facility-name'),
+        "national_id_number" => __('National ID'),
     ],
 
 ];
