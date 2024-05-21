@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @if($user->number_of_available_branches() > 0)
+    @if(App\Models\Tenant\Branch::where('active',true)->count() > 0)
 
     <!--begin::Main-->
     <!--begin::Root-->
