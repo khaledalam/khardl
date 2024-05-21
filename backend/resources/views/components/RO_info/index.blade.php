@@ -24,7 +24,7 @@
     @if(!$user?->traderregistrationrequirement||!$user->restaurant)
     <div class="mb-10 fv-row">
         <!--begin::Label-->
-        <label class="required form-label">{{ __('Restaurant name (English)')}}</label>
+        <label class="required form-label">{{ __('Restaurant name (English)')}}</label>        <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('If your restaurant name is ABC the domain will be abc.khardl.com') }}"></i>
         <!--end::Label-->
         <!--begin::Input-->
         <input type="text" name="restaurant_name" class="form-control mb-2" required placeholder="{{ __('Restaurant name (English)')}}" value="{{old('restaurant_name') ?? $user->restaurant_name}}" />
@@ -56,8 +56,12 @@
         <!--begin::Label-->
         <label class=" form-label">{{ __('password')}}</label>
         <!--end::Label-->
+        <div class="form-check my-2">
+            <input type="checkbox" class="form-check-input" id="change_client_password">
+            <label class="form-check-label" for="change_client_password">{{ __("Change the client's password?") }}</label>
+        </div>
         <!--begin::Input-->
-        <input type="password" name="password" class="form-control mb-2" minlength="8" placeholder="{{ __('password')}}" value="{{old('password')}}" />
+        <input type="password" id="change_password" name="password" disabled class="form-control mb-2" minlength="8" placeholder="{{ __('password')}}" value="{{old('password')}}" />
         <!--end::Input-->
     </div>
     <!--end::Input group-->
@@ -81,3 +85,16 @@
         <!--end::Input-->
     </div>
 </div>
+@section('javascript')
+<script>
+    $(document).ready(function() {
+         $('#change_client_password').change(function() {
+             if ($(this).is(':checked')) {
+                 $('input[name="password"]').removeAttr('disabled');
+             } else {
+                 $('#change_password').attr('disabled', true);
+             }
+         });
+     });
+ </script>
+@endsection
