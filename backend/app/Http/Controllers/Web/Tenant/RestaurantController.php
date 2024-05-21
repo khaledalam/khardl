@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web\Tenant;
 
 use App\Models\Tenant\Item;
+use App\Utils\Slack;
+use Google\Client;
 use Illuminate\Support\Str;
 use App\Models\Subscription;
 use App\Models\Tenant\Order;
@@ -43,6 +45,7 @@ use App\Packages\DeliveryCompanies\DeliveryCompanies;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
 use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
+use JoliCode\Slack\ClientFactory;
 
 
 class RestaurantController extends BaseController
@@ -51,7 +54,7 @@ class RestaurantController extends BaseController
     public function promotions()
     {
         $user = Auth::user();
-    
+
         $settings = Setting::all()->firstOrFail();
 
         $branches = Branch::all()->when($user->isWorker(),function($q)use($user){
@@ -161,7 +164,6 @@ class RestaurantController extends BaseController
 
     public function branches()
     {
-
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
         $branches = Branch::withTrashed()->iSWorker($user)
@@ -752,12 +754,12 @@ class RestaurantController extends BaseController
         $branch = Branch::findOrFail($id);
         if($user->isWorker() && $id != $user->branch->id)  return null;
         if($branch->loyalty_availability){
-       
+
             $branch->payment_methods()->detach(PaymentMethod::where('name',PaymentMethod::LOYALTY_POINTS)->first()?->id);
             return response()->json(['checked' => false]);
 
         }else {
-           
+
 
             $branch->payment_methods()->attach(PaymentMethod::where('name',PaymentMethod::LOYALTY_POINTS)->first()?->id);
             return response()->json(['checked' => true]);
