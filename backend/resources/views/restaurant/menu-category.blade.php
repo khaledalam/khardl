@@ -467,7 +467,7 @@
                 <!--begin::Sidebar-->
                 <div class="col-md-4">
                     <!--begin::Sticky aside-->
-                    <div class="card card-flush mb-0 overflow-scroll py-2" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
+                    <div class="card card-flush px-1">
                         <!--begin::Aside content-->
                         <div class="card-header  align-items-center py-5 gap-2 gap-md-5">
                             <div class="d-flex flex-wrap gap-1">
@@ -487,7 +487,7 @@
                                 </script>
                             </div>
                         </div>
-                        <div class="card-body pt-0">
+                        <div class="card-body pt-0 px-2">
                             @if($categories->count())
                             <div id="categoryList" class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
                                 <!--begin::Menu item-->
@@ -662,7 +662,7 @@
                 <div class="col-md-8">
                     <!--begin::Card-->
                     @if($selectedCategory)
-                    <div class="card">
+                    <div class="card card-flush">
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                             <!--begin::Actions-->
                             <div class="d-flex flex-wrap gap-1">
@@ -950,11 +950,41 @@
                         @endforeach
                         <div class="card-body p-1">
                             <!--begin::Table-->
-                            <table class="table table-hover table-row-dashed fs-6 gy-5 my-0" id="kt_inbox_listing">
+                            <div class="row mb-2 px-2" id="kt_inbox_listing">
                                 <!--begin::Table body-->
-                                <tbody>
-                                    @foreach ($items as $item)
-                                    <tr>
+                                @foreach ($items as $item)
+                                <div class="col-md-6">
+                                    <div class="item mt-3">
+                                        <div class="d-flex align-items-center border border-1 border-secondary rounded-3 p-3 justify-content-between">
+                                            <div class="image" data-bs-toggle="tooltip" title="{{$item->name}}" >
+                                                <img alt="Pic" src="{{$item->photo}}" style="width: 80px; height: 80px;"/>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h5 class="mb-0 fs-5 fw-bold">
+                                                    <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}">
+                                                        <span class="fw-bolder text-darken text-start">{{ $item->name }}</span>
+                                                    </a>
+                                                </h5>
+                                                <p class="mb-0 text-darken">{{ $item->description }}</p>
+                                                <div class="d-flex align-items-center mt-2">
+                                                    <span class="me-3 fs-6 text-danger">{{ $item->calories }} {{ __('Kcal') }}</span>
+                                                    <span class="btn-khardl text-white rounded-pill px-2 py-1 fs-6 fw-bold">{{ $item->price }} {{ __("SAR") }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown ms-1">
+                                                <span data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                    <a class="dropdown-item delete-button" href="#">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    @endforeach
+                                    {{-- <tr>
                                         <td>
                                             @if(!$item->availability)<span class="badge badge-danger mx-1">{{__('Not available')}}</span>
                                             @else
@@ -962,9 +992,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="{{$item->name}}">
-                                                <img alt="Pic" src="{{$item->photo}}" />
-                                            </div>
+
                                         </td>
 
                                         <!--begin::Title-->
@@ -1005,14 +1033,6 @@
                                                         {{ __('edit') }}
                                                     </a>
                                                 </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                {{-- TODO:Edit item --}}
-                                                {{-- <div class="menu-item px-3">
-                                                            <a href="https://google.com" class="menu-link px-3">{{ __('edit') }}</a>
-                                            </div> --}}
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
 
                                             <div class="menu-item px-3" style="border-top-style: solid;border-top-width: 1px;border-top-color: #ccc;">
                                                 <form class="delete-form" action="{{ route('restaurant.delete-item', ['id' => $item->id]) }}" method="POST">
@@ -1026,11 +1046,9 @@
                                             <!--end::Menu-->
                                         </td>
                                         <!--end::Date-->
-                                    </tr>
-                                    @endforeach
-                                </tbody>
+                                    </tr> --}}
                             <!--end::Table body-->
-                            </table>
+                            </div>
                             {{-- TODO: load item when scroll down --}}
                             <!--end::Table-->
                         </div>

@@ -19,6 +19,9 @@ a {
 .aside-dark .menu .menu-item .menu-link .menu-title{
   color: #000;
 }
+.text-darken{
+  color: #3B3B3B!important;
+}
 .aside-dark .menu .menu-item .menu-link.active .menu-icon,
 .aside-dark .menu .menu-item .menu-link.active .menu-icon .svg-icon,
 .aside-dark .menu .menu-item .menu-link.active .menu-icon i,

@@ -80,3 +80,10 @@
 .delete-form .dropdown-item.active, .delete-form .dropdown-item:active{
   background-color: #f46789;
 }
+/* Item */
+.item .bg-khardl{
+  color: #fff!important;
+}
+.item .image img{
+  border-radius: 100px;
+}
