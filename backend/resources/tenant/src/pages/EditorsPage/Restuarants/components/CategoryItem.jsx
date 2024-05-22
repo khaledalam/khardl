@@ -25,9 +25,8 @@ const CategoryItem = ({
   const [isHover, setIsHover] = useState(false);
   const { t } = useTranslation();
 
-  const { branches, menu_category_position } = useSelector(
-    (state) => state.restuarantEditorStyle
-  );
+  const { branches, menu_category_position, display_category_icon } =
+    useSelector((state) => state.restuarantEditorStyle);
 
   if (!branches) return;
 
@@ -53,7 +52,7 @@ const CategoryItem = ({
         isGrid ? "flex-row" : "flex-col"
       } gap-[16px] items-center ${isSide ? "w-full" : "max-w-[60px]"}`}
     >
-      {selectedBranch?.display_category_icon == "1" && (
+      {display_category_icon == 1 && (
         <div
           style={{
             backgroundColor: isHover

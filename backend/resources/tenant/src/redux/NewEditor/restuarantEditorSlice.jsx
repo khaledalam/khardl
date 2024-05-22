@@ -30,7 +30,7 @@ const restuarantEditorSlice = createSlice({
     category_alignment: "center",
     category_shape: "rounded",
     category_hover_color: "#F2FF00",
-
+    display_category_icon: 0,
     categoryDetail_type: "stack",
     categoryDetail_alignment: "center",
     categoryDetail_shape: "rounded",
@@ -240,6 +240,9 @@ const restuarantEditorSlice = createSlice({
     },
     categoryDetailShape: (state, action) => {
       state.categoryDetail_shape = action.payload;
+    },
+    categoryIcon: (state, action) => {
+      state.display_category_icon = action.payload;
     },
     selectedSocialMediaIcons: (state, action) => {
       state.selectedSocialIcons = action.payload;
@@ -575,6 +578,7 @@ export const {
   categoryDetailAlignment,
   categoryDetailCartColor,
   categoryDetailShape,
+  categoryIcon,
   socialMediaIcons,
   selectedSocialMediaIcons,
   socialMediaIconsAlignment,
