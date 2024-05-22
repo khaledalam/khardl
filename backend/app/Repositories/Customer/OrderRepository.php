@@ -74,7 +74,7 @@ class OrderRepository
                     $user->loyalty_points -= $order->total_loyalty_points;
                     $user->save();
                 }
-               
+
                 self::sendNotifications($user, $order);
                 // @TODO: Create TAP charge
 
@@ -100,7 +100,14 @@ class OrderRepository
     {
         $address = null;
         if($request->delivery_type == DeliveryType::DELIVERY){
-            $address = UserAddress::find($request->address);
+            if($request->address_id){
+                $address = UserAddress::find($request->address_id);
+            }elseif($request->lat && $request->lng){
+                // Create a new address record with lat and lng
+                $address = new UserAddress();
+                $address->lat = $request->lat;
+                $address->lng = $request->lng;
+            }
         }
         return $address;
     }

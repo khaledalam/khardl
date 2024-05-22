@@ -1510,5 +1510,6 @@
     "Update information":"تحديث المعلومات",
     "Update restaurant owner profile":"تحديث  حساب مالك المطعم",
     "Change the client's password?":"تغيير كلمة مرور العميل؟",
-    "If your restaurant name is ABC the domain will be abc.khardl.com":"إذا كان اسم مطعمك هو ABC ، فسيكون النطاق abc.khardl.com"
+    "If your restaurant name is ABC the domain will be abc.khardl.com":"إذا كان اسم مطعمك هو ABC ، فسيكون النطاق abc.khardl.com",
+    "Invalid address,Address is required":"عنوان غير صالح ، العنوان مطلوب"
 }
