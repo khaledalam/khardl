@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Logo from "../../../assets/Logo_White.svg";
 import ContactUsCover from "../../../assets/ContactUsCover.webp";
 import { useTranslation } from "react-i18next";
@@ -175,7 +175,6 @@ const Register = ({ closingFunc }) => {
         phone: registerFormRef.current.phone.value,
       });
       if (response.data) {
-
         toast.success(`${t("The code has been re-sent successfully")}`);
       } else {
         throw new Error(`${t("Code resend failed")}`);
@@ -275,7 +274,14 @@ const Register = ({ closingFunc }) => {
           <div className="h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
             <div className="text-zinc-500 text-[9px] font-normal">
               {t("First name")}
-              <span className="text-red-500">*</span>
+              <span
+                className="text-red-500"
+                style={{
+                  color: restaurantStyle?.price_background_color + "C0",
+                }}
+              >
+                *
+              </span>
             </div>
           </div>
         </div>
@@ -289,7 +295,14 @@ const Register = ({ closingFunc }) => {
           <div className="h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
             <div className="text-zinc-500 text-[9px] font-normal">
               {t("Last name")}
-              <span className="text-red-500">*</span>
+              <span
+                className="text-red-500"
+                style={{
+                  color: restaurantStyle?.price_background_color + "C0",
+                }}
+              >
+                *
+              </span>
             </div>
           </div>
         </div>
@@ -321,8 +334,8 @@ const Register = ({ closingFunc }) => {
                 let temp = "";
                 for (let i = 0; i < event.target.value.length; i += 1) {
                   if (
-                    event.target.value[i] >= '0' &&
-                    event.target.value[i] <= '9'
+                    event.target.value[i] >= "0" &&
+                    event.target.value[i] <= "9"
                   ) {
                     temp += event.target.value[i];
                   }
@@ -334,10 +347,7 @@ const Register = ({ closingFunc }) => {
               minLength={9}
               maxLength={9}
               onKeyDown={(event) => {
-                if (
-                  event.ctrlKey &&
-                  event.key === "v"
-                ) {
+                if (event.ctrlKey && event.key === "v") {
                 } else if (
                   (event.which < 48 || event.which > 57) &&
                   (event.which < 96 || event.which > 105) &&
@@ -352,7 +362,12 @@ const Register = ({ closingFunc }) => {
               }}
             />
             {errors.phone && (
-              <span className="text-red-500 text-xs mt-1 ms-2">
+              <span
+                className="text-red-500 text-xs mt-1 ms-2"
+                style={{
+                  color: restaurantStyle?.price_background_color + "C0",
+                }}
+              >
                 {t("Phone Error")}
               </span>
             )}
@@ -379,11 +394,17 @@ const Register = ({ closingFunc }) => {
             <div className="w-9 h-[11px] px-1 bg-white justify-start items-center gap-2.5 inline-flex absolute top-[-8px] left-[8px]">
               <div className="text-zinc-500 text-[9px] font-normal font-['Plus Jakarta Sans']">
                 {t("Phone number")}
-                <span className="text-red-500">*</span>
+                <span
+                  className="text-red-500"
+                  style={{
+                    color: restaurantStyle?.price_background_color,
+                  }}
+                >
+                  *
+                </span>
               </div>
             </div>
           </div>
-
         </div>
         {/* <div className="flex mb-[20px] w-full relative">
           <input
@@ -419,7 +440,12 @@ const Register = ({ closingFunc }) => {
             <div className="w-full bg-white rounded">
               <div className="text-center">
                 <div className="w-[100%] h-[38px] mt-0 p-[7px] boreder-none rounded-full bg-white flex border border-gray-200 ">
-                  <div className="w-[24px] h-[24px] bg-[#7D0A0A] flex justify-center items-center text-white text-[10px] rounded-full">
+                  <div
+                    className="w-[24px] h-[24px] bg-[#7D0A0A] flex justify-center items-center text-white text-[10px] rounded-full"
+                    style={{
+                      backgroundColor: restaurantStyle?.price_background_color,
+                    }}
+                  >
                     {`${countdown}s`}
                   </div>
                   <input
@@ -450,7 +476,12 @@ const Register = ({ closingFunc }) => {
                 </div>
 
                 {errors2.otp && (
-                  <span className="text-red-500 text-xs mt-1 ms-2">
+                  <span
+                    className="text-red-500 text-xs mt-1 ms-2"
+                    style={{
+                      color: restaurantStyle?.price_background_color + "C0",
+                    }}
+                  >
                     {t("Validation code Error")}
                   </span>
                 )}
@@ -465,6 +496,9 @@ const Register = ({ closingFunc }) => {
                       <span
                         onClick={ResendCode}
                         className="text-[#7D0A0A] text-[10px] font-semibold hover:cursor-pointer"
+                        style={{
+                          color: restaurantStyle?.price_background_color,
+                        }}
                       >
                         {t("Resend now.")}
                       </span>
@@ -482,6 +516,9 @@ const Register = ({ closingFunc }) => {
               className={`w-full h-8 px-4 pt-1.5 pb-2 ${
                 lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
               } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
+              style={{
+                backgroundColor: restaurantStyle?.price_background_color,
+              }}
             >
               {t("Register")}
             </button>
@@ -496,6 +533,9 @@ const Register = ({ closingFunc }) => {
               className={`w-full h-8 px-4 pt-1.5 pb-2 ${
                 lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
               } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
+              style={{
+                backgroundColor: restaurantStyle?.price_background_color,
+              }}
             >
               {t("Register")}
             </button>
@@ -505,6 +545,9 @@ const Register = ({ closingFunc }) => {
             <input
               type="button"
               className="text-[#7D0A0A] cursor-pointer hover:text-blue-300 py-2 px-2 text-md "
+              style={{
+                color: restaurantStyle?.price_background_color,
+              }}
               value={t("Login here")}
               onClick={() => {
                 dispatch(SetRegisterModal(false));
