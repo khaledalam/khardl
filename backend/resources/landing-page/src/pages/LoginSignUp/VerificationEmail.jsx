@@ -6,17 +6,20 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { GrPowerReset } from "react-icons/gr";
-// import { useApiContext } from '../context'
-
-import { useAuthContext } from "../../components/context/AuthContext";
-import { API_ENDPOINT, HTTP_NOT_ACCEPTED } from "../../config";
+import { useApiContext } from '../context'
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { API_ENDPOINT, HTTP_NOT_ACCEPTED ,HTTP_NOT_AUTHENTICATED} from "../../config";
 import AxiosInstance from "../../axios/axios";
 
 const VerificationEmail = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
-  const { setStatusCode } = useAuthContext();
+  let user_email = sessionStorage.getItem("email");
+ 
+  const [statusCode, setStatusCode] = useLocalStorage(
+    "status-code",
+    HTTP_NOT_AUTHENTICATED,
+  );
 
   const {
     register: register,
@@ -24,7 +27,7 @@ const VerificationEmail = () => {
     formState: { errors: errors },
   } = useForm();
   const { handleSubmit: handleSubmit2 } = useForm();
-  let user_email = sessionStorage.getItem("email") || "";
+  
 
   const [showForm, setShowForm] = useState(false);
   const [countdown, setCountdown] = useState(60);
@@ -37,8 +40,7 @@ const VerificationEmail = () => {
     setCanResend(false);
     startTimer();
   };
-
-  if (user_email.length < 1) {
+  if (!user_email) {
     window.location.href = "/logout";
   }
 
@@ -66,7 +68,7 @@ const VerificationEmail = () => {
     try {
       const response = await AxiosInstance.post(`/email/verify`, {
         code: data.verificationcode,
-        email: data.email,
+        email: user_email,
       });
       if (response.data) {
         setStatusCode(HTTP_NOT_ACCEPTED);
@@ -103,6 +105,9 @@ const VerificationEmail = () => {
 
   useEffect(() => {
     let timer = startTimer();
+    return () => {
+      clearInterval(timer); 
+    };
   }, []);
 
   return (

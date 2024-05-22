@@ -2,32 +2,33 @@
 
 namespace App\Http\Controllers\API\Central\Auth;
 
-use App\Enums\Admin\LogTypes;
-use App\Http\Requests\Central\CompleteStepTwo\CompleteStepTwoFormRequest;
-use App\Jobs\SendVerifyEmailJob;
 use App\Models\Log;
-use App\Models\Tenant;
-use App\Models\Tenant\RestaurantUser;
 use App\Models\User;
+use App\Models\Tenant;
 use App\Models\Promoter;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use App\Enums\Admin\LogTypes;
 use App\Rules\UniqueSubdomain;
 use Illuminate\Support\Carbon;
 use App\Jobs\CreateTenantAdmin;
+use App\Jobs\SendVerifyEmailJob;
 use App\Models\PromoterIpAddress;
 use App\Models\TraderRequirement;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Actions\CreateTenantAction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Tenant\RestaurantUser;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseController;
 use App\Http\Requests\RestaurantOwnerRegisterRequest;
-use Spatie\Permission\Models\Role;
+use App\Http\Requests\Central\CompleteStepTwo\CompleteStepTwoFormRequest;
 
 class RegisterController extends BaseController
 {
@@ -36,17 +37,18 @@ class RegisterController extends BaseController
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
         $input['status'] = RestaurantUser::INACTIVE;
-        $user = User::create($input);
-        $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
-        $success['name'] =  "$user->first_name $user->last_name";
-        $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
-        $user->assignRole($role);
-        Auth::login($user,true);
+        Session::put('register_'.$input['email'], $input);
+        // $user = User::create($input);
+        // $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
+        // $success['name'] =  "$user->first_name $user->last_name";
+        // $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
+        // $user->assignRole($role);
+        // Auth::login($user,true);
         if($promoter = PromoterIpAddress::where('ip_address',request()?->ip())){
             $promoter->update(['registered'=>true]);
         }
         $this->sendVerificationCode($request);
-        return $this->sendResponse($success, 'User register successfully.');
+        return $this->sendResponse([], 'User register successfully.');
     }
 
     public function stepTwo(CompleteStepTwoFormRequest $request)
@@ -211,8 +213,14 @@ class RegisterController extends BaseController
 
     public function sendVerificationCode(Request $request): JsonResponse
     {
+        
         $today = Carbon::today();
-        $user = Auth::user();
+     
+        if(!$data  = session("register_".$request->email)){
+            return $this->sendError('Fail', __('Email not found, please try again'));
+        }
+        $user = new User($data);
+        
         // You might want a new table to track verification code attempts.
         // Here, I'm assuming the table's name is `email_verification_tokens`.
         $attempts = DB::table('email_verification_tokens')
@@ -224,12 +232,12 @@ class RegisterController extends BaseController
         if (count($attempts) >= 3) {
             return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
         }
-
+      
         // Generate the verification code using the model's method.
         $user->generateVerificationCode();
-
+        // dd($user);
         SendVerifyEmailJob::dispatch($user);
-
+        // dd($user);
         return $this->sendResponse(null, 'Verification code sent to email.');
     }
 
@@ -249,9 +257,11 @@ class RegisterController extends BaseController
     {
 
         $request->validate([
-            // 'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255',
             'code' => 'required|string|min:6|max:6', // Assuming a 6-digit code
         ]);
+        dd(session("register_".$request->email));
+        // if(session("register_".$request->email))
         $user =Auth::user();
 
         // If the user has already verified their email

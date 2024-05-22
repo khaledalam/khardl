@@ -132,7 +132,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         // TODO @todo create new email_verification_tokens record
         $this->verification_code = sprintf("%06d", mt_rand(1, 999999));
-        $this->save();
+        // $this->save();
     }
     public function updateLastLogin()
     {

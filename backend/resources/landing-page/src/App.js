@@ -119,6 +119,10 @@ const App = () => {
             <Route path="/services" element={<Services />} />{" "}
             <Route path="/prices" element={<Prices />} />{" "}
             <Route path="/fqa" element={<FQA />} />
+            <Route
+                path="/verification-email"
+                element={<VerificationEmail />}
+              />{" "}
             <Route element={<Layout />}>
               <Route path="/login" element={<Login />} />{" "}
               <Route path="/register" element={<Register />} />{" "}
@@ -129,10 +133,7 @@ const App = () => {
                 path="/complete-register"
                 element={<CompleteRegistration />}
               />{" "}
-              <Route
-                path="/verification-email"
-                element={<VerificationEmail />}
-              />{" "}
+             
             </Route>{" "}
           </Routes>{" "}
         </div>{" "}

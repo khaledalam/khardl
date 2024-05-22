@@ -133,7 +133,12 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
 
     });
+    Route::post('email/send-verify', [RegisterController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');
+    Route::post('email/verify', [RegisterController::class, 'verify'])->middleware('throttle:passwordReset');
 
+    Route::get('verification-email', static function() {
+        return view("central");
+    })->name("verification-email"); 
     // Auth Protected
 
     Route::middleware(['auth','notBlocked'])->group(function () {
@@ -141,12 +146,12 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
 
         Route::middleware('notVerified')->group(function () {
 
-            Route::post('email/send-verify', [RegisterController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');
-            Route::post('email/verify', [RegisterController::class, 'verify'])->middleware('throttle:passwordReset');
+            // Route::post('email/send-verify', [RegisterController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');
+            // Route::post('email/verify', [RegisterController::class, 'verify'])->middleware('throttle:passwordReset');
 
-            Route::get('verification-email', static function() {
-                return view("central");
-            })->name("verification-email");
+            // Route::get('verification-email', static function() {
+            //     return view("central");
+            // })->name("verification-email");
         });
 
         Route::middleware('verified')->group(function () {

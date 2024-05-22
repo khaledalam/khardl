@@ -18,6 +18,7 @@ const useAxiosAuth = () => {
     "/advantages",
     "/prices",
     "/fqa",
+    "/verification-email",
     "/policies",
     "/privacy",
   ].includes(location.pathname);
