@@ -488,139 +488,169 @@
                             </div>
                         </div>
                         <div class="card-body pt-0">
+                            @if($categories->count())
                             <div id="categoryList" class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
                                 <!--begin::Menu item-->
                                 @foreach ($categories as $category)
 
-                                    <div class="row mb-2">
-                                        <!--begin::Inbox-->
-                                        <div class="col-md-12">
-                                            <div class="menu-link d-flex align-items-stretch justify-content-between gap-4 mb-4 p-3 @if ($category?->id === $selectedCategory?->id) active @endif">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="category_image">
+                                <div class="row mb-2">
+                                    <!--begin::Inbox-->
+                                    <div class="col-md-12">
+                                        <div class="menu-link d-flex align-items-stretch justify-content-between gap-4 mb-4 p-3 @if ($category?->id === $selectedCategory?->id) active @endif">
+                                            <div class="d-flex align-items-center">
+                                                <div class="category_image">
+                                                    <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
+                                                        <img src="{{ $category?->photo ?? global_asset('img/category-icon.png') }}" width="35" height="35" style="border-radius: 50%;" />
+                                                    </a>
+                                                </div>
+                                                <div class="d-flex flex-column ms-3">
+                                                    <div class="category_name">
                                                         <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
-                                                            <img src="{{ $category?->photo ?? global_asset('img/category-icon.png') }}" width="35" height="35" class="mx-2" style="border-radius: 50%;" />
+                                                            <span class="menu-title fw-bolder small">{{ $category->name }}</span>
                                                         </a>
                                                     </div>
-                                                    <div class="d-flex flex-column ms-3">
-                                                        <div class="category_name">
-                                                            <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
-                                                                <span class="menu-title fw-bolder small">{{ $category->name }}</span>
+                                                    <div class="category_info mt-1">
+                                                        <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{ __('Sort') }}: {{ $category->sort }} </span>
+                                                        <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{__('Products')}}: {{ $category->items?->count() }} </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if($user->isRestaurantOwner())
+                                            <div class="d-flex align-items-center mx-2">
+                                                <div class="dropdown">
+                                                    <span style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </span>
+                                                    <ul class="dropdown-menu rounded">
+                                                        <li>
+                                                            <a class="dropdown-item text-muted py-2" href="#" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}', '{{$category->sort}}')">
+                                                                {{ __('Edit category') }}
                                                             </a>
-                                                        </div>
-                                                        <div class="category_info">
-                                                            <span class="badge badge-light-info mt-1">{{ $category->sort }}</span>
-                                                            <span class="badge badge-light-success mt-1">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }} {{__('Products')}}</span>
-                                                        </div>
-                                                    </div>
+                                                        </li>
+                                                        <li>
+                                                            <form class="delete-form text-muted py-2" action="{{ route('restaurant.delete-category', ['id' => $category->id]) }}" method="POST" style="display: inline;">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <button type="submit" class="dropdown-item delete-button btn-danger">
+                                                                    {{ __('Delete') }}
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
                                                 </div>
-                                                @if($user->isRestaurantOwner())
-                                                <div class="d-flex align-items-center mx-2">
-                                                    <div class="edit-category">
-                                                        <span style="cursor: pointer;" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}', '{{$category->sort}}')">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                @endif
                                             </div>
+                                            @endif
 
                                         </div>
-                                        <!--end::Inbox-->
+
                                     </div>
-                                @endforeach
-
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item">
-                                    <!--begin::Add label-->
-                                    <!--end::Add label-->
-                                    <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" class="mb-2" method="POST" id="category-submit" enctype="multipart/form-data">
-                                        @csrf
-                                        <div id="categoryForm" class="mt-2" style="display: none !important;">
-                                            <ul class="nav nav-tabs" id="languageTabs">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#en">{{__('english')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#ar">{{__('arabic')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('logo')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="sort-tab" data-bs-toggle="tab" href="#sort">{{__('sort')}}</a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content mt-3">
-                                                <div class="tab-pane fade show active" id="en">
-                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="categoryName">
-                                                </div>
-                                                <div class="tab-pane fade" id="ar">
-                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
-                                                </div>
-                                                <div class="tab-pane fade" id="logo">
-                                                    <label>{{__('category-logo')}}</label>
-                                                    <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
-                                                </div>
-                                                <div class="tab-pane fade" id="sort">
-                                                    <label>{{__('sort')}}</label>
-                                                    <input type="number" name="sort" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control form-control-solid" placeholder="{{__('The sorting order of category')}}" />
-                                                </div>
-                                            </div>
-                                            <div class="justify-content-center" >
-                                                <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Create') }}</button>
-                                                <button type="button" onclick="hideCategoryEditForm('categoryForm')" class="btn btn-sm btn-info mx-1 mt-2">{{ __('Close') }}</button>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                    <form method="POST" id="category-edit" enctype="multipart/form-data" class="mb-2">
-                                        @csrf
-
-                                        <div id="category-edit-form" class="mt-2" style="display: none !important;">
-                                            <ul class="nav nav-tabs" id="edit-cateogry">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#edit-en">{{__('english')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#edit-ar">{{__('arabic')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#edit-logo">{{__('logo')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="sort-tab" data-bs-toggle="tab" href="#edit-sort">{{__('sort')}}</a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content mt-3">
-                                                <div class="tab-pane fade show active" id="edit-en">
-                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="category_name_en">
-                                                </div>
-                                                <div class="tab-pane fade" id="edit-ar">
-                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar" id="category_name_ar">
-                                                </div>
-                                                <div class="tab-pane fade" id="edit-logo">
-                                                    <label>{{__('category-logo')}}</label>
-                                                    <input type="file" class="form-control form-control-solid" accept="image/*" placeholder="Enter Target Title" name="photo" />
-                                                </div>
-                                                <div class="tab-pane fade" id="edit-sort">
-                                                    <label>{{__('sort')}}</label>
-                                                    <input type="number" min="1" max="{{count($categories)}}" class="form-control form-control-solid" name="sort" placeholder="{{__('The sorting order of category')}}" id="category_sort"/>
-                                                </div>
-                                            </div>
-                                            <div class="d-none justify-content-center" id="update-category-btn">
-                                                <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Update') }}</button>
-                                                <button type="button" onclick="hideCategoryEditForm('category-edit-form')" class="btn btn-sm btn-info mx-1 mt-2">{{ __('Close') }}</button>
-                                            </div>
-                                        </div>
-
-                                    </form>
-
+                                    <!--end::Inbox-->
                                 </div>
-                                <!--end::Menu item-->
+                                @endforeach
+                            </div>
+                            @else
+                            <div class="alert service-alert d-flex align-items-center" role="alert">
+                                <div class="service-alert-icon">
+                                    <i class="bi bi-info-circle mx-2 text-white "></i>
+                                </div>
+                                <div>
+                                    <span>
+                                        <h4>{{__('No categories found')}}</h4>
+                                        {{__('Add new categories to start adding new itms')}}
+                                    </span>
+                                </div>
+                            </div>
+                            @endif
+
+                            <!--end::Menu item-->
+                            <!--begin::Menu item-->
+                            <div class="menu-item">
+                                <!--begin::Add label-->
+                                <!--end::Add label-->
+                                <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" class="mb-2" method="POST" id="category-submit" enctype="multipart/form-data">
+                                    @csrf
+                                    <div id="categoryForm" class="mt-2" style="display: none !important;">
+                                        <ul class="nav nav-tabs" id="languageTabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#en">{{__('english')}}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#ar">{{__('arabic')}}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('logo')}}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="sort-tab" data-bs-toggle="tab" href="#sort">{{__('sort')}}</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content mt-3">
+                                            <div class="tab-pane fade show active" id="en">
+                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="categoryName">
+                                            </div>
+                                            <div class="tab-pane fade" id="ar">
+                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
+                                            </div>
+                                            <div class="tab-pane fade" id="logo">
+                                                <label>{{__('category-logo')}}</label>
+                                                <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                            </div>
+                                            <div class="tab-pane fade" id="sort">
+                                                <label>{{__('sort')}}</label>
+                                                <input type="number" name="sort" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control form-control-solid" placeholder="{{__('The sorting order of category')}}" />
+                                            </div>
+                                        </div>
+                                        <div class="justify-content-center">
+                                            <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Create') }}</button>
+                                            <button type="button" onclick="hideCategoryEditForm('categoryForm')" class="btn btn-sm btn-secondary mx-1 mt-2">{{ __('Close') }}</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <form method="POST" id="category-edit" enctype="multipart/form-data" class="mb-2">
+                                    @csrf
+
+                                    <div id="category-edit-form" class="mt-2" style="display: none !important;">
+                                        <ul class="nav nav-tabs" id="edit-cateogry">
+                                            <li class="nav-item">
+                                                <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#edit-en">{{__('english')}}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#edit-ar">{{__('arabic')}}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#edit-logo">{{__('logo')}}</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="sort-tab" data-bs-toggle="tab" href="#edit-sort">{{__('sort')}}</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content mt-3">
+                                            <div class="tab-pane fade show active" id="edit-en">
+                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="category_name_en">
+                                            </div>
+                                            <div class="tab-pane fade" id="edit-ar">
+                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar" id="category_name_ar">
+                                            </div>
+                                            <div class="tab-pane fade" id="edit-logo">
+                                                <label>{{__('category-logo')}}</label>
+                                                <input type="file" class="form-control form-control-solid" accept="image/*" placeholder="Enter Target Title" name="photo" />
+                                            </div>
+                                            <div class="tab-pane fade" id="edit-sort">
+                                                <label>{{__('sort')}}</label>
+                                                <input type="number" min="1" max="{{count($categories)}}" class="form-control form-control-solid" name="sort" placeholder="{{__('The sorting order of category')}}" id="category_sort" />
+                                            </div>
+                                        </div>
+                                        <div class="d-none justify-content-center" id="update-category-btn">
+                                            <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Update') }}</button>
+                                            <button type="button" onclick="hideCategoryEditForm('category-edit-form')" class="btn btn-sm btn-secondary mx-1 mt-2">{{ __('Close') }}</button>
+                                        </div>
+                                    </div>
+                                </form>
 
                             </div>
+                            <!--end::Menu item-->
+
                             <!--end::Menu-->
                         </div>
                         <!--end::Aside content-->
@@ -631,41 +661,24 @@
                 <!--begin::Content-->
                 <div class="col-md-8">
                     <!--begin::Card-->
+                    @if($selectedCategory)
                     <div class="card">
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                             <!--begin::Actions-->
                             <div class="d-flex flex-wrap gap-1">
-                                <h3 class="text-active-khardl">{{ DB::table('branches')->where('id', $branchId)?->value('name') }} @if($selectedCategory) | {{ $selectedCategory->name }} @endif</h3>
+                                {{ __('Food items in') }}:
+                                <span class="text-khardl">{{ $selectedCategory?->name }}</span>
                             </div>
                             <!--end::Actions-->
                             <!--begin::Pagination-->
                             <div class="d-flex align-items-center flex-wrap gap-2">
                                 @if($selectedCategory)
-                                <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">{{ __('create-new-items') }}
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
-                                    <span class="svg-icon svg-icon-2 me-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
-                                            <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor" />
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                </a>
-                                <form class="delete-form" action="{{ route('restaurant.delete-category', ['id' => $selectedCategory->id]) }}" method="POST">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                        <span class="svg-icon svg-icon-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor" />
-                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor" />
-                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">
+                                    <button class="btn btn-sm btn-khardl" id="addCategoryButton">
+                                        {{ __('Add new') }}
+                                        <i class="fas fa-plus text-white fa-xs"></i>
                                     </button>
-                                </form>
+                                </a>
                                 @endif
                             </div>
                             <!--end::Pagination-->
@@ -1021,7 +1034,8 @@
                             {{-- TODO: load item when scroll down --}}
                             <!--end::Table-->
                         </div>
-                </div>
+                    </div>
+                    @endif
                 <!--end::Card-->
             </div>
             <!--end::Content-->
@@ -1443,7 +1457,7 @@
             event.preventDefault();
 
             var form = button.closest('.delete-form');
-
+            console.log(form);
             Swal.fire({
                 title: `{{ __('are-you-sure') }}`
                 , text: "{{ __('you-wont-be-able-to-undo-this') }}"

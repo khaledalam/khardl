@@ -1,10 +1,12 @@
+.content #kt_content_container .row > div .card{
+  box-shadow: 1px 1px 6px #ccc;
+  border-radius: 10px;
+  height: 100%;
+}
 .branches #carouselExample{
   border: 1px solid #ccc;
   border-radius: 29px;
   background-color: #F9FAFB;
-}
-.branches #carouselExample .row > div{
-
 }
 .branches #carouselExample .row > div a{
   width: 100%;
@@ -67,4 +69,14 @@
 .menu-rounded .menu-link.active{
   border:1px solid #C6DC08;
   background-color: #F9FBE6;
+}
+.category_info span{
+  border-radius: 20px;
+  color: #3B3B3B!important;
+}
+.dropdown-item.active,.dropdown-item:active{
+  background-color: #C6DC08;
+}
+.delete-form .dropdown-item.active, .delete-form .dropdown-item:active{
+  background-color: #f46789;
 }
