@@ -17,7 +17,7 @@ class CustomerSendSMSRequest extends FormRequest
         $user= getAuth();
 
         $rules= [
-            'phone' => 'required|regex:/^(966)?\d{9}$/',
+            'phone' => ['required','exists:users,phone'],
         ];
         if($user){
             $rules['phone'] .= '|unique:users,phone';
