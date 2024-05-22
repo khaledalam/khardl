@@ -297,7 +297,10 @@ const Login = ({ closingFunc }) => {
               }}
             />
             {errors.phone && (
-              <span className="text-red-500 text-xs mt-1 ms-2">
+              <span className="text-red-500 text-xs mt-1 ms-2"
+              style={{
+                color: restaurantStyle?.price_background_color + "C0"
+              }}>
                 {t("Phone Error")}
               </span>
             )}
@@ -353,7 +356,10 @@ const Login = ({ closingFunc }) => {
             >
               <div className="text-center">
                 <div className="w-[100%] h-[38px] mt-0 p-[7px] boreder-none rounded-full bg-white flex border border-gray-200 ">
-                  <div className="w-[24px] h-[24px] bg-[#7D0A0A] flex justify-center items-center text-white text-[10px] rounded-full">
+                  <div className="w-[24px] h-[24px] bg-[#7D0A0A] flex justify-center items-center text-white text-[10px] rounded-full"
+                  style={{
+                    backgroundColor: restaurantStyle?.price_background_color
+                  }}>
                     {`${countdown}s`}
                   </div>
                   <input
@@ -384,7 +390,11 @@ const Login = ({ closingFunc }) => {
                 </div>
 
                 {errors2.otp && (
-                  <span className="text-red-500 text-xs mt-1 ms-2">
+                  <span className="text-red-500 text-xs mt-1 ms-2"
+                  style={{
+                    color: restaurantStyle?.price_background_color + "C0"
+                  }}
+                  >
                     {t("Validation code Error")}
                   </span>
                 )}
@@ -405,6 +415,9 @@ const Login = ({ closingFunc }) => {
                       <span
                         onClick={ResendCode}
                         className="text-[#7D0A0A] text-[10px] font-semibold hover:cursor-pointer"
+                        style={{
+                          color: restaurantStyle?.price_background_color
+                        }}
                       >
                         {t("Resend now.")}
                       </span>
@@ -422,6 +435,9 @@ const Login = ({ closingFunc }) => {
             className={`w-full h-8 px-4 pt-1.5 pb-2 ${
               lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
             } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
+            style={{
+              backgroundColor: restaurantStyle?.price_background_color
+            }}
           >
             {t("Login")}
           </button>
@@ -430,6 +446,9 @@ const Login = ({ closingFunc }) => {
             <input
               type="button"
               className="text-[#7D0A0A] cursor-pointer hover:text-blue-300 py-2 px-2 text-md "
+              style={{
+                color: restaurantStyle?.price_background_color
+              }}
               value={t("Register here")}
               onClick={() => {
                 dispatch(SetLoginModal(false));
