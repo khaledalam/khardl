@@ -132,6 +132,7 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
     inputs.banner_radius = restuarantStyle.banner_radius;
     inputs.category_background_color =
       restuarantStyle.category_background_color;
+    inputs.display_category_icon = restuarantStyle.display_category_icon;
     inputs.banner_image = restuarantStyle?.bannerUpload
       ? await fetch(restuarantStyle?.bannerUpload).then((r) => r.blob())
       : "";

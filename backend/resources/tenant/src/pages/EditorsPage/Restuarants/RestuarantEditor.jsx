@@ -75,6 +75,7 @@ import {
   privacyPolicyTextWeight,
   privacyPolicyTextSize,
   privacyPolicyTextColor,
+  categoryIcon,
 } from "../../../redux/NewEditor/restuarantEditorSlice";
 import {
   getCartItemsCount,
@@ -153,6 +154,7 @@ export const RestuarantEditor = () => {
     footer_text_fontWeight,
     footer_text_fontSize,
     footer_text_color,
+    display_category_icon,
   } = restuarantEditorStyle;
 
   const categories = useSelector((state) => state.categoryAPI.categories);
@@ -199,7 +201,6 @@ export const RestuarantEditor = () => {
           branch_id ? `&selected_branch_id=${branch_id}` : ""
         }`
       );
-
 
       if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data));
@@ -330,16 +331,18 @@ export const RestuarantEditor = () => {
       subItems: [
         {
           title: t("Category"),
-          layout: ["positionLayoutGrid", "color", "radius"],
+          layout: ["positionLayoutGrid", "color", "radius", "icon"],
           layoutInitialValues: [
             menu_category_position,
             menu_category_background_color,
             menu_category_radius,
+            display_category_icon,
           ],
           layoutOnChange: [
             (value) => dispatch(MenuCategoryPosition(value)),
             (color) => dispatch(MenuCategoryBackgroundColor(color)),
             (radius) => dispatch(MenuCategoryRadius(radius)),
+            (iconStatus) => dispatch(categoryIcon(iconStatus)),
           ],
           contentPosition: [],
           text: ["font", "weight", "size", "color"],
@@ -490,12 +493,8 @@ export const RestuarantEditor = () => {
           //   (value) => dispatch(footerAlignment(value)),
           // ],
           text: ["color"],
-          textInitialValues: [
-            footer_text_color,
-          ],
-          textOnChange: [
-            (color) => dispatch(footerTextColor(color)),
-          ],
+          textInitialValues: [footer_text_color],
+          textOnChange: [(color) => dispatch(footerTextColor(color))],
           link: [],
         },
         {

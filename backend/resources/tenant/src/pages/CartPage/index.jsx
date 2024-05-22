@@ -194,17 +194,19 @@ const CartPage = () => {
     } else {
       try {
         try {
-          let address = `${customerAddress.lat},${customerAddress.lng}`;
-          if (cart?.address.length > deliveryAddress) {
-            address = cart.address[deliveryAddress].id;
-          }
-          const cartResponse = await AxiosInstance.post(`/orders`, {
+          let data  = {
             payment_method: paymentMethod,
             delivery_type: deliveryType,
             notes: orderNotes,
             couponCode: coupon,
-            address: address,
-          });
+          };
+          if (cart?.address.length > deliveryAddress) {
+            data.address_id = cart.address[deliveryAddress].id;
+          } else {
+            data.lat = customerAddress.lat;
+            data.lng = customerAddress.lng;
+          }
+          const cartResponse = await AxiosInstance.post(`/orders`, data);
           if (cartResponse.data) {
             toast.success(`${t("Order has been created successfully")}`);
             navigate(`/profile-summary#orders`);
