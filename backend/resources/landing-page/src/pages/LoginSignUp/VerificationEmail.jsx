@@ -58,7 +58,7 @@ const VerificationEmail = () => {
         throw new Error(`${t("Code resend failed")}`);
       }
     } catch (error) {
-      toast.error(`${t("Code resend failed")}`);
+      toast.error(error.response.data.message);
     }
     setSpinner(false);
   };
@@ -71,14 +71,20 @@ const VerificationEmail = () => {
         email: user_email,
       });
       if (response.data) {
+        if (response.data?.data?.user) {
+          localStorage.setItem(
+            "user-info",
+            JSON.stringify(response.data?.data?.user),
+          );
+        }
         setStatusCode(HTTP_NOT_ACCEPTED);
         navigate("/complete-register");
         toast.success(`${t("The code has been verified successfully")}`);
       } else {
-        throw new Error(`${t("Code verification failed")}`);
+        toast.error(response.data.data.message);
       }
     } catch (error) {
-      toast.error(`${t("Code verification failed")}`);
+      toast.error(error.response.data.message);
     }
   };
 

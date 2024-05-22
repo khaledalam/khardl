@@ -37,16 +37,16 @@ class RegisterController extends BaseController
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
         $input['status'] = RestaurantUser::INACTIVE;
-        Session::put('register_'.$input['email'], $input);
+
         // $user = User::create($input);
         // $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
         // $success['name'] =  "$user->first_name $user->last_name";
-        // $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
-        // $user->assignRole($role);
-        // Auth::login($user,true);
+    
         if($promoter = PromoterIpAddress::where('ip_address',request()?->ip())){
             $promoter->update(['registered'=>true]);
         }
+        $emailKey = str_replace('.', '_', $input['email']);
+        session(['register_'.$emailKey => $input]);
         $this->sendVerificationCode($request);
         return $this->sendResponse([], 'User register successfully.');
     }
@@ -214,27 +214,34 @@ class RegisterController extends BaseController
     public function sendVerificationCode(Request $request): JsonResponse
     {
         
-        $today = Carbon::today();
-     
-        if(!$data  = session("register_".$request->email)){
+        $request = $request->validated() ?? $request;
+        $emailKey = str_replace('.', '_', $request['email']);
+        if(!$data  = session("register_".$emailKey)){
             return $this->sendError('Fail', __('Email not found, please try again'));
         }
+ 
         $user = new User($data);
         
         // You might want a new table to track verification code attempts.
         // Here, I'm assuming the table's name is `email_verification_tokens`.
+       
         $attempts = DB::table('email_verification_tokens')
             ->where([
                 ['email', '=', $user?->email],
                 ['created_at', '>=', Carbon::now()->subMinutes(15)]
             ])->get()->all();
-
+       
         if (count($attempts) >= 3) {
             return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
         }
       
         // Generate the verification code using the model's method.
         $user->generateVerificationCode();
+        $emailKey = str_replace('.', '_', $user->email);
+        session(['register_'.$emailKey => $data + [
+            'verification_code'=>$user->verification_code
+        ]]);
+    
         // dd($user);
         SendVerifyEmailJob::dispatch($user);
         // dd($user);
@@ -260,24 +267,44 @@ class RegisterController extends BaseController
             'email' => 'required|email|max:255',
             'code' => 'required|string|min:6|max:6', // Assuming a 6-digit code
         ]);
-        dd(session("register_".$request->email));
-        // if(session("register_".$request->email))
-        $user =Auth::user();
+        
+        $emailKey = str_replace('.', '_', $request->email);
+        $data = Session::get("register_".$emailKey);
+  
 
-        // If the user has already verified their email
-        // if ($user->email_verified_at !== null) {
+        if (!$data) {
+            return $this->sendError('Fail', __('Email not found, please try again'));
+        }
 
-        //     return $this->sendError('Fail', 'Email is already verified.');
-        // }
+        $user = new User($data);
 
         // Check the verification code
         if ($user->checkVerificationCode($request->code)) {
+
+            $validationRules = (new RestaurantOwnerRegisterRequest())->rules();
+            unset($validationRules['c_password']);
+            // Validate the session data
+            $validator = Validator::make($data, $validationRules);
+
+            if ($validator->fails()) {
+                return $this->sendError( $validator->errors()->first(),  $validator->errors());
+            }
+            
+            $user = User::firstOrCreate([
+                'email'=>$request->email
+            ],$data);
             $user->email_verified_at = now();
             $user->status = RestaurantUser::ACTIVE;
             $user->verification_code = $request->code; // Clear the verification code
+            $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
+            $user->assignRole($role);
             $user->save();
-
-            return $this->sendResponse(null, 'Email verified successfully!');
+            Auth::login($user,true);
+            $data = [
+                'user'=>$user
+            ];
+            $data['step2_status'] = 'incomplete';
+            return $this->sendResponse($data, 'Email verified successfully!');
         }
 
         // If we've reached here, the verification code is incorrect
