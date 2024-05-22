@@ -190,18 +190,23 @@ const CartPage = () => {
 
   const handlePlaceOrder = async () => {
 
-    let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
+    // let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
     if (paymentMethod === "Online") {
       GoSellElements.submit();
     } else {
       try {
         try {
+          const address = `${customerAddress.lat},${customerAddress.lng}`;
+          
+          if(cart?.address.length > deliveryAddress) { 
+            address = cart?.address[deliveryAddress]
+          }
           const cartResponse = await AxiosInstance.post(`/orders`, {
             payment_method: paymentMethod,
             delivery_type: deliveryType,
             notes: orderNotes,
             couponCode: coupon,
-            address: orderAddress,
+            address: address,
           });
           if (cartResponse.data) {
             toast.success(`${t("Order has been created successfully")}`);
