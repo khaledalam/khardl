@@ -463,13 +463,31 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Inbox App - Messages -->
-            <div class="d-flex flex-column flex-lg-row">
+            <div class="row">
                 <!--begin::Sidebar-->
-                <div class="flex-column flex-lg-row-fluid w-100 w-lg-275px mb-10 mb-lg-0">
+                <div class="col-md-4">
                     <!--begin::Sticky aside-->
                     <div class="card card-flush mb-0 overflow-scroll py-2" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
                         <!--begin::Aside content-->
-                        <div class="card-body">
+                        <div class="card-header  align-items-center py-5 gap-2 gap-md-5">
+                            <div class="d-flex flex-wrap gap-1">
+                                <h3>
+                                    {{ __('Categories') }}
+                                </h3>
+                            </div>
+                            <div class="d-flex align-items-center flex-wrap gap-2">
+                                <button class="btn btn-sm btn-khardl" id="addCategoryButton">
+                                    {{ __('Add new') }}
+                                    <i class="fas fa-plus text-white fa-xs"></i>
+                                </button>
+                                <script>
+                                    document.getElementById('svgIcon').addEventListener('click', function() {
+                                        document.getElementById('addCategoryButton').click();
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
                             <div id="categoryList" class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
                                 <!--begin::Menu item-->
                                 @foreach ($categories as $category)
@@ -477,35 +495,37 @@
                                     <div class="row mb-2">
                                         <!--begin::Inbox-->
                                         <div class="col-md-12">
-
-                                                <span class="menu-link d-flex align-items-stretch justify-content-start gap-4 mb-4 p-3" @if ($category?->id === $selectedCategory?->id) style="background: #eeeeee;" @endif">
-                                                    <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
-                                                        <img src="{{ $category?->photo ?? global_asset('img/category-icon.png') }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />
-                                                    </a>
-                                                    <div>
+                                            <div class="menu-link d-flex align-items-stretch justify-content-between gap-4 mb-4 p-3 @if ($category?->id === $selectedCategory?->id) active @endif">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="category_image">
                                                         <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
-                                                            <span class="menu-title fw-bolder small">{{ $category->name }}</span>
+                                                            <img src="{{ $category?->photo ?? global_asset('img/category-icon.png') }}" width="35" height="35" class="mx-2" style="border-radius: 50%;" />
                                                         </a>
-                                                        <div class="">
-                                                            @if($user->isRestaurantOwner())
-                                                                        <span class="badge badge-light-info mt-1">
-                                                                    <div class="edit-category">
-                                                                        <span style="cursor: pointer;" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}', '{{$category->sort}}')">
-                                                                            <i class="fa fas fa-edit border" ></i>
-                                                                        </span>
-                                                                    </div>
-                                                                </span>
-                                                            @endif
+                                                    </div>
+                                                    <div class="d-flex flex-column ms-3">
+                                                        <div class="category_name">
+                                                            <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
+                                                                <span class="menu-title fw-bolder small">{{ $category->name }}</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="category_info">
                                                             <span class="badge badge-light-info mt-1">{{ $category->sort }}</span>
                                                             <span class="badge badge-light-success mt-1">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }} {{__('Products')}}</span>
                                                         </div>
                                                     </div>
-
-                                                </span>
-
+                                                </div>
+                                                @if($user->isRestaurantOwner())
+                                                <div class="d-flex align-items-center mx-2">
+                                                    <div class="edit-category">
+                                                        <span style="cursor: pointer;" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}', '{{$category->sort}}')">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                @endif
+                                            </div>
 
                                         </div>
-
                                         <!--end::Inbox-->
                                     </div>
                                 @endforeach
@@ -514,24 +534,6 @@
                                 <!--begin::Menu item-->
                                 <div class="menu-item">
                                     <!--begin::Add label-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon" id="svgIcon">
-                                            <span class="svg-icon svg-icon-2 me-3">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
-                                                    <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </span>
-                                        <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('add-new-category') }}</button>
-
-                                        <script>
-                                            document.getElementById('svgIcon').addEventListener('click', function() {
-                                                document.getElementById('addCategoryButton').click();
-                                            });
-                                        </script>
-                                    </span>
                                     <!--end::Add label-->
                                     <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" class="mb-2" method="POST" id="category-submit" enctype="multipart/form-data">
                                         @csrf
@@ -627,7 +629,7 @@
                 </div>
                 <!--end::Sidebar-->
                 <!--begin::Content-->
-                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
+                <div class="col-md-8">
                     <!--begin::Card-->
                     <div class="card">
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">

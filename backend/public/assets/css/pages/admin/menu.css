@@ -52,3 +52,19 @@
   width: 86%;
   margin: 0px 90px;
 }
+/* Categories */
+#addCategoryButton{
+  border-radius: 20px;
+}
+.menu-rounded .menu-link{
+  border-radius: 30px;
+  border:1px solid #EAECF0;
+}
+.menu-rounded .menu-link img{
+  border:1px solid #EAECF0;
+  padding: 1px;
+}
+.menu-rounded .menu-link.active{
+  border:1px solid #C6DC08;
+  background-color: #F9FBE6;
+}
