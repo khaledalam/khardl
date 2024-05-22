@@ -1,0 +1,54 @@
+.branches #carouselExample{
+  border: 1px solid #ccc;
+  border-radius: 29px;
+  background-color: #F9FAFB;
+}
+.branches #carouselExample .row > div{
+
+}
+.branches #carouselExample .row > div a{
+  width: 100%;
+  background-color: #F9FAFB;
+  color: #667085!important;
+  border-radius: 29px;
+  margin: 2px 0px;
+  font-weight: bold;
+  padding: 11px 0px;
+}
+.branches #carouselExample .row > div a.active{
+  width: 100%;
+  background-color: #C6DC08;
+  color: #fff!important;
+  font-weight: bold;
+}
+.engage-toolbar {
+  position: absolute !important;
+  display: flex !important;
+}
+
+.transform-270 {
+  transform: rotate(270deg);
+  transform-origin: right top;
+}
+
+.transform-90 {
+  transform: rotate(90deg);
+  transform-origin: left top;
+}
+
+
+.carousel-control-prev-icon
+{
+  background-image : url('/img/next.png')
+}
+.carousel-control-next-icon {
+  background-image : url('/img/prev.png')
+}
+.carousel-control-next, .carousel-control-prev{
+  width: 5%;
+}
+.carousel-inner{
+  position: relative;
+  width: 86%;
+  margin: 0px 90px;
+}

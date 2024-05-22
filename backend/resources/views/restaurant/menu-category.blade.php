@@ -2,7 +2,9 @@
 
 @section('title', DB::table('branches')->where('id', $branchId)->value('name'))
 @section('subtitle', $selectedCategory?->name)
-
+@push('styles')
+<link rel="stylesheet" href="{{ global_asset('assets/css/pages/admin/menu.css') }}" type="text/css">
+@endpush
 @section('content')
 <!-- Checkbox -->
 <script>
@@ -415,51 +417,39 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Inbox App - Messages -->
-            <div class="flex-lg-row-fluid my-2">
-                <!--begin::Card-->
-                <div class="card">
-                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                        <div class="d-flex flex-wrap gap-1">
-                            <h3 class="text-khardl">{{ __('Branches') }}</h3>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="carouselExample" class="carousel slide" data-bs-interval="false">
-                              
-                            <div class="carousel-inner">
-                        @foreach ($branches->chunk(5) as $key => $branchChunk)
-                                    
-                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                <div class="row ">
-                                    @foreach ($branchChunk as $branchLoop)
-                                    <div class="col-md-2 d-flex justify-content-center" >
-                                        <a href="{{ route('restaurant.get-category', ['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1,'branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl border border-dark text-black @else btn-active-light-khardl @endif">
-                                            <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px" >   {{ $branchLoop->name }}</span>
-                                        </a>
-                                    </div>
-                                        
-                                    @endforeach
+            <div class="flex-lg-row-fluid my-2 branches">
+                <div id="carouselExample" class="carousel slide" data-bs-interval="false">
+
+                    <div class="carousel-inner">
+                        @foreach ($branches->chunk(3) as $key => $branchChunk)
+
+                        <div class="carousel-item {{ $branchChunk->contains($branchId) ? 'active' : '' }}">
+                            <div class="row ">
+                                @foreach ($branchChunk as $branchLoop)
+                                <div class="col-md-4 d-flex justify-content-center">
+                                    <a href="{{ route('restaurant.get-category', ['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1,'branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) active @endif">
+                                        <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px"> {{ $branchLoop->name }}</span>
+                                    </a>
                                 </div>
-                             
+
+                                @endforeach
                             </div>
+
+                        </div>
                         @endforeach
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev" >
+                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next" >
+                    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-                       
-                    
-                    </div>
-                </div>
-                <!--end::Card-->
             </div>
         </div>
+
         <!--end::Inbox App - Messages -->
     </div>
     <!--end::Container-->
@@ -480,14 +470,6 @@
                     <div class="card card-flush mb-0 overflow-scroll py-2" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
                         <!--begin::Aside content-->
                         <div class="card-body">
-                            <!--begin::Button-->
-                            {{-- <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">--}}
-                            {{-- <p class="btn btn-khardl text-uppercase w-100 mb-10">--}}
-                            {{-- {{ __('all-categories') }}--}}
-                            {{-- </p>--}}
-                            {{-- </a>--}}
-                            <!--end::Button-->
-                            <!--begin::Menu-->
                             <div id="categoryList" class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
                                 <!--begin::Menu item-->
                                 @foreach ($categories as $category)
@@ -526,21 +508,6 @@
 
                                         <!--end::Inbox-->
                                     </div>
-{{--                                --}}
-{{--                                <div class="menu-item mb-3">--}}
-{{--                                    <!--begin::Inbox-->--}}
-{{--                                    <a href="{{ route('restaurant.get-category', ['id' => $category?->id, 'branchId' => $branchId]) }}">--}}
-{{--                                        <span class="menu-link @if ($category?->id === $selectedCategory?->id) active @endif">--}}
-{{--                                            <img src="{{ $category->photo ?? global_asset('img/category-icon.png') }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />--}}
-{{--                                            <span class="menu-title fw-bolder">{{ $category->name }}</span>--}}
-{{--                                        </span>--}}
-{{--                                        <div class="col-md-2">--}}
-{{--                                            <span class="badge badge-light-info mt-1">{{ $category->sort }} {{__('sort')}}</span>--}}
-{{--                                            <span class="badge badge-light-success mt-1">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }} {{__('Products')}}</span>--}}
-{{--                                        </div>--}}
-{{--                                    </a>--}}
-{{--                                    <!--end::Inbox-->--}}
-{{--                                </div>--}}
                                 @endforeach
 
                                 <!--end::Menu item-->
@@ -856,10 +823,10 @@
                                                         <div class="loyalty_point_calculation">
                                                             <span>{{__('For every 10 riyal, :point points correspond to the cost of product options',['point'=>10*$item->LoyaltyPointRatio])}}</span> <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('loyalty points for item options will get calculated automatically')}}"></i>
                                                         </div>
-                                                        @else 
+                                                        @else
                                                         <div class="loyalty_point_calculation"></div>
                                                         @endif
-                                                    
+
                                                     </div>
                                                     <!--end::Col-->
 
@@ -891,7 +858,7 @@
                                                     </div>
                                                 </div>
                                                 <!--end::Input group-->
-                                             
+
                                                 <div id="checkboxes_{{ $item->id }}">
                                                     <!-- Checkbox elements will be dynamically added here -->
 
@@ -1160,7 +1127,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                         <span class="required">{{__('item-availability')}}</span>
-                                        
+
                                     </label>
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                         <input type="checkbox" name="availability" checked value="1">
@@ -1221,7 +1188,7 @@
 
                     </div>
                     <!--end::Input group-->
-                    
+
 
                     <div class="d-flex flex-column mb-8">
                         <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
@@ -1246,7 +1213,7 @@
                     <!--end::Input group-->
 
 
-                
+
                     <div id="checkboxes">
                         <!-- Checkbox elements will be dynamically added here -->
 
@@ -1286,7 +1253,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-      
+
     $(document).ready(function() {
         $('#carouselExample').carousel({
             pause: true,
@@ -1344,10 +1311,10 @@
             let container =  $(this).closest('.modal-body');
             let itemPrice = container.find('.item_price').val()
             let loyaltyPoints = container.find('.price_using_loyalty_points').val()
-       
+
             if (itemPrice !== '' && loyaltyPoints !== '') {
 
-                let text = translate({  point: Math.ceil(10*(loyaltyPoints/itemPrice).toFixed(2)) }); 
+                let text = translate({  point: Math.ceil(10*(loyaltyPoints/itemPrice).toFixed(2)) });
                 let loyalty_point_calculation = container.find('.loyalty_point_calculation');
                 loyalty_point_calculation.html(`<span>${text}</span> <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('loyalty points for item options will get calculated automatically')}}"></i>`);
                 loyalty_point_calculation.find('[data-bs-toggle="tooltip"]').tooltip();
@@ -1360,7 +1327,7 @@
             }else {
                 $('#price_using_loyalty_points'+$(this).data("id")).removeClass('d-block').addClass( 'd-none');
             }
-          
+
         });
     });
     if (document.getElementById('allow_buy_with_loyalty_points')) {
@@ -1604,36 +1571,7 @@
     if(addDropdownButton)
         addDropdownButton.addEventListener('click', createDropdown);
     </script>
-<style>
-    .engage-toolbar {
-        position: absolute !important;
-        display: flex !important;
-    }
 
-    .transform-270 {
-        transform: rotate(270deg);
-        transform-origin: right top;
-    }
-
-    .transform-90 {
-        transform: rotate(90deg);
-        transform-origin: left top;
-    }
-
-  
-    .carousel-control-prev-icon
-    {
-        background-image : url('/img/next.png')
-    }
-    .carousel-control-next-icon {
-        background-image : url('/img/prev.png')
-    }
-    .carousel-inner{
-        position: relative;
-        width: 70%;
-        margin: 0 115px;
-    }
-</style>
 <!--end::Content-->
 {{-- Image preview --}}
 <script>
