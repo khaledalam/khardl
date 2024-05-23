@@ -55,8 +55,11 @@
   margin: 0px 90px;
 }
 /* Categories */
-#addCategoryButton{
+.add-new{
   border-radius: 20px;
+}
+.menu-rounded .menu-link a{
+  color: #3B3B3B!important;
 }
 .menu-rounded .menu-link{
   border-radius: 30px;
@@ -73,6 +76,9 @@
 .category_info span{
   border-radius: 20px;
   color: #3B3B3B!important;
+}
+.dropdown-item.active,.dropdown-item a{
+  color: #E7E8EA;
 }
 .dropdown-item.active,.dropdown-item:active{
   background-color: #C6DC08;

@@ -476,12 +476,12 @@
                                 </h3>
                             </div>
                             <div class="d-flex align-items-center flex-wrap gap-2">
-                                <button class="btn btn-sm btn-khardl" id="addCategoryButton">
+                                <button class="btn btn-sm btn-khardl add-new" id="addCategoryButton">
                                     {{ __('Add new') }}
                                     <i class="fas fa-plus text-white fa-xs"></i>
                                 </button>
                                 <script>
-                                    document.getElementById('svgIcon').addEventListener('click', function() {
+                                    document.getElementById('addCategoryButton').addEventListener('click', function() {
                                         document.getElementById('addCategoryButton').click();
                                     });
                                 </script>
@@ -674,7 +674,7 @@
                             <div class="d-flex align-items-center flex-wrap gap-2">
                                 @if($selectedCategory)
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">
-                                    <button class="btn btn-sm btn-khardl" id="addCategoryButton">
+                                    <button class="btn btn-sm btn-khardl add-new">
                                         {{ __('Add new') }}
                                         <i class="fas fa-plus text-white fa-xs"></i>
                                     </button>
@@ -950,34 +950,58 @@
                         @endforeach
                         <div class="card-body p-1">
                             <!--begin::Table-->
-                            <div class="row mb-2 px-2" id="kt_inbox_listing">
+                            <div class="items row mb-2 px-2" id="kt_inbox_listing">
                                 <!--begin::Table body-->
                                 @foreach ($items as $item)
                                 <div class="col-md-6">
                                     <div class="item mt-3">
                                         <div class="d-flex align-items-center border border-1 border-secondary rounded-3 p-3 justify-content-between">
-                                            <div class="image" data-bs-toggle="tooltip" title="{{$item->name}}" >
+                                            <div class="image" data-bs-toggle="tooltip" title="{{$item->name}}">
                                                 <img alt="Pic" src="{{$item->photo}}" style="width: 80px; height: 80px;"/>
                                             </div>
                                             <div class="flex-grow-1 ms-3">
-                                                <h5 class="mb-0 fs-5 fw-bold">
-                                                    <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}">
-                                                        <span class="fw-bolder text-darken text-start">{{ $item->name }}</span>
-                                                    </a>
-                                                </h5>
-                                                <p class="mb-0 text-darken">{{ $item->description }}</p>
-                                                <div class="d-flex align-items-center mt-2">
-                                                    <span class="me-3 fs-6 text-danger">{{ $item->calories }} {{ __('Kcal') }}</span>
-                                                    <span class="btn-khardl text-white rounded-pill px-2 py-1 fs-6 fw-bold">{{ $item->price }} {{ __("SAR") }}</span>
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="mb-0 fs-5 fw-bold me-auto">
+                                                        <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}">
+                                                            <span class="fw-bolder text-darken text-start">{{ $item->name }}</span>
+                                                        </a>
+                                                    </h5>
+                                                    <div class="dropdown">
+                                                        <span style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </span>
+                                                        <ul class="dropdown-menu rounded">
+                                                            <li>
+                                                                <a class="dropdown-item text-muted py-2" href="{{ route('restaurant.view-item',['item' => $item->id]) }}">
+                                                                    {{ __('View') }}
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item text-muted py-2" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target_{{ $item->id }}">
+                                                                    {{ __('Edit') }}
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <form class="delete-form" action="{{ route('restaurant.delete-item', ['id' => $item->id]) }}" method="POST">
+                                                                    @method('DELETE')
+                                                                    @csrf
+                                                                    <a href="#" class="dropdown-item delete-button btn-danger">{{ __('delete') }}</a>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="dropdown ms-1">
-                                                <span data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </span>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item delete-button" href="#">Delete</a>
+                                                @if($item->description)
+                                                <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $item->description }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">{{ Str::limit($item->description, 20, '...') }}</span>
+                                                @else
+                                                <span>{{ __('No description') }}</span>
+                                                @endif
+                                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                                    <span class="btn-fire rounded-pill px-2 py-2 fs-6  fw-bold">
+                                                        <i class="fas fa-fire " style="color: #FF3D00"></i>
+                                                        {{ $item->calories }} {{ __('Kcal') }}
+                                                    </span>
+                                                    <span class="btn-khardl text-white rounded-pill px-2 py-2 fs-6 fw-bold">{{ $item->price }} {{ __("SAR") }}</span>
                                                 </div>
                                             </div>
                                         </div>
