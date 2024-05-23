@@ -465,7 +465,7 @@
             <!--begin::Inbox App - Messages -->
             <div class="row">
                 <!--begin::Sidebar-->
-                <div class="col-md-4">
+                <div class="col-xl-4 col-xxl-2">
                     <!--begin::Sticky aside-->
                     <div class="card card-flush px-1">
                         <!--begin::Aside content-->
@@ -659,7 +659,7 @@
                 </div>
                 <!--end::Sidebar-->
                 <!--begin::Content-->
-                <div class="col-md-8">
+                <div class="col-xl-8 col-xxl-10">
                     <!--begin::Card-->
                     @if($selectedCategory)
                     <div class="card card-flush">
@@ -953,7 +953,7 @@
                             <div class="items row mb-2 px-2" id="kt_inbox_listing">
                                 <!--begin::Table body-->
                                 @foreach ($items as $item)
-                                <div class="col-md-6">
+                                <div class="col-xl-6 col-xxl-4">
                                     <div class="item mt-3">
                                         <div class="d-flex align-items-center border border-1 border-secondary rounded-3 p-3 justify-content-between">
                                             <div class="image" data-bs-toggle="tooltip" title="{{$item->name}}">
@@ -997,7 +997,7 @@
                                                 <span>{{ __('No description') }}</span>
                                                 @endif
                                                 <div class="d-flex justify-content-between align-items-center mt-2">
-                                                    <span class="btn-fire rounded-pill px-2 py-2 fs-6  fw-bold">
+                                                    <span class="btn-fire rounded-pill px-3 py-2 fs-6  fw-bold">
                                                         <i class="fas fa-fire " style="color: #FF3D00"></i>
                                                         {{ $item->calories }} {{ __('Kcal') }}
                                                     </span>
@@ -1007,70 +1007,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                    @endforeach
-                                    {{-- <tr>
-                                        <td>
-                                            @if(!$item->availability)<span class="badge badge-danger mx-1">{{__('Not available')}}</span>
-                                            @else
-                                            <span class="badge badge-success mx-1">{{__('Available')}}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-
-                                        </td>
-
-                                        <!--begin::Title-->
-                                        <td class="text-center">
-                                            <div class="text-dark">
-                                                <!--begin::Heading-->
-                                                <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}">
-                                                    <span class="fw-bolder text-start">{{ $item->name }}</span>
-                                                </a>
-                                                <!--end::Heading-->
-                                            </div>
-                                        </td>
-                                        <!--begin::Author-->
-                                        <td class="text-center">
-                                            <span class="text-gray fw-bold fs-17">{{$item->price}}</span>
-                                        </td>
-                                        <!--end::Author-->
-
-                                        <!--end::Title-->
-                                        <!--begin::Date-->
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-light btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                <span class="svg-icon svg-icon-5 m-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon--></a>
-                                            <!--begin::Menu-->
-                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('view') }}</a>
-                                                </div>
-                                                <div class="menu-item px-3">
-                                                    <a href="#"  class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target_{{ $item->id }}">
-                                                        {{ __('edit') }}
-                                                    </a>
-                                                </div>
-
-                                            <div class="menu-item px-3" style="border-top-style: solid;border-top-width: 1px;border-top-color: #ccc;">
-                                                <form class="delete-form" action="{{ route('restaurant.delete-item', ['id' => $item->id]) }}" method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <a href="#" class="menu-link px-3 delete-button">{{ __('delete') }}</a>
-                                                </form>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            </div>
-                                            <!--end::Menu-->
-                                        </td>
-                                        <!--end::Date-->
-                                    </tr> --}}
+                                @endforeach
                             <!--end::Table body-->
                             </div>
                             {{-- TODO: load item when scroll down --}}
