@@ -802,7 +802,7 @@
                                                         <!--begin::Input-->
                                                         <div class="position-relative d-flex align-items-center">
                                                             <!--begin::Datepicker-->
-                                                            <input type="number" min="0" step="1" value="{{ old('price') ?? $item->price }}" required name="price" class="form-control item_price form-control-solid ps-12"  />
+                                                            <input type="number" min="0" step="1" value="{{ old('price') ?? $item->price }}" required name="price" class="form-control item_price form-control-solid "  />
                                                             <!--end::Datepicker-->
                                                         </div>
                                                         <!--end::Input-->
@@ -811,7 +811,7 @@
                                                     <!--begin::Col-->
                                                     <div class="col-md-6 fv-row">
                                                         <label class="required fs-6 fw-bold mb-2">{{ __('Calories') }}</label>
-                                                        <input type="number" step="0.1" min="1" required name="calories" value="{{ old('calories') ?? $item->calories }}" class="form-control form-control-solid ps-12" />
+                                                        <input type="number" step="0.1" min="1" required name="calories" value="{{ old('calories') ?? $item->calories }}" class="form-control form-control-solid " />
                                                     </div>
                                                     <!--end::Col-->
 
@@ -833,7 +833,7 @@
                                                     <!--begin::Col-->
                                                     <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item?->allow_buy_with_loyalty_points) d-block @else d-none @endif" id="price_using_loyalty_points{{$item->id}}" >
                                                         <label class="fs-6 fw-bold mb-2">{{ __('Product price with loyalty points (How many points)') }}</label>
-                                                        <input type="number" step="0.1" min="0" name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control price_using_loyalty_points form-control-solid ps-12" />
+                                                        <input type="number" step="0.1" min="0" name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control price_using_loyalty_points form-control-solid " />
                                                         @if($item->LoyaltyPointRatio)
                                                         <div class="loyalty_point_calculation">
                                                             <span>{{__('For every 10 riyal, :point points correspond to the cost of product options',['point'=>10*$item->LoyaltyPointRatio])}}</span> <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('loyalty points for item options will get calculated automatically')}}"></i>
@@ -1071,7 +1071,7 @@
 
                 <!--begin:Form-->
                 @if($selectedCategory)
-                <form id="kt_modal_new_target_form" class="form item_form" action="{{ route('restaurant.add-item', ['id' => $selectedCategory->id, 'branchId' => $branchId]) }}" method="POST" enctype="multipart/form-data">
+                <form id="kt_modal_new_target_form" class="item-popup form item_form" action="{{ route('restaurant.add-item', ['id' => $selectedCategory->id, 'branchId' => $branchId]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--begin::Heading-->
                     <div class="mb-13 text-center">
@@ -1082,18 +1082,7 @@
                     <!--end::Heading-->
                     <!--begin::Input group-->
                     <div class="row">
-                        <div class="col-md-8">
-
-                            <div class="d-flex flex-column mb-8 fv-row">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__('item-photo')}}</span>
-                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('Image will be shown to customers') }}"></i>
-                                </label>
-                                <input type="file" id="item_image" class="form-control form-control-solid" required placeholder="Enter Target Title" name="photo" accept="image/*" />
-                            </div>
-                            <!--end::Input group-->
-
+                        <div class="col-md-6">
                             <!--begin::Input group-->
                             <div class="d-flex flex-column mb-8">
                                 <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
@@ -1115,57 +1104,86 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!--begin::Input group-->
+                            <div class="row g-9 mb-8">
+                                <!--begin::Col-->
+                                <div class="col-md-12 fv-row ">
+                                    <label class="required fs-6 fw-bold mb-2">{{ __('Price') }}</label>
+                                    <!--begin::Input-->
+                                    <div class="position-relative d-flex align-items-center">
+                                        <!--begin::Datepicker-->
+                                        <input type="number" min="0" step="1" required name="price" class="form-control item_price form-control-solid " />
+                                        <!--end::Datepicker-->
+                                    </div>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-md-12 fv-row">
+                                    <label class="required fs-6 fw-bold mb-2">{{ __('Calories') }}</label>
+                                    <input type="number" step="0.1" min="1" required name="calories" class="form-control form-control-solid " />
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                        <span class="required">{{__('item-availability')}}</span>
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <span class="required">{{__('item-photo')}}</span>
+                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('Image will be shown to customers') }}"></i>
+                                </label>
+                                <input type="file" id="item_image" class="form-control form-control-solid" required placeholder="Enter Target Title" name="photo" accept="image/*" />
+                            </div>
+                            <img src="#" id="item-image-preview" class="rounded" style="max-height: 100%;max-width:100%" />
+                            <!--for preview purpose -->
+                        </div>
+                        <div class="col-md-12">
+                            <!--end::Input group-->
+                            <div class="d-flex flex-column mb-8">
+                                <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
 
-                                    </label>
-                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                        <input type="checkbox" name="availability" checked value="1">
-                                    </label>
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en">{{ __('English') }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar">{{ __('Arabic') }}</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content mt-3">
+                                    <div class="tab-pane fade show active" id="d-en">
+                                        <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="description_en"></textarea>
+                                    </div>
+                                    <div class="tab-pane fade" id="d-ar">
+                                        <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="description_ar"></textarea>
+                                    </div>
                                 </div>
-
                             </div>
+                            <!--end::Input group-->
                         </div>
-                        <div class="col-md-4">
-                            <img src="#" id="item-image-preview" class="rounded" style="max-height: 100%;max-width:100%" />   <!--for preview purpose -->
-                        </div>
-                    </div>
-                    <!--end::Input group-->
-                    <!--begin::Input group-->
-                    <div class="row g-9 mb-8">
-                        <!--begin::Col-->
-                        <div class="col-md-6 fv-row">
-                            <label class="required fs-6 fw-bold mb-2">{{ __('Price') }}</label>
-                            <!--begin::Input-->
-                            <div class="position-relative d-flex align-items-center">
-                                <!--begin::Datepicker-->
-                                <input type="number" min="0" step="1" required name="price" class="form-control item_price form-control-solid ps-12" "/>
-                                <!--end::Datepicker-->
-                            </div>
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Col-->
-                        <!--begin::Col-->
-                        <div class="col-md-6 fv-row">
-                            <label class="required fs-6 fw-bold mb-2">{{ __('Calories') }}</label>
-                            <input type="number" step="0.1" min="1" required name="calories" class="form-control form-control-solid ps-12" />
-                        </div>
-                        <!--end::Col-->
-
+                        <!--end::Input group-->
                     </div>
                     <!--end::Input group-->
 
                     <!--begin::Input group-->
                     <div class="row g-9 mb-8">
+                        <div class="d-flex flex-column mb-8 fv-row">
+                            <!--begin::Label-->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <span class="required">{{__('item-availability')}}</span>
+
+                                </label>
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <input type="checkbox" name="availability" checked value="1">
+                                </label>
+                            </div>
+                        </div>
                         <!--begin::Col-->
                         <div class="col-md-6 fv-row">
                             <label class="d-flex align-items-between fs-6 fw-bold mb-4">
-                                <span >{{__('Allow buy with loyalty points?')}}</span>
+                                <span>{{__('Allow buy with loyalty points?')}}</span>
                             </label>
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <input type="checkbox" id="allow_buy_with_loyalty_points-new" name="allow_buy_with_loyalty_points" checked value="1">
@@ -1176,38 +1194,12 @@
                         <div class="col-md-6 fv-row d-block" id="loyalty_point_price_section-new">
                             <label class="fs-6 fw-bold mb-2">{{ __('Product price with loyalty points (How many points)') }}</label>
 
-                            <input type="number" step="0.1" min="0"  name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid ps-12" />
+                            <input type="number" step="0.1" min="0" name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid " />
                             <div class="loyalty_point_calculation"></div>
                         </div>
                         <!--end::Col-->
 
                     </div>
-                    <!--end::Input group-->
-
-
-                    <div class="d-flex flex-column mb-8">
-                        <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
-
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en">{{ __('English') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar">{{ __('Arabic') }}</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content mt-3">
-                            <div class="tab-pane fade show active" id="d-en">
-                                <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="description_en"></textarea>
-                            </div>
-                            <div class="tab-pane fade" id="d-ar">
-                                <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="description_ar"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end::Input group-->
-
-
 
                     <div id="checkboxes">
                         <!-- Checkbox elements will be dynamically added here -->
@@ -1223,6 +1215,7 @@
                     <div id="dropdowns">
                         <!-- Checkbox elements will be dynamically added here -->
                     </div>
+
 
                     <!--begin::Actions-->
                     <div class="text-center">
