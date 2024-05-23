@@ -362,7 +362,7 @@ const ProductItem = ({
       }
     });
 
-    if (document.getElementById(id) !== null) {
+    if (document.getElementById(id) !== null && document.getElementById(id)?.length > 0) {
       document.getElementById(id).close();
     }
   }

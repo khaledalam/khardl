@@ -23,6 +23,7 @@ import {
 
 import { useAuthContext } from "../../../components/context/AuthContext";
 import { HTTP_OK } from "../../../config";
+import {isValidPhone} from "../../../../../landing-page/src/components/Utils";
 
 const Register = ({ closingFunc }) => {
   const navigate = useNavigate();
@@ -236,7 +237,7 @@ const Register = ({ closingFunc }) => {
     }
   }, [showOTP]);
 
-  const [lengthOfPhone, setLengthOfPhone] = useState(0);
+  const [phone, setPhone] = useState("");
 
   return (
     <div className="w-full max-w-[400px] bg-white p-[40px] rounded-[30px] flex flex-col items-center ">
@@ -331,21 +332,10 @@ const Register = ({ closingFunc }) => {
                 required: true,
               })}
               onChange={(event) => {
-                let temp = "";
-                for (let i = 0; i < event.target.value.length; i += 1) {
-                  if (
-                    event.target.value[i] >= "0" &&
-                    event.target.value[i] <= "9"
-                  ) {
-                    temp += event.target.value[i];
-                  }
-                }
-                event.target.value = temp;
-                setLengthOfPhone(event.target.value.length);
-                // console.log(data.target.value.length);
+                setPhone(event.target.value);
               }}
               minLength={9}
-              maxLength={9}
+              maxLength={10}
               onKeyDown={(event) => {
                 if (event.ctrlKey && event.key === "v") {
                 } else if (
@@ -513,11 +503,9 @@ const Register = ({ closingFunc }) => {
           {showOTP ? (
             <button
               type="submit"
-              className={`w-full h-8 px-4 pt-1.5 pb-2 ${
-                lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
-              } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
+              className={`w-full h-8 px-4 pt-1.5 pb-2 rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
               style={{
-                backgroundColor: restaurantStyle?.price_background_color,
+                backgroundColor: isValidPhone(phone) ? restaurantStyle?.price_background_color : '#E7E8EA',
               }}
             >
               {t("Register")}
@@ -525,16 +513,14 @@ const Register = ({ closingFunc }) => {
           ) : (
             <button
               onClick={() => {
-                if (lengthOfPhone != 9) {
+                if (!isValidPhone(phone)) {
                   return;
                 }
                 setShowOTP(true);
               }}
-              className={`w-full h-8 px-4 pt-1.5 pb-2 ${
-                lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
-              } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
+              className={`w-full h-8 px-4 pt-1.5 pb-2 rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
               style={{
-                backgroundColor: restaurantStyle?.price_background_color,
+                backgroundColor: isValidPhone(phone) ? restaurantStyle?.price_background_color : '#E7E8EA',
               }}
             >
               {t("Register")}

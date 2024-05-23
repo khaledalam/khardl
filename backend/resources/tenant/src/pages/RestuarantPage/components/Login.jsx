@@ -28,12 +28,14 @@ import SA from "../../../assets/SA.png";
 import Down from "../../../assets/down.svg";
 import { getCartItemsCount } from "../../../redux/NewEditor/categoryAPISlice";
 import { GrPowerReset } from "react-icons/gr";
+import {isValidPhone} from "../../../../../landing-page/src/components/Utils";
 
 const Login = ({ closingFunc }) => {
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
   const [openEyePassword, setOpenEyePassword] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [isLoading, setisLoading] = useState(true);
+  const [phone, setPhone] = useState("");
   const dispatch = useDispatch();
   const { setStatusCode } = useAuthContext();
 
@@ -263,21 +265,10 @@ const Login = ({ closingFunc }) => {
                 required: true,
               })}
               onChange={(event) => {
-                let temp = "";
-                for (let i = 0; i < event.target.value.length; i += 1) {
-                  if (
-                    event.target.value[i] >= '0' &&
-                    event.target.value[i] <= '9'
-                  ) {
-                    temp += event.target.value[i];
-                  }
-                }
-                event.target.value = temp;
-                setLengthOfPhone(event.target.value.length);
-                // console.log(data.target.value.length);
+                setPhone(event.target.value);
               }}
               minLength={9}
-              maxLength={9}
+              maxLength={10}
               onKeyDown={(event) => {
                 if (
                   event.ctrlKey &&
@@ -432,11 +423,9 @@ const Login = ({ closingFunc }) => {
         <div className="flex flex-col justify-center items-center mt-4 mb-10 w-full">
           <button
             type="submit"
-            className={`w-full h-8 px-4 pt-1.5 pb-2 ${
-              lengthOfPhone == 9 ? "bg-red-900" : "bg-[#E7E8EA]"
-            } rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
+            className={`w-full h-8 px-4 pt-1.5 pb-2 rounded-[50px] border justify-center items-center gap-1 inline-flex text-white text-xs font-normal leading-[18px]`}
             style={{
-              backgroundColor: restaurantStyle?.price_background_color
+              backgroundColor: (isValidPhone(phone) ? restaurantStyle?.price_background_color : '#E7E8EA')
             }}
           >
             {t("Login")}
