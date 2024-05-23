@@ -1525,5 +1525,8 @@
     "Calories(Kcal)":"السعرات",
     "Price(SAR)":"السعر(بالريال)",
     "Loyalty price":"سعر نقاط الولاء",
-    "How many points":"كم عدد النقاط"
+    "How many points":"كم عدد النقاط",
+    "Add new category":"إضافة تصنيف جديد",
+    "English name":"الاسم الانجليزي",
+    "Arabic name":"الاسم العربي"
 }

@@ -474,7 +474,7 @@
                                 </h3>
                             </div>
                             <div class="d-flex align-items-center flex-wrap gap-2">
-                                <button class="btn btn-sm btn-khardl add-new" id="addCategoryButton">
+                                <button class="btn btn-sm btn-khardl add-new" {{-- id="addCategoryButton" --}} data-bs-toggle="modal" data-bs-target="#add_category">
                                     {{ __('Add new') }}
                                     <i class="fas fa-plus text-white fa-xs"></i>
                                 </button>
@@ -521,7 +521,7 @@
                                                     </span>
                                                     <ul class="dropdown-menu rounded">
                                                         <li>
-                                                            <a class="dropdown-item text-muted py-2" href="#" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}', '{{$category->sort}}')">
+                                                            <a class="dropdown-item text-muted py-2" href="#" data-bs-toggle="modal" data-bs-target="#edit_category_{{ $category->id }}">
                                                                 {{ __('Edit category') }}
                                                             </a>
                                                         </li>
@@ -544,6 +544,74 @@
                                     </div>
                                     <!--end::Inbox-->
                                 </div>
+                                <div class="modal fade" id="edit_category_{{ $category->id }}" tabindex="-1" aria-hidden="true">
+                                    <!--begin::Modal dialog-->
+                                    <div class="modal-dialog modal-dialog-centered mw-650px">
+                                        <!--begin::Modal content-->
+                                        <div class="modal-content rounded">
+                                            <!--begin::Modal header-->
+                                            <div class="modal-header pb-0 border-0">
+                                                <!--begin::Close-->
+                                                <h1 class="text-center w-100 mt-6">
+                                                        {{ __('Edit new category') }}
+                                                </h1>
+                                                <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
+                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                    <span class="svg-icon svg-icon-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->
+                                                </div>
+                                                <!--end::Close-->
+                                            </div>
+                                            <!--begin::Modal header-->
+                                            <!--begin::Modal body-->
+                                            <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
+                                                <div class="menu-item item-popup">
+                                                    <form method="POST" action="{{ route('restaurant.edit-category', ['categoryId' => $category->id, 'branchId' => $category->branch?->id]) }}" enctype="multipart/form-data" class="mb-2">
+                                                        @csrf
+                                                        <div id="categoryForm" class="mt-2">
+                                                            <div class="row mt-3">
+                                                                <div class="col-md-12 mb-2">
+                                                                    <label class="mb-1">{{__('English name')}}</label>
+                                                                    <input type="text" class="form-control" value="{{ old('name_en') ?? $category->getTranslation('name','en') }}" placeholder="{{ __('Enter text in English') }}" name="name_en" id="categoryName">
+                                                                </div>
+                                                                <div class="col-md-12 mb-2">
+                                                                    <label class="mb-1">{{__('Arabic name')}}</label>
+                                                                    <input type="text" class="form-control" value="{{ old('name_ar') ?? $category->getTranslation('name','ar') }}" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
+                                                                </div>
+                                                                <div class="col-md-12 mb-2">
+                                                                    <label class="mb-1">{{__('sort')}}</label>
+                                                                    <input type="number" name="sort" min="1" value="{{ $category->sort }}" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control" placeholder="{{__('The sorting order of category')}}" />
+                                                                </div>
+                                                                <div class="col-md-6 mb-2" >
+                                                                    <label class="mb-1">{{__('category-logo')}}</label>
+                                                                    <input type="file" data-item="{{ $category->id }}" class="form-control item_image"  placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                                                </div>
+                                                                <div class="col-md-6 mb-2">
+                                                                    <img alt="category image" src="{{ $category?->photo ?? global_asset('img/category-icon.png') }}" id="item-image-preview-{{ $category->id }}" class="rounded" style="max-height: 162px;max-width:100%" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="justify-content-center mt-2">
+                                                                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl w-100 too-rounded">
+                                                                    <span class="indicator-label">{{__('Save')}}</span>
+                                                                    <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
+                                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <!--end::Modal body-->
+                                        </div>
+                                        <!--end::Modal content-->
+                                    </div>
+                                    <!--end::Modal dialog-->
+                                </div>
                                 @endforeach
                             </div>
                             @else
@@ -562,90 +630,72 @@
 
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
-                            <div class="menu-item">
-                                <!--begin::Add label-->
-                                <!--end::Add label-->
-                                <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" class="mb-2" method="POST" id="category-submit" enctype="multipart/form-data">
-                                    @csrf
-                                    <div id="categoryForm" class="mt-2" style="display: none !important;">
-                                        <ul class="nav nav-tabs" id="languageTabs">
-                                            <li class="nav-item">
-                                                <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#en">{{__('english')}}</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#ar">{{__('arabic')}}</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('logo')}}</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="sort-tab" data-bs-toggle="tab" href="#sort">{{__('sort')}}</a>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content mt-3">
-                                            <div class="tab-pane fade show active" id="en">
-                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="categoryName">
+                            <div class="modal fade" id="add_category" tabindex="-1" aria-hidden="true">
+                                <!--begin::Modal dialog-->
+                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                    <!--begin::Modal content-->
+                                    <div class="modal-content rounded">
+                                        <!--begin::Modal header-->
+                                        <div class="modal-header pb-0 border-0">
+                                            <!--begin::Close-->
+                                            <h1 class="text-center w-100 mt-6">
+                                                    {{ __('Add new category') }}
+                                            </h1>
+                                            <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                <span class="svg-icon svg-icon-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
                                             </div>
-                                            <div class="tab-pane fade" id="ar">
-                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
-                                            </div>
-                                            <div class="tab-pane fade" id="logo">
-                                                <label>{{__('category-logo')}}</label>
-                                                <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
-                                            </div>
-                                            <div class="tab-pane fade" id="sort">
-                                                <label>{{__('sort')}}</label>
-                                                <input type="number" name="sort" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control form-control-solid" placeholder="{{__('The sorting order of category')}}" />
+                                            <!--end::Close-->
+                                        </div>
+                                        <!--begin::Modal header-->
+                                        <!--begin::Modal body-->
+                                        <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
+                                            <div class="menu-item item-popup">
+                                                <!--begin::Add label-->
+                                                <!--end::Add label-->
+                                                <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" class="mb-2" method="POST" id="category-submit" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div id="categoryForm" class="mt-2">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12 mb-2">
+                                                                <label class="mb-1">{{__('English name')}}</label>
+                                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="categoryName">
+                                                            </div>
+                                                            <div class="col-md-12 mb-2">
+                                                                <label class="mb-1">{{__('Arabic name')}}</label>
+                                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
+                                                            </div>
+                                                            <div class="col-md-12 mb-2">
+                                                                <label class="mb-1">{{__('sort')}}</label>
+                                                                <input type="number" name="sort" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control" placeholder="{{__('The sorting order of category')}}" />
+                                                            </div>
+                                                            <div class="col-md-6 mb-2" >
+                                                                <label class="mb-1">{{__('category-logo')}}</label>
+                                                                <input type="file" class="form-control" id="item_image" placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <img id="item-image-preview" class="rounded" style="max-height: 162px;max-width:100%" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="justify-content-center">
+                                                            <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Create') }}</button>
+                                                            {{-- <button type="button" onclick="hideCategoryEditForm('categoryForm')" class="btn btn-sm btn-secondary mx-1 mt-2">{{ __('Close') }}</button> --}}
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
-                                        <div class="justify-content-center">
-                                            <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Create') }}</button>
-                                            <button type="button" onclick="hideCategoryEditForm('categoryForm')" class="btn btn-sm btn-secondary mx-1 mt-2">{{ __('Close') }}</button>
-                                        </div>
+                                        <!--end::Modal body-->
                                     </div>
-                                </form>
-
-                                <form method="POST" id="category-edit" enctype="multipart/form-data" class="mb-2">
-                                    @csrf
-
-                                    <div id="category-edit-form" class="mt-2" style="display: none !important;">
-                                        <ul class="nav nav-tabs" id="edit-cateogry">
-                                            <li class="nav-item">
-                                                <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#edit-en">{{__('english')}}</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#edit-ar">{{__('arabic')}}</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#edit-logo">{{__('logo')}}</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="sort-tab" data-bs-toggle="tab" href="#edit-sort">{{__('sort')}}</a>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content mt-3">
-                                            <div class="tab-pane fade show active" id="edit-en">
-                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="category_name_en">
-                                            </div>
-                                            <div class="tab-pane fade" id="edit-ar">
-                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar" id="category_name_ar">
-                                            </div>
-                                            <div class="tab-pane fade" id="edit-logo">
-                                                <label>{{__('category-logo')}}</label>
-                                                <input type="file" class="form-control form-control-solid" accept="image/*" placeholder="Enter Target Title" name="photo" />
-                                            </div>
-                                            <div class="tab-pane fade" id="edit-sort">
-                                                <label>{{__('sort')}}</label>
-                                                <input type="number" min="1" max="{{count($categories)}}" class="form-control form-control-solid" name="sort" placeholder="{{__('The sorting order of category')}}" id="category_sort" />
-                                            </div>
-                                        </div>
-                                        <div class="d-none justify-content-center" id="update-category-btn">
-                                            <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Update') }}</button>
-                                            <button type="button" onclick="hideCategoryEditForm('category-edit-form')" class="btn btn-sm btn-secondary mx-1 mt-2">{{ __('Close') }}</button>
-                                        </div>
-                                    </div>
-                                </form>
-
+                                    <!--end::Modal content-->
+                                </div>
+                                <!--end::Modal dialog-->
                             </div>
                             <!--end::Menu item-->
 
@@ -719,7 +769,7 @@
                                                 </div>
                                                 <!--end::Heading-->
                                                 <div class="row">
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-6">
                                                         <!--begin::Input group-->
                                                         <div class="d-flex flex-column mb-8">
                                                             <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
@@ -744,7 +794,7 @@
                                                         <!--begin::Input group-->
                                                         <div class="row g-9 mb-8">
                                                             <!--begin::Col-->
-                                                            <div class="col-md-6 fv-row">
+                                                            <div class="col-md-12 fv-row">
                                                                 <label class="required fs-6 fw-bold mb-2">{{ __('Price(SAR)') }}</label>
                                                                 <!--begin::Input-->
                                                                 <div class="position-relative d-flex align-items-center">
@@ -756,7 +806,7 @@
                                                             </div>
                                                             <!--end::Col-->
                                                             <!--begin::Col-->
-                                                            <div class="col-md-6 fv-row">
+                                                            <div class="col-md-12 fv-row">
                                                                 <label class="required fs-6 fw-bold mb-2">{{ __('Calories(Kcal)') }}</label>
                                                                 <input type="number" step="0.1" min="1" required name="calories" value="{{ old('calories') ?? $item->calories }}" class="form-control form-control-solid " />
                                                             </div>
@@ -764,7 +814,7 @@
                                                         </div>
                                                         <!--end::Input group-->
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                           <!--begin::Input group-->
                                                           <div class="d-flex flex-column mb-8 fv-row">
                                                             <!--begin::Label-->
@@ -1615,7 +1665,7 @@
     const addDropdownButton = document.getElementById('addDropdown');
     if(addDropdownButton)
         addDropdownButton.addEventListener('click', createDropdown);
-    </script>
+</script>
 
 <!--end::Content-->
 {{-- Image preview --}}
