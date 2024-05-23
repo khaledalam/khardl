@@ -85,6 +85,9 @@
   background-color: #f46789;
 }
 /* Item */
+.item .btn{
+  white-space: nowrap;
+}
 .item >div{
   border: 1px solid #EAECF0;
 }
@@ -102,4 +105,21 @@
 /* Item popup */
 .item-popup input{
   border-radius: 30px!important;
+}
+.option-btn{
+  border: 1px solid #c6dc06!important;
+  width: 100%;
+  border-radius: 30px;
+}
+/* Options */
+.add-option{
+  font-size: 14px;
+}
+.option-btn .fa-plus{
+  font-size: 10px;
+}
+.option-block{
+  background-color: #FAFAFB;
+  padding: 10px;
+  border-radius: 10px;
 }

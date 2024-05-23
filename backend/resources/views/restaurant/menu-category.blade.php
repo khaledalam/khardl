@@ -21,29 +21,29 @@
         checkboxDiv.className = 'd-flex flex-column mb-8 fv-row checkbox-content';
         checkboxDiv.innerHTML = `
                 <hr />
-                <div class="d-flex flex-column fv-row">
+                <div class="d-flex flex-column fv-row option-block">
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">{{ __('Checkbox') }} </span>
+                            <span class="">{{ __('Add Checkbox') }} </span>
                         </label>
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2 form-check">
                             <input type="hidden" name="checkbox_required[${checkboxCount}]" value="false"  />
-                            <input type="checkbox" name="checkbox_required_input[${checkboxCount}]" ${key !=null ? (item.checkbox_required[key] == "true"  ? 'checked':'') : ''} >&nbsp;{{ __('Required') }}
+                            <input type="checkbox"  class="form-check-input" name="checkbox_required_input[${checkboxCount}]" ${key !=null ? (item.checkbox_required[key] == "true"  ? 'checked':'') : ''} >&nbsp;{{ __('Required') }} ?
+                            <button class="delete-checkbox btn btn-sm" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash-alt"></i></button>
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${checkboxCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleEn[${checkboxCount}]"  placeholder="{{ __('Title in english') }}"
+                            <input type="text"  required class="form-control mx-3 w-65" name="checkboxInputTitleEn[${checkboxCount}]"  placeholder="{{ __('Title in english') }}"
                             value="${key !=null ? item.checkbox_input_titles[key][0]: ''}">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[${checkboxCount}]" placeholder="{{ __('Title in arabic') }}"
+                            <input type="text"  required class="form-control mx-3 w-65" name="checkboxInputTitleAr[${checkboxCount}]" placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.checkbox_input_titles[key][1]: ''}">
 
-                            <input type="number" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" min="1" step="1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}"
+                            <input type="number"  min="1" step="1" required class="form-control mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}"
                             value="${key !=null ? item.checkbox_input_maximum_choices[key]: ''}">
-                            <button class="delete-checkbox btn btn-sm btn-white" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -51,7 +51,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${checkboxCount}" ></div><br />
-                    <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
+                    <a class="btn btn-sm btn-khardl add-option  too-rounded w-100" style="color: #fff !important;"><i class="fas fa-plus"></i> {{ __('Add option') }}</a>
                 </div>
             `;
 
@@ -106,27 +106,27 @@
         if (isDeletable) {
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in english') }}"
+                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Option in english') }}"
                     value="${option ? option[0] : ''}">
-                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
+                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
                     value="${option ? option[1] : ''}">
 
-                    <input type="number" min="0" step="0.1" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Price') }}"
+                    <input type="number" min="0" step="0.1" required name="checkboxInputPrice[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Price') }}"
                     value="${price ? price : ''}">
-                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                    <button class="invisible btn btn-sm"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
         } else {
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
+                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in english') }}"
                     value="${option ? option[0] : ''}">
-                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
+                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
                     value="${option ? option[1] : ''}">
 
-                    <input type="number" step="0.1" min="0" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Price') }}"
+                    <input type="number" step="0.1" min="0" required name="checkboxInputPrice[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Price') }}"
                     value="${price ? price : ''}">
-                    <button class="delete-option btn btn-sm btn-white " type="button"><i class="fas fa-trash text-danger"></i></button>
+                    <button class="delete-option btn btn-sm  " type="button"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
 
@@ -158,28 +158,27 @@
         selectionDiv.className = 'd-flex flex-column mb-8 fv-row';
         selectionDiv.innerHTML = `
                 <hr />
-                <div class="d-flex flex-column fv-row">
+                <div class="d-flex flex-column fv-row option-block">
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">{{ __('Selection') }}</span>
+                            <span class="">{{ __('Add Selection') }}</span>
                         </label>
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2 form-check">
 
                             <input type="hidden" name="selection_required[${selectionCount}]" value="false" />
-                            <input type="checkbox" name="selection_required_input[${selectionCount}]" disabled checked >&nbsp;{{ __('Required') }}
+                            <input type="checkbox" class="form-check-input" name="selection_required_input[${selectionCount}]" disabled checked >&nbsp;{{ __('Required') }} ?
+                            <button class="delete-selection btn btn-sm" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash-alt"></i></button>
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${selectionCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[${selectionCount}]" placeholder="{{ __('Title in english') }}"
+                            <input type="text"  required class="form-control mx-3 w-100" name="selectionInputTitleEn[${selectionCount}]" placeholder="{{ __('Title in english') }}"
                             value="${key !=null ? item.selection_input_titles[key][0]: ''}">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[${selectionCount}]"  placeholder="{{ __('Title in arabic') }}"
+                            <input type="text"  required class="form-control mx-3 w-100" name="selectionInputTitleAr[${selectionCount}]"  placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.selection_input_titles[key][1]: ''}">
-
-                            <button class="delete-selection btn btn-sm btn-white" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -187,7 +186,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${selectionCount}" ></div><br />
-                    <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
+                    <a class="btn btn-sm btn-khardl add-option too-rounded w-100" style="color: #fff !important;"><i class="fas fa-plus"></i> {{ __('Add option') }}</a>
                 </div>
             `;
 
@@ -242,27 +241,27 @@
         if (isDeletable) {
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
+                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in english') }}"
                     value="${option ? option[0] : ''}">
-                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
                     value="${option ? option[1] : ''}">
 
-                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
+                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Price') }}"
                     value="${price ? price : ''}">
-                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                    <button class="invisible btn btn-sm"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
         } else {
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
+                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in english') }}"
                     value="${option ? option[0] : ''}">
-                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
                     value="${option ? option[1] : ''}">
 
-                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
+                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Price') }}"
                     value="${price ? price : ''}">
-                    <button class="delete-option btn btn-sm btn-white" type="button"><i class="fas fa-trash text-danger"></i></button>
+                    <button class="delete-option btn btn-sm " type="button"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
 
@@ -293,28 +292,27 @@
         dropdownDiv.className = 'd-flex flex-column mb-8 fv-row';
         dropdownDiv.innerHTML = `
                 <hr />
-                <div class="d-flex flex-column fv-row">
+                <div class="d-flex flex-column fv-row option-block">
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">{{ __('Dropdown') }}</span>
+                            <span class="">{{ __('Add Dropdown') }}</span>
                         </label>
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2 form-check">
 
                             <input type="hidden" name="dropdown_required[${dropdownCount}]" value="true" />
-                            <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" disabled checked >&nbsp;{{ __('Required') }}
+                            <input type="checkbox"  class="form-check-input" name="dropdown_required_input[${dropdownCount}]" disabled checked >&nbsp;{{ __('Required') }} ?
+                            <button class="delete-dropdown btn btn-sm" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash-alt"></i></button>
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${dropdownCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[${dropdownCount}]" placeholder="{{ __('Title in english') }}"
+                            <input type="text"  required class="form-control mx-3 w-100" name="dropdownInputTitleEn[${dropdownCount}]" placeholder="{{ __('Title in english') }}"
                             value="${key !=null ? item.dropdown_input_titles[key][0]: ''}">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[${dropdownCount}]"  placeholder="{{ __('Title in arabic') }}"
+                            <input type="text"  required class="form-control mx-3 w-100" name="dropdownInputTitleAr[${dropdownCount}]"  placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.dropdown_input_titles[key][1]: ''}">
-
-                            <button class="delete-dropdown btn btn-sm btn-white" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -322,7 +320,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${dropdownCount}" ></div><br />
-                    <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
+                    <a class="btn btn-sm btn-khardl add-option too-rounded w-100" style="color: #fff !important;"><i class="fas fa-plus"></i> {{ __('Add option') }}</a>
                 </div>
             `;
 
@@ -377,26 +375,26 @@
         if (isDeletable) {
             optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in english') }}"
+                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Option in english') }}"
                         value="${option ? option[0] : ''}">
-                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
                         value="${option ? option[1] : ''}">
 
-                        <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
-                        <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                        <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Price') }}">
+                        <button class="invisible btn btn-sm"><i class="fas fa-trash-alt"></i></button>
                     </div>
             `;
         } else {
             optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
+                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in english') }}"
                         value="${option ? option[0] : ''}">
-                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('Option in arabic') }}"
+                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control mx-3 w-50"   placeholder="{{ __('Option in arabic') }}"
                         value="${option ? option[1] : ''}">
 
-                        <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
+                        <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Price') }}"
                         value="${price ? price : ''}">
-                        <button class="delete-option btn btn-sm btn-white" type="button"><i class="fas fa-trash text-danger"></i></button>
+                        <button class="delete-option btn btn-sm " type="button"><i class="fas fa-trash-alt"></i></button>
                     </div>
             `;
             const deleteOptionButton = optionDiv.querySelector('.delete-option');
@@ -465,7 +463,7 @@
             <!--begin::Inbox App - Messages -->
             <div class="row">
                 <!--begin::Sidebar-->
-                <div class="col-xl-4 col-xxl-2">
+                <div class="col-md-4 {{-- col-xxl-2 --}}">
                     <!--begin::Sticky aside-->
                     <div class="card card-flush px-1">
                         <!--begin::Aside content-->
@@ -659,7 +657,7 @@
                 </div>
                 <!--end::Sidebar-->
                 <!--begin::Content-->
-                <div class="col-xl-8 col-xxl-10">
+                <div class="col-md-8 {{-- col-xxl-10 --}}">
                     <!--begin::Card-->
                     @if($selectedCategory)
                     <div class="card card-flush">
@@ -798,7 +796,7 @@
                                                 <div class="row g-9 mb-8">
                                                     <!--begin::Col-->
                                                     <div class="col-md-6 fv-row">
-                                                        <label class="required fs-6 fw-bold mb-2">{{ __('Price') }}</label>
+                                                        <label class="required fs-6 fw-bold mb-2">{{ __('Price(SAR)') }}</label>
                                                         <!--begin::Input-->
                                                         <div class="position-relative d-flex align-items-center">
                                                             <!--begin::Datepicker-->
@@ -810,7 +808,7 @@
                                                     <!--end::Col-->
                                                     <!--begin::Col-->
                                                     <div class="col-md-6 fv-row">
-                                                        <label class="required fs-6 fw-bold mb-2">{{ __('Calories') }}</label>
+                                                        <label class="required fs-6 fw-bold mb-2">{{ __('Calories(Kcal)') }}</label>
                                                         <input type="number" step="0.1" min="1" required name="calories" value="{{ old('calories') ?? $item->calories }}" class="form-control form-control-solid " />
                                                     </div>
                                                     <!--end::Col-->
@@ -953,7 +951,7 @@
                             <div class="items row mb-2 px-2" id="kt_inbox_listing">
                                 <!--begin::Table body-->
                                 @foreach ($items as $item)
-                                <div class="col-xl-6 col-xxl-4">
+                                <div class="col-md-6">
                                     <div class="item mt-3 {{ $item->availability ? '':'un-available'}}">
                                         <div class="d-flex align-items-center rounded-3 p-3 justify-content-between">
                                             <div class="image" data-bs-toggle="tooltip" title="{{$item->name}}">
@@ -1050,25 +1048,6 @@
             <!--begin::Modal header-->
             <!--begin::Modal body-->
             <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
-                <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse start-0 {{app()->getLocale() != 'ar'?' transform-90':'transform-270'}} mt-20 gap-2">
-                    <!--begin::Demos drawer toggle-->
-                    <button id="addCheckbox" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Checkbox">
-                        <span id="create_new_checkbox">+ {{ __('Checkbox') }}</span>
-                    </button>
-                    <!--end::Demos drawer toggle-->
-                    <!--begin::Help drawer toggle-->
-                    <button id="addSelection" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Selection">
-                        <span id="create_new_selection">+ {{ __('Selection') }}</span>
-                    </button>
-                    <!--end::Help drawer toggle-->
-                    <!--begin::Purchase link-->
-                    <button id="addDropdown" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Dropdown">
-                        <span id="create_new_Dropdown">+ {{ __('Dropdown') }}</span>
-                    </button>
-                    <!--end::Purchase link-->
-                </div>
-
-
                 <!--begin:Form-->
                 @if($selectedCategory)
                 <form id="kt_modal_new_target_form" class="item-popup form item_form" action="{{ route('restaurant.add-item', ['id' => $selectedCategory->id, 'branchId' => $branchId]) }}" method="POST" enctype="multipart/form-data">
@@ -1108,7 +1087,7 @@
                             <div class="row g-9 mb-8">
                                 <!--begin::Col-->
                                 <div class="col-md-12 fv-row ">
-                                    <label class="required fs-6 fw-bold mb-2">{{ __('Price') }}</label>
+                                    <label class="required fs-6 fw-bold mb-2">{{ __('Price(SAR)') }}</label>
                                     <!--begin::Input-->
                                     <div class="position-relative d-flex align-items-center">
                                         <!--begin::Datepicker-->
@@ -1120,7 +1099,7 @@
                                 <!--end::Col-->
                                 <!--begin::Col-->
                                 <div class="col-md-12 fv-row">
-                                    <label class="required fs-6 fw-bold mb-2">{{ __('Calories') }}</label>
+                                    <label class="required fs-6 fw-bold mb-2">{{ __('Calories(Kcal)') }}</label>
                                     <input type="number" step="0.1" min="1" required name="calories" class="form-control form-control-solid " />
                                 </div>
                                 <!--end::Col-->
@@ -1168,39 +1147,78 @@
 
                     <!--begin::Input group-->
                     <div class="row g-9 mb-8">
-                        <div class="d-flex flex-column mb-8 fv-row">
+                        <div class="col-md-5 fv-row">
                             <!--begin::Label-->
                             <div class="d-flex justify-content-between align-items-center">
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                     <span class="required">{{__('item-availability')}}</span>
 
                                 </label>
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <input type="checkbox" name="availability" checked value="1">
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2 custom-switch">
+                                    <input type="checkbox" type="checkbox" name="availability" checked value="1">
+                                    <span class="slider round"></span>
                                 </label>
                             </div>
                         </div>
                         <!--begin::Col-->
-                        <div class="col-md-6 fv-row">
-                            <label class="d-flex align-items-between fs-6 fw-bold mb-4">
-                                <span>{{__('Allow buy with loyalty points?')}}</span>
-                            </label>
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <input type="checkbox" id="allow_buy_with_loyalty_points-new" name="allow_buy_with_loyalty_points" checked value="1">
-                            </label>
+                        <div class="col-md-7 fv-row">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div  class="d-flex align-items-between">
+                                        <label class="fs-6 fw-bold mb-4">
+                                            <span>{{__('Allow buy with loyalty points?')}}</span>
+                                        </label>
+                                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                            <label class="custom-switch">
+                                                <input type="checkbox" type="checkbox" id="allow_buy_with_loyalty_points-new" name="allow_buy_with_loyalty_points" checked value="1">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div id="loyalty_point_price_section-new">
+                                        <input type="number" step="0.1" min="0" placeholder="{{ __('Loyalty price') }}" name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid " />
+                                        <p class="text-muted">{{ __('How many points') }}</p>
+                                        <div class="loyalty_point_calculation"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!--end::Col-->
-                        <!--begin::Col-->
-                        <div class="col-md-6 fv-row d-block" id="loyalty_point_price_section-new">
-                            <label class="fs-6 fw-bold mb-2">{{ __('Product price with loyalty points (How many points)') }}</label>
-
-                            <input type="number" step="0.1" min="0" name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid " />
-                            <div class="loyalty_point_calculation"></div>
-                        </div>
-                        <!--end::Col-->
-
                     </div>
-
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <!--begin::Demos drawer toggle-->
+                            <button id="addCheckbox" class="btn option-btn" type="button" title="Add Checkbox">
+                                <span id="create_new_checkbox">
+                                    <i class="fas fa-plus text-black"></i>
+                                    {{ __('Checkbox') }}
+                                </span>
+                            </button>
+                            <!--end::Demos drawer toggle-->
+                        </div>
+                        <div class="col-md-4">
+                            <!--begin::Help drawer toggle-->
+                            <button id="addSelection" class="btn option-btn" type="button" title="Add Selection">
+                                <span id="create_new_selection">
+                                    <i class="fas fa-plus text-black"></i>
+                                    {{ __('Selection') }}
+                                </span>
+                            </button>
+                            <!--end::Help drawer toggle-->
+                        </div>
+                        <div class="col-md-4">
+                            <!--begin::Purchase link-->
+                        <button id="addDropdown" class="btn option-btn" type="button" title="Add Dropdown">
+                            <span id="create_new_Dropdown">
+                                <i class="fas fa-plus text-black"></i>
+                                {{ __('Dropdown') }}
+                            </span>
+                        </button>
+                        <!--end::Purchase link-->
+                        </div>
+                    </div>
                     <div id="checkboxes">
                         <!-- Checkbox elements will be dynamically added here -->
 
@@ -1219,9 +1237,8 @@
 
                     <!--begin::Actions-->
                     <div class="text-center">
-                        <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
-                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
-                            <span class="indicator-label">{{__('submit')}}</span>
+                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl w-100 too-rounded">
+                            <span class="indicator-label">{{__('Save')}}</span>
                             <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>

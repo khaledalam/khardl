@@ -818,6 +818,9 @@
     "Checkbox" : "خيارات (اختيار متعدد)",
     "Selection" : "خيارات حره",
     "Dropdown" : "خيارات من قائمه",
+    "Add Checkbox" : "اضف خيارات (اختيار متعدد)",
+    "Add Selection" : "اضف خيارات حره",
+    "Add Dropdown" : "اضف خيارات من قائمه",
     "Calories" : "السعرات",
     "English" : "بالانجليزية",
     "Arabic" : "بالعربية",
@@ -1518,5 +1521,9 @@
     "No categories found":"لم يتم العثور على التصنيفات",
     "Add new categories to start adding new itms":"أضف تصنيفات جديدة لبدء إضافة منتجات جديدة",
     "Kcal":"سعرات",
-    "No description":"بدون وصف"
+    "No description":"بدون وصف",
+    "Calories(Kcal)":"السعرات",
+    "Price(SAR)":"السعر(بالريال)",
+    "Loyalty price":"سعر نقاط الولاء",
+    "How many points":"كم عدد النقاط"
 }
