@@ -10,16 +10,14 @@ import { useApiContext } from '../context'
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { API_ENDPOINT, HTTP_NOT_ACCEPTED ,HTTP_NOT_AUTHENTICATED} from "../../config";
 import AxiosInstance from "../../axios/axios";
+import { useAuthContext } from "../../components/context/AuthContext";
 
 const VerificationEmail = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   let user_email = sessionStorage.getItem("email");
  
-  const [statusCode, setStatusCode] = useLocalStorage(
-    "status-code",
-    HTTP_NOT_AUTHENTICATED,
-  );
+  const { setStatusCode } = useAuthContext();
 
   const {
     register: register,

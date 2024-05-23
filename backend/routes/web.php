@@ -138,7 +138,7 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
 
     Route::get('verification-email', static function() {
         return view("central");
-    })->name("verification-email"); 
+    })->name("verification-email")->middleware('guest'); 
     // Auth Protected
 
     Route::middleware(['auth','notBlocked'])->group(function () {

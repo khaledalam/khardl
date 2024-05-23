@@ -213,11 +213,15 @@ class RegisterController extends BaseController
 
     public function sendVerificationCode(Request $request): JsonResponse
     {
+        if($request instanceof RestaurantOwnerRegisterRequest){
+            $request = $request?->validated();
+        }else {
+            $request = $request->all();
+        }
         
-        $request = $request->validated() ?? $request;
         $emailKey = str_replace('.', '_', $request['email']);
         if(!$data  = session("register_".$emailKey)){
-            return $this->sendError('Fail', __('Email not found, please try again'));
+            return $this->sendError(__('Email not found, please try again'), __('Email not found, please try again'));
         }
  
         $user = new User($data);
@@ -232,15 +236,13 @@ class RegisterController extends BaseController
             ])->get()->all();
        
         if (count($attempts) >= 3) {
-            return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
+            return $this->sendError(__('Too many attempts. Request a new verification code after 15 minutes from now.'), __('Too many attempts. Request a new verification code after 15 minutes from now.'));
         }
       
         // Generate the verification code using the model's method.
         $user->generateVerificationCode();
         $emailKey = str_replace('.', '_', $user->email);
-        session(['register_'.$emailKey => $data + [
-            'verification_code'=>$user->verification_code
-        ]]);
+        session(['register_'.$emailKey => array_merge($data,[ 'verification_code'=>$user->verification_code])]);
     
         // dd($user);
         SendVerifyEmailJob::dispatch($user);
@@ -270,10 +272,10 @@ class RegisterController extends BaseController
         
         $emailKey = str_replace('.', '_', $request->email);
         $data = Session::get("register_".$emailKey);
-  
+        
 
         if (!$data) {
-            return $this->sendError('Fail', __('Email not found, please try again'));
+            return $this->sendError(__('Email not found, please try again'), __('Email not found, please try again'));
         }
 
         $user = new User($data);
@@ -304,12 +306,13 @@ class RegisterController extends BaseController
                 'user'=>$user
             ];
             $data['step2_status'] = 'incomplete';
+            
             return $this->sendResponse($data, 'Email verified successfully!');
         }
 
         // If we've reached here, the verification code is incorrect
         // Note: You may want to track the number of incorrect attempts and handle them accordingly.
-        return $this->sendError('Fail', __('The verification code is incorrect.'));
+        return $this->sendError(__('The verification code is incorrect.'), __('The verification code is incorrect.'));
     }
 
 }
