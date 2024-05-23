@@ -709,25 +709,6 @@
                                         <!--begin::Modal header-->
                                         <!--begin::Modal body-->
                                         <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
-                                            <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse start-0 {{app()->getLocale() != 'ar'?' transform-90':'transform-270'}} mt-20 gap-2">
-                                                <!--begin::Demos drawer toggle-->
-                                                <button id="addCheckbox_{{ $item->id }}" type="button" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Checkbox">
-                                                    <span id="create_new_checkbox">+ {{ __('Checkbox') }}</span>
-                                                </button>
-                                                <!--end::Demos drawer toggle-->
-                                                <!--begin::Help drawer toggle-->
-                                                <button id="addSelection_{{ $item->id }}" type="button" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Selection">
-                                                    <span id="create_new_selection">+ {{ __('Selection') }}</span>
-                                                </button>
-                                                <!--end::Help drawer toggle-->
-                                                <!--begin::Purchase link-->
-                                                <button id="addDropdown_{{ $item->id }}" type="button" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Dropdown">
-                                                    <span id="create_new_Dropdown">+ {{ __('Dropdown') }}</span>
-                                                </button>
-                                                <!--end::Purchase link-->
-                                            </div>
-
-
                                             <!--begin:Form-->
                                             @if($selectedCategory)
                                                 <!--begin::Heading-->
@@ -739,17 +720,6 @@
                                                 <!--end::Heading-->
                                                 <div class="row">
                                                     <div class="col-md-8">
-                                                         <!--begin::Input group-->
-                                                        <div class="d-flex flex-column mb-8 fv-row">
-                                                            <!--begin::Label-->
-                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                                <span class="required">{{__('item-photo')}}</span>
-                                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('Image will be shown to customers') }}"></i>
-                                                            </label>
-                                                            <input type="file"  data-item="{{ $item->id }}" class="item_image form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
-                                                        </div>
-                                                        <!--end::Input group-->
-
                                                         <!--begin::Input group-->
                                                         <div class="d-flex flex-column mb-8">
                                                             <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
@@ -771,53 +741,46 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <!--begin::Input group-->
-                                                        <div class="d-flex flex-column mb-8 fv-row">
-                                                            <!--begin::Label-->
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                                    <span class="required">{{__('item-availability')}}</span>
-                                                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
-                                                                </label>
-                                                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                                    <input type="checkbox" name="availability" value="1" {{ old('availability') || $item->availability ? 'checked' : '' }}>
-                                                                </label>
+                                                        <div class="row g-9 mb-8">
+                                                            <!--begin::Col-->
+                                                            <div class="col-md-6 fv-row">
+                                                                <label class="required fs-6 fw-bold mb-2">{{ __('Price(SAR)') }}</label>
+                                                                <!--begin::Input-->
+                                                                <div class="position-relative d-flex align-items-center">
+                                                                    <!--begin::Datepicker-->
+                                                                    <input type="number" min="0" step="1" value="{{ old('price') ?? $item->price }}" required name="price" class="form-control item_price form-control-solid "  />
+                                                                    <!--end::Datepicker-->
+                                                                </div>
+                                                                <!--end::Input-->
                                                             </div>
-
+                                                            <!--end::Col-->
+                                                            <!--begin::Col-->
+                                                            <div class="col-md-6 fv-row">
+                                                                <label class="required fs-6 fw-bold mb-2">{{ __('Calories(Kcal)') }}</label>
+                                                                <input type="number" step="0.1" min="1" required name="calories" value="{{ old('calories') ?? $item->calories }}" class="form-control form-control-solid " />
+                                                            </div>
+                                                            <!--end::Col-->
                                                         </div>
                                                         <!--end::Input group-->
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <img alt="product_image" src="{{ $item->photo }}" id="item-image-preview-{{ $item->id }}" class="rounded" style="max-height: 100%;max-width:100%" />
-                                                    </div>
-                                                </div>
-                                                <!--begin::Input group-->
-                                                <div class="row g-9 mb-8">
-                                                    <!--begin::Col-->
-                                                    <div class="col-md-6 fv-row">
-                                                        <label class="required fs-6 fw-bold mb-2">{{ __('Price(SAR)') }}</label>
-                                                        <!--begin::Input-->
-                                                        <div class="position-relative d-flex align-items-center">
-                                                            <!--begin::Datepicker-->
-                                                            <input type="number" min="0" step="1" value="{{ old('price') ?? $item->price }}" required name="price" class="form-control item_price form-control-solid "  />
-                                                            <!--end::Datepicker-->
+                                                          <!--begin::Input group-->
+                                                          <div class="d-flex flex-column mb-8 fv-row">
+                                                            <!--begin::Label-->
+                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                                <span class="required">{{__('item-photo')}}</span>
+                                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('Image will be shown to customers') }}"></i>
+                                                            </label>
+                                                            <input type="file"  data-item="{{ $item->id }}" class="item_image form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                                            <img alt="product_image" src="{{ $item->photo }}" id="item-image-preview-{{ $item->id }}" class="rounded" style="max-height: 100%;max-width:100%" />
                                                         </div>
-                                                        <!--end::Input-->
+                                                        <!--end::Input group-->
                                                     </div>
-                                                    <!--end::Col-->
-                                                    <!--begin::Col-->
-                                                    <div class="col-md-6 fv-row">
-                                                        <label class="required fs-6 fw-bold mb-2">{{ __('Calories(Kcal)') }}</label>
-                                                        <input type="number" step="0.1" min="1" required name="calories" value="{{ old('calories') ?? $item->calories }}" class="form-control form-control-solid " />
-                                                    </div>
-                                                    <!--end::Col-->
-
                                                 </div>
-                                                <!--end::Input group-->
 
                                                 <!--begin::Input group-->
-                                                <div class="row g-9 mb-8">
+                                               {{--  <div class="row g-9 mb-8">
                                                     <!--begin::Col-->
                                                     <div class="col-md-6 fv-row">
                                                         <label class="d-flex align-items-between fs-6 fw-bold mb-4">
@@ -843,7 +806,7 @@
                                                     </div>
                                                     <!--end::Col-->
 
-                                                </div>
+                                                </div> --}}
                                                 <!--end::Input group-->
 
                                                 <div class="d-flex flex-column mb-8">
@@ -870,8 +833,85 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!--end::Input group-->
+                                                <div class="row g-9 mb-8">
+                                                    <div class="col-md-5 fv-row">
+                                                        <!--begin::Label-->
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                                <span class="required">{{__('item-availability')}}</span>
 
+                                                            </label>
+                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2 custom-switch">
+                                                                <input type="checkbox" type="checkbox" name="availability" value="1" {{ old('availability') || $item->availability ? 'checked' : '' }}>
+                                                                <span class="slider round"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <!--begin::Col-->
+                                                    <div class="col-md-7 fv-row">
+                                                        <div class="row">
+                                                            <div class="col-md-7">
+                                                                <div  class="d-flex align-items-between">
+                                                                    <label class="fs-6 fw-bold mb-4">
+                                                                        <span>{{__('Allow buy with loyalty points?')}}</span>
+                                                                    </label>
+                                                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                                        <label class="custom-switch">
+                                                                            <input type="checkbox" type="checkbox" class="allow_buy_with_loyalty_points" data-id="{{$item->id}}" name="allow_buy_with_loyalty_points" @if($item?->allow_buy_with_loyalty_points) checked @endif value="1">
+                                                                            <span class="slider round"></span>
+                                                                        </label>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-5 @if(old('price_using_loyalty_points') ?? $item?->allow_buy_with_loyalty_points) d-block @else d-none @endif" id="price_using_loyalty_points{{$item->id}}">
+                                                                <div {{-- id="loyalty_point_price_section-new" --}}>
+                                                                    <input type="number" step="0.1" min="0" placeholder="{{ __('Loyalty price') }}" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}"  name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid " />
+                                                                    @if($item->LoyaltyPointRatio)
+                                                                    <div class="loyalty_point_calculation text-muted">
+                                                                        <span>{{__('For every 10 riyal, :point points correspond to the cost of product options',['point'=>10*$item->LoyaltyPointRatio])}}</span> <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('loyalty points for item options will get calculated automatically')}}"></i>
+                                                                    </div>
+                                                                    @else
+                                                                    <p class="text-muted">{{ __('How many points') }}</p>
+                                                                    <div class="loyalty_point_calculation"></div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--end::Col-->
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-md-4">
+                                                        <!--begin::Demos drawer toggle-->
+                                                        <button id="addCheckbox_{{ $item->id }}" class="btn option-btn" type="button" title="Add Checkbox">
+                                                            <span id="create_new_checkbox">
+                                                                <i class="fas fa-plus text-black"></i>
+                                                                {{ __('Checkbox') }}
+                                                            </span>
+                                                        </button>
+                                                        <!--end::Demos drawer toggle-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--begin::Help drawer toggle-->
+                                                        <button id="addSelection_{{ $item->id }}" class="btn option-btn" type="button" title="Add Selection">
+                                                            <span id="create_new_selection">
+                                                                <i class="fas fa-plus text-black"></i>
+                                                                {{ __('Selection') }}
+                                                            </span>
+                                                        </button>
+                                                        <!--end::Help drawer toggle-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--begin::Purchase link-->
+                                                    <button id="addDropdown_{{ $item->id }}" class="btn option-btn" type="button" title="Add Dropdown">
+                                                        <span id="create_new_Dropdown">
+                                                            <i class="fas fa-plus text-black"></i>
+                                                            {{ __('Dropdown') }}
+                                                        </span>
+                                                    </button>
+                                                    <!--end::Purchase link-->
+                                                    </div>
+                                                </div>
                                                 <div id="checkboxes_{{ $item->id }}">
                                                     <!-- Checkbox elements will be dynamically added here -->
 
@@ -926,14 +966,15 @@
                                                 </script>
 
                                                 <!--begin::Actions-->
+                                                <!--begin::Actions-->
                                                 <div class="text-center">
-                                                    <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
-                                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
-                                                        <span class="indicator-label">{{__('submit')}}</span>
+                                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl w-100 too-rounded">
+                                                        <span class="indicator-label">{{__('Save')}}</span>
                                                         <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                     </button>
                                                 </div>
+                                                <!--end::Actions-->
                                                 <!--end::Actions-->
                                             @endif
                                             <!--end:Form-->
@@ -1144,7 +1185,6 @@
                         <!--end::Input group-->
                     </div>
                     <!--end::Input group-->
-
                     <!--begin::Input group-->
                     <div class="row g-9 mb-8">
                         <div class="col-md-5 fv-row">
@@ -1162,7 +1202,7 @@
                         </div>
                         <!--begin::Col-->
                         <div class="col-md-7 fv-row">
-                            <div class="row">
+                            <div class="row" >
                                 <div class="col-md-7">
                                     <div  class="d-flex align-items-between">
                                         <label class="fs-6 fw-bold mb-4">
@@ -1176,8 +1216,8 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
-                                    <div id="loyalty_point_price_section-new">
+                                <div class="col-md-5" id="loyalty_point_price_section-new" >
+                                    <div class="d-block" id="loyalty_points" >
                                         <input type="number" step="0.1" min="0" placeholder="{{ __('Loyalty price') }}" name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid " />
                                         <p class="text-muted">{{ __('How many points') }}</p>
                                         <div class="loyalty_point_calculation"></div>
@@ -1354,15 +1394,15 @@
     if (document.getElementById('allow_buy_with_loyalty_points-new')) {
         document.getElementById('allow_buy_with_loyalty_points-new').addEventListener('click', function (e) {
             if (e.target.checked) {
-                if (document.getElementById('loyalty_point_price_section-new').classList.contains("d-none")) {
-                    document.getElementById('loyalty_point_price_section-new').classList.remove('d-none');
+                if (document.getElementById('loyalty_points').classList.contains("d-none")) {
+                    document.getElementById('loyalty_points').classList.remove('d-none');
                 }
-                document.getElementById('loyalty_point_price_section-new').classList.add('d-block');
+                document.getElementById('loyalty_points').classList.add('d-block');
             } else {
-                if (document.getElementById('loyalty_point_price_section-new').classList.contains("d-block")) {
-                    document.getElementById('loyalty_point_price_section-new').classList.remove('d-block');
+                if (document.getElementById('loyalty_points').classList.contains("d-block")) {
+                    document.getElementById('loyalty_points').classList.remove('d-block');
                 }
-                document.getElementById('loyalty_point_price_section-new').classList.add('d-none');
+                document.getElementById('loyalty_points').classList.add('d-none');
             }
         });
     }
