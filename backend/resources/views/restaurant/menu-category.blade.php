@@ -954,8 +954,8 @@
                                 <!--begin::Table body-->
                                 @foreach ($items as $item)
                                 <div class="col-xl-6 col-xxl-4">
-                                    <div class="item mt-3">
-                                        <div class="d-flex align-items-center border border-1 border-secondary rounded-3 p-3 justify-content-between">
+                                    <div class="item mt-3 {{ $item->availability ? '':'un-available'}}">
+                                        <div class="d-flex align-items-center rounded-3 p-3 justify-content-between">
                                             <div class="image" data-bs-toggle="tooltip" title="{{$item->name}}">
                                                 <img alt="Pic" src="{{$item->photo}}" style="width: 80px; height: 80px;"/>
                                             </div>

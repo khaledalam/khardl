@@ -85,6 +85,14 @@
   background-color: #f46789;
 }
 /* Item */
+.item >div{
+  border: 1px solid #EAECF0;
+}
+.item.un-available > div{
+  border: 1px solid #FF3D00;
+  background-color: #ffece5;
+}
+
 .item .bg-khardl{
   color: #fff!important;
 }
