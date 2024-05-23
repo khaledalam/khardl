@@ -1005,6 +1005,7 @@
     "You need to have branches first" : "يجب أن يكون لديك فروع أولاً",
     "No available branches" : "لا يوجد فروع متاحة",
     "Business information" : "معلومات الحساب",
+    "Too many failed attempts. Request a new reset code.":"العديد من المحاولات الفاشلة.اطلب رمز إعادة تعيين جديد",
     "Key" : "المرمز",
     "Value" : "القيمة",
     "Wallet ID" : "رقم المحفظة",

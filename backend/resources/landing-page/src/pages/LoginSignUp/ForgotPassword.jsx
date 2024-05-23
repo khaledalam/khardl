@@ -18,10 +18,13 @@ const ForgotPassword = () => {
   const EyeLoginCode = () => {
     setOpenEyeLoginCode(!openEyeLoginCode);
   };
+  const [showOTP, setShowOTP] = useState(false); 
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    resetField,
   } = useForm();
 
   // **API POST REQUEST**
@@ -31,8 +34,9 @@ const ForgotPassword = () => {
 
     try {
       const response = await AxiosInstance.post(`/password/forgot`, {
-        email: data.email,
+        emailOrPhone: data.email,
         login_code: data.login_code,
+        otp: data.otp ?? null,
       });
       if (response.data.success) {
         sessionStorage.setItem("email", data.email);
@@ -45,7 +49,17 @@ const ForgotPassword = () => {
         throw new Error(`${t("Failed to send verification code")}`);
       }
     } catch (error) {
-      toast.error(`${t("Failed to send verification code")}`);
+      if (error.response && error.response.status === 403) {
+        
+        toast.success(
+          `${t("If phone number is registered with us, an OTP SMS will be sent")}`,
+        );
+        setShowOTP(true); 
+        resetField("email"); 
+      } else {
+        toast.error(error.response.data.message);
+
+      }
     }
     setLoading(false);
   };
@@ -75,17 +89,41 @@ const ForgotPassword = () => {
                 onSubmit={handleSubmit(onSubmit)}
                 className="px-8 pt-2 pb-2 bg-white rounded new-form-ui"
               >
+                  {showOTP && (
+                  <div className="mb-6 text-center">
+                    <label
+                      className="block mb-4 text-sm text-start font-bold text-gray-700"
+                      htmlFor="otp"
+                    >
+                      {t("Enter your SMS OTP code")}
+                    </label>
+                    <input
+                      type="text"
+                      className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                      placeholder={t("Enter your SMS OTP code")}
+                      {...register("otp", { required: true })}
+                    />
+                    {errors.otp && (
+                      <span className="text-red-500 text-xs mt-1 ms-2">
+                        {t("Maybe phone number is not registered or OTP code is wrong")}
+                      </span>
+                    )}
+                  </div>
+                )}
                 <div className="mb-6 text-center">
                   <label
                     className="block mb-4 text-sm text-start font-bold text-gray-700"
                     htmlFor="email"
                   >
-                    {t("Email")}
+                    
+                   {showOTP
+                      ? t("Enter your new email address")
+                      : t("Email or Phone number")}
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                    placeholder={t("Email")}
+                    
                     {...register("email", { required: true })}
                   />
                   {errors.email && (
@@ -94,7 +132,7 @@ const ForgotPassword = () => {
                     </span>
                   )}
                 </div>
-
+              
                 <div className={"flex justify-start items-center gap-3"}>
                   <div
                     className={"justify-start items-center gap-3"}
