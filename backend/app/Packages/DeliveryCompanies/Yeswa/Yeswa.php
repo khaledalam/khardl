@@ -128,7 +128,7 @@ class Yeswa  extends AbstractDeliveryCompany
                     $order->update([
                         'status'=>Order::COMPLETED
                     ]);
-                    $this->sendNotification($order);
+                    $this->sendNotifications($order);
                 }else if ($data['job_status'] == 'FAILED' ){
                     if($order->status != Order::ACCEPTED)
                     $order->update([

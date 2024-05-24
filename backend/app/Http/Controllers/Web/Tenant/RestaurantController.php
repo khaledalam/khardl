@@ -690,7 +690,7 @@ class RestaurantController extends BaseController
                 ]);
             }
 
-            return redirect()->route('restaurant.get-category', ['id' => Category::where('branch_id', $selectedCategory->branch_id)?->first()?->id ?? -1, 'branchId' => $selectedCategory->branch_id])->with('success', 'Category successfully deleted.');
+            return redirect()->route('restaurant.get-category', ['id' => Category::where('branch_id', $selectedCategory->branch_id)?->first()?->id ?? -1, 'branchId' => $selectedCategory->branch_id])->with('success', __('Deleted successfully'));
 
         } else {
             return redirect()->back()->with('error', 'You are not authorized to access that page.');

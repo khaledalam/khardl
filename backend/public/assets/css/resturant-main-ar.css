@@ -4,3 +4,10 @@
 .product_option_price{
     float: left;
 }
+.carousel-control-prev-icon
+{
+  background-image : url('/img/next.png')!important;
+}
+.carousel-control-next-icon {
+  background-image : url('/img/prev.png')!important;
+}

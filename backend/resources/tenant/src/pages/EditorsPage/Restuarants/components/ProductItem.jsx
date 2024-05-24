@@ -362,7 +362,8 @@ const ProductItem = ({
       }
     });
 
-    if (document.getElementById(id) !== null && document.getElementById(id)?.length > 0) {
+    // if (document.getElementById(id) !== null && document.getElementById(id)?.length > 0) {
+    if (document.getElementById(id) !== null) {
       document.getElementById(id).close();
     }
   }
@@ -455,7 +456,6 @@ const ProductItem = ({
             "user-info",
             JSON.stringify(responseData?.data?.user)
           );
-
 
           if (responseData.data.user.status === "inactive") {
             sessionStorage.setItem(

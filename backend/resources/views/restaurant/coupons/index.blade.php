@@ -20,13 +20,13 @@
                         </div>
                     </div>
                     <div class="card-body">
-                         
+
                             <div id="carouselExample" class="carousel slide" data-interval="false">
-                              
+
                                 <div class="carousel-inner">
                                     @foreach ($branches->chunk(6) as $key => $branchChunk)
-                                    
-                                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+
+                                        <div class="carousel-item {{ $branchChunk->contains($branchId) ? 'active' : '' }}">
                                             <div class="row ">
                                                 @foreach ($branchChunk as $branchLoop)
                                                 <div class="col-md-2 d-flex justify-content-start" >
@@ -34,13 +34,13 @@
                                                         <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px" >   {{ $branchLoop->name }}</span>
                                                     </a>
                                                 </div>
-                                                      
+
                                                 @endforeach
                                             </div>
                                         </div>
                                     @endforeach
-                                        
-                                    
+
+
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev" >
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -51,8 +51,8 @@
                                     <span class="sr-only">Next</span>
                                 </a>
                             </div>
-                  
-                    
+
+
                     </div>
                 </div>
                 <!--end::Card-->
@@ -148,7 +148,7 @@
                                         </td>
                                         <td class="text-black ">
                                             {{ $coupon->code }}
-                                            
+
                                         </td>
                                         <td class="px-3">
                                             @if($coupon->type == \App\Enums\Admin\CouponTypes::FIXED_COUPON->value)
@@ -202,7 +202,7 @@
                                             <span class="badge badge-danger">{{ __('Deleted') }}</span>
                                             @elseif($status)
                                                 <span class="badge badge-warning">{{__('not active')}}</span>
-                                            @else 
+                                            @else
                                                 <span class="badge badge-success">{{__('active')}}</span>
                                             @endif
                                         </td>
@@ -218,7 +218,7 @@
                                             <!--begin::Menu-->
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                 <!--begin::Menu item-->
-                                                
+
                                                 <div class="menu-item px-3">
 
                                                     @if($status)
@@ -273,10 +273,10 @@
 </div>
 
 <style>
-    
 
 
-  
+
+
     .carousel-control-prev-icon
     {
         background-image : url('/img/next.png')
@@ -293,14 +293,14 @@
 @endsection
 @section('js')
 <script>
-    
+
     $(document).ready(function() {
   $('#carouselExample').carousel({
     pause: true,
     interval: false,
   });
 });
-   
+
 
     function DeleteCoupon(couponId) {
         event.preventDefault();

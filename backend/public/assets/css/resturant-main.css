@@ -9,11 +9,6 @@
   color: #35af05;
 }
 
-/* Menu page */
-.card-body .menu-column {
-  max-height: 500px;
-}
-
 /* Summary */
 .restaurant_daily_amount:hover .restaurant_daily_earning {
   opacity: 1;

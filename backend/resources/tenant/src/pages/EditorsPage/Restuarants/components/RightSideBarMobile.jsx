@@ -39,6 +39,7 @@ import {
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
 import EditorColorSelect from "./EditorColorSelect";
 import EditorPosition from "./EditorPosition";
+import EditorCategoryItemAlignment from "./EditorCategoryItemAlignment";
 
 export const RightSideBarMobile = ({
   activeSection,
@@ -214,6 +215,19 @@ export const RightSideBarMobile = ({
                     ]?.contentPositionOnChange[subIndex](value);
                   }}
                 />
+              ) : subItem == "itemLayout" ? (
+                <EditorCategoryItemAlignment
+                  modalId={`${activeDesignSection}-position-modal`}
+                  defaultValue={
+                    navItems[activeSection].subItems[activeSubitem]
+                      ?.textInitialValues[subIndex]
+                  }
+                  onChange={(value) => {
+                    navItems[activeSection].subItems[
+                      activeSubitem
+                    ]?.textOnChange[subIndex](value);
+                  }}
+                />
               ) : subItem == "radius" ? (
                 <EditorPercentageInput
                   label={t("Border Radius")}
@@ -239,13 +253,11 @@ export const RightSideBarMobile = ({
                 <EditorSelect
                   label={t("Icon")}
                   defaultValue={
-                    (
-                      activeDesignSection === "layout"
-                        ? navItems[activeSection].subItems[activeSubitem]
-                            ?.layoutInitialValues[subIndex]
-                        : navItems[activeSection].subItems[activeSubitem]
-                            ?.layoutInitialValues_2[subIndex]
-                    ) == 1
+                    (activeDesignSection === "layout"
+                      ? navItems[activeSection].subItems[activeSubitem]
+                          ?.layoutInitialValues[subIndex]
+                      : navItems[activeSection].subItems[activeSubitem]
+                          ?.layoutInitialValues_2[subIndex]) == 1
                       ? "Show"
                       : "Hide"
                   }
@@ -318,8 +330,12 @@ export const RightSideBarMobile = ({
                       text: "Roboto",
                     },
                     {
-                      value: "Plus Jakarta Sans",
-                      text: "Jakarta",
+                      value: "Amiri",
+                      text: "Amiri",
+                    },
+                    {
+                      value: "Tajawal",
+                      text: "Tajawal",
                     },
                   ]}
                 />
