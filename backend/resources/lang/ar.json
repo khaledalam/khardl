@@ -1528,5 +1528,6 @@
     "How many points":"كم عدد النقاط",
     "Add new category":"إضافة تصنيف جديد",
     "English name":"الاسم الانجليزي",
-    "Arabic name":"الاسم العربي"
+    "Arabic name":"الاسم العربي",
+    "Invalid address,Address is required":"عنوان غير صالح ، العنوان مطلوب"
 }

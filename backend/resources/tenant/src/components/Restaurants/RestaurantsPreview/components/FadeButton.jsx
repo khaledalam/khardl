@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { TbCircleArrowDown } from "react-icons/tb";
+import { useSelector } from "react-redux";
 
 const FadeButton = () => {
   const [opacity, setOpacity] = useState(1);
+  const price_background_color = useSelector((state) => state.restuarantEditorStyle.price_background_color);
 
   useEffect(() => {
     const scrollableDiv = document.getElementById("scrollableDiv");
@@ -25,9 +27,12 @@ const FadeButton = () => {
   return (
     <div
       className="sticky -bottom-1 rounded-xl mx-auto w-fit animate-wiggle"
-      style={{ opacity: opacity }}
+      style={{
+        opacity: opacity,
+        color: price_background_color + "80",
+      }}
     >
-      <TbCircleArrowDown className="rounded-xl w-10 h-10 text-blue-300" />
+      <TbCircleArrowDown className="rounded-xl w-10 h-10" />
     </div>
   );
 };

@@ -36,7 +36,7 @@ const Category = ({ restaurantStyle, categories = [] }) => {
           : "flex-row items-start "
       }  gap-[16px]`}
     >
-      <style jsx>{`
+      <style>{`
         .custom-checkbox:checked {
           border-color: ${price_background_color || "#7D0A0A"} !important;
           --tw-ring-color: ${price_background_color || "#7D0A0A"} !important;

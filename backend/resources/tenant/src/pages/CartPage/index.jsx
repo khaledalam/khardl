@@ -126,7 +126,6 @@ const CartPage = () => {
       setCoupon("");
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
     }
   };
 
@@ -189,20 +188,25 @@ const CartPage = () => {
   };
 
   const handlePlaceOrder = async () => {
-
-    let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
+    // let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
     if (paymentMethod === "Online") {
       GoSellElements.submit();
     } else {
       try {
         try {
-          const cartResponse = await AxiosInstance.post(`/orders`, {
+          let data  = {
             payment_method: paymentMethod,
             delivery_type: deliveryType,
             notes: orderNotes,
             couponCode: coupon,
-            address: orderAddress,
-          });
+          };
+          if (cart?.address.length > deliveryAddress) {
+            data.address_id = cart.address[deliveryAddress].id;
+          } else {
+            data.lat = customerAddress.lat;
+            data.lng = customerAddress.lng;
+          }
+          const cartResponse = await AxiosInstance.post(`/orders`, data);
           if (cartResponse.data) {
             toast.success(`${t("Order has been created successfully")}`);
             navigate(`/profile-summary#orders`);
@@ -428,11 +432,9 @@ const CartPage = () => {
                             cardPaymentCallbackFunc(token);
                           }}
                           // optional (A callback function that will be called when you button is clickable)
-                          onReady={() => {
-                          }}
+                          onReady={() => {}}
                           // optional (A callback function that will be called when the button clicked)
-                          onClick={() => {
-                          }}
+                          onClick={() => {}}
                         />
                       </div>
                     )}
@@ -497,7 +499,7 @@ const CartPage = () => {
                         <div>{cart?.delivery_fee + ` ${t("SAR")}`}</div>
                       </div>
                     )}
-                    
+
                     <div className="flex justify-between mt-4">
                       <div className="flex flex-col">
                         <span>{t("Coupon Discount")}</span>

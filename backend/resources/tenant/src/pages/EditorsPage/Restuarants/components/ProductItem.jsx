@@ -362,7 +362,7 @@ const ProductItem = ({
       }
     });
 
-    if (document.getElementById(id) !== null) {
+    if (document.getElementById(id) !== null && document.getElementById(id)?.length > 0) {
       document.getElementById(id).close();
     }
   }
@@ -585,10 +585,10 @@ const ProductItem = ({
           <div className="w-28 h-6">
             <div
               style={{
-                backgroundColor: price_background_color,
+                backgroundColor: price_background_color + "E0",
                 boxShadow: "0px -2px 10px 0px rgba(0, 0, 0, 0.3)",
               }}
-              className="w-28 h-6 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center relative"
+              className="w-28 h-6 bg-red-900 bg-opacity-90 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center relative"
             >
               <div
                 style={{
