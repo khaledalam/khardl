@@ -66,6 +66,8 @@ function Map({ inputStyle, isCart, user }) {
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle);
   const customerAddress = useSelector((state) => state.customerAPI.address);
   const [isAddressChanged, setIsAddressChanged] = useState(false);
+  const { price_background_color } = useSelector((state) => state.restuarantEditorStyle);
+  const [isMouseHover, setIsMouseHover] = useState(false);
   const { t } = useTranslation();
 
   const branches = restuarantStyle.branches;
@@ -198,7 +200,14 @@ function Map({ inputStyle, isCart, user }) {
         <div className="w-full mt-6">
           <button
             onClick={() => handleSetDefaultAddress()}
-            className="w-full h-10 flex items-center justify-center rounded-lg p-1 border border-[text-gray-900] "
+            className="w-full h-10 flex items-center justify-center rounded-lg p-1 border border-red-900 hover:text-white hover:bg-red-900 transition-all"
+            onMouseEnter={() => setIsMouseHover(true)}
+            onMouseLeave={() => setIsMouseHover(false)}
+            style={{
+              background : isMouseHover ? price_background_color : "white",
+              color: isMouseHover ? "white": price_background_color,
+              borderColor: price_background_color
+            }}
           >
             {t("Deliver to this address")}
           </button>
