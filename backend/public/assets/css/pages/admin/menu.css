@@ -1,0 +1,126 @@
+.content #kt_content_container .row > div .card{
+  box-shadow: 1px 1px 6px #ccc;
+  border-radius: 10px;
+  height: 100%;
+}
+.branches #carouselExample{
+  border: 1px solid #ccc;
+  border-radius: 29px;
+  background-color: #F9FAFB;
+}
+.branches #carouselExample .row > div a{
+  width: 100%;
+  background-color: #F9FAFB;
+  color: #667085!important;
+  border-radius: 29px;
+  margin: 2px 0px;
+  font-weight: bold;
+  padding: 11px 0px;
+}
+.branches #carouselExample .row > div a.active{
+  width: 100%;
+  background-color: #C6DC08;
+  color: #fff!important;
+  font-weight: bold;
+}
+.engage-toolbar {
+  position: absolute !important;
+  display: flex !important;
+}
+
+.transform-270 {
+  transform: rotate(270deg);
+  transform-origin: right top;
+}
+
+.transform-90 {
+  transform: rotate(90deg);
+  transform-origin: left top;
+}
+.carousel-control-prev-icon
+{
+  background-image : url('/img/prev.png')
+}
+.carousel-control-next-icon {
+  background-image : url('/img/next.png')
+}
+.carousel-control-next, .carousel-control-prev{
+  width: 5%;
+}
+.carousel-inner{
+  position: relative;
+  width: 86%;
+  margin: 0px 90px;
+}
+/* Categories */
+.add-new{
+  border-radius: 20px;
+}
+.menu-rounded .menu-link a{
+  color: #3B3B3B!important;
+}
+.menu-rounded .menu-link{
+  border-radius: 30px;
+  border:1px solid #EAECF0;
+}
+.menu-rounded .menu-link img{
+  border:1px solid #EAECF0;
+  padding: 1px;
+}
+.menu-rounded .menu-link.active{
+  border:1px solid #C6DC08;
+  background-color: #F9FBE6;
+}
+.category_info span{
+  border-radius: 20px;
+  color: #3B3B3B!important;
+}
+.dropdown-item.active,.dropdown-item a{
+  color: #E7E8EA;
+}
+.dropdown-item.active,.dropdown-item:active{
+  background-color: #C6DC08;
+}
+.delete-form .dropdown-item.active, .delete-form .dropdown-item:active{
+  background-color: #f46789;
+}
+/* Item */
+.item .btn{
+  white-space: nowrap;
+}
+.item >div{
+  border: 1px solid #EAECF0;
+}
+.item.un-available > div{
+  border: 1px solid #FF3D00;
+  background-color: #ffece5;
+}
+
+.item .bg-khardl{
+  color: #fff!important;
+}
+.item .image img{
+  border-radius: 100px;
+}
+/* Item popup */
+.item-popup input{
+  border-radius: 30px!important;
+}
+.option-btn{
+  border: 1px solid #c6dc06!important;
+  width: 100%;
+  border-radius: 30px;
+  padding: 13px 10px!important;
+}
+/* Options */
+.add-option{
+  font-size: 14px;
+}
+.option-btn .fa-plus{
+  font-size: 10px;
+}
+.option-block{
+  background-color: #FAFAFB;
+  padding: 10px;
+  border-radius: 10px;
+}

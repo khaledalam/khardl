@@ -2,7 +2,9 @@
 
 @section('title', DB::table('branches')->where('id', $branchId)->value('name'))
 @section('subtitle', $selectedCategory?->name)
-
+@push('styles')
+<link rel="stylesheet" href="{{ global_asset('assets/css/pages/admin/menu.css') }}" type="text/css">
+@endpush
 @section('content')
 <!-- Checkbox -->
 <script>
@@ -19,29 +21,29 @@
         checkboxDiv.className = 'd-flex flex-column mb-8 fv-row checkbox-content';
         checkboxDiv.innerHTML = `
                 <hr />
-                <div class="d-flex flex-column fv-row">
+                <div class="d-flex flex-column fv-row option-block">
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">{{ __('Checkbox') }} </span>
+                            <span class="">{{ __('Add Checkbox') }} </span>
                         </label>
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2 form-check">
                             <input type="hidden" name="checkbox_required[${checkboxCount}]" value="false"  />
-                            <input type="checkbox" name="checkbox_required_input[${checkboxCount}]" ${key !=null ? (item.checkbox_required[key] == "true"  ? 'checked':'') : ''} >&nbsp;{{ __('Required') }}
+                            <input type="checkbox"  class="form-check-input" name="checkbox_required_input[${checkboxCount}]" ${key !=null ? (item.checkbox_required[key] == "true"  ? 'checked':'') : ''} >&nbsp;{{ __('Required') }} ?
+                            <button class="delete-checkbox btn btn-sm" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash-alt"></i></button>
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${checkboxCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleEn[${checkboxCount}]"  placeholder="{{ __('Title in english') }}"
+                            <input type="text"  required class="form-control mx-3 w-65" name="checkboxInputTitleEn[${checkboxCount}]"  placeholder="{{ __('Title in english') }}"
                             value="${key !=null ? item.checkbox_input_titles[key][0]: ''}">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[${checkboxCount}]" placeholder="{{ __('Title in arabic') }}"
+                            <input type="text"  required class="form-control mx-3 w-65" name="checkboxInputTitleAr[${checkboxCount}]" placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.checkbox_input_titles[key][1]: ''}">
 
-                            <input type="number" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" min="1" step="1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}"
+                            <input type="number"  min="1" step="1" required class="form-control mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}"
                             value="${key !=null ? item.checkbox_input_maximum_choices[key]: ''}">
-                            <button class="delete-checkbox btn btn-sm btn-white" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -49,7 +51,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${checkboxCount}" ></div><br />
-                    <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
+                    <a class="btn btn-sm btn-khardl add-option  too-rounded w-100" style="color: #fff !important;"><i class="fas fa-plus"></i> {{ __('Add option') }}</a>
                 </div>
             `;
 
@@ -104,27 +106,27 @@
         if (isDeletable) {
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in english') }}"
+                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Option in english') }}"
                     value="${option ? option[0] : ''}">
-                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
+                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
                     value="${option ? option[1] : ''}">
 
-                    <input type="number" min="0" step="0.1" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Price') }}"
+                    <input type="number" min="0" step="0.1" required name="checkboxInputPrice[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Price') }}"
                     value="${price ? price : ''}">
-                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                    <button class="invisible btn btn-sm"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
         } else {
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
+                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in english') }}"
                     value="${option ? option[0] : ''}">
-                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
+                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Option in arabic') }}"
                     value="${option ? option[1] : ''}">
 
-                    <input type="number" step="0.1" min="0" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Price') }}"
+                    <input type="number" step="0.1" min="0" required name="checkboxInputPrice[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Price') }}"
                     value="${price ? price : ''}">
-                    <button class="delete-option btn btn-sm btn-white " type="button"><i class="fas fa-trash text-danger"></i></button>
+                    <button class="delete-option btn btn-sm  " type="button"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
 
@@ -156,28 +158,27 @@
         selectionDiv.className = 'd-flex flex-column mb-8 fv-row';
         selectionDiv.innerHTML = `
                 <hr />
-                <div class="d-flex flex-column fv-row">
+                <div class="d-flex flex-column fv-row option-block">
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">{{ __('Selection') }}</span>
+                            <span class="">{{ __('Add Selection') }}</span>
                         </label>
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2 form-check">
 
                             <input type="hidden" name="selection_required[${selectionCount}]" value="false" />
-                            <input type="checkbox" name="selection_required_input[${selectionCount}]" disabled checked >&nbsp;{{ __('Required') }}
+                            <input type="checkbox" class="form-check-input" name="selection_required_input[${selectionCount}]" disabled checked >&nbsp;{{ __('Required') }} ?
+                            <button class="delete-selection btn btn-sm" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash-alt"></i></button>
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${selectionCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[${selectionCount}]" placeholder="{{ __('Title in english') }}"
+                            <input type="text"  required class="form-control mx-3 w-100" name="selectionInputTitleEn[${selectionCount}]" placeholder="{{ __('Title in english') }}"
                             value="${key !=null ? item.selection_input_titles[key][0]: ''}">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[${selectionCount}]"  placeholder="{{ __('Title in arabic') }}"
+                            <input type="text"  required class="form-control mx-3 w-100" name="selectionInputTitleAr[${selectionCount}]"  placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.selection_input_titles[key][1]: ''}">
-
-                            <button class="delete-selection btn btn-sm btn-white" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -185,7 +186,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${selectionCount}" ></div><br />
-                    <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
+                    <a class="btn btn-sm btn-khardl add-option too-rounded w-100" style="color: #fff !important;"><i class="fas fa-plus"></i> {{ __('Add option') }}</a>
                 </div>
             `;
 
@@ -240,27 +241,27 @@
         if (isDeletable) {
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
+                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in english') }}"
                     value="${option ? option[0] : ''}">
-                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
                     value="${option ? option[1] : ''}">
 
-                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
+                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Price') }}"
                     value="${price ? price : ''}">
-                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                    <button class="invisible btn btn-sm"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
         } else {
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
+                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in english') }}"
                     value="${option ? option[0] : ''}">
-                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
                     value="${option ? option[1] : ''}">
 
-                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
+                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Price') }}"
                     value="${price ? price : ''}">
-                    <button class="delete-option btn btn-sm btn-white" type="button"><i class="fas fa-trash text-danger"></i></button>
+                    <button class="delete-option btn btn-sm " type="button"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
 
@@ -291,28 +292,27 @@
         dropdownDiv.className = 'd-flex flex-column mb-8 fv-row';
         dropdownDiv.innerHTML = `
                 <hr />
-                <div class="d-flex flex-column fv-row">
+                <div class="d-flex flex-column fv-row option-block">
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">{{ __('Dropdown') }}</span>
+                            <span class="">{{ __('Add Dropdown') }}</span>
                         </label>
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2 form-check">
 
                             <input type="hidden" name="dropdown_required[${dropdownCount}]" value="true" />
-                            <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" disabled checked >&nbsp;{{ __('Required') }}
+                            <input type="checkbox"  class="form-check-input" name="dropdown_required_input[${dropdownCount}]" disabled checked >&nbsp;{{ __('Required') }} ?
+                            <button class="delete-dropdown btn btn-sm" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash-alt"></i></button>
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${dropdownCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[${dropdownCount}]" placeholder="{{ __('Title in english') }}"
+                            <input type="text"  required class="form-control mx-3 w-100" name="dropdownInputTitleEn[${dropdownCount}]" placeholder="{{ __('Title in english') }}"
                             value="${key !=null ? item.dropdown_input_titles[key][0]: ''}">
-                            <input type="text" style="box-shadow:0 0 13px 2px rgba(0, 0, 0, 0.2) !important;" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[${dropdownCount}]"  placeholder="{{ __('Title in arabic') }}"
+                            <input type="text"  required class="form-control mx-3 w-100" name="dropdownInputTitleAr[${dropdownCount}]"  placeholder="{{ __('Title in arabic') }}"
                             value="${key !=null ? item.dropdown_input_titles[key][1]: ''}">
-
-                            <button class="delete-dropdown btn btn-sm btn-white" type="button" data-index="${item ? item.id : update}"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
                     <hr>
@@ -320,7 +320,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${dropdownCount}" ></div><br />
-                    <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
+                    <a class="btn btn-sm btn-khardl add-option too-rounded w-100" style="color: #fff !important;"><i class="fas fa-plus"></i> {{ __('Add option') }}</a>
                 </div>
             `;
 
@@ -375,26 +375,26 @@
         if (isDeletable) {
             optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Option in english') }}"
+                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control mx-3 w-50" placeholder="{{ __('Option in english') }}"
                         value="${option ? option[0] : ''}">
-                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
+                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in arabic') }}"
                         value="${option ? option[1] : ''}">
 
-                        <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
-                        <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                        <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Price') }}">
+                        <button class="invisible btn btn-sm"><i class="fas fa-trash-alt"></i></button>
                     </div>
             `;
         } else {
             optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Option in english') }}"
+                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Option in english') }}"
                         value="${option ? option[0] : ''}">
-                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('Option in arabic') }}"
+                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control mx-3 w-50"   placeholder="{{ __('Option in arabic') }}"
                         value="${option ? option[1] : ''}">
 
-                        <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}"
+                        <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control mx-3 w-50"  placeholder="{{ __('Price') }}"
                         value="${price ? price : ''}">
-                        <button class="delete-option btn btn-sm btn-white" type="button"><i class="fas fa-trash text-danger"></i></button>
+                        <button class="delete-option btn btn-sm " type="button"><i class="fas fa-trash-alt"></i></button>
                     </div>
             `;
             const deleteOptionButton = optionDiv.querySelector('.delete-option');
@@ -415,51 +415,39 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Inbox App - Messages -->
-            <div class="flex-lg-row-fluid my-2">
-                <!--begin::Card-->
-                <div class="card">
-                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                        <div class="d-flex flex-wrap gap-1">
-                            <h3 class="text-khardl">{{ __('Branches') }}</h3>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="carouselExample" class="carousel slide" data-bs-interval="false">
-                              
-                            <div class="carousel-inner">
-                        @foreach ($branches->chunk(5) as $key => $branchChunk)
-                                    
-                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                <div class="row ">
-                                    @foreach ($branchChunk as $branchLoop)
-                                    <div class="col-md-2 d-flex justify-content-center" >
-                                        <a href="{{ route('restaurant.get-category', ['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1,'branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) btn-khardl border border-dark text-black @else btn-active-light-khardl @endif">
-                                            <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px" >   {{ $branchLoop->name }}</span>
-                                        </a>
-                                    </div>
-                                        
-                                    @endforeach
+            <div class="flex-lg-row-fluid my-2 branches">
+                <div id="carouselExample" class="carousel slide" data-bs-interval="false">
+
+                    <div class="carousel-inner">
+                        @foreach ($branches->chunk(3) as $key => $branchChunk)
+
+                        <div class="carousel-item {{ $branchChunk->contains($branchId) ? 'active' : '' }}">
+                            <div class="row ">
+                                @foreach ($branchChunk as $branchLoop)
+                                <div class="col-md-4 d-flex justify-content-center">
+                                    <a href="{{ route('restaurant.get-category', ['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1,'branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) active @endif">
+                                        <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px"> {{ $branchLoop->name }}</span>
+                                    </a>
                                 </div>
-                             
+
+                                @endforeach
                             </div>
+
+                        </div>
                         @endforeach
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev" >
+                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next" >
+                    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-                       
-                    
-                    </div>
-                </div>
-                <!--end::Card-->
             </div>
         </div>
+
         <!--end::Inbox App - Messages -->
     </div>
     <!--end::Container-->
@@ -473,185 +461,244 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Inbox App - Messages -->
-            <div class="d-flex flex-column flex-lg-row">
+            <div class="row">
                 <!--begin::Sidebar-->
-                <div class="flex-column flex-lg-row-fluid w-100 w-lg-275px mb-10 mb-lg-0">
+                <div class="col-md-4 {{-- col-xxl-2 --}}">
                     <!--begin::Sticky aside-->
-                    <div class="card card-flush mb-0 overflow-scroll py-2" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
+                    <div class="card card-flush px-1">
                         <!--begin::Aside content-->
-                        <div class="card-body">
-                            <!--begin::Button-->
-                            {{-- <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">--}}
-                            {{-- <p class="btn btn-khardl text-uppercase w-100 mb-10">--}}
-                            {{-- {{ __('all-categories') }}--}}
-                            {{-- </p>--}}
-                            {{-- </a>--}}
-                            <!--end::Button-->
-                            <!--begin::Menu-->
+                        <div class="card-header  align-items-center py-5 gap-2 gap-md-5">
+                            <div class="d-flex flex-wrap gap-1">
+                                <h3>
+                                    {{ __('Categories') }}
+                                </h3>
+                            </div>
+                            <div class="d-flex align-items-center flex-wrap gap-2">
+                                <button class="btn btn-sm btn-khardl add-new" {{-- id="addCategoryButton" --}} data-bs-toggle="modal" data-bs-target="#add_category">
+                                    {{ __('Add new') }}
+                                    <i class="fas fa-plus text-white fa-xs"></i>
+                                </button>
+                                <script>
+                                    document.getElementById('addCategoryButton').addEventListener('click', function() {
+                                        document.getElementById('addCategoryButton').click();
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 px-2">
+                            @if($categories->count())
                             <div id="categoryList" class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
                                 <!--begin::Menu item-->
                                 @foreach ($categories as $category)
 
-                                    <div class="row mb-2">
-                                        <!--begin::Inbox-->
-                                        <div class="col-md-12">
-
-                                                <span class="menu-link d-flex align-items-stretch justify-content-start gap-4 mb-4 p-3" @if ($category?->id === $selectedCategory?->id) style="background: #eeeeee;" @endif">
+                                <div class="row mb-2">
+                                    <!--begin::Inbox-->
+                                    <div class="col-md-12">
+                                        <div class="menu-link d-flex align-items-stretch justify-content-between gap-4 mb-4 p-3 @if ($category?->id === $selectedCategory?->id) active @endif">
+                                            <div class="d-flex align-items-center">
+                                                <div class="category_image">
                                                     <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
-                                                        <img src="{{ $category?->photo ?? global_asset('img/category-icon.png') }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />
+                                                        <img src="{{ $category?->photo ?? global_asset('img/category-icon.png') }}" width="35" height="35" style="border-radius: 50%;" />
                                                     </a>
-                                                    <div>
+                                                </div>
+                                                <div class="d-flex flex-column ms-3">
+                                                    <div class="category_name">
                                                         <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
                                                             <span class="menu-title fw-bolder small">{{ $category->name }}</span>
                                                         </a>
-                                                        <div class="">
-                                                            @if($user->isRestaurantOwner())
-                                                                        <span class="badge badge-light-info mt-1">
-                                                                    <div class="edit-category">
-                                                                        <span style="cursor: pointer;" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}', '{{$category->sort}}')">
-                                                                            <i class="fa fas fa-edit border" ></i>
-                                                                        </span>
-                                                                    </div>
-                                                                </span>
-                                                            @endif
-                                                            <span class="badge badge-light-info mt-1">{{ $category->sort }}</span>
-                                                            <span class="badge badge-light-success mt-1">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }} {{__('Products')}}</span>
+                                                    </div>
+                                                    <div class="category_info mt-1">
+                                                        <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{ __('Sort') }}: {{ $category->sort }} </span>
+                                                        <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{__('Products')}}: {{ $category->items?->count() }} </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if($user->isRestaurantOwner())
+                                            <div class="d-flex align-items-center mx-2">
+                                                <div class="dropdown">
+                                                    <span style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </span>
+                                                    <ul class="dropdown-menu rounded">
+                                                        <li>
+                                                            <a class="dropdown-item text-muted py-2" href="#" data-bs-toggle="modal" data-bs-target="#edit_category_{{ $category->id }}">
+                                                                {{ __('Edit category') }}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <form class="delete-form text-muted py-2" action="{{ route('restaurant.delete-category', ['id' => $category->id]) }}" method="POST" style="display: inline;">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <button type="submit" class="dropdown-item delete-button btn-danger">
+                                                                    {{ __('Delete') }}
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            @endif
+
+                                        </div>
+
+                                    </div>
+                                    <!--end::Inbox-->
+                                </div>
+                                <div class="modal fade" id="edit_category_{{ $category->id }}" tabindex="-1" aria-hidden="true">
+                                    <!--begin::Modal dialog-->
+                                    <div class="modal-dialog modal-dialog-centered mw-650px">
+                                        <!--begin::Modal content-->
+                                        <div class="modal-content rounded">
+                                            <!--begin::Modal header-->
+                                            <div class="modal-header pb-0 border-0">
+                                                <!--begin::Close-->
+                                                <h1 class="text-center w-100 mt-6">
+                                                        {{ __('Edit new category') }}
+                                                </h1>
+                                                <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
+                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                    <span class="svg-icon svg-icon-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->
+                                                </div>
+                                                <!--end::Close-->
+                                            </div>
+                                            <!--begin::Modal header-->
+                                            <!--begin::Modal body-->
+                                            <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
+                                                <div class="menu-item item-popup">
+                                                    <form method="POST" action="{{ route('restaurant.edit-category', ['categoryId' => $category->id, 'branchId' => $category->branch?->id]) }}" enctype="multipart/form-data" class="mb-2">
+                                                        @csrf
+                                                        <div id="categoryForm" class="mt-2">
+                                                            <div class="row mt-3">
+                                                                <div class="col-md-12 mb-2">
+                                                                    <label class="mb-1">{{__('English name')}}</label>
+                                                                    <input type="text" class="form-control" value="{{ old('name_en') ?? $category->getTranslation('name','en') }}" placeholder="{{ __('Enter text in English') }}" name="name_en" id="categoryName">
+                                                                </div>
+                                                                <div class="col-md-12 mb-2">
+                                                                    <label class="mb-1">{{__('Arabic name')}}</label>
+                                                                    <input type="text" class="form-control" value="{{ old('name_ar') ?? $category->getTranslation('name','ar') }}" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
+                                                                </div>
+                                                                <div class="col-md-12 mb-2">
+                                                                    <label class="mb-1">{{__('sort')}}</label>
+                                                                    <input type="number" name="sort" min="1" value="{{ $category->sort }}" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control" placeholder="{{__('The sorting order of category')}}" />
+                                                                </div>
+                                                                <div class="col-md-6 mb-2" >
+                                                                    <label class="mb-1">{{__('category-logo')}}</label>
+                                                                    <input type="file" data-item="{{ $category->id }}" class="form-control item_image"  placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                                                </div>
+                                                                <div class="col-md-6 mb-2">
+                                                                    <img alt="category image" src="{{ $category?->photo ?? global_asset('img/category-icon.png') }}" id="item-image-preview-{{ $category->id }}" class="rounded" style="max-height: 162px;max-width:100%" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="justify-content-center mt-2">
+                                                                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl w-100 too-rounded">
+                                                                    <span class="indicator-label">{{__('Save')}}</span>
+                                                                    <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
+                                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <!--end::Modal body-->
+                                        </div>
+                                        <!--end::Modal content-->
+                                    </div>
+                                    <!--end::Modal dialog-->
+                                </div>
+                                @endforeach
+                            </div>
+                            @else
+                            <div class="alert service-alert d-flex align-items-center" role="alert">
+                                <div class="service-alert-icon">
+                                    <i class="bi bi-info-circle mx-2 text-white "></i>
+                                </div>
+                                <div>
+                                    <span>
+                                        <h4>{{__('No categories found')}}</h4>
+                                        {{__('Add new categories to start adding new itms')}}
+                                    </span>
+                                </div>
+                            </div>
+                            @endif
+
+                            <!--end::Menu item-->
+                            <!--begin::Menu item-->
+                            <div class="modal fade" id="add_category" tabindex="-1" aria-hidden="true">
+                                <!--begin::Modal dialog-->
+                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                    <!--begin::Modal content-->
+                                    <div class="modal-content rounded">
+                                        <!--begin::Modal header-->
+                                        <div class="modal-header pb-0 border-0">
+                                            <!--begin::Close-->
+                                            <h1 class="text-center w-100 mt-6">
+                                                    {{ __('Add new category') }}
+                                            </h1>
+                                            <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                <span class="svg-icon svg-icon-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                            <!--end::Close-->
+                                        </div>
+                                        <!--begin::Modal header-->
+                                        <!--begin::Modal body-->
+                                        <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
+                                            <div class="menu-item item-popup">
+                                                <!--begin::Add label-->
+                                                <!--end::Add label-->
+                                                <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" class="mb-2" method="POST" id="category-submit" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div id="categoryForm" class="mt-2">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-12 mb-2">
+                                                                <label class="mb-1">{{__('English name')}}</label>
+                                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="categoryName">
+                                                            </div>
+                                                            <div class="col-md-12 mb-2">
+                                                                <label class="mb-1">{{__('Arabic name')}}</label>
+                                                                <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
+                                                            </div>
+                                                            <div class="col-md-12 mb-2">
+                                                                <label class="mb-1">{{__('sort')}}</label>
+                                                                <input type="number" name="sort" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control" placeholder="{{__('The sorting order of category')}}" />
+                                                            </div>
+                                                            <div class="col-md-6 mb-2" >
+                                                                <label class="mb-1">{{__('category-logo')}}</label>
+                                                                <input type="file" class="form-control" id="item_image" placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <img id="item-image-preview" class="rounded" style="max-height: 162px;max-width:100%" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="justify-content-center">
+                                                            <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Create') }}</button>
+                                                            {{-- <button type="button" onclick="hideCategoryEditForm('categoryForm')" class="btn btn-sm btn-secondary mx-1 mt-2">{{ __('Close') }}</button> --}}
                                                         </div>
                                                     </div>
-
-                                                </span>
-
-
+                                                </form>
+                                            </div>
                                         </div>
-
-                                        <!--end::Inbox-->
+                                        <!--end::Modal body-->
                                     </div>
-{{--                                --}}
-{{--                                <div class="menu-item mb-3">--}}
-{{--                                    <!--begin::Inbox-->--}}
-{{--                                    <a href="{{ route('restaurant.get-category', ['id' => $category?->id, 'branchId' => $branchId]) }}">--}}
-{{--                                        <span class="menu-link @if ($category?->id === $selectedCategory?->id) active @endif">--}}
-{{--                                            <img src="{{ $category->photo ?? global_asset('img/category-icon.png') }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />--}}
-{{--                                            <span class="menu-title fw-bolder">{{ $category->name }}</span>--}}
-{{--                                        </span>--}}
-{{--                                        <div class="col-md-2">--}}
-{{--                                            <span class="badge badge-light-info mt-1">{{ $category->sort }} {{__('sort')}}</span>--}}
-{{--                                            <span class="badge badge-light-success mt-1">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }} {{__('Products')}}</span>--}}
-{{--                                        </div>--}}
-{{--                                    </a>--}}
-{{--                                    <!--end::Inbox-->--}}
-{{--                                </div>--}}
-                                @endforeach
-
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item">
-                                    <!--begin::Add label-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon" id="svgIcon">
-                                            <span class="svg-icon svg-icon-2 me-3">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
-                                                    <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                        </span>
-                                        <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('add-new-category') }}</button>
-
-                                        <script>
-                                            document.getElementById('svgIcon').addEventListener('click', function() {
-                                                document.getElementById('addCategoryButton').click();
-                                            });
-                                        </script>
-                                    </span>
-                                    <!--end::Add label-->
-                                    <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" class="mb-2" method="POST" id="category-submit" enctype="multipart/form-data">
-                                        @csrf
-                                        <div id="categoryForm" class="mt-2" style="display: none !important;">
-                                            <ul class="nav nav-tabs" id="languageTabs">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#en">{{__('english')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#ar">{{__('arabic')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('logo')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="sort-tab" data-bs-toggle="tab" href="#sort">{{__('sort')}}</a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content mt-3">
-                                                <div class="tab-pane fade show active" id="en">
-                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="categoryName">
-                                                </div>
-                                                <div class="tab-pane fade" id="ar">
-                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
-                                                </div>
-                                                <div class="tab-pane fade" id="logo">
-                                                    <label>{{__('category-logo')}}</label>
-                                                    <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
-                                                </div>
-                                                <div class="tab-pane fade" id="sort">
-                                                    <label>{{__('sort')}}</label>
-                                                    <input type="number" name="sort" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control form-control-solid" placeholder="{{__('The sorting order of category')}}" />
-                                                </div>
-                                            </div>
-                                            <div class="justify-content-center" >
-                                                <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Create') }}</button>
-                                                <button type="button" onclick="hideCategoryEditForm('categoryForm')" class="btn btn-sm btn-info mx-1 mt-2">{{ __('Close') }}</button>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                    <form method="POST" id="category-edit" enctype="multipart/form-data" class="mb-2">
-                                        @csrf
-
-                                        <div id="category-edit-form" class="mt-2" style="display: none !important;">
-                                            <ul class="nav nav-tabs" id="edit-cateogry">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#edit-en">{{__('english')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#edit-ar">{{__('arabic')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#edit-logo">{{__('logo')}}</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="sort-tab" data-bs-toggle="tab" href="#edit-sort">{{__('sort')}}</a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content mt-3">
-                                                <div class="tab-pane fade show active" id="edit-en">
-                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="category_name_en">
-                                                </div>
-                                                <div class="tab-pane fade" id="edit-ar">
-                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar" id="category_name_ar">
-                                                </div>
-                                                <div class="tab-pane fade" id="edit-logo">
-                                                    <label>{{__('category-logo')}}</label>
-                                                    <input type="file" class="form-control form-control-solid" accept="image/*" placeholder="Enter Target Title" name="photo" />
-                                                </div>
-                                                <div class="tab-pane fade" id="edit-sort">
-                                                    <label>{{__('sort')}}</label>
-                                                    <input type="number" min="1" max="{{count($categories)}}" class="form-control form-control-solid" name="sort" placeholder="{{__('The sorting order of category')}}" id="category_sort"/>
-                                                </div>
-                                            </div>
-                                            <div class="d-none justify-content-center" id="update-category-btn">
-                                                <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Update') }}</button>
-                                                <button type="button" onclick="hideCategoryEditForm('category-edit-form')" class="btn btn-sm btn-info mx-1 mt-2">{{ __('Close') }}</button>
-                                            </div>
-                                        </div>
-
-                                    </form>
-
+                                    <!--end::Modal content-->
                                 </div>
-                                <!--end::Menu item-->
-
+                                <!--end::Modal dialog-->
                             </div>
+                            <!--end::Menu item-->
+
                             <!--end::Menu-->
                         </div>
                         <!--end::Aside content-->
@@ -660,43 +707,26 @@
                 </div>
                 <!--end::Sidebar-->
                 <!--begin::Content-->
-                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
+                <div class="col-md-8 {{-- col-xxl-10 --}}">
                     <!--begin::Card-->
-                    <div class="card">
+                    @if($selectedCategory)
+                    <div class="card card-flush">
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                             <!--begin::Actions-->
                             <div class="d-flex flex-wrap gap-1">
-                                <h3 class="text-active-khardl">{{ DB::table('branches')->where('id', $branchId)?->value('name') }} @if($selectedCategory) | {{ $selectedCategory->name }} @endif</h3>
+                                {{ __('Food items in') }}:
+                                <span class="text-khardl">{{ $selectedCategory?->name }}</span>
                             </div>
                             <!--end::Actions-->
                             <!--begin::Pagination-->
                             <div class="d-flex align-items-center flex-wrap gap-2">
                                 @if($selectedCategory)
-                                <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">{{ __('create-new-items') }}
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
-                                    <span class="svg-icon svg-icon-2 me-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
-                                            <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor" />
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                </a>
-                                <form class="delete-form" action="{{ route('restaurant.delete-category', ['id' => $selectedCategory->id]) }}" method="POST">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                        <span class="svg-icon svg-icon-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor" />
-                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor" />
-                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">
+                                    <button class="btn btn-sm btn-khardl add-new">
+                                        {{ __('Add new') }}
+                                        <i class="fas fa-plus text-white fa-xs"></i>
                                     </button>
-                                </form>
+                                </a>
                                 @endif
                             </div>
                             <!--end::Pagination-->
@@ -729,25 +759,6 @@
                                         <!--begin::Modal header-->
                                         <!--begin::Modal body-->
                                         <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
-                                            <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse start-0 {{app()->getLocale() != 'ar'?' transform-90':'transform-270'}} mt-20 gap-2">
-                                                <!--begin::Demos drawer toggle-->
-                                                <button id="addCheckbox_{{ $item->id }}" type="button" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Checkbox">
-                                                    <span id="create_new_checkbox">+ {{ __('Checkbox') }}</span>
-                                                </button>
-                                                <!--end::Demos drawer toggle-->
-                                                <!--begin::Help drawer toggle-->
-                                                <button id="addSelection_{{ $item->id }}" type="button" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Selection">
-                                                    <span id="create_new_selection">+ {{ __('Selection') }}</span>
-                                                </button>
-                                                <!--end::Help drawer toggle-->
-                                                <!--begin::Purchase link-->
-                                                <button id="addDropdown_{{ $item->id }}" type="button" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Dropdown">
-                                                    <span id="create_new_Dropdown">+ {{ __('Dropdown') }}</span>
-                                                </button>
-                                                <!--end::Purchase link-->
-                                            </div>
-
-
                                             <!--begin:Form-->
                                             @if($selectedCategory)
                                                 <!--begin::Heading-->
@@ -758,18 +769,7 @@
                                                 </div>
                                                 <!--end::Heading-->
                                                 <div class="row">
-                                                    <div class="col-md-8">
-                                                         <!--begin::Input group-->
-                                                        <div class="d-flex flex-column mb-8 fv-row">
-                                                            <!--begin::Label-->
-                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                                <span class="required">{{__('item-photo')}}</span>
-                                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('Image will be shown to customers') }}"></i>
-                                                            </label>
-                                                            <input type="file"  data-item="{{ $item->id }}" class="item_image form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
-                                                        </div>
-                                                        <!--end::Input group-->
-
+                                                    <div class="col-md-6">
                                                         <!--begin::Input group-->
                                                         <div class="d-flex flex-column mb-8">
                                                             <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
@@ -791,53 +791,46 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <!--begin::Input group-->
-                                                        <div class="d-flex flex-column mb-8 fv-row">
-                                                            <!--begin::Label-->
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                                    <span class="required">{{__('item-availability')}}</span>
-                                                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
-                                                                </label>
-                                                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                                    <input type="checkbox" name="availability" value="1" {{ old('availability') || $item->availability ? 'checked' : '' }}>
-                                                                </label>
+                                                        <div class="row g-9 mb-8">
+                                                            <!--begin::Col-->
+                                                            <div class="col-md-12 fv-row">
+                                                                <label class="required fs-6 fw-bold mb-2">{{ __('Price(SAR)') }}</label>
+                                                                <!--begin::Input-->
+                                                                <div class="position-relative d-flex align-items-center">
+                                                                    <!--begin::Datepicker-->
+                                                                    <input type="number" min="0" step="1" value="{{ old('price') ?? $item->price }}" required name="price" class="form-control item_price form-control-solid "  />
+                                                                    <!--end::Datepicker-->
+                                                                </div>
+                                                                <!--end::Input-->
                                                             </div>
-
+                                                            <!--end::Col-->
+                                                            <!--begin::Col-->
+                                                            <div class="col-md-12 fv-row">
+                                                                <label class="required fs-6 fw-bold mb-2">{{ __('Calories(Kcal)') }}</label>
+                                                                <input type="number" step="0.1" min="1" required name="calories" value="{{ old('calories') ?? $item->calories }}" class="form-control form-control-solid " />
+                                                            </div>
+                                                            <!--end::Col-->
                                                         </div>
                                                         <!--end::Input group-->
                                                     </div>
-                                                    <div class="col-md-4">
-                                                        <img alt="product_image" src="{{ $item->photo }}" id="item-image-preview-{{ $item->id }}" class="rounded" style="max-height: 100%;max-width:100%" />
-                                                    </div>
-                                                </div>
-                                                <!--begin::Input group-->
-                                                <div class="row g-9 mb-8">
-                                                    <!--begin::Col-->
-                                                    <div class="col-md-6 fv-row">
-                                                        <label class="required fs-6 fw-bold mb-2">{{ __('Price') }}</label>
-                                                        <!--begin::Input-->
-                                                        <div class="position-relative d-flex align-items-center">
-                                                            <!--begin::Datepicker-->
-                                                            <input type="number" min="0" step="1" value="{{ old('price') ?? $item->price }}" required name="price" class="form-control item_price form-control-solid ps-12"  />
-                                                            <!--end::Datepicker-->
+                                                    <div class="col-md-6">
+                                                          <!--begin::Input group-->
+                                                          <div class="d-flex flex-column mb-8 fv-row">
+                                                            <!--begin::Label-->
+                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                                <span class="required">{{__('item-photo')}}</span>
+                                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('Image will be shown to customers') }}"></i>
+                                                            </label>
+                                                            <input type="file"  data-item="{{ $item->id }}" class="item_image form-control form-control-solid" placeholder="Enter Target Title" name="photo" accept="image/*" />
+                                                            <img alt="product_image" src="{{ $item->photo }}" id="item-image-preview-{{ $item->id }}" class="rounded" style="max-height: 100%;max-width:100%" />
                                                         </div>
-                                                        <!--end::Input-->
+                                                        <!--end::Input group-->
                                                     </div>
-                                                    <!--end::Col-->
-                                                    <!--begin::Col-->
-                                                    <div class="col-md-6 fv-row">
-                                                        <label class="required fs-6 fw-bold mb-2">{{ __('Calories') }}</label>
-                                                        <input type="number" step="0.1" min="1" required name="calories" value="{{ old('calories') ?? $item->calories }}" class="form-control form-control-solid ps-12" />
-                                                    </div>
-                                                    <!--end::Col-->
-
                                                 </div>
-                                                <!--end::Input group-->
 
                                                 <!--begin::Input group-->
-                                                <div class="row g-9 mb-8">
+                                               {{--  <div class="row g-9 mb-8">
                                                     <!--begin::Col-->
                                                     <div class="col-md-6 fv-row">
                                                         <label class="d-flex align-items-between fs-6 fw-bold mb-4">
@@ -851,19 +844,19 @@
                                                     <!--begin::Col-->
                                                     <div class="col-md-6 fv-row @if(old('price_using_loyalty_points') ?? $item?->allow_buy_with_loyalty_points) d-block @else d-none @endif" id="price_using_loyalty_points{{$item->id}}" >
                                                         <label class="fs-6 fw-bold mb-2">{{ __('Product price with loyalty points (How many points)') }}</label>
-                                                        <input type="number" step="0.1" min="0" name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control price_using_loyalty_points form-control-solid ps-12" />
+                                                        <input type="number" step="0.1" min="0" name="price_using_loyalty_points" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}" class="form-control price_using_loyalty_points form-control-solid " />
                                                         @if($item->LoyaltyPointRatio)
                                                         <div class="loyalty_point_calculation">
                                                             <span>{{__('For every 10 riyal, :point points correspond to the cost of product options',['point'=>10*$item->LoyaltyPointRatio])}}</span> <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('loyalty points for item options will get calculated automatically')}}"></i>
                                                         </div>
-                                                        @else 
+                                                        @else
                                                         <div class="loyalty_point_calculation"></div>
                                                         @endif
-                                                    
+
                                                     </div>
                                                     <!--end::Col-->
 
-                                                </div>
+                                                </div> --}}
                                                 <!--end::Input group-->
 
                                                 <div class="d-flex flex-column mb-8">
@@ -890,8 +883,85 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!--end::Input group-->
-                                             
+                                                <div class="row g-9 mb-8">
+                                                    <div class="col-md-5 fv-row">
+                                                        <!--begin::Label-->
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                                <span class="required">{{__('item-availability')}}</span>
+
+                                                            </label>
+                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2 custom-switch">
+                                                                <input type="checkbox" type="checkbox" name="availability" value="1" {{ old('availability') || $item->availability ? 'checked' : '' }}>
+                                                                <span class="slider round"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <!--begin::Col-->
+                                                    <div class="col-md-7 fv-row">
+                                                        <div class="row">
+                                                            <div class="col-md-7">
+                                                                <div  class="d-flex align-items-between">
+                                                                    <label class="fs-6 fw-bold mb-4">
+                                                                        <span>{{__('Allow buy with loyalty points?')}}</span>
+                                                                    </label>
+                                                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                                        <label class="custom-switch">
+                                                                            <input type="checkbox" type="checkbox" class="allow_buy_with_loyalty_points" data-id="{{$item->id}}" name="allow_buy_with_loyalty_points" @if($item?->allow_buy_with_loyalty_points) checked @endif value="1">
+                                                                            <span class="slider round"></span>
+                                                                        </label>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-5 @if(old('price_using_loyalty_points') ?? $item?->allow_buy_with_loyalty_points) d-block @else d-none @endif" id="price_using_loyalty_points{{$item->id}}">
+                                                                <div {{-- id="loyalty_point_price_section-new" --}}>
+                                                                    <input type="number" step="0.1" min="0" placeholder="{{ __('Loyalty price') }}" value="{{ old('price_using_loyalty_points') ?? $item?->price_using_loyalty_points }}"  name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid " />
+                                                                    @if($item->LoyaltyPointRatio)
+                                                                    <div class="loyalty_point_calculation text-muted">
+                                                                        <span>{{__('For every 10 riyal, :point points correspond to the cost of product options',['point'=>10*$item->LoyaltyPointRatio])}}</span> <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('loyalty points for item options will get calculated automatically')}}"></i>
+                                                                    </div>
+                                                                    @else
+                                                                    <p class="text-muted">{{ __('How many points') }}</p>
+                                                                    <div class="loyalty_point_calculation"></div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--end::Col-->
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-md-4">
+                                                        <!--begin::Demos drawer toggle-->
+                                                        <button id="addCheckbox_{{ $item->id }}" class="btn option-btn" type="button" title="Add Checkbox">
+                                                            <span id="create_new_checkbox">
+                                                                <i class="fas fa-plus text-black"></i>
+                                                                {{ __('Checkbox') }}
+                                                            </span>
+                                                        </button>
+                                                        <!--end::Demos drawer toggle-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--begin::Help drawer toggle-->
+                                                        <button id="addSelection_{{ $item->id }}" class="btn option-btn" type="button" title="Add Selection">
+                                                            <span id="create_new_selection">
+                                                                <i class="fas fa-plus text-black"></i>
+                                                                {{ __('Selection') }}
+                                                            </span>
+                                                        </button>
+                                                        <!--end::Help drawer toggle-->
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <!--begin::Purchase link-->
+                                                    <button id="addDropdown_{{ $item->id }}" class="btn option-btn" type="button" title="Add Dropdown">
+                                                        <span id="create_new_Dropdown">
+                                                            <i class="fas fa-plus text-black"></i>
+                                                            {{ __('Dropdown') }}
+                                                        </span>
+                                                    </button>
+                                                    <!--end::Purchase link-->
+                                                    </div>
+                                                </div>
                                                 <div id="checkboxes_{{ $item->id }}">
                                                     <!-- Checkbox elements will be dynamically added here -->
 
@@ -946,14 +1016,15 @@
                                                 </script>
 
                                                 <!--begin::Actions-->
+                                                <!--begin::Actions-->
                                                 <div class="text-center">
-                                                    <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
-                                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
-                                                        <span class="indicator-label">{{__('submit')}}</span>
+                                                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl w-100 too-rounded">
+                                                        <span class="indicator-label">{{__('Save')}}</span>
                                                         <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                     </button>
                                                 </div>
+                                                <!--end::Actions-->
                                                 <!--end::Actions-->
                                             @endif
                                             <!--end:Form-->
@@ -968,91 +1039,71 @@
                         @endforeach
                         <div class="card-body p-1">
                             <!--begin::Table-->
-                            <table class="table table-hover table-row-dashed fs-6 gy-5 my-0" id="kt_inbox_listing">
+                            <div class="items row mb-2 px-2" id="kt_inbox_listing">
                                 <!--begin::Table body-->
-                                <tbody>
-                                    @foreach ($items as $item)
-                                    <tr>
-                                        <td>
-                                            @if(!$item->availability)<span class="badge badge-danger mx-1">{{__('Not available')}}</span>
-                                            @else
-                                            <span class="badge badge-success mx-1">{{__('Available')}}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="{{$item->name}}">
-                                                <img alt="Pic" src="{{$item->photo}}" />
+                                @foreach ($items as $item)
+                                <div class="col-md-6">
+                                    <div class="item mt-3 {{ $item->availability ? '':'un-available'}}">
+                                        <div class="d-flex align-items-center rounded-3 p-3 justify-content-between">
+                                            <div class="image" data-bs-toggle="tooltip" title="{{$item->name}}">
+                                                <img alt="Pic" src="{{$item->photo}}" style="width: 80px; height: 80px;"/>
                                             </div>
-                                        </td>
-
-                                        <!--begin::Title-->
-                                        <td class="text-center">
-                                            <div class="text-dark">
-                                                <!--begin::Heading-->
-                                                <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}">
-                                                    <span class="fw-bolder text-start">{{ $item->name }}</span>
-                                                </a>
-                                                <!--end::Heading-->
-                                            </div>
-                                        </td>
-                                        <!--begin::Author-->
-                                        <td class="text-center">
-                                            <span class="text-gray fw-bold fs-17">{{$item->price}}</span>
-                                        </td>
-                                        <!--end::Author-->
-
-                                        <!--end::Title-->
-                                        <!--begin::Date-->
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-light btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                <span class="svg-icon svg-icon-5 m-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon--></a>
-                                            <!--begin::Menu-->
-                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('view') }}</a>
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="mb-0 fs-5 fw-bold me-auto">
+                                                        <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}">
+                                                            <span class="fw-bolder text-darken text-start">{{ $item->name }}</span>
+                                                        </a>
+                                                    </h5>
+                                                    <div class="dropdown">
+                                                        <span style="cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </span>
+                                                        <ul class="dropdown-menu rounded">
+                                                            <li>
+                                                                <a class="dropdown-item text-muted py-2" href="{{ route('restaurant.view-item',['item' => $item->id]) }}">
+                                                                    {{ __('View') }}
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item text-muted py-2" href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target_{{ $item->id }}">
+                                                                    {{ __('Edit') }}
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <form class="delete-form" action="{{ route('restaurant.delete-item', ['id' => $item->id]) }}" method="POST">
+                                                                    @method('DELETE')
+                                                                    @csrf
+                                                                    <a href="#" class="dropdown-item delete-button btn-danger">{{ __('delete') }}</a>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                                <div class="menu-item px-3">
-                                                    <a href="#"  class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target_{{ $item->id }}">
-                                                        {{ __('edit') }}
-                                                    </a>
+                                                @if($item->description)
+                                                <span class="btn-tooltip" data-bs-toggle="tooltip" title="{{ $item->description }}" data-container="body" data-animation="true" data-bs-toggle="tooltip">{{ Str::limit($item->description, 20, '...') }}</span>
+                                                @else
+                                                <span>{{ __('No description') }}</span>
+                                                @endif
+                                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                                    <span class="btn-fire rounded-pill px-3 py-2 fs-6  fw-bold">
+                                                        <i class="fas fa-fire " style="color: #FF3D00"></i>
+                                                        {{ $item->calories }} {{ __('Kcal') }}
+                                                    </span>
+                                                    <span class="btn-khardl text-white rounded-pill px-2 py-2 fs-6 fw-bold">{{ $item->price }} {{ __("SAR") }}</span>
                                                 </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                {{-- TODO:Edit item --}}
-                                                {{-- <div class="menu-item px-3">
-                                                            <a href="https://google.com" class="menu-link px-3">{{ __('edit') }}</a>
-                                            </div> --}}
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-
-                                            <div class="menu-item px-3" style="border-top-style: solid;border-top-width: 1px;border-top-color: #ccc;">
-                                                <form class="delete-form" action="{{ route('restaurant.delete-item', ['id' => $item->id]) }}" method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <a href="#" class="menu-link px-3 delete-button">{{ __('delete') }}</a>
-                                                </form>
                                             </div>
-                                            <!--end::Menu item-->
-                                            </div>
-                                            <!--end::Menu-->
-                                        </td>
-                                        <!--end::Date-->
-                                    </tr>
-                                    @endforeach
-                                </tbody>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
                             <!--end::Table body-->
-                            </table>
+                            </div>
                             {{-- TODO: load item when scroll down --}}
                             <!--end::Table-->
                         </div>
-                </div>
+                    </div>
+                    @endif
                 <!--end::Card-->
             </div>
             <!--end::Content-->
@@ -1088,28 +1139,9 @@
             <!--begin::Modal header-->
             <!--begin::Modal body-->
             <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
-                <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse start-0 {{app()->getLocale() != 'ar'?' transform-90':'transform-270'}} mt-20 gap-2">
-                    <!--begin::Demos drawer toggle-->
-                    <button id="addCheckbox" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Checkbox">
-                        <span id="create_new_checkbox">+ {{ __('Checkbox') }}</span>
-                    </button>
-                    <!--end::Demos drawer toggle-->
-                    <!--begin::Help drawer toggle-->
-                    <button id="addSelection" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Selection">
-                        <span id="create_new_selection">+ {{ __('Selection') }}</span>
-                    </button>
-                    <!--end::Help drawer toggle-->
-                    <!--begin::Purchase link-->
-                    <button id="addDropdown" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Dropdown">
-                        <span id="create_new_Dropdown">+ {{ __('Dropdown') }}</span>
-                    </button>
-                    <!--end::Purchase link-->
-                </div>
-
-
                 <!--begin:Form-->
                 @if($selectedCategory)
-                <form id="kt_modal_new_target_form" class="form item_form" action="{{ route('restaurant.add-item', ['id' => $selectedCategory->id, 'branchId' => $branchId]) }}" method="POST" enctype="multipart/form-data">
+                <form id="kt_modal_new_target_form" class="item-popup form item_form" action="{{ route('restaurant.add-item', ['id' => $selectedCategory->id, 'branchId' => $branchId]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--begin::Heading-->
                     <div class="mb-13 text-center">
@@ -1120,18 +1152,7 @@
                     <!--end::Heading-->
                     <!--begin::Input group-->
                     <div class="row">
-                        <div class="col-md-8">
-
-                            <div class="d-flex flex-column mb-8 fv-row">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__('item-photo')}}</span>
-                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('Image will be shown to customers') }}"></i>
-                                </label>
-                                <input type="file" id="item_image" class="form-control form-control-solid" required placeholder="Enter Target Title" name="photo" accept="image/*" />
-                            </div>
-                            <!--end::Input group-->
-
+                        <div class="col-md-6">
                             <!--begin::Input group-->
                             <div class="d-flex flex-column mb-8">
                                 <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
@@ -1153,100 +1174,141 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!--begin::Input group-->
+                            <div class="row g-9 mb-8">
+                                <!--begin::Col-->
+                                <div class="col-md-12 fv-row ">
+                                    <label class="required fs-6 fw-bold mb-2">{{ __('Price(SAR)') }}</label>
+                                    <!--begin::Input-->
+                                    <div class="position-relative d-flex align-items-center">
+                                        <!--begin::Datepicker-->
+                                        <input type="number" min="0" step="1" required name="price" class="form-control item_price form-control-solid " />
+                                        <!--end::Datepicker-->
+                                    </div>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-md-12 fv-row">
+                                    <label class="required fs-6 fw-bold mb-2">{{ __('Calories(Kcal)') }}</label>
+                                    <input type="number" step="0.1" min="1" required name="calories" class="form-control form-control-solid " />
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                        <span class="required">{{__('item-availability')}}</span>
-                                        
-                                    </label>
-                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                        <input type="checkbox" name="availability" checked value="1">
-                                    </label>
-                                </div>
-
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <span class="required">{{__('item-photo')}}</span>
+                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('Image will be shown to customers') }}"></i>
+                                </label>
+                                <input type="file" id="item_image" class="form-control form-control-solid" required placeholder="Enter Target Title" name="photo" accept="image/*" />
                             </div>
+                            <img src="#" id="item-image-preview" class="rounded" style="max-height: 100%;max-width:100%" />
+                            <!--for preview purpose -->
+                        </div>
+                        <div class="col-md-12">
+                            <!--end::Input group-->
+                            <div class="d-flex flex-column mb-8">
+                                <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
+
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en">{{ __('English') }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar">{{ __('Arabic') }}</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content mt-3">
+                                    <div class="tab-pane fade show active" id="d-en">
+                                        <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="description_en"></textarea>
+                                    </div>
+                                    <div class="tab-pane fade" id="d-ar">
+                                        <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="description_ar"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Input group-->
+                        </div>
+                        <!--end::Input group-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="row g-9 mb-8">
+                        <div class="col-md-5 fv-row">
+                            <!--begin::Label-->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <span class="required">{{__('item-availability')}}</span>
+
+                                </label>
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2 custom-switch">
+                                    <input type="checkbox" type="checkbox" name="availability" checked value="1">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <!--begin::Col-->
+                        <div class="col-md-7 fv-row">
+                            <div class="row" >
+                                <div class="col-md-7">
+                                    <div  class="d-flex align-items-between">
+                                        <label class="fs-6 fw-bold mb-4">
+                                            <span>{{__('Allow buy with loyalty points?')}}</span>
+                                        </label>
+                                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                            <label class="custom-switch">
+                                                <input type="checkbox" type="checkbox" id="allow_buy_with_loyalty_points-new" name="allow_buy_with_loyalty_points" checked value="1">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-5" id="loyalty_point_price_section-new" >
+                                    <div class="d-block" id="loyalty_points" >
+                                        <input type="number" step="0.1" min="0" placeholder="{{ __('Loyalty price') }}" name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid " />
+                                        <p class="text-muted">{{ __('How many points') }}</p>
+                                        <div class="loyalty_point_calculation"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <!--begin::Demos drawer toggle-->
+                            <button id="addCheckbox" class="btn option-btn" type="button" title="Add Checkbox">
+                                <span id="create_new_checkbox">
+                                    <i class="fas fa-plus text-black"></i>
+                                    {{ __('Checkbox') }}
+                                </span>
+                            </button>
+                            <!--end::Demos drawer toggle-->
                         </div>
                         <div class="col-md-4">
-                            <img src="#" id="item-image-preview" class="rounded" style="max-height: 100%;max-width:100%" />   <!--for preview purpose -->
+                            <!--begin::Help drawer toggle-->
+                            <button id="addSelection" class="btn option-btn" type="button" title="Add Selection">
+                                <span id="create_new_selection">
+                                    <i class="fas fa-plus text-black"></i>
+                                    {{ __('Selection') }}
+                                </span>
+                            </button>
+                            <!--end::Help drawer toggle-->
+                        </div>
+                        <div class="col-md-4">
+                            <!--begin::Purchase link-->
+                        <button id="addDropdown" class="btn option-btn" type="button" title="Add Dropdown">
+                            <span id="create_new_Dropdown">
+                                <i class="fas fa-plus text-black"></i>
+                                {{ __('Dropdown') }}
+                            </span>
+                        </button>
+                        <!--end::Purchase link-->
                         </div>
                     </div>
-                    <!--end::Input group-->
-                    <!--begin::Input group-->
-                    <div class="row g-9 mb-8">
-                        <!--begin::Col-->
-                        <div class="col-md-6 fv-row">
-                            <label class="required fs-6 fw-bold mb-2">{{ __('Price') }}</label>
-                            <!--begin::Input-->
-                            <div class="position-relative d-flex align-items-center">
-                                <!--begin::Datepicker-->
-                                <input type="number" min="0" step="1" required name="price" class="form-control item_price form-control-solid ps-12" "/>
-                                <!--end::Datepicker-->
-                            </div>
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Col-->
-                        <!--begin::Col-->
-                        <div class="col-md-6 fv-row">
-                            <label class="required fs-6 fw-bold mb-2">{{ __('Calories') }}</label>
-                            <input type="number" step="0.1" min="1" required name="calories" class="form-control form-control-solid ps-12" />
-                        </div>
-                        <!--end::Col-->
-
-                    </div>
-                    <!--end::Input group-->
-
-                    <!--begin::Input group-->
-                    <div class="row g-9 mb-8">
-                        <!--begin::Col-->
-                        <div class="col-md-6 fv-row">
-                            <label class="d-flex align-items-between fs-6 fw-bold mb-4">
-                                <span >{{__('Allow buy with loyalty points?')}}</span>
-                            </label>
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <input type="checkbox" id="allow_buy_with_loyalty_points-new" name="allow_buy_with_loyalty_points" checked value="1">
-                            </label>
-                        </div>
-                        <!--end::Col-->
-                        <!--begin::Col-->
-                        <div class="col-md-6 fv-row d-block" id="loyalty_point_price_section-new">
-                            <label class="fs-6 fw-bold mb-2">{{ __('Product price with loyalty points (How many points)') }}</label>
-
-                            <input type="number" step="0.1" min="0"  name="price_using_loyalty_points" class="form-control price_using_loyalty_points form-control-solid ps-12" />
-                            <div class="loyalty_point_calculation"></div>
-                        </div>
-                        <!--end::Col-->
-
-                    </div>
-                    <!--end::Input group-->
-                    
-
-                    <div class="d-flex flex-column mb-8">
-                        <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
-
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en">{{ __('English') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar">{{ __('Arabic') }}</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content mt-3">
-                            <div class="tab-pane fade show active" id="d-en">
-                                <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in english') }}" name="description_en"></textarea>
-                            </div>
-                            <div class="tab-pane fade" id="d-ar">
-                                <textarea type="text" class="form-control form-control-solid" rows="3" placeholder="{{ __('Enter name in arabic') }}" name="description_ar"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end::Input group-->
-
-
-                
                     <div id="checkboxes">
                         <!-- Checkbox elements will be dynamically added here -->
 
@@ -1262,11 +1324,11 @@
                         <!-- Checkbox elements will be dynamically added here -->
                     </div>
 
+
                     <!--begin::Actions-->
                     <div class="text-center">
-                        <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
-                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
-                            <span class="indicator-label">{{__('submit')}}</span>
+                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl w-100 too-rounded">
+                            <span class="indicator-label">{{__('Save')}}</span>
                             <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
@@ -1286,7 +1348,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-      
+
     $(document).ready(function() {
         $('#carouselExample').carousel({
             pause: true,
@@ -1344,10 +1406,10 @@
             let container =  $(this).closest('.modal-body');
             let itemPrice = container.find('.item_price').val()
             let loyaltyPoints = container.find('.price_using_loyalty_points').val()
-       
+
             if (itemPrice !== '' && loyaltyPoints !== '') {
 
-                let text = translate({  point: Math.ceil(10*(loyaltyPoints/itemPrice).toFixed(2)) }); 
+                let text = translate({  point: Math.ceil(10*(loyaltyPoints/itemPrice).toFixed(2)) });
                 let loyalty_point_calculation = container.find('.loyalty_point_calculation');
                 loyalty_point_calculation.html(`<span>${text}</span> <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('loyalty points for item options will get calculated automatically')}}"></i>`);
                 loyalty_point_calculation.find('[data-bs-toggle="tooltip"]').tooltip();
@@ -1360,7 +1422,7 @@
             }else {
                 $('#price_using_loyalty_points'+$(this).data("id")).removeClass('d-block').addClass( 'd-none');
             }
-          
+
         });
     });
     if (document.getElementById('allow_buy_with_loyalty_points')) {
@@ -1382,15 +1444,15 @@
     if (document.getElementById('allow_buy_with_loyalty_points-new')) {
         document.getElementById('allow_buy_with_loyalty_points-new').addEventListener('click', function (e) {
             if (e.target.checked) {
-                if (document.getElementById('loyalty_point_price_section-new').classList.contains("d-none")) {
-                    document.getElementById('loyalty_point_price_section-new').classList.remove('d-none');
+                if (document.getElementById('loyalty_points').classList.contains("d-none")) {
+                    document.getElementById('loyalty_points').classList.remove('d-none');
                 }
-                document.getElementById('loyalty_point_price_section-new').classList.add('d-block');
+                document.getElementById('loyalty_points').classList.add('d-block');
             } else {
-                if (document.getElementById('loyalty_point_price_section-new').classList.contains("d-block")) {
-                    document.getElementById('loyalty_point_price_section-new').classList.remove('d-block');
+                if (document.getElementById('loyalty_points').classList.contains("d-block")) {
+                    document.getElementById('loyalty_points').classList.remove('d-block');
                 }
-                document.getElementById('loyalty_point_price_section-new').classList.add('d-none');
+                document.getElementById('loyalty_points').classList.add('d-none');
             }
         });
     }
@@ -1474,7 +1536,7 @@
             event.preventDefault();
 
             var form = button.closest('.delete-form');
-
+            console.log(form);
             Swal.fire({
                 title: `{{ __('are-you-sure') }}`
                 , text: "{{ __('you-wont-be-able-to-undo-this') }}"
@@ -1603,37 +1665,8 @@
     const addDropdownButton = document.getElementById('addDropdown');
     if(addDropdownButton)
         addDropdownButton.addEventListener('click', createDropdown);
-    </script>
-<style>
-    .engage-toolbar {
-        position: absolute !important;
-        display: flex !important;
-    }
+</script>
 
-    .transform-270 {
-        transform: rotate(270deg);
-        transform-origin: right top;
-    }
-
-    .transform-90 {
-        transform: rotate(90deg);
-        transform-origin: left top;
-    }
-
-  
-    .carousel-control-prev-icon
-    {
-        background-image : url('/img/next.png')
-    }
-    .carousel-control-next-icon {
-        background-image : url('/img/prev.png')
-    }
-    .carousel-inner{
-        position: relative;
-        width: 70%;
-        margin: 0 115px;
-    }
-</style>
 <!--end::Content-->
 {{-- Image preview --}}
 <script>
