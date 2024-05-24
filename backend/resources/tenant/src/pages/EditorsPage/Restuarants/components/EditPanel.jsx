@@ -29,7 +29,7 @@ import { useTranslation } from "react-i18next";
 
 const EditPanel = () => {
   const restuarantEditorStyle = useSelector(
-    (state) => state.restuarantEditorStyle,
+    (state) => state.restuarantEditorStyle
   );
   const {
     page_color,
@@ -73,8 +73,8 @@ const EditPanel = () => {
                 logo_shape === "rounded"
                   ? t("Rounded")
                   : logo_shape === "sharp"
-                    ? t("Sharp")
-                    : ""
+                  ? t("Sharp")
+                  : ""
               }
               handleChange={(value) => dispatch(logoShape(value))}
               options={[
@@ -93,8 +93,8 @@ const EditPanel = () => {
                 banner_shape === "rounded"
                   ? t("Rounded")
                   : banner_shape === "sharp"
-                    ? t("Sharp")
-                    : ""
+                  ? t("Sharp")
+                  : ""
               }
               handleChange={(value) => dispatch(bannerShape(value))}
               options={[
@@ -113,8 +113,8 @@ const EditPanel = () => {
                 category_shape === "rounded"
                   ? t("Rounded")
                   : category_shape === "sharp"
-                    ? t("Sharp")
-                    : ""
+                  ? t("Sharp")
+                  : ""
               }
               handleChange={(value) => dispatch(categoryShape(value))}
               options={[
@@ -133,8 +133,8 @@ const EditPanel = () => {
                 categoryDetail_shape === "rounded"
                   ? t("Rounded")
                   : categoryDetail_shape === "sharp"
-                    ? t("Sharp")
-                    : ""
+                  ? t("Sharp")
+                  : ""
               }
               handleChange={(value) => dispatch(categoryDetailShape(value))}
               options={[
@@ -262,6 +262,8 @@ const EditPanel = () => {
                 { value: "cairo", text: "Cairo" },
                 { value: "Poppins", text: "Poppins" },
                 { value: "Roboto", text: "Roboto" },
+                { value: "Amiri", text: "Amiri" },
+                { value: "Tajawal", text: "Tajawal" },
               ]}
             />
           </div>

@@ -39,6 +39,7 @@ import {
   productBackgroundColor,
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
 import EditorColorSelect from "./EditorColorSelect";
+import EditorCategoryItemAlignment from "./EditorCategoryItemAlignment";
 
 export const RightSideBarDesktop = ({
   activeSection,
@@ -245,6 +246,20 @@ export const RightSideBarDesktop = ({
                                   ]?.contentPositionOnChange[subIndex](value);
                                 }}
                               />
+                            ) : subItem == "itemLayout" ? (
+                              <EditorCategoryItemAlignment
+                                modalId={`${item}-position-modal`}
+                                defaultValue={
+                                  navItems[activeSection].subItems[
+                                    activeSubitem
+                                  ]?.textInitialValues[subIndex]
+                                }
+                                onChange={(value) => {
+                                  navItems[activeSection].subItems[
+                                    activeSubitem
+                                  ]?.textOnChange[subIndex](value);
+                                }}
+                              />
                             ) : subItem == "radius" ? (
                               <EditorPercentageInput
                                 label={t("Border Radius")}
@@ -273,15 +288,13 @@ export const RightSideBarDesktop = ({
                               <EditorSelect
                                 label={t("Icon")}
                                 defaultValue={
-                                  (
-                                    item === "layout"
-                                      ? navItems[activeSection].subItems[
-                                          activeSubitem
-                                        ]?.layoutInitialValues[subIndex]
-                                      : navItems[activeSection].subItems[
-                                          activeSubitem
-                                        ]?.layoutInitialValues_2[subIndex]
-                                  ) == 1
+                                  (item === "layout"
+                                    ? navItems[activeSection].subItems[
+                                        activeSubitem
+                                      ]?.layoutInitialValues[subIndex]
+                                    : navItems[activeSection].subItems[
+                                        activeSubitem
+                                      ]?.layoutInitialValues_2[subIndex]) == 1
                                     ? "Show"
                                     : "Hide"
                                 }
@@ -340,8 +353,12 @@ export const RightSideBarDesktop = ({
                                     text: "Roboto",
                                   },
                                   {
-                                    value: "Plus Jakarta Sans",
-                                    text: "Jakarta",
+                                    value: "Amiri",
+                                    text: "Amiri",
+                                  },
+                                  {
+                                    value: "Tajawal",
+                                    text: "Tajawal",
                                   },
                                 ]}
                               />

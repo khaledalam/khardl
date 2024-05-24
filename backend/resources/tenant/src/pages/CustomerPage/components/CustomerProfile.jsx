@@ -195,13 +195,13 @@ const CustomerProfile = () => {
           />
         </div>
       </div> */}
-      <div className="flex w-full items-center justify-between mt-6 mb-4 flex-wrap">
-        <button
+      <div className="flex w-full items-center justify-end mt-6 mb-4 flex-wrap">
+        {/* <button
           onClick={() => setDeleteModalOpen(true)}
           className="cursor-pointer text-white bg-red-900 rounded-lg px-4 py-2.5 border font-['Plus Jakarta Sans'] leading-[18px] hover:bg-white hover:border-red-900 hover:text-red-900 w-fit transition-all shadow-md"
         >
           {t("Delete my account")}
-        </button>
+        </button> */}
         <div className="flex items-center gap-5">
           <button
             onClick={() => setModalOpen(true)}

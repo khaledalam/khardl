@@ -75,7 +75,7 @@ import {
   privacyPolicyTextWeight,
   privacyPolicyTextSize,
   privacyPolicyTextColor,
-  categoryIcon,
+  MenuCategoryItemLayout,
 } from "../../../redux/NewEditor/restuarantEditorSlice";
 import {
   getCartItemsCount,
@@ -144,6 +144,7 @@ export const RestuarantEditor = () => {
     menu_category_color,
     menu_category_position,
     menu_category_radius,
+    menu_category_item_layout,
     menu_section_background_color,
     menu_section_radius,
     menu_card_radius,
@@ -154,7 +155,6 @@ export const RestuarantEditor = () => {
     footer_text_fontWeight,
     footer_text_fontSize,
     footer_text_color,
-    display_category_icon,
   } = restuarantEditorStyle;
 
   const categories = useSelector((state) => state.categoryAPI.categories);
@@ -331,32 +331,32 @@ export const RestuarantEditor = () => {
       subItems: [
         {
           title: t("Category"),
-          layout: ["positionLayoutGrid", "color", "radius", "icon"],
+          layout: ["positionLayoutGrid", "color", "radius"],
           layoutInitialValues: [
             menu_category_position,
             menu_category_background_color,
             menu_category_radius,
-            display_category_icon,
           ],
           layoutOnChange: [
             (value) => dispatch(MenuCategoryPosition(value)),
             (color) => dispatch(MenuCategoryBackgroundColor(color)),
             (radius) => dispatch(MenuCategoryRadius(radius)),
-            (iconStatus) => dispatch(categoryIcon(iconStatus)),
           ],
           contentPosition: [],
-          text: ["font", "weight", "size", "color"],
+          text: ["font", "weight", "size", "color", "itemLayout"],
           textInitialValues: [
             menu_category_font,
             menu_category_weight,
             menu_category_size,
             menu_category_color,
+            menu_category_item_layout,
           ],
           textOnChange: [
             (value) => dispatch(MenuCategoryFont(value)),
             (value) => dispatch(MenuCategoryWeight(value)),
             (value) => dispatch(MenuCategorySize(value)),
             (color) => dispatch(MenuCategoryColor(color)),
+            (value) => dispatch(MenuCategoryItemLayout(value)),
           ],
           link: [],
         },
