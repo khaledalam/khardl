@@ -5,14 +5,18 @@ import {
   updateSelectedIconInput,
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
 import { cn } from "../../../../utils/styles";
+import {useTranslation} from "react-i18next";
 
 const EditorLink = ({ label }) => {
+
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const { mediaCollection, selectedSocialIcons } = useSelector(
     (state) => state.restuarantEditorStyle,
   );
 
-  
+
 
   const usedMediaIds = selectedSocialIcons.map((socialIcon) =>
     parseInt(socialIcon.id),
@@ -82,7 +86,7 @@ const EditorLink = ({ label }) => {
             className="bg-transparent outline-none text-xs flex-grow pl-1 xl:text-base font-light text-[rgba(17,24,39,0.77)]"
             type="url"
             size={10}
-            placeholder="URL..."
+            placeholder={t("URL") + '...'}
             value={currentValue}
             onKeyDown={handleInputKeyDown}
             onChange={(e) => setCurrentValue(e.target.value)}

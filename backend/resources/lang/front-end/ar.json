@@ -151,6 +151,7 @@
     "Upload Image": "ارفع صوره",
     "Apply": "حفظ",
     "layout": "تَخطِيط",
+    "Layout": "تَخطِيط",
     "contentPosition": "مكان المحتوى",
     "Each Branch": "تطبيق لمطعمكً",
     "Register now": "سجل الآن",
@@ -632,5 +633,8 @@
     "Save address": "احفظ العنوان",
     "Set as default": "تعيين كافتراضي",
     "ِEdit": "تعديل",
-    "Back": "رجوع"
+    "Back": "رجوع",
+    "URL": "رابط",
+    "Normal": "عادي",
+    "light": "رفيع"
 }
