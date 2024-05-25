@@ -533,6 +533,10 @@ Route::middleware([
                     Route::delete("trash/carts", 'trash')->name('trash');
                     Route::get("carts/count", 'count')->name('count');
                 });
+
+                Route::resource("orders", CustomerOrderController::class)->only([
+                    'store',
+                ]);
             });
         });
 
