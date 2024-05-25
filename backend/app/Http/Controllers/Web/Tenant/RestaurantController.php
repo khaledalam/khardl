@@ -263,7 +263,7 @@ class RestaurantController extends BaseController
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string',
-            'address' => 'required|string',
+            'address' => 'nullable|string',
             'city' => 'nullable|string',
             'neighborhood' => 'nullable|string',
             'lat-new_branch' => 'required',
@@ -293,7 +293,7 @@ class RestaurantController extends BaseController
         $data = [
             'name' => $validatedData['name'],
             'phone' => $validatedData['phone'],
-            'address' => $validatedData['address'],
+            'address' => $validatedData['address'] ?? ' ',
             'city' => $validatedData['city'],
             'neighborhood' => $validatedData['neighborhood'],
             'lat' => (float) $validatedData['lat-new_branch'],
