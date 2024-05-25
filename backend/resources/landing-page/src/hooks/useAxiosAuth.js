@@ -14,10 +14,12 @@ const useAxiosAuth = () => {
     "/register",
     "/services",
     "/reset-password",
+    "/reset-email",
     "/create-new-password",
     "/advantages",
     "/prices",
     "/fqa",
+    "/verification-email",
     "/policies",
     "/privacy",
   ].includes(location.pathname);

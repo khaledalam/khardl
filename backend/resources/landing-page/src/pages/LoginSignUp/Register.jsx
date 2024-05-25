@@ -4,7 +4,7 @@ import ContactUsCover from "../../assets/ContactUsCover.webp";
 import { useTranslation } from "react-i18next";
 import MainText from "../../components/MainText";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm,useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
@@ -23,11 +23,15 @@ const Register = () => {
     register,
     setError,
     formState: { errors },
+    getValues
   } = useForm();
   const [openEyePassword, setOpenEyePassword] = useState(false);
   const [openEyeRePassword, setOpenEyeRePassword] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
+  const [showVerify, setShowVerify] = useState(false);
+  const [verified, setVerified] = useState(false);
 
   function showTermsModal() {
     if (!showTerms) {
@@ -90,6 +94,61 @@ const Register = () => {
   };
   /////////////////////////////////////////////////////////////////////////////////////
   // API POST REQUEST
+  const handleVerifyOTP = async () => {
+    setSpinner(true);
+    const values = getValues();
+    if (!values.email || !values.first_name || !values.last_name) {
+      toast.error(t("Please complete the rest of the information"));
+      setSpinner(false);
+      return ;
+    }
+
+   
+    try {
+      const response = await AxiosInstance.post(`/email/send-verify`, {
+        email: values.email,
+        first_name: values.first_name,
+        last_name: values.last_name,
+      });
+      if (response.data.success) {
+        setShowOTP(true);
+        toast.success(`${t("The verification code has been sent to your email")}`);
+      } else {
+        setShowOTP(false);
+        throw new Error(`${t("Failed to send verification code")}`);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+    setSpinner(false);
+  };
+  const checkVerify = async () => {
+    setSpinner(true);
+    const values = getValues();
+    if (!values.email || !values.otp) {
+      toast.error(t("Please complete the rest of the information"));
+      setSpinner(false);
+      return ;
+    }
+
+   
+    try {
+      const response = await AxiosInstance.post(`/email/verify`, {
+        email: values.email,
+        code: values.otp
+      });
+      if (response.data.success) {
+        setVerified(true);
+        toast.success(`${t("The code has been verified successfully")}`);
+      } else {
+        setVerified(false);
+        throw new Error(`${t("Code verification failed")}`);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+    setSpinner(false);
+  };
   const onSubmit = async (data) => {
     try {
       if (err) {
@@ -109,10 +168,18 @@ const Register = () => {
         c_password: data.c_password,
         terms_and_policies: data.terms_and_policies,
         restaurant_name_ar: data.restaurant_name_ar,
+        otp: data.otp
       });
       toast.success(`${t("Account successfully created")}`);
       sessionStorage.setItem("email", data.email);
-      window.location.href = "/verification-email";
+      if (response.data?.data?.user) {
+        localStorage.setItem(
+          "user-info",
+          JSON.stringify(response.data?.data?.user),
+        );
+      }
+      setStatusCode(HTTP_NOT_ACCEPTED);
+      navigate("/complete-register");
     } catch (error) {
       setSpinner(false);
       console.log(error);
@@ -368,15 +435,65 @@ const Register = () => {
                           type="email"
                           className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                           placeholder={t("Email")}
+                         
                           {...register("email", { required: true })}
+                          onChange={(e) => {
+                            setShowVerify(true); // Show OTP input if email input is not empty
+                          }}
                         />
+                        { showVerify && (
+
+                              <a
+                              className="text-[#00000080] text-[10px] ms-2 text-success"
+                              onClick={() => handleVerifyOTP()}
+                              style={{ marginBottom: "20px" }}
+                              >
+
+
+                              {t(
+                                "Verify",
+                              )}{" "}
+
+                              </a>
+                        )
+                        
+                        }
                         {errors?.email && (
                           <span className="text-red-500 text-xs mt-1 ms-2">
                             {errors?.email[0] || t("Email Error")}
                           </span>
                         )}
                       </div>
-
+                      {showOTP && (
+                      <div className="mb-6 text-center">
+                        <label
+                          className="block  text-sm text-start font-bold text-gray-700"
+                          htmlFor="otp"
+                        >
+                      
+                        </label>
+                        <input
+                          type="text"
+                          className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                          placeholder={t("OTP")}
+                          {...register("otp", { required: true })}
+                        />
+                        {errors.otp && (
+                          <span className="text-red-500 text-xs ">
+                            {t("OTP Error")}
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          className="submit-btn hover:bg-[#d6eb16] w-fit font-bold bg-[var(--primary)] rounded-full transition-all delay-100 py-2 px-6 text-[15px] "
+                          onClick={checkVerify}
+                        >
+                          { verified ?  t("The code has been verified successfully"): t("Verify Email")}
+                      
+                         
+                        </button>
+                      </div>
+                    )}
                       {/* Phone Input */}
                       <div>
                         <h4 className="mb-2 ms-2 text-[13px] font-semibold">

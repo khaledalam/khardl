@@ -9,12 +9,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
 class SendVerifyEmailJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable;
 
     public $user;
 
@@ -23,7 +22,9 @@ class SendVerifyEmailJob implements ShouldQueue
      */
     public function __construct(User $user)
     {
+   
         $this->user = $user;
+  
     }
 
     /**
@@ -31,7 +32,9 @@ class SendVerifyEmailJob implements ShouldQueue
      */
     public function handle(): void
     {
+  
         try {
+    
             // Send the email with the verification code
             Mail::send('emails.verify', ['code' => $this->user?->verification_code, 'name' => "{$this?->user?->first_name} {$this?->user?->last_name}"], function ($message) {
                 $message->to($this?->user?->email);
@@ -53,7 +56,7 @@ class SendVerifyEmailJob implements ShouldQueue
             });
 
         } catch (\Exception $e) {
-
+            logger($e->getMessage());
             $action = [
                 'en' => '[fail] Sent verify restaurant user email',
                 'ar' => '[فشل] ارسال بريد للتحقق من مستخدم المطعم',

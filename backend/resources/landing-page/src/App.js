@@ -20,6 +20,7 @@ import Prices from "./pages/Prices/prices";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import ForgotPassword from "./pages/LoginSignUp/ForgotPassword";
+import ForgotEmail from "./pages/LoginSignUp/ForgotEmail";
 import CreateNewPassword from "./pages/LoginSignUp/CreateNewPassword";
 import Protected from "./Protected";
 
@@ -109,6 +110,7 @@ const App = () => {
             />{" "}
             <Route path="/logout" element={<Logout />} />{" "}
             <Route path="/reset-password" element={<ForgotPassword />} />{" "}
+            <Route path="/reset-email" element={<ForgotEmail />} />{" "}
             <Route
               path="/create-new-password"
               element={<Protected Cmp={CreateNewPassword} />}
@@ -119,6 +121,10 @@ const App = () => {
             <Route path="/services" element={<Services />} />{" "}
             <Route path="/prices" element={<Prices />} />{" "}
             <Route path="/fqa" element={<FQA />} />
+            <Route
+                path="/verification-email"
+                element={<VerificationEmail />}
+              />{" "}
             <Route element={<Layout />}>
               <Route path="/login" element={<Login />} />{" "}
               <Route path="/register" element={<Register />} />{" "}
@@ -129,10 +135,7 @@ const App = () => {
                 path="/complete-register"
                 element={<CompleteRegistration />}
               />{" "}
-              <Route
-                path="/verification-email"
-                element={<VerificationEmail />}
-              />{" "}
+             
             </Route>{" "}
           </Routes>{" "}
         </div>{" "}
