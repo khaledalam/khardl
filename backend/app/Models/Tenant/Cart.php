@@ -38,6 +38,7 @@ class Cart extends Model
 
     public function canPayWithLoyaltyPoints(): bool
     {
+        if(is_null($this->branch)) return false;
         if(!$this->branch->loyalty_availability) return false;
         if ($this->items()->count() < 1) {
             return false;
