@@ -252,7 +252,8 @@ return [
         'description.en' => "الوصف بالانجليزية",
         "yesterday"=>"الامس",
         "identity_of_owner_or_manager"=> "هويه المالك او المدير",
-        "commercial_registration_number"=> "رقم التسجيل التجاري"
+        "commercial_registration_number"=> "رقم التسجيل التجاري",
+        "emailOrPhone"=>"البريد الالكتروني او رقم الهاتف"
 
     ],
     'values' => [

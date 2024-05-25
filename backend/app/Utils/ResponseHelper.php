@@ -19,6 +19,7 @@ class ResponseHelper {
     const HTTP_VERIFIED             = 203;
     const HTTP_NOT_VERIFIED         = 211;
     const HTTP_ACCEPTED             = 205;
+    const HTTP_LOCKED               = 423;           
     // not approve restaurant owner trade documents
     const HTTP_NOT_ACCEPTED         = 206;
     const HTTP_BLOCKED              = 207;

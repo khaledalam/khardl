@@ -35,6 +35,7 @@ class RestaurantOwnerRegisterRequest extends FormRequest
             'c_password' => 'required|same:password',
             'phone' => 'required|regex:/^(966)?\d{9}$/|unique:users',
             'terms_and_policies' => 'accepted',
+            'otp'=>"required|string",
             'restaurant_name' => ['required','string','min:3','max:255',new UniqueSubdomain()],
             'restaurant_name_ar' => [
                 'required',

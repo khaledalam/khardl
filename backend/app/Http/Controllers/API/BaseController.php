@@ -20,7 +20,7 @@ class BaseController extends Controller
         return response()->json($response);
     }
 
-    public function sendError($error, $errorMessages = [], $code = ResponseHelper::HTTP_FORBIDDEN)
+    public function  sendError($error, $errorMessages = [], $code = ResponseHelper::HTTP_FORBIDDEN)
     {
         $response = [
             'success' => false,
