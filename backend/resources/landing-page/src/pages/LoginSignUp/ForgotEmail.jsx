@@ -9,19 +9,24 @@ import AxiosInstance from "../../axios/axios";
 import { CgSpinner } from "react-icons/cg";
 import MainText from "../../components/MainText";
 import { AiOutlineTeam, AiOutlineVerticalAlignMiddle } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
-const ForgotPassword = () => {
+const ForgotEmail = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [openEyeLoginCode, setOpenEyeLoginCode] = useState(false);
-  const EyeLoginCode = () => {
-    setOpenEyeLoginCode(!openEyeLoginCode);
-  };
+  const [token, setToken] = useState(null);
+ 
+  const Language = useSelector((state) => state.languageMode.languageMode);
+
+  const [showOTP, setShowOTP] = useState(false); 
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    resetField,
   } = useForm();
 
   // **API POST REQUEST**
@@ -31,21 +36,35 @@ const ForgotPassword = () => {
 
     try {
       const response = await AxiosInstance.post(`/password/forgot`, {
-        email: data.email,
-        login_code: data.login_code,
+        emailOrPhone: data.email,
+        otp: data.otp ?? null,
+        token : token,
+   
       });
       if (response.data.success) {
-        sessionStorage.setItem("email", data.email);
+       
 
         toast.success(
           `${t("The verification code has been sent to your email")}`,
         );
-        navigate("/create-new-password");
+        sessionStorage.setItem("email", data.email);
+        navigate('/')
       } else {
         throw new Error(`${t("Failed to send verification code")}`);
       }
     } catch (error) {
-      toast.error(`${t("Failed to send verification code")}`);
+      if (error.response && error.response.status === 423) {
+        sessionStorage.setItem("email", data.email);
+        toast.success(
+          `${t("If phone number is registered with us, an OTP SMS will be sent")}`,
+        );
+        setShowOTP(true); 
+        setToken(error.response?.data?.data?.id);
+        resetField("email"); 
+      } else {
+        toast.error(error.response?.data?.message);
+
+      }
     }
     setLoading(false);
   };
@@ -65,27 +84,52 @@ const ForgotPassword = () => {
             <div className="max-[860px]:w-[80vw] w-[450px] bg-white py-10 max-[860px]:px-2 shadow-lg rounded-2xl shadow-[#C0D123]">
               <div className="px-8 mb-6 flex flex-col items-center text-center">
                 <MainText
-                  Title={t("Forgot your password?")}
+                  Title={t("Forgot your email?")}
                   classTitle="!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px] new-form-ui"
                 />
 
-                <p className="text-sm text-gray-700 mt-5">{t("Reset Text")}</p>
+                <p className="text-sm text-gray-700 mt-5">{t("Don't worry, just enter your phone number below and re-enter your new email!")}</p>
               </div>
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="px-8 pt-2 pb-2 bg-white rounded new-form-ui"
               >
+                  {showOTP && (
+                  <div className="mb-6 text-center">
+                    <label
+                      className="block mb-4 text-sm text-start font-bold text-gray-700"
+                      htmlFor="otp"
+                    >
+                      {t("Enter your SMS OTP code")}
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                      placeholder={t("Enter your SMS OTP code")}
+                      {...register("otp", { required: true })}
+                    />
+                    {errors.otp && (
+                      <span className="text-red-500 text-xs mt-1 ms-2">
+                        {t("Maybe phone number is not registered or OTP code is wrong")}
+                      </span>
+                    )}
+                  </div>
+                )}
                 <div className="mb-6 text-center">
                   <label
                     className="block mb-4 text-sm text-start font-bold text-gray-700"
                     htmlFor="email"
                   >
-                    {t("Email")}
+                    
+                   {showOTP
+                      ? t("Enter your new email address")
+                      : t("Enter your Phone number")}
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                    placeholder={t("Email")}
+                    
                     {...register("email", { required: true })}
                   />
                   {errors.email && (
@@ -94,42 +138,9 @@ const ForgotPassword = () => {
                     </span>
                   )}
                 </div>
-
-                <div className={"flex justify-start items-center gap-3"}>
-                  <div
-                    className={"justify-start items-center gap-3"}
-                    style={{ display: openEyeLoginCode ? "flex" : "none" }}
-                  >
-                    <h4 className="ms-2 text-[13px] text-gray-500">
-                      {t("Login Code")}
-                    </h4>
-                    <input
-                      type="text"
-                      className={`p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                      placeholder={"12345"}
-                      {...register("login_code", { required: false })}
-                      style={{
-                        marginBottom: "10px",
-                      }}
-                    />
-                    {errors.login_code && (
-                      <span className="text-red-500 text-xs mt-1 ms-2">
-                        {t("Login Code Error")}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                {openEyeLoginCode === false ? (
-                  <AiOutlineTeam
-                    onClick={EyeLoginCode}
-                    className="text-[var(--primary)] cursor-pointer"
-                  />
-                ) : (
-                  <AiOutlineVerticalAlignMiddle
-                    onClick={EyeLoginCode}
-                    className="text-[var(--primary)] cursor-pointer"
-                  />
-                )}
+               
+             
+             
                 <div className="text-center">
                   <button
                     disabled={loading}
@@ -164,7 +175,10 @@ const ForgotPassword = () => {
                           </div>
                         </div>
                       )}{" "}
-                      {t("Send verification code")}
+                       {showOTP
+                      ? t("Reset your account")
+                      : t("Send verification code")}
+                 
                     </span>
                   </button>
                 </div>
@@ -177,4 +191,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ForgotEmail;

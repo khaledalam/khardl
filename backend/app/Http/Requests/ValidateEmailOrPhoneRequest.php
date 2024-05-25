@@ -22,14 +22,19 @@ class ValidateEmailOrPhoneRequest extends FormRequest
      */
     public function rules(): array
     {
-        // dd($this->all());
+    
         if (filter_var($this->emailOrPhone, FILTER_VALIDATE_EMAIL)) {
+            if($this->otp && $this->token){
+                return  [
+                    'emailOrPhone' => 'required|email|unique:users,email|min:10|max:255', 
+                ];
+            }
             return  [
                 'emailOrPhone' => 'required|email|exists:users,email|min:10|max:255',
             ];
         } else {
             return  [
-                'emailOrPhone' => 'required|exists:users,phone|regex:/^(966)?\d{9}$/',
+                'emailOrPhone' => 'required|regex:/^(966)?\d{9}$/',
             ];
         }
        

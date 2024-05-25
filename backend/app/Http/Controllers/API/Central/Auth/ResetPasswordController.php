@@ -5,16 +5,18 @@ namespace App\Http\Controllers\API\Central\Auth;
 use App\Models\User;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
+use App\Utils\ResponseHelper;
 use Illuminate\Support\Carbon;
+use App\Jobs\SendVerifyEmailJob;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseController;
 use App\Http\Requests\ValidateEmailOrPhoneRequest;
-use App\Utils\ResponseHelper;
 
 class ResetPasswordController extends BaseController
 {
@@ -43,6 +45,28 @@ class ResetPasswordController extends BaseController
             });
         }
         if (filter_var($request->emailOrPhone, FILTER_VALIDATE_EMAIL)) {
+            if($request->otp && $request->token){
+                if($db = DB::table('password_reset_tokens')->where('token', $request->token)->first()){
+                    if($user = User::where('phone',$db->email)->first()){
+                        if($user->checkVerificationSMSCode($request->otp,$request->token)){
+                            $user->email = $request->emailOrPhone;
+                            $user->email_verified_at = null;
+                            $user->generateVerificationCode();
+                            SendVerifyEmailJob::dispatch($user);
+                            $user->save();
+                            Auth::login($user,true);
+                            $data = [
+                                'user'=>$user
+                            ] ;
+                            DB::table('password_reset_tokens')->where('token', $request->token)->delete();
+                            return $this->sendResponse($data, __('User logged in successfully.'));
+                        }
+                    }
+                }
+                return $this->sendError(__('Wrong credentials'));
+
+
+            }
             return  $this->resetPasswordEmail($request);
         }else {
             return  $this->resetPasswordPhone($request);
@@ -60,7 +84,7 @@ class ResetPasswordController extends BaseController
             ->whereDate('created_at', $today)->first();
 
         if ($tokens && $tokens->attempts >=3) {
-            return $this->sendError('Fail', __('Too many failed attempts. Request a new reset code.'));
+            return $this->sendError( __('Too many failed attempts. Request a new reset code.'));
         }
 
         $token = rand(100000, 999999);
@@ -99,19 +123,21 @@ class ResetPasswordController extends BaseController
 
         $user = User::where(['phone' => $request->emailOrPhone])->first();
         if(!$user){
-            return $this->sendError(__('Phone number is not exist'));
+            return $this->sendError(__('If phone number is registered with us, an OTP SMS will be sent'),[
+                'id'=> 99999
+            ],ResponseHelper::HTTP_LOCKED);
         }
         $tokens = DB::table('password_reset_tokens')
             ->where('email', $request->emailOrPhone)
             ->whereDate('created_at', $today)->first();
 
         if ($tokens && $tokens->attempts >=3) {
-            return $this->sendError('Fail', __('Too many failed attempts. Request a new reset code.'));
+            return $this->sendError(__('Too many failed attempts. Request a new reset code.'));
         }
 
         $token = $user->generateVerificationSMSCode();
         if(!$token){
-            return $this->sendError('Fail', __('Request failed .'));
+            return $this->sendError( __('Request failed .'));
         }
         if(DB::table('password_reset_tokens')->where('email', $request->emailOrPhone)->whereDate('created_at', $today)->first()){
             DB::table('password_reset_tokens')->where('email', $request->emailOrPhone)->whereDate('created_at', $today)->update([
@@ -135,7 +161,9 @@ class ResetPasswordController extends BaseController
             }
         }
       
-        return $this->sendError(__('Please enter the OTP code'),[],ResponseHelper::HTTP_FORBIDDEN);
+        return $this->sendError(__('Please enter the OTP code'),[
+            'id'=> $token
+        ],ResponseHelper::HTTP_LOCKED);
     }
     public function reset(Request $request): JsonResponse
     {
@@ -180,7 +208,7 @@ class ResetPasswordController extends BaseController
         ->first();
 
         if (!$tokenData){
-            return $this->sendError('Fail', 'Invalid token.');
+            return $this->sendError(__('Invalid token.'));
         }
 
         $user = User::where('email', $tokenData->email)->first();
@@ -191,6 +219,6 @@ class ResetPasswordController extends BaseController
 
         DB::table('password_reset_tokens')->where('token', $request->token)->delete();
 
-        return $this->sendResponse(null, 'Password reset successfully.');
+        return $this->sendResponse(null, __('Password reset successfully.'));
     }
 }

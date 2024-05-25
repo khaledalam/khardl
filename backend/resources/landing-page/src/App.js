@@ -20,6 +20,7 @@ import Prices from "./pages/Prices/prices";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import ForgotPassword from "./pages/LoginSignUp/ForgotPassword";
+import ForgotEmail from "./pages/LoginSignUp/ForgotEmail";
 import CreateNewPassword from "./pages/LoginSignUp/CreateNewPassword";
 import Protected from "./Protected";
 
@@ -109,6 +110,7 @@ const App = () => {
             />{" "}
             <Route path="/logout" element={<Logout />} />{" "}
             <Route path="/reset-password" element={<ForgotPassword />} />{" "}
+            <Route path="/reset-email" element={<ForgotEmail />} />{" "}
             <Route
               path="/create-new-password"
               element={<Protected Cmp={CreateNewPassword} />}

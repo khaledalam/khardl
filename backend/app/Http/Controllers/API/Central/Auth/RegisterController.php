@@ -35,20 +35,36 @@ class RegisterController extends BaseController
     public function register(RestaurantOwnerRegisterRequest $request): JsonResponse
     {
         $input = $request->validated();
+        $emailKey = str_replace('.', '_', $input['email']);
+        $input = $request->validated();
+        $emailKey = str_replace('.', '_', $input['email']);
+        if(!$session = Session::get('register_'.$emailKey)){
+            if($session['verification_code'] != $request->otp){
+                return $this->sendError(__('OTP code is wrong'));
+            }
+        }
         $input['password'] = Hash::make($input['password']);
         $input['status'] = RestaurantUser::INACTIVE;
 
-        // $user = User::create($input);
-        // $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
-        // $success['name'] =  "$user->first_name $user->last_name";
-    
         if($promoter = PromoterIpAddress::where('ip_address',request()?->ip())){
             $promoter->update(['registered'=>true]);
         }
         $emailKey = str_replace('.', '_', $input['email']);
-        session(['register_'.$emailKey => $input]);
-        $this->sendVerificationCode($request);
-        return $this->sendResponse([], 'User register successfully.');
+
+        Session::forget('register_'.$emailKey);
+        $user = User::create($input);
+        $user->email_verified_at = now();
+        $user->status = RestaurantUser::ACTIVE;
+        $user->verification_code = $input['otp']; 
+        $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
+        $user->assignRole($role);
+        $user->save();
+        Auth::login($user,true);
+        $data = [
+            'user'=>$user
+        ];
+        $data['step2_status'] = 'incomplete';
+        return $this->sendResponse($data, 'User register successfully.');
     }
 
     public function stepTwo(CompleteStepTwoFormRequest $request)
@@ -213,19 +229,25 @@ class RegisterController extends BaseController
 
     public function sendVerificationCode(Request $request): JsonResponse
     {
-        if($request instanceof RestaurantOwnerRegisterRequest){
-            $request = $request?->validated();
-        }else {
+        $request->validate([
+            'email' => 'required|string|email|min:10|max:255|unique:users',
+        ]);
+        if(Auth::check()){
             $request = $request->all();
+            $user = Auth::user();
+          
+        }else {
+            $data = [
+                'email'=>$request->email,
+                'first_name'=>$request->first_name,
+                'last_name'=>$request->last_name
+            ];
+         
+           
+            $user = new User($data);
         }
         
-        $emailKey = str_replace('.', '_', $request['email']);
-        if(!$data  = session("register_".$emailKey)){
-            return $this->sendError(__('Email not found, please try again'), __('Email not found, please try again'));
-        }
- 
-        $user = new User($data);
-        
+
         // You might want a new table to track verification code attempts.
         // Here, I'm assuming the table's name is `email_verification_tokens`.
        
@@ -241,9 +263,12 @@ class RegisterController extends BaseController
       
         // Generate the verification code using the model's method.
         $user->generateVerificationCode();
-        $emailKey = str_replace('.', '_', $user->email);
-        session(['register_'.$emailKey => array_merge($data,[ 'verification_code'=>$user->verification_code])]);
-    
+        if(Auth::check()){
+            $user->save();
+        }else {
+            $emailKey = str_replace('.', '_', $user->email);
+            session(['register_'.$emailKey => array_merge($data,[ 'verification_code'=>$user->verification_code])]);
+        }
         // dd($user);
         SendVerifyEmailJob::dispatch($user);
         // dd($user);
@@ -269,37 +294,30 @@ class RegisterController extends BaseController
             'email' => 'required|email|max:255',
             'code' => 'required|string|min:6|max:6', // Assuming a 6-digit code
         ]);
-        
-        $emailKey = str_replace('.', '_', $request->email);
-        $data = Session::get("register_".$emailKey);
-        
-
-        if (!$data) {
-            return $this->sendError(__('Email not found, please try again'), __('Email not found, please try again'));
+        if(Auth::check()){
+            $user = Auth::user();
+        }else {
+            $emailKey = str_replace('.', '_', $request->email);
+            $data = Session::get("register_".$emailKey);
+            
+    
+            if (!$data) {
+                return $this->sendError(__('Email not found, please try again'));
+            }
+    
+            $user = new User($data);
         }
-
-        $user = new User($data);
+        
 
         // Check the verification code
         if ($user->checkVerificationCode($request->code)) {
-
-            $validationRules = (new RestaurantOwnerRegisterRequest())->rules();
-            unset($validationRules['c_password']);
-            // Validate the session data
-            $validator = Validator::make($data, $validationRules);
-
-            if ($validator->fails()) {
-                return $this->sendError( $validator->errors()->first(),  $validator->errors());
+            if(!Auth::check()){
+                return $this->sendResponse($data, 'Email verified successfully!');
             }
-            
-            $user = User::firstOrCreate([
-                'email'=>$request->email
-            ],$data);
+                     
             $user->email_verified_at = now();
             $user->status = RestaurantUser::ACTIVE;
             $user->verification_code = $request->code; // Clear the verification code
-            $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
-            $user->assignRole($role);
             $user->save();
             Auth::login($user,true);
             $data = [
@@ -312,7 +330,7 @@ class RegisterController extends BaseController
 
         // If we've reached here, the verification code is incorrect
         // Note: You may want to track the number of incorrect attempts and handle them accordingly.
-        return $this->sendError(__('The verification code is incorrect.'), __('The verification code is incorrect.'));
+        return $this->sendError(__('The verification code is incorrect.'));
     }
 
 }

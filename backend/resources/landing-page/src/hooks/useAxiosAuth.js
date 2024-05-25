@@ -14,6 +14,7 @@ const useAxiosAuth = () => {
     "/register",
     "/services",
     "/reset-password",
+    "/reset-email",
     "/create-new-password",
     "/advantages",
     "/prices",
