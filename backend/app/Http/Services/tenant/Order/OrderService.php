@@ -2,24 +2,27 @@
 
 namespace App\Http\Services\tenant\Order;
 
-use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
-use App\Http\Requests\Tenant\Customer\OrderRequest;
-use App\Http\Resources\Web\Tenant\ItemResource;
+use App\Models\User;
 use App\Models\Tenant;
-use App\Models\Tenant\Branch;
 use App\Models\Tenant\Cart;
-use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\Order;
-use App\Models\Tenant\OrderStatusLogs;
-use App\Models\Tenant\PaymentMethod;
+use Illuminate\Http\Request;
+use App\Models\Tenant\Branch;
 use App\Models\Tenant\Product;
-use App\Models\User;
-use App\Repositories\Customer\CartRepository;
-use App\Repositories\Customer\OrderRepository;
 use App\Traits\APIResponseTrait;
+use App\Models\Tenant\DeliveryType;
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
+use App\Models\Tenant\OrderStatusLogs;
+use App\Repositories\Customer\CartRepository;
+use App\Repositories\Customer\OrderRepository;
+use App\Http\Resources\Web\Tenant\ItemResource;
+use App\Http\Requests\Tenant\Customer\OrderRequest;
+use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
+use App\Http\Resources\API\Tenant\Collection\Driver\OrderCollection;
+
 
 class OrderService
 {
@@ -181,5 +184,41 @@ class OrderService
     public function changeProductAvailability(Item $item)
     {
         $item->toggleAvailability();
+    }
+    public function customerOrders(Request $request)
+    {
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        $query = Order::with(['payment_method', 'items', 'branch', 'user'])
+        
+            ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
+            ->WhenDateString($request['date_string'] ?? null)
+            ->when($request->status == 'ready', function ($query) {
+                return $query
+                    ->where('deliver_by', null)
+                    ->where('driver_id', null)
+                    ->readyForDriver()
+                    ->where(function ($query) {
+                        $query->shouldLimitDrivers()->shouldAssignDriver();
+                    });
+            })
+            ->when($request->status == 'all' || !$request->status, function ($query) use ($user) {
+                return $query
+                    ->where('deliver_by', null)
+                    ->where('status','!=', Order::CANCELLED)
+                    ->where('status','!=', Order::COMPLETED)
+                    ->where(function ($query) use ($user) {
+                        $query->where('driver_id', $user->id)
+                        ->orWhere(function ($query) {
+                            $query->shouldLimitDrivers()->shouldAssignDriver();
+                        });
+                    });
+            })
+            ->recentUpdated();
+    
+        $perPage = $request['perPage'] ?? config('application.perPage', 20);
+        $orders = $query->paginate($perPage);
+        return $this->sendResponse(new OrderCollection($orders), '');
     }
 }

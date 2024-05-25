@@ -14,6 +14,7 @@ use App\Models\Tenant\RestaurantUser;
 use App\Http\Requests\Tenant\OTPRequest;
 use App\Repositories\Customer\CartRepository;
 use App\Repositories\Customer\OrderRepository;
+use App\Http\Services\tenant\Order\OrderService;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
 use App\Http\Requests\UpdateCustomerInfoAppRequest;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
@@ -153,6 +154,10 @@ class OrderController
         }
         return redirect()->route("payment.failed");
 
+    }
+    public function customerOrders(OrderService $orderService,Request $request)
+    {
+        return $orderService->customerOrders($request);
     }
 
 
