@@ -30,7 +30,6 @@ const restuarantEditorSlice = createSlice({
     category_alignment: "center",
     category_shape: "rounded",
     category_hover_color: "#F2FF00",
-
     categoryDetail_type: "stack",
     categoryDetail_alignment: "center",
     categoryDetail_shape: "rounded",
@@ -159,6 +158,7 @@ const restuarantEditorSlice = createSlice({
     menu_category_color: "#000000",
     menu_category_position: "center",
     menu_category_radius: 20,
+    menu_category_item_layout: "center",
 
     page_color: "#eee",
     category_background_color: "#4466ff",
@@ -437,6 +437,9 @@ const restuarantEditorSlice = createSlice({
     MenuCategoryRadius: (state, action) => {
       state.menu_category_radius = action.payload;
     },
+    MenuCategoryItemLayout: (state, action) => {
+      state.menu_category_item_layout = action.payload;
+    },
     MenuSectionBackgroundColor: (state, action) => {
       state.menu_section_background_color = action.payload;
     },
@@ -654,6 +657,7 @@ export const {
   MenuCategoryColor,
   MenuCategoryPosition,
   MenuCategoryRadius,
+  MenuCategoryItemLayout,
   MenuSectionBackgroundColor,
   MenuSectionRadius,
   MenuCardRadius,

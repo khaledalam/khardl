@@ -8,11 +8,6 @@
     .btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon) {
         padding: calc(0.75rem + 2px) calc(1.5rem + 1px);
     }
-
-    .card {
-        cursor: pointer;
-    }
-
     .customer-app-card {
         border: 1px solid #c2da08;
     }
@@ -237,7 +232,7 @@
                                                 <!--begin::Title-->
                                                 <!--end::Title-->
                                                 <!--begin::Price-->
-                                                @if($RO_subscription->number_of_branches > 0)
+                                                @if($RO_subscription?->number_of_branches > 0)
                                                 <div class="col-md-10">
                                                     <h6 class="fw-normal">{{__('Number of branches available to add')}}</h6>
                                                 </div>

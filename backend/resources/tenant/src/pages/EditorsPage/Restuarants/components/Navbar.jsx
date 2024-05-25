@@ -132,19 +132,20 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
     inputs.banner_radius = restuarantStyle.banner_radius;
     inputs.category_background_color =
       restuarantStyle.category_background_color;
+    inputs.menu_category_item_layout =
+      restuarantStyle.menu_category_item_layout;
+    inputs.display_category_icon = restuarantStyle.display_category_icon;
     inputs.banner_image = restuarantStyle?.bannerUpload
       ? await fetch(restuarantStyle?.bannerUpload).then((r) => r.blob())
       : "";
 
     // inputs.banner_images = restuarantStyle?.banner_images;
 
-
     if (
       restuarantStyle.banner_type == "slider" &&
       Array.isArray(restuarantStyle?.banner_images) &&
       restuarantStyle?.banner_images?.length > 0
     ) {
-
       const imagePromises = restuarantStyle?.banner_images
         .filter((banner) => banner !== undefined || banner !== null)
         .map(async (image) => {
@@ -167,7 +168,6 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
         });
 
       inputs.banner_images = await Promise.all(imagePromises);
-
     } else {
       // inputs.banner_images = "";
     }
@@ -213,7 +213,6 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
 
   const [isBranchModelOpen, setIsBranchModelOpen] = useState(false);
   useEffect(() => {
-
     if (isModelOpen === true && isBranchModelOpen === true) {
       () => setIsModelOpen(false);
     }

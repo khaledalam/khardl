@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\Restaurant\OrderOnlineInvoice;
+use App\Http\Services\tenant\AdsPackage\AdsPackageService;
 use App\Models\CentralSetting;
+use App\Utils\Slack;
 use Carbon\Carbon;
 use App\Models\Tenant;
 use App\Models\Tenant\Order;
@@ -17,6 +20,7 @@ use App\Models\ROCustomerAppSub;
 use App\Models\NotificationReceipt;
 use App\Models\ROSubscriptionCoupon;
 use Illuminate\Support\Facades\Auth;
+use JoliCode\Slack\ClientFactory;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\ROSubscriptionInvoice;
 use App\Models\Tenant\RestaurantUser;
@@ -45,13 +49,10 @@ class TapController extends Controller
     {
         $user = Auth::user();
         $settings = Setting::first();
-        $orders = Order::onlineCash()
+        $orders = Order::paidOnlineCash()
         ->whenSearch($request['search']?? null)
-        ->whenStatus($request['status']?? null)
         ->WhenDateString($request['date_string']??null)
-        ->whenPaymentStatus($request['payment_status']?? null)
-        ->recent()
-        ->paginate(config('application.perPage',10));
+        ->recent();
         $ROSubscription = ROSubscription::first();
         $ROCustomerAppSubscription = ROCustomerAppSub::first();
         $ROCustomerAppSubscriptionInvoices = ROCustomerAppSubInvoice::orderBy('id','DESC')->get();
@@ -59,26 +60,39 @@ class TapController extends Controller
         if ($ROSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'csv') {
             return $this->handleDownload($request, $ROSubscriptionInvoices);
         }
+        if ($request->filled('download') && $request->input('download') == 'orders_csv'&& $orders->count()) {
+            return $this->handleDownload($request, clone $orders->get());
+        }
         if ($ROCustomerAppSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'download_app') {
             return $this->handleDownload($request, $ROCustomerAppSubscriptionInvoices);
         }
-
-        return view('restaurant.payments', compact('user','ROCustomerAppSubscription','ROSubscriptionInvoices','ROCustomerAppSubscriptionInvoices','settings','ROSubscription','orders'));
+        $orders =  $orders->paginate(config('application.perPage',10));
+        $requestedPackages = $this->getRequestedPackages();
+        return view('restaurant.payments', compact('user','ROCustomerAppSubscription','ROSubscriptionInvoices','ROCustomerAppSubscriptionInvoices','settings','ROSubscription','orders','requestedPackages'));
+    }
+    public function getRequestedPackages()
+    {
+        $adsService =  new AdsPackageService();
+        return $adsService->getRequestedPackages();
     }
     private function handleDownload($request, $model)
     {
         try {
             $todayDate = Carbon::now()->format('Y-m-d');
             $filename = "subscription_invoice_$todayDate.csv";
+            if ($model[0] instanceof Order) {
+                $filename = "order_invoice_$todayDate.csv";
+            }
             return match(true){
                 $model[0] instanceof ROSubscriptionInvoice => Excel::download(new ExportSubscriptionInvoice($model), $filename),
                 $model[0] instanceof ROCustomerAppSubInvoice => Excel::download(new ExportAppSubscriptionInvoice($model), $filename),
+                $model[0] instanceof Order => Excel::download(new OrderOnlineInvoice($model), $filename),
                 default => null
             };
 
         } catch (\Exception $e) {
-            logger($e);
-            return redirect()->route('tap.payments');
+            \Sentry\captureException($e);
+            return redirect()->route('tap.payments')->with('error',__('Could not download CSV file.'));
         }
     }
     public function payments_upload_tap_documents_get()
@@ -352,14 +366,19 @@ class TapController extends Controller
                     'lead_id' => $response['message']['id'],
                     'lead_response' => $response['message']
                 ]);
-                SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
-                    user: RestaurantUser::first(),
-                    lead_id :  $response['message']['id'],
-                );
+
+                // disable send email to TAP team about new lead id
+//                SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
+//                    user: RestaurantUser::first(),
+//                    lead_id :  $response['message']['id'],
+//                );
 
                 if ($update_tap_sheet) {
                    $this->UpdateTAPSheet($response);
                 }
+
+
+                Slack::send();
 
             });
 

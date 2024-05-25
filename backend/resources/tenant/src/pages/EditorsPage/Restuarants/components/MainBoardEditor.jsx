@@ -887,7 +887,6 @@ const MainBoardEditor = ({
                   </div>
                 ))}
               </div>
-
               <input
                 type="file"
                 name="banner"

@@ -67,12 +67,14 @@
                                 @foreach ($admins as $admin)
                                 <tr>
                                     <td class="text-muted fw-bolder">
-                                        {{ $admin->id }}
+                                        <a href="{{ route('admin.owner-information.show',['user' => $admin->id]) }}">
+                                            {{ $admin->id }}
+                                        </a>
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex justify-content-start flex-column">
-                                                <span href="#" class="text-dark fw-bolder text-hover-khardl fs-6">{{ $admin->first_name }}</span>
+                                                <a href="{{ route('admin.owner-information.show',['user' => $admin->id]) }}" class="text-dark fw-bolder text-hover-khardl fs-6">{{ $admin->first_name }}</a>
                                             </div>
                                         </div>
                                     </td>
@@ -97,7 +99,7 @@
                                         <a class="text-dark fw-bolder text-hover-khardl d-block fs-6" href="{{ route('admin.view-restaurants', ['tenant' => $admin->restaurant?->id]) }}">
                                             {{ $admin->restaurant?->restaurant_name }}
                                             <br>
-                                            @if ($admin->restaurant->is_live())
+                                            @if ($admin->restaurant?->is_live())
                                             <span class="badge badge-success">{{ __('active') }}</span>
                                             @else
                                             <span class="badge badge-warning">{{ __('inactive') }}</span>
@@ -105,21 +107,15 @@
                                         </a>
                                         @else
                                         <span class="badge badge-secondary">{{ __('Not complete step 2') }}</span>
+                                        <a href="{{ route('admin.complete-step-two.index',['user' => $admin->id]) }}" class="text-muted d-block" target="_blank">
+                                            <u>
+                                                {{ __('Complete step 2 manually') }}
+                                            </u>
+                                        </a>
                                         @endif
-
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-end flex-shrink-0">
-                                            {{-- <a href="#" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
-                    <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                    <span class="svg-icon svg-icon-3">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor" />
-                        <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor" />
-                      </svg>
-                    </span>
-                    <!--end::Svg Icon-->
-                  </a> --}}
                                             <a href="#" class="btn  btn-active-khardl btn-sm me-1 toggle-status-btn" data-user-id="{{ $admin->id }}">
                                                 <span class="svg-icon svg-icon-3">
                                                     <div class="form-check form-switch">

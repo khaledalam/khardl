@@ -75,6 +75,7 @@ import {
   privacyPolicyTextWeight,
   privacyPolicyTextSize,
   privacyPolicyTextColor,
+  MenuCategoryItemLayout,
 } from "../../../redux/NewEditor/restuarantEditorSlice";
 import {
   getCartItemsCount,
@@ -143,6 +144,7 @@ export const RestuarantEditor = () => {
     menu_category_color,
     menu_category_position,
     menu_category_radius,
+    menu_category_item_layout,
     menu_section_background_color,
     menu_section_radius,
     menu_card_radius,
@@ -199,7 +201,6 @@ export const RestuarantEditor = () => {
           branch_id ? `&selected_branch_id=${branch_id}` : ""
         }`
       );
-
 
       if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data));
@@ -342,18 +343,20 @@ export const RestuarantEditor = () => {
             (radius) => dispatch(MenuCategoryRadius(radius)),
           ],
           contentPosition: [],
-          text: ["font", "weight", "size", "color"],
+          text: ["font", "weight", "size", "color", "itemLayout"],
           textInitialValues: [
             menu_category_font,
             menu_category_weight,
             menu_category_size,
             menu_category_color,
+            menu_category_item_layout,
           ],
           textOnChange: [
             (value) => dispatch(MenuCategoryFont(value)),
             (value) => dispatch(MenuCategoryWeight(value)),
             (value) => dispatch(MenuCategorySize(value)),
             (color) => dispatch(MenuCategoryColor(color)),
+            (value) => dispatch(MenuCategoryItemLayout(value)),
           ],
           link: [],
         },
@@ -490,12 +493,8 @@ export const RestuarantEditor = () => {
           //   (value) => dispatch(footerAlignment(value)),
           // ],
           text: ["color"],
-          textInitialValues: [
-            footer_text_color,
-          ],
-          textOnChange: [
-            (color) => dispatch(footerTextColor(color)),
-          ],
+          textInitialValues: [footer_text_color],
+          textOnChange: [(color) => dispatch(footerTextColor(color))],
           link: [],
         },
         {

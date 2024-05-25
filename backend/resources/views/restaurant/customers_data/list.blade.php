@@ -9,6 +9,8 @@
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -18,28 +20,85 @@
                 <form action="">
                 @csrf
                     <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+
+
+
                         <!--begin::Card title-->
-                        <div class="card-title">
-                            <h2>{{ __('Locations') }}</h2>
-                        </div>
-                        <!--end::Card title-->
-                        <!--begin::Card toolbar-->
-                        <div class="card-toolbar flex-row-fluid justify-content-start gap-5" @if(app()->getLocale() === 'ar') style=" flex-direction: revert;" @endif>
-                            <!--begin::Search-->
-                            <div class="d-flex align-items-center position-relative my-1">
-                                <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                                <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                        <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->
-                                <input type="text" name="search_location" value="{{ request('search_location')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('City, Region, Country')}}" />
+                        <div class="card-title d-flex justify-content-between align-items-center w-100">
+                                <h2 class="mx-4">{{ __('Locations') }}</h2>
+
+
+                            <div class="card-toolbar flex-row-fluid justify-content-start gap-5" @if(app()->getLocale() === 'ar') style=" flex-direction: revert;" @endif>
+                                <!--begin::Search-->
+                                <div class="d-flex align-items-center position-relative my-1">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                    <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                    <input type="text" name="search_location" value="{{ request('search_location')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('City, Region, Country')}}" />
+                                </div>
+                                <button class="btn btn-khardl" type="submit">{{ __('Search') }}</button>
+
+                                <div class="border d-flex justify-content-center gap-2 align-items-center px-3 mx-5">
+                                    <span>{{__('Graph')}}</span>
+                                    <select class="form-select w-auto" name="location_chart_by">
+                                        <option value="city" @if( ($_GET['location_chart_by'] ?? '') == 'city') selected @endif>{{__('City')}}</option>
+                                        <option value="region" @if( ($_GET['location_chart_by'] ?? '') == 'region') selected @endif>{{__('Region')}}</option>
+                                        <option value="country" @if( ($_GET['location_chart_by'] ?? '') == 'country') selected @endif>{{__('Country')}}</option>
+                                    </select>
+                                    <button class="btn btn-primary" type="submit">{{ __('Refresh') }}</button>
+                                </div>
+
                             </div>
-                            <button class="btn btn-khardl" type="submit">{{ __('Search') }}</button>
+
+
+                            <a href="{{route('location.download',[])}}" class="btn btn-khardl">
+                                <i class="fas fa-download me-1 text-black"></i> {{ __('download-all') }}
+                            </a>
                         </div>
-                        <!--end::Card toolbar-->
+                        <!--End::Card title-->
+
+
+
+
+                        <div style="width: min(600px, 60%); margin: auto;">
+
+                            <canvas id="barChart"></canvas>
+                        </div>
+
+                        <script>
+                            var ctx = document.getElementById('barChart').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: @json($chart_data['labels']),
+                                    datasets: [{
+                                        label: "{{ucfirst(__($_GET['location_chart_by'] ?? 'City'))}}",
+                                        data: @json($chart_data['data']),
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.7)',
+                                            'rgba(54, 162, 235, 0.7)',
+                                            'rgba(255, 206, 86, 0.7)',
+                                            'rgba(75, 192, 192, 0.7)',
+                                            'rgba(153, 102, 255, 0.7)',
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                        ],
+                                        borderWidth: 1,
+                                    }]
+                                },
+                            });
+                        </script>
+
                     </div>
                 </form>
                 <!--begin::Tab content-->
@@ -68,9 +127,6 @@
                                     @foreach ($customerByLocationByLocation as $country => $countryList)
                                         @foreach ($countryList as $city => $cityList)
                                             @foreach ($cityList as $region => $ordersCount)
-                                                @if($country == 'N/A' || $city == 'N/A' || $region == 'N/A')
-                                                    @continue
-                                                @endif
                                                 <!--begin::Table row-->
                                                 <tr>
                                                     <td class="px-2">{{ __($city) }}</td>
@@ -97,6 +153,9 @@
         <!--end::Container-->
     </div>
     <!--end::Post-->
+
+
+    <hr />
 
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">

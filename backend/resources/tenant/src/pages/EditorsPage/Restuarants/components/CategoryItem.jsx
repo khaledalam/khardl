@@ -25,9 +25,8 @@ const CategoryItem = ({
   const [isHover, setIsHover] = useState(false);
   const { t } = useTranslation();
 
-  const { branches, menu_category_position } = useSelector(
-    (state) => state.restuarantEditorStyle
-  );
+  const { branches, menu_category_position, menu_category_item_layout } =
+    useSelector((state) => state.restuarantEditorStyle);
 
   if (!branches) return;
 
@@ -50,10 +49,14 @@ const CategoryItem = ({
       onClick={onClick}
       key={valuekey}
       className={`flex w-full cursor-pointer hover:scale-110 transform transition-transform duration-300 ease-in-out ${
-        isGrid ? "flex-row" : "flex-col"
-      } gap-[16px] items-center ${isSide ? "w-full" : "max-w-[60px]"}`}
+        menu_category_item_layout != "center" ? "flex-row" : "flex-col"
+      } items-center ${
+        menu_category_item_layout == "left"
+          ? "max-w-[140px] gap-[4px]"
+          : "max-w-[60px] gap-[16px]"
+      }`}
     >
-      {selectedBranch?.display_category_icon == "1" && (
+      {menu_category_item_layout != "none" && (
         <div
           style={{
             backgroundColor: isHover

@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { GoSellElements } from "@tap-payments/gosell";
+import { useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
 
-const PaymentCardGoSell = ({ callBackWithToken }) => {
+const PaymentCardGoSell = ({ callBackWithToken, setLoading }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const restaurantStyle = useSelector((state) => {
+    return state.restuarantEditorStyle;
+  });
 
   useEffect(() => {
     const initializePayment = async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         setIsLoading(false);
       } catch (err) {
-        setError("Failed to initialize payment gateway.");
         setIsLoading(false);
       }
     };
@@ -21,14 +24,14 @@ const PaymentCardGoSell = ({ callBackWithToken }) => {
 
   if (isLoading) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center">
-        <span className="loading loading-spinner text-primary"></span>
+      <div className={"m-auto w-28 mt-2"}>
+        <ClipLoader
+          color={restaurantStyle?.page_color}
+          loading={isLoading}
+          size={100}
+        />
       </div>
     );
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
   }
 
   return (

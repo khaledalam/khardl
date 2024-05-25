@@ -13,13 +13,35 @@ body {
 a {
   color: #9fb305 !important;
 }
-
+.btn-khardl i,
+.btn-active-color-khardl  svg{
+  color: #ffffff!important;
+}
+.btn-khardl{
+  color: #ffffff!important;
+  background-color: #C6DC08!important;
+}
+.btn-fire{
+  border: 1px solid #FFECD6;
+  background-color: #FFFBF7;
+  color: #3B3B3B!important;
+}
+.aside-dark .menu .menu-item .menu-link .menu-title{
+  color: #000;
+}
+.text-darken{
+  color: #3B3B3B!important;
+}
+.too-rounded{
+  border-radius: 25px;
+}
 .aside-dark .menu .menu-item .menu-link.active .menu-icon,
 .aside-dark .menu .menu-item .menu-link.active .menu-icon .svg-icon,
 .aside-dark .menu .menu-item .menu-link.active .menu-icon i,
 .menu-state-primary .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-title,
 .menu-state-primary .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-title,
-.accordion-button:not(.collapsed) {
+.aside-dark .accordion-button:not(.collapsed),
+.qr_page .accordion-button:not(.collapsed) {
   color: #c3da0b !important;
 }
 
@@ -28,13 +50,29 @@ a {
 .aside-dark .menu .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-icon i,
 .aside-dark .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon,
 .aside-dark .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon .svg-icon,
-.aside-dark .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon i {
+.aside-dark .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon i ,
+.aside-dark .menu .menu-item.show > .menu-link .menu-icon,
+.aside-dark .menu .menu-item.show > .menu-link .menu-icon i{
   color: #c3da0b !important;
 }
-
+.aside-dark .menu .menu-item.hover:not(.here) > .menu-link:not(.disabled):not(.active):not(.here),
+.aside-dark .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here){
+  transition: color 0.2s ease, background-color 0.2s ease!important;
+  background-color: #1b1b28!important;
+  color: #fff!important;
+}
+.aside-dark .menu .menu-item.hover:not(.here) > .menu-link:not(.disabled):not(.active):not(.here) .menu-title,
+.aside-dark .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-title,
+.aside-dark .menu .menu-item .menu-link.active .menu-title{
+  color: #fff!important;
+}
 .aside-dark .menu .menu-item .menu-link.active,
 .aside-dark .menu .menu-item .menu-link:hover {
   border-radius: 8px;
+}
+.aside-dark .menu .menu-item .menu-link.active{
+  background-color: #1b1b28!important;
+  color: #fff!important;
 }
 
 .nav-line-tabs .nav-item .nav-link.active,
@@ -42,15 +80,24 @@ a {
   border-color: #c3da0b !important;
 }
 
-.page-item.active .page-link {
+.page-item.active .page-link ,
+.aside-dark .menu .menu-item .menu-link.active .menu-bullet .bullet{
   background-color: #c3da0b !important;
+}
+.aside-dark .menu .menu-item .menu-link .menu-bullet .bullet{
+  color:#494b74
 }
 
 .form-check-input:checked {
   background-color: #c3da0b !important;
   border-color: #c3da0b !important;
 }
-
+.scrolltop{
+  background-color: #9fb305;
+}
+.scrolltop:hover{
+  background-color: #c3da0b;
+}
 /* Summary page */
 .filtration div {
   position: absolute;
@@ -357,3 +404,73 @@ a {
 .service-content .row .col-md-6 img{
   max-height: 200px;
 }
+/* Custom checkbox input */
+/* The switch - the box around the slider */
+.custom-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.custom-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.custom-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.custom-switch .slider:before {
+  position: absolute;
+  content: "\2714";
+  /* background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 11' width='13' height='11' fill='none'%3e%3cpath d='M11.0426 1.02893C11.3258 0.695792 11.8254 0.655283 12.1585 0.938451C12.4917 1.22162 12.5322 1.72124 12.249 2.05437L5.51985 9.97104C5.23224 10.3094 4.72261 10.3451 4.3907 10.05L0.828197 6.88335C0.50141 6.59288 0.471975 6.09249 0.762452 5.7657C1.05293 5.43891 1.55332 5.40948 1.88011 5.69995L4.83765 8.32889L11.0426 1.02893Z' fill='%23FFFFFF'/%3e%3c/svg%3e"); */
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  font-size: 18px;
+  bottom: 4px;
+  background-color: #C6DC08;
+  transition: .4s;
+  color: #ff6348;
+  padding: 0px 6px;
+}
+
+.custom-switch .slider:before{
+  background-color: #E7E8EA;
+}
+.custom-switch input:checked + .slider {
+  background-color: #fff;
+  border:1px solid #E7E8EA;
+}
+
+.custom-switch  .slider {
+  background-color: #FF6347;
+}
+
+.custom-switch input:checked + .slider:before {
+  transform: translateX(26px);
+  background-color: #C6DC08;
+  color: #fff;
+}
+
+/* Rounded sliders */
+.custom-switch  .slider.round {
+  border-radius: 34px;
+}
+
+.custom-switch  .slider.round:before {
+  border-radius: 50%;
+}
+

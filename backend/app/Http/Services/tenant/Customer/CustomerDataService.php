@@ -8,6 +8,8 @@ use App\Models\Tenant\Order;
 use App\Models\User;
 use App\Packages\TapPayment\Customer\Customer;
 use App\Traits\APIResponseTrait;
+use App\Utils\OrdersLocations;
+use App\Utils\OrdersLocationsHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
@@ -79,6 +81,7 @@ class CustomerDataService
         }
         */
 
+//        dd($request->all());
 
         /** @var RestaurantUser $user */
         $user  = Auth::user();
@@ -90,34 +93,13 @@ class CustomerDataService
         ->paginate(config('application.perPage')??20);
         $customerStatuses = RestaurantUser::STATUS;
 
-        $orders = Order::where('manual_order_first_name', '=', null)
-            ->where('status','=', Order::COMPLETED)
-            ->whenSearch($request['search_location']??null)
-            ->get()->all();
+        $customerByLocationByLocation = OrdersLocationsHelper::getCustomerOrdersByLocation($request);
 
-        $customerByLocationByLocation = [];
+        $chart_data = OrdersLocationsHelper::getVisualization($customerByLocationByLocation, $request?->location_chart_by ?? 'city');
 
-
-        foreach ($orders as $order) {
-            if (!in_array($order->country ?? 'N/A', $customerByLocationByLocation)) {
-                $customerByLocationByLocation[$order->country ?? 'N/A'] = [];
-            }
-
-            if (!in_array($order->city ?? 'N/A', $customerByLocationByLocation[$order->country ?? 'N/A'])) {
-                $customerByLocationByLocation[$order->country ?? 'N/A'][$order->city ?? 'N/A'] = [];
-            }
-
-            if (!in_array($order->region ?? 'N/A', $customerByLocationByLocation[$order->country ?? 'N/A'][$order->city ?? 'N/A'])) {
-                $customerByLocationByLocation[$order->country ?? 'N/A'][$order->city ?? 'N/A'][$order->region ?? 'N/A'] = 0;
-            }
-
-            $customerByLocationByLocation[$order->country ?? 'N/A'][$order->city ?? 'N/A'][$order->region ?? 'N/A']++;
-        }
-
-        asort($customerByLocationByLocation);
 
         return view('restaurant.customers_data.list', compact('user','allCustomers','customerStatuses',
-            'customerByLocationByLocation'));
+            'customerByLocationByLocation', 'chart_data'));
     }
     public function show(Request $request,RestaurantUser $restaurantUser)
     {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Utils\OrdersLocationsHelper;
 use Exception;
 use ZipArchive;
 use Illuminate\Http\Request;
@@ -49,6 +50,34 @@ class DownloadController extends Controller
         return redirect()->back()->with('error',__('failed to download'));
 
     }
+
+    function array_to_csv_download($data, $filename = "locations_.csv", $delimiter=";") {
+        $f = fopen('php://memory', 'w');
+
+        $rank = 1;
+        fputcsv($f, ['City', 'Region', 'Country', 'Orders Count', 'Rank'], $delimiter);
+        foreach ($data as $country => $countryList) {
+            foreach ($countryList as $city => $cityList) {
+                foreach ($cityList as $region => $ordersCount) {
+                    fputcsv($f, [$city, $region, $country, $ordersCount, $rank++], $delimiter);
+                }
+            }
+        }
+
+        fseek($f, 0);
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="'.$filename.'";');
+        fpassthru($f);
+    }
+
+    public function locationDownload(Request $request) {
+
+        $customerByLocationByLocation = OrdersLocationsHelper::getCustomerOrdersByLocation($request);
+
+        $this->array_to_csv_download($customerByLocationByLocation, "locations_" . date('Y-m-d') . ".csv");
+
+    }
+
     public function downloadPDF(PdfPrintInterface $repository){
         try{
             $pdf = PDF::loadView($repository->view(),['data'=>$repository->data()]);

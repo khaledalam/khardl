@@ -55,7 +55,7 @@ class Order extends Model
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $casts = [
-        'received_by_restaurant_at' => 'datetime'
+        'received_by_restaurant_at' => 'datetime',
     ];
     protected $appends = ['cancelable'];
     const STATUS = [
@@ -103,10 +103,10 @@ class Order extends Model
             $model->id = $ID;
         });
     }
-    public function getCreatedAtAttribute($value)
+    /* public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
-    }
+    } */
     public function getTaxAmountAttribute()
     {
         return number_format((($this->subtotal - $this->discount) * $this->vat) / 100, 2, '.', '');
@@ -164,6 +164,10 @@ class Order extends Model
     {
         return $query->where('status', self::REJECTED);
     }
+    public function scopePaid($query)
+    {
+        return $query->where('payment_status', PaymentMethod::PAID);
+    }
     public function scopeDriverOrders($query)
     {
         return $query->whereHas('delivery_type', function ($q) {
@@ -181,6 +185,13 @@ class Order extends Model
         return $query->whereHas('payment_method', function ($q) {
             return $q->where('name', PaymentMethod::ONLINE);
         });
+    }
+    public function scopePaidOnlineCash($query)
+    {
+        return $query
+        ->paid()
+        ->completed()
+        ->onlineCash();
     }
     public function scopeRecent($query)
     {

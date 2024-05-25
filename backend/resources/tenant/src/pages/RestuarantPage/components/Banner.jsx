@@ -47,7 +47,7 @@ const Banner = ({ restaurantStyle }) => {
       </div>
     </>
   ) : (
-    <div class="w-full aspect-[2/1]">
+    <div className="w-full aspect-[2/1]">
       <Skeleton className="h-full w-full" />
     </div>
   );

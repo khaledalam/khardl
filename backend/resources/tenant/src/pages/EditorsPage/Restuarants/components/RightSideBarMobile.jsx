@@ -38,6 +38,8 @@ import {
   productBackgroundColor,
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
 import EditorColorSelect from "./EditorColorSelect";
+import EditorPosition from "./EditorPosition";
+import EditorCategoryItemAlignment from "./EditorCategoryItemAlignment";
 
 export const RightSideBarMobile = ({
   activeSection,
@@ -51,7 +53,7 @@ export const RightSideBarMobile = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const restuarantEditorStyle = useSelector(
-    (state) => state.restuarantEditorStyle,
+    (state) => state.restuarantEditorStyle
   );
 
   const {
@@ -109,7 +111,7 @@ export const RightSideBarMobile = ({
                     item != "textInitialValues_2" &&
                     item != "textOnChange_2" &&
                     navItems[activeSection].subItems[activeSubitem][item]
-                      .length > 0,
+                      .length > 0
                 )
                 .map(
                   (key, index) =>
@@ -127,7 +129,7 @@ export const RightSideBarMobile = ({
                       >
                         {t(key)}
                       </div>
-                    ),
+                    )
                 )}
             </div>
           </div>
@@ -169,35 +171,35 @@ export const RightSideBarMobile = ({
                           ]?.layoutOnChange[subIndex](color);
                         }
                       : activeDesignSection === "contentPosition"
-                        ? (color) => {
-                            navItems[activeSection].subItems[
-                              activeSubitem
-                            ]?.contentPositionOnChange[subIndex](color);
-                          }
-                        : activeDesignSection === "text"
-                          ? (color) => {
-                              navItems[activeSection].subItems[
-                                activeSubitem
-                              ]?.textOnChange[subIndex](color);
-                            }
-                          : (color) => {
-                              navItems[activeSection].subItems[
-                                activeSubitem
-                              ]?.textOnChange_2[subIndex](color);
-                            }
+                      ? (color) => {
+                          navItems[activeSection].subItems[
+                            activeSubitem
+                          ]?.contentPositionOnChange[subIndex](color);
+                        }
+                      : activeDesignSection === "text"
+                      ? (color) => {
+                          navItems[activeSection].subItems[
+                            activeSubitem
+                          ]?.textOnChange[subIndex](color);
+                        }
+                      : (color) => {
+                          navItems[activeSection].subItems[
+                            activeSubitem
+                          ]?.textOnChange_2[subIndex](color);
+                        }
                   }
                   color={
                     activeDesignSection === "layout"
                       ? navItems[activeSection].subItems[activeSubitem]
                           ?.layoutInitialValues[subIndex]
                       : activeDesignSection === "contentPosition"
-                        ? navItems[activeSection].subItems[activeSubitem]
-                            ?.contentPositionInitialValues[subIndex]
-                        : activeDesignSection === "text"
-                          ? navItems[activeSection].subItems[activeSubitem]
-                              ?.textInitialValues[subIndex]
-                          : navItems[activeSection].subItems[activeSubitem]
-                              ?.textInitialValues_2[subIndex]
+                      ? navItems[activeSection].subItems[activeSubitem]
+                          ?.contentPositionInitialValues[subIndex]
+                      : activeDesignSection === "text"
+                      ? navItems[activeSection].subItems[activeSubitem]
+                          ?.textInitialValues[subIndex]
+                      : navItems[activeSection].subItems[activeSubitem]
+                          ?.textInitialValues_2[subIndex]
                   }
                 />
               ) : subItem == "positionContent" ? (
@@ -211,6 +213,19 @@ export const RightSideBarMobile = ({
                     navItems[activeSection].subItems[
                       activeSubitem
                     ]?.contentPositionOnChange[subIndex](value);
+                  }}
+                />
+              ) : subItem == "itemLayout" ? (
+                <EditorCategoryItemAlignment
+                  modalId={`${activeDesignSection}-position-modal`}
+                  defaultValue={
+                    navItems[activeSection].subItems[activeSubitem]
+                      ?.textInitialValues[subIndex]
+                  }
+                  onChange={(value) => {
+                    navItems[activeSection].subItems[
+                      activeSubitem
+                    ]?.textOnChange[subIndex](value);
                   }}
                 />
               ) : subItem == "radius" ? (
@@ -233,6 +248,54 @@ export const RightSideBarMobile = ({
                       : navItems[activeSection].subItems[activeSubitem]
                           ?.contentPositionOnChange[subIndex]
                   }
+                />
+              ) : subItem == "icon" ? (
+                <EditorSelect
+                  label={t("Icon")}
+                  defaultValue={
+                    (activeDesignSection === "layout"
+                      ? navItems[activeSection].subItems[activeSubitem]
+                          ?.layoutInitialValues[subIndex]
+                      : navItems[activeSection].subItems[activeSubitem]
+                          ?.layoutInitialValues_2[subIndex]) == 1
+                      ? "Show"
+                      : "Hide"
+                  }
+                  handleChange={(value) => {
+                    activeDesignSection === "layout"
+                      ? navItems[activeSection].subItems[
+                          activeSubitem
+                        ]?.layoutOnChange[subIndex](value)
+                      : navItems[activeSection].subItems[
+                          activeSubitem
+                        ]?.layoutOnChange_2[subIndex](value);
+                  }}
+                  options={[
+                    {
+                      value: "0",
+                      text: "Hide",
+                    },
+                    {
+                      value: "1",
+                      text: "Show",
+                    },
+                  ]}
+                />
+              ) : subItem == "type" ? (
+                <EditorSelect
+                  label={t("Type")}
+                  defaultValue={t("Stack")}
+                  handleChange={(value) => dispatch(setHeaderPosition(value))}
+                  options={[
+                    {
+                      value: "stack",
+                      text: t("Stack"),
+                    },
+                    {
+                      value: "grid",
+                      text: t("Grid"),
+                    },
+                  ]}
                 />
               ) : subItem == "font" ? (
                 <EditorSelect
@@ -267,8 +330,12 @@ export const RightSideBarMobile = ({
                       text: "Roboto",
                     },
                     {
-                      value: "Plus Jakarta Sans",
-                      text: "Jakarta",
+                      value: "Amiri",
+                      text: "Amiri",
+                    },
+                    {
+                      value: "Tajawal",
+                      text: "Tajawal",
                     },
                   ]}
                 />

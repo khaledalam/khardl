@@ -39,6 +39,7 @@ import {
   productBackgroundColor,
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
 import EditorColorSelect from "./EditorColorSelect";
+import EditorCategoryItemAlignment from "./EditorCategoryItemAlignment";
 
 export const RightSideBarDesktop = ({
   activeSection,
@@ -107,9 +108,7 @@ export const RightSideBarDesktop = ({
   };
 
   return (
-    <div
-      className="flex flex-col px-[16px] h-full"
-    >
+    <div className="flex flex-col px-[16px] h-full">
       <div className="flex flex-row">
         <h2 className="font-medium text-[14px] xl:text-[18px] leading-[18px] mt-[24px] pr-[10px]">
           {t("Designs")}
@@ -247,6 +246,20 @@ export const RightSideBarDesktop = ({
                                   ]?.contentPositionOnChange[subIndex](value);
                                 }}
                               />
+                            ) : subItem == "itemLayout" ? (
+                              <EditorCategoryItemAlignment
+                                modalId={`${item}-position-modal`}
+                                defaultValue={
+                                  navItems[activeSection].subItems[
+                                    activeSubitem
+                                  ]?.textInitialValues[subIndex]
+                                }
+                                onChange={(value) => {
+                                  navItems[activeSection].subItems[
+                                    activeSubitem
+                                  ]?.textOnChange[subIndex](value);
+                                }}
+                              />
                             ) : subItem == "radius" ? (
                               <EditorPercentageInput
                                 label={t("Border Radius")}
@@ -270,6 +283,40 @@ export const RightSideBarDesktop = ({
                                         activeSubitem
                                       ]?.contentPositionOnChange[subIndex]
                                 }
+                              />
+                            ) : subItem == "icon" ? (
+                              <EditorSelect
+                                label={t("Icon")}
+                                defaultValue={
+                                  (item === "layout"
+                                    ? navItems[activeSection].subItems[
+                                        activeSubitem
+                                      ]?.layoutInitialValues[subIndex]
+                                    : navItems[activeSection].subItems[
+                                        activeSubitem
+                                      ]?.layoutInitialValues_2[subIndex]) == 1
+                                    ? "Show"
+                                    : "Hide"
+                                }
+                                handleChange={(value) => {
+                                  item === "layout"
+                                    ? navItems[activeSection].subItems[
+                                        activeSubitem
+                                      ]?.layoutOnChange[subIndex](value)
+                                    : navItems[activeSection].subItems[
+                                        activeSubitem
+                                      ]?.layoutOnChange_2[subIndex](value);
+                                }}
+                                options={[
+                                  {
+                                    value: "0",
+                                    text: "Hide",
+                                  },
+                                  {
+                                    value: "1",
+                                    text: "Show",
+                                  },
+                                ]}
                               />
                             ) : subItem == "font" ? (
                               <EditorSelect
@@ -306,8 +353,12 @@ export const RightSideBarDesktop = ({
                                     text: "Roboto",
                                   },
                                   {
-                                    value: "Plus Jakarta Sans",
-                                    text: "Jakarta",
+                                    value: "Amiri",
+                                    text: "Amiri",
+                                  },
+                                  {
+                                    value: "Tajawal",
+                                    text: "Tajawal",
                                   },
                                 ]}
                               />

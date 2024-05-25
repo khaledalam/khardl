@@ -34,7 +34,7 @@ class OrderRequest extends FormRequest
             'shipping_address'=>'nullable',
             'order_notes'=>'nullable',
             'cart'=>'nullable',
-            'address'=>'nullable',
+            'address_id'=>['nullable','integer'],
             'manual_order_first_name' => 'nullable',
             'manual_order_last_name' => 'nullable',
         ];
@@ -62,9 +62,15 @@ class OrderRequest extends FormRequest
                     return;
                 }
             }
-            if($this->delivery_type == DeliveryType::DELIVERY && (!$this->address || !$user->addresses()?->where('id',$this->address)->count())){
-                $validator->errors()->add('address', __('Please update your location or enter customer address before place an order'));
-                return ;
+            if($this->delivery_type == DeliveryType::DELIVERY ){
+                if(!$this->address_id && (!$this->lat || !$this->lng)){
+                    $validator->errors()->add('address', __('Please update your location or enter customer address before place an order'));
+                    return ;
+                }
+                if($this->address_id && !$user->addresses()?->where('id',$this->address_id)->count()){
+                    $validator->errors()->add('address', __('Invalid address,Address is required'));
+                    return;
+                }
             }
             if(!$cart->hasItems()){
                 $validator->errors()->add('cart', __('Cart is empty'));

@@ -163,7 +163,7 @@ if (!function_exists('sendPushNotification')) {
                         ]
                     ]
                 ];
-                $data = array_merge($data, $readyData, $notificationData);
+                $data = array_merge($data, $readyData, $notificationData,$appleSound);
                 if($place == 'both' || $place == 'external'){
                     $content = [
                         'notification' => $notificationData,
@@ -346,4 +346,3 @@ if (!function_exists('addressCityRegionCountry')) {
         return [$city, $region, $country];
     }
 }
-

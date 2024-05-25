@@ -66,11 +66,13 @@ function Map({ inputStyle, isCart, user }) {
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle);
   const customerAddress = useSelector((state) => state.customerAPI.address);
   const [isAddressChanged, setIsAddressChanged] = useState(false);
+  const { price_background_color } = useSelector((state) => state.restuarantEditorStyle);
+  const [isMouseHover, setIsMouseHover] = useState(false);
   const { t } = useTranslation();
 
   const branches = restuarantStyle.branches;
   const filterBranch = branches?.filter(
-    (branch) => branch.pickup_availability === 1,
+    (branch) => branch.pickup_availability === 1
   )[0];
 
   const inputRef = useRef();
@@ -109,7 +111,7 @@ function Map({ inputStyle, isCart, user }) {
         lat: lat,
         lng: lng,
         addressValue: addressText,
-      }),
+      })
     );
     setIsAddressChanged(true);
   };
@@ -126,7 +128,7 @@ function Map({ inputStyle, isCart, user }) {
         lat: lat,
         lng: lng,
         addressValue: addressText,
-      }),
+      })
     );
   };
 
@@ -160,7 +162,7 @@ function Map({ inputStyle, isCart, user }) {
           inputValueRef={inputValueRef}
           isCart={isCart}
           saveLocation={handleSetDefaultAddress}
-          AddressChanged={isAddressChanged}
+          setAddressChanged={setIsAddressChanged}
         />
       </div>
 
@@ -193,6 +195,24 @@ function Map({ inputStyle, isCart, user }) {
           />
         </GoogleMap>
       </div>
+
+      {isCart && (isAddressChanged) && (
+        <div className="w-full mt-6">
+          <button
+            onClick={() => handleSetDefaultAddress()}
+            className="w-full h-10 flex items-center justify-center rounded-lg p-1 border border-red-900 hover:text-white hover:bg-red-900 transition-all"
+            onMouseEnter={() => setIsMouseHover(true)}
+            onMouseLeave={() => setIsMouseHover(false)}
+            style={{
+              background : isMouseHover ? price_background_color : "white",
+              color: isMouseHover ? "white": price_background_color,
+              borderColor: price_background_color
+            }}
+          >
+            {t("Deliver to this address")}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -202,13 +222,11 @@ function PlacesAutoComplete({
   inputRef,
   inputValueRef,
   isCart,
-  saveLocation,
-  AddressChanged,
+  setAddressChanged,
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const { t } = useTranslation();
-  const [isAddressChanged, setIsAddressChanged] = useState(AddressChanged);
 
   const customerAddress = useSelector((state) => state.customerAPI.address);
   const {
@@ -237,9 +255,9 @@ function PlacesAutoComplete({
         lat: lat,
         lng: lng,
         addressValue: address,
-      }),
+      })
     );
-    setIsAddressChanged(true);
+    setAddressChanged(true);
     clearSuggestions();
   };
   const handleAlert = (message) => {
@@ -262,13 +280,13 @@ function PlacesAutoComplete({
             lat: lat,
             lng: lng,
             addressValue: addressText,
-          }),
+          })
         );
-        setIsAddressChanged(true);
+        setAddressChanged(true);
       }, positionError);
     } else {
       handleAlert(
-        "Sorry, Geolocation is not supported by your browser. You can continue by typing your location on the map.",
+        "Sorry, Geolocation is not supported by your browser. You can continue by typing your location on the map."
       );
     }
   };
@@ -278,11 +296,11 @@ function PlacesAutoComplete({
       navigator.permissions.query({ name: "geolocation" }).then((res) => {
         if (res.state === "denied") {
           handleAlert(
-            "Enable location permissions for this website in your browser settings.",
+            "Enable location permissions for this website in your browser settings."
           );
         } else {
           handleAlert(
-            "Unable to access your location. You can continue by typing your location on the map.",
+            "Unable to access your location. You can continue by typing your location on the map."
           );
         }
       });
@@ -296,8 +314,8 @@ function PlacesAutoComplete({
   }, [isCart]);
 
   return (
-    <Combobox onSelect={handleSelect}>
-      <div className="flex items-center gap-4">
+    <Combobox onSelect={handleSelect} className="w-full">
+      <div className="flex flex-wrap items-center gap-4 w-full flex-row">
         <ConfirmationModal
           isOpen={modalOpen}
           message={t(modalMessage)}
@@ -312,7 +330,7 @@ function PlacesAutoComplete({
           disabled={!ready}
           className={
             isCart
-              ? "w-fit md:w-[200px] lg:w-[300px] scale-90 sm:scale-100"
+              ? "w-[250px] sm:w-[240px] md:w-[180px] lg:w-[260px]"
               : inputStyle
           }
           placeholder={t("Write custom address")}
@@ -323,16 +341,6 @@ function PlacesAutoComplete({
         >
           <MdLocationPin size={28} color="grey" />
         </div>
-        {isCart && (AddressChanged || isAddressChanged) && (
-          <div>
-            <button
-              onClick={() => saveLocation()}
-              className="w-40 h-10 flex items-center justify-center rounded-lg p-1 border border-[text-gray-900] "
-            >
-              {t("Set default address")}
-            </button>
-          </div>
-        )}
       </div>
 
       <ComboboxPopover>

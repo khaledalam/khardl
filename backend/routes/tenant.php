@@ -94,7 +94,7 @@ Route::group([
 ], static function () {
 
     Route::get('/impersonate/{token}', static function ($token) {
-        // TODO  @todo improvement make custom response to remember user 
+        // TODO  @todo improvement make custom response to remember user
        UserImpersonation::makeResponse($token);
        if(Auth::user()?->isRestaurantOwner() || Auth::user()?->hasPermissionWorker('can_access_summary'))return redirect()->route('restaurant.summary');
        return redirect()->route('restaurant.branches');
@@ -242,6 +242,10 @@ Route::group([
             Route::get('/payments', [TapController::class, 'payments'])->middleware(['permission:can_control_payment'])->name('tap.payments');
             Route::get('/download/pdf', [DownloadController::class, 'downloadPDF'])
                 ->name("download.pdf");
+
+            Route::get('/locations/download', [DownloadController::class, 'locationDownload'])
+                ->name("location.download");
+
             Route::group(['prefix' => '/branches'], function () {
                 // Route::get('/{branch}',[RestaurantController::class, 'branch'])->name('restaurant.branch');
                 Route::get('/orders/{order}', [RestaurantController::class, 'branchOrders'])->name('restaurant.branch.order');

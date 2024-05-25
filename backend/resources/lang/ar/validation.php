@@ -85,7 +85,7 @@ return [
         'numeric' => 'يجب أن تكون قيمة  :attribute مساوية أو أصغر من :max.',
         'string'  => 'يجب أن لا يتجاوز طول نّص  :attribute :max حروفٍ/حرفًا.',
     ],
-    'mimes'                => 'يجب أن يكون ملفًا من نوع : :values.',
+    'mimes'                => ' :attribute يجب أن يكون ملفًا من نوع : :values.',
     'mimetypes'            => 'يجب أن يكون ملفًا من نوع : :values.',
     'min'                  => [
         'array'   => 'يجب أن يحتوي  :attribute على الأقل على :min عُنصرًا/عناصر.',
@@ -251,6 +251,8 @@ return [
         'description.ar' => "الوصف بالعربي",
         'description.en' => "الوصف بالانجليزية",
         "yesterday"=>"الامس",
+        "identity_of_owner_or_manager"=> "هويه المالك او المدير",
+        "commercial_registration_number"=> "رقم التسجيل التجاري"
 
     ],
     'values' => [
