@@ -524,6 +524,17 @@ Route::middleware([
                 });
                 /* Customer address */
                 Route::get("/cards", [CustomerCardController::class, 'show']);
+                Route::apiResource("carts", CartController::class)->only([
+                    'index',
+                    'store',
+                    'destroy'
+                ]);
+                Route::controller(CartController::class)
+                ->name('customer.cards.')
+                ->group(function () {
+                    Route::delete("trash/carts", 'trash')->name('trash');
+                    Route::get("carts/count", 'count')->name('count');
+                });
             });
         });
 

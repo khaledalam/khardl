@@ -36,10 +36,11 @@ class CartRepository
 
     public function add(AddItemToCartRequest $request): JsonResponse
     {
-        if(!$this->hasBranch($request->branch_id)){
+        $item = Item::findOrFail($request->item_id);
+        if(!$this->hasBranch($request->branch_id) || ( $request->branch_id != $item->branch_id && $this->cart->branch_id != NULL)){
             return $this->sendError(__('Cannot add item from different branch.'));
         }
-        $item = Item::findOrFail($request->item_id);
+       
         $this->createCartItem($item, $request->all());
         return $this->data(__('The meal has been added successfully.'));
     }
