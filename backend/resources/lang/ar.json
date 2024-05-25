@@ -1529,5 +1529,7 @@
     "Add new category":"إضافة تصنيف جديد",
     "English name":"الاسم الانجليزي",
     "Arabic name":"الاسم العربي",
-    "Invalid address,Address is required":"عنوان غير صالح ، العنوان مطلوب"
+    "Invalid address,Address is required":"عنوان غير صالح ، العنوان مطلوب",
+    "Can not determine the scope of the current branch":"لا يمكن تحديد نطاق الفرع الحالي",
+    "Distance scope":"نطاق المسافة"
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\API\tenant\Customer\Address;
 
+use App\Models\Tenant\Branch;
 use App\Traits\APIResponseTrait;
 
 class AddressService
@@ -67,6 +68,15 @@ class AddressService
         ->findOrFail($address->id)
         ->delete();
         return $this->sendResponse($this->customer->refresh()->addresses()->get(), __('Deleted successfully'));
+    }
+    public function checkBranchScope($request,Branch $branch)
+    {
+        $distance = haversineDistance((float)$request->lat, (float)$request->lng, (float)$branch->lat, (float)$branch->lng);
+        $is_far = $distance > config('application.branch_max_scope', 15);
+        return $this->sendResponse([
+            'distance' => $distance,
+            'is_far' => $is_far
+        ], __('Distance scope'));
     }
     public function request_data($request)
     {

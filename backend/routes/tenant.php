@@ -390,6 +390,7 @@ Route::group([
                     Route::post('delete-address/{address}','delete');
                     Route::get('get-addresses','index');
                     Route::get('get-default','getDefault');
+                    Route::post('check-branch-scope/{branch}','checkBranchScope');
                 });
                 /* Customer address */
                 Route::delete("cards/{card_id}/delete", [CustomerCardController::class, 'delete']);
@@ -519,6 +520,7 @@ Route::middleware([
                     Route::post('delete-address/{address}','delete');
                     Route::get('get-addresses','index');
                     Route::get('get-default','getDefault');
+                    Route::post('check-branch-scope/{branch}','checkBranchScope');
                 });
                 /* Customer address */
                 Route::get("/cards", [CustomerCardController::class, 'show']);
