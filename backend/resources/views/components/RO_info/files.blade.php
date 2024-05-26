@@ -3,7 +3,11 @@
         <h2>
             {{ __('Required files')}}
             @if ($user?->traderRegistrationRequirement)
-            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('If you upload new files, old files will be removed') }}"></i>
+            <i class="fas fa-exclamation-circle ms-1 fs-7">
+                {{ __('If you upload new files, old files will be removed. If there is an existing file, this icon') }}
+                <i class="fas fa-download"></i> 
+                {{ __('will appear in front of it.') }}
+            </i>
             @endif
         </h2>
     </div>
@@ -16,7 +20,7 @@
         <!--begin::Flex Container-->
         <div class="d-flex align-items-center">
             <!--begin::Input-->
-            <input type="file" class="form-control" name="commercial_registration" accept=".pdf, .jpg, .jpeg, .png" {{ $user?->traderRegistrationRequirement ? '' : 'required' }}>
+            <input type="file" class="form-control" name="commercial_registration" accept=".pdf, .jpg, .jpeg, .png" {{ $user?->traderRegistrationRequirement ? '' : 'required' }} >
             <!--end::Input-->
 
             <!--begin::Download Link-->
