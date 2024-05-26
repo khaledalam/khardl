@@ -25,8 +25,8 @@ class UpdateROFormRequest extends FormRequest
         $user = $this->user;
         $hasFiles = $user->traderRegistrationRequirement()->exists();
         $ROInfoRules = [
-            /* 'first_name' => 'required|string|min:3|max:255',
-            'last_name' => 'required|string|min:3|max:255', */
+            'first_name' => 'required|string|min:3|max:255',
+            'last_name' => 'required|string|min:3|max:255',
             'email' => 'required|string|email|min:10|max:255|unique:users,email,' . $this->user?->id,
             'position' => 'required|string|min:3|max:255',
             'password' => 'nullable|string|min:6|max:255',
