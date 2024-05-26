@@ -9,7 +9,7 @@
         <label class="required form-label">{{ __('first-name')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="text" name="first_name" class="form-control mb-2" required placeholder="{{ __('first-name')}}" value="{{old('first_name') ?? $user->first_name}}" />
+        <input type="text" {{-- name="first_name" --}} class="form-control mb-2" disabled placeholder="{{ __('first-name')}}" value="{{ $user->first_name}}" />
         <!--end::Input-->
     </div>
     <!--end::Input group-->
@@ -18,7 +18,7 @@
         <label class="required form-label">{{ __('last-name')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="text" name="last_name" class="form-control mb-2" required placeholder="{{ __('last-name')}}" value="{{old('last_name') ?? $user->last_name}}" />
+        <input type="text" {{-- name="last_name"  --}}class="form-control mb-2" disabled placeholder="{{ __('last-name')}}" value="{{ $user->last_name}}" />
         <!--end::Input-->
     </div>
     @if(!$user?->traderregistrationrequirement||!$user->restaurant)

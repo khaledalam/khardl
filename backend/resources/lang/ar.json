@@ -1537,5 +1537,6 @@
     "Invalid address,Address is required":"عنوان غير صالح ، العنوان مطلوب",
     "Can not determine the scope of the current branch":"لا يمكن تحديد نطاق الفرع الحالي",
     "Distance scope":"نطاق المسافة",
-    "Edit restaurant data":"تعديل بيانات المطعم"
+    "Edit restaurant data":"تعديل بيانات المطعم",
+    "If you upload new files, old files will be removed":"إذا قمت بتحميل ملفات جديدة ، فسيتم إزالة الملفات القديمة"
 }
