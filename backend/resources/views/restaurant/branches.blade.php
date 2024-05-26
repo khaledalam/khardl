@@ -192,7 +192,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             <!--begin::Row-->
                             <div class="row gx-9">
                                 <!--begin::Col-->
-                             
+
                                 <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}" >
                                     {{-- @if(!$branch->deleted_at)
                                     <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}"  style="display: none;" value="{{$branch->address}}">
@@ -800,12 +800,12 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
-                           
+
                             <div class="col-md-12 fv-row" >
                                 <div id="map-autocomplete-card-new_branch" style="width: 80%;float: left;"></div>
 
                                 <label class="required fs-6 fw-bold mb-2">{{ __('location-branch') }}</label>
-                                {{-- <input id="pac-input-new_branch" class="form-control" type="text" required placeholder="{{ __('search-for-place')}}" name="address"> --}}
+{{--                                 <input id="pac-input-new_branch" class="form-control" type="hidden" placeholder="{{ __('search-for-place')}}" name="address">--}}
                                 <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
                                 <input type="hidden" id="lat-new_branch" name="lat-new_branch" />
                                 <input type="hidden" id="lng-new_branch" name="lng-new_branch" />
@@ -830,7 +830,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <!--begin::Input-->
                                 <div class="position-relative d-flex align-items-center">
                                     <!--begin::Datepicker-->
-                                    <input value="{{ old('neighborhood') }}" required name="neighborhood" class="form-control form-control-solid " type="text" />
+                                    <input value="{{ old('neighborhood') }}" name="neighborhood" class="form-control form-control-solid " type="text" />
                                     <!--end::Datepicker-->
                                 </div>
                                 <!--end::Input-->

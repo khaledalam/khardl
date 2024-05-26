@@ -511,7 +511,7 @@ Route::middleware([
                 Route::get('/', [CustomerOrderController::class, 'user']);
                 Route::post('/update', [LoginCustomerController::class, 'updateCustomerApp']);
                 Route::post('/verify/phone', [LoginCustomerController::class, 'VerifyCustomerPhone']);
-                Route::get('/orders', [CustomerDataController::class, 'orders']);
+                Route::get('/orders', [CustomerOrderController::class, 'customerOrders']);
                 /* Customer address */
                 Route::controller(CustomerAddressController::class)->group(function () {
                     Route::post('add-address','create');
@@ -524,6 +524,21 @@ Route::middleware([
                 });
                 /* Customer address */
                 Route::get("/cards", [CustomerCardController::class, 'show']);
+                Route::apiResource("carts", CartController::class)->only([
+                    'index',
+                    'store',
+                    'destroy'
+                ]);
+                Route::controller(CartController::class)
+                ->name('customer.cards.')
+                ->group(function () {
+                    Route::delete("trash/carts", 'trash')->name('trash');
+                    Route::get("carts/count", 'count')->name('count');
+                });
+
+                Route::resource("orders", CustomerOrderController::class)->only([
+                    'store',
+                ]);
             });
         });
 

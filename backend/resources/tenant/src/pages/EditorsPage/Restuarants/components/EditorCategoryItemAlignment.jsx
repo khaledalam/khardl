@@ -15,7 +15,7 @@ const EditorCategoryItemAlignment = ({ defaultValue, onChange, modalId }) => {
       icon: (
         <div className="flex flex-row justify-between items-center gap-2">
           <div className="w-3 h-3 border-2 border-gray-900 rounded-full"></div>
-          text
+          {t('text')}
         </div>
       ),
     },
@@ -24,13 +24,13 @@ const EditorCategoryItemAlignment = ({ defaultValue, onChange, modalId }) => {
       icon: (
         <div className="flex flex-col justify-between items-center gap-1">
           <div className="w-3 h-3 border-2 border-gray-900 rounded-full"></div>
-          text
+          {t('text')}
         </div>
       ),
     },
     {
       position: "none",
-      icon: <div>text</div>,
+      icon: <div>{t('text')}</div>,
     },
   ];
 

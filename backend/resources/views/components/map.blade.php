@@ -45,11 +45,12 @@
             markers[branchId] = marker; // Store the marker for this branch
             maps[branchId] = map; // Store the map for this branch
 
-            // map.addListener( 'bounds_changed', function (event) {
-            //     console.log('bounds_changed');
+            map.addListener( 'bounds_changed', function (event) {
+                console.log('bounds_changed', event);
+
                 // marker.position  = event.latLng;
                 // updateLocationInput(marker.position, branchId);
-            // });
+            });
 
             // Add a click event listener to the map
             map.addListener( 'click', function (event) {
@@ -116,8 +117,9 @@
                     if (latElement && lngElement) {
                         const lat = parseFloat(latElement.value);
                         const lng = parseFloat(lngElement.value);
-                        // console.log('Latitude:', lat);
-                        // console.log('Longitude:', lng);
+                        console.log('Latitude:', lat);
+                        console.log('Longitude:', lng);
+                        console.log('branchIdElement:', branchIdElement);
                         initializeMapOnClick(branchIdElement, lat, lng);
                         document.getElementById('save-location' + branchIdElement).style.display = 'block';
                         // document.getElementById('pac-input' + branchIdElement).style.display = 'block';
@@ -166,6 +168,11 @@
                 locationInput.value = addressFromLatLng;
             }
 
+            // const addressInput = document.getElementById('pac-input' + branchId);
+            // if (addressInput) {
+            //     locationInput.value = addressFromLatLng;
+            // }
+
 
         }
         $('#add-new-branch').one('click', function(event){
@@ -178,6 +185,7 @@
                 document.getElementById('lat-new_branch').value = centerCoords.lat;
                 document.getElementById('lng-new_branch').value = centerCoords.lat;
                 // document.getElementById('pac-input-new_branch').value = centerCoords.address;
+            console.log("centerCoords: ", centerCoords)
                 initializeMapOnClick('-new_branch', centerCoords?.lat, centerCoords?.lng);
 
                 //    new_branch.addListener( 'click', function (event) {

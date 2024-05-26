@@ -2,51 +2,69 @@
 
 namespace App\Http\Controllers\API\Central\Auth;
 
-use App\Enums\Admin\LogTypes;
-use App\Http\Requests\Central\CompleteStepTwo\CompleteStepTwoFormRequest;
-use App\Jobs\SendVerifyEmailJob;
 use App\Models\Log;
-use App\Models\Tenant;
-use App\Models\Tenant\RestaurantUser;
 use App\Models\User;
+use App\Models\Tenant;
 use App\Models\Promoter;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use App\Enums\Admin\LogTypes;
 use App\Rules\UniqueSubdomain;
 use Illuminate\Support\Carbon;
 use App\Jobs\CreateTenantAdmin;
+use App\Jobs\SendVerifyEmailJob;
 use App\Models\PromoterIpAddress;
 use App\Models\TraderRequirement;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Actions\CreateTenantAction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Tenant\RestaurantUser;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseController;
 use App\Http\Requests\RestaurantOwnerRegisterRequest;
-use Spatie\Permission\Models\Role;
+use App\Http\Requests\Central\CompleteStepTwo\CompleteStepTwoFormRequest;
 
 class RegisterController extends BaseController
 {
     public function register(RestaurantOwnerRegisterRequest $request): JsonResponse
     {
         $input = $request->validated();
+        $emailKey = str_replace('.', '_', $input['email']);
+        $input = $request->validated();
+        $emailKey = str_replace('.', '_', $input['email']);
+        if(!$session = Session::get('register_'.$emailKey)){
+            if($session['verification_code'] != $request->otp){
+                return $this->sendError(__('OTP code is wrong'));
+            }
+        }
         $input['password'] = Hash::make($input['password']);
         $input['status'] = RestaurantUser::INACTIVE;
-        $user = User::create($input);
-        $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
-        $success['name'] =  "$user->first_name $user->last_name";
-        $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
-        $user->assignRole($role);
-        Auth::login($user,true);
+
         if($promoter = PromoterIpAddress::where('ip_address',request()?->ip())){
             $promoter->update(['registered'=>true]);
         }
-        $this->sendVerificationCode($request);
-        return $this->sendResponse($success, 'User register successfully.');
+        $emailKey = str_replace('.', '_', $input['email']);
+
+        Session::forget('register_'.$emailKey);
+        $user = User::create($input);
+        $user->email_verified_at = now();
+        $user->status = RestaurantUser::ACTIVE;
+        $user->verification_code = $input['otp']; 
+        $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
+        $user->assignRole($role);
+        $user->save();
+        Auth::login($user,true);
+        $data = [
+            'user'=>$user
+        ];
+        $data['step2_status'] = 'incomplete';
+        return $this->sendResponse($data, 'User register successfully.');
     }
 
     public function stepTwo(CompleteStepTwoFormRequest $request)
@@ -211,25 +229,49 @@ class RegisterController extends BaseController
 
     public function sendVerificationCode(Request $request): JsonResponse
     {
-        $today = Carbon::today();
-        $user = Auth::user();
+        $request->validate([
+            'email' => 'required|string|email|min:10|max:255|unique:users',
+        ]);
+        if(Auth::check()){
+            $request = $request->all();
+            $user = Auth::user();
+          
+        }else {
+            $data = [
+                'email'=>$request->email,
+                'first_name'=>$request->first_name,
+                'last_name'=>$request->last_name
+            ];
+         
+           
+            $user = new User($data);
+        }
+        
+
         // You might want a new table to track verification code attempts.
         // Here, I'm assuming the table's name is `email_verification_tokens`.
+       
         $attempts = DB::table('email_verification_tokens')
             ->where([
                 ['email', '=', $user?->email],
                 ['created_at', '>=', Carbon::now()->subMinutes(15)]
             ])->get()->all();
-
+       
         if (count($attempts) >= 3) {
-            return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
+            return $this->sendError(__('Too many attempts. Request a new verification code after 15 minutes from now.'), __('Too many attempts. Request a new verification code after 15 minutes from now.'));
         }
-
+      
         // Generate the verification code using the model's method.
         $user->generateVerificationCode();
-
+        if(Auth::check()){
+            $user->save();
+        }else {
+            $emailKey = str_replace('.', '_', $user->email);
+            session(['register_'.$emailKey => array_merge($data,[ 'verification_code'=>$user->verification_code])]);
+        }
+        // dd($user);
         SendVerifyEmailJob::dispatch($user);
-
+        // dd($user);
         return $this->sendResponse(null, 'Verification code sent to email.');
     }
 
@@ -249,30 +291,46 @@ class RegisterController extends BaseController
     {
 
         $request->validate([
-            // 'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255',
             'code' => 'required|string|min:6|max:6', // Assuming a 6-digit code
         ]);
-        $user =Auth::user();
-
-        // If the user has already verified their email
-        // if ($user->email_verified_at !== null) {
-
-        //     return $this->sendError('Fail', 'Email is already verified.');
-        // }
+        if(Auth::check()){
+            $user = Auth::user();
+        }else {
+            $emailKey = str_replace('.', '_', $request->email);
+            $data = Session::get("register_".$emailKey);
+            
+    
+            if (!$data) {
+                return $this->sendError(__('Email not found, please try again'));
+            }
+    
+            $user = new User($data);
+        }
+        
 
         // Check the verification code
         if ($user->checkVerificationCode($request->code)) {
+            if(!Auth::check()){
+                return $this->sendResponse($data, 'Email verified successfully!');
+            }
+                     
             $user->email_verified_at = now();
             $user->status = RestaurantUser::ACTIVE;
             $user->verification_code = $request->code; // Clear the verification code
             $user->save();
-
-            return $this->sendResponse(null, 'Email verified successfully!');
+            Auth::login($user,true);
+            $data = [
+                'user'=>$user
+            ];
+            $data['step2_status'] = 'incomplete';
+            
+            return $this->sendResponse($data, 'Email verified successfully!');
         }
 
         // If we've reached here, the verification code is incorrect
         // Note: You may want to track the number of incorrect attempts and handle them accordingly.
-        return $this->sendError('Fail', __('The verification code is incorrect.'));
+        return $this->sendError(__('The verification code is incorrect.'));
     }
 
 }

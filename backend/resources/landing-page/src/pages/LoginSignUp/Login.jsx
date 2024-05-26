@@ -243,6 +243,11 @@ const Login = () => {
                           {t("Forgot your password?")}
                         </label>
                       </Link>
+                      <Link to="/reset-email">
+                        <label className="text-[14px] text-[var(--primary)] cursor-pointer">
+                          {t("Forgot your email?")}
+                        </label>
+                      </Link>
                       {openEyeLoginCode === false ? (
                         <AiOutlineTeam
                           onClick={EyeLoginCode}
