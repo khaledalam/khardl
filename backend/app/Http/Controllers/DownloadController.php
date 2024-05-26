@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TraderRequirement;
 use App\Utils\OrdersLocationsHelper;
 use Exception;
 use ZipArchive;
@@ -15,7 +16,6 @@ class DownloadController extends Controller
 {
     public function download($path,Request $request){
         try{
-
             if (Storage::disk('private')->exists($path)) {
                 $storage_path = storage_path("app/private/$path");
                 if (File::isFile($storage_path)) {
@@ -35,9 +35,22 @@ class DownloadController extends Controller
                     }
                     $zip_path = $storage_path.'/'.$zipFileName;
                     if ($zip->open($zip_path, ZipArchive::CREATE) === TRUE) {
-                        $filesToZip = Storage::disk('private')->allFiles($path);
-                        foreach ($filesToZip as $file) {
-                            $zip->addFile(storage_path("app/private/$file"), basename($file));
+                        $user_id = explode('/',$path)[1];
+                        $tradeFiles = TraderRequirement::where('user_id',$user_id)->first();
+                        $fieldsToCheck = [
+                            'commercial_registration',
+                            'tax_registration_certificate',
+                            'bank_certificate',
+                            'identity_of_owner_or_manager',
+                            'national_address'
+                        ];
+                        foreach ($fieldsToCheck as $field) {
+                            if (!empty($tradeFiles->$field)) {
+                                $filePath = storage_path("app/private/{$tradeFiles->$field}");
+                                if (file_exists($filePath)) {
+                                    $zip->addFile($filePath, basename($filePath));
+                                }
+                            }
                         }
                         $zip->close();
                         return response()->download($zip_path)->deleteFileAfterSend(true);

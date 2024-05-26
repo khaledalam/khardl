@@ -223,7 +223,7 @@ return [
         "commercial registration number"=>"رقم التسجيل التجاري",
         'commercial_registration' => "التسجيل التجاري",
         'tax_registration_certificate' => 'شهادة التسجيل الضريبي',
-        'bank_certificate' => 'شهادةالبنك',
+        'bank_certificate' => 'شهادة البنك',
         'Identity_of_owner_or_manager' =>"هويةالمالك او المدير",
         'national_address' => 'العنوان الوطني',
         'IBAN' => 'إيبان',

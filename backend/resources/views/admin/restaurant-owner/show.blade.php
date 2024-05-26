@@ -26,12 +26,21 @@
                                         <div class="card-title">
                                             <h2>{{ __('Update restaurant owner profile')}}</h2>
                                         </div>
+                                        @if ($user->restaurant?->id)
+                                        <a href="{{ route('admin.view-restaurants',['tenant' => $user->restaurant?->id]) }}">
+                                            <button type="button" class="btn btn-khardl btn-sm">
+                                                <i class="fa fa-arrow-left"></i>
+                                                {{ __('Back to list') }}
+                                            </button>
+                                        </a>
+                                        @else
                                         <a href="{{ route('admin.restaurant-owner-management') }}">
                                             <button type="button" class="btn btn-khardl btn-sm">
                                                 <i class="fa fa-arrow-left"></i>
                                                 {{ __('Back to list') }}
                                             </button>
                                         </a>
+                                        @endif
                                     </div>
                                     <!--end::Card header-->
                                     @include('components.RO_info.index')
