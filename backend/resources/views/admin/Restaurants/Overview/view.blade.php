@@ -232,9 +232,13 @@
                 <!--begin::Card header-->
                 <div class="card-header cursor-pointer">
                     <!--begin::Card title-->
-                    <div class="card-title m-0">
+                    <div class="card-title m-0 ">
                         <h3 class="fw-bolder m-0">{{ __('restaurant-details') }}</h3>
                     </div>
+                    <a href="{{ route('admin.owner-information.show', ['user' => $restaurant->user_id]) }}" class="btn btn-khardl" style="height: 41px;margin-top: 15px;">
+                        <i class="fa fa-edit"></i>
+                        {{ __('Edit restaurant data') }}
+                    </a>
                     <!--end::Card title-->
                 </div>
                 <!--begin::Card header-->

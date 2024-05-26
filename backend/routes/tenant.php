@@ -503,7 +503,7 @@ Route::middleware([
         Route::prefix('customer')->group(function () {
             Route::post('/login', [LoginCustomerController::class, 'loginCustomerOnly'])->middleware('throttle:login-customer');
             Route::post('/register', [LoginCustomerController::class, 'registerCustomerOnly']);
-            Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp'])->name('restaurant.restaurant.style.app');
+            Route::get('/restaurant-style-app', [RestaurantStyleController::class, 'fetchToApp']);
             Route::post('/send/sms', [LoginCustomerController::class, 'sendSMS']);
             Route::get('/branches', [BranchController::class, 'index']);
             Route::get('/branches/{branch_id}/categories', [BranchController::class, 'categories']);
@@ -531,15 +531,16 @@ Route::middleware([
                     'destroy'
                 ]);
                 Route::controller(CartController::class)
-                ->name('customer.cards.')
                 ->group(function () {
-                    Route::delete("trash/carts", 'trash')->name('trash');
-                    Route::get("carts/count", 'count')->name('count');
+                    Route::delete("trash/carts", 'trash');
+                    Route::get("carts/count", 'count');
                 });
 
                 Route::resource("orders", CustomerOrderController::class)->only([
                     'store',
                 ]);
+                Route::post("orders/validate", [CustomerOrderController::class, 'validateOrder']);
+                Route::post("orders/payment/redirect", [CustomerOrderController::class, 'paymentRedirect']);
             });
         });
 

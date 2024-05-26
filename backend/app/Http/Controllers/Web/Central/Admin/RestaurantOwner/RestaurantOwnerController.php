@@ -40,8 +40,8 @@ class RestaurantOwnerController extends Controller
             $user->update(['password' => Hash::make($request['password'])]);
         }
         $user->update($request->only([
-            'first_name',
-            'last_name',
+            /* 'first_name',
+            'last_name', */
             'email',
             'phone',
             'position'
