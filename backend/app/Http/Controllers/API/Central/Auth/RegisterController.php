@@ -36,7 +36,7 @@ class RegisterController extends BaseController
     {
         $input = $request->validated();
         $emailKey = str_replace('.', '_', $input['email']);
-        $input = $request->validated();
+        $input = $request->validated(); 
         $emailKey = str_replace('.', '_', $input['email']);
         if (!$session = Session::get('register_' . $emailKey)) {
             if ($session['verification_code'] != $request->otp) {
