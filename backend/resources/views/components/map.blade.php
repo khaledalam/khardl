@@ -55,7 +55,8 @@
             // Add a click event listener to the map
             map.addListener( 'click', function (event) {
                 marker.position  = event.latLng;
-                updateLocationInput(marker.position, branchId);
+ 
+                updateLocationInput(event.latLng, branchId);
             });
 
             autocomplete.addEventListener("gmp-placeselect", async ({ place }) => {
@@ -78,7 +79,9 @@
                 // }
                 const lat = place.location.lat();
                 const lng = place.location.lng();
+              
                 selectedPlacePosition = new google.maps.LatLng(lat, lng);
+         
                 updateLocationInput(selectedPlacePosition, branchId);
                 // If the place has a geometry, then present it on a map.
                 if (place.location.viewport) {
@@ -102,6 +105,8 @@
                 // infowindow.open(map, marker);
             });
 
+
+
         }
 
         const mapContainers = document.querySelectorAll('.map-container');
@@ -117,9 +122,7 @@
                     if (latElement && lngElement) {
                         const lat = parseFloat(latElement.value);
                         const lng = parseFloat(lngElement.value);
-                        console.log('Latitude:', lat);
-                        console.log('Longitude:', lng);
-                        console.log('branchIdElement:', branchIdElement);
+                      
                         initializeMapOnClick(branchIdElement, lat, lng);
                         document.getElementById('save-location' + branchIdElement).style.display = 'block';
                         // document.getElementById('pac-input' + branchIdElement).style.display = 'block';
@@ -157,13 +160,13 @@
 
             const latInput = document.getElementById('lat' + branchId);
             const lngInput = document.getElementById('lng' + branchId);
-            latInput.value = latLng.lat;
-            lngInput.value = latLng.lng;
+            latInput.value = latLng.lat();
+            lngInput.value = latLng.lng();
 
-            const addressFromLatLng = await convertToAddress(latLng.lat, latLng.lng);
+            const addressFromLatLng = await convertToAddress(latLng.lat(), latLng.lng());
 
             const locationInput = document.getElementById('location' + branchId);
-
+            console.log(locationInput,addressFromLatLng);
             if (locationInput) {
                 locationInput.value = addressFromLatLng;
             }
@@ -175,44 +178,7 @@
 
 
         }
-        $('#add-new-branch').one('click', function(event){
-            console.log(223);
-                const centerCoords = {
-                    lat: 24.7136,
-                    lng: 46.6753,
-                    address: '8779 Street Number 74, Al Olaya, 2593, Riyadh 12214, Saudi Arabia'
-                }; // Default center coordinates
-                document.getElementById('lat-new_branch').value = centerCoords.lat;
-                document.getElementById('lng-new_branch').value = centerCoords.lat;
-                // document.getElementById('pac-input-new_branch').value = centerCoords.address;
-            console.log("centerCoords: ", centerCoords)
-                initializeMapOnClick('-new_branch', centerCoords?.lat, centerCoords?.lng);
-
-                //    new_branch.addListener( 'click', function (event) {
-
-                //         // If a marker exists, remove it
-                //         if (markers['-new_branch']) {
-                //             markers['-new_branch'].setMap(null);
-                //         }
-
-                //         // Create a new marker at the clicked location
-                //         markers['-new_branch'] = new google.maps.Marker({
-                //             map: maps['-new_branch'],
-                //             position: event.latLng,
-                //             draggable: true,
-                //         });
-
-                //         // document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
-
-                //         const latnew_branch = document.getElementById('lat-new_branch');
-                //         const lngnew_branch = document.getElementById('lng-new_branch');
-
-                //         // Update the hidden input with the clicked location's latitude and longitude
-                //         latnew_branch.value = `${event.latLng.lat()}`;
-                //         lngnew_branch.value = `${event.latLng.lng()}`;
-                //     });
-
-        });
+        
 
 
 </script>
