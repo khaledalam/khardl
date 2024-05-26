@@ -1,6 +1,11 @@
 <div class="card-body pt-0">
     <div class="card-title">
-        <h2>{{ __('Required files')}}</h2>
+        <h2>
+            {{ __('Required files')}}
+            @if ($user?->traderRegistrationRequirement)
+            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('If you upload new files, old files will be removed') }}"></i>
+            @endif
+        </h2>
     </div>
     <!--begin::Input group-->
     <div class="mb-10 fv-row">
