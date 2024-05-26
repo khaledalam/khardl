@@ -244,6 +244,10 @@ class RestaurantController extends BaseController
 
     }
     public function createBranch(){
+        if (!$this->can_create_branch()) {
+            return redirect()->back()->with('error', 'Not allowed to create branch');
+        }
+
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
        

@@ -45,6 +45,10 @@ class OrderRequest extends FormRequest
         $cart = CartRepository::get();
         $validator->after(function ($validator) use($cart){
             $user = Auth::user();
+            if(!$cart->hasItems()){
+                $validator->errors()->add('cart', __('Cart is empty'));
+                return ;
+            }
             if(!$cart->isActiveBranch()){
                 $validator->errors()->add('cart', __('This branch is no longer accepting orders'));
 
@@ -73,10 +77,7 @@ class OrderRequest extends FormRequest
                     return;
                 }
             }
-            if(!$cart->hasItems()){
-                $validator->errors()->add('cart', __('Cart is empty'));
-                return ;
-            }
+         
             if($cart->coupon()){
                 if (!$cart->coupon()->validity){
                     $validator->errors()->add('cart', __('Coupon has been expired'));
