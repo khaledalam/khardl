@@ -166,7 +166,7 @@
             const addressFromLatLng = await convertToAddress(latLng.lat(), latLng.lng());
 
             const locationInput = document.getElementById('location' + branchId);
-      
+            console.log(locationInput,addressFromLatLng);
             if (locationInput) {
                 locationInput.value = addressFromLatLng;
             }
