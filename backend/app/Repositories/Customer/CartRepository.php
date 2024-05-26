@@ -425,7 +425,7 @@ class CartRepository
     }
     public function isActiveBranch()
     {
-        return $this->cart->branch->active;
+        return $this->cart->branch?->active;
     }
 
 
