@@ -22,8 +22,7 @@ trait CentralSharedRoutesTrait
                 'policies'=>'policies',
                 'prices'=>'prices',
                 'fqa'=>'fqa',
-                'reset-password'=> 'reset-password',
-                'create-new-password'=> 'create-new-password',
+                
             ],
             'middleware'=>[
                 'visitors'
@@ -37,7 +36,10 @@ trait CentralSharedRoutesTrait
         return [
             'routes'=>[
                 'register'=>'register',
-                'login'=>'login'
+                'login'=>'login',
+                'reset-password'=> 'reset-password',
+                'reset-email'=> 'reset-email',
+                'create-new-password'=> 'create-new-password',
             ],
             'middleware'=>[
                 'guest',

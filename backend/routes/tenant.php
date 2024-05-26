@@ -211,6 +211,7 @@ Route::group([
             Route::resource('drivers', DriverController::class)->middleware('permission:can_edit_and_view_drivers');
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
+
             Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
             Route::put('/branches/{id}/update', [RestaurantController::class, 'updateBranchDetails'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch-details');
             Route::get('/branches/{id}/toggleBranch', [RestaurantController::class, 'toggleBranch'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-branch-status');
@@ -289,8 +290,8 @@ Route::group([
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
 
 
-
-                Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
+                Route::get('/branches/create', [RestaurantController::class, 'createBranch'])->name('restaurant.create-branch');
+                Route::post('/branches/store', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::any('/callback', [TapController::class, 'callback'])->name('tap.callback');
                 Route::delete('/workers/delete/{id}', [WorkerController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
 
@@ -390,6 +391,7 @@ Route::group([
                     Route::post('delete-address/{address}','delete');
                     Route::get('get-addresses','index');
                     Route::get('get-default','getDefault');
+                    Route::post('check-branch-scope/{branch}','checkBranchScope');
                 });
                 /* Customer address */
                 Route::delete("cards/{card_id}/delete", [CustomerCardController::class, 'delete']);
@@ -519,6 +521,7 @@ Route::middleware([
                     Route::post('delete-address/{address}','delete');
                     Route::get('get-addresses','index');
                     Route::get('get-default','getDefault');
+                    Route::post('check-branch-scope/{branch}','checkBranchScope');
                 });
                 /* Customer address */
                 Route::get("/cards", [CustomerCardController::class, 'show']);

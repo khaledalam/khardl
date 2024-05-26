@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Models\Tenant\Branch;
+use App\Utils\ResponseHelper;
+use App\Packages\Msegat\Msegat;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Database\Factories\UserFactory;
+use App\Models\Tenant\RestaurantUser;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -132,7 +135,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         // TODO @todo create new email_verification_tokens record
         $this->verification_code = sprintf("%06d", mt_rand(1, 999999));
-        $this->save();
+        // $this->save();
     }
     public function updateLastLogin()
     {
@@ -196,6 +199,28 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
             ->orWhere('restaurant_name', 'like', '%' . $search . '%')
             ->orWhere('restaurant_name_ar', 'like', '%' . $search . '%');
         });
+    }
+    public function generateVerificationSMSCode()
+    {
+        $response = Msegat::sendOTP(
+            number: $this->phone
+        );
+
+        return ($response['http_code'] == ResponseHelper::HTTP_OK) ? $response['message']['id'] : false;
+    }
+
+    public function checkVerificationSMSCode(string $otp,string $id)
+    {
+        $response = Msegat::verifyOTP(
+            otp: $otp,
+            id: $id
+        );
+        if ($response['http_code'] == ResponseHelper::HTTP_OK) {
+            $this->phone_verified_at = now();
+            $this->save();
+            return true;
+        }
+        return false;
     }
     /* Scopes */
     protected static function newFactory()

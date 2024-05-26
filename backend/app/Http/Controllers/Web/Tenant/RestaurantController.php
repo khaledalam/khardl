@@ -243,7 +243,17 @@ class RestaurantController extends BaseController
         return $this->sendResponse($branches, 'Fetched branches successfully');
 
     }
-
+    public function createBranch(){
+        $user = Auth::user();
+        $available_branches = $user->number_of_available_branches();
+       
+        $branches = Branch::withTrashed()->iSWorker($user)
+            ->get()
+            ->sortByDesc(['deleted_at']);
+        return view( 'restaurant.add-branches',
+            compact( 'user','branches','available_branches')
+        ); 
+    }
     public function addBranch(Request $request)
     {
         if (!$this->can_create_branch()) {
@@ -263,7 +273,7 @@ class RestaurantController extends BaseController
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string',
-            'address' => 'required|string',
+            'location' => 'required|string',
             'city' => 'nullable|string',
             'neighborhood' => 'nullable|string',
             'lat-new_branch' => 'required',
@@ -276,7 +286,7 @@ class RestaurantController extends BaseController
             'lat-new_branch.required' => 'Select location',
             'lng-new_branch.required' => 'Select location',
         ]);
-
+  
         $branchesExist = DB::table('branches')->where('is_primary', 1)->exists();
 
         $time = function ($time, $open = true) use ($request) {
@@ -293,7 +303,7 @@ class RestaurantController extends BaseController
         $data = [
             'name' => $validatedData['name'],
             'phone' => $validatedData['phone'],
-            'address' => $validatedData['address'],
+            'address' => $validatedData['location'] ?? ' ',
             'city' => $validatedData['city'],
             'neighborhood' => $validatedData['neighborhood'],
             'lat' => (float) $validatedData['lat-new_branch'],

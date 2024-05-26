@@ -45,7 +45,7 @@ class Cart extends Model
         }
 
         foreach ($this->items()->get() as $cart_item) {
-            if (!$cart_item->item->allow_buy_with_loyalty_points) {
+            if (!$cart_item->item?->allow_buy_with_loyalty_points) {
                 return false;
             }
         }
@@ -59,7 +59,7 @@ class Cart extends Model
             return 0;
         }
         $total = 0;
-        
+
         foreach ($this->items()->get() as $cart_item) {
             $total += ($cart_item->item->price_using_loyalty_points * $cart_item->quantity) + ($cart_item->options_price / $cart_item->item->LoyaltyPointRatio);
         }

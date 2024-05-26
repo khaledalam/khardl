@@ -15,4 +15,5 @@ return [
   'cache_monthly_visitors'  => 4 * 60 * 60,//4 hours
   'cache_RO_Summary_Page'  => 4 * 60 * 60,//4 hours,
   'cache_Admin_Summary_Page'=> 4 * 60 * 60,//4 hours,
+  'branch_max_scope' => 15//15km
 ];

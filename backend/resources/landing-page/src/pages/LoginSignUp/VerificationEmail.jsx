@@ -6,16 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { GrPowerReset } from "react-icons/gr";
-// import { useApiContext } from '../context'
-
-import { useAuthContext } from "../../components/context/AuthContext";
-import { API_ENDPOINT, HTTP_NOT_ACCEPTED } from "../../config";
+import { useApiContext } from '../context'
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { API_ENDPOINT, HTTP_NOT_ACCEPTED ,HTTP_NOT_AUTHENTICATED} from "../../config";
 import AxiosInstance from "../../axios/axios";
+import { useAuthContext } from "../../components/context/AuthContext";
 
 const VerificationEmail = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
+  let user_email = sessionStorage.getItem("email");
+ 
   const { setStatusCode } = useAuthContext();
 
   const {
@@ -24,7 +25,7 @@ const VerificationEmail = () => {
     formState: { errors: errors },
   } = useForm();
   const { handleSubmit: handleSubmit2 } = useForm();
-  let user_email = sessionStorage.getItem("email") || "";
+  
 
   const [showForm, setShowForm] = useState(false);
   const [countdown, setCountdown] = useState(60);
@@ -37,8 +38,7 @@ const VerificationEmail = () => {
     setCanResend(false);
     startTimer();
   };
-
-  if (user_email.length < 1) {
+  if (!user_email) {
     window.location.href = "/logout";
   }
 
@@ -56,7 +56,7 @@ const VerificationEmail = () => {
         throw new Error(`${t("Code resend failed")}`);
       }
     } catch (error) {
-      toast.error(`${t("Code resend failed")}`);
+      toast.error(error.response.data.message);
     }
     setSpinner(false);
   };
@@ -66,17 +66,23 @@ const VerificationEmail = () => {
     try {
       const response = await AxiosInstance.post(`/email/verify`, {
         code: data.verificationcode,
-        email: data.email,
+        email: user_email,
       });
       if (response.data) {
+        if (response.data?.data?.user) {
+          localStorage.setItem(
+            "user-info",
+            JSON.stringify(response.data?.data?.user),
+          );
+        }
         setStatusCode(HTTP_NOT_ACCEPTED);
         navigate("/complete-register");
         toast.success(`${t("The code has been verified successfully")}`);
       } else {
-        throw new Error(`${t("Code verification failed")}`);
+        toast.error(response.data.data.message);
       }
     } catch (error) {
-      toast.error(`${t("Code verification failed")}`);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -103,6 +109,9 @@ const VerificationEmail = () => {
 
   useEffect(() => {
     let timer = startTimer();
+    return () => {
+      clearInterval(timer); 
+    };
   }, []);
 
   return (

@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import halfArrowDown from "../../../../assets/halfArrowDown.svg";
+import {useTranslation} from "react-i18next";
 
 const EditorSelect = ({ defaultValue, options, handleChange, label }) => {
   const [isOpen, setisOpen] = useState(false);
+  const { t } = useTranslation();
 
   const handleDropdown = useCallback(() => {
     setisOpen((prev) => !prev);
@@ -25,7 +27,7 @@ const EditorSelect = ({ defaultValue, options, handleChange, label }) => {
           className="h-[32px] w-[154px] rounded-[50px] flex items-center justify-between px-[16px] bg-neutral-100 active:bg-neutral-100 hover:bg-neutral-100"
         >
           <span className="text-[12px] xl:text-[16px] leading-[16px] font-light text-[rgba(17,24,39,0.77)]">
-            {defaultValue}
+            {t(defaultValue.charAt(0).toUpperCase() + defaultValue.slice(1))}
           </span>
           <span className="">
             {/* <BiChevronDown size={22} /> */}
