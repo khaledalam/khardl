@@ -20,7 +20,7 @@ class TraderRequirement extends Model
         'bank_certificate',
         'identity_of_owner_or_manager',
         'national_address',
-        'national_id_number',   
+        'national_id_number',
         'commercial_registration_number',
         'bank_name'
     ];
@@ -32,5 +32,15 @@ class TraderRequirement extends Model
     protected static function newFactory()
     {
       return TraderRequirementFactory::new();
+    }
+    public function getCountFilesAttribute()
+    {
+        $count = 0;
+        if($this->commercial_registration)$count++;
+        if($this->tax_registration_certificate)$count++;
+        if($this->bank_certificate)$count++;
+        if($this->identity_of_owner_or_manager)$count++;
+        if($this->national_address)$count++;
+        return $count;
     }
 }
