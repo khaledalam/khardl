@@ -2,34 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\Restaurant\OrderOnlineInvoice;
-use App\Http\Services\tenant\AdsPackage\AdsPackageService;
-use App\Models\CentralSetting;
-use App\Utils\Slack;
+use Exception;
 use Carbon\Carbon;
-use App\Models\Tenant;
-use App\Models\Tenant\Order;
 use Google\Client;
+use App\Utils\Slack;
+use App\Models\Tenant;
+use Illuminate\Http\File;
+use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
 use App\Utils\ResponseHelper;
+use App\Models\CentralSetting;
 use App\Models\ROSubscription;
 use App\Models\Tenant\Setting;
 use App\Enums\Admin\CouponTypes;
 use App\Models\ROCustomerAppSub;
+use Illuminate\Http\UploadedFile;
+use JoliCode\Slack\ClientFactory;
 use App\Models\NotificationReceipt;
 use App\Models\ROSubscriptionCoupon;
 use Illuminate\Support\Facades\Auth;
-use JoliCode\Slack\ClientFactory;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\ROSubscriptionInvoice;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\Tap\TapBusiness;
 use App\Packages\TapPayment\Lead\Lead;
 use App\Models\ROCustomerAppSubInvoice;
+use Illuminate\Support\Facades\Storage;
 use App\Jobs\SendApprovedBusinessEmailJob;
 use App\Models\Tenant\Tap\TapBusinessFile;
 use App\Http\Requests\Tenant\SaveCardRequest;
+use App\Exports\Restaurant\OrderOnlineInvoice;
 use App\Packages\TapPayment\Business\Business;
 use App\Http\Requests\Tenant\RenewBranchRequest;
 use App\Http\Requests\Tenant\CustomerAppSubRequest;
@@ -40,8 +43,8 @@ use App\Exports\Restaurant\ExportSubscriptionInvoice;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
 use App\Packages\TapPayment\Requests\CreateLeadRequest;
 use App\Exports\Restaurant\ExportAppSubscriptionInvoice;
+use App\Http\Services\tenant\AdsPackage\AdsPackageService;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
-
 
 class TapController extends Controller
 {
@@ -312,86 +315,126 @@ class TapController extends Controller
     public function payments_submit_lead($tenant,CreateLeadRequest $request) {
         $tenant = Tenant::findOrFail($tenant);
         $data = $request->all();
+        try {
 
-        // $tenant_id = tenant()->id;
-        // $userBankIban = '';
-        // tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
-        //     $user = Tenant::find($tenant_id)->user;
-        //     $userBankIban = $user->traderRegistrationRequirement?->IBAN;
-        // });
+            if($request->file('brand.logo')){
+                $restaurant_logo = TapFileAPI::create([
+                    'file' => $request->file('brand.logo'),
+                    'purpose' => 'business_logo',
+                    'title' => "Restaurant Logo"
+                ]);
+                $data['brand']['logo']=$restaurant_logo['message']['id'];
 
-        // Autofill data from our side to simplify the flow
-        // $data['user']['name']['title'] = 'Mr';
-        // $data['user']['phone'][0]['type'] = 'WORK';
-        // $data['user']['email'][0]['type'] = 'WORK';
-        // $data['wallet']['bank']['account']['iban'] = $userBankIban;
-        if($request->file('brand.logo')){
-            $restaurant_logo = TapFileAPI::create([
-                'file' => $request->file('brand.logo'),
-                'purpose' => 'business_logo',
-                'title' => "Restaurant Logo"
-            ]);
-            $data['brand']['logo']=$restaurant_logo['message']['id'];
+            }else {
+                if($logo = $tenant->logo()){
+                    $path= $tenant->run(function()use($logo){
+                        $pathInfo = pathinfo($logo);
+                        return new File(storage_path("/app/public/restaurant-styles/".$pathInfo['basename']));
+                    });
+                    $restaurant_logo = TapFileAPI::create([
+                        'file' => $this->UploadFileInstance($path),
+                        'purpose' => 'business_logo',
+                        'title' => "Restaurant Logo"
+                    ]);
 
-        }
-        if($request->file("wallet.bank.documents.0.images.0")){
-            $bank_statement = TapFileAPI::create([
-                'file' => $request->file("wallet.bank.documents.0.images.0"),
-                'purpose' => 'identity_document',
-                'title' => "Bank Statement"
-            ]);
-            $data['wallet']['bank']['documents'][0]['images'][0]=$bank_statement['message']['id'];
-
-        }
-        if($request->file("entity.tax.documents.0.images.0")){
-            $tax = TapFileAPI::create([
-                'file' => $request->file("entity.tax.documents.0.images.0"),
-                'purpose' => 'tax_document_user_upload',
-                'title' => "Tax Document"
-            ]);
-            $data['entity']['tax']['documents'][0]['images'][0]=$tax['message']['id'];
-
-        }
-
-
-
-        $response = Lead::connect($data);
-        if($response['http_code'] == ResponseHelper::HTTP_OK){
-            logger($request);
-
-            $update_tap_sheet = CentralSetting::first()?->auto_update_tap_sheet;
-
-            $tenant->run(function()use($response, $update_tap_sheet){
-                Setting::first()->update([
-                    'lead_id' => $response['message']['id'],
-                    'lead_response' => $response['message']
+                    $data['brand']['logo']=$restaurant_logo['message']['id'];
+                }
+            }
+            if($request->file("wallet.bank.documents.0.images.0")){
+                $bank_statement = TapFileAPI::create([
+                    'file' => $request->file("wallet.bank.documents.0.images.0"),
+                    'purpose' => 'identity_document',
+                    'title' => "Bank Statement"
                 ]);
 
-                // disable send email to TAP team about new lead id
-//                SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
-//                    user: RestaurantUser::first(),
-//                    lead_id :  $response['message']['id'],
-//                );
+                $data['wallet']['bank']['documents'][0]['images'][0]=$bank_statement['message']['id'];
 
-                if ($update_tap_sheet) {
-                   $this->UpdateTAPSheet($response);
+            }else {
+                if(isset($tenant->user->traderRegistrationRequirement) && $tenant->user->traderRegistrationRequirement->bank_certificate){
+                    $path=  new File( storage_path("app/private/".$tenant->user->traderRegistrationRequirement->bank_certificate));
+                    $bank_statement = TapFileAPI::create([
+                        'file' => $this->UploadFileInstance($path),
+                        'purpose' => 'identity_document',
+                        'title' => "Bank Statement"
+                    ]);
+      
+                    $data['wallet']['bank']['documents'][0]['images'][0]=$bank_statement['message']['id'];
                 }
+            }
+            if($request->file("entity.tax.documents.0.images.0")){
+                $tax = TapFileAPI::create([
+                    'file' => $request->file("entity.tax.documents.0.images.0"),
+                    'purpose' => 'tax_document_user_upload',
+                    'title' => "Tax Document"
+                ]);
+
+                $data['entity']['tax']['documents'][0]['images'][0]=$tax['message']['id'];
+
+            }else {
+                if(isset($tenant->user->traderRegistrationRequirement) && $tenant->user->traderRegistrationRequirement->tax_registration_certificate){
+                    $path=  new File( storage_path("app/private/".$tenant->user->traderRegistrationRequirement->tax_registration_certificate));
+                    $tax = TapFileAPI::create([
+                        'file' => $this->UploadFileInstance($path),
+                        'purpose' => 'tax_document_user_upload',
+                        'title' => "Tax Document"
+                    ]);
+                    $data['entity']['tax']['documents'][0]['images'][0]=$tax['message']['id'];
+            
+                }
+            }
 
 
-                Slack::send();
+         
+            $response = Lead::connect($data);
+          
+            if($response['http_code'] == ResponseHelper::HTTP_OK){
+                logger($request);
 
-            });
+                $update_tap_sheet = CentralSetting::first()?->auto_update_tap_sheet;
+
+                $tenant->run(function()use($response, $update_tap_sheet){
+                    Setting::first()->update([
+                        'lead_id' => $response['message']['id'],
+                        'lead_response' => $response['message']
+                    ]);
+
+                    // disable send email to TAP team about new lead id
+    //                SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
+    //                    user: RestaurantUser::first(),
+    //                    lead_id :  $response['message']['id'],
+    //                );
+
+                    if ($update_tap_sheet) {
+                    $this->UpdateTAPSheet($response);
+                    }
+
+
+                    Slack::send();
+
+                });
 
 
 
-            return redirect()->route('admin.view-restaurants',['tenant'=>$tenant])->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
+                return redirect()->route('admin.view-restaurants',['tenant'=>$tenant])->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
+            }
+        }catch(Exception $e){
+            \Sentry\captureMessage('TAP:  creating tap lead '.json_encode($e->getMessage()));
+           
         }
         return redirect()->back()
         ->withInput($request->input())
         ->with('error', $response['message']);
 
     }
-
+    public function UploadFileInstance(File $file){
+        return new UploadedFile(
+            $file->getPathname(),
+            $file->getFilename(),
+            $file->getMimeType(),
+            null, 
+            true 
+        );
+    }
     private function UpdateTAPSheet($response)
     {
         // Update the TAP shared Google sheet (add LEAD ID)
