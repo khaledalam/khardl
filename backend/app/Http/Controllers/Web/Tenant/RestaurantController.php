@@ -250,13 +250,13 @@ class RestaurantController extends BaseController
 
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
-       
+
         $branches = Branch::withTrashed()->iSWorker($user)
             ->get()
             ->sortByDesc(['deleted_at']);
         return view( 'restaurant.add-branches',
             compact( 'user','branches','available_branches')
-        ); 
+        );
     }
     public function addBranch(Request $request)
     {
@@ -290,7 +290,7 @@ class RestaurantController extends BaseController
             'lat-new_branch.required' => 'Select location',
             'lng-new_branch.required' => 'Select location',
         ]);
-  
+
         $branchesExist = DB::table('branches')->where('is_primary', 1)->exists();
 
         $time = function ($time, $open = true) use ($request) {

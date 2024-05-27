@@ -420,22 +420,22 @@
 
                     <div class="carousel-inner">
                         @foreach ($branches->chunk(3) as $key => $branchChunk)
-
                         <div class="carousel-item {{ $branchChunk->contains($branchId) ? 'active' : '' }}">
-                            <div class="row ">
+                            <div class="row
+                            @if($branchChunk->count() == 1 || $branchChunk->count() == 2) centered @endif">
                                 @foreach ($branchChunk as $branchLoop)
                                 <div class="col-md-4 d-flex justify-content-center">
                                     <a href="{{ route('restaurant.get-category', ['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1,'branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) active @endif">
                                         <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px"> {{ $branchLoop->name }}</span>
                                     </a>
                                 </div>
-
                                 @endforeach
                             </div>
 
                         </div>
                         @endforeach
                     </div>
+                    @if ($branches?->count() > 3)
                     <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
@@ -444,6 +444,7 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -463,7 +464,7 @@
             <!--begin::Inbox App - Messages -->
             <div class="row">
                 <!--begin::Sidebar-->
-                <div class="col-md-4 {{-- col-xxl-2 --}}">
+                <div class="col-md-4 {{-- col-xxl-2 --}} mb-4">
                     <!--begin::Sticky aside-->
                     <div class="card card-flush px-1">
                         <!--begin::Aside content-->
@@ -495,24 +496,22 @@
                                     <!--begin::Inbox-->
                                     <div class="col-md-12">
                                         <div class="menu-link d-flex align-items-stretch justify-content-between gap-4 mb-4 p-3 @if ($category?->id === $selectedCategory?->id) active @endif">
-                                            <div class="d-flex align-items-center">
-                                                <div class="category_image">
-                                                    <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
+                                            <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="category_image">
                                                         <img src="{{ $category?->photo ?? global_asset('img/category-icon.png') }}" width="35" height="35" style="border-radius: 50%;" />
-                                                    </a>
-                                                </div>
-                                                <div class="d-flex flex-column ms-3">
-                                                    <div class="category_name">
-                                                        <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
+                                                    </div>
+                                                    <div class="d-flex flex-column ms-3">
+                                                        <div class="category_name">
                                                             <span class="menu-title fw-bolder small">{{ $category->name }}</span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="category_info mt-1">
-                                                        <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{ __('Sort') }}: {{ $category->sort }} </span>
-                                                        <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{__('Products')}}: {{ $category->items?->count() }} </span>
+                                                        </div>
+                                                        <div class="category_info mt-1">
+                                                            <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{ __('Sort') }}: {{ $category->sort }} </span>
+                                                            <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{__('Products')}}: {{ $category->items?->count() }} </span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                             @if($user->isRestaurantOwner())
                                             <div class="d-flex align-items-center mx-2">
                                                 <div class="dropdown">
@@ -931,7 +930,7 @@
                                                     <!--end::Col-->
                                                 </div>
                                                 <div class="row mb-4">
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4 mb-2">
                                                         <!--begin::Demos drawer toggle-->
                                                         <button id="addCheckbox_{{ $item->id }}" class="btn option-btn" type="button" title="Add Checkbox">
                                                             <span id="create_new_checkbox">
@@ -941,7 +940,7 @@
                                                         </button>
                                                         <!--end::Demos drawer toggle-->
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4 mb-2">
                                                         <!--begin::Help drawer toggle-->
                                                         <button id="addSelection_{{ $item->id }}" class="btn option-btn" type="button" title="Add Selection">
                                                             <span id="create_new_selection">
@@ -951,7 +950,7 @@
                                                         </button>
                                                         <!--end::Help drawer toggle-->
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4 mb-2">
                                                         <!--begin::Purchase link-->
                                                     <button id="addDropdown_{{ $item->id }}" class="btn option-btn" type="button" title="Add Dropdown">
                                                         <span id="create_new_Dropdown">
@@ -1278,7 +1277,7 @@
                         <!--end::Col-->
                     </div>
                     <div class="row mb-4">
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-2">
                             <!--begin::Demos drawer toggle-->
                             <button id="addCheckbox" class="btn option-btn" type="button" title="Add Checkbox">
                                 <span id="create_new_checkbox">
@@ -1288,7 +1287,7 @@
                             </button>
                             <!--end::Demos drawer toggle-->
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-2">
                             <!--begin::Help drawer toggle-->
                             <button id="addSelection" class="btn option-btn" type="button" title="Add Selection">
                                 <span id="create_new_selection">
@@ -1298,7 +1297,7 @@
                             </button>
                             <!--end::Help drawer toggle-->
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-2">
                             <!--begin::Purchase link-->
                         <button id="addDropdown" class="btn option-btn" type="button" title="Add Dropdown">
                             <span id="create_new_Dropdown">
