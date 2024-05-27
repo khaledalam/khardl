@@ -496,24 +496,22 @@
                                     <!--begin::Inbox-->
                                     <div class="col-md-12">
                                         <div class="menu-link d-flex align-items-stretch justify-content-between gap-4 mb-4 p-3 @if ($category?->id === $selectedCategory?->id) active @endif">
-                                            <div class="d-flex align-items-center">
-                                                <div class="category_image">
-                                                    <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
+                                            <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="category_image">
                                                         <img src="{{ $category?->photo ?? global_asset('img/category-icon.png') }}" width="35" height="35" style="border-radius: 50%;" />
-                                                    </a>
-                                                </div>
-                                                <div class="d-flex flex-column ms-3">
-                                                    <div class="category_name">
-                                                        <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
+                                                    </div>
+                                                    <div class="d-flex flex-column ms-3">
+                                                        <div class="category_name">
                                                             <span class="menu-title fw-bolder small">{{ $category->name }}</span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="category_info mt-1">
-                                                        <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{ __('Sort') }}: {{ $category->sort }} </span>
-                                                        <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{__('Products')}}: {{ $category->items?->count() }} </span>
+                                                        </div>
+                                                        <div class="category_info mt-1">
+                                                            <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{ __('Sort') }}: {{ $category->sort }} </span>
+                                                            <span class="btn-khardl mx-1 px-3 py-1  mt-1">{{__('Products')}}: {{ $category->items?->count() }} </span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                             @if($user->isRestaurantOwner())
                                             <div class="d-flex align-items-center mx-2">
                                                 <div class="dropdown">
