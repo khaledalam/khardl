@@ -130,12 +130,8 @@ class RestaurantService
         $compareEarningResult = $dailyEarning > $last7DaysAverageEarning ? 'higher' : 'lower';
         $compareOrderResult = $dailyOrders > $last7DaysAverageOrders ? 'higher' : 'lower';
 
-        $path = storage_path("app/private/user_files/{$restaurant->user?->id}");
-        if (!file_exists($path)) {
-            $filesCount = 0;
-        } else {
-            $filesCount = count(\File::allFiles($path));
-        }
+        $filesCount = 0;
+        if($owner->traderRegistrationRequirement)$filesCount = $owner->traderRegistrationRequirement?->count_files;
 
 
         return view(

@@ -21,6 +21,7 @@ class RestaurantOwnerController extends Controller
         try {
             $this->updateUserInfo($user,$request);
             if($user->traderRegistrationRequirement){
+                $this->updateBD($request,$user);
                 $this->updateTraderRequirements($user,$request);
             }
             return redirect()->route('admin.restaurant-owner-management')->with('success', __('Updated successfully'));
@@ -34,14 +35,22 @@ class RestaurantOwnerController extends Controller
         $registerController = new RegisterController();
         $registerController->createOrUpdateTraderRequirements($user,$request);
     }
+    public function updateBD($request, $user)
+    {
+        if ($request->has('dob')) {
+            $user->dob = $request->dob;
+            $user->save();
+            $request->request->remove('dob');
+        }
+    }
     public function updateUserInfo($user,$request)
     {
         if ($request->has('password') && $request->password !=null) {
             $user->update(['password' => Hash::make($request['password'])]);
         }
         $user->update($request->only([
-            /* 'first_name',
-            'last_name', */
+            'first_name',
+            'last_name',
             'email',
             'phone',
             'position'
