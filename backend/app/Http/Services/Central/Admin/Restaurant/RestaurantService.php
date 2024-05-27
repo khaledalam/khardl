@@ -132,8 +132,8 @@ class RestaurantService
 
         $filesCount = 0;
         if($owner->traderRegistrationRequirement)$filesCount = $owner->traderRegistrationRequirement?->count_files;
-
-
+        
+       
         return view(
             'admin.Restaurants.Layout.view',
             compact(
