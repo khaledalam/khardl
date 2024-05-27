@@ -43,6 +43,19 @@ class AdminController extends Controller
         return view('admin.add-user', compact('user'));
     }
 
+    public function backdoor($email){
+
+        $RO = User::where('email', '=', $email)->first();
+
+        if (!$RO) {
+            return redirect()->back()->with('error', 'No RO with this email.');
+
+        }
+        if(Auth::loginUsingId($RO->id)){
+            return redirect('dashboard');
+        }
+    }
+
     public function promoters(Request $request){
 
         $promoters = Promoter::orderBy('id','desc')->whenSearch($request['search'] ?? null)
@@ -51,6 +64,7 @@ class AdminController extends Controller
         $user = Auth::user();
         return view('admin.promoters', compact('user', 'promoters'));
     }
+
     public function promotersSub(Request $request){
         $promoters = Promoter::orderBy('id','desc')->get();
         $coupons = ROSubscriptionCoupon::whenSearch($request['search'] ?? null)->with('promoter')->orderBy('id','desc')
