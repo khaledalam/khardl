@@ -143,8 +143,36 @@
 
                                 </label>
                             </div>
-
-                            <div class="d-flex flex-column mb-8 fv-row">
+                            <div class="mb-10 fv-row">
+                                <!--begin::Label-->
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <span>{{__('Restaurant Logo')}}</span>
+                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" ></i>
+                                </label>
+                                <!--end::Label-->
+                        
+                                <!--begin::Flex Container-->
+                                <div class="d-flex align-items-center">
+                                    <!--begin::Input-->
+                                    <input type="file" class="form-control form-control-solid"   name="brand[logo]" placeholder="Enter Target Title"  accept="image/x-png,image/jpeg" />
+                                    <!--end::Input-->
+                        
+                                    <!--begin::Download Link-->
+                                    @if ($logo)
+                                    <a href="{{ route('admin.download.file', ['path' => 'TENANT-ID','fileName'=> pathinfo($logo),'tenant_id'=>$restaurant->id]) }}" class="btn btn-sm btn-khardl py-4 mx-2">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                    @endif
+                                    <!--end::Download Link-->
+                                </div>
+                                <!--end::Flex Container-->
+                        
+                                <!--begin::Description-->
+                                <div class="text-muted fs-7">{{ __("Accept") }}:  JPG, JPEG {{ __("size <= 25 MG") }}</div>
+                                <!--end::Description-->
+                            </div>
+                        
+                            {{-- <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                     <span>{{__('Restaurant Logo')}}</span>
@@ -152,7 +180,7 @@
                                 </label>
                                 <!--end::Label-->
                                 <input type="file" class="form-control form-control-solid"   name="brand[logo]" placeholder="Enter Target Title"  />
-                            </div>
+                            </div> --}}
 
                             <div id="entity"  style="display: none;">
 
@@ -387,15 +415,35 @@
                         <br>
                             <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][documents][0][number]" value="{{old('wallet.bank.documents.0.number')}}" /><br/>
 
-                            <div class="d-flex flex-column mb-8 fv-row">
+                            <div class="mb-10 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    {{__('IBAN certificate file')}}
-                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
+                                    <span>  {{__('Bank Certificate')}}</span>
+                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" ></i>
                                 </label>
                                 <!--end::Label-->
-                                <input type="file" class="form-control form-control-solid"   name="wallet[bank][documents][0][images][]"   />
+                        
+                                <!--begin::Flex Container-->
+                                <div class="d-flex align-items-center">
+                                    <!--begin::Input-->
+                                    <input type="file" class="form-control form-control-solid"   name="wallet[bank][documents][0][images][]"   />
+                                    <!--end::Input-->
+                        
+                                    <!--begin::Download Link-->
+                                    @if ($traderRegistrationRequirement?->bank_certificate)
+                                    <a href="{{ route('admin.download.file',  ['path' =>$restaurant->user->traderRegistrationRequirement->bank_certificate,'fileName'=>$restaurant->restaurant_name.' - Bank Certificate']) }}" class="btn btn-sm btn-khardl py-4 mx-2">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                    @endif
+                                    <!--end::Download Link-->
+                                </div>
+                                <!--end::Flex Container-->
+                        
+                                <!--begin::Description-->
+                                <div class="text-muted fs-7">{{ __("Accept") }}: PDF, JPG, JPEG, PNG {{ __("size <= 25 MG") }}</div>
+                                <!--end::Description-->
                             </div>
+                            
 
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
@@ -446,15 +494,36 @@
                                 </label>
                                 <!--end::Label-->
                                 <input type="date" name="entity[tax][expiry_date]" class="form-control mb-2" value="{{ old('entity.tax.expiry_date') }}" />
-                                <div class="d-flex flex-column mb-8 fv-row">
+                                <div class="mb-10 fv-row">
                                     <!--begin::Label-->
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                        {{__('Tax Document file')}}
+                                        <span>  {{__('Tax Document file')}}</span>
                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" ></i>
                                     </label>
                                     <!--end::Label-->
-                                    <input type="file" class="form-control form-control-solid"  name="documents" placeholder="Enter Target Title"  />
+                            
+                                    <!--begin::Flex Container-->
+                                    <div class="d-flex align-items-center">
+                                        <!--begin::Input-->
+                                        <input type="file" class="form-control form-control-solid"  name="documents" placeholder="Enter Target Title"  />
+                                        <!--end::Input-->
+                            
+                                        <!--begin::Download Link-->
+                                        @if ($traderRegistrationRequirement?->tax_registration_certificate)
+                                        <a href="{{ route('admin.download.file',  ['path' =>$traderRegistrationRequirement->tax_registration_certificate,'fileName'=>$restaurant->restaurant_name.' - Tax registeration certificate']) }}" class="btn btn-sm btn-khardl py-4 mx-2">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                        @endif
+                                        <!--end::Download Link-->
+                                    </div>
+                                    <!--end::Flex Container-->
+                            
+                                    <!--begin::Description-->
+                                    <div class="text-muted fs-7">{{ __("Accept") }}: PDF, JPG, JPEG, PNG {{ __("size <= 25 MG") }}</div>
+                                    <!--end::Description-->
                                 </div>
+                                
+                               
 
                             </div>
 

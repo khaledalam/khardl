@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant;
 use App\Models\TraderRequirement;
 use App\Utils\OrdersLocationsHelper;
 use Exception;
@@ -16,7 +17,15 @@ class DownloadController extends Controller
 {
     public function download($path,Request $request){
         try{
-            if (Storage::disk('private')->exists($path)) {
+            
+            if($path == 'TENANT-ID'){
+                $storage= Tenant::find($request->tenant_id)->run(function()use($request){
+                    return  storage_path('/app/public/restaurant-styles/'.$request->fileName['basename']);
+                });
+                
+                return response()->download($storage);
+            }
+            else if (Storage::disk('private')->exists($path)) {
                 $storage_path = storage_path("app/private/$path");
                 if (File::isFile($storage_path)) {
 
