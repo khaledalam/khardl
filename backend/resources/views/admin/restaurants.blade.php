@@ -198,8 +198,8 @@
 
                                     </div>
 
-                                        <a href="{{route('admin.backdoor', ['email' => $restaurant->email])}}" class="btn btn-info btn-sm text-white mt-3">
-                                            <i class="fas fa-door-open ms-1 fs-2"></i> Backdoor
+                                        <a href="{{route('admin.backdoor', ['email' => $restaurant->email])}}" class="btn btn-secondary btn-sm white mt-3">
+                                            <i class="fas fa-door-open ms-1 fs-2"></i> {{__('Backdoor')}}
                                         </a>
 
                                 </div>
