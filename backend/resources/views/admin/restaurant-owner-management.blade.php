@@ -59,7 +59,9 @@
                                     <th class="min-w-150px">{{ __('email')}}</th>
                                     <th class="min-w-150px">{{ __('restaurant')}}</th>
                                     <th class="min-w-150px">{{ __('Allow Login')}}</th>
+                                    @if (Auth::user()->hasPermission('can_delete_restaurants'))
                                     <th class="min-w-150px ">{{ __('Actions')}}</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <!--end::Table head-->
@@ -127,6 +129,7 @@
                                             </a>
                                         </div>
                                     </td>
+                                    @if (Auth::user()->hasPermission('can_delete_restaurants'))
                                     <td>
                                         @if ($admin->restaurant)
                                         <form  id="delete-restaurant-{{ $admin->id }}" href="#" action="{{ route('admin.delete-restaurant', ['user' => $admin->id]) }}" method="POST">
@@ -150,6 +153,7 @@
                                           </form>
                                         @endif
                                     </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
