@@ -257,7 +257,7 @@
                         <div class="col-md-2 filtration">
                             <div class="mb-4">
                                 <select class="form-select" id="filter_range">
-                                    <option value="daily" selected>{{ __('7 Days') }}</option>
+                                    <option value="daily" selected>{{ __('14 Days') }}</option>
                                     <option value="monthly">{{ __('6 Months') }}</option>
                                 </select>
                             </div>
@@ -270,7 +270,7 @@
                                         <div class="card">
                                             <div class="card-body p-1">
                                                 <h3>
-                                                    {{ __("Visitors within 7 days") }} :
+                                                    {{ __("Visitors within 14 days") }} :
                                                     <span class="btn-tooltip" data-bs-toggle="tooltip"
                                                     title="{{ $sum = getSumOfDataGraph($dailyVisitors) }} {{ __('Visitor') }}" data-container="body"
                                                     data-animation="true" data-bs-toggle="tooltip">
