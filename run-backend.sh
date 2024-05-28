@@ -7,8 +7,8 @@ export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
 docker stop $(docker ps -q)
 
-docker compose -f backend/docker-compose.yml down --remove-orphans
-docker compose -f backend/docker-compose.yml up -d --build --remove-orphans
+docker-compose -f backend/docker-compose.yml down --remove-orphans
+docker-compose -f backend/docker-compose.yml up -d --build --remove-orphans
 
 # confirm docker db is connected with laravel and up and running
 REAL="MySQL server has gone away"

@@ -48,15 +48,15 @@ const CategoryItem = ({
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
       key={valuekey}
-      className={`flex w-full cursor-pointer hover:scale-110 transform transition-transform duration-300 ease-in-out ${
+      className={`flex w-full mx-3 justify-center cursor-pointer hover:scale-110 transform transition-transform duration-300 ease-in-out ${
         menu_category_item_layout != "center" ? "flex-row" : "flex-col"
       } items-center ${
-        menu_category_item_layout == "left"
-          ? "max-w-[140px] gap-[4px]"
-          : "max-w-[60px] gap-[16px]"
+        menu_category_item_layout == "sides"
+          ? "max-w-full gap-[4px]"
+          : "max-w-full gap-[16px]"
       }`}
     >
-      {menu_category_item_layout != "none" && (
+      {menu_category_item_layout != "hide" && (
         <div
           style={{
             backgroundColor: isHover
@@ -67,8 +67,8 @@ const CategoryItem = ({
           }}
           className={` ${
             menu_category_position == "center"
-              ? "w-[60px] h-[60px]"
-              : "w-[40px] h-[40px]"
+              ? "min-w-[60px] max-w-[60px] w-[60px] h-[60px]"
+              : "min-w-[40px] max-w-[40px] w-[40px] h-[40px]"
           } ${
             shape === "sharp" ? "" : "rounded-full"
           }  flex items-center justify-center transition-all duration-300  bg-neutral-100  `}
@@ -108,7 +108,7 @@ const CategoryItem = ({
               ? fontSize - 2
               : 14,
         }}
-        className={`w-max ${
+        className={`max-w-full h-full break-words text-center ${
           textAlign === t("Center")
             ? "text-center"
             : textAlign === t("Left")

@@ -256,3 +256,7 @@ body::-webkit-scrollbar-track {
 .ql-content {
   padding: 0 4px;
 }
+
+div, button, span {
+  word-spacing: 0.25em !important;
+}

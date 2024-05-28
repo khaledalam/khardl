@@ -17,7 +17,12 @@ import Branches from "../../../../components/Branches";
 import { use } from "i18next";
 import { useSelector, useDispatch } from "react-redux";
 
-const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
+const Navbar = ({
+  toggleSidebarCollapse,
+  setIsPreview,
+  isPreview,
+  isEdit = false,
+}) => {
   const { t } = useTranslation();
   const { toggleMenu } = useContext(MenuContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -266,11 +271,15 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
         <Modal
           open={isModelOpen}
           onClose={() => setIsModelOpen(false)}
-          className={`fixed ${
-            currentLanguage == "en" ? "left-auto" : "right-auto"
-          } top-auto md:top-auto ${
-            currentLanguage == "en" ? "md:left-auto" : "md:right-auto"
-          }`}
+          className={
+            isEdit
+              ? `fixed mt-8 mx-4 sm:mx-6`
+              : `fixed ${
+                  currentLanguage == "en" ? "left-auto" : "right-auto"
+                } top-auto md:top-auto ${
+                  currentLanguage == "en" ? "md:left-auto" : "md:right-auto"
+                }`
+          }
         >
           <NewSideBar
             onClose={() => setIsModelOpen(false)}
@@ -325,7 +334,7 @@ const Navbar = ({ toggleSidebarCollapse, setIsPreview, isPreview }) => {
         <div className="flex items-center gap-[8px] cursor-pointer">
           <button
             onClick={() => setIsPreview((prev) => !prev)}
-            className="w-[63px] h-[24px] text-[10px] font-semibold bg-white hover:bg-neutral-200 active:bg-neutral-200 border-[0.5px] rounded-[50px] "
+            className="min-w-[63px] h-[24px] text-[10px] font-semibold bg-white hover:bg-neutral-200 active:bg-neutral-200 border-[0.5px] rounded-[50px] px-2"
           >
             {isPreview ? t("Edit") : t("Preview")}
           </button>

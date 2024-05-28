@@ -194,12 +194,18 @@ const CartPage = () => {
     } else {
       try {
         try {
+          if(paymentMethod == null) {
+            return toast.error(t("Please select the payment method."))
+          }
+
           let data  = {
             payment_method: paymentMethod,
             delivery_type: deliveryType,
             notes: orderNotes,
             couponCode: coupon,
           };
+
+          await AxiosInstance.post(`/orders/validate`, data);
           if (cart?.address.length > deliveryAddress) {
             data.address_id = cart.address[deliveryAddress].id;
           } else {
@@ -215,8 +221,8 @@ const CartPage = () => {
           toast.error(error.response.data.message);
         }
       } catch (error) {
-        toast.error(error.response.data.message);
         console.log(error);
+        toast.error(error.response.data.message);
       }
     }
   };
