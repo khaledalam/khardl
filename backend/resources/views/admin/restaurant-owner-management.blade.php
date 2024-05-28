@@ -241,7 +241,7 @@
                 <input type="text" id="password-input" required class="swal2-input" placeholder="{{ __('Enter password') }}">
             `,
             showCancelButton: true,
-            confirmButtonText: "{{ __('Delete') }}",
+            confirmButtonText: "{{ __('Delete permanently') }}",
             cancelButtonText: "{{ __('No') }}",
             confirmButtonColor: '#d33',
             preConfirm: () => {
