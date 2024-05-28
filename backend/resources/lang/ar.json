@@ -1541,5 +1541,16 @@
     "Distance scope":"نطاق المسافة",
     "Edit restaurant data":"تعديل بيانات المطعم",
     "If you upload new files, old files will be removed. If there is an existing file, this icon":"إذا قمت بتحميل ملفات جديدة ، فسيتم إزالة الملفات القديمة. إذا كان هناك ملف موجود ، فهذا الرمز",
-    "will appear in front of it.":"سوف تظهر أمامه."
+    "will appear in front of it.":"سوف تظهر أمامه.",
+    "Delete account":"حذف الحساب",
+    "Delete restaurant owner account":"حذف حساب مالك المطعم",
+    "Are you sure you want to delete this restaurant ?":"هل أنت متأكد أنك تريد حذف هذا المطعم؟",
+    "Enter restaurant name":"أدخل اسم المطعم",
+    "Enter password":"أدخل كلمة المرور",
+    "Restaurant Name(English)":"اسم المطعم (بالانجليزية)",
+    "Password":"كلمة المرور",
+    "Incorrect password.":"كلمة سر خاطئة.",
+    "Incorrect restaurant name":"اسم المطعم غير صحيح",
+    "Something went wrong":"هناك خطأ ما",
+    "Restaurant name":"اسم المطعم"
 }

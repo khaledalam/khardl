@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Central\RestaurantOwner\DeleteRestaurantRequest;
 use Carbon\Carbon;
 use App\Models\Log;
 use App\Models\User;
@@ -322,29 +323,6 @@ class AdminController extends Controller
 
     }
 
-
-
-
-
-    public function deleteRestaurant($id)
-    {
-        //
-        User::findOrFail($id)->delete();
-        $actions = [
-            'en' => 'Has deleted a restaurant with an ID of: ' . $id,
-            'ar' => 'حذف مطعم بمعرف: ' . $id,
-        ];
-        Log::create([
-            'user_id' => Auth::id(),
-            'action' => $actions,
-            'type' => LogTypes::DeleteRestaurant
-        ]);
-
-        if(app()->getLocale() === 'en')
-            return redirect()->back()->with('success', 'Deleted successfully.');
-        else
-            return redirect()->back()->with('success', 'حذف بنجاح.');
-    }
 
     public function deleteUser($id)
     {
@@ -834,5 +812,64 @@ class AdminController extends Controller
         return redirect()->route('admin.subscriptions')->with([
             'success' => __("Subscription has been updated"),
         ]);
+    }
+    public function deleteAccount(Request $request, User $user)
+    {
+        if (!$user->restaurant) {
+            $this->deleteROAccount($user);
+        }
+        return redirect()->back()->with('success', __('Deleted successfully'));
+    }
+    public function deleteROAccount($user)
+    {
+        $this->saveLogDeleteAccount($user);
+        $user->delete();
+    }
+    public function saveLogDeleteAccount($user)
+    {
+        $actions = [
+            'en' => 'Has deleted a restaurant owner account  with email : ' . $user->email,
+            'ar' => 'حذف حساب مالك مطعم وكان البريد الالكتروني: ' . $user->email,
+        ];
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => $actions,
+            'type' => LogTypes::DeleteRestaurantOwnerAccount,
+            'metadata' => [
+                'email' => $user->email ?? null,
+                'name' => $user->full_name ?? null,
+            ]
+        ]);
+    }
+    public function deleteRestaurant(DeleteRestaurantRequest $request, User $user)
+    {
+        try {
+            $this->destroyRestaurant($user);
+            $this->deleteROAccount($user);
+        } catch (\Exception $exception) {
+            \Sentry\captureException($exception);
+            return redirect()->back()->with('error', __('Something went wrong'));
+        }
+        return redirect()->back()->with('success', __('Deleted successfully'));
+    }
+    public function destroyRestaurant($user)
+    {
+        $restaurant_name = $user->restaurant_name;
+        $user->restaurant->delete();
+        $actions = [
+            'en' => 'Has deleted a restaurant with name : ' . $restaurant_name,
+            'ar' => 'حذف مطعم باسم: ' . $restaurant_name,
+        ];
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => $actions,
+            'type' => LogTypes::DeleteRestaurant,
+            'metadata' => [
+                'restaurant_name' => $restaurant_name ?? null,
+                'name' => $user->full_name ?? null,
+                'email' => $user->email ?? null
+            ]
+        ]);
+
     }
 }
