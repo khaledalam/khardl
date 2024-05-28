@@ -11,7 +11,7 @@ const EditorCategoryItemAlignment = ({ defaultValue, onChange, modalId }) => {
 
   const alignments = [
     {
-      position: "left",
+      position: "sides",
       icon: (
         <div className="flex flex-row justify-between items-center gap-2">
           <div className="w-3 h-3 border-2 border-gray-900 rounded-full"></div>
@@ -29,7 +29,7 @@ const EditorCategoryItemAlignment = ({ defaultValue, onChange, modalId }) => {
       ),
     },
     {
-      position: "none",
+      position: "hide",
       icon: <div>{t('text')}</div>,
     },
   ];

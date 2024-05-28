@@ -531,6 +531,7 @@ export const RestuarantEditor = () => {
         toggleSidebarCollapse={handleSidebarCollapse}
         setIsPreview={setIsPreview}
         isPreview={isPreview}
+        isEdit={true}
       />
       <div
         style={{ backgroundColor: page_color }}
