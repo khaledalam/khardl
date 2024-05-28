@@ -326,6 +326,20 @@
                                 </span>
                             </a>
                         </div>
+                        <div class="menu-item menu-accordion">
+                            <a href="{{route('table-reservations.index')}}">
+                                <span class="{{ ($link == 'table-reservations') ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <i class="fas fa-users"></i>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">{{__('Table reservations')}}</span>
+                                </span>
+                            </a>
+                        </div>
 
                         <!-- Restaurants -->
                         @if( $branchId)
