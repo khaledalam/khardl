@@ -10,6 +10,7 @@ use App\Models\Tenant;
 use App\Models\Promoter;
 use App\Mail\DeniedEmail;
 use App\Mail\ApprovedEmail;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
@@ -815,14 +816,20 @@ class AdminController extends Controller
     }
     public function deleteAccount(Request $request, User $user)
     {
-        if (!$user->restaurant) {
-            $this->deleteROAccount($user);
+        try {
+            if (!$user->restaurant) {
+                $this->deleteROAccount($user);
+            }
+            return redirect()->back()->with('success', __('Deleted successfully'));
+        } catch (\Exception $exception) {
+            \Sentry\captureException($exception);
+            return redirect()->back()->with('error', __('Something went wrong'));
         }
-        return redirect()->back()->with('success', __('Deleted successfully'));
     }
     public function deleteROAccount($user)
     {
         $this->saveLogDeleteAccount($user);
+        $this->deleteAccountFiles($user->id);
         $user->delete();
     }
     public function saveLogDeleteAccount($user)
@@ -855,7 +862,9 @@ class AdminController extends Controller
     public function destroyRestaurant($user)
     {
         $restaurant_name = $user->restaurant_name;
+        $restaurant_id  = $user->restaurant->id;
         $user->restaurant->delete();
+        $this->deleteRestaurantFiles($restaurant_id);
         $actions = [
             'en' => 'Has deleted a restaurant with name : ' . $restaurant_name,
             'ar' => 'حذف مطعم باسم: ' . $restaurant_name,
@@ -871,5 +880,22 @@ class AdminController extends Controller
             ]
         ]);
 
+    }
+    public function deleteRestaurantFiles($restaurant_id)
+    {
+        $suffixStorage = config('tenancy.filesystem.suffix_base');
+        $path = storage_path($suffixStorage.$restaurant_id);
+        if (File::exists($path)) {
+            File::deleteDirectory($path);
+        }
+    }
+    public function deleteAccountFiles($id)
+    {
+        $directory = User::STORAGE . '/' . $id;
+
+        $isExists = Storage::disk('private')->exists($directory);
+        if ($isExists) {
+            Storage::disk('private')->deleteDirectory($directory);
+        }
     }
 }
