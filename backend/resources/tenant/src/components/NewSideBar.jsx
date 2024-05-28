@@ -155,7 +155,7 @@ const NewSideBar = ({ onClose, isBranchModelOpen, setIsBranchModelOpen }) => {
       </div>
       <div
         onClick={() => onClose()}
-        className={`w-[25px] h-[25px] bg-white flex justify-center items-center rounded-full border border-black border-opacity-30 absolute  top-0 ${
+        className={`w-[25px] h-[25px] bg-white flex justify-center items-center rounded-full border cursor-pointer border-black border-opacity-30 absolute  top-0 ${
           currentLanguage == "ar" ? "left-[-30px]" : "right-[-30px]"
         }`}
       >
