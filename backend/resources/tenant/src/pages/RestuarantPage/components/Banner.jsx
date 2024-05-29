@@ -1,59 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import Sliderr from "../../EditorsPage/Restuarants/components/Sliderr";
-
-import EmptyBackground from "../../../assets/emptyBackground.png";
-import UploadIcon from "../../../assets/uploadIcon.png";
 import Skeleton from "react-loading-skeleton";
 
-const Banner = ({ restaurantStyle }) => {
+const Banner = React.memo(({ restaurantStyle }) => {
   const { t } = useTranslation();
 
-  const {
-    banner_image,
-    banner_images,
-    banner_background_color,
-    logo_shape,
-    banner_type,
-    banner_shape,
-  } = restaurantStyle;
+  const { banner_image, banner_images, banner_type } = restaurantStyle;
 
   const [listofBannerImages, setListofBannerImages] = useState([]);
-  const [uploadedSingleBanner, setUploadedSingleBanner] = useState(null);
 
   useEffect(() => {
-    if (banner_type == "slider" && banner_images?.length > 0) {
+    if (banner_type === "slider" && banner_images?.length > 0) {
       setListofBannerImages(
-        banner_images?.map((image) => {
-          return {
-            croppedImage: `${image.url}`,
-          };
-        })
+        banner_images.map((image) => ({
+          croppedImage: image.url,
+        }))
       );
+    } else if (banner_type === "one-photo" && banner_image) {
+      setListofBannerImages([{ croppedImage: banner_image.url }]);
+    } else {
+      setListofBannerImages([]);
     }
-    if (banner_type == "one-photo" && banner_image) {
-      setListofBannerImages([{ croppedImage: `${banner_image.url}` }]);
-      setUploadedSingleBanner(`${banner_image.url}`);
-    }
-  }, [restaurantStyle]);
+  }, [banner_type, banner_images, banner_image]);
 
-  return listofBannerImages?.length >= 1 ? (
-    <>
-      <div className={`w-full aspect-[2/1]`}>
-        <Sliderr
-          banner_images={listofBannerImages}
-          setIsBannerModalOpened={() => {}}
-        />
+  if (listofBannerImages.length === 0) {
+    return (
+      <div className="w-full aspect-[2/1]">
+        <Skeleton className="h-full w-full" />
       </div>
-    </>
-  ) : (
+    );
+  }
+
+  return (
     <div className="w-full aspect-[2/1]">
-      <Skeleton className="h-full w-full" />
+      <Sliderr
+        banner_images={listofBannerImages}
+        setIsBannerModalOpened={() => {}}
+      />
     </div>
   );
-  // ) : (
-  //   <div></div>
-  // );
-};
+});
 
 export default Banner;

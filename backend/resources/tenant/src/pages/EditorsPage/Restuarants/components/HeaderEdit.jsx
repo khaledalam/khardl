@@ -65,7 +65,7 @@ const HeaderEdit = ({
         <div
           // onClick={() => dispatch(SetSideBar(!isSideBarOpen))}
           style={{ fontWeight: restaurantStyle?.text_fontWeight }}
-          className={`flex items-center gap-3 cursor-pointer relative`}
+          className={`flex items-center gap-3 relative`}
         >
           <img src={HeaderSidebar} alt="sidebar icon" />
           <img
@@ -90,7 +90,7 @@ const HeaderEdit = ({
           backgroundColor: order_cart_color ? order_cart_color : "#F3F3F3",
           borderRadius: order_cart_radius ? `${order_cart_radius}px` : "50px",
         }}
-        className={`w-[30px] h-[30px] pl-[8px] pr-[7px] pb-[9px] pt-[6px] relative flex items-center justify-center cursor-pointer self-center shadow-md ${
+        className={`w-[30px] h-[30px] pl-[8px] pr-[7px] pb-[9px] pt-[6px] relative flex items-center justify-center self-center shadow-md ${
           order_cart_position == "left"
             ? "justify-self-start"
             : order_cart_position == "right"
@@ -130,18 +130,22 @@ const HeaderEdit = ({
           <img
             src={logoUpload || logo}
             alt={"logo icon"}
-            className="w-[30px] h-[30px] shadow-md"
+            className="w-[30px] h-[30px] shadow-md cursor-pointer"
             style={{
               borderRadius: logo_border_radius
                 ? `${logo_border_radius}px`
                 : "50px",
             }}
+            onClick={() => document.getElementById("file_input_logo").click()}
           />
           <input
             type="file"
             name="logo"
-            id="logo"
-            className="opacity-0 absolute top-0 object-cover cursor-pointer"
+            id="file_input_logo"
+            style={{
+              display: "none",
+            }}
+            className="opacity-0 absolute top-0 object-cover"
             ref={fileInputRef}
             accept="image/*"
             onChange={(event) => handleLogoUpload(event, fileInputRef)}
