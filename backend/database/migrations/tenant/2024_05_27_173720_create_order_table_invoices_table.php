@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\Order\TableInvoice;
+use App\Enums\Order\TableInvoiceEnum;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,9 +18,10 @@ return new class extends Migration
             $table->dateTime("date_time");
             $table->string("environment")->nullable()->comment('indoor , outdoor');
             $table->string("note")->nullable();
-            $table->string("status")->default(TableInvoice::PENDING->value);
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string("status")->default(TableInvoiceEnum::PENDING->value);
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->string('new_user')->nullable();
             $table->unsignedBigInteger('branch_id');
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
             $table->timestamps();

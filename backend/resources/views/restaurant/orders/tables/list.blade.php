@@ -121,7 +121,7 @@
                             <th class="text-end min-w-100px">{{ __('notes') }}</th>
                             <th class="text-end min-w-100px">{{ __('Date') }}</th>
                             <th class="text-end min-w-100px">
-                                <a href="{{ route('restaurant.orders_add') }}">
+                                <a href="{{ route('table-reservations.create') }}">
                                     <button class="btn btn-khardl btn-sm" type="button">
                                         {{ __('Add new') }}
                                     </button>

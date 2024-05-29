@@ -240,7 +240,10 @@ Route::group([
                 Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
             });
             Route::middleware('permission:can_mange_orders')->controller(TenantOrderController::class)->group(function () {
+                Route::get('table-reservations/validate-time',[TableReservationController::class,'validateTime']);
+                Route::get('table-reservations/get-branch-hours/{branchId}',[TableReservationController::class,'getBranchHours']);
                 Route::resource('table-reservations',TableReservationController::class);
+
             });
             /* End order routes */
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
