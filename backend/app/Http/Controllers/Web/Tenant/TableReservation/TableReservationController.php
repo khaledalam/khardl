@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Web\Tenant\TableReservation;
 
+use App\Http\Controllers\API\BaseController;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
 use App\Http\Controllers\Controller;
+use App\Rules\ValidateTableDatetime;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\OrderTableInvoice;
 use App\Http\Requests\TableReservationRequest;
+use App\Http\Resources\OrderTableResource;
 
-class TableReservationController extends Controller
+class TableReservationController extends BaseController
 {
  
     public function index()
@@ -31,12 +34,22 @@ class TableReservationController extends Controller
     }
     public function store(TableReservationRequest $request)
     {
-        OrderTableInvoice::create($request->validated());
+        $order = OrderTableInvoice::create($request->validated());
+        if ($request->expectsJson()) {
+            return $this->sendResponse(new OrderTableResource($order),__('Created successfully'));
+        }
         return redirect()->route('table-reservations.index')->with('success', __('Created successfully'));
+
 
     }
     public function validateTime(Request $request){
-       return OrderTableInvoice::ValidateDateTime($request->branch_id,$request->datetime);
+        $request->validate([
+            'branch_id' => 'required',
+            'datetime' => ['required', 'date_format:Y-m-d H', new ValidateTableDatetime($request->branch_id)],
+        ]);
+    }
+    public function reservations(){
+        return $this->sendResponse(OrderTableResource::collection(Auth::user()->table_reservations),__('Created successfully'));
     }
     public function getBranchHours($branchId){
         $branch = Branch::find($branchId);

@@ -119,9 +119,10 @@
                             <th class="text-end min-w-70px">{{ __('Number of guests') }}</th>
                             <th class="text-end min-w-100px">{{ __('type of reservation') }}</th>
                             <th class="text-end min-w-100px">{{ __('notes') }}</th>
-                            <th class="text-end min-w-100px">{{ __('Date') }}</th>
+                            <th class="text-end min-w-100px">{{ __('Reservation time') }}</th>
+                            <th class="text-end min-w-100px">{{ __('Created at') }}</th>
                             <th class="text-end min-w-100px">
-                                <a href="{{ route('table-reservations.create') }}">
+                                <a href="{{ route('restaurant.orders_add') }}">
                                     <button class="btn btn-khardl btn-sm" type="button">
                                         {{ __('Add new') }}
                                     </button>
@@ -212,6 +213,9 @@
                                     {{$table->note}}
                                 </span>
                             </p>
+                        </td>
+                        <td class="text-end" data-order="2022-03-22">
+                            <span class="fw-bolder">{{Carbon\Carbon::parse($table->date_time)->format('d-m-y h:i A')}}</span>
                         </td>
                         <!--begin::Date Added=-->
                         <td class="text-end" data-order="2022-03-22">

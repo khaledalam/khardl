@@ -548,6 +548,10 @@ Route::middleware([
                 ]);
                 Route::post("orders/validate", [CustomerOrderController::class, 'validateOrder']);
                 Route::post("orders/payment/redirect", [CustomerOrderController::class, 'paymentRedirect']);
+
+                Route::get("table-reservations", [TableReservationController::class, 'reservations']);
+                Route::post("table-reservations/store", [TableReservationController::class, 'store']);
+               
             });
         });
 

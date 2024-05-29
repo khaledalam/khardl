@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use App\Enums\Order\TableInvoiceEnum;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
@@ -27,7 +28,8 @@ class TableReservationRequest extends FormRequest
 
         return [
             'n_of_guests' => 'required|integer|min:1',
-            'date_time' => 'required|date_format:Y-m-d H:i:s',
+            'branch_id' => 'required|integer',
+            'date_time' => 'required|after_or_equal:today|date_format:Y-m-d H',
             'environment' => 'required|in:indoor,outdoor',
             'user_id' => [
                 Rule::requiredIf(function () {
@@ -40,5 +42,14 @@ class TableReservationRequest extends FormRequest
             'new_user'=>"nullable|string",
             'status' => ['required',new Enum(TableInvoiceEnum::class)]
         ];
+    }
+    protected function prepareForValidation()
+    {
+        if(Auth::user()->isCustomer())
+            $this->merge([
+                'user_id' => Auth::id(),
+                'new_user'=>null,
+                'status'=>TableInvoiceEnum::PENDING->value
+            ]);
     }
 }

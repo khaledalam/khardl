@@ -123,7 +123,7 @@
                                             <label class=" form-label">{{ __('notes')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="email" name="note" class="form-control mb-2" placeholder="{{ __('notes')}}" value="{{old('note')}}"  />
+                                            <input type="text" name="note" class="form-control mb-2" placeholder="{{ __('notes')}}" value="{{old('note')}}"  />
                                             <!--end::Input-->
                                             <!--begin::Description-->
 
@@ -243,14 +243,9 @@
                                         branch_id: branchId,
                                         datetime: formattedDate
                                     },
-                                    success: function(response) {
-                                        if (!response.valid) {
-                                            alert(response.message);
-                                            instance.clear();
-                                        }
-                                    },
-                                    error: function() {
-                                        alert("{{__('An error occurred while validating the selected time.')}}");
+                                    error: function(response) {
+                                        instance.clear();
+                                        alert(response.responseJSON.message);
                                     }
                                 });
                             }else {

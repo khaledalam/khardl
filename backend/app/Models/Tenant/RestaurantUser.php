@@ -196,6 +196,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Order::class, 'user_id', 'id');
     }
+    public function table_reservations(): HasMany
+    {
+        return $this->hasMany(OrderTableInvoice::class, 'user_id');
+    }
     public function driver_orders(): HasMany
     {
         return $this->hasMany(Order::class, 'driver_id', 'id');
