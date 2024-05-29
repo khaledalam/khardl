@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
+use App\Rules\ValidateTableDatetime;
 use Illuminate\Support\Facades\Auth;
 use App\Enums\Order\TableInvoiceEnum;
 use Illuminate\Validation\Rules\Enum;
@@ -29,11 +30,11 @@ class TableReservationRequest extends FormRequest
         return [
             'n_of_guests' => 'required|integer|min:1',
             'branch_id' => 'required|integer',
-            'date_time' => 'required|after_or_equal:today|date_format:Y-m-d H',
+            'date_time' => ['required','after_or_equal:today','date_format:Y-m-d H',new ValidateTableDatetime($this->input('new_customer'))],
             'environment' => 'required|in:indoor,outdoor',
             'user_id' => [
                 Rule::requiredIf(function () {
-                    return is_null($this->input('new_customer'));
+                    return is_null($this->input('new_user'));
                 }),
                 'required',
                 'integer'

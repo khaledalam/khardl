@@ -122,7 +122,7 @@
                             <th class="text-end min-w-100px">{{ __('Reservation time') }}</th>
                             <th class="text-end min-w-100px">{{ __('Created at') }}</th>
                             <th class="text-end min-w-100px">
-                                <a href="{{ route('restaurant.orders_add') }}">
+                                <a href="{{ route('table-reservations.create') }}">
                                     <button class="btn btn-khardl btn-sm" type="button">
                                         {{ __('Add new') }}
                                     </button>
@@ -145,7 +145,7 @@
                         <!--end::Checkbox-->
                         <!--begin::Order ID=-->
                         <td data-kt-ecommerce-order-filter="order_id">
-                            <a href="{{route('restaurant.branch.order',['order'=>$table->id])}}" class="text-gray-800 text-hover-khardl fw-bolder">{{$table->id}}</a>
+                            <a href="#" class="text-gray-800 text-hover-khardl fw-bolder">{{$table->id}}</a>
                         </td>
                         <!--end::Order ID=-->
                         <!--begin::Customer=-->
@@ -160,7 +160,7 @@
                                 <!--end::Avatar-->
                                 <div class="ms-5">
                                     <!--begin::Title-->
-                                    <a href="{{route('restaurant.branch.order',['order'=>$table->id])}}" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">
+                                    <a href="#" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">
                                         {{$table->user->fullName}}
                                     </a>
                                     <!--end::Title-->
@@ -170,7 +170,7 @@
                         <td>
                             <div >
                                 <!--begin::Title-->
-                                <a href="{{route('restaurant.branch.order',['order'=>$table->id])}}" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">
+                                <a href="#" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">
                                     {{$table->user?->phone}}
                                 </a>
                                 <!--end::Title-->
@@ -215,7 +215,7 @@
                             </p>
                         </td>
                         <td class="text-end" data-order="2022-03-22">
-                            <span class="fw-bolder">{{Carbon\Carbon::parse($table->date_time)->format('d-m-y h:i A')}}</span>
+                            <span class="fw-bolder">{{Carbon\Carbon::parse($table->date_time)->format('d-m-Y h:i A')}}</span>
                         </td>
                         <!--begin::Date Added=-->
                         <td class="text-end" data-order="2022-03-22">
@@ -235,9 +235,7 @@
                             <!--begin::Menu-->
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="{{route('restaurant.branch.order',['order'=>$table->id])}}" class="menu-link px-3">{{ __('View') }}</a>
-                                </div>
+                                
                                 <!--end::Menu item-->
 
                                 <!--end::Menu item-->
