@@ -196,7 +196,7 @@ class SummaryService
             'aggregate_field' => 'count',
             'aggregate_function' => 'sum',
             'filter_field' => 'created_at',
-            'filter_days' => 7,
+            'filter_days' => $count + 1,
             'chart_color' => '194, 218, 8',
         ];
         return new LaravelChart($chart_options);
