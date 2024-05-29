@@ -131,7 +131,7 @@ const MainBoardEditor = ({
     menu_section_background_color,
     menu_section_radius,
     banner_radius,
-    price_background_color
+    price_background_color,
   } = restuarantEditorStyle;
 
   const [listofBannerImages, setListofBannerImages] = useState([]);
@@ -326,7 +326,6 @@ const MainBoardEditor = ({
   };
 
   const removeUploadedImage = (index) => {
-
     if (index >= 0 && index < listofBannerImages?.length) {
       setListofBannerImages(listofBannerImages.filter((_, id) => id !== index));
       if (listofBannerImages?.length < 2) {
@@ -411,8 +410,6 @@ const MainBoardEditor = ({
     }
   };
 
-
-
   return (
     <div
       style={{
@@ -422,7 +419,7 @@ const MainBoardEditor = ({
       }}
       className="w-full p-4 flex flex-col gap-[16px] relative"
     >
-      <style jsx>{`
+      <style jsx="true">{`
         .custom-checkbox:checked {
           border-color: ${price_background_color || "#7D0A0A"} !important;
           --tw-ring-color: ${price_background_color || "#7D0A0A"} !important;

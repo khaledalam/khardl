@@ -1,16 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Skeleton from "react-loading-skeleton";
 import Header from "./Header";
 // import Logo from "./Logo";
 import Banner from "./Banner";
 import Category from "./Category";
-import SocialMedia from "./SocialMedia";
 import Footer from "./Footer";
 import Login from "./Login";
 import Register from "./Register";
-
 import {
   SetSideBar,
   SetLoginModal,
@@ -29,18 +27,41 @@ const FullPage = ({ categories }) => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { page_color, isSideBarOpen, isLoginModalOpen, isRegisterModalOpen } =
     restaurantStyle;
-
-  let isModelOpen = isSideBarOpen;
-  let setIsModelOpen = (value) => dispatch(SetSideBar(value));
-
   const currentLanguage = useSelector(
     (state) => state.languageMode.languageMode
   );
 
   const [isBranchModelOpen, setIsBranchModelOpen] = useState(false);
+
+  const handleGotoCart = useCallback(() => {
+    if (!isLoggedIn) {
+      dispatch(SetLoginModal(true));
+    } else {
+      navigate("/cart");
+    }
+  }, [isLoggedIn, dispatch, navigate]);
+
+  const handleCloseModal = useCallback(() => {
+    if (isLoginModalOpen) dispatch(SetLoginModal(false));
+    if (isRegisterModalOpen) dispatch(SetRegisterModal(false));
+  }, [isLoginModalOpen, isRegisterModalOpen, dispatch]);
+
   useEffect(() => {
-    if (isModelOpen === true && isBranchModelOpen === true) {
-      () => setIsModelOpen(false);
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 27) {
+        handleCloseModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleCloseModal]);
+
+  useEffect(() => {
+    if (isModelOpen && isBranchModelOpen) {
+      setIsModelOpen(false);
     }
   }, [isBranchModelOpen]);
 
@@ -48,48 +69,25 @@ const FullPage = ({ categories }) => {
     setIsModelOpen(false);
   }, [isBranchModelOpen, isLoginModalOpen]);
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.keyCode === 27) {
-        if (isLoginModalOpen) {
-          dispatch(SetLoginModal(false));
-        }
-        if (isRegisterModalOpen) {
-          dispatch(SetRegisterModal(false));
-        }
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isLoginModalOpen, isRegisterModalOpen, dispatch]);
+  const isModelOpen = useMemo(() => isSideBarOpen, [isSideBarOpen]);
+  const setIsModelOpen = useCallback(
+    (value) => dispatch(SetSideBar(value)),
+    [dispatch]
+  );
 
   return (
     <div
-      style={{
-        backgroundColor: page_color,
-      }}
-      className=" h-full overflow-y-scroll hide-scroll"
+      style={{ backgroundColor: page_color }}
+      className="h-full overflow-y-scroll hide-scroll"
     >
       <div
-        style={{
-          backgroundColor: page_color,
-        }}
+        style={{ backgroundColor: page_color }}
         className="w-full h-full p-2 pt-1 md:p-4 flex flex-col gap-[16px] relative mx-auto max-w-[1200px]"
       >
         <Header
           restaurantStyle={restaurantStyle}
           categories={categories}
-          handleGotoCart={() => {
-            if (!isLoggedIn) {
-              dispatch(SetLoginModal(true));
-            } else {
-              navigate("/cart");
-            }
-          }}
+          handleGotoCart={handleGotoCart}
         />
         {/* <Logo restaurantStyle={restaurantStyle} /> */}
         <Banner restaurantStyle={restaurantStyle} />
@@ -103,22 +101,16 @@ const FullPage = ({ categories }) => {
         {/* <SocialMedia restaurantStyle={restaurantStyle} /> */}
         <Footer restaurantStyle={restaurantStyle} />
       </div>
-      {isBranchModelOpen ? (
+      {isBranchModelOpen && (
         <Modal
           open={isBranchModelOpen}
-          onClose={() => {
-            setIsBranchModelOpen(false);
-          }}
+          onClose={() => setIsBranchModelOpen(false)}
           className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[680px]"
         >
-          <Branches
-            closingFunc={() => {
-              setIsBranchModelOpen(false);
-            }}
-            closingFuncSideMenu={() => setIsModelOpen(false)}
-          />
+          <Branches closingFunc={() => setIsBranchModelOpen(false)} />
         </Modal>
-      ) : isLoginModalOpen ? (
+      )}
+      {isLoginModalOpen && (
         <Modal
           open={isLoginModalOpen}
           onClose={() => dispatch(SetLoginModal(false))}
@@ -126,7 +118,8 @@ const FullPage = ({ categories }) => {
         >
           <Login closingFunc={() => dispatch(SetLoginModal(false))} />
         </Modal>
-      ) : isRegisterModalOpen ? (
+      )}
+      {isRegisterModalOpen && (
         <Modal
           open={isRegisterModalOpen}
           onClose={() => dispatch(SetRegisterModal(false))}
@@ -134,19 +127,15 @@ const FullPage = ({ categories }) => {
         >
           <Register closingFunc={() => dispatch(SetRegisterModal(false))} />
         </Modal>
-      ) : (
+      )}
+      {isModelOpen && (
         <>
           <div
-            className={`fixed top-0 left-0 w-screen h-screen z-[999] bg-black bg-opacity-50 ${
-              isModelOpen ? "" : "hidden"
-            }`}
+            className="fixed top-0 left-0 w-screen h-screen z-[999] bg-black bg-opacity-50"
             onClick={() => setIsModelOpen(false)}
           />
-          {/* <div className="relative"> */}
           <div
             className={`absolute z-[1000] top-[60px] ${
-              isModelOpen ? "" : "hidden"
-            } ${
               currentLanguage === "en"
                 ? "left-auto ml-[4%]"
                 : "right-auto mr-[4%]"
@@ -157,18 +146,7 @@ const FullPage = ({ categories }) => {
               isBranchModelOpen={isBranchModelOpen}
               setIsBranchModelOpen={setIsBranchModelOpen}
             />
-
-            {/* <Modal
-              open={isModelOpen}
-              onClose={() => setIsModelOpen(false)}
-              className={`fixed ${
-                currentLanguage == "en" ? "left-auto" : "right-auto"
-              } top-[60px] md:top-[60px] ${
-                currentLanguage == "en" ? "md:left-auto" : "md:right-auto"
-              }`}
-            ></Modal> */}
           </div>
-          {/* </div> */}
         </>
       )}
     </div>
