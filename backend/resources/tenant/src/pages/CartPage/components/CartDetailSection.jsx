@@ -19,12 +19,8 @@ const CartDetailSection = ({
   );
 
   return (
-    <div
-      key={name}
-      className="flex align-items-center mt-4"
-      title={title}
-    >
-      <style jsx>{`
+    <div key={name} className="flex align-items-center mt-4" title={title}>
+      <style jsx="true">{`
         .custom-radiobutton.p-highlight .p-radiobutton-box {
           background-color: ${restaurantEditorStyle?.price_background_color ||
           "#e5e7eb"};
