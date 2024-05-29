@@ -36,10 +36,11 @@
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <button type="submit" class="btn btn-khardl me-5">{{ __('search')}}</button>
+                                    <button type="submit" class="btn btn-active-light-khardl me-5">{{ __('search')}}</button>
                                 </div>
                             </div>
                         </form>
+                        <a href="{{ route('admin.owner-information.create') }}" class="btn btn-khardl">{{ __("Add new") }}</a>
                     </h3>
                 </div>
                 <!--end::Header-->

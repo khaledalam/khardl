@@ -237,7 +237,8 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     ->controller(RestaurantOwnerController::class)->group(function () {
                         Route::get('/show-restaurant-owner-info/{user}', 'show')->name('show');
                         Route::post('/update-restaurant-owner-info/{user}', 'update')->name('update');
-
+                        Route::get('/create-restaurant-owner', 'create')->name('create');
+                        Route::post('/create-restaurant-owner', 'store')->name('store');
                     });
 //                    Route::get('/order-inquiry', [AdminController::class, 'orderInquiry'])->middleware('permission:can_access_restaurants')->name('order-inquiry');
                     Route::delete('/user-management/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('permission:can_edit_admins')->name('delete-user');

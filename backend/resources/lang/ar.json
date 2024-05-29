@@ -1553,5 +1553,6 @@
     "Incorrect restaurant name":"اسم المطعم غير صحيح",
     "Something went wrong":"هناك خطأ ما",
     "Restaurant name":"اسم المطعم",
-    "Delete permanently":"حذف نهائي"
+    "Delete permanently":"حذف نهائي",
+    "Create restaurant":"إنشاء مطعم"
 }
