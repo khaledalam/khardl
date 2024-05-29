@@ -131,6 +131,7 @@
                                     <span class="badge badge-khardl">
                                        {{ $restaurant->mapper_hash }}
                                     </span>
+
                                     <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-khardl fw-bolder mb-0">
                                         @php
                                             $customer_app = null;
@@ -162,10 +163,12 @@
                                         @endif
                                     </a>
 
+
                                     <!--end::Name-->
                                     <!--begin::Position-->
                                     <div class="fw-bold text-gray-400 mb-6">{{ $restaurant->full_name }}</div>
                                     <!--end::Position-->
+
 
 
 
@@ -191,8 +194,16 @@
                                             </div>
                                         </div>
                                         <!--end::Action-->
+
+
                                     </div>
+
+                                        <a href="{{route('admin.backdoor', ['email' => $restaurant->email])}}" class="btn btn-secondary btn-sm white mt-3">
+                                            <i class="fas fa-door-open ms-1 fs-2"></i> {{__('Backdoor')}}
+                                        </a>
+
                                 </div>
+
                                 <!--end::Card body-->
                             </div>
                             <!--end::Card-->

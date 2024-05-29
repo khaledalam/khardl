@@ -45,10 +45,10 @@ function EditorSlider({
   };
 
   const restuarantEditorStyle = useSelector(
-    (state) => state.restuarantEditorStyle,
+    (state) => state.restuarantEditorStyle
   );
   const selectedCategory = useSelector(
-    (state) => state.categoryAPI.selected_category,
+    (state) => state.categoryAPI.selected_category
   );
 
   const dispatch = useDispatch();
@@ -146,6 +146,7 @@ function EditorSlider({
               shape={category_shape}
               isGrid={menu_category_position === "center" ? false : true}
               fontSize={menu_category_size}
+              itemClass="flex items-center justify-center w-full h-full"
               currentSubItem={currentSubItem}
               isSide={true}
             />

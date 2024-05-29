@@ -36,7 +36,7 @@ class RegisterController extends BaseController
     {
         $input = $request->validated();
         $emailKey = str_replace('.', '_', $input['email']);
-        $input = $request->validated(); 
+        $input = $request->validated();
         $emailKey = str_replace('.', '_', $input['email']);
         if (!$session = Session::get('register_' . $emailKey)) {
             if ($session['verification_code'] != $request->otp) {
@@ -116,7 +116,11 @@ class RegisterController extends BaseController
         Log::create([
             'user_id' => Auth::id(),
             'action' => $actions,
-            'type' => LogTypes::CreateNewRestaurant
+            'type' => LogTypes::CreateNewRestaurant,
+            'metadata' => [
+                'email' => $user->email ?? null,
+                'restaurant_name' => $user->restaurant_name ?? null,
+            ]
         ]);
         return $tenant;
     }

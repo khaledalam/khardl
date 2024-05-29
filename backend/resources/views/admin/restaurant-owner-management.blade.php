@@ -58,7 +58,10 @@
                                     <th class="min-w-150px">{{ __('phone-number')}}</th>
                                     <th class="min-w-150px">{{ __('email')}}</th>
                                     <th class="min-w-150px">{{ __('restaurant')}}</th>
-                                    <th class="min-w-150px text-end">{{ __('Allow Login')}}</th>
+                                    <th class="min-w-150px">{{ __('Allow Login')}}</th>
+                                    @if (Auth::user()->hasPermission('can_delete_restaurants'))
+                                    <th class="min-w-150px ">{{ __('Actions')}}</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <!--end::Table head-->
@@ -114,7 +117,7 @@
                                         </a>
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="d-flex justify-content-center">
                                         <div class="d-flex justify-content-end flex-shrink-0">
                                             <a href="#" class="btn  btn-active-khardl btn-sm me-1 toggle-status-btn" data-user-id="{{ $admin->id }}">
                                                 <span class="svg-icon svg-icon-3">
@@ -124,10 +127,33 @@
                                                     </div>
                                                 </span>
                                             </a>
-
-
                                         </div>
                                     </td>
+                                    @if (Auth::user()->hasPermission('can_delete_restaurants'))
+                                    <td>
+                                        @if ($admin->restaurant)
+                                        <form  id="delete-restaurant-{{ $admin->id }}" href="#" action="{{ route('admin.delete-restaurant', ['user' => $admin->id]) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                            <input type="hidden" name="restaurant_name" id="restaurant_name_{{ $admin->id }}">
+                                            <input type="hidden" name="password" id="password_{{ $admin->id }}">
+                                            <button type="button" class="btn btn-danger btn-sm" onclick='deleteRestaurant("{{ $admin->id }}")'>
+                                                <i class="fa fa-trash-alt text-white px-1"></i>
+                                                {{ __('Delete restaurant') }}
+                                            </button>
+                                        </form>
+                                        @else
+                                        <form class="delete-form" action="{{ route('admin.delete-account', ['user' => $admin->id]) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="delete-button btn btn-danger btn-sm">
+                                                <i class="fa fa-trash-alt text-white px-1"></i>
+                                                {{ __('Delete account') }}
+                                            </button>
+                                          </form>
+                                        @endif
+                                    </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -204,4 +230,46 @@
     });
 
 </script>
+@push('scripts')
+    <script>
+       function deleteRestaurant(user) {
+        event.preventDefault();
+
+        Swal.fire({
+            text: `{{ __("Are you sure you want to delete this restaurant ?") }}`,
+            icon: 'warning',
+            html: `
+                <label>{{ __('Restaurant Name(English)') }}</label>
+            <input type="text" id="restaurant-name-input" required class="swal2-input" placeholder="{{ __('Enter restaurant name') }}">
+                <label>{{ __('Password') }}</label>
+                <input type="text" id="password-input" required class="swal2-input" placeholder="{{ __('Enter password') }}">
+            `,
+            showCancelButton: true,
+            confirmButtonText: "{{ __('Delete permanently') }}",
+            cancelButtonText: "{{ __('No') }}",
+            confirmButtonColor: '#d33',
+            preConfirm: () => {
+                return {
+                    restaurant_name: document.getElementById('restaurant-name-input').value,
+                    password: document.getElementById('password-input').value
+                }
+            }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Get the form and inputs
+                    var form = document.getElementById(`delete-restaurant-${user}`);
+                    var restaurantNameInput = document.getElementById(`restaurant_name_${user}`);
+                    var passwordInput = document.getElementById(`password_${user}`);
+
+                    // Set the values from the Swal inputs to the hidden form inputs
+                    restaurantNameInput.value = result.value.restaurant_name;
+                    passwordInput.value = result.value.password;
+
+                    // Submit the form
+                    form.submit();
+                }
+            });
+        }
+    </script>
+    @endpush
 @endsection

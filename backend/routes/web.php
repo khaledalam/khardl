@@ -89,6 +89,8 @@ Route::get('/health', static function (){
 })->name('health');
 
 Route::get('/test', function (){
+    $tenant = Tenant::find('294c6ebd-9a4a-433f-a4c2-e285415beec6');
+    $tenant->delete();
     return response()->json();
 })->name('test');
 
@@ -173,10 +175,12 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                 Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
                 Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin']],function () {
                     Route::get('/dashboard', [SuperAdminDashboard::class, 'index'])->middleware('permission:can_access_dashboard')->name('dashboard');
+
+                    Route::get('/backdoor/{email}', [AdminController::class, 'backdoor'])->middleware('permission:can_add_admins')->name('backdoor');
+
                     Route::post('/approve/{id}', [AdminController::class, 'approveUser'])->middleware('permission:can_approve_restaurants')->name('approveUser');
                     Route::post('/deny/{id}', [AdminController::class, 'denyUser'])->middleware('permission:can_approve_restaurants')->name('denyUser');
                     Route::get('/add-user', [AdminController::class, 'addUser'])->middleware('permission:can_add_admins')->name('add-user');
-                    Route::delete('/delete/{id}', [AdminController::class, 'deleteRestaurant'])->middleware('permission:can_delete_restaurants')->name('delete-restaurant');
                     Route::post('/generate-user', [AdminController::class, 'generateUser'])->middleware('permission:can_add_admins')->name('generate-user');
                     Route::get('/logs', [LogController::class, 'logs'])->middleware('permission:can_see_logs')->name('log');
                     Route::controller(RestaurantController::class)->group(function () {
@@ -216,7 +220,13 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     ->middleware('permission:can_manage_notifications_receipt');
                     Route::get('/user-management', [AdminController::class, 'userManagement'])->middleware('permission:can_see_admins')->name('user-management');
                     Route::get('/restaurant-owner-management', [AdminController::class, 'restaurantOwnerManagement'])->middleware('permission:can_see_restaurant_owners')->name('restaurant-owner-management');
-                    Route::middleware('permission:can_see_restaurant_owners')
+                    Route::delete('/delete-RO-account/{user}', [AdminController::class, 'deleteAccount'])
+                    ->middleware('permission:can_see_restaurant_owners')
+                    ->name('delete-account');
+                    Route::delete('/delete-restaurant/{user}', [AdminController::class, 'deleteRestaurant'])
+                    ->middleware('permission:can_delete_restaurants')
+                    ->name('delete-restaurant');
+                    Route::middleware('permission:can_delete_restaurants')
                     ->name('complete-step-two.')
                     ->controller(CompleteStepTwoController::class)->group(function () {
                         Route::get('/complete-step-two/{user}', 'completeStepTwo')->name('index');

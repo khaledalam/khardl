@@ -169,6 +169,10 @@
                                                             <br>
                                                             {{ __('Name') }} :  {{ $log->metadata['name'] }}
                                                         @endif
+                                                        @if (isset($log->metadata['restaurant_name']))
+                                                            <br>
+                                                            {{ __('Restaurant name') }} :  {{ $log->metadata['restaurant_name'] }}
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
