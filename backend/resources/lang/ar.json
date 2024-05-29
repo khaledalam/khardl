@@ -1555,5 +1555,6 @@
     "Restaurant name":"اسم المطعم",
     "Delete permanently":"حذف نهائي",
     "Create restaurant":"إنشاء مطعم",
-    "This restaurant name is already taken":"تم أخذ اسم المطعم هذا بالفعل"
+    "This restaurant name is already taken":"تم أخذ اسم المطعم هذا بالفعل",
+    "This Restaurant was made manually":"تم انشاء هذا المطعم يدويًا"
 }

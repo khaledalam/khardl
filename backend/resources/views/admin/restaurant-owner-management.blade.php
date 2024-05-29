@@ -109,6 +109,9 @@
                                             <span class="badge badge-warning">{{ __('inactive') }}</span>
                                             @endif
                                         </a>
+                                        @if (!$admin->restaurant_name_ar)
+                                        <span class="text-muted">({{ __('This Restaurant was made manually') }})</span>
+                                        @endif
                                         @else
                                         <span class="badge badge-secondary">{{ __('Not complete step 2') }}</span>
                                         <a href="{{ route('admin.complete-step-two.index',['user' => $admin->id]) }}" class="text-muted d-block" target="_blank">

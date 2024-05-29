@@ -54,7 +54,7 @@ class RestaurantOwnerService
                 $this->createOrUpdateTraderRequirements($user,$request);
             }
             return redirect()->route('admin.restaurant-owner-management')->with('success', __('Updated successfully'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             \Sentry\captureException($e);
             return redirect()->route('admin.restaurant-owner-management')->with('error', __('An error occurred'));
         }
