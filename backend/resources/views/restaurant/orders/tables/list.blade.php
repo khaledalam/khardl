@@ -62,23 +62,13 @@
                         <select class="form-select form-select-solid" name="status">
                             <option value="">{{ __('Status') }}</option>
                             <option value="pending" {{ request('status') =='pending' ? 'selected':'' }}>{{ __('Pending') }}</option>
-                            <option value="received_by_restaurant" {{ request('status') =='received_by_restaurant' ? 'selected':'' }}>{{ __('received_by_restaurant') }}</option>
-                            <option value="ready" {{ request('status') =='ready' ? 'selected':'' }}>{{ __('Ready') }}</option>
                             <option value="accepted" {{ request('status') =='accepted' ? 'selected':'' }}>{{ __('Accepted') }}</option>
-                            <option value="completed" {{ request('status') =='completed' ? 'selected':'' }}>{{ __('Completed') }}</option>
-                            <option value="cancelled" {{ request('status') =='cancelled' ? 'selected':'' }}>{{ __('Cancelled') }}</option>
+                            <option value="completed" {{ request('status') =='paid' ? 'selected':'' }}>{{ __('Paid') }}</option>
+                            <option value="cancelled" {{ request('status') =='rejected' ? 'selected':'' }}>{{ __('Rejected') }}</option>
                         </select>
                         <!--end::Select2-->
                     </div>
-                    <div class="w-100 mw-150px">
-                        <!--begin::Select2-->
-                        <select class="form-select form-select-solid" name="payment_status">
-                            <option value="">{{ __('Payment') }}</option>
-                            <option value="paid" {{ request('payment_status') =='paid' ? 'selected':'' }}>{{ __('Paid') }}</option>
-                            <option value="pending" {{ request('payment_status') =='pending' ? 'selected':'' }}>{{ __('Pending') }}</option>
-                        </select>
-                        <!--end::Select2-->
-                    </div>
+                  
                     <div class="w-100 mw-150px">
                         <!--begin::Select2-->
                         <select class="form-select form-select-solid" name="date_string">
@@ -86,6 +76,12 @@
                             <option value="today" {{ request('date_string') =='today' ? 'selected':'' }}>{{ __('Today') }}</option>
                             <option value="last_day" {{ request('date_string') =='last_day' ? 'selected':'' }}>{{ __('Last day') }}</option>
                             <option value="last_week" {{ request('date_string') =='last_week' ? 'selected':'' }}>{{ __('Last week') }}</option>
+                            <option value="this_month" {{ request('date_string') =='this_month' ? 'selected':'' }}>{{ __('This Month') }}</option>
+                            <option value="last_month" {{ request('date_string') =='last_month' ? 'selected':'' }}>{{ __('Last Month') }}</option>
+                            <option value="this_year" {{ request('date_string') =='this_year' ? 'selected':'' }}>{{ __('This Year') }}</option>
+                            <option value="last_year" {{ request('date_string') =='last_year' ? 'selected':'' }}>{{ __('Last Year') }}</option>
+                            <option value="future" {{ request('date_string') =='future' ? 'selected':'' }}>{{ __('Upcoming') }}</option>
+
                         </select>
                         <!--end::Select2-->
                     </div>
@@ -208,7 +204,7 @@
                         </td>
                         <td>
                          
-                            <p data-toggle="tooltip" data-placement="top" title="{{$table->note}}" id="test">
+                            <p data-toggle="tooltip" data-placement="top" title="{{$table->note}}" class="note" style="cursor: pointer">
                                 <span class="d-inline-block text-truncate" style="max-width: 70px;">
                                     {{$table->note}}
                                 </span>
@@ -291,7 +287,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#test').tooltip('enable');
+        $('.note').tooltip('enable');
     });
 </script>
 @endsection

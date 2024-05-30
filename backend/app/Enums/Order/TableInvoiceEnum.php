@@ -1,7 +1,7 @@
 <?php
 namespace App\Enums\Order;
 use ArchTech\Enums\Values;
-enum TableInvoiceEnum: string
+enum  TableInvoiceEnum: string
 {
     use Values;
     case PENDING = 'pending';

@@ -17,9 +17,13 @@ use App\Http\Resources\OrderTableResource;
 class TableReservationController extends BaseController
 {
  
-    public function index()
+    public function index( Request $request)
     {
-        $tables = OrderTableInvoice::with('user','branch')->paginate(config('application.perPage')??20);
+        $tables = OrderTableInvoice::with('user','branch')
+        ->whenSearch($request['search'] ?? null)
+        ->whenStatus($request['status'] ?? null)
+        ->WhenDateString($request['date_string']??null)
+        ->paginate(config('application.perPage')??20);
         $user= Auth::user();
         return view('restaurant.orders.tables.list', compact('tables','user'));
 

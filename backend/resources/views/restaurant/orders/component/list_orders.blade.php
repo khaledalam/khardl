@@ -69,6 +69,10 @@
                             <option value="today" {{ request('date_string') =='today' ? 'selected':'' }}>{{ __('Today') }}</option>
                             <option value="last_day" {{ request('date_string') =='last_day' ? 'selected':'' }}>{{ __('Last day') }}</option>
                             <option value="last_week" {{ request('date_string') =='last_week' ? 'selected':'' }}>{{ __('Last week') }}</option>
+                            <option value="this_month" {{ request('date_string') =='this_month' ? 'selected':'' }}>{{ __('This Month') }}</option>
+                            <option value="last_month" {{ request('date_string') =='last_month' ? 'selected':'' }}>{{ __('Last Month') }}</option>
+                            <option value="this_year" {{ request('date_string') =='this_year' ? 'selected':'' }}>{{ __('This Year') }}</option>
+                            <option value="last_year" {{ request('date_string') =='last_year' ? 'selected':'' }}>{{ __('Last Year') }}</option>
                         </select>
                         <!--end::Select2-->
                     </div>
