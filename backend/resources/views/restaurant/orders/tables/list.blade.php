@@ -108,7 +108,7 @@
                             </th>
                             <th class="min-w-100px">{{ __('ID') }}</th>
                             <th class="min-w-175px">{{ __('Customer') }}</th>
-                            <th class="text-end min-w-70px">{{ __('Phone') }}</th>
+
                             <th class="min-w-175px">{{ __('Branch') }}</th>
                             <th class="min-w-175px">{{ __('Status') }}</th>
     
@@ -157,21 +157,17 @@
                                 <div class="ms-5">
                                     <!--begin::Title-->
                                     <a href="#" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">
-                                        {{$table->user->fullName}}
+                                        @if($table->user_id)
+                                        <a href="{{route('customers_data.show',['restaurantUser'=>$table->user_id])}}">{{$table->user->fullName}}</a>
+                                        @else
+                                            {{$table->new_user}}
+                                        @endif
                                     </a>
                                     <!--end::Title-->
                                 </div>
                             </div>
                         </td>
-                        <td>
-                            <div >
-                                <!--begin::Title-->
-                                <a href="#" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">
-                                    {{$table->user?->phone}}
-                                </a>
-                                <!--end::Title-->
-                            </div>
-                        </td>
+
                         <!--end::Customer=-->
                         <!--begin::Status=-->
            

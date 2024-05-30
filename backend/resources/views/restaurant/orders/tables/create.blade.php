@@ -94,6 +94,7 @@
                                             <!--begin::Input-->
                                             <div class="form-group">
                                                 <select name="user_id"  class="form-select">
+                                                    <option value="" ></option>
                                                     @foreach ($customers as $customer)
                                                     <option value="{{ $customer->id }}" {{old('user_id') == $customer->id ? 'selected' :''}} required>{{ $customer->fullName }}</option>
                                                     @endforeach

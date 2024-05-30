@@ -30,7 +30,7 @@ class ValidateTableDatetime implements ValidationRule
         try {
             $branch = Branch::Active()->findOrFail($this->branch_id);
             $datetime = Carbon::createFromFormat('Y-m-d H', $value);
-    
+      
             $dayOfWeek = strtolower($datetime->format('l'));
     
             if ($branch->{$dayOfWeek . '_closed'}) {
