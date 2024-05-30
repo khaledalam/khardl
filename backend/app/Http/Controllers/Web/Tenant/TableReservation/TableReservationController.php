@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\Tenant\TableReservation;
 
-use App\Http\Controllers\API\BaseController;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
@@ -11,8 +10,10 @@ use App\Rules\ValidateTableDatetime;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\OrderTableInvoice;
-use App\Http\Requests\TableReservationRequest;
 use App\Http\Resources\OrderTableResource;
+use App\Http\Controllers\API\BaseController;
+use App\Http\Requests\TableReservationRequest;
+use App\Http\Requests\Web\Tenant\Order\ChangeTableStatusFormRequest;
 
 class TableReservationController extends BaseController
 {
@@ -73,5 +74,12 @@ class TableReservationController extends BaseController
 
         ]);
     }
+    public function changeStatus(ChangeTableStatusFormRequest $request,OrderTableInvoice $tableId)
+    {
+        $tableId->status = $request->status;
+        $tableId->save();
+        return redirect()->back()->with('success',__('Status changed successfully'));
+    }
+
  
 }

@@ -63,8 +63,8 @@
                             <option value="">{{ __('Status') }}</option>
                             <option value="pending" {{ request('status') =='pending' ? 'selected':'' }}>{{ __('Pending') }}</option>
                             <option value="accepted" {{ request('status') =='accepted' ? 'selected':'' }}>{{ __('Accepted') }}</option>
-                            <option value="completed" {{ request('status') =='paid' ? 'selected':'' }}>{{ __('Paid') }}</option>
-                            <option value="cancelled" {{ request('status') =='rejected' ? 'selected':'' }}>{{ __('Rejected') }}</option>
+                            <option value="paid" {{ request('status') =='paid' ? 'selected':'' }}>{{ __('Paid') }}</option>
+                            <option value="rejected" {{ request('status') =='rejected' ? 'selected':'' }}>{{ __('Rejected') }}</option>
                         </select>
                         <!--end::Select2-->
                     </div>
@@ -219,6 +219,7 @@
                         </td>
                         <!--end::Date Added=-->
                         <!--begin::Action=-->
+                        @if($table->status != \App\Enums\Order\TableInvoiceEnum::REJECTED->value && $table->status !=  \App\Enums\Order\TableInvoiceEnum::ACCEPTED->value )
                         <td class="text-end">
                             <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
@@ -227,8 +228,14 @@
                                         <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
                                     </svg>
                                 </span>
+                                <form id="approve-form"  method="POST" style="display: inline">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="status" id="orderStatus" >
+                                </form>
                                 <!--end::Svg Icon--></a>
                             <!--begin::Menu-->
+                           
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <!--begin::Menu item-->
                                 
@@ -238,17 +245,18 @@
                                 <!--begin::Menu item-->
                                 {{-- <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row">Delete</a>
-                                </div> --}}
-                                {{-- @if($order->status != \App\Models\Tenant\Order::CANCELLED && $order->status != \App\Models\Tenant\Order::COMPLETED && $order->status != \App\Models\Tenant\Order::REJECTED  )
+                                </div>  --}}
+                                
                                     <div class="menu-item px-3">
-                                        <a href="#" onclick='showConfirmation("{{$order->id}}","{{$order->status}}")' class="menu-link px-3" >{{__('Changes status')}}</a>
+                                        <a href="#" onclick='showConfirmation("{{$table->id}}")' class="menu-link px-3" >{{__('Changes status')}}</a>
                                     </div>
-                                @endif --}}
+                              
 
                                 <!--end::Menu item-->
                             </div>
                             <!--end::Menu-->
                         </td>
+                        @endif
                         <!--end::Action=-->
                     </tr>
                     <!--end::Table row-->
@@ -286,6 +294,30 @@
 @section('js')
 
 <script>
+    function showConfirmation(tableId) {
+        event.preventDefault();
+        const statusOptions = @json(array_combine(\App\Enums\Order\TableInvoiceEnum::values(),array_map(fn ($status) => __(''.$status), \App\Enums\Order\TableInvoiceEnum::values())));
+
+        Swal.fire({
+            text: '{{ __('are-you-sure-you-want-to-change-order-status')}}',
+            icon: 'warning',
+            input: 'select',
+            showCancelButton: true,
+            inputOptions: statusOptions,
+            inputPlaceholder: 'Select an option',
+            confirmButtonText: `{{ __('yes') }}`,
+            cancelButtonText: `{{ __('no') }}`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const selectedStatus = result.value;
+                document.getElementById('orderStatus').setAttribute('value',selectedStatus);
+                var form = document.getElementById('approve-form');
+                form.action = `{{ route('table-reservations.change-status', ['tableId' => ':tableId']) }}`.replace(':tableId', tableId)
+                form.submit();
+
+            }
+        });
+    }
     $(document).ready(function() {
         $('.note').tooltip('enable');
     });
