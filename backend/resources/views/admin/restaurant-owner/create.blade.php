@@ -74,10 +74,10 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="form-label">{{ __('email')}}</label>
+                                            <label class="required form-label">{{ __('email')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('email')}}" value="{{old('email') }} " />
+                                            <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('email')}}" value="{{old('email') }} " required />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -85,10 +85,10 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class=" form-label">{{ __('password')}}</label>
+                                            <label class="required form-label">{{ __('password')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="password" id="change_password" name="password" class="form-control mb-2" minlength="8" placeholder="{{ __('password')}}" value="{{old('password')}}" />
+                                            <input type="text" id="change_password" name="password" class="form-control mb-2" minlength="8" placeholder="{{ __('password')}}" value="{{old('password')}}" required />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->

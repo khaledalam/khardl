@@ -39,9 +39,9 @@ class CreateROFormRequest extends FormRequest
             'dob' => 'nullable|date_format:Y-m-d',
             'first_name' => 'nullable|string|min:3|max:255',
             'last_name' => 'nullable|string|min:3|max:255',
-            'email' => 'nullable|string|email|min:10|max:255|unique:users,email',
+            'email' => 'required|string|email|min:10|max:255|unique:users,email',
             'position' => 'nullable|string|min:3|max:255',
-            'password' => 'nullable|string|min:6|max:255',
+            'password' => 'required|string|min:6|max:255',
             'phone' => 'nullable|regex:/^(966)?\d{9}$/|unique:users,phone',
         ];
     }

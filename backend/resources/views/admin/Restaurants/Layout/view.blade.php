@@ -47,6 +47,9 @@
                                             </span>
                                             @endif
                                             <!--end::Svg Icon-->
+                                            @if(!$restaurant->restaurant_name_ar)
+                                            <span class="text-muted">({{ __('This Restaurant was made manually') }})</span>
+                                            @endif
                                         </a>
                                     </div>
                                     <!--end::Name-->
