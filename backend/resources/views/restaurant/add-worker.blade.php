@@ -195,6 +195,15 @@
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_mange_table_reservations" value="1" name="can_mange_table_reservations" {{old('can_mange_table_reservations') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_mange_table_reservations">{{ __('Can access table reservation orders')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can view details of orders and update order status') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
                                                     <!--end::Input group-->
                                                     <!--begin::Input group-->
                                                     <div class="row mb-0 mt-5">

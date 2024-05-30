@@ -3,30 +3,17 @@
 declare(strict_types=1);
 
 
-use App\Http\Controllers\API\Tenant\Customer\Address\CustomerAddressController;
-use App\Http\Controllers\API\Tenant\LocationController;
-use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
-
-use App\Http\Controllers\API\Tenant\Notification\NotificationController;
-use App\Http\Controllers\Notification\PushNotificationController;
-use App\Http\Controllers\Web\Tenant\AdsPackage\AdsPackageController;
-use App\Http\Controllers\Web\Tenant\DeliveryCompanies\DeliveryCompaniesController;
-use App\Http\Controllers\Web\Tenant\Driver\DriverController;
-use App\Http\Controllers\Web\Tenant\OurServices\OurServicesController;
-use App\Http\Controllers\Web\Tenant\QR\QRController;
-use App\Http\Controllers\Web\Tenant\Setting\SettingController;
-use App\Http\Controllers\Web\Tenant\Summary\SummaryController;
-use App\Http\Controllers\Web\Tenant\Worker\WorkerController;
-use App\Models\Tenant;
-use App\Models\Tenant\RestaurantStyle;
-use App\Models\Tenant\RestaurantUser;
-use App\Models\Tenant\Setting;
 use App\Models\User;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
+
+use App\Models\Tenant\Setting;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Facades\Route;
+use App\Models\Tenant\RestaurantStyle;
 use App\Http\Controllers\TapController;
 use App\Traits\TenantSharedRoutesTrait;
 use Illuminate\Support\Facades\Session;
@@ -37,8 +24,10 @@ use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\TenantAssetsController;
 use App\Http\Controllers\API\Tenant\ItemController;
 use App\Http\Controllers\API\Tenant\OrderController;
+use App\Http\Controllers\Web\Tenant\QR\QRController;
 use App\Http\Controllers\API\Tenant\BranchController;
 use App\Http\Controllers\API\Tenant\CategoryController;
+use App\Http\Controllers\API\Tenant\LocationController;
 use App\Packages\TapPayment\Controllers\CardController;
 use App\Packages\TapPayment\Controllers\FileController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
@@ -52,21 +41,33 @@ use App\Http\Controllers\API\Tenant\Customer\CartController;
 use App\Http\Controllers\API\Tenant\CustomerStyleController;
 use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
 use App\Http\Controllers\Web\Tenant\Coupon\CouponController;
+use App\Http\Controllers\Web\Tenant\Driver\DriverController;
+use App\Http\Controllers\Web\Tenant\Worker\WorkerController;
 use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\API\Tenant\RestaurantStyleController;
+use App\Http\Controllers\Web\Tenant\Setting\SettingController;
+use App\Http\Controllers\Web\Tenant\Summary\SummaryController;
+use App\Http\Controllers\API\Tenant\V2\Auth\V2_LoginController;
 use App\Packages\TapPayment\Controllers\SubscriptionController;
+use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
+use App\Http\Controllers\Web\Tenant\AdsPackage\AdsPackageController;
 use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
+use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
+use App\Http\Controllers\Web\Tenant\OurServices\OurServicesController;
+use App\Http\Controllers\API\Tenant\Notification\NotificationController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController as APILoginController;
+use App\Http\Controllers\API\Tenant\Customer\Address\CustomerAddressController;
+use App\Http\Controllers\Web\Tenant\TableReservation\TableReservationController;
+use App\Http\Controllers\Web\Tenant\DeliveryCompanies\DeliveryCompaniesController;
 use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
-use App\Http\Controllers\API\Tenant\Driver\Order\OrderController as DriverOrderController;
+use App\Http\Controllers\Web\Tenant\Menu\Item\ItemController as AdminItemController;
 use App\Http\Controllers\API\Tenant\Customer\CardController as CustomerCardController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
-use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
-use App\Http\Controllers\Web\Tenant\Menu\Item\ItemController as AdminItemController;
 
-use App\Http\Controllers\API\Tenant\V2\Auth\V2_LoginController;
+use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
+use App\Http\Controllers\API\Tenant\Driver\Order\OrderController as DriverOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,9 +127,9 @@ Route::group([
             /* Coupon page */
             Route::middleware('permission:can_access_coupons')
             ->resource('{branchId}/coupons',CouponController::class)
-            ->middleware(['permission:can_access_coupons','coupon-role'])
+            ->middleware(['permission:can_access_coupons','redirectIfNotBelongToBranch'])
             ->withTrashed(['show','restore','edit','update']);
-            Route::middleware(['permission:can_access_coupons','coupon-role'])
+            Route::middleware(['permission:can_access_coupons','redirectIfNotBelongToBranch'])
             ->name('coupons.')
             ->controller(CouponController::class)->group(function () {
                 Route::delete('{branchId}/coupons/delete/{coupon}','delete')->withTrashed()->name('delete');
@@ -237,6 +238,12 @@ Route::group([
                 Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
                 Route::get('get-product-by-id/{item}', 'getProduct')->name('restaurant.getProduct');
                 Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
+            });
+            Route::middleware(['permission:can_mange_table_reservations','redirectIfNotBelongToBranch'])->controller(TenantOrderController::class)->group(function () {
+                Route::get('{branchId}/table-reservations/validate-time',[TableReservationController::class,'validateTime']);
+                Route::get('{branchId}/table-reservations/get-branch-hours',[TableReservationController::class,'getBranchHours']);
+                Route::resource('{branchId}/table-reservations',TableReservationController::class)->except('show','destroy','update','edit');
+                Route::put('{branchId}/table-reservations/{tableId}/change-status',[TableReservationController::class,'changeStatus'])->name('table-reservations.change-status');
             });
             /* End order routes */
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
@@ -541,6 +548,10 @@ Route::middleware([
                 ]);
                 Route::post("orders/validate", [CustomerOrderController::class, 'validateOrder']);
                 Route::post("orders/payment/redirect", [CustomerOrderController::class, 'paymentRedirect']);
+
+                Route::get("table-reservations", [TableReservationController::class, 'reservations']);
+                Route::post("{branchId}/table-reservations/store", [TableReservationController::class, 'store']);
+               
             });
         });
 

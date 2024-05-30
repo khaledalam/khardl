@@ -130,13 +130,15 @@ a {
 
 /* Badges */
 .badge.active,
-.badge.accepted,
 .badge.completed,
 .badge.paid {
   color: #fff;
   background-color: #50cd89;
 }
-
+.badge.accepted {
+  color: #fff;
+  background-color: #17a2b8;
+}
 .badge.suspended {
   color: #fff;
   background-color: darkviolet;

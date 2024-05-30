@@ -185,6 +185,15 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_mange_table_reservations" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_mange_table_reservations') == 1) checked @endif value="1" name="can_mange_table_reservations">
+                                                            <label class="form-check-label" for="can_mange_table_reservations">{{ __('Can access table reservation orders')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can view details of orders and update order status') }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_summary" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_access_summary') == 1) checked @endif value="1" name="can_access_summary">
                                                             <label class="form-check-label" for="can_access_summary">{{ __('Can access summary page')}}</label>
                                                             <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('Can see the daily and monthly sales, can see best selling items') }}"></i>

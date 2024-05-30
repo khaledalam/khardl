@@ -106,7 +106,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     }
     public function isCustomer()
     {
-        return $this->roles->Empty();
+        return $this->roles->isEmpty();
     }
     public function isWorker()
     {
@@ -195,6 +195,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'user_id', 'id');
+    }
+    public function table_reservations(): HasMany
+    {
+        return $this->hasMany(OrderTableInvoice::class, 'user_id');
     }
     public function driver_orders(): HasMany
     {
