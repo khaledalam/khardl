@@ -66,9 +66,9 @@ class DashboardService
     }
     public function dailyVisitors()
     {
-        return $this->getDaily();
+        return $this->getDaily(14);
     }
-    public function getDaily()
+    public function getDaily($count)
     {
         $chart_options = [
             'chart_title' => __('Daily visitors'),
@@ -80,7 +80,7 @@ class DashboardService
             'aggregate_field' => 'count',
             'aggregate_function' => 'sum',
             'filter_field' => 'created_at',
-            'filter_days' => 15,
+            'filter_days' => $count ,
             'chart_color' => '194, 218, 8',
         ];
         return new LaravelChart($chart_options);

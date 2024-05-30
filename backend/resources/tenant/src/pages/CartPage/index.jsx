@@ -189,22 +189,27 @@ const CartPage = () => {
 
   const handlePlaceOrder = async () => {
     // let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
+    let data  = {
+      payment_method: paymentMethod,
+      delivery_type: deliveryType,
+      notes: orderNotes,
+      couponCode: coupon,
+    };
     if (paymentMethod === "Online") {
-      GoSellElements.submit();
+      try {
+        const validateResponse = await AxiosInstance.post(`/orders/validate`, data);
+        if (cartResponse.data) {
+          GoSellElements.submit();
+        }
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
     } else {
       try {
         try {
           if(paymentMethod == null) {
             return toast.error(t("Please select the payment method."))
           }
-
-          let data  = {
-            payment_method: paymentMethod,
-            delivery_type: deliveryType,
-            notes: orderNotes,
-            couponCode: coupon,
-          };
-
           await AxiosInstance.post(`/orders/validate`, data);
           if (cart?.address.length > deliveryAddress) {
             data.address_id = cart.address[deliveryAddress].id;
