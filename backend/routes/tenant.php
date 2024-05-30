@@ -127,9 +127,9 @@ Route::group([
             /* Coupon page */
             Route::middleware('permission:can_access_coupons')
             ->resource('{branchId}/coupons',CouponController::class)
-            ->middleware(['permission:can_access_coupons','coupon-role'])
+            ->middleware(['permission:can_access_coupons','redirectIfNotBelongToBranch'])
             ->withTrashed(['show','restore','edit','update']);
-            Route::middleware(['permission:can_access_coupons','coupon-role'])
+            Route::middleware(['permission:can_access_coupons','redirectIfNotBelongToBranch'])
             ->name('coupons.')
             ->controller(CouponController::class)->group(function () {
                 Route::delete('{branchId}/coupons/delete/{coupon}','delete')->withTrashed()->name('delete');
@@ -239,11 +239,11 @@ Route::group([
                 Route::get('get-product-by-id/{item}', 'getProduct')->name('restaurant.getProduct');
                 Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
             });
-            Route::middleware('permission:can_mange_orders')->controller(TenantOrderController::class)->group(function () {
-                Route::get('table-reservations/validate-time',[TableReservationController::class,'validateTime']);
-                Route::get('table-reservations/get-branch-hours/{branchId}',[TableReservationController::class,'getBranchHours']);
-                Route::resource('table-reservations',TableReservationController::class)->except('show','destroy','update','edit');
-                Route::put('table-reservations/{tableId}/change-status',[TableReservationController::class,'changeStatus'])->name('table-reservations.change-status');
+            Route::middleware(['permission:can_mange_table_reservations','redirectIfNotBelongToBranch'])->controller(TenantOrderController::class)->group(function () {
+                Route::get('{branchId}/table-reservations/validate-time',[TableReservationController::class,'validateTime']);
+                Route::get('{branchId}/table-reservations/get-branch-hours',[TableReservationController::class,'getBranchHours']);
+                Route::resource('{branchId}/table-reservations',TableReservationController::class)->except('show','destroy','update','edit');
+                Route::put('{branchId}/table-reservations/{tableId}/change-status',[TableReservationController::class,'changeStatus'])->name('table-reservations.change-status');
             });
             /* End order routes */
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
@@ -550,7 +550,7 @@ Route::middleware([
                 Route::post("orders/payment/redirect", [CustomerOrderController::class, 'paymentRedirect']);
 
                 Route::get("table-reservations", [TableReservationController::class, 'reservations']);
-                Route::post("table-reservations/store", [TableReservationController::class, 'store']);
+                Route::post("{branchId}/table-reservations/store", [TableReservationController::class, 'store']);
                
             });
         });

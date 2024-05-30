@@ -39,7 +39,7 @@ use Illuminate\Session\Middleware\StartSession;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\EnsureEmailIsNotVerified;
 use App\Http\Middleware\IsBusinessFilesSubmitted;
-use App\Http\Middleware\UserRoleCouponMiddleware;
+use App\Http\Middleware\RedirectIfNotBelongToBranch;
 use Spatie\Permission\Middlewares\RoleMiddleware;
 use App\Http\Middleware\ActiveRestaurantAndBranch;
 use Illuminate\Routing\Middleware\ThrottleRequests;
@@ -158,7 +158,7 @@ class Kernel extends HttpKernel
         "trans_api"=>LocalizationApi::class,
         'ActiveRestaurantAndBranch'=>ActiveRestaurantAndBranch::class,
         'visitors'=> Visitors::class,
-        'coupon-role'=>UserRoleCouponMiddleware::class
+        'redirectIfNotBelongToBranch'=>RedirectIfNotBelongToBranch::class
     ];
 
 }

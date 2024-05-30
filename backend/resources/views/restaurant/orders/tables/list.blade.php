@@ -4,6 +4,53 @@
 
 @section('content')
 
+@if($user->isRestaurantOwner())
+<div class="content d-flex flex-column flex-column pt-0" id="kt_content">
+
+    <!--begin::Post-->
+    <div class="post d-flex flex-column" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Inbox App - Messages -->
+            <div class="flex-lg-row-fluid my-2 branches">
+                <div id="carouselExample" class="carousel slide" data-bs-interval="false">
+
+                    <div class="carousel-inner">
+                        @foreach ($branches->chunk(3) as $key => $branchChunk)
+                        <div class="carousel-item {{ $branchChunk->contains($branchId) ? 'active' : '' }}">
+                            <div class="row
+                            @if($branchChunk->count() == 1 || $branchChunk->count() == 2) centered @endif">
+                                @foreach ($branchChunk as $branchLoop)
+                                <div class="col-md-4 d-flex justify-content-center">
+                                    <a href="{{ route('table-reservations.index', ['branchId' => $branchLoop->id]) }}" style="min-width: 120px;" class="btn btn-sm @if($branchLoop->id == $branchId) active @endif">
+                                        <span class="d-inline-block text-truncate" style="max-width: 80px;margin:-7px"> {{ $branchLoop->name }}</span>
+                                    </a>
+                                </div>
+                                @endforeach
+                            </div>
+
+                        </div>
+                        @endforeach
+                    </div>
+                    @if ($branches?->count() > 3)
+                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!--end::Inbox App - Messages -->
+    </div>
+    <!--end::Container-->
+</div>
+@endif
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
@@ -118,7 +165,7 @@
                             <th class="text-end min-w-100px">{{ __('Reservation time') }}</th>
                             <th class="text-end min-w-100px">{{ __('Created at') }}</th>
                             <th class="text-end min-w-100px">
-                                <a href="{{ route('table-reservations.create') }}">
+                                <a href="{{ route('table-reservations.create',['branchId'=>$branchId]) }}">
                                     <button class="btn btn-khardl btn-sm" type="button">
                                         {{ __('Add new') }}
                                     </button>
@@ -284,7 +331,9 @@
     <!--end::Main-->
 @endsection
 @push('styles')
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<link rel="stylesheet" href="{{ global_asset('assets/css/pages/admin/menu.css') }}" type="text/css">
 
 @endpush
 @section('js')
@@ -308,14 +357,23 @@
                 const selectedStatus = result.value;
                 document.getElementById('orderStatus').setAttribute('value',selectedStatus);
                 var form = document.getElementById('approve-form');
-                form.action = `{{ route('table-reservations.change-status', ['tableId' => ':tableId']) }}`.replace(':tableId', tableId)
+                form.action = `{{ route('table-reservations.change-status', ['tableId' => ':tableId','branchId' => ':branchId']) }}`
+                .replace(':tableId', tableId)
+                .replace(':branchId', "{{$branchId}}");
                 form.submit();
 
             }
         });
     }
     $(document).ready(function() {
+        $('#carouselExample').carousel({
+            pause: true,
+            interval: false,
+        });
         $('.note').tooltip('enable');
     });
+    
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 @endsection

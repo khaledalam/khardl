@@ -182,6 +182,7 @@
     "Reservation time":"وقت الحجز",
     "Reservation date":"يوم الحجز",
     "Upcoming":"القادمة",
+    "Can access table reservation orders":"يمكن الوصول إلى طلبات حجز الطاولات",
     "Selected date time has been booked by another customer":"تم حجز هذا الوقت المحدد من قبل عميل آخر",
     "You reached the maximum uses for coupon":"لقد وصلت إلى الحد الأقصى لاستخدامات القسيمة",
     "Coupon has been expired":"لقد انتهت صلاحية القسيمة",

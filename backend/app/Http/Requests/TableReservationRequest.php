@@ -26,11 +26,10 @@ class TableReservationRequest extends FormRequest
      */
     public function rules(): array
     {
-     
+        
         return [
             'n_of_guests' => 'required|integer|min:1',
-            'branch_id' => 'required|integer',
-            'date_time' => ['required','after_or_equal:today','date_format:Y-m-d H',new ValidateTableDatetime($this->input('branch_id'))],
+            'date_time' => ['required','after_or_equal:today','date_format:Y-m-d H',new ValidateTableDatetime($this->route('branchId'))],
             'environment' => 'required|in:indoor,outdoor',
             'user_id' => [
                 Rule::requiredIf(function () {

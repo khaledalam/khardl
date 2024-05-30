@@ -15,7 +15,7 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Form-->
-            <form action="{{ route('table-reservations.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('table-reservations.store',['branchId'=>$branchId]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!--begin::Main column-->
@@ -32,7 +32,7 @@
                                         <div class="card-title">
                                             <h2>{{ __('Reserve new table')}}</h2>
                                         </div>
-                                        <a href="{{ route('table-reservations.index') }}">
+                                        <a href="{{ route('table-reservations.index',['branchId'=>$branchId]) }}">
                                             <button type="button" class="btn btn-khardl btn-sm">
                                 <i class="fa fa-arrow-left"></i>
                                 {{ __('Back to list') }}
@@ -131,27 +131,7 @@
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                <span class="required form-label"> {{ __('Branch')}}</span>
-                                                <i class="fas fa-exclamation-circle ms-1 fs-7">
-                                                    {{ __('Active Branches Only')}}
-                                                </i>
-                                            </label>
-
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <div class="form-group">
-                                                <select name="branch_id" id="branch_id" class="form-select">
-                                                    <option value=""></option>
-                                                    @foreach ($branches as $branch)
-                                                    <option value="{{ $branch->id }}" {{old('branch_id') == $branch->id ? 'selected' :''}} required>{{ $branch->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <!--end::Input-->
-                                        </div>
+                                        
                                         <div class="mb-10 fv-row" id="customChoiceTabs"> 
                                             <!--begin::Label-->
                                             <label class="required form-label">{{ __('Reservation time')}}</label>
@@ -212,7 +192,7 @@
         }
         $('#customChoiceTabs').css('display','block');
         $.ajax({
-            url: `/table-reservations/get-branch-hours/${branchId}`, // Adjust the URL to your backend endpoint
+            url: `/${branchId}/table-reservations/get-branch-hours`, // Adjust the URL to your backend endpoint
             method: 'GET',
             success: function(response) {
 
@@ -238,10 +218,10 @@
                                 const formattedDate = instance.formatDate(selectedDate, "Y-m-d H");
                             
                                 $.ajax({
-                                    url: `/table-reservations/validate-time`, // Change to your actual endpoint
+                                    url: `/${branchId}/table-reservations/validate-time`, // Change to your actual endpoint
                                     method: 'GET',
                                     data: {
-                                        branch_id: branchId,
+                      
                                         datetime: formattedDate
                                     },
                                     error: function(response) {
@@ -261,17 +241,10 @@
         });
     }
         $(document).ready(function() {
-            let branchId = $("#branch option:selected").val();
-            @if(old('branch_id'))
-                branchId = "{{old('branch_id')}}"
-            @endif
-     
+            let branchId = "{{$branchId}}"
+        
             updateDisabledDates(branchId);
 
-            $("#branch_id").change(function() {
-                const newBranchId = $(this).val();
-                updateDisabledDates(newBranchId);
-            });
         });
 
            

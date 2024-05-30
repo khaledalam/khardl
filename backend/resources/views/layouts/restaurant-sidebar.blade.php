@@ -327,7 +327,7 @@
                             </a>
                         </div>
                         <div class="menu-item menu-accordion">
-                            <a href="{{route('table-reservations.index')}}">
+                            <a href="{{route('table-reservations.index',['branchId'=>$branchId])}}">
                                 <span class="{{ ($link == 'table-reservations') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                          <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
