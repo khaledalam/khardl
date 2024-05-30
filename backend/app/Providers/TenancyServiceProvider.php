@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Jobs\DeleteCentralTenantSettingsJob;
 use Stancl\Tenancy\Jobs;
 use Stancl\Tenancy\Events;
 use Stancl\Tenancy\Listeners;
@@ -46,6 +47,7 @@ class TenancyServiceProvider extends ServiceProvider
             Events\TenantDeleted::class => [
                 JobPipeline::make([
                     Jobs\DeleteDatabase::class,
+                    DeleteCentralTenantSettingsJob::class
                 ])->send(function (Events\TenantDeleted $event) {
                     return $event->tenant;
                 })->shouldBeQueued(true), // `false` by default, but you probably want to make this `true` for production.
