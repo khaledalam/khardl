@@ -89,8 +89,6 @@ Route::get('/health', static function (){
 })->name('health');
 
 Route::get('/test', function (){
-    $tenant = Tenant::find('294c6ebd-9a4a-433f-a4c2-e285415beec6');
-    $tenant->delete();
     return response()->json();
 })->name('test');
 

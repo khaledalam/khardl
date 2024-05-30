@@ -109,7 +109,7 @@
                                             <span class="badge badge-warning">{{ __('inactive') }}</span>
                                             @endif
                                         </a>
-                                        @if (!$admin->restaurant_name_ar)
+                                        @if ($admin->is_created_manually)
                                         <span class="text-muted">({{ __('This Restaurant was made manually') }})</span>
                                         @endif
                                         @else
