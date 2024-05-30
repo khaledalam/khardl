@@ -10,6 +10,8 @@ use App\Http\Requests\Central\RestaurantOwner\UpdateROFormRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+
 class RestaurantOwnerService
 {
     public function show(Request $request, User $user)
@@ -25,33 +27,40 @@ class RestaurantOwnerService
         DB::beginTransaction();
         try {
             $user = User::create($this->request_data($request));
-            $this->createOrUpdateTraderRequirements($user,$request,$optional = true);
+            $this->assignRole($user);
+            $this->createOrUpdateTraderRequirements($user, $request, $optional = true);
+            DB::commit();
             $tenant = $this->createRestaurant($user);
-            return redirect()->route('admin.view-restaurants',['tenant' => $tenant->id])->with('success', __('Created successfully'));
+            return redirect()->route('admin.view-restaurants', ['tenant' => $tenant->id])->with('success', __('Created successfully'));
         } catch (Exception $e) {
             DB::rollBack();
             \Sentry\captureException($e);
             return redirect()->back()->with('error', __('An error occurred'));
         }
     }
+    public function assignRole($user)
+    {
+        $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
+        $user->assignRole($role);
+        $user->save();
+    }
     public function request_data($request)
     {
-        $data = $request->only(['first_name','last_name','position','email','password','dob','restaurant_name','restaurant_name_ar']);
+        $data = $request->only(['first_name', 'last_name', 'position', 'email', 'password', 'dob', 'restaurant_name', 'restaurant_name_ar']);
         $data['first_name'] = $request->first_name ?? 'N/A';
         $data['last_name'] = $request->last_name ?? 'N/A';
         $data['position'] = $request->position ?? 'N/A';
-        $data['password'] = $request->password ?? 'N/A';
-        $data['email'] = $request->email ?? 'N/A@'.User::latest()->first()?->id + 1;
-        $data['password'] = $request->password ? Hash::make($request->password): Hash::make('N/A');
+        $data['is_created_manually'] = 1;
+        $data['email_verified_at'] = now();
         return $data;
     }
     public function update(UpdateROFormRequest $request, User $user)
     {
         try {
-            $this->updateUserInfo($user,$request);
-            if($user->traderRegistrationRequirement){
-                $this->updateBD($request,$user);
-                $this->createOrUpdateTraderRequirements($user,$request);
+            $this->updateUserInfo($user, $request);
+            if ($user->traderRegistrationRequirement) {
+                $this->updateBD($request, $user);
+                $this->createOrUpdateTraderRequirements($user, $request);
             }
             return redirect()->route('admin.restaurant-owner-management')->with('success', __('Updated successfully'));
         } catch (Exception $e) {
@@ -64,10 +73,10 @@ class RestaurantOwnerService
         $registerController = new RegisterController();
         return $registerController->createTenant($user);
     }
-    public function createOrUpdateTraderRequirements($user,$request,$optional = null)
+    public function createOrUpdateTraderRequirements($user, $request, $optional = null)
     {
         $registerController = new RegisterController();
-        return $registerController->createOrUpdateTraderRequirements($user,$request,$optional);
+        return $registerController->createOrUpdateTraderRequirements($user, $request, $optional);
     }
     public function updateBD($request, $user)
     {
@@ -77,9 +86,9 @@ class RestaurantOwnerService
             $request->request->remove('dob');
         }
     }
-    public function updateUserInfo($user,$request)
+    public function updateUserInfo($user, $request)
     {
-        if ($request->has('password') && $request->password !=null) {
+        if ($request->has('password') && $request->password != null) {
             $user->update(['password' => Hash::make($request['password'])]);
         }
         $user->update($request->only([
@@ -89,7 +98,7 @@ class RestaurantOwnerService
             'phone',
             'position'
         ]));
-        if($user->restaurant && $request->has('email')){
+        if ($user->restaurant && $request->has('email')) {
             $user->restaurant->update([
                 'email' => $request->email
             ]);
