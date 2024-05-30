@@ -32,16 +32,16 @@ class ValidateTableDatetime implements ValidationRule
             $datetime = Carbon::createFromFormat('Y-m-d H', $value);
       
             $dayOfWeek = strtolower($datetime->format('l'));
-    
+            
             if ($branch->{$dayOfWeek . '_closed'}) {
                 $fail(__('The branch is closed on this day.'));
                 return;
             }
-    
-            $openTime = Carbon::parse($branch->{$dayOfWeek . '_open'});
-            $closeTime = Carbon::parse($branch->{$dayOfWeek . '_close'});
-    
-            if (!$datetime->between($openTime, $closeTime)) {
+            $inputTime = $datetime->format('H:i');
+            $openTime = Carbon::parse($branch->{$dayOfWeek . '_open'})->format('H:i');
+            $closeTime = Carbon::parse($branch->{$dayOfWeek . '_close'})->format('H:i');
+            
+            if (!($inputTime >= $openTime && $inputTime <= $closeTime)) {
                 $fail(__('Selected time is outside the branch operating hours.'));
                 return;
             }
