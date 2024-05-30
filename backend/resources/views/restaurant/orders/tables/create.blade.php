@@ -261,7 +261,11 @@
         });
     }
         $(document).ready(function() {
-            const branchId = $("#branch option:selected").val();
+            let branchId = $("#branch option:selected").val();
+            @if(old('branch_id'))
+                branchId = "{{old('branch_id')}}"
+            @endif
+     
             updateDisabledDates(branchId);
 
             $("#branch_id").change(function() {
