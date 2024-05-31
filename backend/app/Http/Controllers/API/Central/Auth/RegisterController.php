@@ -124,52 +124,7 @@ class RegisterController extends BaseController
         ]);
         return $tenant;
     }
-   /*  public function createOrUpdateTraderRequirements($user, $request)
-    {
-        $user_id = $user->id;
-
-        $input = $request->all();
-        $input['user_id'] = $user_id;
-        // Ensure the directory exists and is writable
-        $directory = storage_path("app/private/" . User::STORAGE . "/{$user_id}");
-        if (!File::exists($directory)) {
-            File::makeDirectory($directory, 0755, true);
-        }
-
-        $fileNames = [
-            'commercial_registration',
-            'tax_registration_certificate',
-            'bank_certificate',
-            'identity_of_owner_or_manager',
-            'national_address',
-        ];
-
-        $userRejectedReasons = json_decode($user?->reject_reasons) ?? [];
-
-        foreach ($fileNames as $fileKey) {
-
-            if ($request->hasFile($fileKey)) {
-
-                if (($key = array_search($fileKey, $userRejectedReasons)) !== false) {
-                    unset($userRejectedReasons[$key]);
-                }
-
-                $input[$fileKey] = $request->file($fileKey)->storeAs(
-                    "user_files/{$user_id}",
-                    $fileKey . '_' . date("Y-m-d") . '_' . hash_file('sha256', $request->file($fileKey)->getRealPath()) . '.' . $request->file($fileKey)->getClientOriginalExtension(),
-                    'private'
-                );
-            } else if ($user?->traderRegistrationRequirement?->{$fileKey}) {
-                $input[$fileKey] = $user?->traderRegistrationRequirement?->{$fileKey};
-            } else if ($fileKey != 'tax_registration_certificate') { // optional
-                return $this->sendError('Fail', $fileKey . __('is missing'));
-            }
-        }
-        TraderRequirement::updateOrCreate([
-            'user_id' => $user->id
-        ], $input);
-    } */
-    public function createOrUpdateTraderRequirements($user, $request)
+    public function createOrUpdateTraderRequirements($user, $request,$optional = false)
     {
         $user_id = $user->id;
         $input = $request->all();
@@ -198,12 +153,12 @@ class RegisterController extends BaseController
                 $input[$fileKey] = $this->storeFile($fileKey, $request->file($fileKey), $user_id);
             } elseif ($user?->traderRegistrationRequirement?->{$fileKey}) {
                 $input[$fileKey] = $user?->traderRegistrationRequirement?->{$fileKey};
-            }else if ($fileKey != 'tax_registration_certificate') { // optional
+            }else if ($fileKey != 'tax_registration_certificate'&& !$optional) { // optional
                 return $this->sendError('Fail', $fileKey . __('is missing'));
             }
         }
 
-        TraderRequirement::updateOrCreate(['user_id' => $user->id], $input);
+        return TraderRequirement::updateOrCreate(['user_id' => $user->id], $input);
     }
 
     private function ensureDirectoryExists($user_id)

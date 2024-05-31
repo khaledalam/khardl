@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import halfArrowDown from "../../../../assets/halfArrowDown.svg";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const EditorSelect = ({ defaultValue, options, handleChange, label }) => {
   const [isOpen, setisOpen] = useState(false);
@@ -37,12 +37,12 @@ const EditorSelect = ({ defaultValue, options, handleChange, label }) => {
         {isOpen && (
           <div
             tabIndex={0}
-            className="z-[99] menu flex flex-col gap-4 p-2 shadow bg-base-100 rounded-box w-full max-h-[290px] overflow-x-hidden overflow-y-scroll !flex-nowrap hide-scroll"
+            className="z-[99] menu flex flex-col gap-4 p-2 shadow bg-base-100 rounded-box w-full max-h-fit overflow-x-hidden overflow-y-scroll !flex-nowrap hide-scroll"
           >
             {options &&
               options?.map((item, i) => (
                 <div
-                  className="flex w-full gap-3 items-center p-2 hover:bg-[#C0D12330]"
+                  className="flex w-full gap-3 items-center p-2 hover:bg-[#C0D12330] cursor-pointer"
                   key={i}
                   onClick={() => {
                     handleChange(item.value);

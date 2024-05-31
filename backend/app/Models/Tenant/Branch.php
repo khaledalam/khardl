@@ -104,6 +104,10 @@ class Branch extends Model
             return $query->where('id',$user->branch_id);
         }
     }
+    public function scopeActive($query)
+    {
+        return $query->where('active',1);
+    }
     /* End Scope */
     /* Start attributes */
     public function getTotalRevenuesAttribute()

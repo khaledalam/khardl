@@ -36,10 +36,11 @@
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <button type="submit" class="btn btn-khardl me-5">{{ __('search')}}</button>
+                                    <button type="submit" class="btn btn-active-light-khardl me-5">{{ __('search')}}</button>
                                 </div>
                             </div>
                         </form>
+                        <a href="{{ route('admin.owner-information.create') }}" class="btn btn-khardl">{{ __("Add new") }}</a>
                     </h3>
                 </div>
                 <!--end::Header-->
@@ -108,6 +109,9 @@
                                             <span class="badge badge-warning">{{ __('inactive') }}</span>
                                             @endif
                                         </a>
+                                        @if ($admin->is_created_manually)
+                                        <span class="text-muted">({{ __('This Restaurant was made manually') }})</span>
+                                        @endif
                                         @else
                                         <span class="badge badge-secondary">{{ __('Not complete step 2') }}</span>
                                         <a href="{{ route('admin.complete-step-two.index',['user' => $admin->id]) }}" class="text-muted d-block" target="_blank">

@@ -407,6 +407,7 @@
         optionsDiv.appendChild(optionDiv);
     }
 </script>
+
 @if($user->isRestaurantOwner())
 <div class="content d-flex flex-column flex-column pt-0" id="kt_content">
 

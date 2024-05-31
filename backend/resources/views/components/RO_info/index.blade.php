@@ -9,7 +9,7 @@
         <label class="required form-label">{{ __('first-name')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('first-name')}}" value="{{ old('first_name') ?? $user->first_name}}" />
+        <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('first-name')}}" value="{{ old('first_name') ?? $user?->first_name}}" />
         <!--end::Input-->
     </div>
     <!--end::Input group-->
@@ -18,16 +18,16 @@
         <label class="required form-label">{{ __('last-name')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('last-name')}}" value="{{ old('last_name') ?? $user->last_name}}" />
+        <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('last-name')}}" value="{{ old('last_name') ?? $user?->last_name}}" />
         <!--end::Input-->
     </div>
-    @if(!$user?->traderregistrationrequirement||!$user->restaurant)
+    @if(!$user?->traderregistrationrequirement||!$user?->restaurant)
     <div class="mb-10 fv-row">
         <!--begin::Label-->
         <label class="required form-label">{{ __('Restaurant name (English)')}}</label>        <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('If your restaurant name is ABC the domain will be abc.khardl.com') }}"></i>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="text" name="restaurant_name" class="form-control mb-2" required placeholder="{{ __('Restaurant name (English)')}}" value="{{old('restaurant_name') ?? $user->restaurant_name}}" />
+        <input type="text" name="restaurant_name" class="form-control mb-2" required placeholder="{{ __('Restaurant name (English)')}}" value="{{old('restaurant_name') ?? $user?->restaurant_name}}" />
         <!--end::Input-->
     </div>
     <div class="mb-10 fv-row">
@@ -35,7 +35,7 @@
         <label class="required form-label">{{ __('Restaurant name (Arabic)')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="text" name="restaurant_name_ar" class="form-control mb-2" required placeholder="{{ __('Restaurant name (English)')}}" value="{{old('restaurant_name_ar') ?? $user->restaurant_name_ar}}" />
+        <input type="text" name="restaurant_name_ar" class="form-control mb-2" required placeholder="{{ __('Restaurant name (English)')}}" value="{{old('restaurant_name_ar') ?? $user?->restaurant_name_ar}}" />
         <!--end::Input-->
     </div>
     @endif
@@ -46,7 +46,7 @@
         <label class="required form-label">{{ __('email')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="email" name="email" class="form-control mb-2" required placeholder="{{ __('email')}}" value="{{old('email')?? $user->email}} " />
+        <input type="email" name="email" class="form-control mb-2" required placeholder="{{ __('email')}}" value="{{old('email')?? $user?->email}} " />
         <!--end::Input-->
     </div>
     <!--end::Input group-->
@@ -72,7 +72,7 @@
         <label class="required form-label">{{ __('phone')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control" name="phone" id="phone" placeholder="05XXXXXXXX" required value="{{ old('phone') ?? $user->phone }}">
+        <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control" name="phone" id="phone" placeholder="05XXXXXXXX" required value="{{ old('phone') ?? $user?->phone }}">
         <!--end::Input-->
     </div>
     <!--end::Input group-->
@@ -81,7 +81,7 @@
         <label class="required form-label">{{ __('position')}}</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="text" required class="form-control" name="position" id="position" placeholder="{{ __('position') }}" value="{{ old('position') ?? $user->position }}">
+        <input type="text" required class="form-control" name="position" id="position" placeholder="{{ __('position') }}" value="{{ old('position') ?? $user?->position }}">
         <!--end::Input-->
     </div>
 </div>
