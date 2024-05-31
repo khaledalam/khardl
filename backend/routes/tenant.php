@@ -239,12 +239,12 @@ Route::group([
                 Route::get('get-product-by-id/{item}', 'getProduct')->name('restaurant.getProduct');
                 Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
             });
-            Route::middleware(['permission:can_mange_table_reservations','redirectIfNotBelongToBranch'])->controller(TenantOrderController::class)->group(function () {
-                Route::get('{branchId}/table-reservations/validate-time',[TableReservationController::class,'validateTime']);
-                Route::get('{branchId}/table-reservations/get-branch-hours',[TableReservationController::class,'getBranchHours']);
-                Route::resource('{branchId}/table-reservations',TableReservationController::class)->except('show','destroy','update','edit');
-                Route::put('{branchId}/table-reservations/{tableId}/change-status',[TableReservationController::class,'changeStatus'])->name('table-reservations.change-status');
-            });
+            // Route::middleware(['permission:can_mange_table_reservations','redirectIfNotBelongToBranch'])->controller(TenantOrderController::class)->group(function () {
+            //     Route::get('{branchId}/table-reservations/validate-time',[TableReservationController::class,'validateTime']);
+            //     Route::get('{branchId}/table-reservations/get-branch-hours',[TableReservationController::class,'getBranchHours']);
+            //     Route::resource('{branchId}/table-reservations',TableReservationController::class)->except('show','destroy','update','edit');
+            //     Route::put('{branchId}/table-reservations/{tableId}/change-status',[TableReservationController::class,'changeStatus'])->name('table-reservations.change-status');
+            // });
             /* End order routes */
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
             Route::get('/payments', [TapController::class, 'payments'])->middleware(['permission:can_control_payment'])->name('tap.payments');
