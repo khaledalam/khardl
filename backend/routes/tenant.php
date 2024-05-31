@@ -402,6 +402,9 @@ Route::group([
                 });
                 /* Customer address */
                 Route::delete("cards/{card_id}/delete", [CustomerCardController::class, 'delete']);
+
+                Route::get("table-reservations", [TableReservationController::class, 'reservations']);
+                Route::post("{branchId}/table-reservations/store", [TableReservationController::class, 'store']);
             });
 
 
