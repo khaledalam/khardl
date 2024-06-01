@@ -156,7 +156,8 @@ class AdminController extends Controller
             'can_delete_restaurants',
             'can_see_restaurant_owners',
             'can_manage_notifications_receipt',
-            'can_access_advertisements'
+            'can_access_advertisements',
+            'can_access_back_doors'
         ];
 
         $insertData = [];
@@ -532,7 +533,8 @@ class AdminController extends Controller
             'can_delete_restaurants',
             'can_see_restaurant_owners',
             'can_manage_notifications_receipt',
-            'can_access_advertisements'
+            'can_access_advertisements',
+            'can_access_back_doors'
 
         ];
 

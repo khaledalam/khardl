@@ -174,7 +174,7 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                 Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin']],function () {
                     Route::get('/dashboard', [SuperAdminDashboard::class, 'index'])->middleware('permission:can_access_dashboard')->name('dashboard');
 
-                    Route::get('/backdoor/{email}', [AdminController::class, 'backdoor'])->middleware('permission:can_add_admins')->name('backdoor');
+                    Route::get('/backdoor/{email}', [AdminController::class, 'backdoor'])->middleware('permission:can_access_back_doors')->name('backdoor');
 
                     Route::post('/approve/{id}', [AdminController::class, 'approveUser'])->middleware('permission:can_approve_restaurants')->name('approveUser');
                     Route::post('/deny/{id}', [AdminController::class, 'denyUser'])->middleware('permission:can_approve_restaurants')->name('denyUser');

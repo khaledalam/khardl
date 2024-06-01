@@ -197,11 +197,11 @@
 
 
                                     </div>
-
+                                    @if(Auth::user()->hasPermission("can_access_back_doors"))
                                         <a href="{{route('admin.backdoor', ['email' => $restaurant->email])}}" class="btn btn-secondary btn-sm white mt-3">
                                             <i class="fas fa-door-open ms-1 fs-2"></i> {{__('Backdoor')}}
                                         </a>
-
+                                    @endif
                                 </div>
 
                                 <!--end::Card body-->
