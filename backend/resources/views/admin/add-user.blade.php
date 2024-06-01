@@ -289,9 +289,18 @@
                                                     <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_advertisements" value="1" name="can_access_advertisements" {{old('can_access_advertisements') ? 'checked' : ''}}>
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_back_doors" value="1" name="can_access_advertisements" {{old('can_access_advertisements') ? 'checked' : ''}}>
                                                             <label class="form-check-label" for="can_access_advertisements">{{ __('Can access advertising services')}}</label>
                                                             <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __("Can request for advertisement service, can see old requests") }}"></i>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_access_back_doors" value="1" name="can_access_back_doors" {{old('can_access_back_doors') ? 'checked' : ''}}>
+                                                            <label class="form-check-label" for="can_access_back_doors">{{ __('Can access back doors')}}</label>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __("Can login as restaurant owner for all restaurants") }}"></i>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>

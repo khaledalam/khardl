@@ -1226,7 +1226,7 @@
     "Table reservations":"حجوزات الطاولات",
     "login code for your restaurant to login to the orders app and drivers app":"رمز تسجيل الدخول لمطعمك لتسجيل الدخول إلى تطبيق الطلبات وتطبيق السائقين",
     "Are you sure you want to sign new contract ?":"هل أنت متأكد أنك تريد التوقيع على عقد جديد؟",
-    "This Email used In":"هذا البريد يستخدم ف", 
+    "This Email used In":"هذا البريد يستخدم ف",
     "Swift Number":"رقم سويفت",
     "Tax Number":"الرقم الضريبي",
     "IBAN authentication number":"رقم توثيق الآيبان",
@@ -1581,5 +1581,7 @@
     "Delete permanently":"حذف نهائي",
     "Create restaurant":"إنشاء مطعم",
     "This restaurant name is already taken":"تم أخذ اسم المطعم هذا بالفعل",
-    "This Restaurant was made manually":"تم انشاء هذا المطعم يدويًا"
+    "This Restaurant was made manually":"تم انشاء هذا المطعم يدويًا",
+    "Can access back doors":"يمكن الوصول الي الابواب الخلفية",
+    "Can login as restaurant owner for all restaurants":"يمكن تسجيل الدخول كمالك مطعم لجميع المطاعم"
 }
