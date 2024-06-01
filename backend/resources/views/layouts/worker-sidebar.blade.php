@@ -248,7 +248,7 @@
                                 </a>
                             </div>
                             @endif
-                            @if($user?->hasPermissionWorker('can_mange_table_reservations'))
+                            {{-- @if($user?->hasPermissionWorker('can_mange_table_reservations'))
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('table-reservations.index',['branchId'=>$user->branch->id])}}">
                                     <span class="{{ ($link == 'table-reservations') ? 'menu-link active' : 'menu-link ' }}">
@@ -263,7 +263,7 @@
                                     </span>
                                 </a>
                             </div>
-                            @endif
+                            @endif --}}
                             <!-- Coupons -->
                             @if($user?->hasPermissionWorker('can_access_coupons'))
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($link == 'promotions' || $link == 'coupons')  ? 'show' : ''}}">
