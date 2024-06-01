@@ -217,7 +217,7 @@
                         </div>
                         <!-- menu -->
                         <div class="menu-item menu-accordion">
-                            @if($branchId = \App\Models\Tenant\Branch::find(44)?->id)
+                            @if($branchId = \App\Models\Tenant\Branch::first()?->id)
                             <a href="{{route('restaurant.get-category', ['id' => \App\Models\Tenant\Category::where('branch_id', $branchId)?->first()?->id ?? -1, 'branchId' => $branchId])}}">
                                 <span class="{{ ($link == 'menu') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">

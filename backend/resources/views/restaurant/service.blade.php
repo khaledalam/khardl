@@ -373,8 +373,6 @@
 
                                                                         </div>
 
-
-
                                                                     </div>
                                                                     <div id="discount_web"></div>
 
@@ -440,6 +438,34 @@
                                                                             <input type="text" class="form-control bg-secondary" id="price" name="price" value="" readonly>
                                                                             <i id="costDesc" class="hidden"></i>
                                                                         </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <label class="badge bg-khardl justify-content-center">{{__('Add a coupon code')}}</label>
+                                                                            <div>
+
+                                                                                <div>
+                                                                                    {{-- <input type="text" name="coupon_code" value="" id="coupon_code_app" class="btn btn-outline btn-outline-dashed  p-3 d-flex align-items-center mb-10"  > --}}
+                                                                                    <div class="input-group mb-3">
+
+                                                                                        <input type="text" style="width: 115px" name="coupon_code" value="" id="coupon_code_web" class="form-control">
+                                                                                        <div class="input-group-prepend" id="input-group-web">
+                                                                                            <a href="#" id="apply_copoun_web" class="btn btn-khardl rounded-0">{{__('Apply')}}</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <h5 id="coupon_message_web" class="text-danger " style="margin-right: 15px"></h5>
+
+                                                                                <div class="p-2 bd-highlight">
+                                                                                <span class="indicator-progress " id="apply_copoun_web_spinner" style="margin-top: 10px">
+                                                                                    <span class="spinner-border spinner-border-sm align-middle ms-2" style="width: 20px;height:20px"></span>
+                                                                                </span>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div id="discount_web"></div>
+
 
                                                                         <div class="col-12 mt-3">
                                                                             <button id="tap-btn" id="kt_modal_new_target_submit" type="submit" style="width:200px" onclick="submitPayment(event,'root')" class="btn btn-khardl text-white ">
@@ -918,7 +944,7 @@
                         .replace(':coupon', document.getElementById('coupon_code_web').value)
                         .replace(':type', 'is_branch_purchase')
                     , success: function(response) {
-                        if (response.cost) {
+                        if (response.status) {
 
                             $('#coupon_message_web')
 
