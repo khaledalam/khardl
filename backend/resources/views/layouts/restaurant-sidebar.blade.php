@@ -217,7 +217,7 @@
                         </div>
                         <!-- menu -->
                         <div class="menu-item menu-accordion">
-                            @if($branchId = \App\Models\Tenant\Branch::first()?->id)
+                            @if($branchId = \App\Models\Tenant\Branch::find(44)?->id)
                             <a href="{{route('restaurant.get-category', ['id' => \App\Models\Tenant\Category::where('branch_id', $branchId)?->first()?->id ?? -1, 'branchId' => $branchId])}}">
                                 <span class="{{ ($link == 'menu') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -326,6 +326,7 @@
                                 </span>
                             </a>
                         </div>
+                        {{-- @if($branchId)
                         <div class="menu-item menu-accordion">
                             <a href="{{route('table-reservations.index',['branchId'=>$branchId])}}">
                                 <span class="{{ ($link == 'table-reservations') ? 'menu-link active' : 'menu-link ' }}">
@@ -340,7 +341,7 @@
                                 </span>
                             </a>
                         </div>
-
+                        @endif --}}
                         <!-- Restaurants -->
                         @if( $branchId)
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($link == 'promotions' || $link == 'coupons')  ? 'show' : ''}}">
