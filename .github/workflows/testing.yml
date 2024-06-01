@@ -10,22 +10,21 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-
 jobs:
   Deploy:
-    name: ⚙️ Deploy
-    runs-on: [ self-hosted ]
-    needs: [ Testing-Cypress ]
+    name: ⚙️ Apply Deploy
+    runs-on: [self-hosted]
     if: github.ref == 'refs/heads/development'
     steps:
       - name: ⚙️ DB backup and App apply changes
         run: |
           cd /home/khardl4test/public_html/
-          export HOME=/home/khardl5
-          git config --add safe.directory /home/khardl4test/public_html
-          git pull https://${{secrets.TOK}}@github.com/${GITHUB_REPOSITORY}.git development
+          export HOME=/home/khardl4test
+          git config --global --add safe.directory /home/khardl4test/public_html
+          git pull https://${{secrets.TOK}}@github.com/${GITHUB_REPOSITORY}.git production
           echo "------";
           ./testing-deploy.sh
+
 #  Testing-PHPUnit:
 #    name: 🧪 PHPUnit
 #    runs-on: ubuntu-20.04
