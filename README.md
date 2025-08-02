@@ -51,7 +51,7 @@
 
 ## 🖼 Screenshots
 
-### Central site (SaaS Platform):
+### Central site (Public users):
 | Home | Services | Signup | Signin |
 |------|----------|--------|--------|
 | ![](./screenshots/khardl_8000_home.png) | ![](./screenshots/khardl_8000_services.png) | ![](./screenshots/khardl_8000_signup.png) | ![](./screenshots/khardl_8000_signin.png) |
@@ -60,6 +60,28 @@
 | OTP Login | Password Reset | FAQ | Advantages |
 |-----------|----------------|-----|------------|
 | ![](./screenshots/khardl_8000_login_with_code.png) | ![](./screenshots/khardl_8000_forget_password.png) | ![](./screenshots/khardl_8000_faq.png) | ![](./screenshots/khardl_8000_advantages.png) |
+
+### Central site (Super Admin):
+
+| Dashboard | Admins | Add Admin |
+|----------|--------|------------|
+| ![](./screenshots/superadmin_dashboard.png) | ![](./screenshots/superadmin_admins_all.png) | ![](./screenshots/superadmin_admins_add.png) |
+
+| Ads List | Add Ad | Promotters |
+|----------|--------|------------|
+| ![](./screenshots/superadmin_ads_requests.png) | ![](./screenshots/superadmin_ads_requests_add.png) | ![](./screenshots/superadmin_promotters.png) |
+
+| Purchase Notifications | Settings | Logs |
+|------------------------|----------|------|
+| ![](./screenshots/superadmin_purchase_notifications.png) | ![](./screenshots/superadmin_settings.png) | ![](./screenshots/superadmin_logs.png) |
+
+| Restaurants List | App Requests | Owner Panel | Coupons |
+|------------------|--------------|-------------|---------|
+| ![](./screenshots/superadmin_restaurants_all.png) | ![](./screenshots/superadmin_restaurants_app_requests.png) | ![](./screenshots/superadmin_restaurants_owner.png) | ![](./screenshots/superadmin_sub_coupons.png) |
+
+
+----
+
 
 ### Tenant site (Restaurant):
 | Home | Signup | Customer Dashboard | Cart |
